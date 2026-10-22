@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>دليل ENSTP - أقسام الدليل وجدول التوقيت</title>
+  <title>دليل ENSTP - استعمال الزمن حسب الفوج</title>
 
   <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,25 +22,6 @@
       --primary: #4f46e5;
       --primary-hover: #4338ca;
       --primary-light: #eef2ff;
-      --primary-border: #c7d2fe;
-    }
-    :root[data-theme="rose"] {
-      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.12), transparent 40%),
-                     radial-gradient(circle at 85% 85%, rgba(251, 113, 133, 0.10), transparent 45%),
-                     linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%);
-      --primary: #e11d48;
-      --primary-hover: #be123c;
-      --primary-light: #fff1f2;
-      --primary-border: #fecdd3;
-    }
-    :root[data-theme="emerald"] {
-      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
-                     radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.10), transparent 45%),
-                     linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      --primary: #059669;
-      --primary-hover: #047857;
-      --primary-light: #ecfdf5;
-      --primary-border: #a7f3d0;
     }
 
     body {
@@ -78,266 +59,220 @@
       color: white;
       box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.35);
     }
-    .bento-card {
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .bento-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
   <div class="ambient-bg"></div>
 
-  <!-- الهيدر / الشريط العلوي -->
+  <!-- الهيدر -->
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-2xl btn-custom flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
         <div>
-          <h1 class="font-bold text-gray-900 text-base leading-tight">دليل <span style="color:var(--primary)">ENSTP</span></h1>
-          <p class="text-[11px] text-gray-500">دليل الطالب الجديد - المدرسة الوطنية العليا للأشغال العمومية</p>
+          <h1 class="font-bold text-gray-900 text-base leading-tight">دليل ENSTP <span style="color:var(--primary)">- استعمال الزمن</span></h1>
+          <p class="text-[11px] text-gray-500">المدرسة الوطنية العليا للأشغال العمومية</p>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
-          <i class="fa-solid fa-house"></i>
-          <span>الرئيسية</span>
-        </a>
-      </div>
+      <a href="classes.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
+        <i class="fa-solid fa-arrow-right"></i>
+        <span>العودة للأقسام</span>
+      </a>
     </div>
   </header>
 
   <!-- المحتوى الرئيسي -->
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-12">
+  <main class="max-w-6xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-10">
     
-    <!-- قسم العنوان الرئيسي -->
-    <div class="text-center max-w-2xl mx-auto space-y-3">
-      <span class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
-        <i class="fa-solid fa-compass"></i>
-        <span>أقسام ومرافق الدليل</span>
-      </span>
-      <h2 class="text-3xl lg:text-4xl font-black text-gray-900">أقسام دليل الطالب</h2>
-      <p class="text-xs lg:text-sm text-gray-500">
-        تصفح الأقسام بوضوح وراحة تامة، مع إمكانية استعراض جدول التوقيت التفاعلي المدمج أدناه.
-      </p>
+    <!-- قسم الترويسة -->
+    <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-3">
+        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
+          <i class="fa-solid fa-trophy"></i>
+          <span>جدول التوقيت التفاعلي الدقيق</span>
+        </span>
+        <h2 class="text-3xl font-black text-gray-900">استعمال الزمن حسب الفوج والدفعة</h2>
+        <p class="text-xs lg:text-sm text-gray-600 leading-relaxed">
+          اختر القسم والسنة الدراسية، ثم حدد رقم الفوج لتصفح جدول التوقيت الخاص بك بدقة عالية للعام الدراسي 2026-2027.
+        </p>
+      </div>
+      <div class="w-24 h-24 rounded-3xl bg-amber-50 text-amber-500 flex items-center justify-center text-4xl shadow-md flex-shrink-0">
+        <i class="fa-solid fa-calendar-days"></i>
+      </div>
     </div>
 
-    <!-- شبكة الأقسام (Bento Grid) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      
-      <!-- 1. مدرستي -->
-      <a href="ecole.html" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="مدرستي"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-indigo-600 shadow-md">
-            <i class="fa-solid fa-school text-base"></i>
-          </div>
-        </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-indigo-600">القسم #1</span>
-          <h3 class="text-xl font-black text-gray-900">مدرستي</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">تاريخ المدرسة، المدرجات (A, B, C)، المخابر وقائمة الأساتذة الرسمية.</p>
-        </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
-          <span>فتح القسم</span>
-          <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition"></i>
-        </div>
-      </a>
-
-      <!-- 2. جدول التوقيت -->
-      <button type="button" onclick="document.getElementById('schedule-section').scrollIntoView({behavior: 'smooth'})" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group text-right w-full">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100 w-full">
-          <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="جدول التوقيت"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-emerald-600 shadow-md">
-            <i class="fa-solid fa-calendar-days text-base"></i>
-          </div>
-        </div>
-        <div class="space-y-1.5 flex-grow w-full">
-          <span class="text-[10px] font-bold uppercase text-emerald-600">جدول الحصص والتوقيت</span>
-          <h3 class="text-xl font-black text-gray-900">جدول التوقيت</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">تعرف تلقائياً على حصص اليوم ومواد السنوات التحضيرية والمنشآت القاعدية.</p>
-        </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
-          <span>الانتقال للجدول</span>
-          <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition"></i>
-        </div>
-      </button>
-
-      <!-- 3. إدارتي -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="الإدارة"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-purple-600 shadow-md">
-            <i class="fa-solid fa-building-user text-base"></i>
-          </div>
-        </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-purple-600">القسم #2</span>
-          <h3 class="text-xl font-black text-gray-900">إدارتي</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">مصلحة الدراسة، التسجيلات، الشهادات وإدارة الغيابات والمصالح الإدارية.</p>
-        </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-purple-600">
-          <span>قريباً</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </div>
-
-      <!-- 4. نجاحي -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="نجاحي"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-amber-600 shadow-md">
-            <i class="fa-solid fa-trophy text-base"></i>
-          </div>
-        </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-amber-600">القسم #3</span>
-          <h3 class="text-xl font-black text-gray-900">سر نجاحي</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">نصائح التفوق، مجموعات المراجعة، المطبوعات وحساب المعدلات.</p>
-        </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-amber-600">
-          <span>قيد الإنجاز</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </div>
-
-      <!-- 5. الإقامة الجامعية -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="الإقامة الجامعية"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-pink-600 shadow-md">
-            <i class="fa-solid fa-bed text-base"></i>
-          </div>
-        </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-pink-600">القسم #4</span>
-          <h3 class="text-xl font-black text-gray-900">إقامتي الجامعية</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">دليل الطالب المقيم: الإيواء، المطعم الجامعي والخدمات المتاحة.</p>
-        </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600">
-          <span>قيد الإنجاز</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </div>
-
-      <!-- 6. النقل والإطعام -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="النقل والمطاعم"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-cyan-600 shadow-md">
-            <i class="fa-solid fa-bus text-base"></i>
-          </div>
-        </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-cyan-600">القسم #5 و #6</span>
-          <h3 class="text-xl font-black text-gray-900">النقل والمطاعم</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">خطوط الحافلات، المطاعم الاقتصادية ومحلات القبة المحيطة بالمدرسة.</p>
-        </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-cyan-600">
-          <span>قيد الإنجاز</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- قسم: جدول التوقيت التفاعلي المدمج -->
-    <div id="schedule-section" class="glass-card rounded-3xl p-6 lg:p-10 border border-white space-y-8 shadow-xl">
+    <!-- قسم استعمال الزمن -->
+    <div class="glass-card rounded-3xl p-6 lg:p-10 border border-white space-y-8 shadow-xl">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b pb-4">
         <div>
-          <span class="px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs uppercase tracking-wider border border-emerald-100 inline-flex items-center gap-1.5">
-            <i class="fa-solid fa-calendar-check"></i>
-            <span>التحديث التلقائي حسب اليوم</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs uppercase tracking-wider border border-emerald-100">
+            <i class="fa-solid fa-calendar-check ml-1"></i> برنامج التوقيت الذكي
           </span>
-          <h3 class="text-2xl font-black text-gray-900 mt-2">جدول التوقيت الأسبوعي</h3>
+          <h3 class="text-2xl font-black text-gray-900 mt-2">برنامج الحصص والأعمال التوجيهية</h3>
         </div>
-        <div class="flex items-center gap-2">
+        <div>
           <span id="real-today-tag" class="px-4 py-2 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100">
             اليوم: جارِ التحقق...
           </span>
         </div>
       </div>
 
-      <!-- الفلاتر: التخصص والسنة -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- الفلاتر: القسم، السنة، الفوج -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label for="select-dept" class="block text-xs font-bold text-gray-700 mb-1">التخصص / القسم:</label>
-          <select id="select-dept" onchange="updateSubCategories()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
-            <option value="prep">السنة التحضيرية (Classes Préparatoires)</option>
+          <label class="block text-xs font-bold text-gray-700 mb-1">القسم / التخصص:</label>
+          <select id="select-dept" onchange="updateYears()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            <option value="prep">الطبقة التحضيرية (Classes Préparatoires)</option>
             <option value="dib">قسم المنشآت القاعدية (DIB)</option>
             <option value="dms">قسم المواد والهياكل (DMS)</option>
           </select>
         </div>
+
         <div>
-          <label for="select-year" class="block text-xs font-bold text-gray-700 mb-1">السنة الدراسية:</label>
-          <select id="select-year" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
-            <!-- يُحقن بواسطة JavaScript -->
+          <label class="block text-xs font-bold text-gray-700 mb-1">السنة الدراسية:</label>
+          <select id="select-year" onchange="updateGroups()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            <!-- تتغير ديناميكياً -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">الفوج / الفرقة (Groupe):</label>
+          <select id="select-group" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            <!-- تتغير ديناميكياً حسب السنة المحددة -->
           </select>
         </div>
       </div>
 
-      <!-- شريط الأيام -->
+      <!-- أزرار الأيام -->
       <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-        <button type="button" onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">السبت</button>
-        <button type="button" onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأحد</button>
-        <button type="button" onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الإثنين</button>
-        <button type="button" onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الثلاثاء</button>
-        <button type="button" onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأربعاء</button>
-        <button type="button" onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الخميس</button>
+        <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">السبت</button>
+        <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأحد</button>
+        <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الإثنين</button>
+        <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الثلاثاء</button>
+        <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأربعاء</button>
+        <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الخميس</button>
       </div>
 
-      <!-- قائمة البرنامج -->
+      <!-- عرض الجدول -->
       <div class="space-y-3">
         <h4 id="schedule-title" class="font-extrabold text-sm text-gray-800 border-r-4 border-indigo-600 pr-3">برنامج الحصص</h4>
         <div id="schedule-list" class="space-y-3">
-          <!-- يُحقن بواسطة JavaScript -->
+          <!-- تُحقن بواسطة JS -->
         </div>
       </div>
     </div>
 
   </main>
 
-  <!-- الفوتر / أسفل الصفحة -->
+  <!-- الفوتر -->
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500">
-    <p>© 2026 المدرسة الوطنية العليا للأشغال العمومية بالقبة — قسم المنشآت القاعدية (المجموعة 02). مشروع مقاولاتية "صفر دينار".</p>
+    <p>© 2026 ENSTP القبة — قسم المنشآت القاعدية (المجموعة 02).</p>
   </footer>
 
-  <!-- البرمجة باستخدام JAVASCRIPT -->
+  <!-- البرمجة -->
   <script>
+    // قاعدة بيانات الأفواج الرسمية لكل سنة
+    const groupsDatabase = {
+      // 1CP: 12 أفواج
+      'prep_1': Array.from({ length: 12 }, (_, i) => ({
+        value: `g${i + 1}`,
+        label: `الفوج ${String(i + 1).padStart(2, '0')} (Groupe ${i + 1})`
+      })),
+
+      // 2CP: 18 فوجاً
+      'prep_2': Array.from({ length: 18 }, (_, i) => ({
+        value: `g${i + 1}`,
+        label: `الفوج ${String(i + 1).padStart(2, '0')} (Groupe ${i + 1})`
+      })),
+
+      // DIB 1: 4 أفواج
+      'dib_1': [
+        { value: 'g1', label: 'الفوج 01 (Groupe 01)' },
+        { value: 'g2', label: 'الفوج 02 (Groupe 02)' },
+        { value: 'g3', label: 'الفوج 03 (Groupe 03)' },
+        { value: 'g4', label: 'الفوج 04 (Groupe 04)' }
+      ],
+
+      // DIB 2: قسمان (Sections)
+      'dib_2': [
+        { value: 'sec1', label: 'الفرقة 01 (Section 01)' },
+        { value: 'sec2', label: 'الفرقة 02 (Section 02)' }
+      ],
+
+      // DIB 3: الدفعة الكاملة أو المجموعات الخاصة
+      'dib_3': [
+        { value: 'promo', label: 'الدفعة كاملة (Promo)' },
+        { value: 'gtun', label: 'Groupe TUN' },
+        { value: 'gbat', label: 'Groupe BAT' }
+      ],
+
+      // DMS 1: 4 أقسام/أفواج
+      'dms_1': [
+        { value: 'sec1', label: 'الفرقة 01 (SEC 1)' },
+        { value: 'sec2', label: 'الفرقة 02 (SEC 2)' },
+        { value: 'sec3', label: 'الفرقة 03 (SEC 3)' },
+        { value: 'sec4', label: 'الفرقة 04 (SEC 4)' }
+      ],
+
+      // DMS 2: قسمان
+      'dms_2': [
+        { value: 'sec1', label: 'الفرقة 01 (SEC 01)' },
+        { value: 'sec2', label: 'الفرقة 02 (SEC 02)' }
+      ],
+
+      // DMS 3: الدفعة الكاملة
+      'dms_3': [
+        { value: 'promo', label: 'الدفعة كاملة (Promo)' }
+      ]
+    };
+
+    // قاعدة بيانات الحصص
     const scheduleDatabase = {
       'prep_1': {
-        'Saturday': [{ time: '08:00 - 11:05', subject: 'Calculus 1', prof: 'أ. بن علي', room: 'مدرج A' }],
-        'Sunday': [{ time: '08:00 - 09:30', subject: 'Physics 1', prof: 'أ. قادي', room: 'مدرج A' }],
-        'Monday': [{ time: '09:35 - 11:05', subject: 'Chemistry 1', prof: 'أ. تواتي', room: 'مدرج B' }],
-        'Tuesday': [{ time: '08:00 - 11:05', subject: 'Computer Science 1', prof: 'أ. خان', room: 'مخبر الإعلام الآلي' }],
-        'Wednesday': [{ time: '08:00 - 09:30', subject: 'Algebra 1', prof: 'أ. زروقي', room: 'مدرج A' }],
-        'Thursday': [{ time: '08:00 - 12:40', subject: 'أعمال تطبيقية (فيزياء / كيمياء)', prof: 'فريق المخابر', room: 'المخابر' }]
+        'Sunday': [
+          { time: '08:00 - 09:30', subject: 'الفيزياء 1 (Physique 1)', prof: 'أ. زقم / أ. حدوش', room: 'المدرج A' },
+          { time: '09:35 - 11:05', subject: 'التحليل 1 (Analyse 1)', prof: 'أ. بلعاطي', room: 'القاعة 16' }
+        ],
+        'Monday': [
+          { time: '08:00 - 09:30', subject: 'الجبر 1 (Algèbre 1)', prof: 'أ. هباش', room: 'القاعة 16' },
+          { time: '09:35 - 11:05', subject: 'الكيمياء 1 (Chimie 1)', prof: 'أ. بالي', room: 'القاعة 17' }
+        ],
+        'Tuesday': [
+          { time: '08:00 - 09:30', subject: 'الإعلام الآلي 1 (Informatique 1)', prof: 'أ. بدر', room: 'مخبر الإعلام الآلي' },
+          { time: '09:35 - 11:05', subject: 'اللغة الإنجليزية 1 (Anglais 1)', prof: 'أ. يعلى', room: 'القاعة 18' }
+        ],
+        'Wednesday': [
+          { time: '08:00 - 09:30', subject: 'اللغة الفرنسية 1 (Français 1)', prof: 'أ. بلحاج', room: 'القاعة 16' },
+          { time: '09:35 - 11:05', subject: 'الاقتصاد العام (Économie Général)', prof: 'أ. شوشاوي', room: 'القاعة 15' }
+        ],
+        'Thursday': [
+          { time: '08:00 - 11:05', subject: 'أعمال تطبيقية (TP Physique / Chimie)', prof: 'فريق المخابر', room: 'المخابر' }
+        ],
+        'Saturday': [{ time: '09:00 - 12:00', subject: 'محاضرات وتعويضات', prof: 'الإدارة', room: 'المدرج A' }]
       },
       'prep_2': {
         'Saturday': [
-          { time: '08:00 - 09:30', subject: 'Calculus 3', prof: 'أ. إبراهيمي', room: 'المدرج الرئيسي A' },
-          { time: '09:35 - 11:05', subject: 'Computer Science 3', prof: 'أ. ولد قدور', room: 'المدرج الرئيسي A' }
+          { time: '08:00 - 09:30', subject: 'Calculus 3', prof: 'أ. إبراهيمي', room: 'المدرج A' },
+          { time: '09:35 - 11:05', subject: 'Computer Science 3', prof: 'أ. ولد قدور', room: 'المدرج A' }
         ],
-        'Sunday': [{ time: '08:00 - 11:05', subject: 'Physics 3', prof: 'فريق الأساتذة', room: 'المدرج الرئيسي A' }],
+        'Sunday': [{ time: '08:00 - 11:05', subject: 'Physics 3', prof: 'أ. برودي', room: 'المدرج A' }],
         'Monday': [
-          { time: '08:00 - 09:30', subject: 'Calculus 3', prof: 'أ. إبراهيمي', room: 'المدرج الرئيسي A' },
-          { time: '09:35 - 11:05', subject: 'Numerical Analysis 1', prof: 'أ. حمادي', room: 'المدرج الرئيسي A' }
+          { time: '08:00 - 09:30', subject: 'Calculus 3', prof: 'أ. إبراهيمي', room: 'المدرج A' },
+          { time: '09:35 - 11:05', subject: 'Numerical Analysis 1', prof: 'أ. حمادي', room: 'المدرج A' }
         ],
         'Tuesday': [
-          { time: '08:00 - 09:30', subject: 'Chemistry 3', prof: 'أ. بوهارة', room: 'المدرج الرئيسي A' },
-          { time: '09:35 - 11:05', subject: 'Fluid Mechanics', prof: 'أ. قلو', room: 'المدرج الرئيسي A' }
+          { time: '08:00 - 09:30', subject: 'Chemistry 3', prof: 'أ. بوهارة / أ. بندادة', room: 'المدرج A' },
+          { time: '09:35 - 11:05', subject: 'Fluid Mechanics', prof: 'أ. قلو', room: 'المدرج A' },
+          { time: '11:10 - 12:40', subject: 'General Electricity', prof: 'أ. رحوي', room: 'المدرج A' }
         ],
         'Wednesday': [
-          { time: '08:00 - 09:30', subject: 'Rational Mech 1', prof: 'أ. زوادي', room: 'المدرج الرئيسي A' },
-          { time: '09:35 - 11:05', subject: 'English 3', prof: 'أ. يعلى', room: 'المدرج الرئيسي A' }
+          { time: '08:00 - 09:30', subject: 'Rational Mech 1', prof: 'أ. زوادي', room: 'المدرج A' },
+          { time: '09:35 - 11:05', subject: 'English 3', prof: 'أ. يعلى', room: 'المدرج A' }
         ],
-        'Thursday': [{ time: '08:00 - 12:40', subject: 'أعمال تطبيقية (كيمياء / فيزياء / كهرباء)', prof: 'فريق المخابر', room: 'المخابر' }]
+        'Thursday': [{ time: '08:00 - 12:40', subject: 'أعمال تطبيقية (TP)', prof: 'فريق المخابر', room: 'المخابر' }]
       },
       'dib_1': {
-        'Saturday': [{ time: '09:35 - 11:05', subject: 'مواد البناء (Constr Mat)', prof: 'أ. بدوي', room: 'عن بُعد' }],
         'Sunday': [
           { time: '08:00 - 09:30', subject: 'مقاومة المواد (SOM)', prof: 'أ. العايب', room: 'القاعة 7' },
           { time: '09:35 - 11:05', subject: 'الهيدروليك التطبيقي (Appl Hydr)', prof: 'أ. بوساعدي', room: 'القاعة 8' },
@@ -360,33 +295,121 @@
         'Thursday': [
           { time: '08:00 - 11:00', subject: 'أعمال تطبيقية (طبوغرافيا / مواد / جيولوجيا)', prof: 'عالم / قتاش', room: 'المخبر' },
           { time: '11:05 - 12:35', subject: 'الذكاء الاصطناعي (IA)', prof: 'أ. شامي', room: 'القاعة 8' }
-        ]
+        ],
+        'Saturday': [{ time: '09:35 - 11:05', subject: 'مواد البناء (Constr Mat)', prof: 'أ. بدوي', room: 'عن بعد' }]
       },
       'dib_2': {
-        'Sunday': [{ time: '08:00 - 11:05', subject: 'الطرقات 2 (Routes 2)', prof: 'أ. مهدي', room: 'القاعة 3' }],
-        'Monday': [{ time: '09:35 - 12:40', subject: 'المنشآت الفنية (Ouvrages d\'art)', prof: 'أ. شريف', room: 'القاعة 4' }]
+        'Sunday': [
+          { time: '08:00 - 10:00', subject: 'Road Geot', prof: 'أ. الدريش', room: 'القاعة 5' },
+          { time: '10:05 - 12:05', subject: 'الخرسانة المسلحة (RC)', prof: 'أ. تفراوت', room: 'القاعة 5' }
+        ],
+        'Monday': [
+          { time: '08:00 - 10:00', subject: 'ميكانيكا التربة 4 (Soil Mech 4)', prof: 'أ. حمادي', room: 'القاعة 22' },
+          { time: '10:05 - 12:05', subject: 'العناصر المنتهية (FEM)', prof: 'أ. مهياوي', room: 'القاعة 22' }
+        ],
+        'Tuesday': [
+          { time: '08:00 - 09:30', subject: 'مخطط الطرقات (Road Sketch)', prof: 'قومتر / حطري', room: 'القاعة 25' },
+          { time: '09:35 - 11:05', subject: 'ميكانيكا الصخور (Rock Mech)', prof: 'أ. بن امغار', room: 'القاعة 25' }
+        ],
+        'Wednesday': [
+          { time: '08:00 - 09:30', subject: 'ميكانيكا الهياكل المتقدمة (Adv Struct Mech)', prof: 'أ. عساس', room: 'القاعة 5' },
+          { time: '09:35 - 11:05', subject: 'الخرسانة المسلحة (RC)', prof: 'أ. بن رضوان', room: 'القاعة 5' }
+        ],
+        'Thursday': [
+          { time: '08:00 - 09:30', subject: 'الخرسانة المجهدة / السكك الحديدية', prof: 'عميور / غفار', room: 'القاعة 5' },
+          { time: '13:00 - 16:00', subject: 'زيارة ورشات (In Situ Visit)', prof: 'المؤطرون', room: 'الميدان' }
+        ],
+        'Saturday': [{ time: '09:00 - 12:00', subject: 'مشروع التركيب', prof: 'القسم', room: 'القاعات' }]
+      },
+      'dib_3': {
+        'Sunday': [
+          { time: '08:00 - 09:30', subject: 'الحساب الآلي للهياكل', prof: 'أ. بن أوشفون', room: 'القاعة 19' },
+          { time: '09:35 - 11:05', subject: 'إدارة المشاريع (Management)', prof: 'أ. خيالي', room: 'القاعة 19' }
+        ],
+        'Monday': [
+          { time: '08:00 - 09:30', subject: 'أمراض وتأهيل المنشآت', prof: 'أ. فدغوش', room: 'القاعة 19' },
+          { time: '09:35 - 11:05', subject: 'التحسين في الهندسة المدنية', prof: 'أ. فدغوش', room: 'القاعة 19' }
+        ],
+        'Tuesday': [
+          { time: '08:00 - 09:30', subject: 'MMC Approfondie', prof: 'أ. زحافي', room: 'القاعة 19' },
+          { time: '09:35 - 11:05', subject: 'ديناميكية التربة 2 (Soil Dyn 2)', prof: 'أ. حديد', room: 'القاعة 19' }
+        ],
+        'Wednesday': [
+          { time: '08:00 - 09:30', subject: 'قانون الأشغال العمومية', prof: 'أ. حمادي', room: 'القاعة 19' },
+          { time: '09:35 - 11:05', subject: 'مواد مبتكرة (Matériaux Innovants)', prof: 'أ. مسيلي', room: 'القاعة 19' }
+        ],
+        'Thursday': [{ time: '08:00 - 09:30', subject: 'مقاولاتية (Lean Entreprenariat)', prof: 'مؤطر خارجي', room: 'القاعة 19' }],
+        'Saturday': [{ time: '08:00 - 09:30', subject: 'برنامج MIDAS', prof: 'أ. قارفي', room: 'القاعة 19' }]
       },
       'dms_1': {
-        'Sunday': [{ time: '08:00 - 11:05', subject: 'الخرسانة المسلحة (Béton Armé)', prof: 'أ. قاسي', room: 'القاعة 1' }],
-        'Tuesday': [{ time: '09:35 - 12:40', subject: 'ديناميكية الهياكل', prof: 'أ. بلقاسم', room: 'القاعة 2' }]
+        'Sunday': [{ time: '08:00 - 11:05', subject: 'SM 1 / App Go', prof: 'أ. مسيلي / أ. حبيب', room: 'SEC 1-4' }],
+        'Monday': [{ time: '08:00 - 11:05', subject: 'SOM 1 / Topo', prof: 'أ. بوقزي / أ. لفقير', room: 'SEC 1-4' }],
+        'Tuesday': [{ time: '08:00 - 11:05', subject: 'T. English / SM 1', prof: 'أ. خلفي / أ. مسيلي', room: 'SEC 1-4' }],
+        'Wednesday': [{ time: '08:00 - 11:05', subject: 'CM 1 / SOM 1', prof: 'أ. زحافي / أ. عناد', room: 'SEC 1-4' }],
+        'Thursday': [{ time: '08:00 - 11:05', subject: 'TPES / Topo', prof: 'أ. ساعدي / أ. بن أوناس', room: 'SEC 1-4' }],
+        'Saturday': [{ time: '09:00 - 12:00', subject: 'TP App Geo', prof: 'أ. حبيب', room: 'المخبر' }]
+      },
+      'dms_2': {
+        'Sunday': [{ time: '08:00 - 12:05', subject: 'Structural Dynamics & RC 2', prof: 'أ. حديد / أ. بلعورة', room: 'SEC 1-2' }],
+        'Monday': [{ time: '08:00 - 12:05', subject: 'Steel Structures / FEM', prof: 'أ. بوقزي / أ. الشيخ', room: 'SEC 1-2' }],
+        'Tuesday': [{ time: '08:00 - 12:05', subject: 'Bridges 1 / Steel Structures', prof: 'أ. زوؤرغي / أ. بوقزي', room: 'SEC 1-2' }],
+        'Wednesday': [{ time: '08:00 - 12:05', subject: 'Roads 2 / Prestressed Concrete', prof: 'أ. بختي / أ. بلعورة', room: 'SEC 1-2' }],
+        'Thursday': [{ time: '08:00 - 11:35', subject: 'Buildings 1 / Soil Mechanics 4', prof: 'أ. لجل / أ. قلوز', room: 'SEC 1-2' }],
+        'Saturday': [{ time: '13:00 - 16:05', subject: 'Tunnels / Hydraulic Structures', prof: 'أ. حبيب / أ. لفقير', room: 'القاعات' }]
+      },
+      'dms_3': {
+        'Sunday': [{ time: '08:00 - 12:40', subject: 'Calcul Avancé & Béton Précontraint', prof: 'فريق DMS', room: 'الدفعة' }],
+        'Monday': [{ time: '08:00 - 12:40', subject: 'Ouvrages d’Art & Géotechnique', prof: 'فريق DMS', room: 'الدفعة' }],
+        'Tuesday': [{ time: '08:00 - 12:40', subject: 'Modélisation Numérique & BIM', prof: 'فريق DMS', room: 'الدفعة' }],
+        'Wednesday': [{ time: '08:00 - 12:40', subject: 'Management & Sécurité', prof: 'فريق DMS', room: 'الدفعة' }],
+        'Thursday': [{ time: '08:00 - 12:40', subject: 'مشروع التخرج / زيارات ميدانية', prof: 'المؤطرون', room: 'الميدان' }],
+        'Saturday': [{ time: '09:00 - 12:00', subject: 'ملتقيات متخصصة', prof: 'خبراء', room: 'المدرج' }]
       }
     };
 
-    let selectedDay = 'Sunday';
+    let selectedDay = 'Thursday';
     const dayNamesAr = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
 
-    function updateSubCategories() {
+    function updateYears() {
       const dept = document.getElementById('select-dept').value;
       const yearSelect = document.getElementById('select-year');
       yearSelect.innerHTML = '';
 
       if (dept === 'prep') {
-        yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
+        yearSelect.innerHTML = `
+          <option value="prep_1">السنة الأولى تحضيري (1CP)</option>
+          <option value="prep_2">السنة الثانية تحضيري (2CP)</option>
+        `;
       } else if (dept === 'dib') {
-        yearSelect.innerHTML = `<option value="dib_1">السنة الأولى منشآت قاعدية (1st DIB)</option><option value="dib_2">السنة الثانية منشآت قاعدية (2nd DIB)</option>`;
-      } else {
-        yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مواد وهياكل (1st DMS)</option>`;
+        yearSelect.innerHTML = `
+          <option value="dib_1">السنة الأولى مهندس (1st DIB)</option>
+          <option value="dib_2">السنة الثانية مهندس (2nd DIB)</option>
+          <option value="dib_3">السنة الثالثة مهندس (3rd DIB)</option>
+        `;
+      } else if (dept === 'dms') {
+        yearSelect.innerHTML = `
+          <option value="dms_1">السنة الأولى مهندس (1st DMS)</option>
+          <option value="dms_2">السنة الثانية مهندس (2nd DMS)</option>
+          <option value="dms_3">السنة الثالثة مهندس (3rd DMS)</option>
+        `;
       }
+      updateGroups();
+    }
+
+    function updateGroups() {
+      const yearKey = document.getElementById('select-year').value;
+      const groupSelect = document.getElementById('select-group');
+      groupSelect.innerHTML = '';
+
+      const groups = groupsDatabase[yearKey] || [{ value: 'g1', label: 'الفوج 01' }];
+
+      groups.forEach(group => {
+        const option = document.createElement('option');
+        option.value = group.value;
+        option.textContent = group.label;
+        groupSelect.appendChild(option);
+      });
+
       renderSchedule();
     }
 
@@ -403,27 +426,26 @@
     function detectCurrentDay() {
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let today = days[new Date().getDay()];
-      if (today === 'Friday') today = 'Sunday'; // يوم الجمعة ينتقل تلقائياً للأحد
+      if (today === 'Friday') today = 'Sunday';
       
-      const realTag = document.getElementById('real-today-tag');
-      if (realTag) {
-        realTag.innerText = `اليوم الحالي: ${dayNamesAr[today] || today}`;
-      }
+      document.getElementById('real-today-tag').innerText = `اليوم الحالي: ${dayNamesAr[today] || today}`;
       changeDay(today);
     }
 
     function renderSchedule() {
       const yearKey = document.getElementById('select-year').value;
+      const groupSelect = document.getElementById('select-group');
+      const groupText = groupSelect.options[groupSelect.selectedIndex] ? groupSelect.options[groupSelect.selectedIndex].text : '';
       const container = document.getElementById('schedule-list');
       container.innerHTML = '';
 
       const items = (scheduleDatabase[yearKey] && scheduleDatabase[yearKey][selectedDay]) || [
-        { time: '08:00 - 12:00', subject: 'محاضرات عامة / أعمال توجيهية', prof: 'فريق الأساتذة', room: 'مدرج المدرسة' }
+        { time: '08:00 - 12:00', subject: 'محاضرات عامة / أعمال توجيهية', prof: 'فريق الأساتذة', room: 'المدرجات / القاعات' }
       ];
 
       items.forEach(item => {
         const row = document.createElement('div');
-        row.className = "p-4 bg-white/90 rounded-2xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm";
+        row.className = "p-4 bg-white/90 rounded-2xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs";
         row.innerHTML = `
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs flex-shrink-0">
@@ -436,7 +458,7 @@
           </div>
           <div class="flex flex-wrap items-center gap-2 text-xs font-bold text-gray-600">
             <span class="px-3 py-1 rounded-lg bg-gray-100"><i class="fa-regular fa-clock ml-1 text-indigo-500"></i> ${item.time}</span>
-            <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700"><i class="fa-solid fa-location-dot ml-1"></i> ${item.room}</span>
+            <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700"><i class="fa-solid fa-location-dot ml-1"></i> ${item.room} (${groupText})</span>
           </div>
         `;
         container.appendChild(row);
@@ -444,7 +466,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      updateSubCategories();
+      updateYears();
       detectCurrentDay();
     });
   </script>
