@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guide ENSTP - Classes en Rotation 3D</title>
+  <title>Guide ENSTP - Rubriques & Emploi du Temps</title>
 
-  <!-- Google Fonts: Cairo, Poppins, Plus Jakarta Sans -->
+  <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- FontAwesome 6 Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <!-- TailwindCSS -->
@@ -25,9 +23,7 @@
       --primary-hover: #4338ca;
       --primary-light: #eef2ff;
       --primary-border: #c7d2fe;
-      --text-accent: #4f46e5;
     }
-
     :root[data-theme="rose"] {
       --bg-gradient: radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.12), transparent 40%),
                      radial-gradient(circle at 85% 85%, rgba(251, 113, 133, 0.10), transparent 45%),
@@ -36,9 +32,7 @@
       --primary-hover: #be123c;
       --primary-light: #fff1f2;
       --primary-border: #fecdd3;
-      --text-accent: #e11d48;
     }
-
     :root[data-theme="emerald"] {
       --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
                      radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.10), transparent 45%),
@@ -47,113 +41,49 @@
       --primary-hover: #047857;
       --primary-light: #ecfdf5;
       --primary-border: #a7f3d0;
-      --text-accent: #059669;
     }
-
-    html[data-size="small"] { font-size: 14px; }
-    html[data-size="normal"] { font-size: 16px; }
-    html[data-size="large"] { font-size: 18px; }
 
     body {
-      font-family: 'Plus Jakarta Sans', 'Cairo', 'Poppins', sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
       background: #f8fafc;
       color: #1e293b;
-      overflow-x: hidden;
     }
-
     .ambient-bg {
       position: fixed;
       inset: 0;
       z-index: -1;
       background: var(--bg-gradient);
     }
-
     .glass-card {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.04),
-                  0 0 20px rgba(99, 102, 241, 0.05);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
     }
-
     .glass-nav {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     }
-
-    .btn-primary-custom {
+    .btn-custom {
       background-color: var(--primary);
-      color: #ffffff;
+      color: white;
       transition: all 0.3s ease;
     }
-
-    .btn-primary-custom:hover {
+    .btn-custom:hover {
       background-color: var(--primary-hover);
     }
-
-    .text-accent-custom {
-      color: var(--text-accent);
+    .btn-day.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.35);
     }
-
-    .bg-light-custom {
-      background-color: var(--primary-light);
-      border-color: var(--primary-border);
+    .bento-card {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-    /* 3D Circular Orbit Stage */
-    .orbit-stage {
-      perspective: 1400px;
-      position: relative;
-      width: 100%;
-      height: 440px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .orbit-ring {
-      position: relative;
-      width: 320px;
-      height: 320px;
-      transform-style: preserve-3d;
-      transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    /* الأيقونات المربعة الدوارة ثلاثية الأبعاد */
-    .square-3d-card {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 130px;
-      height: 130px;
-      margin-top: -65px;
-      margin-left: -65px;
-      border-radius: 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 2px solid rgba(255, 255, 255, 1);
-      box-shadow: 0 16px 32px rgba(99, 102, 241, 0.18),
-                  inset 0 2px 4px rgba(255, 255, 255, 0.9);
-      transition: all 0.5s ease;
-      transform-style: preserve-3d;
-    }
-
-    .square-3d-card:hover {
-      transform: scale(1.18) translateZ(40px) !important;
-      box-shadow: 0 25px 50px rgba(99, 102, 241, 0.35),
-                  0 0 25px rgba(236, 72, 153, 0.3);
-    }
-
-    .square-3d-card.active {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 5px var(--primary-border), 0 20px 45px rgba(99, 102, 241, 0.4);
+    .bento-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
@@ -162,391 +92,340 @@
   <div class="ambient-bg"></div>
 
   <!-- HEADER -->
-  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      
-      <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl btn-primary-custom flex items-center justify-center text-white font-black text-lg shadow-md">
-            E
-          </div>
-          <div>
-            <h1 class="font-bold text-gray-900 tracking-tight text-base leading-tight">
-              ENSTP <span class="text-accent-custom">Guide</span>
-            </h1>
-            <p class="text-[11px] text-gray-500 font-cairo">دليل الطالب الجديد - المدرسة الوطنية العليا للأشغال العمومية</p>
-          </div>
-        </div>
-
-        <nav class="flex items-center gap-1 bg-gray-100/80 p-1 rounded-full border border-gray-200">
-          <a href="index.html" class="px-4 py-1.5 rounded-full font-semibold text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1.5">
-            <i class="fa-solid fa-house"></i>
-            <span>Accueil</span>
-          </a>
-          <a href="classes.html" class="px-4 py-1.5 rounded-full font-semibold text-xs bg-white text-gray-900 shadow-sm flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-nodes text-accent-custom"></i>
-            <span>Classes 3D Orbit</span>
-          </a>
-        </nav>
-      </div>
-
-      <!-- Controls -->
-      <div class="flex items-center gap-2 lg:gap-3 text-xs bg-white/80 p-1.5 rounded-2xl border border-gray-200/80 shadow-sm">
-        <button onclick="toggleAiModal()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold flex items-center gap-1.5 shadow-sm hover:opacity-90 transition">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-          <span>Recherche IA</span>
-        </button>
-
-        <div class="h-4 w-px bg-gray-300"></div>
-
-        <div class="flex items-center gap-1 bg-gray-100 p-1 rounded-xl">
-          <button onclick="setLanguage('fr')" id="lang-fr" class="px-2 py-1 rounded-lg font-bold transition bg-white text-gray-900 shadow-xs">FR</button>
-          <button onclick="setLanguage('ar')" id="lang-ar" class="px-2 py-1 rounded-lg font-bold transition text-gray-500 hover:text-gray-900">عربي</button>
-          <button onclick="setLanguage('en')" id="lang-en" class="px-2 py-1 rounded-lg font-bold transition text-gray-500 hover:text-gray-900">EN</button>
-        </div>
-
-        <div class="h-4 w-px bg-gray-300"></div>
-
-        <div class="flex items-center gap-1.5">
-          <button onclick="setTheme('indigo')" title="Indigo" class="w-5 h-5 rounded-full bg-indigo-500 hover:scale-110 transition"></button>
-          <button onclick="setTheme('rose')" title="Rose" class="w-5 h-5 rounded-full bg-rose-500 hover:scale-110 transition"></button>
-          <button onclick="setTheme('emerald')" title="Emerald" class="w-5 h-5 rounded-full bg-emerald-500 hover:scale-110 transition"></button>
-        </div>
-
-        <div class="h-4 w-px bg-gray-300"></div>
-
-        <div class="flex items-center gap-1 font-bold text-gray-600">
-          <button onclick="setFontSize('small')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-[11px]">A-</button>
-          <button onclick="setFontSize('normal')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-xs">A</button>
-          <button onclick="setFontSize('large')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-sm">A+</button>
+  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl btn-custom flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
+        <div>
+          <h1 class="font-bold text-gray-900 text-base leading-tight">ENSTP <span style="color:var(--primary)">Guide</span></h1>
+          <p class="text-[11px] text-gray-500 font-cairo">دليل الطالب الجديد - المدرسة الوطنية العليا للأشغال العمومية</p>
         </div>
       </div>
-
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
+          <i class="fa-solid fa-house"></i>
+          <span>Accueil</span>
+        </a>
+      </div>
     </div>
   </header>
 
-  <!-- MAIN 3D ORBIT STAGE -->
-  <main class="max-w-6xl mx-auto px-4 lg:px-8 py-8 flex-grow w-full space-y-6">
+  <!-- MAIN CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-12">
     
-    <div class="text-center max-w-2xl mx-auto space-y-2">
-      <span class="px-3.5 py-1.5 rounded-full bg-light-custom text-accent-custom font-bold text-xs uppercase tracking-wider inline-flex items-center gap-1.5">
-        <i class="fa-solid fa-rotate"></i>
-        <span>دوران دائري ثلاثي الأبعاد للأقسام</span>
+    <!-- Title Section -->
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <span class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
+        <i class="fa-solid fa-compass"></i>
+        <span>أقسام ومرافق الدليل</span>
       </span>
-      <h2 class="text-2xl lg:text-3xl font-black text-gray-900">Les 10 Rubriques en Rotation Circulaire 3D</h2>
+      <h2 class="text-3xl lg:text-4xl font-black text-gray-900">Les Rubriques du Guide ENSTP</h2>
       <p class="text-xs lg:text-sm text-gray-500 font-cairo">
-        تدور الأقسام بشكل دائري سلس؛ حيث تتحرك كل أيقونة مربعة لتأتي الأخرى خلفها مباشرة في حلقة تفاعلية متصلة.
+        تصفح الأقسام بوضوح وراحتك التامة، مع إمكانية استعراض جدول التوقيت التفاعلي المدمج أدناه.
       </p>
     </div>
 
-    <!-- 3D Orbit Display Stage -->
-    <div class="relative glass-card rounded-3xl p-6 lg:p-8 border border-white overflow-hidden shadow-xl">
+    <!-- BENTO GRID (الأقسام الواضحة والكبيرة بدلاً من الدوران) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       
-      <!-- Controls Bar -->
-      <div class="flex items-center justify-between mb-2 z-20 relative">
-        <button onclick="rotateOrbit(-1)" class="w-10 h-10 rounded-2xl bg-white text-gray-700 shadow-md hover:bg-gray-100 transition flex items-center justify-center">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        
-        <div class="flex items-center gap-3">
-          <button onclick="toggleAutoRotate()" id="autorotate-btn" class="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span id="autorotate-label">Rotation: ON</span>
-          </button>
+      <!-- 1. Mon École -->
+      <a href="ecole.html" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
+          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Mon Ecole"/>
+          <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-indigo-600 shadow-md">
+            <i class="fa-solid fa-school text-base"></i>
+          </div>
         </div>
+        <div class="space-y-1.5 flex-grow">
+          <span class="text-[10px] font-bold uppercase text-indigo-600">Rubrique #1</span>
+          <h3 class="text-xl font-black text-gray-900">Mon école</h3>
+          <p class="text-xs text-gray-600 font-cairo leading-relaxed">تاريخ المدرسة، المدرجات (A, B, C)، والمخابر وقائمة الأساتذة الرسمية.</p>
+        </div>
+        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
+          <span>Ouvrir la section</span>
+          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+        </div>
+      </a>
 
-        <button onclick="rotateOrbit(1)" class="w-10 h-10 rounded-2xl bg-white text-gray-700 shadow-md hover:bg-gray-100 transition flex items-center justify-center">
-          <i class="fa-solid fa-chevron-right"></i>
-        </button>
-      </div>
-
-      <!-- The 3D Stage Ring -->
-      <div class="orbit-stage">
-        <div id="orbit-ring" class="orbit-ring">
-          <!-- Injected dynamically via JS -->
+      <!-- 2. Emploi du Temps (جدول التوقيع / التوقيت المدمج) -->
+      <div onclick="document.getElementById('schedule-section').scrollIntoView({behavior: 'smooth'})" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
+          <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Emploi du temps"/>
+          <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-emerald-600 shadow-md">
+            <i class="fa-solid fa-calendar-days text-base"></i>
+          </div>
+        </div>
+        <div class="space-y-1.5 flex-grow">
+          <span class="text-[10px] font-bold uppercase text-emerald-600">جدول الحصص والتوقيت</span>
+          <h3 class="text-xl font-black text-gray-900">Emploi du Temps</h3>
+          <p class="text-xs text-gray-600 font-cairo leading-relaxed">تعرف تلقائياً على حصص اليوم ومواد السنة التحضيرية والمنشآت القاعدية.</p>
+        </div>
+        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600">
+          <span>Aller au planning</span>
+          <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition"></i>
         </div>
       </div>
 
-      <!-- Active Section Detail Card Below -->
-      <div id="class-detail-card" class="mt-4 p-6 glass-card rounded-2xl border border-white shadow-md transition-all duration-500">
-        <!-- Injected dynamically -->
+      <!-- 3. Mon Administration -->
+      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Administration"/>
+          <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-purple-600 shadow-md">
+            <i class="fa-solid fa-building-user text-base"></i>
+          </div>
+        </div>
+        <div class="space-y-1.5 flex-grow">
+          <span class="text-[10px] font-bold uppercase text-purple-600">Rubrique #2</span>
+          <h3 class="text-xl font-black text-gray-900">Mon administration</h3>
+          <p class="text-xs text-gray-600 font-cairo leading-relaxed">مصلحة الدراسة، التسجيلات، الشهادات وإدارة الغيابات والمصالح.</p>
+        </div>
+        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-purple-600">
+          <span>Bientôt disponible</span>
+          <i class="fa-solid fa-clock"></i>
+        </div>
       </div>
 
+      <!-- 4. Ma Réussite -->
+      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
+          <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Reussite"/>
+          <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-amber-600 shadow-md">
+            <i class="fa-solid fa-trophy text-base"></i>
+          </div>
+        </div>
+        <div class="space-y-1.5 flex-grow">
+          <span class="text-[10px] font-bold uppercase text-amber-600">Rubrique #3</span>
+          <h3 class="text-xl font-black text-gray-900">Ma réussite</h3>
+          <p class="text-xs text-gray-600 font-cairo leading-relaxed">نصائح التفوق، مجموعات المراجعة، والمطبوعات وحساب المعدلات.</p>
+        </div>
+        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-amber-600">
+          <span>En cours</span>
+          <i class="fa-solid fa-clock"></i>
+        </div>
+      </div>
+
+      <!-- 5. Cité Universitaire -->
+      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
+          <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Cite U"/>
+          <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-pink-600 shadow-md">
+            <i class="fa-solid fa-bed text-base"></i>
+          </div>
+        </div>
+        <div class="space-y-1.5 flex-grow">
+          <span class="text-[10px] font-bold uppercase text-pink-600">Rubrique #4</span>
+          <h3 class="text-xl font-black text-gray-900">Ma cité universitaire</h3>
+          <p class="text-xs text-gray-600 font-cairo leading-relaxed">دليل الطالب المقيم: الإيواء، المطعم الجامعي والمغسلة.</p>
+        </div>
+        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600">
+          <span>En cours</span>
+          <i class="fa-solid fa-clock"></i>
+        </div>
+      </div>
+
+      <!-- 6. Transport & Restauration -->
+      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
+          <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Transport"/>
+          <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-cyan-600 shadow-md">
+            <i class="fa-solid fa-bus text-base"></i>
+          </div>
+        </div>
+        <div class="space-y-1.5 flex-grow">
+          <span class="text-[10px] font-bold uppercase text-cyan-600">Rubrique #5 & #6</span>
+          <h3 class="text-xl font-black text-gray-900">Transport & Manger</h3>
+          <p class="text-xs text-gray-600 font-cairo leading-relaxed">خطوط الحافلات، المطاعم الاقتصادية ومتاجر القبة.</p>
+        </div>
+        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-cyan-600">
+          <span>En cours</span>
+          <i class="fa-solid fa-clock"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: SCHEDULE / جدول التوقيت التفاعلي المدمج -->
+    <div id="schedule-section" class="glass-card rounded-3xl p-6 lg:p-10 border border-white space-y-8 shadow-xl">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b pb-4">
+        <div>
+          <span class="px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs uppercase tracking-wider border border-emerald-100">
+            <i class="fa-solid fa-calendar-check mr-1"></i> التحديث التلقائي حسب اليوم
+          </span>
+          <h3 class="text-2xl font-black text-gray-900 mt-2">Emploi du Temps / جدول التوقيت</h3>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="real-today-tag" class="px-4 py-2 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100">
+            اليوم: جارِ التحقق...
+          </span>
+        </div>
+      </div>
+
+      <!-- خيارات التخصص والسنة -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">التخصص / القسم:</label>
+          <select id="select-dept" onchange="updateSubCategories()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            <option value="prep">الطبقة التحضيرية (Classes Préparatoires)</option>
+            <option value="dib">قسم المنشآت القاعدية (DIB)</option>
+            <option value="dms">قسم المواد والهياكل (DMS)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">السنة الدراسية:</label>
+          <select id="select-year" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            <!-- Injected via JS -->
+          </select>
+        </div>
+      </div>
+
+      <!-- شريط الأيام التفاعلي -->
+      <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+        <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">السبت</button>
+        <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأحد</button>
+        <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الإثنين</button>
+        <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الثلاثاء</button>
+        <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأربعاء</button>
+        <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الخميس</button>
+      </div>
+
+      <!-- عرض البرنامج -->
+      <div class="space-y-3">
+        <h4 id="schedule-title" class="font-extrabold text-sm text-gray-800 border-l-4 border-indigo-600 pl-3">برنامج الحصص</h4>
+        <div id="schedule-list" class="space-y-3">
+          <!-- Injected via JS -->
+        </div>
+      </div>
     </div>
 
   </main>
-
-  <!-- MODAL AI -->
-  <div id="ai-modal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="glass-card bg-white/95 rounded-3xl max-w-xl w-full p-6 lg:p-8 space-y-4 border border-white shadow-2xl relative">
-      <div class="flex items-center justify-between border-b pb-3">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-sm font-bold">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-          </div>
-          <h3 class="font-bold text-base text-gray-900">المساعد الذكي للبحث في دليل ENSTP</h3>
-        </div>
-        <button onclick="toggleAiModal()" class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div class="space-y-3 font-cairo">
-        <p class="text-xs text-gray-500">اكتب أي سؤال تبحث عنه (مثلاً: أين توجد القاعة 13؟ كيف أصل إلى المطعم الجامعي؟)</p>
-        
-        <div class="flex gap-2">
-          <input type="text" id="ai-input" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="اسأل المساعد الذكي..." />
-          <button onclick="askAiAssistant()" class="px-5 py-2.5 rounded-xl bg-purple-600 text-white font-bold text-xs flex items-center gap-1.5 shadow-md hover:bg-purple-700">
-            <i class="fa-solid fa-paper-plane"></i>
-            <span>بحث</span>
-          </button>
-        </div>
-
-        <div id="ai-response" class="p-4 bg-purple-50/60 rounded-2xl border border-purple-100 text-xs text-gray-700 hidden leading-relaxed space-y-2"></div>
-      </div>
-    </div>
-  </div>
 
   <!-- FOOTER -->
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
     <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02). Projet Entrepreneuriat "Zéro Dinar".</p>
   </footer>
 
-  <!-- SCRIPT -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    const guideClasses = [
-      {
-        id: 1,
-        title: "Mon école",
-        desc: "تقديم المدرسة، تاريخها، المدرجات (A/B/C)، قاعات الدروس وقائمة الأساتذة.",
-        image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-school",
-        link: "ecole.html"
+    const scheduleDatabase = {
+      'dib_1': {
+        'Saturday': [{ time: '09h35 - 11h05', subject: 'Constr Mat', prof: 'M. BADAOUI', room: 'En ligne' }],
+        'Sunday': [
+          { time: '08h00 - 09h30', subject: 'SOM (Résistance des Matériaux)', prof: 'Mme LAIB', room: 'Classroom 7' },
+          { time: '09h35 - 11h05', subject: 'Appl Hydr', prof: 'M. BOUSSADI', room: 'Classroom 8' },
+          { time: '11h10 - 12h40', subject: 'MMC', prof: 'M. MERDOUD', room: 'Classroom 9' }
+        ],
+        'Monday': [
+          { time: '08h00 - 09h30', subject: 'Appl Geology', prof: 'M. OMRACI', room: 'Classroom 7' },
+          { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'Mme BENOUMECHIARA', room: 'Classroom 8' },
+          { time: '11h10 - 12h40', subject: 'Topo', prof: 'M. ALEM', room: 'Classroom 9' }
+        ],
+        'Tuesday': [
+          { time: '08h00 - 09h30', subject: 'SOM', prof: 'Mme LAIB', room: 'Classroom 6' },
+          { time: '09h35 - 11h05', subject: 'MMC', prof: 'M. MERDOUD', room: 'Classroom 7' },
+          { time: '11h10 - 12h40', subject: 'Appl Hydr', prof: 'M. RAHMANI', room: 'Classroom 8' }
+        ],
+        'Wednesday': [
+          { time: '08h00 - 09h30', subject: 'Ter Plan Env Sust', prof: 'M. SAADI', room: 'Classroom 7' },
+          { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'Mme BENOUMECHIARA', room: 'Classroom 8' }
+        ],
+        'Thursday': [
+          { time: '08h00 - 11h00', subject: 'Practical Topo / CM / Appl Geo', prof: 'ALEM / GUETTACHE', room: 'Labo' },
+          { time: '11h05 - 12h35', subject: 'IA (Intelligence Artificielle)', prof: 'M. CHAMI', room: 'Classroom 8' }
+        ]
       },
-      {
-        id: 2,
-        title: "Mon administration",
-        desc: "مصلحة الدراسة، إجراءات التسجيل، الشهادات، وإدارة الغيابات.",
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-building-user",
-        link: "#"
-      },
-      {
-        id: 3,
-        title: "Ma réussite",
-        desc: "استعمال الزمن، مجموعات المراجعة، نصائح الدفعات وحساب المعدلات.",
-        image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-trophy",
-        link: "#"
-      },
-      {
-        id: 4,
-        title: "Ma cité universitaire",
-        desc: "دليل الطالب المقيم: الإيواء، المطعم الجامعي والمغسلة.",
-        image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-bed",
-        link: "#"
-      },
-      {
-        id: 5,
-        title: "Forum d'étudiants",
-        desc: "فضاء التبادل والتضامن الطلابي، الأسئلة الشائعة والمرافقة.",
-        image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-comments",
-        link: "#"
-      },
-      {
-        id: 6,
-        title: "Transport",
-        desc: "خطوط الحافلات نحو القبة والعاصمة، مواقف سيارات الأجرة وشبكة التضامن.",
-        image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-bus-simple",
-        link: "#"
-      },
-      {
-        id: 7,
-        title: "Où je peux manger",
-        desc: "مطاعم مجهزة بأسعار اقتصادية بالقرب من المدرسة، والمخابز.",
-        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-utensils",
-        link: "#"
-      },
-      {
-        id: 8,
-        title: "Shopping et achats",
-        desc: "المكتبات المجاورة للطباعة وسحب المخططات، السوبرماركت والمستلزمات.",
-        image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-bag-shopping",
-        link: "#"
-      },
-      {
-        id: 9,
-        title: "Loisirs à Alger",
-        desc: "الأماكن السياحية في العاصمة (حديقة التجارب، القصبة)، والنادي الرياضي.",
-        image: "https://images.unsplash.com/photo-1589556264807-a9c544987740?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-icons",
-        link: "#"
-      },
-      {
-        id: 10,
-        title: "Code QR",
-        desc: "رموز QR سريعة للمسح بالهاتف للتوجيه المباشر نحو الخرائط والخدمات.",
-        image: "https://images.unsplash.com/photo-1595079476339-1634c7f070b4?q=80&w=600&auto=format&fit=crop",
-        icon: "fa-qrcode",
-        link: "#"
+      'prep_2': {
+        'Saturday': [
+          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. BRAHMI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Computer Science 3', prof: 'M. OULD KADDOUR', room: 'Auditorium A' }
+        ],
+        'Sunday': [{ time: '08h00 - 11h05', subject: 'Physics 3', prof: 'Enseignants', room: 'Auditorium A' }],
+        'Monday': [
+          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. BRAHMI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Numerical Analysis 1', prof: 'M. HAMADI', room: 'Auditorium A' }
+        ],
+        'Tuesday': [
+          { time: '08h00 - 09h30', subject: 'Chemistry 3', prof: 'Mme BOUHARA', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Fluid Mechanics', prof: 'M. KELLOU', room: 'Auditorium A' }
+        ],
+        'Wednesday': [
+          { time: '08h00 - 09h30', subject: 'Rational Mech 1', prof: 'Mme ZOUADI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'English 3', prof: 'M. YALA', room: 'Auditorium A' }
+        ],
+        'Thursday': [{ time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Electricity)', prof: 'Equipe Labo', room: 'Laboratoires' }]
       }
-    ];
+    };
 
-    let currentAngle = 0;
-    let activeIndex = 0;
-    let autoRotateInterval = null;
-    let isAutoRotating = true;
+    let selectedDay = 'Thursday';
+    const dayNamesAr = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
 
-    // RENDER 3D ORBIT CAROUSEL
-    function render3DOrbit() {
-      const ring = document.getElementById('orbit-ring');
-      if (!ring) return;
-      ring.innerHTML = '';
+    function updateSubCategories() {
+      const dept = document.getElementById('select-dept').value;
+      const yearSelect = document.getElementById('select-year');
+      yearSelect.innerHTML = '';
 
-      const total = guideClasses.length;
-      const radius = 185; // Radius of circular orbit
-
-      guideClasses.forEach((cls, index) => {
-        const angle = (index / total) * (2 * Math.PI);
-        const x = Math.round(radius * Math.cos(angle));
-        const z = Math.round(radius * Math.sin(angle));
-
-        const card = document.createElement('div');
-        card.className = `square-3d-card ${index === activeIndex ? 'active' : ''}`;
-        card.style.transform = `translate3d(${x}px, 0px, ${z}px)`;
-        card.onclick = () => selectCard(index);
-
-        card.innerHTML = `
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl shadow-md mb-1.5">
-            <i class="fa-solid ${cls.icon}"></i>
-          </div>
-          <span class="text-[10px] font-black text-gray-800 text-center leading-tight px-1.5 line-clamp-1">${cls.title}</span>
-        `;
-
-        ring.appendChild(card);
-      });
-
-      updateDetailCard();
-    }
-
-    function rotateOrbit(direction) {
-      const total = guideClasses.length;
-      activeIndex = (activeIndex + direction + total) % total;
-      
-      const stepAngle = 360 / total;
-      currentAngle += direction * stepAngle;
-      
-      const ring = document.getElementById('orbit-ring');
-      if (ring) {
-        ring.style.transform = `rotateY(${-currentAngle}deg)`;
-      }
-
-      const cards = ring.children;
-      for (let i = 0; i < cards.length; i++) {
-        if (i === activeIndex) cards[i].classList.add('active');
-        else cards[i].classList.remove('active');
-      }
-
-      updateDetailCard();
-    }
-
-    function selectCard(index) {
-      const diff = index - activeIndex;
-      rotateOrbit(diff);
-    }
-
-    function toggleAutoRotate() {
-      const btnLabel = document.getElementById('autorotate-label');
-      if (isAutoRotating) {
-        clearInterval(autoRotateInterval);
-        isAutoRotating = false;
-        btnLabel.innerText = "Rotation: OFF";
+      if (dept === 'prep') {
+        yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
+      } else if (dept === 'dib') {
+        yearSelect.innerHTML = `<option value="dib_1">السنة الأولى منشآت قاعدية (1st DIB)</option><option value="dib_2">السنة الثانية منشآت قاعدية (2nd DIB)</option>`;
       } else {
-        startAutoRotate();
-        isAutoRotating = true;
-        btnLabel.innerText = "Rotation: ON";
+        yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مواد وهياكل (1st DMS)</option>`;
       }
+      renderSchedule();
     }
 
-    function startAutoRotate() {
-      clearInterval(autoRotateInterval);
-      autoRotateInterval = setInterval(() => {
-        rotateOrbit(1);
-      }, 3200);
+    function changeDay(day) {
+      selectedDay = day;
+      document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`day-${day}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.getElementById('schedule-title').innerText = `برنامج الحصص ليوم ${dayNamesAr[day] || day}`;
+      renderSchedule();
     }
 
-    function updateDetailCard() {
-      const cls = guideClasses[activeIndex];
-      const detail = document.getElementById('class-detail-card');
-      if (!detail) return;
+    function detectCurrentDay() {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      let today = days[new Date().getDay()];
+      if (today === 'Friday') today = 'Sunday';
       
-      detail.innerHTML = `
-        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div class="flex items-center gap-4 w-full md:w-auto">
-            <div class="w-24 h-24 rounded-2xl overflow-hidden shadow-md flex-shrink-0 bg-gray-100">
-              <img src="${cls.image}" alt="${cls.title}" class="w-full h-full object-cover" />
+      document.getElementById('real-today-tag').innerText = `اليوم الحالي: ${dayNamesAr[today] || today}`;
+      changeDay(today);
+    }
+
+    function renderSchedule() {
+      const yearKey = document.getElementById('select-year').value;
+      const container = document.getElementById('schedule-list');
+      container.innerHTML = '';
+
+      const items = (scheduleDatabase[yearKey] && scheduleDatabase[yearKey][selectedDay]) || [
+        { time: '08h00 - 12h00', subject: 'محاضرات عامة / أعمال توجيهية', prof: 'فريق الأساتذة', room: 'مدرج المدرسة' }
+      ];
+
+      items.forEach(item => {
+        const row = document.createElement('div');
+        row.className = "p-4 bg-white/90 rounded-2xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs";
+        row.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs flex-shrink-0">
+              <i class="fa-solid fa-book"></i>
             </div>
             <div>
-              <span class="text-xs text-accent-custom font-bold uppercase tracking-wide">Rubrique #${cls.id}</span>
-              <h3 class="text-xl font-black text-gray-900">${cls.title}</h3>
-              <p class="text-xs text-gray-600 font-cairo mt-1 leading-relaxed">${cls.desc}</p>
+              <h5 class="font-extrabold text-sm text-gray-900">${item.subject}</h5>
+              <p class="text-xs text-gray-500 font-cairo">الأستاذ: <span class="font-bold text-gray-700">${item.prof}</span></p>
             </div>
           </div>
-          <a href="${cls.link}" class="px-6 py-3 rounded-2xl btn-primary-custom text-white font-bold text-xs shadow-md flex items-center justify-center gap-2 flex-shrink-0 w-full md:w-auto">
-            <span>Ouvrir ${cls.title}</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      `;
-    }
-
-    function toggleAiModal() {
-      document.getElementById('ai-modal').classList.toggle('hidden');
-    }
-
-    function askAiAssistant() {
-      const input = document.getElementById('ai-input').value.trim();
-      const respBox = document.getElementById('ai-response');
-      if (!input) return;
-
-      respBox.classList.remove('hidden');
-      respBox.innerHTML = `<div class="flex items-center gap-2 text-purple-600 font-bold"><i class="fa-solid fa-spinner animate-spin"></i> جاري البحث...</div>`;
-
-      setTimeout(() => {
-        respBox.innerHTML = `
-          <p class="font-bold text-purple-900">إجابة المساعد الذكي لدليل ENSTP:</p>
-          <p>بناءً على استفسارك "${input}"، يمكنك الاطلاع على تفاصيل هذا القسم عبر النقر مباشرة على البطاقة المناسبة في الدليل.</p>
+          <div class="flex items-center gap-2 text-xs font-bold text-gray-600">
+            <span class="px-3 py-1 rounded-lg bg-gray-100"><i class="fa-regular fa-clock mr-1 text-indigo-500"></i> ${item.time}</span>
+            <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700"><i class="fa-solid fa-location-dot mr-1"></i> ${item.room}</span>
+          </div>
         `;
-      }, 800);
+        container.appendChild(row);
+      });
     }
 
-    function setTheme(themeName) {
-      document.documentElement.setAttribute('data-theme', themeName);
-      localStorage.setItem('enstp_theme', themeName);
-    }
-
-    function setFontSize(size) {
-      document.documentElement.setAttribute('data-size', size);
-      localStorage.setItem('enstp_size', size);
-    }
-
-    function setLanguage(lang) {
-      document.documentElement.setAttribute('lang', lang);
-      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-      localStorage.setItem('enstp_lang', lang);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      render3DOrbit();
-      startAutoRotate();
-      setTheme(localStorage.getItem('enstp_theme') || 'indigo');
-      setFontSize(localStorage.getItem('enstp_size') || 'normal');
-      setLanguage(localStorage.getItem('enstp_lang') || 'fr');
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSubCategories();
+      detectCurrentDay();
     });
   </script>
 </body>
