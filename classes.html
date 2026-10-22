@@ -1,0 +1,61 @@
+<span class="text-[11px] font-bold text-accent-custom uppercase tracking-wider">Rubrique #${cls.id}</span>
+              <h3 class="text-xl font-black text-gray-900 mt-0.5">${cls.title}</h3>
+              <p class="text-xs text-gray-600 font-cairo mt-2 leading-relaxed">${cls.desc}</p>
+            </div>
+            <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-accent-custom">
+              <span>Découvrir la rubrique</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        ;
+        grid.appendChild(card);
+      });
+    }
+
+    // AI SEARCH MODAL
+    function toggleAiModal() {
+      document.getElementById('ai-modal').classList.toggle('hidden');
+    }
+
+    function askAiAssistant() {
+      const input = document.getElementById('ai-input').value.trim();
+      const respBox = document.getElementById('ai-response');
+      if (!input) return;
+
+      respBox.classList.remove('hidden');
+      respBox.innerHTML = <div class="flex items-center gap-2 text-purple-600 font-bold"><i class="fa-solid fa-spinner animate-spin"></i> جاري البحث...</div>;
+
+      setTimeout(() => {
+        respBox.innerHTML = 
+          <p class="font-bold text-purple-900">إجابة المساعد الذكي لدليل ENSTP:</p>
+          <p>بناءً على استفسارك "${input}"، يمكنك الاطلاع على تفاصيل هذا القسم عبر النقر مباشرة على البطاقة المناسبة في الدليل.</p>
+        `;
+      }, 1000);
+    }
+
+    // SETTINGS (THEME, FONT, LANG)
+    function setTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('enstp_theme', themeName);
+    }
+
+    function setFontSize(size) {
+      document.documentElement.setAttribute('data-size', size);
+      localStorage.setItem('enstp_size', size);
+    }
+
+    function setLanguage(lang) {
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      localStorage.setItem('enstp_lang', lang);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderPhotoGrid();
+      setTheme(localStorage.getItem('enstp_theme') || 'indigo');
+      setFontSize(localStorage.getItem('enstp_size') || 'normal');
+      setLanguage(localStorage.getItem('enstp_lang') || 'fr');
+    });
+  </script>
+</body>
+</html>
