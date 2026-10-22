@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr" data-theme="indigo" data-size="normal">
+<html lang="fr" dir="ltr" data-theme="indigo">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -125,13 +125,13 @@
       </p>
     </div>
 
-    <!-- BENTO GRID (الأقسام الواضحة والكبيرة بدلاً من الدوران) -->
+    <!-- BENTO GRID -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       
       <!-- 1. Mon École -->
       <a href="ecole.html" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
         <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Mon Ecole"/>
+          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Mon École"/>
           <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-indigo-600 shadow-md">
             <i class="fa-solid fa-school text-base"></i>
           </div>
@@ -147,27 +147,27 @@
         </div>
       </a>
 
-      <!-- 2. Emploi du Temps (جدول التوقيع / التوقيت المدمج) -->
-      <div onclick="document.getElementById('schedule-section').scrollIntoView({behavior: 'smooth'})" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
+      <!-- 2. Emploi du Temps -->
+      <button type="button" onclick="document.getElementById('schedule-section').scrollIntoView({behavior: 'smooth'})" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group text-left w-full">
+        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100 w-full">
           <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Emploi du temps"/>
           <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-emerald-600 shadow-md">
             <i class="fa-solid fa-calendar-days text-base"></i>
           </div>
         </div>
-        <div class="space-y-1.5 flex-grow">
+        <div class="space-y-1.5 flex-grow w-full">
           <span class="text-[10px] font-bold uppercase text-emerald-600">جدول الحصص والتوقيت</span>
           <h3 class="text-xl font-black text-gray-900">Emploi du Temps</h3>
           <p class="text-xs text-gray-600 font-cairo leading-relaxed">تعرف تلقائياً على حصص اليوم ومواد السنة التحضيرية والمنشآت القاعدية.</p>
         </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600">
+        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
           <span>Aller au planning</span>
           <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition"></i>
         </div>
-      </div>
+      </button>
 
       <!-- 3. Mon Administration -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
         <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
           <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Administration"/>
           <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-purple-600 shadow-md">
@@ -186,9 +186,9 @@
       </div>
 
       <!-- 4. Ma Réussite -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
         <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Reussite"/>
+          <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Réussite"/>
           <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-amber-600 shadow-md">
             <i class="fa-solid fa-trophy text-base"></i>
           </div>
@@ -205,9 +205,9 @@
       </div>
 
       <!-- 5. Cité Universitaire -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
         <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Cite U"/>
+          <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Cité Universitaire"/>
           <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-pink-600 shadow-md">
             <i class="fa-solid fa-bed text-base"></i>
           </div>
@@ -224,7 +224,7 @@
       </div>
 
       <!-- 6. Transport & Restauration -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
+      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
         <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
           <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Transport"/>
           <div class="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-cyan-600 shadow-md">
@@ -244,7 +244,7 @@
 
     </div>
 
-    <!-- SECTION: SCHEDULE / جدول التوقيت التفاعلي المدمج -->
+    <!-- SECTION: SCHEDULE -->
     <div id="schedule-section" class="glass-card rounded-3xl p-6 lg:p-10 border border-white space-y-8 shadow-xl">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b pb-4">
         <div>
@@ -260,10 +260,10 @@
         </div>
       </div>
 
-      <!-- خيارات التخصص والسنة -->
+      <!-- Filtres -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">التخصص / القسم:</label>
+          <label for="select-dept" class="block text-xs font-bold text-gray-700 mb-1 font-cairo">التخصص / القسم:</label>
           <select id="select-dept" onchange="updateSubCategories()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
             <option value="prep">الطبقة التحضيرية (Classes Préparatoires)</option>
             <option value="dib">قسم المنشآت القاعدية (DIB)</option>
@@ -271,24 +271,24 @@
           </select>
         </div>
         <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">السنة الدراسية:</label>
+          <label for="select-year" class="block text-xs font-bold text-gray-700 mb-1 font-cairo">السنة الدراسية:</label>
           <select id="select-year" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
             <!-- Injected via JS -->
           </select>
         </div>
       </div>
 
-      <!-- شريط الأيام التفاعلي -->
+      <!-- Jours -->
       <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-        <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">السبت</button>
-        <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأحد</button>
-        <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الإثنين</button>
-        <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الثلاثاء</button>
-        <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأربعاء</button>
-        <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الخميس</button>
+        <button type="button" onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">السبت</button>
+        <button type="button" onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأحد</button>
+        <button type="button" onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الإثنين</button>
+        <button type="button" onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الثلاثاء</button>
+        <button type="button" onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأربعاء</button>
+        <button type="button" onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الخميس</button>
       </div>
 
-      <!-- عرض البرنامج -->
+      <!-- Liste du programme -->
       <div class="space-y-3">
         <h4 id="schedule-title" class="font-extrabold text-sm text-gray-800 border-l-4 border-indigo-600 pl-3">برنامج الحصص</h4>
         <div id="schedule-list" class="space-y-3">
@@ -307,6 +307,34 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     const scheduleDatabase = {
+      'prep_1': {
+        'Saturday': [{ time: '08h00 - 11h05', subject: 'Calculus 1', prof: 'M. BENALI', room: 'Amphi A' }],
+        'Sunday': [{ time: '08h00 - 09h30', subject: 'Physics 1', prof: 'Mme KADDI', room: 'Amphi A' }],
+        'Monday': [{ time: '09h35 - 11h05', subject: 'Chemistry 1', prof: 'M. TOUATI', room: 'Amphi B' }],
+        'Tuesday': [{ time: '08h00 - 11h05', subject: 'Computer Science 1', prof: 'M. KHAN', room: 'Lab Info' }],
+        'Wednesday': [{ time: '08h00 - 09h30', subject: 'Algebra 1', prof: 'Mme ZERROUKI', room: 'Amphi A' }],
+        'Thursday': [{ time: '08h00 - 12h40', subject: 'TP Physique / Chimie', prof: 'Equipe TP', room: 'Laboratoires' }]
+      },
+      'prep_2': {
+        'Saturday': [
+          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. BRAHMI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Computer Science 3', prof: 'M. OULD KADDOUR', room: 'Auditorium A' }
+        ],
+        'Sunday': [{ time: '08h00 - 11h05', subject: 'Physics 3', prof: 'Enseignants', room: 'Auditorium A' }],
+        'Monday': [
+          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. BRAHMI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Numerical Analysis 1', prof: 'M. HAMADI', room: 'Auditorium A' }
+        ],
+        'Tuesday': [
+          { time: '08h00 - 09h30', subject: 'Chemistry 3', prof: 'Mme BOUHARA', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Fluid Mechanics', prof: 'M. KELLOU', room: 'Auditorium A' }
+        ],
+        'Wednesday': [
+          { time: '08h00 - 09h30', subject: 'Rational Mech 1', prof: 'Mme ZOUADI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'English 3', prof: 'M. YALA', room: 'Auditorium A' }
+        ],
+        'Thursday': [{ time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Electricity)', prof: 'Equipe Labo', room: 'Laboratoires' }]
+      },
       'dib_1': {
         'Saturday': [{ time: '09h35 - 11h05', subject: 'Constr Mat', prof: 'M. BADAOUI', room: 'En ligne' }],
         'Sunday': [
@@ -333,29 +361,17 @@
           { time: '11h05 - 12h35', subject: 'IA (Intelligence Artificielle)', prof: 'M. CHAMI', room: 'Classroom 8' }
         ]
       },
-      'prep_2': {
-        'Saturday': [
-          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. BRAHMI', room: 'Auditorium A' },
-          { time: '09h35 - 11h05', subject: 'Computer Science 3', prof: 'M. OULD KADDOUR', room: 'Auditorium A' }
-        ],
-        'Sunday': [{ time: '08h00 - 11h05', subject: 'Physics 3', prof: 'Enseignants', room: 'Auditorium A' }],
-        'Monday': [
-          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. BRAHMI', room: 'Auditorium A' },
-          { time: '09h35 - 11h05', subject: 'Numerical Analysis 1', prof: 'M. HAMADI', room: 'Auditorium A' }
-        ],
-        'Tuesday': [
-          { time: '08h00 - 09h30', subject: 'Chemistry 3', prof: 'Mme BOUHARA', room: 'Auditorium A' },
-          { time: '09h35 - 11h05', subject: 'Fluid Mechanics', prof: 'M. KELLOU', room: 'Auditorium A' }
-        ],
-        'Wednesday': [
-          { time: '08h00 - 09h30', subject: 'Rational Mech 1', prof: 'Mme ZOUADI', room: 'Auditorium A' },
-          { time: '09h35 - 11h05', subject: 'English 3', prof: 'M. YALA', room: 'Auditorium A' }
-        ],
-        'Thursday': [{ time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Electricity)', prof: 'Equipe Labo', room: 'Laboratoires' }]
+      'dib_2': {
+        'Sunday': [{ time: '08h00 - 11h05', subject: 'Routes 2', prof: 'M. MEHDI', room: 'Classroom 3' }],
+        'Monday': [{ time: '09h35 - 12h40', subject: 'Ouvrages d\'art', prof: 'Mme CHERIF', room: 'Classroom 4' }]
+      },
+      'dms_1': {
+        'Sunday': [{ time: '08h00 - 11h05', subject: 'Béton Armé', prof: 'M. KACI', room: 'Classroom 1' }],
+        'Tuesday': [{ time: '09h35 - 12h40', subject: 'Dynamique des Structures', prof: 'M. BELKACEM', room: 'Classroom 2' }]
       }
     };
 
-    let selectedDay = 'Thursday';
+    let selectedDay = 'Sunday';
     const dayNamesAr = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
 
     function updateSubCategories() {
@@ -386,9 +402,12 @@
     function detectCurrentDay() {
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let today = days[new Date().getDay()];
-      if (today === 'Friday') today = 'Sunday';
+      if (today === 'Friday') today = 'Sunday'; // Le vendredi bascule automatiquement sur le dimanche (début de semaine)
       
-      document.getElementById('real-today-tag').innerText = `اليوم الحالي: ${dayNamesAr[today] || today}`;
+      const realTag = document.getElementById('real-today-tag');
+      if (realTag) {
+        realTag.innerText = `اليوم الحالي: ${dayNamesAr[today] || today}`;
+      }
       changeDay(today);
     }
 
@@ -403,7 +422,7 @@
 
       items.forEach(item => {
         const row = document.createElement('div');
-        row.className = "p-4 bg-white/90 rounded-2xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs";
+        row.className = "p-4 bg-white/90 rounded-2xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm";
         row.innerHTML = `
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs flex-shrink-0">
@@ -414,7 +433,7 @@
               <p class="text-xs text-gray-500 font-cairo">الأستاذ: <span class="font-bold text-gray-700">${item.prof}</span></p>
             </div>
           </div>
-          <div class="flex items-center gap-2 text-xs font-bold text-gray-600">
+          <div class="flex flex-wrap items-center gap-2 text-xs font-bold text-gray-600">
             <span class="px-3 py-1 rounded-lg bg-gray-100"><i class="fa-regular fa-clock mr-1 text-indigo-500"></i> ${item.time}</span>
             <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700"><i class="fa-solid fa-location-dot mr-1"></i> ${item.room}</span>
           </div>
