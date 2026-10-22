@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guide ENSTP - Rubriques & Classes Visuelles</title>
+  <title>Guide ENSTP - Classes en Rotation 3D</title>
 
   <!-- Google Fonts: Cairo, Poppins, Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,15 +102,58 @@
       border-color: var(--primary-border);
     }
 
-    .photo-card-container {
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* 3D Circular Orbit Stage */
+    .orbit-stage {
+      perspective: 1400px;
+      position: relative;
+      width: 100%;
+      height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .photo-card-container:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
+
+    .orbit-ring {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      transform-style: preserve-3d;
+      transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .photo-card-container:hover img {
-      transform: scale(1.08);
+
+    /* الأيقونات المربعة الدوارة ثلاثية الأبعاد */
+    .square-3d-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 130px;
+      height: 130px;
+      margin-top: -65px;
+      margin-left: -65px;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 2px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 16px 32px rgba(99, 102, 241, 0.18),
+                  inset 0 2px 4px rgba(255, 255, 255, 0.9);
+      transition: all 0.5s ease;
+      transform-style: preserve-3d;
+    }
+
+    .square-3d-card:hover {
+      transform: scale(1.18) translateZ(40px) !important;
+      box-shadow: 0 25px 50px rgba(99, 102, 241, 0.35),
+                  0 0 25px rgba(236, 72, 153, 0.3);
+    }
+
+    .square-3d-card.active {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 5px var(--primary-border), 0 20px 45px rgba(99, 102, 241, 0.4);
     }
   </style>
 </head>
@@ -141,8 +184,8 @@
             <span>Accueil</span>
           </a>
           <a href="classes.html" class="px-4 py-1.5 rounded-full font-semibold text-xs bg-white text-gray-900 shadow-sm flex items-center gap-1.5">
-            <i class="fa-solid fa-images text-accent-custom"></i>
-            <span>Classes Visuelles</span>
+            <i class="fa-solid fa-circle-nodes text-accent-custom"></i>
+            <span>Classes 3D Orbit</span>
           </a>
         </nav>
       </div>
@@ -182,22 +225,54 @@
     </div>
   </header>
 
-  <!-- MAIN -->
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-8">
+  <!-- MAIN 3D ORBIT STAGE -->
+  <main class="max-w-6xl mx-auto px-4 lg:px-8 py-8 flex-grow w-full space-y-6">
     
-    <div class="text-center max-w-2xl mx-auto space-y-3">
+    <div class="text-center max-w-2xl mx-auto space-y-2">
       <span class="px-3.5 py-1.5 rounded-full bg-light-custom text-accent-custom font-bold text-xs uppercase tracking-wider inline-flex items-center gap-1.5">
-        <i class="fa-solid fa-camera-retro"></i>
-        <span>معرض الأقسام والأقسام الواقعية</span>
+        <i class="fa-solid fa-rotate"></i>
+        <span>دوران دائري ثلاثي الأبعاد للأقسام</span>
       </span>
-      <h2 class="text-3xl lg:text-4xl font-black text-gray-900">Les 10 Rubriques Visuelles du Guide</h2>
-      <p class="text-sm text-gray-500 font-cairo">
-        تصفح الأقسام عبر صور واقعية عالية الجودة تعبر بدقة عن كل مرفق وتسهل وصولك الفوري للمعلومة.
+      <h2 class="text-2xl lg:text-3xl font-black text-gray-900">Les 10 Rubriques en Rotation Circulaire 3D</h2>
+      <p class="text-xs lg:text-sm text-gray-500 font-cairo">
+        تدور الأقسام بشكل دائري سلس؛ حيث تتحرك كل أيقونة مربعة لتأتي الأخرى خلفها مباشرة في حلقة تفاعلية متصلة.
       </p>
     </div>
 
-    <!-- Cards Grid -->
-    <div id="photo-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <!-- 3D Orbit Display Stage -->
+    <div class="relative glass-card rounded-3xl p-6 lg:p-8 border border-white overflow-hidden shadow-xl">
+      
+      <!-- Controls Bar -->
+      <div class="flex items-center justify-between mb-2 z-20 relative">
+        <button onclick="rotateOrbit(-1)" class="w-10 h-10 rounded-2xl bg-white text-gray-700 shadow-md hover:bg-gray-100 transition flex items-center justify-center">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        
+        <div class="flex items-center gap-3">
+          <button onclick="toggleAutoRotate()" id="autorotate-btn" class="px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="autorotate-label">Rotation: ON</span>
+          </button>
+        </div>
+
+        <button onclick="rotateOrbit(1)" class="w-10 h-10 rounded-2xl bg-white text-gray-700 shadow-md hover:bg-gray-100 transition flex items-center justify-center">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- The 3D Stage Ring -->
+      <div class="orbit-stage">
+        <div id="orbit-ring" class="orbit-ring">
+          <!-- Injected dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Active Section Detail Card Below -->
+      <div id="class-detail-card" class="mt-4 p-6 glass-card rounded-2xl border border-white shadow-md transition-all duration-500">
+        <!-- Injected dynamically -->
+      </div>
+
+    </div>
 
   </main>
 
@@ -322,36 +397,112 @@
       }
     ];
 
-    function renderPhotoGrid() {
-      const grid = document.getElementById('photo-grid');
-      if (!grid) return;
-      grid.innerHTML = '';
+    let currentAngle = 0;
+    let activeIndex = 0;
+    let autoRotateInterval = null;
+    let isAutoRotating = true;
 
-      guideClasses.forEach(cls => {
-        const card = document.createElement('a');
-        card.href = cls.link;
-        card.className = "photo-card-container glass-card rounded-3xl overflow-hidden border border-white flex flex-col justify-between cursor-pointer";
+    // RENDER 3D ORBIT CAROUSEL
+    function render3DOrbit() {
+      const ring = document.getElementById('orbit-ring');
+      if (!ring) return;
+      ring.innerHTML = '';
+
+      const total = guideClasses.length;
+      const radius = 185; // Radius of circular orbit
+
+      guideClasses.forEach((cls, index) => {
+        const angle = (index / total) * (2 * Math.PI);
+        const x = Math.round(radius * Math.cos(angle));
+        const z = Math.round(radius * Math.sin(angle));
+
+        const card = document.createElement('div');
+        card.className = `square-3d-card ${index === activeIndex ? 'active' : ''}`;
+        card.style.transform = `translate3d(${x}px, 0px, ${z}px)`;
+        card.onclick = () => selectCard(index);
+
         card.innerHTML = `
-          <div class="relative h-48 overflow-hidden bg-gray-100">
-            <img src="${cls.image}" alt="${cls.title}" class="w-full h-full object-cover transition-transform duration-700 ease-out" />
-            <div class="absolute top-3 right-3 w-10 h-10 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center text-accent-custom shadow-md">
-              <i class="fa-solid ${cls.icon} text-lg"></i>
-            </div>
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl shadow-md mb-1.5">
+            <i class="fa-solid ${cls.icon}"></i>
           </div>
-          <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-            <div>
-              <span class="text-[11px] font-bold text-accent-custom uppercase tracking-wider">Rubrique #${cls.id}</span>
-              <h3 class="text-xl font-black text-gray-900 mt-0.5">${cls.title}</h3>
-              <p class="text-xs text-gray-600 font-cairo mt-2 leading-relaxed">${cls.desc}</p>
-            </div>
-            <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-accent-custom">
-              <span>Découvrir la rubrique</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </div>
-          </div>
+          <span class="text-[10px] font-black text-gray-800 text-center leading-tight px-1.5 line-clamp-1">${cls.title}</span>
         `;
-        grid.appendChild(card);
+
+        ring.appendChild(card);
       });
+
+      updateDetailCard();
+    }
+
+    function rotateOrbit(direction) {
+      const total = guideClasses.length;
+      activeIndex = (activeIndex + direction + total) % total;
+      
+      const stepAngle = 360 / total;
+      currentAngle += direction * stepAngle;
+      
+      const ring = document.getElementById('orbit-ring');
+      if (ring) {
+        ring.style.transform = `rotateY(${-currentAngle}deg)`;
+      }
+
+      const cards = ring.children;
+      for (let i = 0; i < cards.length; i++) {
+        if (i === activeIndex) cards[i].classList.add('active');
+        else cards[i].classList.remove('active');
+      }
+
+      updateDetailCard();
+    }
+
+    function selectCard(index) {
+      const diff = index - activeIndex;
+      rotateOrbit(diff);
+    }
+
+    function toggleAutoRotate() {
+      const btnLabel = document.getElementById('autorotate-label');
+      if (isAutoRotating) {
+        clearInterval(autoRotateInterval);
+        isAutoRotating = false;
+        btnLabel.innerText = "Rotation: OFF";
+      } else {
+        startAutoRotate();
+        isAutoRotating = true;
+        btnLabel.innerText = "Rotation: ON";
+      }
+    }
+
+    function startAutoRotate() {
+      clearInterval(autoRotateInterval);
+      autoRotateInterval = setInterval(() => {
+        rotateOrbit(1);
+      }, 3200);
+    }
+
+    function updateDetailCard() {
+      const cls = guideClasses[activeIndex];
+      const detail = document.getElementById('class-detail-card');
+      if (!detail) return;
+      
+      detail.innerHTML = `
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4 w-full md:w-auto">
+            <div class="w-24 h-24 rounded-2xl overflow-hidden shadow-md flex-shrink-0 bg-gray-100">
+              <img src="${cls.image}" alt="${cls.title}" class="w-full h-full object-cover" />
+            </div>
+            <div>
+              <span class="text-xs text-accent-custom font-bold uppercase tracking-wide">Rubrique #${cls.id}</span>
+              <h3 class="text-xl font-black text-gray-900">${cls.title}</h3>
+              <p class="text-xs text-gray-600 font-cairo mt-1 leading-relaxed">${cls.desc}</p>
+            </div>
+          </div>
+          <a href="${cls.link}" class="px-6 py-3 rounded-2xl btn-primary-custom text-white font-bold text-xs shadow-md flex items-center justify-center gap-2 flex-shrink-0 w-full md:w-auto">
+            <span>Ouvrir ${cls.title}</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      `;
     }
 
     function toggleAiModal() {
@@ -391,7 +542,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      renderPhotoGrid();
+      render3DOrbit();
+      startAutoRotate();
       setTheme(localStorage.getItem('enstp_theme') || 'indigo');
       setFontSize(localStorage.getItem('enstp_size') || 'normal');
       setLanguage(localStorage.getItem('enstp_lang') || 'fr');
