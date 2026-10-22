@@ -138,207 +138,56 @@
   </div>
 
   <script>
-    // قاعدة بيانات الأساتذة حسب السنة والمادة مع الصور المتاحة والبيانات الرسمية
     const teachersData = {
       '1cp': [
-        // Physique 1
-        {
-          id: 'haddouche',
-          name: 'HADDOUCHE Abdeslam',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 'a.haddouche@enstp.edu.dz',
-          subject: 'Physique 1',
-          year: '1ère année préparatoire',
-          advice: 'Time management + self confidence[cite: 36].',
-          research: 'Quantum Supersymmetry, Theoretical Nuclear Structure[cite: 36].',
-          links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/abdeslam-haddouche-46a420a6' }],
-          photo: ''
-        },
-        {
-          id: 'zikem',
-          name: 'ZIKEM Afifa',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 'a.zikem@enstp.edu.dz',
-          subject: 'Physique 1',
-          year: '1ère année préparatoire',
-          advice: "À l'université, vous allez parfois rencontrer des difficultés, avoir de mauvaises notes ou vous sentir dépassés... Soyez réguliers, curieux et persévérants[cite: 41].",
-          research: 'Contribution to the study of the physical properties of some double perovskite crystals via first principles methods[cite: 41].'
-          },
+        { id: 'haddouche', name: 'HADDOUCHE Abdeslam', grade: 'Professor (Enseignant Permanent)', email: 'a.haddouche@enstp.edu.dz', subject: 'Physique 1', year: '1ère année préparatoire', advice: 'Time management + self confidence.', research: 'Quantum Supersymmetry, Theoretical Nuclear Structure.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/abdeslam-haddouche-46a420a6' }], photo: '' },
+        { id: 'zikem', name: 'ZIKEM Afifa', grade: 'Professor (Enseignant Permanent)', email: 'a.zikem@enstp.edu.dz', subject: 'Physique 1', year: '1ère année préparatoire', advice: "À l'université, vous allez parfois rencontrer des difficultés, avoir de mauvaises notes ou vous sentir dépassés... Soyez réguliers, curieux et persévérants.", research: 'Contribution to the study of the physical properties of some double perovskite crystals via first principles methods.' },
         { id: 'kias_1', name: 'KIAS', email: 'kias@enstp.edu.dz', subject: 'Physique 1', year: '1ère année préparatoire' },
         { id: 'benyettou_1', name: 'BENYETTOU', email: 'f.benyettou@enstp.edu.dz', subject: 'Physique 1', year: '1ère année préparatoire' },
         { id: 'ouanoufi', name: 'OUANOUFI', email: 'ouanoufi@enstp.edu.dz', subject: 'Physique 1', year: '1ère année préparatoire' },
-
-        // Analyse 1
         { id: 'bellal', name: 'BELLAL', email: 'r.bellal@enstp.edu.dz', subject: 'Analyse 1', year: '1ère année préparatoire' },
         { id: 'kechiche', name: 'KECHICHE', email: 'kechiche@enstp.edu.dz', subject: 'Analyse 1', year: '1ère année préparatoire' },
         { id: 'benahmed_1', name: 'BENAHMED', email: 'benahmed@enstp.edu.dz', subject: 'Analyse 1', year: '1ère année préparatoire' },
-
-        // Algèbre 1
         { id: 'makhfi', name: 'MAKHFI', email: 'makhfi@enstp.edu.dz', subject: 'Algèbre 1', year: '1ère année préparatoire' },
-        {
-          id: 'hebbache',
-          name: 'HEBBACHE Zineb',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 'zinebhebache@gmail.com',
-          subject: 'Algèbre 1',
-          year: '1ère année préparatoire',
-          advice: "Improve yourselves and don't waste your time[cite: 39].",
-          research: 'Codes over skew rings[cite: 39].',
-          links: [{ label: 'Google Scholar', url: 'https://share.google/TvrlY2iAfZWaqEcJZ' }]
-        },
-
-        // Proba Stat
+        { id: 'hebbache', name: 'HEBBACHE Zineb', grade: 'Professor (Enseignant Permanent)', email: 'zinebhebache@gmail.com', subject: 'Algèbre 1', year: '1ère année préparatoire', advice: "Improve yourselves and don't waste your time.", research: 'Codes over skew rings.', links: [{ label: 'Google Scholar', url: 'https://share.google/TvrlY2iAfZWaqEcJZ' }] },
         { id: 'chouchaoui_1', name: 'CHOUCHAOUI', email: 'chouchaoui@enstp.edu.dz', subject: 'Proba Stat', year: '1ère année préparatoire' },
         { id: 'masrour', name: 'MASROUR', email: 'masrour@enstp.edu.dz', subject: 'Proba Stat', year: '1ère année préparatoire' },
-
-        // Chimie 1
         { id: 'bali', name: 'BALI', email: 'bali@enstp.edu.dz', subject: 'Chimie 1', year: '1ère année préparatoire' },
         { id: 'benaissa_1', name: 'BENAISSA S.', email: 's.benaissa@enstp.edu.dz', subject: 'Chimie 1', year: '1ère année préparatoire' },
         { id: 'ferhat', name: 'FERHAT', email: 'ferhat@enstp.edu.dz', subject: 'Chimie 1', year: '1ère année préparatoire', grade: 'Vacataire' },
         { id: 'bouchama', name: 'BOUCHAMA', email: 'bouchama@enstp.edu.dz', subject: 'Chimie 1', year: '1ère année préparatoire', grade: 'Vacataire' },
         { id: 'boudiaf_1', name: 'BOUDIAF', email: 'boudiaf@enstp.edu.dz', subject: 'Chimie 1', year: '1ère année préparatoire', grade: 'Vacataire' },
-
-        // Informatique 1
         { id: 'bader', name: 'BADER', email: 'bader@enstp.edu.dz', subject: 'Informatique 1', year: '1ère année préparatoire' },
         { id: 'rezgui', name: 'REZGUI', email: 'rezgui@enstp.edu.dz', subject: 'Informatique 1', year: '1ère année préparatoire', grade: 'Vacataire' },
         { id: 'rouibah', name: 'ROUIBAH', email: 'rouibah@enstp.edu.dz', subject: 'Informatique 1', year: '1ère année préparatoire', grade: 'Vacataire' },
-
-        // Ingénierie & Économie
         { id: 'mahrez', name: 'MAHREZ', email: 'mahrez@enstp.edu.dz', subject: 'Ingénierie Humaine 1', year: '1ère année préparatoire' },
         { id: 'chouchaoui_eco', name: 'CHOUCHAOUI', email: 'chouchaoui.eco@enstp.edu.dz', subject: 'Economie Générale', year: '1ère année préparatoire' },
-
-        // Anglais 1
-        {
-          id: 'yala',
-          name: 'YALA Ahmed',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 'a.yala@enstp.edu.dz',
-          subject: 'Anglais 1',
-          year: '1ère année préparatoire',
-          advice: 'Do not study engineering only to pass exams; study it to become someone who can solve real life problems[cite: 45].',
-          research: 'The Use of Mobile Assisted Language Learning to Foster Students EFL Sentence Writing[cite: 45].',
-          links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=fVI2fEUAAAAJ&hl=fr' }],
-          photo: '' // صورة الأستاذ Yala عند توفرها
-        },
+        { id: 'yala', name: 'YALA Ahmed', grade: 'Professor (Enseignant Permanent)', email: 'a.yala@enstp.edu.dz', subject: 'Anglais 1', year: '1ère année préparatoire', advice: 'Do not study engineering only to pass exams; study it to become someone who can solve real life problems.', research: 'The Use of Mobile Assisted Language Learning to Foster Students EFL Sentence Writing.', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=fVI2fEUAAAAJ&hl=fr' }], photo: '' },
         { id: 'khalfi', name: 'KHALFI', email: 'khalfi@enstp.edu.dz', subject: 'Anglais 1', year: '1ère année préparatoire' },
         { id: 'hassaine', name: 'HASSAINE', email: 'hassaine@enstp.edu.dz', subject: 'Anglais 1', year: '1ère année préparatoire' },
-
-        // Français 1 & Dessin
         { id: 'belhadj', name: 'BELHADJ F.', email: 'f.belhadj@enstp.edu.dz', subject: 'Français 1', year: '1ère année préparatoire' },
         { id: 'ouslimane', name: 'OUSLIMANE S.', email: 's.ouslimane@enstp.edu.dz', subject: 'Français 1', year: '1ère année préparatoire', grade: 'Vacataire' },
         { id: 'benkraled', name: 'BENKRALED', email: 'benkraled@enstp.edu.dz', subject: 'Dessin Technique', year: '1ère année préparatoire', grade: 'Vacataire' }
       ],
-
       '2cp': [
-        // Physique 3 & MDF
-        {
-          id: 'berroudji',
-          name: 'BERROUDJI Sid-Ahmed',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 's.berroudji@enstp.edu.dz',
-          subject: 'Physique 3 / MDF',
-          year: '2ème année préparatoire',
-          modules: 'Physics 3, Physics 4, Fluids mechanics',
-          advice: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-          links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/sid-ahmed-berroudji/' }],
-          photo: 'https://i.ibb.co/6Pq7pXm/berroudji.jpg' // صورة الأستاذ المتوفرة[cite: 31, 35]
-        },
+        { id: 'berroudji', name: 'BERROUDJI Sid-Ahmed', grade: 'Professor (Enseignant Permanent)', email: 's.berroudji@enstp.edu.dz', subject: 'Physique 3 / MDF', year: '2ème année préparatoire', modules: 'Physics 3, Physics 4, Fluids mechanics', advice: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/sid-ahmed-berroudji/' }], photo: 'https://i.ibb.co/6Pq7pXm/berroudji.jpg' },
         { id: 'toumi', name: 'TOUMI', email: 'toumi@enstp.edu.dz', subject: 'Physique 3', year: '2ème année préparatoire' },
         { id: 'kellou', name: 'KELLOU H.', email: 'h.kellou@enstp.edu.dz', subject: 'Physique 3 / MDF', year: '2ème année préparatoire' },
         { id: 'meddah', name: 'MEDDAH', email: 'meddah@enstp.edu.dz', subject: 'Physique 3', year: '2ème année préparatoire', grade: 'Vacataire' },
         { id: 'taibi', name: 'TAIBI', email: 'taibi@enstp.edu.dz', subject: 'Physique 3', year: '2ème année préparatoire', grade: 'Vacataire' },
-
-        // Analyse 3 & Analyse Numérique
         { id: 'brahmi', name: 'BRAHMI', email: 'brahmi@enstp.edu.dz', subject: 'Analyse 3', year: '2ème année préparatoire' },
         { id: 'dehimi', name: 'DEHIMI', email: 'dehimi@enstp.edu.dz', subject: 'Analyse 3', year: '2ème année préparatoire' },
         { id: 'boulatiour', name: 'BOULATIOUR', email: 'boulatiour@enstp.edu.dz', subject: 'Analyse 3', year: '2ème année préparatoire', grade: 'Vacataire' },
-        {
-          id: 'hamadi',
-          name: 'HAMADI Ahmed',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 'a.hamadi@enstp.edu.dz',
-          subject: 'Analyse Numérique 2',
-          year: '2ème année préparatoire',
-          advice: 'Il faut suivre tous vos cours et TD sans aucune absence pour assurer vos succès[cite: 37, 47].',
-          research: 'Structure Algorithmique de graphes parfaits[cite: 37, 47].'
-        },
+        { id: 'hamadi', name: 'HAMADI Ahmed', grade: 'Professor (Enseignant Permanent)', email: 'a.hamadi@enstp.edu.dz', subject: 'Analyse Numérique 2', year: '2ème année préparatoire', advice: 'Il faut suivre tous vos cours et TD sans aucune absence pour assurer vos succès.', research: 'Structure Algorithmique de graphes parfaits.' },
         { id: 'kiouche', name: 'KIOUCHE', email: 'kiouche@enstp.edu.dz', subject: 'Analyse Numérique 2', year: '2ème année préparatoire' },
-
-        // Chimie 3
         { id: 'dib', name: 'DIB K.', email: 'k.dib@enstp.edu.dz', subject: 'Chimie 3', year: '2ème année préparatoire' },
-        {
-          id: 'bendada',
-          name: 'BENDADA Kheiredine',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 'k.bendada@enstp.edu.dz',
-          subject: 'Chimie 3',
-          year: '2ème année préparatoire',
-          modules: 'Chimie des solutions et Chimie organique[cite: 33, 40]',
-          advice: 'Je conseille aux étudiants de développer leur curiosité scientifique, de ne pas hésiter à poser des questions et de toujours chercher à comprendre plutôt qu’à simplement mémoriser[cite: 33, 40].',
-          research: 'Caractérisation des paramètres thermodynamiques de surface des roches réservoirs pétroliers par CGI et remédiation des sols[cite: 33, 40].',
-          links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?hl=fr&user=Oy0kr_UAAAAJ' }]
-        },
-        {
-          id: 'bouhara',
-          name: 'BOUHARA Safia',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 's.bouhara@enstp.edu.dz',
-          subject: 'Chimie 3',
-          year: '2ème année préparatoire',
-          advice: 'Je conseille les etudiants d’etre respectueux, patients et ne pas se decourager[cite: 43].',
-          research: 'Adsorption du glyphosate (herbicide) sur les nanotubes de carbone et bore azote[cite: 43].',
-          links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=AK2HZyYAAAAJ&hl=fr' }]
-        },
+        { id: 'bendada', name: 'BENDADA Kheiredine', grade: 'Professor (Enseignant Permanent)', email: 'k.bendada@enstp.edu.dz', subject: 'Chimie 3', year: '2ème année préparatoire', modules: 'Chimie des solutions et Chimie organique', advice: 'Je conseille aux étudiants de développer leur curiosité scientifique, de ne pas hésiter à poser des questions et de toujours chercher à comprendre plutôt qu’à simplement mémoriser.', research: 'Caractérisation des paramètres thermodynamiques de surface des roches réservoirs pétroliers par CGI et remédiation des sols.', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?hl=fr&user=Oy0kr_UAAAAJ' }] },
+        { id: 'bouhara', name: 'BOUHARA Safia', grade: 'Professor (Enseignant Permanent)', email: 's.bouhara@enstp.edu.dz', subject: 'Chimie 3', year: '2ème année préparatoire', advice: 'Je conseille les etudiants d’etre respectueux, patients et ne pas se decourager.', research: 'Adsorption du glyphosate (herbicide) sur les nanotubes de carbone et bore azote.', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=AK2HZyYAAAAJ&hl=fr' }] },
         { id: 'haouchine', name: 'HAOUCHINE', email: 'haouchine@enstp.edu.dz', subject: 'Chimie 3', year: '2ème année préparatoire' },
-
-        // Électricité Générale / Électronique & Spécialités
-        {
-          id: 'rahoui',
-          name: 'RAHOUI Adel',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 'a.rahoui@enstp.edu.dz',
-          subject: 'Électricité Générale',
-          year: '2ème année préparatoire',
-          modules: 'Électricité Générale S3 / Électronique Générale S4[cite: 38, 46]',
-          research: 'Commande, observation et synchronisation avancées des convertisseurs d’électronique de puissance et énergies renouvelables[cite: 38, 46].',
-          links: [
-            { label: 'LinkedIn', url: 'www.linkedin.com/in/adelrahoui' },
-            { label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Adel_Rahoui' }
-          ],
-          photo: 'https://i.ibb.co/3s2z81g/rahoui.jpg' // صورة الأستاذ المتوفرة[cite: 38, 46]
-        },
-        {
-          id: 'benyettou',
-          name: 'BENYETTOU Fethi',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 'f.benyettou@enstp.edu.dz',
-          subject: 'Électricité / Électronique',
-          year: '2ème année préparatoire',
-          advice: 'Cherchez, vous trouverez[cite: 32, 34].',
-          research: 'Modélisation et simulation des nano-structures BQs, PQs, et NFs pour le photovoltaïque[cite: 32, 34].',
-          links: [{ label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Benyettou-Fethi-2' }]
-        },
-        {
-          id: 'boudina',
-          name: 'BOUDINA Nour El Houda',
-          grade: 'Enseignant Vacataire',
-          email: 'nourelhouda.boudina@enstp.edu.dz',
-          subject: 'Électricité Générale',
-          year: '2ème année préparatoire',
-          advice: "Ne cessez jamais d'apprendre et de croire en vous. Construisez votre carrière professionnelle sur les bases théoriques acquises...[cite: 44]",
-          links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/nour-el-houda-boudina-93215b2b5' }]
-        },
-        {
-          id: 'chiali',
-          name: 'CHIALI Soumiya',
-          grade: 'Professor (Enseignant Permanent)',
-          email: 's.chiali@enstp.edu.dz',
-          subject: 'Ingénierie 1',
-          year: '2ème année préparatoire',
-          advice: "Lorsqu'on entreprend un travail, il faut le faire avec soin et le mener à la perfection[cite: 42].",
-          research: 'Valorisation des vases de barrage en technique routière[cite: 42].'
-        },
-        // باقي الأساتذة
+        { id: 'rahoui', name: 'RAHOUI Adel', grade: 'Professor (Enseignant Permanent)', email: 'a.rahoui@enstp.edu.dz', subject: 'Électricité Générale', year: '2ème année préparatoire', modules: 'Électricité Générale S3 / Électronique Générale S4', research: 'Commande, observation et synchronisation avancées des convertisseurs d’électronique de puissance et énergies renouvelables.', links: [{ label: 'LinkedIn', url: 'www.linkedin.com/in/adelrahoui' }, { label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Adel_Rahoui' }], photo: 'https://i.ibb.co/3s2z81g/rahoui.jpg' },
+        { id: 'benyettou', name: 'BENYETTOU Fethi', grade: 'Professor (Enseignant Permanent)', email: 'f.benyettou@enstp.edu.dz', subject: 'Électricité / Électronique', year: '2ème année préparatoire', advice: 'Cherchez, vous trouverez.', research: 'Modélisation et simulation des nano-structures BQs, PQs, et NFs pour le photovoltaïque.', links: [{ label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Benyettou-Fethi-2' }] },
+        { id: 'boudina', name: 'BOUDINA Nour El Houda', grade: 'Enseignant Vacataire', email: 'nourelhouda.boudina@enstp.edu.dz', subject: 'Électricité Générale', year: '2ème année préparatoire', advice: "Ne cessez jamais d'apprendre et de croire en vous. Construisez votre carrière professionnelle sur les bases théoriques acquises...", links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/nour-el-houda-boudina-93215b2b5' }] },
+        { id: 'chiali', name: 'CHIALI Soumiya', grade: 'Professor (Enseignant Permanent)', email: 's.chiali@enstp.edu.dz', subject: 'Ingénierie 1', year: '2ème année préparatoire', advice: "Lorsqu'on entreprend un travail, il faut le faire avec soin et le mener à la perfection.", research: 'Valorisation des vases de barrage en technique routière.' },
         { id: 'ould_kaddour', name: 'OULD KADDOUR', email: 'm.ouladkaddour@enstp.edu.dz', subject: 'Informatique 3', year: '2ème année préparatoire' },
         { id: 'lhaddad', name: 'LHADDAD', email: 's.lhaddad@enstp.edu.dz', subject: 'Informatique 3', year: '2ème année préparatoire' },
         { id: 'zouadi_m', name: 'ZOUADI N.', email: 'n.zouadi@enstp.edu.dz', subject: 'Mécanique Rationnelle', year: '2ème année préparatoire' }
@@ -347,10 +196,11 @@
 
     let selectedYear = '1cp';
     let selectedSubject = 'Toutes';
+
     function selectYear(year) {
       selectedYear = year;
-      document.getElementById('btn-1cp').className = btn-year px-6 py-3 rounded-2xl font-bold text-sm border border-gray-200 transition ${year === '1cp' ? 'active' : 'bg-white text-gray-700'};
-      document.getElementById('btn-2cp').className = btn-year px-6 py-3 rounded-2xl font-bold text-sm border border-gray-200 transition ${year === '2cp' ? 'active' : 'bg-white text-gray-700'};
+      document.getElementById('btn-1cp').className = `btn-year px-6 py-3 rounded-2xl font-bold text-sm border border-gray-200 transition ${year === '1cp' ? 'active' : 'bg-white text-gray-700'}`;
+      document.getElementById('btn-2cp').className = `btn-year px-6 py-3 rounded-2xl font-bold text-sm border border-gray-200 transition ${year === '2cp' ? 'active' : 'bg-white text-gray-700'}`;
       
       selectedSubject = 'Toutes';
       renderSubjects();
@@ -365,7 +215,7 @@
       subjectsBox.innerHTML = '';
       uniqueSubjects.forEach(sub => {
         const btn = document.createElement('button');
-        btn.className = badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'};
+        btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'}`;
         btn.innerText = sub;
         btn.onclick = () => {
           selectedSubject = sub;
@@ -390,7 +240,7 @@
         card.className = "glass-card p-5 rounded-3xl border border-white space-y-3 hover:shadow-xl transition cursor-pointer flex flex-col justify-between";
         card.onclick = () => openModal(t);
 
-        card.innerHTML = 
+        card.innerHTML = `
           <div class="space-y-2">
             <span class="text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100 uppercase">${t.subject}</span>
             <h3 class="font-bold text-base text-gray-900">${t.name}</h3>
@@ -402,7 +252,7 @@
             <span>Afficher la fiche</span>
             <i class="fa-solid fa-arrow-right"></i>
           </div>
-        ;
+        `;
         grid.appendChild(card);
       });
     }
@@ -413,7 +263,6 @@
       document.getElementById('modal-email').querySelector('span').innerText = t.email;
       document.getElementById('modal-modules').innerText = t.modules || t.subject;
 
-      // Advice
       const advBox = document.getElementById('modal-advice-box');
       if (t.advice) {
         advBox.classList.remove('hidden');
@@ -422,7 +271,6 @@
         advBox.classList.add('hidden');
       }
 
-      // Research
       const resBox = document.getElementById('modal-research-box');
       if (t.research) {
         resBox.classList.remove('hidden');
@@ -431,23 +279,21 @@
         resBox.classList.add('hidden');
       }
 
-      // Links
       const linksBox = document.getElementById('modal-links-box');
       const linksContainer = document.getElementById('modal-links');
       if (t.links && t.links.length > 0) {
         linksBox.classList.remove('hidden');
         linksContainer.innerHTML = '';
         t.links.forEach(l => {
-          linksContainer.innerHTML += <a href="${l.url}" target="_blank" class="px-3 py-1 rounded-lg bg-cyan-50 text-cyan-700 border border-cyan-200 text-xs font-bold hover:bg-cyan-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>;
+          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1 rounded-lg bg-cyan-50 text-cyan-700 border border-cyan-200 text-xs font-bold hover:bg-cyan-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
         });
       } else {
         linksBox.classList.add('hidden');
       }
 
-      // Image or Initials
       const imgBox = document.getElementById('modal-img-box');
       if (t.photo) {
-        imgBox.innerHTML = <img src="${t.photo}" class="w-full h-full object-cover"/>;
+        imgBox.innerHTML = `<img src="${t.photo}" class="w-full h-full object-cover"/>`;
       } else {
         const initials = t.name.split(' ').map(n => n[0]).join('').substring(0, 2);
         imgBox.innerHTML = initials;
