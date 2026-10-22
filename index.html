@@ -1,19 +1,292 @@
-btn_explore: "Découvrir les 7 Classes 3D",
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="indigo" data-size="normal">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide de Survie ENSTP</title>
+
+  <!-- Google Fonts: Cairo, Poppins & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+            jakarta: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root[data-theme="indigo"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.10), transparent 45%),
+                     linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --primary-border: #c7d2fe;
+      --text-accent: #4f46e5;
+    }
+
+    :root[data-theme="rose"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(251, 113, 133, 0.10), transparent 45%),
+                     linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%);
+      --primary: #e11d48;
+      --primary-hover: #be123c;
+      --primary-light: #fff1f2;
+      --primary-border: #fecdd3;
+      --text-accent: #e11d48;
+    }
+
+    :root[data-theme="emerald"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.10), transparent 45%),
+                     linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      --primary: #059669;
+      --primary-hover: #047857;
+      --primary-light: #ecfdf5;
+      --primary-border: #a7f3d0;
+      --text-accent: #059669;
+    }
+
+    html[data-size="small"] { font-size: 14px; }
+    html[data-size="normal"] { font-size: 16px; }
+    html[data-size="large"] { font-size: 18px; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Cairo', 'Poppins', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: var(--bg-gradient);
+      transition: background 0.5s ease;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.04),
+                  0 0 20px rgba(99, 102, 241, 0.05);
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .btn-primary-custom {
+      background-color: var(--primary);
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary-custom:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .text-accent-custom {
+      color: var(--text-accent);
+    }
+
+    .bg-light-custom {
+      background-color: var(--primary-light);
+      border-color: var(--primary-border);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <div class="ambient-bg"></div>
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl btn-primary-custom flex items-center justify-center text-white font-black text-lg shadow-md">
+            E
+          </div>
+          <div>
+            <h1 class="font-bold text-gray-900 tracking-tight text-base leading-tight">
+              ENSTP <span class="text-accent-custom">Guide</span>
+            </h1>
+            <p class="text-[11px] text-gray-500 font-cairo" data-i18n="tagline">دليل الطالب الجديد - المدرسة الوطنية العليا للأشغال العمومية</p>
+          </div>
+        </div>
+
+        <nav class="flex items-center gap-1 bg-gray-100/80 p-1 rounded-full border border-gray-200">
+          <a href="index.html" class="px-4 py-1.5 rounded-full font-semibold text-xs bg-white text-gray-900 shadow-sm flex items-center gap-1.5">
+            <i class="fa-solid fa-house text-accent-custom"></i>
+            <span data-i18n="nav_home">Accueil</span>
+          </a>
+          <a href="classes.html" class="px-4 py-1.5 rounded-full font-semibold text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1.5">
+            <i class="fa-solid fa-shapes"></i>
+            <span data-i18n="nav_classes">Classes 3D</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center gap-3 text-xs bg-white/80 p-1.5 rounded-2xl border border-gray-200/80 shadow-sm">
+        <div class="flex items-center gap-1 bg-gray-100 p-1 rounded-xl">
+          <button onclick="setLanguage('fr')" id="lang-fr" class="px-2 py-1 rounded-lg font-bold transition bg-white text-gray-900 shadow-xs">FR</button>
+          <button onclick="setLanguage('ar')" id="lang-ar" class="px-2 py-1 rounded-lg font-bold transition text-gray-500 hover:text-gray-900">عربي</button>
+          <button onclick="setLanguage('en')" id="lang-en" class="px-2 py-1 rounded-lg font-bold transition text-gray-500 hover:text-gray-900">EN</button>
+        </div>
+
+        <div class="h-4 w-px bg-gray-300"></div>
+
+        <div class="flex items-center gap-1.5">
+          <button onclick="setTheme('indigo')" title="Indigo" class="w-5 h-5 rounded-full bg-indigo-500 hover:scale-110 transition"></button>
+          <button onclick="setTheme('rose')" title="Rose" class="w-5 h-5 rounded-full bg-rose-500 hover:scale-110 transition"></button>
+          <button onclick="setTheme('emerald')" title="Emerald" class="w-5 h-5 rounded-full bg-emerald-500 hover:scale-110 transition"></button>
+        </div>
+
+        <div class="h-4 w-px bg-gray-300"></div>
+
+        <div class="flex items-center gap-1 font-bold text-gray-600">
+          <button onclick="setFontSize('small')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-[11px]">A-</button>
+          <button onclick="setFontSize('normal')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-xs">A</button>
+          <button onclick="setFontSize('large')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-sm">A+</button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex-grow w-full space-y-10">
+
+    <div class="glass-card rounded-3xl p-8 lg:p-12 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 border border-white">
+      <div class="space-y-6 max-w-2xl z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-custom border text-xs font-bold tracking-wide text-accent-custom">
+          <span class="w-2 h-2 rounded-full bg-current animate-pulse"></span>
+          <span data-i18n="badge">Projet Entrepreneuriat • ENSTP Kouba</span>
+        </div>
+        
+        <h2 class="text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
+          <span data-i18n="hero_title_1">Bienvenue dans votre</span> <br/>
+          <span class="text-accent-custom" data-i18n="hero_title_2">Guide de Survie Numérique</span>
+        </h2>
+        
+        <p class="text-gray-600 text-sm lg:text-base leading-relaxed font-cairo" data-i18n="hero_desc">
+          رفيقك الرقمي المباشر لتسهيل اندماجك في حياتك الجامعية الجديدة. يمنحك الوصول السريع والمجاني إلى مواقع القاعات والمدرجات، الإدارة، الخدمات، مطاعم المنطقة، النقل، والإقامة الجامعية بسهولة تامة عبر هاتفك.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <a href="classes.html" class="btn-primary-custom px-6 py-3.5 rounded-2xl font-bold text-sm shadow-md flex items-center gap-3">
+            <span data-i18n="btn_explore">Découvrir les Classes</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#about-us" class="px-6 py-3.5 rounded-2xl bg-white text-gray-700 font-bold text-sm border border-gray-200 hover:bg-gray-50 transition shadow-xs flex items-center gap-2">
+            <i class="fa-solid fa-users text-accent-custom"></i>
+            <span data-i18n="btn_about">Qui sommes-nous ?</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="relative w-full lg:w-80 h-72 flex items-center justify-center">
+        <div class="glass-card w-full h-full rounded-3xl p-6 flex flex-col justify-between border border-white text-center shadow-lg">
+          <div class="w-16 h-16 mx-auto rounded-2xl bg-light-custom text-accent-custom flex items-center justify-center text-3xl shadow-xs">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-base" data-i18n="card_title">ENSTP Survival Kit</h3>
+            <p class="text-xs text-gray-500 font-cairo mt-1" data-i18n="card_subtitle">100% Gratuit • Orienté الطالب الجديد</p>
+          </div>
+          <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 py-1.5 px-3 rounded-xl border border-emerald-200">
+            <i class="fa-solid fa-leaf mr-1"></i> Zéro Dinar • Zero Budget
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT US -->
+    <div id="about-us" class="glass-card rounded-3xl p-8 lg:p-10 border border-white space-y-6">
+      <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+        <div class="w-10 h-10 rounded-xl bg-light-custom text-accent-custom flex items-center justify-center text-lg">
+          <i class="fa-solid fa-users-viewfinder"></i>
+        </div>
+        <div>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="about_title">Qui sommes-nous ? / من نحن؟</h3>
+          <p class="text-xs text-gray-500 font-cairo" data-i18n="about_subtitle">فريق العمل والمبادرة الطلابية</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 leading-relaxed font-cairo text-sm text-gray-600">
+        <div class="bg-white/60 p-5 rounded-2xl border border-gray-100 space-y-2">
+          <h4 class="font-bold text-gray-900 text-base flex items-center gap-2">
+            <i class="fa-solid fa-compass text-accent-custom"></i>
+            <span data-i18n="about_team_title">طلبة السنة الأولى - قسم المنشآت القاعدية (فوج 2)</span>
+          </h4>
+          <p data-i18n="about_team_desc">
+            نحن مجموعة من طلبة السنة الأولى بالمدارس التحضيرية في المدرسة الوطنية العليا للأشغال العمومية (ENSTP)، تخصص قسم المنشآت القاعدية (فوج 2).
+          </p>
+        </div>
+
+        <div class="bg-white/60 p-5 rounded-2xl border border-gray-100 space-y-2">
+          <h4 class="font-bold text-gray-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-bullseye text-accent-custom"></i>
+            <span data-i18n="about_goal_title">هدفنا ورسالتنا</span>
+          </h4>
+          <p data-i18n="about_goal_desc">
+            تبسيط الحياة اليومية والجامعية لكل طالب جديد ينضم إلى عائلة ENSTP عبر تقديم دليل رقمي مجاني وتفاعلي.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
+    <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02).</p>
+  </footer>
+
+  <script>
+    const translations = {
+      fr: {
+        tagline: "Guide du nouvel étudiant - ENSTP Kouba",
+        nav_home: "Accueil",
+        nav_classes: "Classes 3D",
+        badge: "Projet Entrepreneuriat • ENSTP Kouba",
+        hero_title_1: "Bienvenue dans votre",
+        hero_title_2: "Guide de Survie Numérique",
+        hero_desc: "Votre compagnon numérique pour faciliter votre intégration à l'ENSTP.",
+        btn_explore: "Découvrir les Classes",
         btn_about: "Qui sommes-nous ?",
         card_title: "ENSTP Survival Kit",
         card_subtitle: "100% Gratuit • Orienté Nouvel Étudiant",
         about_title: "Qui sommes-nous ?",
         about_subtitle: "Présentation de l'équipe et de notre mission",
         about_team_title: "Étudiants de 1ère Année - Infrastructures de Base (Groupe 02)",
-        about_team_desc: "Nous sommes des étudiants de première année à l'ENSTP (Département Infrastructures de Base - Groupe 02). Ayant vécu l'expérience de la rentrée et ses défis, nous avons conçu ce guide pour vous.",
+        about_team_desc: "Nous sommes des étudiants de première année à l'ENSTP (Groupe 02).",
         about_goal_title: "Notre Objectif",
-        about_goal_desc: "Simplifier la vie quotidienne et académique de chaque nouvel étudiant en lui offrant un guide numérique fluide, moderne et gratuit pour répondre à toutes ses questions.",
-        feat1_title: "Orientation Simple",
-        feat1_desc: "Localisation rapide des amphis, salles et services.",
-        feat2_title: "Restauration & Services",
-        feat2_desc: "Restaurants à petit budget, reprographie et commerces.",
-        feat3_title: "Entraide Étudiante",
-        feat3_desc: "Guide de la cité universitaire et réseau de solidarité."
+        about_goal_desc: "Simplifier la vie quotidienne et académique de chaque nouvel étudiant."
       },
       ar: {
         tagline: "دليل الطالب الجديد - المدرسة الوطنية العليا للأشغال العمومية",
@@ -22,23 +295,17 @@ btn_explore: "Découvrir les 7 Classes 3D",
         badge: "مشروع المقاولاتية • ENSTP القبة",
         hero_title_1: "مرحباً بكم في",
         hero_title_2: "دليل الطالب الرقمي",
-        hero_desc: "رفيقك الرقمي المباشر لتسهيل اندماجك في حياتك الجامعية الجديدة بالمرسة الوطنية العليا للأشغال العمومية. الوصول السريع والمجاني لجميع المعلومات والقاعات والمرافق عبر هاتفك.",
-        btn_explore: "استكشف الأقسام السبعة 3D",
+        hero_desc: "رفيقك الرقمي المباشر لتسهيل اندماجك في حياتك الجامعية الجديدة بالمرسة الوطنية العليا للأشغال العمومية.",
+        btn_explore: "استكشف الأقسام",
         btn_about: "من نحن؟",
         card_title: "دليل الطالب ENSTP",
         card_subtitle: "100% مجاني • موجه للطالب الجديد",
         about_title: "من نحن؟",
         about_subtitle: "فريق العمل والمبادرة الطلابية",
         about_team_title: "طلبة السنة الأولى - قسم المنشآت القاعدية (فوج 02)",
-        about_team_desc: "نحن مجموعة من طلبة السنة الأولى بالمدرسة الوطنية العليا للأشغال العمومية (قسم المنشآت القاعدية - فوج 02). عشنا تجربة الدخول الجامعي وما يحمله من صعوبات في التعرف على المحيط الجديد ويسعدنا تقديم هذا الدليل لكم.",
+        about_team_desc: "نحن مجموعة من طلبة السنة الأولى بالمدرسة الوطنية العليا للأشغال العمومية (فوج 02).",
         about_goal_title: "هدفنا ورسالتنا",
-        about_goal_desc: "تبسيط الحياة اليومية والجامعية لكل طالب جديد ينضم إلى عائلة ENSTP، عبر تقديم دليل رقمي شامل، مجاني، وتفاعلي يُجيب عن كل تساؤلاته بهدوء ووضوح.",
-        feat1_title: "توجيه وسهل",
-        feat1_desc: "تحديد القاعات، المدرجات، والمصالح الإدارية بدقة.",
-        feat2_title: "إطعام وخدمات",
-        feat2_desc: "مطاعم اقتصادية، محلات الطباعة والخدمات الليلية.",
-        feat3_title: "تضامن طلابي",
-        feat3_desc: "دليل الإقامة الجامعية وشبكة التكافل بين الطلاب."
+        about_goal_desc: "تبسيط الحياة اليومية والجامعية لكل طالب جديد ينضم إلى عائلة ENSTP."
       },
       en: {
         tagline: "New Student Survival Guide - ENSTP Kouba",
@@ -47,7 +314,57 @@ btn_explore: "Découvrir les 7 Classes 3D",
         badge: "Entrepreneurship Project • ENSTP Kouba",
         hero_title_1: "Welcome to your",
         hero_title_2: "Digital Survival Guide",
-        hero_desc: "Your essential companion for smooth integration at ENSTP. Quick and free access to classroom locations, administration, local dining, transport, and campus housing right from your smartphone.",
-        btn_explore: "Explore 7 3D Classes",
+        hero_desc: "Your essential companion for smooth integration at ENSTP.",
+        btn_explore: "Explore Classes",
         btn_about: "Who are we?",
-        card_title: "ENSTP Survival Kit
+        card_title: "ENSTP Survival Kit",
+        card_subtitle: "100% Free • Focused on Freshmen",
+        about_title: "Who are we?",
+        about_subtitle: "Team introduction and project goal",
+        about_team_title: "1st Year Students - Basic Infrastructure (Group 02)",
+        about_team_desc: "We are first-year students at ENSTP (Group 02).",
+        about_goal_title: "Our Mission",
+        about_goal_desc: "To simplify the daily academic life of every new student."
+      }
+    };
+
+    function setTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('enstp_theme', themeName);
+    }
+
+    function setFontSize(size) {
+      document.documentElement.setAttribute('data-size', size);
+      localStorage.setItem('enstp_size', size);
+    }
+          function setLanguage(lang) {
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      
+      ['fr', 'ar', 'en'].forEach(l => {
+        const btn = document.getElementById(lang-${l});
+        if (l === lang) {
+          btn.className = "px-2 py-1 rounded-lg font-bold transition bg-white text-gray-900 shadow-xs";
+        } else {
+          btn.className = "px-2 py-1 rounded-lg font-bold transition text-gray-500 hover:text-gray-900";
+        }
+      });
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      localStorage.setItem('enstp_lang', lang);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setTheme(localStorage.getItem('enstp_theme') || 'indigo');
+      setFontSize(localStorage.getItem('enstp_size') || 'normal');
+      setLanguage(localStorage.getItem('enstp_lang') || 'fr');
+    });
+  </script>
+</body>
+</html>
