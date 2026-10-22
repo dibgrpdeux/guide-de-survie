@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="indigo" data-size="normal">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide ENSTP - Ma Réussite & Emploi du Temps</title>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root[data-theme="indigo"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.10), transparent 45%),
+                     linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+    }
+    :root[data-theme="rose"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(251, 113, 133, 0.10), transparent 45%),
+                     linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%);
+      --primary: #e11d48;
+      --primary-hover: #be123c;
+      --primary-light: #fff1f2;
+    }
+    :root[data-theme="emerald"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.10), transparent 45%),
+                     linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      --primary: #059669;
+      --primary-hover: #047857;
+      --primary-light: #ecfdf5;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: var(--bg-gradient);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+    }
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .btn-custom {
+      background-color: var(--primary);
+      color: white;
+      transition: all 0.3s ease;
+    }
+    .btn-custom:hover {
+      background-color: var(--primary-hover);
+    }
+    .btn-day.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.35);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <div class="ambient-bg"></div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl btn-custom flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
+        <div>
+          <h1 class="font-bold text-gray-900 text-base leading-tight">ENSTP <span style="color:var(--primary)">Ma Réussite</span></h1>
+          <p class="text-[11px] text-gray-500 font-cairo">المدرسة الوطنية العليا للأشغال العمومية</p>
+        </div>
+      </div>
+      <a href="classes.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
+        <i class="fa-solid fa-arrow-right"></i>
+        <span>Retour aux Classes</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-10">
+    
+    <!-- Hero Section: Ma Réussite -->
+    <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-3">
+        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
+          <i class="fa-solid fa-trophy"></i>
+          <span>قسم التفوق والنجاح (Ma Réussite)</span>
+        </span>
+        <h2 class="text-3xl font-black text-gray-900">تنظيم وقتك هو أساس نجاحك في ENSTP</h2>
+        <p class="text-xs lg:text-sm text-gray-600 font-cairo leading-relaxed">
+          يتيح لك هذا القسم متابعة جدول التوقيت والحصص الرسمية بدقة، مع نصائح الدفعات السابقة لضمان تفوقك وتحقيق أهدافك الأكاديمية بكل هدوء.
+        </p>
+      </div>
+      <div class="w-24 h-24 rounded-3xl bg-amber-50 text-amber-500 flex items-center justify-center text-4xl shadow-md flex-shrink-0">
+        <i class="fa-solid fa-award"></i>
+      </div>
+    </div>
+
+    <!-- SECTION: EMPLOI DU TEMPS (جدول التوقيت المدمج داخل قسم نجاحي) -->
+    <div class="glass-card rounded-3xl p-6 lg:p-10 border border-white space-y-8 shadow-xl">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b pb-4">
+        <div>
+          <span class="px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs uppercase tracking-wider border border-emerald-100">
+            <i class="fa-solid fa-calendar-check mr-1"></i> جدول الحصص والتوقيت (Emploi du Temps)
+          </span>
+          <h3 class="text-2xl font-black text-gray-900 mt-2">استعمال الزمن الرسمي</h3>
+        </div>
+        <div>
+          <span id="real-today-tag" class="px-4 py-2 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100">
+            اليوم الحالي: جارِ التحقق...
+          </span>
+        </div>
+      </div>
+
+      <!-- خيارات التخصص والسنة -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">التخصص / القسم:</label>
+          <select id="select-dept" onchange="updateSubCategories()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            <option value="prep">الطبقة التحضيرية (Classes Préparatoires)</option>
+            <option value="dib">قسم المنشآت القاعدية (DIB)</option>
+            <option value="dms">قسم المواد والهياكل (DMS)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">السنة الدراسية:</label>
+          <select id="select-year" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+            <!-- Injected via JS -->
+          </select>
+        </div>
+      </div>
+
+      <!-- شريط الأيام التفاعلي -->
+      <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+        <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">السبت</button>
+        <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأحد</button>
+        <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الإثنين</button>
+        <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الثلاثاء</button>
+        <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأربعاء</button>
+        <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الخميس</button>
+      </div>
+
+      <!-- عرض البرنامج -->
+      <div class="space-y-3">
+        <h4 id="schedule-title" class="font-extrabold text-sm text-gray-800 border-l-4 border-indigo-600 pl-3">برنامج الحصص</h4>
+        <div id="schedule-list" class="space-y-3">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
+    <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02). Projet Entrepreneuriat "Zéro Dinar".</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const scheduleDatabase = {
+      'dib_1': {
+        'Saturday': [{ time: '09h35 - 11h05', subject: 'Constr Mat', prof: 'M. BADAOUI', room: 'En ligne' }],
+        'Sunday': [
+          { time: '08h00 - 09h30', subject: 'SOM (Résistance des Matériaux)', prof: 'Mme LAIB', room: 'Classroom 7' },
+          { time: '09h35 - 11h05', subject: 'Appl Hydr', prof: 'M. BOUSSADI', room: 'Classroom 8' },
+          { time: '11h10 - 12h40', subject: 'MMC', prof: 'M. MERDOUD', room: 'Classroom 9' }
+        ],
+        'Monday': [
+          { time: '08h00 - 09h30', subject: 'Appl Geology', prof: 'M. OMRACI', room: 'Classroom 7' },
+          { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'Mme BENOUMECHIARA', room: 'Classroom 8' },
+          { time: '11h10 - 12h40', subject: 'Topo', prof: 'M. ALEM', room: 'Classroom 9' }
+        ],
+        'Tuesday': [
+          { time: '08h00 - 09h30', subject: 'SOM', prof: 'Mme LAIB', room: 'Classroom 6' },
+          { time: '09h35 - 11h05', subject: 'MMC', prof: 'M. MERDOUD', room: 'Classroom 7' },
+          { time: '11h10 - 12h40', subject: 'Appl Hydr', prof: 'M. RAHMANI', room: 'Classroom 8' }
+        ],
+        'Wednesday': [
+          { time: '08h00 - 09h30', subject: 'Ter Plan Env Sust', prof: 'M. SAADI', room: 'Classroom 7' },
+          { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'Mme BENOUMECHIARA', room: 'Classroom 8' }
+        ],
+        'Thursday': [
+          { time: '08h00 - 11h00', subject: 'Practical Topo / CM / Appl Geo', prof: 'ALEM / GUETTACHE', room: 'Labo' },
+          { time: '11h05 - 12h35', subject: 'IA (Intelligence Artificielle)', prof: 'M. CHAMI', room: 'Classroom 8' }
+        ]
+      },
+      'prep_2': {
+        'Saturday': [
+          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. BRAHMI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Computer Science 3', prof: 'M. OULD KADDOUR', room: 'Auditorium A' }
+        ],
+        'Sunday': [{ time: '08h00 - 11h05', subject: 'Physics 3', prof: 'Enseignants', room: 'Auditorium A' }],
+        'Monday': [
+          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. BRAHMI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Numerical Analysis 1', prof: 'M. HAMADI', room: 'Auditorium A' }
+        ],
+        'Tuesday': [
+          { time: '08h00 - 09h30', subject: 'Chemistry 3', prof: 'Mme BOUHARA', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'Fluid Mechanics', prof: 'M. KELLOU', room: 'Auditorium A' }
+        ],
+        'Wednesday': [
+          { time: '08h00 - 09h30', subject: 'Rational Mech 1', prof: 'Mme ZOUADI', room: 'Auditorium A' },
+          { time: '09h35 - 11h05', subject: 'English 3', prof: 'M. YALA', room: 'Auditorium A' }
+        ],
+        'Thursday': [{ time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Electricity)', prof: 'Equipe Labo', room: 'Laboratoires' }]
+      }
+    };
+
+    let selectedDay = 'Thursday';
+    const dayNamesAr = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
+
+    function updateSubCategories() {
+      const dept = document.getElementById('select-dept').value;
+      const yearSelect = document.getElementById('select-year');
+      yearSelect.innerHTML = '';
+
+      if (dept === 'prep') {
+        yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
+      } else if (dept === 'dib') {
+        yearSelect.innerHTML = `<option value="dib_1">السنة الأولى منشآت قاعدية (1st DIB)</option><option value="dib_2">السنة الثانية منشآت قاعدية (2nd DIB)</option>`;
+      } else {
+        yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مواد وهياكل (1st DMS)</option>`;
+      }
+      renderSchedule();
+    }
+
+    function changeDay(day) {
+      selectedDay = day;
+      document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`day-${day}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.getElementById('schedule-title').innerText = `برنامج الحصص ليوم ${dayNamesAr[day] || day}`;
+      renderSchedule();
+    }
+
+    function detectCurrentDay() {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      let today = days[new Date().getDay()];
+      if (today === 'Friday') today = 'Sunday';
+      
+      document.getElementById('real-today-tag').innerText = `اليوم الحالي: ${dayNamesAr[today] || today}`;
+      changeDay(today);
+    }
+
+    function renderSchedule() {
+      const yearKey = document.getElementById('select-year').value;
+      const container = document.getElementById('schedule-list');
+      container.innerHTML = '';
+
+      const items = (scheduleDatabase[yearKey] && scheduleDatabase[yearKey][selectedDay]) || [
+        { time: '08h00 - 12h00', subject: 'محاضرات عامة / أعمال توجيهية', prof: 'فريق الأساتذة', room: 'مدرج المدرسة' }
+      ];
+
+      items.forEach(item => {
+        const row = document.createElement('div');
+        row.className = "p-4 bg-white/90 rounded-2xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs";
+        row.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs flex-shrink-0">
+              <i class="fa-solid fa-book"></i>
+            </div>
+            <div>
+              <h5 class="font-extrabold text-sm text-gray-900">${item.subject}</h5>
+              <p class="text-xs text-gray-500 font-cairo">الأستاذ: <span class="font-bold text-gray-700">${item.prof}</span></p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold text-gray-600">
+            <span class="px-3 py-1 rounded-lg bg-gray-100"><i class="fa-regular fa-clock mr-1 text-indigo-500"></i> ${item.time}</span>
+            <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700"><i class="fa-solid fa-location-dot mr-1"></i> ${item.room}</span>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSubCategories();
+      detectCurrentDay();
+    });
+  </script>
+</body>
+</html>
