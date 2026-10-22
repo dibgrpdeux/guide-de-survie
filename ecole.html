@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr" data-theme="indigo" data-size="normal">
+<html lang="fr" dir="ltr" data-theme="indigo">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -101,8 +101,9 @@
     
     <!-- Hero Section -->
     <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white space-y-4">
-      <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider" style="background:var(--primary-light); color:var(--primary);">
-        <i class="fa-solid fa-school mr-1"></i> Section Principale
+      <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
+        <i class="fa-solid fa-school"></i>
+        <span>Section Principale</span>
       </span>
       <h2 class="text-3xl font-black text-gray-900">Bienvenue à l'ENSTP Kouba / قسم مدرستي</h2>
       <p class="text-sm text-gray-600 font-cairo leading-relaxed">
@@ -113,7 +114,7 @@
     <!-- Sub-sections Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       
-      <!-- بطاقة 1: الأساتذة (توجه لصفحة enseignants.html) -->
+      <!-- Carte 1: Enseignants -->
       <a href="enseignants.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
         <div class="space-y-3">
           <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition">
@@ -128,44 +129,74 @@
         </div>
       </a>
 
-      <!-- بطاقة 2: المباني والمدرجات -->
-      <div onclick="alert('قريباً: خريطة المدرجات A, B, C والمخابر')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
-        <div class="space-y-3">
+      <!-- Carte 2: Bâtiments & Amphis -->
+      <button type="button" onclick="openModal('Batiments & Amphis', 'قريباً: خريطة تفاعلية للمدرجات (A, B, C) وقاعات التدريس والمخابر العلمية.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+        <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-2xl group-hover:bg-pink-600 group-hover:text-white transition">
             <i class="fa-solid fa-building-columns"></i>
           </div>
           <h3 class="font-extrabold text-xl text-gray-900">Bâtiments & Amphis</h3>
-          <p class="text-xs text-gray-500 font-cairo">مواقع المدرجات الرئيسية (أميقي A، B، C)، القاعات والمخابر العلمية.</p>
+          <p class="text-xs text-gray-500 font-cairo">مواقع المدرجات الرئيسية (A, B, C)، القاعات والمخابر العلمية.</p>
         </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600">
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600 w-full">
           <span>En cours</span>
           <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
-      </div>
+      </button>
 
-      <!-- بطاقة 3: تاريخ ونبذة عن المدرسة -->
-      <div onclick="alert('قريباً: تاريخ ومحطات ENSTP')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
-        <div class="space-y-3">
+      <!-- Carte 3: Histoire & À propos -->
+      <button type="button" onclick="openModal('Histoire & À propos', 'قريباً: نبذة تاريخية شاملة عن تأسيس المدرسة الوطنية العليا للأشغال العمومية ودورها الريادي.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+        <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition">
             <i class="fa-solid fa-landmark"></i>
           </div>
           <h3 class="font-extrabold text-xl text-gray-900">Histoire & À propos</h3>
           <p class="text-xs text-gray-500 font-cairo">نبذة تاريخية عن تأسيس المدرسة ودورها في تكوين مهندسي الأشغال العمومية.</p>
         </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600">
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
           <span>En cours</span>
           <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
-      </div>
+      </button>
 
     </div>
 
   </main>
 
+  <!-- MODAL DE NOTIFICATION -->
+  <div id="info-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+    <div class="glass-card rounded-3xl p-6 lg:p-8 max-w-md w-full space-y-4 shadow-2xl border border-white">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h3 id="modal-title" class="font-black text-lg text-gray-900">Notification</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition text-lg px-2">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <p id="modal-body" class="text-xs text-gray-600 font-cairo leading-relaxed py-2"></p>
+      <div class="pt-2 text-right">
+        <button onclick="closeModal()" class="btn-custom px-5 py-2.5 rounded-xl font-bold text-xs shadow-md">
+          Fermer / إغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
     <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02).</p>
   </footer>
+
+  <script>
+    function openModal(title, message) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-body').innerText = message;
+      document.getElementById('info-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('info-modal').classList.add('hidden');
+    }
+  </script>
 
 </body>
 </html>
