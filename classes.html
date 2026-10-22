@@ -1,4 +1,363 @@
-<span class="text-[11px] font-bold text-accent-custom uppercase tracking-wider">Rubrique #${cls.id}</span>
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="indigo" data-size="normal">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide ENSTP - Rubriques & Classes Visuelles</title>
+
+  <!-- Google Fonts: Cairo, Poppins, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+            jakarta: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* متغيرات الثيمات الهادئة والمشرقة */
+    :root[data-theme="indigo"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.10), transparent 45%),
+                     linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --primary-border: #c7d2fe;
+      --text-accent: #4f46e5;
+    }
+
+    :root[data-theme="rose"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(251, 113, 133, 0.10), transparent 45%),
+                     linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%);
+      --primary: #e11d48;
+      --primary-hover: #be123c;
+      --primary-light: #fff1f2;
+      --primary-border: #fecdd3;
+      --text-accent: #e11d48;
+    }
+
+    :root[data-theme="emerald"] {
+      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
+                     radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.10), transparent 45%),
+                     linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      --primary: #059669;
+      --primary-hover: #047857;
+      --primary-light: #ecfdf5;
+      --primary-border: #a7f3d0;
+      --text-accent: #059669;
+    }
+
+    html[data-size="small"] { font-size: 14px; }
+    html[data-size="normal"] { font-size: 16px; }
+    html[data-size="large"] { font-size: 18px; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Cairo', 'Poppins', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: var(--bg-gradient);
+      transition: background 0.5s ease;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.04),
+                  0 0 20px rgba(99, 102, 241, 0.05);
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .btn-primary-custom {
+      background-color: var(--primary);
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary-custom:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .text-accent-custom {
+      color: var(--text-accent);
+    }
+
+    .bg-light-custom {
+      background-color: var(--primary-light);
+      border-color: var(--primary-border);
+    }
+    /* تأثير تكبير الصورة الواقعية بسلاسة عند المرور عليها */
+    .photo-card-container {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .photo-card-container:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
+    }
+    .photo-card-container:hover img {
+      transform: scale(1.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <div class="ambient-bg"></div>
+
+  <!-- HEADER & NAVBAR -->
+  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Logo & Navigation Links -->
+      <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl btn-primary-custom flex items-center justify-center text-white font-black text-lg shadow-md">
+            E
+          </div>
+          <div>
+            <h1 class="font-bold text-gray-900 tracking-tight text-base leading-tight">
+              ENSTP <span class="text-accent-custom">Guide</span>
+            </h1>
+            <p class="text-[11px] text-gray-500 font-cairo" data-i18n="tagline">دليل الطالب الجديد - المدرسة الوطنية العليا للأشغال العمومية</p>
+          </div>
+        </div>
+
+        <nav class="flex items-center gap-1 bg-gray-100/80 p-1 rounded-full border border-gray-200">
+          <a href="index.html" class="px-4 py-1.5 rounded-full font-semibold text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1.5">
+            <i class="fa-solid fa-house"></i>
+            <span data-i18n="nav_home">Accueil</span>
+          </a>
+          <a href="classes.html" class="px-4 py-1.5 rounded-full font-semibold text-xs bg-white text-gray-900 shadow-sm flex items-center gap-1.5">
+            <i class="fa-solid fa-images text-accent-custom"></i>
+            <span data-i18n="nav_classes">Classes Visuelles</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Controls (AI Search, Theme, Font, Lang) -->
+      <div class="flex items-center gap-2 lg:gap-3 text-xs bg-white/80 p-1.5 rounded-2xl border border-gray-200/80 shadow-sm">
+        
+        <!-- AI Search Button -->
+        <button onclick="toggleAiModal()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold flex items-center gap-1.5 shadow-sm hover:opacity-90 transition">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span data-i18n="btn_ai_search">Recherche IA</span>
+        </button>
+
+        <div class="h-4 w-px bg-gray-300"></div>
+
+        <!-- Language Selector -->
+        <div class="flex items-center gap-1 bg-gray-100 p-1 rounded-xl">
+          <button onclick="setLanguage('fr')" id="lang-fr" class="px-2 py-1 rounded-lg font-bold transition bg-white text-gray-900 shadow-xs">FR</button>
+          <button onclick="setLanguage('ar')" id="lang-ar" class="px-2 py-1 rounded-lg font-bold transition text-gray-500 hover:text-gray-900">عربي</button>
+          <button onclick="setLanguage('en')" id="lang-en" class="px-2 py-1 rounded-lg font-bold transition text-gray-500 hover:text-gray-900">EN</button>
+        </div>
+
+        <div class="h-4 w-px bg-gray-300"></div>
+
+        <!-- Theme Selector -->
+        <div class="flex items-center gap-1.5">
+          <button onclick="setTheme('indigo')" title="Indigo" class="w-5 h-5 rounded-full bg-indigo-500 hover:scale-110 transition"></button>
+          <button onclick="setTheme('rose')" title="Rose" class="w-5 h-5 rounded-full bg-rose-500 hover:scale-110 transition"></button>
+          <button onclick="setTheme('emerald')" title="Emerald" class="w-5 h-5 rounded-full bg-emerald-500 hover:scale-110 transition"></button>
+        </div>
+
+        <div class="h-4 w-px bg-gray-300"></div>
+        <!-- Font Size Selector -->
+        <div class="flex items-center gap-1 font-bold text-gray-600">
+          <button onclick="setFontSize('small')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-[11px]">A-</button>
+          <button onclick="setFontSize('normal')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-xs">A</button>
+          <button onclick="setFontSize('large')" class="px-2 py-0.5 hover:bg-gray-100 rounded text-sm">A+</button>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN SECTION: REALISTIC PHOTO CARDS GRID -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-8">
+    
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <span class="px-3.5 py-1.5 rounded-full bg-light-custom text-accent-custom font-bold text-xs uppercase tracking-wider inline-flex items-center gap-1.5">
+        <i class="fa-solid fa-camera-retro"></i>
+        <span>معرض الأقسام والأقسام الواقعية</span>
+      </span>
+      <h2 class="text-3xl lg:text-4xl font-black text-gray-900" data-i18n="classes_title">Les 10 Rubriques Visuelles du Guide</h2>
+      <p class="text-sm text-gray-500 font-cairo" data-i18n="classes_subtitle">
+        تصفح الأقسام عبر صور واقعية عالية الجودة تعبر بدقة عن كل مرفق وتسهل وصولك الفوري للمعلومة.
+      </p>
+    </div>
+
+    <!-- شبكة بطاقات الصور الواقعية -->
+    <div id="photo-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- يتم حقن البطاقات ديناميكياً عبر الجافاسكريبت -->
+    </div>
+
+  </main>
+
+  <!-- AI SEARCH MODAL -->
+  <div id="ai-modal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card bg-white/95 rounded-3xl max-w-xl w-full p-6 lg:p-8 space-y-4 border border-white shadow-2xl relative">
+      <div class="flex items-center justify-between border-b pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <h3 class="font-bold text-base text-gray-900">المساعد الذكي للبحث في دليل ENSTP</h3>
+        </div>
+        <button onclick="toggleAiModal()" class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 font-cairo">
+        <p class="text-xs text-gray-500">اكتب أي سؤال تبحث عنه (مثلاً: أين توجد القاعة 13؟ كيف أصل إلى المطعم الجامعي؟)</p>
+        
+        <div class="flex gap-2">
+          <input type="text" id="ai-input" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="اسأل المساعد الذكي..." />
+          <button onclick="askAiAssistant()" class="px-5 py-2.5 rounded-xl bg-purple-600 text-white font-bold text-xs flex items-center gap-1.5 shadow-md hover:bg-purple-700">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>بحث</span>
+          </button>
+        </div>
+
+        <div id="ai-response" class="p-4 bg-purple-50/60 rounded-2xl border border-purple-100 text-xs text-gray-700 hidden leading-relaxed space-y-2">
+          <!-- Live Answer -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
+    <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02). Projet Entrepreneuriat "Zéro Dinar".</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC WITH REALISTIC PHOTOS -->
+  <script>
+    // الأقسام العشرة مدعومة بصور واقعية عالية الجودة لكل قسم
+    const guideClasses = [
+      {
+        id: 1,
+        title: "Mon école",
+        desc: "تقديم المدرسة، تاريخها، المدرجات (A/B/C)، قاعات الدروس والمخابر.",
+        image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-school"
+      },
+      {
+        id: 2,
+        title: "Mon administration",
+        desc: "مصلحة الدراسة، إجراءات التسجيل، الشهادات، وغدارة الغيابات.",
+        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-building-user"
+      },
+      {
+        id: 3,
+        title: "Ma réussite",
+        desc: "استعمال الزمن، مجموعات المراجعة، نصائح الدفعات وحساب المعدلات.",
+        image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-trophy"
+      },
+      {
+        id: 4,
+        title: "Ma cité universitaire",
+        desc: "دليل الطالب المقيم: الإيواء، المطعم الجامعي والمغسلة.",
+        image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-bed"
+      },
+      {
+        id: 5,
+        title: "Forum d'étudiants",
+        desc: "فضاء التبادل والتضامن الطلابي، الأسئلة الشائعة والمرافقة.",
+        image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-comments"
+      },
+      {
+        id: 6,
+        title: "Transport",
+        desc: "خطوط الحافلات نحو القبة والعاصمة، مواقف سيارات الأجرة وشبكة التضامن.",
+        image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-bus-simple"
+      },
+      {
+        id: 7,
+        title: "Où je peux manger",
+        desc: "مطاعم مجهزة بأسعار اقتصادية بالقرب من المدرسة، والمخابز.",
+        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-utensils"
+      },
+      {
+        id: 8,
+        title: "Shopping et achats",
+        desc: "المكتبات المجاورة للطباعة وسحب المخططات، السوبرماركت والمستلزمات.",
+        image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-bag-shopping"
+      },
+      {
+        id: 9,
+        title: "Loisirs à Alger",
+        desc: "الأماكن السياحية في العاصمة (حداقة التجارب، القصبة)، والنادي الرياضي.",
+        image: "https://images.unsplash.com/photo-1589556264807-a9c544987740?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-icons"
+      },
+      {
+        id: 10,
+        title: "Code QR",
+        desc: "رموز QR سريعة للمسح بالهاتف للتوجيه المباشر نحو الخرائط والخدمات.",
+        image: "https://images.unsplash.com/photo-1595079476339-1634c7f070b4?q=80&w=600&auto=format&fit=crop",
+        icon: "fa-qrcode"
+      }
+    ];
+
+    // RENDER PHOTO CARDS GRID
+    function renderPhotoGrid() {
+      const grid = document.getElementById('photo-grid');
+      grid.innerHTML = '';
+
+      guideClasses.forEach(cls => {
+        const card = document.createElement('div');
+        card.className = "photo-card-container glass-card rounded-3xl overflow-hidden border border-white flex flex-col justify-between cursor-pointer";
+        card.innerHTML = `
+          <div class="relative h-48 overflow-hidden bg-gray-100">
+            <img src="${cls.image}" alt="${cls.title}" class="w-full h-full object-cover transition-transform duration-700 ease-out" />
+            <div class="absolute top-3 right-3 w-10 h-10 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center text-accent-custom shadow-md">
+              <i class="fa-solid ${cls.icon} text-lg"></i>
+            </div>
+          </div>
+          <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+            <div>
+            <span class="text-[11px] font-bold text-accent-custom uppercase tracking-wider">Rubrique #${cls.id}</span>
               <h3 class="text-xl font-black text-gray-900 mt-0.5">${cls.title}</h3>
               <p class="text-xs text-gray-600 font-cairo mt-2 leading-relaxed">${cls.desc}</p>
             </div>
