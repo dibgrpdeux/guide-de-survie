@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr" data-theme="indigo" data-size="normal">
+<html lang="fr" dir="ltr" data-theme="indigo">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guide ENSTP - Ma Réussite & Emploi du Temps</title>
+  <title>Guide ENSTP - Ma Réussite</title>
 
-  <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -19,62 +16,14 @@
       --bg-gradient: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12), transparent 40%),
                      radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.10), transparent 45%),
                      linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --primary-light: #eef2ff;
+      --primary: #4f46e5; --primary-hover: #4338ca; --primary-light: #eef2ff;
     }
-    :root[data-theme="rose"] {
-      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.12), transparent 40%),
-                     radial-gradient(circle at 85% 85%, rgba(251, 113, 133, 0.10), transparent 45%),
-                     linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%);
-      --primary: #e11d48;
-      --primary-hover: #be123c;
-      --primary-light: #fff1f2;
-    }
-    :root[data-theme="emerald"] {
-      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
-                     radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.10), transparent 45%),
-                     linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      --primary: #059669;
-      --primary-hover: #047857;
-      --primary-light: #ecfdf5;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
-    }
-    .ambient-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: var(--bg-gradient);
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
-    }
-    .glass-nav {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-    }
-    .btn-custom {
-      background-color: var(--primary);
-      color: white;
-      transition: all 0.3s ease;
-    }
-    .btn-custom:hover {
-      background-color: var(--primary-hover);
-    }
-    .btn-day.active {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.35);
-    }
+    body { font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
+    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: var(--bg-gradient); }
+    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
+    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+    .btn-custom { background-color: var(--primary); color: white; transition: all 0.3s ease; }
+    .btn-custom:hover { background-color: var(--primary-hover); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -91,26 +40,26 @@
           <p class="text-[11px] text-gray-500 font-cairo">المدرسة الوطنية العليا للأشغال العمومية</p>
         </div>
       </div>
-      <a href="classes.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
+      <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
         <i class="fa-solid fa-arrow-right"></i>
-        <span>Retour aux Classes</span>
+        <span>Retour à l'Accueil</span>
       </a>
     </div>
   </header>
 
   <!-- MAIN CONTENT -->
-  <main class="max-w-6xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-10">
+  <main class="max-w-6xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-8">
     
     <!-- Hero Section -->
     <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="space-y-3">
+      <div class="space-y-3 text-center md:text-left">
         <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
           <i class="fa-solid fa-trophy"></i>
           <span>قسم التفوق والنجاح (Ma Réussite)</span>
         </span>
-        <h2 class="text-3xl font-black text-gray-900">Organisation & Emploi du Temps</h2>
-        <p class="text-xs lg:text-sm text-gray-600 font-cairo leading-relaxed">
-          Suivez votre emploi du temps officiel par spécialité, année et groupe, avec détection automatique du jour actuel pour faciliter votre quotidien à l'ENSTP.
+        <h2 class="text-3xl font-black text-gray-900">Votre Espace Académique</h2>
+        <p class="text-xs lg:text-sm text-gray-600 font-cairo leading-relaxed max-w-2xl">
+          كل ما تحتاجه للنجاح في مسارك الدراسي في مكان واحد. اختر الخدمة التي تريدها أدناه للوصول السريع إليها.
         </p>
       </div>
       <div class="w-24 h-24 rounded-3xl bg-amber-50 text-amber-500 flex items-center justify-center text-4xl shadow-md flex-shrink-0">
@@ -118,320 +67,61 @@
       </div>
     </div>
 
-    <!-- SECTION: EMPLOI DU TEMPS -->
-    <div class="glass-card rounded-3xl p-6 lg:p-10 border border-white space-y-8 shadow-xl">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b pb-4">
-        <div>
-          <span class="px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs uppercase tracking-wider border border-emerald-100">
-            <i class="fa-solid fa-calendar-check mr-1"></i> Emploi du Temps Intelligent
-          </span>
-          <h3 class="text-2xl font-black text-gray-900 mt-2">Planning des Cours & TD</h3>
-        </div>
-        <div>
-          <span id="real-today-tag" class="px-4 py-2 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100">
-            Aujourd'hui : Chargement...
-          </span>
-        </div>
-      </div>
+    <!-- Sub-sections Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      <!-- Filtres : Département, Année et Groupe -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">Département / Spécialité :</label>
-          <select id="select-dept" onchange="updateYears()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
-            <option value="prep">Classes Préparatoires (تحضيري)</option>
-            <option value="dib">Infrastructures de Base - DIB (منشآت قاعدية)</option>
-            <option value="dms">Matériaux & Structures - DMS (مواد وهياكل)</option>
-          </select>
+      <!-- 1. Emploi du temps (الرابط هنا يتجه لملف الجدول) -->
+      <a href="emploi-du-temps.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
+        <div class="space-y-3">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition">
+            <i class="fa-solid fa-calendar-days"></i>
+          </div>
+          <h3 class="font-extrabold text-xl text-gray-900">Emploi du Temps</h3>
+          <p class="text-xs text-gray-500 font-cairo">استعمال الزمن الدقيق الخاص بفوجك (محاضرات، أعمال موجهة وتطبيقية).</p>
         </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">Année d'études :</label>
-          <select id="select-year" onchange="updateGroups()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
-            <!-- Dynamique -->
-          </select>
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
+          <span>Ouvrir le planning</span>
+          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
+      </a>
 
-        <div>
-          <label class="block text-xs font-bold text-gray-700 mb-1 font-cairo">Numéro de Groupe / Section :</label>
-          <select id="select-group" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
-            <!-- Dynamique -->
-          </select>
+      <!-- 2. Cours & TD -->
+      <button type="button" onclick="alert('قريباً: قسم لتحميل الدروس والملخصات بصيغة PDF.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+        <div class="space-y-3 w-full">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+          <h3 class="font-extrabold text-xl text-gray-900">Cours & TD</h3>
+          <p class="text-xs text-gray-500 font-cairo">تحميل الدروس، الملخصات، وسلاسل التمارين الخاصة بكل مادة.</p>
         </div>
-      </div>
-
-      <!-- Boutons des Jours -->
-      <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-        <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">Samedi</button>
-        <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">Dimanche</button>
-        <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">Lundi</button>
-        <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">Mardi</button>
-        <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">Mercredi</button>
-        <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">Jeudi</button>
-      </div>
-
-      <!-- Affichage du Planning -->
-      <div class="space-y-3">
-        <h4 id="schedule-title" class="font-extrabold text-sm text-gray-800 border-l-4 border-indigo-600 pl-3">Programme des cours</h4>
-        <div id="schedule-list" class="space-y-3">
-          <!-- Injecté dynamiquement -->
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
+          <span>Bientôt disponible</span>
+          <i class="fa-solid fa-clock"></i>
         </div>
-      </div>
+      </button>
+
+      <!-- 3. Examens -->
+      <button type="button" onclick="alert('قريباً: قسم للامتحانات السابقة ونماذج الاختبارات.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+        <div class="space-y-3 w-full">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:bg-rose-600 group-hover:text-white transition">
+            <i class="fa-solid fa-file-signature"></i>
+          </div>
+          <h3 class="font-extrabold text-xl text-gray-900">Examens</h3>
+          <p class="text-xs text-gray-500 font-cairo">مواضيع الامتحانات السابقة ونماذج للإجابة لمساعدتك على التحضير.</p>
+        </div>
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-rose-600 w-full">
+          <span>Bientôt disponible</span>
+          <i class="fa-solid fa-clock"></i>
+        </div>
+      </button>
+
     </div>
-
   </main>
 
   <!-- FOOTER -->
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
-    <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02). Projet Entrepreneuriat "Zéro Dinar".</p>
+    <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02).</p>
   </footer>
 
-  <!-- SCRIPT -->
-  <script>
-    const scheduleDatabase = {
-      'prep_1': {
-        'Sunday': [
-          { time: '08h00 - 09h30', subject: 'Physique 1 (Amphi/TD)', prof: 'Mme Zikem / M. Haddouche', room: 'Amphi A' },
-          { time: '09h35 - 11h05', subject: 'Analyse 1', prof: 'Mme Bellal', room: 'Classroom 16' }
-        ],
-        'Monday': [
-          { time: '08h00 - 09h30', subject: 'Algèbre 1', prof: 'Mme Hebbache', room: 'Classroom 16' },
-          { time: '09h35 - 11h05', subject: 'Chimie 1', prof: 'Mme Bali', room: 'Classroom 17' }
-        ],
-        'Tuesday': [
-          { time: '08h00 - 09h30', subject: 'Informatique 1', prof: 'Mme Bader', room: 'Labo Info' },
-          { time: '09h35 - 11h05', subject: 'Anglais 1', prof: 'M. Yala', room: 'Classroom 18' }
-        ],
-        'Wednesday': [
-          { time: '08h00 - 09h30', subject: 'Français 1', prof: 'Mme Belhadj', room: 'Classroom 16' },
-          { time: '09h35 - 11h05', subject: 'Economie Générale', prof: 'Mme Chouchaoui', room: 'Classroom 15' }
-        ],
-        'Thursday': [
-          { time: '08h00 - 11h05', subject: 'Travaux Pratiques (TP Physique / Chimie)', prof: 'Équipe Labo', room: 'Laboratoires' }
-        ],
-        'Saturday': [{ time: '09h00 - 12h00', subject: 'Séminaires / Rattrapages', prof: 'Direction', room: 'Amphi A' }]
-      },
-      'prep_2': {
-        'Saturday': [
-          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. Brahmi', room: 'Auditorium A' },
-          { time: '09h35 - 11h05', subject: 'Computer Science 3', prof: 'M. Ould Kaddour', room: 'Auditorium A' }
-        ],
-        'Sunday': [
-          { time: '08h00 - 11h05', subject: 'Physics 3', prof: 'M. Berroudji', room: 'Auditorium A' }
-        ],
-        'Monday': [
-          { time: '08h00 - 09h30', subject: 'Calculus 3', prof: 'M. Brahmi', room: 'Auditorium A' },
-          { time: '09h35 - 11h05', subject: 'Numerical Analysis 1', prof: 'M. Hamadi', room: 'Auditorium A' }
-        ],
-        'Tuesday': [
-          { time: '08h00 - 09h30', subject: 'Chemistry 3', prof: 'Mme Bouhara / M. Bendada', room: 'Auditorium A' },
-          { time: '09h35 - 11h05', subject: 'Fluid Mechanics', prof: 'M. Kellou', room: 'Auditorium A' },
-          { time: '11h10 - 12h40', subject: 'General Electricity', prof: 'M. Rahoui', room: 'Auditorium A' }
-        ],
-        'Wednesday': [
-          { time: '08h00 - 09h30', subject: 'Rational Mech 1', prof: 'Mme Zouadi', room: 'Auditorium A' },
-          { time: '09h35 - 11h05', subject: 'English 3', prof: 'M. Yala', room: 'Auditorium A' }
-        ],
-        'Thursday': [
-          { time: '08h00 - 12h40', subject: 'TP Lab (Chimie / Physique / Électronique)', prof: 'Équipe Labo', room: 'Laboratoires' }
-        ]
-      },
-      'dib_1': {
-        'Sunday': [
-          { time: '08h00 - 09h30', subject: 'SOM (Résistance des Matériaux)', prof: 'Mme Laib', room: 'Classroom 7' },
-          { time: '09h35 - 11h05', subject: 'Appl Hydr', prof: 'M. Boussadi', room: 'Classroom 8' },
-          { time: '11h10 - 12h40', subject: 'MMC', prof: 'M. Merdoud', room: 'Classroom 9' }
-        ],
-        'Monday': [
-          { time: '08h00 - 09h30', subject: 'Appl Geology', prof: 'M. Omraci', room: 'Classroom 7' },
-          { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'Mme Benoumechiara', room: 'Classroom 8' },
-          { time: '11h10 - 12h40', subject: 'Topo', prof: 'M. Alem', room: 'Classroom 9' }
-        ],
-        'Tuesday': [
-          { time: '08h00 - 09h30', subject: 'SOM', prof: 'Mme Laib', room: 'Classroom 6' },
-          { time: '09h35 - 11h05', subject: 'MMC', prof: 'M. Merdoud', room: 'Classroom 7' },
-          { time: '11h10 - 12h40', subject: 'Appl Hydr', prof: 'M. Rahmani', room: 'Classroom 8' }
-        ],
-        'Wednesday': [
-          { time: '08h00 - 09h30', subject: 'Ter Plan Env Sust', prof: 'M. Saadi', room: 'Classroom 7' },
-          { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'Mme Benoumechiara', room: 'Classroom 8' }
-        ],
-        'Thursday': [
-          { time: '08h00 - 11h00', subject: 'Practical Topo / CM', prof: 'Alem / Guettache', room: 'Labo' },
-          { time: '11h05 - 12h35', subject: 'Intelligence Artificielle (IA)', prof: 'M. Chami', room: 'Classroom 8' }
-        ],
-        'Saturday': [{ time: '09h35 - 11h05', subject: 'Constr Mat', prof: 'M. Badaoui', room: 'En ligne' }]
-      },
-      'dib_2': {
-        'Sunday': [
-          { time: '08h00 - 10h00', subject: 'Road Geot', prof: 'M. Derriche', room: 'Classroom 5' },
-          { time: '10h05 - 12h05', subject: 'RC (Béton Armé)', prof: 'M. Tafraout', room: 'Classroom 5' }
-        ],
-        'Monday': [
-          { time: '08h00 - 10h00', subject: 'Soil Mech 4', prof: 'M. Hamadi', room: 'Classroom 22' },
-          { time: '10h05 - 12h05', subject: 'FEM', prof: 'M. Mehiaoui', room: 'Classroom 22' }
-        ],
-        'Tuesday': [
-          { time: '08h00 - 09h30', subject: 'Road Sketch', prof: 'Goumettre / Hatri', room: 'Classroom 25' },
-          { time: '09h35 - 11h05', subject: 'Rock Mech', prof: 'M. Benamghar', room: 'Classroom 25' }
-        ],
-        'Wednesday': [
-          { time: '08h00 - 09h30', subject: 'Adv Struct Mech', prof: 'Assas', room: 'Classroom 5' },
-          { time: '09h35 - 11h05', subject: 'RC', prof: 'Benredouane', room: 'Classroom 5' }
-        ],
-        'Thursday': [
-          { time: '08h00 - 09h30', subject: 'Pres Concr / Railway', prof: 'Amieur / Gheffar', room: 'Classroom 5' },
-          { time: '13h00 - 16h00', subject: 'In Situ Visit / Chantiers', prof: 'Encadreurs', room: 'Terrain' }
-        ],
-        'Saturday': [{ time: '09h00 - 12h00', subject: 'Projet de Synthèse', prof: 'Département', room: 'Salles' }]
-      },
-      'dib_3': {
-        'Sunday': [
-          { time: '08h00 - 09h30', subject: 'Calcul Automatique des Structures', prof: 'M. Benouchfoun', room: 'Promo 19' },
-          { time: '09h35 - 11h05', subject: 'Management de Projets', prof: 'Mme Chiali', room: 'Promo 19' }
-        ],
-        'Monday': [
-          { time: '08h00 - 09h30', subject: 'Pathologie et Réhabilitation', prof: 'M. Fedghouche', room: 'Promo 19' },
-          { time: '09h35 - 11h05', subject: 'Optimisation en Génie Civil', prof: 'M. Fedghouche', room: 'Promo 19' }
-        ],
-        'Tuesday': [
-          { time: '08h00 - 09h30', subject: 'MMC Approfondie', prof: 'Mme Zahafi', room: 'Salle 19' },
-          { time: '09h35 - 11h05', subject: 'Dynamique des Sols 2', prof: 'M. Hadid', room: 'Promo 19' }
-        ],
-        'Wednesday': [
-          { time: '08h00 - 09h30', subject: 'Droit des TP', prof: 'M. Hamadi', room: 'Promo 19' },
-          { time: '09h35 - 11h05', subject: 'Matériaux Innovants', prof: 'Mme Msili', room: 'Promo 19' }
-        ],
-        'Thursday': [
-          { time: '08h00 - 09h30', subject: 'Lean Entreprenariat', prof: 'Intervenant', room: 'Salle 19' }
-        ],
-        'Saturday': [
-          { time: '08h00 - 09h30', subject: 'MIDAS', prof: 'M. Guerfi', room: 'Promo 19' }
-        ]
-      },
-      'dms_1': {
-        'Sunday': [{ time: '08h00 - 11h05', subject: 'SM 1 / App Go', prof: 'Mme Msili / M. Hebib', room: 'Sec 1-4' }],
-        'Monday': [{ time: '08h00 - 11h05', subject: 'SOM 1 / Topo', prof: 'M. Boukezzi / M. Lefkir', room: 'Sec 1-4' }],
-        'Tuesday': [{ time: '08h00 - 11h05', subject: 'T. English / SM 1', prof: 'Mme Khalfi / Mme Msili', room: 'Sec 1-4' }],
-        'Wednesday': [{ time: '08h00 - 11h05', subject: 'CM 1 / SOM 1', prof: 'Mme Zahafi / M. Annad', room: 'Sec 1-4' }],
-        'Thursday': [{ time: '08h00 - 11h05', subject: 'TPES / Topo', prof: 'Mme Saadi / Mme Benounas', room: 'Sec 1-4' }],
-        'Saturday': [{ time: '09h00 - 12h00', subject: 'TP App Geo', prof: 'M. Hebib', room: 'Labo' }]
-      },
-      'dms_2': {
-        'Sunday': [{ time: '08h00 - 12h05', subject: 'Structural Dynamics & RC 2', prof: 'M. Hadid / M. Belaoura', room: 'Sec 1-2' }],
-        'Monday': [{ time: '08h00 - 12h05', subject: 'Steel Structures / FEM', prof: 'Mme Boukezzi / M. Chikh', room: 'Sec 1-2' }],
-        'Tuesday': [{ time: '08h00 - 12h05', subject: 'Bridges 1 / Steel Structures', prof: 'M. Zourgui / Mme Boukezzi', room: 'Sec 1-2' }],
-        'Wednesday': [{ time: '08h00 - 12h05', subject: 'Roads 2 / Prestressed Concrete', prof: 'M. Bakhti / M. Belaoura', room: 'Sec 1-2' }],
-        'Thursday': [{ time: '08h00 - 11h35', subject: 'Buildings 1 / Soil Mechanics 4', prof: 'M. Ladjel / M. Guehlouz', room: 'Sec 1-2' }],
-        'Saturday': [{ time: '13h00 - 16h05', subject: 'Tunnels / Hydraulic Structures', prof: 'M. Hebib / M. Lefkir', room: 'Salles' }]
-      },
-      'dms_3': {
-        'Sunday': [{ time: '08h00 - 12h40', subject: 'Calcul Avancé & Béton Précontraint', prof: 'Équipe DMS', room: 'Promo' }],
-        'Monday': [{ time: '08h00 - 12h40', subject: 'Ouvrages d’Art & Géotechnique', prof: 'Équipe DMS', room: 'Promo' }],
-        'Tuesday': [{ time: '08h00 - 12h40', subject: 'Modélisation Numérique & BIM', prof: 'Équipe DMS', room: 'Promo' }],
-        'Wednesday': [{ time: '08h00 - 12h40', subject: 'Management & Sécurité', prof: 'Équipe DMS', room: 'Promo' }],
-        'Thursday': [{ time: '08h00 - 12h40', subject: 'Projets de Fin de Cycle / Visites', prof: 'Encadreurs', room: 'Terrain' }],
-        'Saturday': [{ time: '09h00 - 12h00', subject: 'Séminaires Spécialisés', prof: 'Experts', room: 'Amphi' }]
-      }
-    };
-
-    let selectedDay = 'Thursday';
-    const dayNamesFr = { 'Saturday': 'Samedi', 'Sunday': 'Dimanche', 'Monday': 'Lundi', 'Tuesday': 'Mardi', 'Wednesday': 'Mercredi', 'Thursday': 'Jeudi' };
-
-    function updateYears() {
-      const dept = document.getElementById('select-dept').value;
-      const yearSelect = document.getElementById('select-year');
-      yearSelect.innerHTML = '';
-
-      if (dept === 'prep') {
-        yearSelect.innerHTML = `
-          <option value="prep_1">1ère Année Préparatoire (1CP)</option>
-          <option value="prep_2">2ème Année Préparatoire (2CP)</option>
-        `;
-      } else if (dept === 'dib') {
-        yearSelect.innerHTML = `
-          <option value="dib_1">1ère Année Ingénieur (DIB)</option>
-          <option value="dib_2">2ème Année Ingénieur (DIB)</option>
-          <option value="dib_3">3ème Année Ingénieur (DIB)</option>
-        `;
-      } else if (dept === 'dms') {
-        yearSelect.innerHTML = `
-          <option value="dms_1">1ère Année Ingénieur (DMS)</option>
-          <option value="dms_2">2ème Année Ingénieur (DMS)</option>
-          <option value="dms_3">3ème Année Ingénieur (DMS)</option>
-        `;
-      }
-      updateGroups();
-    }
-
-    function updateGroups() {
-      const groupSelect = document.getElementById('select-group');
-      groupSelect.innerHTML = `
-        <option value="g1">Groupe 01 (Fouj 01)</option>
-        <option value="g2">Groupe 02 (Fouj 02)</option>
-        <option value="g3">Groupe 03 (Fouj 03)</option>
-        <option value="g4">Groupe 04 (Fouj 04)</option>
-        <option value="sec1">Section 01</option>
-        <option value="sec2">Section 02</option>
-      `;
-      renderSchedule();
-    }
-
-    function changeDay(day) {
-      selectedDay = day;
-      document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById(`day-${day}`);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      document.getElementById('schedule-title').innerText = `Programme des cours pour ${dayNamesFr[day] || day}`;
-      renderSchedule();
-    }
-
-    function detectCurrentDay() {
-      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      let today = days[new Date().getDay()];
-      if (today === 'Friday') today = 'Sunday';
-      
-      document.getElementById('real-today-tag').innerText = `Aujourd'hui : ${dayNamesFr[today] || today}`;
-      changeDay(today);
-    }
-
-    function renderSchedule() {
-      const yearKey = document.getElementById('select-year').value;
-      const groupKey = document.getElementById('select-group').value;
-      const container = document.getElementById('schedule-list');
-      container.innerHTML = '';
-
-      const items = (scheduleDatabase[yearKey] && scheduleDatabase[yearKey][selectedDay]) || [
-        { time: '08h00 - 12h00', subject: 'Cours Magistraux / TD', prof: 'Corps Enseignant', room: 'Amphi / Salles' }
-      ];
-
-      items.forEach(item => {
-        const row = document.createElement('div');
-        row.className = "p-4 bg-white/90 rounded-2xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs";
-        row.innerHTML = `
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs flex-shrink-0">
-              <i class="fa-solid fa-book"></i>
-            </div>
-            <div>
-              <h5 class="font-extrabold text-sm text-gray-900">${item.subject}</h5>
-              <p class="text-xs text-gray-500 font-cairo">Enseignant : <span class="font-bold text-gray-700">${item.prof}</span></p>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 text-xs font-bold text-gray-600">
-            <span class="px-3 py-1 rounded-lg bg-gray-100"><i class="fa-regular fa-clock mr-1 text-indigo-500"></i> ${item.time}</span>
-            <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700"><i class="fa-solid fa-location-dot mr-1"></i> ${item.room} (${groupKey.toUpperCase()})</span>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      updateYears();
-      detectCurrentDay();
-    });
-  </script>
 </body>
 </html>
