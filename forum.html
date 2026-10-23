@@ -10,7 +10,6 @@
   
   <style> 
     body { font-family: 'Cairo', sans-serif; }
-    /* تخصيص شريط التمرير */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -62,13 +61,8 @@
           </div>
           <div>
             <label class="block text-sm font-bold mb-1">الولاية (للدخول لغرفة ولايتك)</label>
-            <select id="wilayaInput" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-              <option value="16 - الجزائر">16 - الجزائر</option>
-              <option value="09 - البليدة">09 - البليدة</option>
-              <option value="31 - وهران">31 - وهران</option>
-              <option value="25 - قسنطينة">25 - قسنطينة</option>
-              <option value="19 - سطيف">19 - سطيف</option>
-            </select>
+            <!-- سيتم تعبئة الولايات عبر الجافاسكريبت -->
+            <select id="wilayaInput" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"></select>
           </div>
         </div>
 
@@ -86,7 +80,7 @@
   <!-- واجهة المنتدى الرئيسية -->
   <div id="forumScreen" class="hidden h-full flex flex-row relative">
     
-    <!-- القائمة الجانبية (الغرف) -->
+    <!-- القائمة الجانبية -->
     <aside class="w-72 bg-gray-900 text-white flex flex-col h-full shrink-0">
       <div class="p-4 border-b border-gray-800 flex items-center gap-3">
         <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
@@ -97,7 +91,6 @@
       </div>
 
       <div class="flex-1 overflow-y-auto p-3 space-y-6">
-        <!-- الغرف العامة -->
         <div>
           <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">القنوات العامة</p>
           <button onclick="selectChannel('general', 'Salle Général', 'عام')" class="w-full text-right p-2.5 rounded-lg hover:bg-gray-800 flex items-center gap-3 text-sm transition-colors text-blue-400 bg-gray-800/50">
@@ -105,11 +98,11 @@
           </button>
         </div>
 
-        <!-- غرف الولايات -->
+        <!-- غرف الولايات (سيتم تعبئتها ديناميكياً) -->
         <div>
-          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">غرف الولايات</p>
-          <div id="wilayaChannels" class="space-y-1">
-            <!-- سيتم توليد غرف الولايات هنا -->
+          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">غرف الولايات (69 ولاية)</p>
+          <div id="wilayaChannels" class="space-y-1 h-64 overflow-y-auto pr-1">
+            <!-- يتم التوليد في الجافاسكريبت -->
           </div>
         </div>
 
@@ -120,12 +113,11 @@
             <button onclick="openCreateRoomModal()" class="text-blue-400 hover:text-white transition text-xs" title="إنشاء غرفة"><i class="fa-solid fa-plus-circle"></i></button>
           </div>
           <div id="customChannels" class="space-y-1">
-            <!-- سيتم توليد غرف الطلبة هنا -->
+            <!-- يتم التوليد في الجافاسكريبت -->
           </div>
         </div>
       </div>
 
-      <!-- معلومات الطالب -->
       <div class="p-4 border-t border-gray-800 bg-gray-950 flex items-center justify-between">
         <div class="flex items-center gap-3 overflow-hidden">
           <div id="userAvatar" class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
@@ -138,9 +130,8 @@
       </div>
     </aside>
 
-    <!-- المحتوى الرئيسي (المنشورات) -->
+    <!-- المحتوى الرئيسي -->
     <main class="flex-1 flex flex-col bg-gray-100 h-full relative">
-      <!-- ترويسة الغرفة -->
       <header class="bg-white p-4 shadow-sm border-b flex justify-between items-center z-10">
         <div>
           <h2 id="channelTitle" class="text-lg font-black text-gray-800 flex items-center gap-2">
@@ -153,12 +144,10 @@
         </span>
       </header>
 
-      <!-- قائمة المنشورات -->
       <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24">
-        <!-- تضاف المنشورات هنا -->
+        <!-- المنشورات -->
       </div>
 
-      <!-- صندوق النشر (يشبه فيسبوك) -->
       <div class="absolute bottom-0 left-0 right-0 bg-white border-t p-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
         <div class="max-w-3xl mx-auto flex gap-3 items-end">
           <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold shrink-0 mb-1">
