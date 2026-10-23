@@ -1,219 +1,184 @@
-// استيراد المكتبات
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-// إعدادات Firebase الخاصة بك
-const firebaseConfig = {
-  apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
-  authDomain: "enstp-forum-c5a28.firebaseapp.com",
-  projectId: "enstp-forum-c5a28",
-  storageBucket: "enstp-forum-c5a28.firebasestorage.app",
-  messagingSenderId: "129732313908",
-  appId: "1:129732313908:web:c06215b2fde653b76c9b61",
-  measurementId: "G-D5SPDJHPMC"
-};
-
-// تهيئة التطبيق والخدمات
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
-
-// المتغيرات العامة
-let currentUser = null;
-let currentChannelId = 'general';
-let unsubscribePosts = null;
-
-// عناصر DOM
-const loadingOverlay = document.getElementById('loadingOverlay');
-const authOverlay = document.getElementById('authOverlay');
-const forumMain = document.getElementById('forumMain');
-const loginBtn = document.getElementById('googleLoginBtn');
-const authError = document.getElementById('authError');
+// --- إعدادات أولية ---
+const authScreen = document.getElementById('authScreen');
+const forumScreen = document.getElementById('forumScreen');
+const loginBtn = document.getElementById('loginBtn');
+const toggleBtn = document.getElementById('toggleBtn');
+const toggleText = document.getElementById('toggleText');
+const registerFields = document.getElementById('registerFields');
+const errorMsg = document.getElementById('errorMsg');
 const logoutBtn = document.getElementById('logoutBtn');
-const postsFeed = document.getElementById('postsFeed');
-const postContent = document.getElementById('postContent');
-const submitPostBtn = document.getElementById('submitPostBtn');
 
-// 1. التحقق من نتيجة إعادة التوجيه (عند العودة من صفحة جوجل)
-getRedirectResult(auth)
-  .then((result) => {
-    if (result) {
-      const email = result.user.email;
-      if (!email.toLowerCase().endsWith("@enstp.edu.dz")) {
-        authError.classList.remove('hidden');
-        signOut(auth);
-      }
-    }
-  })
-  .catch((error) => {
-    console.error("خطأ في نتيجة إعادة التوجيه:", error);
-  });
+let isLoginMode = true; // الوضع الافتراضي: تسجيل دخول
 
-// 2. زر تسجيل الدخول (يستخدم إعادة التوجيه بدلاً من النافذة المنبثقة)
-if (loginBtn) {
-  loginBtn.addEventListener('click', () => {
-    // إخفاء أي رسالة خطأ سابقة
-    authError.classList.add('hidden');
-    
-    // استخدام signInWithRedirect لتجنب حظر النوافذ المنبثقة
-    signInWithRedirect(auth, provider)
-      .catch((error) => {
-        console.error("خطأ أثناء بدء تسجيل الدخول:", error);
-        alert("حدث خطأ أثناء الاتصال بجوجل. يرجى المحاولة مرة أخرى.");
-      });
-  });
-}
-
-// 3. مراقبة حالة الجلسة
-onAuthStateChanged(auth, (user) => {
-  if (loadingOverlay) loadingOverlay.style.display = 'none';
-
-  if (user && user.email.toLowerCase().endsWith("@enstp.edu.dz")) {
-    currentUser = user;
-    authOverlay.classList.add('hidden');
-    forumMain.classList.remove('hidden');
-    
-    document.getElementById('userName').innerText = user.displayName || 'طالب';
-    document.getElementById('userEmail').innerText = user.email;
-    document.getElementById('userAvatar').src = user.photoURL || 'https://ui-avatars.com/api/?name=' + (user.displayName || 'Student') + '&background=random';
-
-    if (!unsubscribePosts) {
-      loadPosts(currentChannelId);
-    }
+// --- التبديل بين تسجيل الدخول وإنشاء حساب ---
+toggleBtn.addEventListener('click', () => {
+  isLoginMode = !isLoginMode;
+  if (isLoginMode) {
+    registerFields.classList.add('hidden');
+    loginBtn.innerText = 'تسجيل الدخول';
+    toggleText.innerText = 'ليس لديك حساب؟';
+    toggleBtn.innerText = 'إنشاء حساب جديد';
   } else {
-    currentUser = null;
-    authOverlay.classList.remove('hidden');
-    forumMain.classList.add('hidden');
-    if (user) signOut(auth);
+    registerFields.classList.remove('hidden');
+    loginBtn.innerText = 'إنشاء الحساب والدخول';
+    toggleText.innerText = 'لديك حساب بالفعل؟';
+    toggleBtn.innerText = 'تسجيل الدخول';
   }
+  errorMsg.classList.add('hidden');
 });
 
-// 4. تسجيل الخروج
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    if (unsubscribePosts) { unsubscribePosts(); unsubscribePosts = null; }
-    signOut(auth);
-  });
-}
-
-// 5. التبديل بين القنوات
-window.selectChannel = (channelId, channelTitle) => {
-  if (currentChannelId === channelId) return;
+// --- وظيفة إنشاء الحساب أو تسجيل الدخول ---
+loginBtn.addEventListener('click', () => {
+  const email = document.getElementById('emailInput').value.trim();
+  const pass = document.getElementById('passInput').value;
   
-  currentChannelId = channelId;
-  document.getElementById('currentChannelTitle').innerHTML = `<i class="fa-solid fa-hashtag text-gray-400"></i> ${channelTitle}`;
-  
-  document.querySelectorAll('.channel-btn').forEach(btn => {
-    btn.classList.remove('bg-gray-800', 'text-white');
-    btn.classList.add('text-gray-400');
-  });
-  event.currentTarget.classList.remove('text-gray-400');
-  event.currentTarget.classList.add('bg-gray-800', 'text-white');
-
-  if (currentUser) {
-    if (unsubscribePosts) unsubscribePosts();
-    loadPosts(channelId);
+  // التحقق من الإيميل
+  if (!email.endsWith('@enstp.edu.dz')) {
+    showError('يجب استخدام بريد ينتهي بـ @enstp.edu.dz');
+    return;
   }
-};
+  if (pass.length < 4) {
+    showError('كلمة السر يجب أن تكون 4 أحرف على الأقل');
+    return;
+  }
 
-// 6. تحميل المنشورات
-function loadPosts(channelId) {
-  if (!postsFeed) return;
-  
-  postsFeed.innerHTML = '<div class="flex justify-center py-10"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>';
+  // جلب الحسابات المحفوظة في المتصفح
+  let users = JSON.parse(localStorage.getItem('enstp_users')) || {};
 
-  const q = query(
-    collection(db, "posts"),
-    where("channelId", "==", channelId),
-    orderBy("createdAt", "desc")
-  );
+  if (isLoginMode) {
+    // --- تسجيل الدخول ---
+    if (users[email] && users[email].password === pass) {
+      // نجاح
+      loginUser(users[email]);
+    } else {
+      showError('البريد الإلكتروني أو كلمة السر غير صحيحة');
+    }
+  } else {
+    // --- إنشاء حساب جديد ---
+    const firstName = document.getElementById('firstNameInput').value.trim();
+    const lastName = document.getElementById('lastNameInput').value.trim();
+    const year = document.getElementById('yearInput').value;
 
-  unsubscribePosts = onSnapshot(q, (snapshot) => {
-    postsFeed.innerHTML = '';
-    if (snapshot.empty) {
-      postsFeed.innerHTML = `
-        <div class="text-center py-20 text-gray-400">
-          <i class="fa-regular fa-comment-dots text-5xl mb-4 opacity-50"></i>
-          <p class="font-bold">لا توجد منشورات هنا بعد.</p>
-          <p class="text-xs mt-1">كن أول من يبدأ النقاش!</p>
-        </div>`;
+    if (!firstName || !lastName) {
+      showError('يرجى إدخال الاسم واللقب');
+      return;
+    }
+    if (users[email]) {
+      showError('هذا البريد مسجل مسبقاً، يرجى تسجيل الدخول');
       return;
     }
 
-    snapshot.forEach((doc) => {
-      const post = doc.data();
-      const date = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString('ar-DZ', { hour: '2-digit', minute:'2-digit' }) : 'الآن';
-      const isMe = post.authorEmail === currentUser.email;
-      
-      const postElement = document.createElement('div');
-      postElement.className = `bg-white p-4 rounded-2xl shadow-sm border ${isMe ? 'border-blue-200 bg-blue-50/30' : 'border-gray-100'} flex flex-col gap-2 max-w-3xl mx-auto w-full`;
-      postElement.innerHTML = `
-        <div class="flex items-center justify-between border-b border-gray-50 pb-2">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full ${isMe ? 'bg-blue-600' : 'bg-gray-700'} text-white font-bold flex items-center justify-center text-sm shadow-sm">
-              ${post.authorName ? post.authorName.charAt(0) : 'ط'}
+    // حفظ المستخدم الجديد
+    const newUser = {
+      email: email,
+      password: pass,
+      firstName: firstName,
+      lastName: lastName,
+      year: year,
+      fullName: `${firstName} ${lastName}`
+    };
+    
+    users[email] = newUser;
+    localStorage.setItem('enstp_users', JSON.stringify(users));
+    loginUser(newUser);
+  }
+});
+
+function showError(msg) {
+  errorMsg.innerText = msg;
+  errorMsg.classList.remove('hidden');
+}
+
+// --- دالة تسجيل الدخول بنجاح ---
+function loginUser(user) {
+  // حفظ الجلسة الحالية
+  localStorage.setItem('enstp_currentUser', JSON.stringify(user));
+  
+  // إخفاء شاشة الدخول وإظهار المنتدى
+  authScreen.classList.add('hidden');
+  forumScreen.classList.remove('hidden');
+  forumScreen.classList.add('flex');
+
+  // تحديث بيانات الترويسة
+  document.getElementById('userAvatar').innerText = user.firstName.charAt(0);
+  document.getElementById('userInfo').innerText = `${user.fullName} | ${user.year}`;
+
+  // تحميل المنشورات
+  loadPosts();
+}
+
+// --- تسجيل الخروج ---
+logoutBtn.addEventListener('click', () => {
+  localStorage.removeItem('enstp_currentUser');
+  location.reload(); // إعادة تحميل الصفحة
+});
+
+// --- نظام المنشورات (يُحفظ في المتصفح) ---
+const postBtn = document.getElementById('postBtn');
+const postText = document.getElementById('postText');
+const postsContainer = document.getElementById('postsContainer');
+
+postBtn.addEventListener('click', () => {
+  const text = postText.value.trim();
+  if (!text) return;
+
+  const currentUser = JSON.parse(localStorage.getItem('enstp_currentUser'));
+  
+  const newPost = {
+    id: Date.now(),
+    author: currentUser.fullName,
+    email: currentUser.email,
+    year: currentUser.year,
+    content: text,
+    date: new Date().toLocaleString('ar-DZ', { hour: '2-digit', minute:'2-digit' })
+  };
+
+  // جلب المنشورات القديمة وإضافة الجديد
+  let posts = JSON.parse(localStorage.getItem('enstp_posts')) || [];
+  posts.unshift(newPost); // إضافة في الأعلى
+  localStorage.setItem('enstp_posts', JSON.stringify(posts));
+
+  postText.value = ''; // مسح الحقل
+  loadPosts(); // إعادة رسم المنشورات
+});
+
+function loadPosts() {
+  postsContainer.innerHTML = '';
+  let posts = JSON.parse(localStorage.getItem('enstp_posts')) || [];
+  const currentUser = JSON.parse(localStorage.getItem('enstp_currentUser'));
+
+  if (posts.length === 0) {
+    postsContainer.innerHTML = '<div class="text-center text-gray-400 mt-10"><i class="fa-regular fa-comment-dots text-4xl mb-2"></i><p>لا توجد منشورات بعد. كن أول من يكتب!</p></div>';
+    return;
+  }
+
+  posts.forEach(post => {
+    const isMe = post.email === currentUser.email;
+    const postHTML = `
+      <div class="bg-white p-4 rounded-xl shadow-sm border ${isMe ? 'border-blue-200' : 'border-gray-100'}">
+        <div class="flex justify-between items-start mb-2">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full ${isMe ? 'bg-blue-600' : 'bg-gray-700'} text-white flex items-center justify-center font-bold text-sm">
+              ${post.author.charAt(0)}
             </div>
             <div>
-              <p class="text-sm font-bold text-gray-800">${post.authorName} ${isMe ? '<span class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full mr-2">أنت</span>' : ''}</p>
-              <p class="text-[10px] text-gray-400 font-mono dir-ltr text-right">${post.authorEmail}</p>
+              <p class="text-sm font-bold">${post.author} ${isMe ? '<span class="text-[10px] bg-blue-100 text-blue-600 px-2 rounded-full mr-1">أنت</span>' : ''}</p>
+              <p class="text-[10px] text-gray-500">${post.year}</p>
             </div>
           </div>
-          <span class="text-[10px] text-gray-400 bg-gray-50 px-2 py-1 rounded-md"><i class="fa-regular fa-clock ml-1"></i>${date}</span>
+          <span class="text-xs text-gray-400">${post.date}</span>
         </div>
-        <p class="text-gray-700 text-sm whitespace-pre-line my-1 leading-relaxed">${post.content}</p>
-      `;
-      postsFeed.appendChild(postElement);
-    });
-  }, (error) => {
-    console.error("خطأ في جلب المنشورات:", error);
-    postsFeed.innerHTML = '<p class="text-center text-red-500 font-bold py-10">حدث خطأ في تحميل المنشورات.</p>';
+        <p class="text-gray-700 text-sm whitespace-pre-line">${post.content}</p>
+      </div>
+    `;
+    postsContainer.innerHTML += postHTML;
   });
 }
 
-// 7. نشر مشاركة جديدة
-if (submitPostBtn) {
-  submitPostBtn.addEventListener('click', async () => {
-    const text = postContent.value.trim();
-    if (!text) { postContent.focus(); return; }
-
-    submitPostBtn.disabled = true;
-    submitPostBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
-
-    try {
-      await addDoc(collection(db, "posts"), {
-        channelId: currentChannelId,
-        content: text,
-        authorName: currentUser.displayName || 'طالب المدرسة',
-        authorEmail: currentUser.email,
-        createdAt: serverTimestamp()
-      });
-
-      postContent.value = '';
-      postContent.style.height = 'auto';
-    } catch (error) {
-      console.error("خطأ أثناء النشر:", error);
-      alert("تعذر نشر المشاركة. تحقق من اتصالك بالإنترنت.");
-    } finally {
-      submitPostBtn.disabled = false;
-      submitPostBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>';
-    }
-  });
-}
-
-// 8. تمدد مربع النص
-if (postContent) {
-  postContent.addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-    if(this.value === '') this.style.height = 'auto';
-  });
-  
-  postContent.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      submitPostBtn.click();
-    }
-  });
-}
+// --- التحقق عند فتح الصفحة (هل المستخدم مسجل مسبقاً؟) ---
+window.addEventListener('DOMContentLoaded', () => {
+  const currentUser = localStorage.getItem('enstp_currentUser');
+  if (currentUser) {
+    loginUser(JSON.parse(currentUser));
+  }
+});
