@@ -224,6 +224,33 @@
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500">
     <p>© 2026 ENSTP القبة — تصميم فريق التطوير الطلابي.</p>
   </footer>
+<!-- زر فتح إغلاق المحادثة -->
+<button id="aiToggleBtn" class="fixed bottom-6 left-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-xl z-50 flex items-center justify-center transition-transform hover:scale-105">
+  💬 مساعد الطالب الذكي
+</button>
 
+<!-- نافذة المحادثة -->
+<div id="aiChatBox" class="fixed bottom-24 left-6 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 hidden flex-col overflow-hidden max-h-[500px]">
+  
+  <!-- رأس النافذة -->
+  <div class="bg-blue-600 text-white p-4 flex justify-between items-center font-bold">
+    <span>🤖 مساعد ENSTP الذكي</span>
+    <button id="closeAiBtn" class="text-white hover:text-gray-200">✕</button>
+  </div>
+
+  <!-- منطقة الرسائل -->
+  <div id="aiMessages" class="p-4 flex-1 overflow-y-auto space-y-3 text-sm h-80 bg-gray-50">
+    <div class="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[85%]">
+      مرحباً بك! أنا مساعدك الذكي لموقع دليل ENSTP. كيف يمكنني مساعدتك اليوم بخصوص استعمال الزمن أو المواد الدراسية؟
+    </div>
+  </div>
+
+  <!-- مدخل النص -->
+  <div class="p-3 border-t border-gray-200 flex gap-2 bg-white">
+    <input id="aiInput" type="text" placeholder="اسأل المساعد الذكي..." class="flex-1 p-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <button id="sendAiBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">إرسال</button>
+  </div>
+
+</div>
 </body>
 </html>
