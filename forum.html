@@ -11,18 +11,24 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
+  <!-- شاشة تحميل مبدئية -->
+  <div id="loadingScreen" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
+    <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+    <p class="font-bold text-gray-600">جاري التحقق...</p>
+  </div>
+
   <!-- شاشة تسجيل الدخول / إنشاء حساب -->
-  <div id="authScreen" class="fixed inset-0 bg-slate-900 bg-opacity-90 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-    <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md">
+  <div id="authScreen" class="fixed inset-0 bg-slate-900 bg-opacity-90 flex items-center justify-center z-40 p-4 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+      
       <div class="text-center mb-6">
         <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
           <i class="fa-solid fa-graduation-cap"></i>
         </div>
         <h2 class="text-2xl font-bold text-gray-800">المنتدى الطلابي</h2>
-        <p class="text-sm text-gray-500">خاص بطلبة المدرسة الوطنية العليا</p>
+        <p class="text-sm text-gray-500">خاص بطلبة المدرسة</p>
       </div>
 
-      <!-- الاستمارة -->
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-bold mb-1">البريد الإلكتروني</label>
@@ -33,44 +39,42 @@
           <input type="password" id="passInput" placeholder="********" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" dir="ltr">
         </div>
 
-        <!-- حقول إضافية تظهر فقط عند إنشاء حساب جديد -->
-        <div id="registerFields" class="hidden space-y-4">
+        <!-- حقول إضافية تظهر فقط عند إنشاء حساب -->
+        <div id="registerFields" class="hidden space-y-4 pt-2 border-t">
           <div>
             <label class="block text-sm font-bold mb-1">الاسم</label>
-            <input type="text" id="firstNameInput" placeholder="مثال: أحمد" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+            <input type="text" id="firstNameInput" placeholder="أحمد" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
           </div>
           <div>
             <label class="block text-sm font-bold mb-1">اللقب</label>
-            <input type="text" id="lastNameInput" placeholder="مثال: بن علي" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+            <input type="text" id="lastNameInput" placeholder="بن علي" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
           </div>
           <div>
             <label class="block text-sm font-bold mb-1">السنة الدراسية</label>
             <select id="yearInput" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
               <option value="1CP">السنة الأولى تحضيري (1CP)</option>
               <option value="2CP">السنة الثانية تحضيري (2CP)</option>
-              <option value="DIB">هندسة المنشآت القاعدية (DIB)</option>
-              <option value="DMS">هندسة المواد والهياكل (DMS)</option>
+              <option value="DIB">هندسة (DIB)</option>
+              <option value="DMS">هندسة (DMS)</option>
             </select>
           </div>
         </div>
 
-        <p id="errorMsg" class="text-red-500 text-sm font-bold text-center hidden"></p>
+        <p id="errorMsg" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded"></p>
 
-        <button id="loginBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition">تسجيل الدخول</button>
+        <button id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition">تسجيل الدخول</button>
         
         <div class="text-center mt-4 text-sm">
           <span id="toggleText" class="text-gray-500">ليس لديك حساب؟</span>
-          <button id="toggleBtn" class="text-blue-600 font-bold hover:underline">إنشاء حساب جديد</button>
+          <button id="toggleBtn" class="text-blue-600 font-bold hover:underline">إنشاء حساب</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- واجهة المنتدى (تظهر بعد تسجيل الدخول) -->
-  <div id="forumScreen" class="hidden flex-col h-screen max-w-4xl mx-auto w-full bg-white shadow-xl">
-    
-    <!-- الترويسة -->
-    <header class="bg-white p-4 border-b flex justify-between items-center shadow-sm">
+  <!-- واجهة المنتدى -->
+  <div id="forumScreen" class="hidden flex-col h-screen max-w-4xl mx-auto w-full bg-white shadow-xl relative">
+    <header class="bg-white p-4 border-b flex justify-between items-center shadow-sm z-10">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">
           <span id="userAvatar">U</span>
@@ -80,25 +84,22 @@
           <p class="text-xs text-gray-500" id="userInfo">طالب</p>
         </div>
       </div>
-      <button id="logoutBtn" class="text-gray-500 hover:text-red-500 transition"><i class="fa-solid fa-power-off"></i> خروج</button>
+      <button id="logoutBtn" class="text-gray-500 hover:text-red-500 transition flex items-center gap-1 text-sm font-bold"><i class="fa-solid fa-power-off"></i> خروج</button>
     </header>
 
-    <!-- المنشورات -->
-    <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+    <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 pb-24">
       <!-- تضاف المنشورات هنا -->
     </div>
 
-    <!-- صندوق النشر -->
-    <div class="p-4 bg-white border-t">
+    <div class="absolute bottom-0 left-0 right-0 p-4 bg-white border-t shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
       <div class="flex gap-2">
-        <textarea id="postText" rows="1" placeholder="ماذا تريد أن تقول..." class="w-full p-3 bg-gray-100 border rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none resize-none"></textarea>
-        <button id="postBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-xl font-bold transition"><i class="fa-solid fa-paper-plane"></i></button>
+        <textarea id="postText" rows="1" placeholder="شاركنا أفكارك أو استفساراتك..." class="w-full p-3 bg-gray-100 border rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none resize-none"></textarea>
+        <button id="postBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-xl font-bold transition flex items-center justify-center"><i class="fa-solid fa-paper-plane"></i></button>
       </div>
     </div>
-
   </div>
 
-  <!-- ربط ملف الجافاسكريبت -->
-  <script src="forum.js"></script>
+  <!-- استدعاء السكربت -->
+  <script type="module" src="forum.js"></script>
 </body>
 </html>
