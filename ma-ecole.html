@@ -4,82 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guide ENSTP - Mon École</title>
-
-  <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
     :root[data-theme="indigo"] {
       --bg-gradient: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12), transparent 40%),
                      radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.10), transparent 45%),
                      linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --primary-light: #eef2ff;
-      --primary-border: #c7d2fe;
+      --primary: #4f46e5; --primary-hover: #4338ca; --primary-light: #eef2ff;
     }
-    :root[data-theme="rose"] {
-      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.12), transparent 40%),
-                     radial-gradient(circle at 85% 85%, rgba(251, 113, 133, 0.10), transparent 45%),
-                     linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%);
-      --primary: #e11d48;
-      --primary-hover: #be123c;
-      --primary-light: #fff1f2;
-      --primary-border: #fecdd3;
-    }
-    :root[data-theme="emerald"] {
-      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
-                     radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.10), transparent 45%),
-                     linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      --primary: #059669;
-      --primary-hover: #047857;
-      --primary-light: #ecfdf5;
-      --primary-border: #a7f3d0;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
-    }
-    .ambient-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: var(--bg-gradient);
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.04);
-    }
-    .glass-nav {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-    }
-    .btn-custom {
-      background-color: var(--primary);
-      color: white;
-      transition: all 0.3s ease;
-    }
-    .btn-custom:hover {
-      background-color: var(--primary-hover);
-    }
+    body { font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
+    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: var(--bg-gradient); }
+    .glass-card { background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.04); }
+    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+    .btn-custom { background-color: var(--primary); color: white; transition: all 0.3s ease; }
+    .btn-custom:hover { background-color: var(--primary-hover); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
-
   <div class="ambient-bg"></div>
 
-  <!-- HEADER -->
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -89,21 +36,17 @@
           <p class="text-[11px] text-gray-500 font-cairo">المدرسة الوطنية العليا للأشغال العمومية</p>
         </div>
       </div>
-      <a href="classes.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
+      <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
         <i class="fa-solid fa-arrow-right"></i>
-        <span>Retour aux Classes</span>
+        <span>Retour à l'Accueil</span>
       </a>
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
   <main class="max-w-6xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-8">
-    
-    <!-- Hero Section -->
     <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white space-y-4">
       <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
-        <i class="fa-solid fa-school"></i>
-        <span>Section Principale</span>
+        <i class="fa-solid fa-school"></i> <span>Section Principale</span>
       </span>
       <h2 class="text-3xl font-black text-gray-900">Bienvenue à l'ENSTP Kouba / قسم مدرستي</h2>
       <p class="text-sm text-gray-600 font-cairo leading-relaxed">
@@ -111,10 +54,8 @@
       </p>
     </div>
 
-    <!-- Sub-sections Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      
-      <!-- Carte 1: Enseignants -->
+      <!-- رابط الأساتذة -->
       <a href="enseignants.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
         <div class="space-y-3">
           <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition">
@@ -129,8 +70,8 @@
         </div>
       </a>
 
-      <!-- Carte 2: Bâtiments & Amphis -->
-      <button type="button" onclick="openModal('Batiments & Amphis', 'قريباً: خريطة تفاعلية للمدرجات (A, B, C) وقاعات التدريس والمخابر العلمية.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+      <!-- المباني -->
+      <button type="button" onclick="alert('قريباً: خريطة تفاعلية للمدرجات (A, B, C) وقاعات التدريس والمخابر العلمية.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
         <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-2xl group-hover:bg-pink-600 group-hover:text-white transition">
             <i class="fa-solid fa-building-columns"></i>
@@ -144,8 +85,8 @@
         </div>
       </button>
 
-      <!-- Carte 3: Histoire & À propos -->
-      <button type="button" onclick="openModal('Histoire & À propos', 'قريباً: نبذة تاريخية شاملة عن تأسيس المدرسة الوطنية العليا للأشغال العمومية ودورها الريادي.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+      <!-- التاريخ -->
+      <button type="button" onclick="alert('قريباً: نبذة تاريخية شاملة عن تأسيس المدرسة الوطنية العليا للأشغال العمومية ودورها الريادي.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
         <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition">
             <i class="fa-solid fa-landmark"></i>
@@ -158,45 +99,11 @@
           <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
       </button>
-
     </div>
-
   </main>
 
-  <!-- MODAL DE NOTIFICATION -->
-  <div id="info-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-    <div class="glass-card rounded-3xl p-6 lg:p-8 max-w-md w-full space-y-4 shadow-2xl border border-white">
-      <div class="flex items-center justify-between border-b pb-3">
-        <h3 id="modal-title" class="font-black text-lg text-gray-900">Notification</h3>
-        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition text-lg px-2">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <p id="modal-body" class="text-xs text-gray-600 font-cairo leading-relaxed py-2"></p>
-      <div class="pt-2 text-right">
-        <button onclick="closeModal()" class="btn-custom px-5 py-2.5 rounded-xl font-bold text-xs shadow-md">
-          Fermer / إغلاق
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
     <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02).</p>
   </footer>
-
-  <script>
-    function openModal(title, message) {
-      document.getElementById('modal-title').innerText = title;
-      document.getElementById('modal-body').innerText = message;
-      document.getElementById('info-modal').classList.remove('hidden');
-    }
-
-    function closeModal() {
-      document.getElementById('info-modal').classList.add('hidden');
-    }
-  </script>
-
 </body>
 </html>
