@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>دليل ENSTP - أقسام الدليل وجدول التوقيت</title>
+  <title>دليل ENSTP - الصفحة الرئيسية</title>
 
   <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,29 +22,10 @@
       --primary: #4f46e5;
       --primary-hover: #4338ca;
       --primary-light: #eef2ff;
-      --primary-border: #c7d2fe;
-    }
-    :root[data-theme="rose"] {
-      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.12), transparent 40%),
-                     radial-gradient(circle at 85% 85%, rgba(251, 113, 133, 0.10), transparent 45%),
-                     linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%);
-      --primary: #e11d48;
-      --primary-hover: #be123c;
-      --primary-light: #fff1f2;
-      --primary-border: #fecdd3;
-    }
-    :root[data-theme="emerald"] {
-      --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
-                     radial-gradient(circle at 85% 85%, rgba(20, 184, 166, 0.10), transparent 45%),
-                     linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      --primary: #059669;
-      --primary-hover: #047857;
-      --primary-light: #ecfdf5;
-      --primary-border: #a7f3d0;
     }
 
     body {
-      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Cairo', sans-serif;
       background: #f8fafc;
       color: #1e293b;
     }
@@ -54,36 +35,29 @@
       z-index: -1;
       background: var(--bg-gradient);
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
-    }
     .glass-nav {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     }
-    .btn-custom {
-      background-color: var(--primary);
-      color: white;
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .icon-box {
       transition: all 0.3s ease;
     }
-    .btn-custom:hover {
-      background-color: var(--primary-hover);
-    }
-    .btn-day.active {
-      background: var(--primary);
+    .glass-card:hover .icon-box {
+      background-color: var(--primary);
       color: white;
-      box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.35);
-    }
-    .bento-card {
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .bento-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      transform: scale(1.1) rotate(-5deg);
     }
   </style>
 </head>
@@ -91,362 +65,165 @@
 
   <div class="ambient-bg"></div>
 
-  <!-- الهيدر / الشريط العلوي -->
+  <!-- الهيدر -->
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl btn-custom flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
+        <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
         <div>
-          <h1 class="font-bold text-gray-900 text-base leading-tight">دليل <span style="color:var(--primary)">ENSTP</span></h1>
-          <p class="text-[11px] text-gray-500">دليل الطالب الجديد - المدرسة الوطنية العليا للأشغال العمومية</p>
+          <h1 class="font-bold text-gray-900 text-base leading-tight">دليل ENSTP</h1>
+          <p class="text-[11px] text-gray-500">المدرسة الوطنية العليا للأشغال العمومية</p>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
-          <i class="fa-solid fa-house"></i>
-          <span>الرئيسية</span>
-        </a>
-      </div>
+      <button class="w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition">
+        <i class="fa-regular fa-bell"></i>
+      </button>
     </div>
   </header>
 
   <!-- المحتوى الرئيسي -->
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-12">
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-10">
     
-    <!-- قسم العنوان الرئيسي -->
-    <div class="text-center max-w-2xl mx-auto space-y-3">
-      <span class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
-        <i class="fa-solid fa-compass"></i>
-        <span>أقسام ومرافق الدليل</span>
-      </span>
-      <h2 class="text-3xl lg:text-4xl font-black text-gray-900">أقسام دليل الطالب</h2>
-      <p class="text-xs lg:text-sm text-gray-500">
-        تصفح الأقسام بوضوح وراحة تامة، مع إمكانية استعراض جدول التوقيت التفاعلي المدمج أدناه.
+    <!-- قسم الترحيب -->
+    <div class="text-center space-y-3">
+      <h2 class="text-3xl md:text-4xl font-black text-gray-900">مرحباً بك في فضائك الجامعي</h2>
+      <p class="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        اكتشف كل ما تحتاجه لتسهيل مسارك الدراسي وحياتك اليومية في المدرسة الوطنية العليا للأشغال العمومية (ENSTP). اختر القسم المناسب أدناه للبدء.
       </p>
     </div>
 
-    <!-- شبكة الأقسام (Bento Grid) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      
+    <!-- شبكة الأقسام -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
       <!-- 1. مدرستي -->
-      <a href="ecole.html" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="مدرستي"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-indigo-600 shadow-md">
-            <i class="fa-solid fa-school text-base"></i>
-          </div>
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-school"></i>
         </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-indigo-600">القسم #1</span>
-          <h3 class="text-xl font-black text-gray-900">مدرستي</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">تاريخ المدرسة، المدرجات (A, B, C)، المخابر وقائمة الأساتذة الرسمية.</p>
-        </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
-          <span>فتح القسم</span>
-          <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition"></i>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">مدرستي</h3>
+          <p class="text-xs text-gray-500 mt-1">تعرف على المدرسة، المرافق، والمكتبة</p>
         </div>
       </a>
 
-      <!-- 2. جدول التوقيت -->
-      <button type="button" onclick="document.getElementById('schedule-section').scrollIntoView({behavior: 'smooth'})" class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 cursor-pointer group text-right w-full">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100 w-full">
-          <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="جدول التوقيت"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-emerald-600 shadow-md">
-            <i class="fa-solid fa-calendar-days text-base"></i>
-          </div>
+      <!-- 2. إدارتي -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-file-signature"></i>
         </div>
-        <div class="space-y-1.5 flex-grow w-full">
-          <span class="text-[10px] font-bold uppercase text-emerald-600">جدول الحصص والتوقيت</span>
-          <h3 class="text-xl font-black text-gray-900">جدول التوقيت</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">تعرف تلقائياً على حصص اليوم ومواد السنوات التحضيرية والمنشآت القاعدية.</p>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">إدارتي</h3>
+          <p class="text-xs text-gray-500 mt-1">الوثائق، الشهادات، والإجراءات الإدارية</p>
         </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
-          <span>الانتقال للجدول</span>
-          <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition"></i>
-        </div>
-      </button>
+      </a>
 
-      <!-- 3. إدارتي -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="الإدارة"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-purple-600 shadow-md">
-            <i class="fa-solid fa-building-user text-base"></i>
-          </div>
+      <!-- 3. نجاحي -->
+      <a href="schedule.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-indigo-100 relative overflow-hidden">
+        <div class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl">استعمال الزمن</div>
+        <div class="icon-box w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl shadow-sm mt-2">
+          <i class="fa-solid fa-user-graduate"></i>
         </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-purple-600">القسم #2</span>
-          <h3 class="text-xl font-black text-gray-900">إدارتي</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">مصلحة الدراسة، التسجيلات، الشهادات وإدارة الغيابات والمصالح الإدارية.</p>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">نجاحي</h3>
+          <p class="text-xs text-gray-500 mt-1">الدروس، الامتحانات، وجداول التوقيت</p>
         </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-purple-600">
-          <span>قريباً</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </div>
+      </a>
 
-      <!-- 4. نجاحي -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="نجاحي"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-amber-600 shadow-md">
-            <i class="fa-solid fa-trophy text-base"></i>
-          </div>
+      <!-- 4. إقامتي الجامعية -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-bed"></i>
         </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-amber-600">القسم #3</span>
-          <h3 class="text-xl font-black text-gray-900">سر نجاحي</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">نصائح التفوق، مجموعات المراجعة، المطبوعات وحساب المعدلات.</p>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">إقامتي الجامعية</h3>
+          <p class="text-xs text-gray-500 mt-1">معلومات الإيواء والخدمات الجامعية</p>
         </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-amber-600">
-          <span>قيد الإنجاز</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </div>
+      </a>
 
-      <!-- 5. الإقامة الجامعية -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="الإقامة الجامعية"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-pink-600 shadow-md">
-            <i class="fa-solid fa-bed text-base"></i>
-          </div>
+      <!-- 5. الرياضة -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-dumbbell"></i>
         </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-pink-600">القسم #4</span>
-          <h3 class="text-xl font-black text-gray-900">إقامتي الجامعية</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">دليل الطالب المقيم: الإيواء، المطعم الجامعي والخدمات المتاحة.</p>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">الرياضة</h3>
+          <p class="text-xs text-gray-500 mt-1">الأنشطة الرياضية، الملاعب، والنوادي</p>
         </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600">
-          <span>قيد الإنجاز</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </div>
+      </a>
 
-      <!-- 6. النقل والإطعام -->
-      <div class="bento-card glass-card rounded-3xl p-6 border border-white flex flex-col justify-between space-y-4 group">
-        <div class="relative h-44 rounded-2xl overflow-hidden bg-gray-100">
-          <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="النقل والمطاعم"/>
-          <div class="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-cyan-600 shadow-md">
-            <i class="fa-solid fa-bus text-base"></i>
-          </div>
+      <!-- 6. ملتقى الطلبة -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-users-rays"></i>
         </div>
-        <div class="space-y-1.5 flex-grow">
-          <span class="text-[10px] font-bold uppercase text-cyan-600">القسم #5 و #6</span>
-          <h3 class="text-xl font-black text-gray-900">النقل والمطاعم</h3>
-          <p class="text-xs text-gray-600 leading-relaxed">خطوط الحافلات، المطاعم الاقتصادية ومحلات القبة المحيطة بالمدرسة.</p>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">ملتقى الطلبة</h3>
+          <p class="text-xs text-gray-500 mt-1">النوادي العلمية، الفعاليات، والنقاشات</p>
         </div>
-        <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-cyan-600">
-          <span>قيد الإنجاز</span>
-          <i class="fa-solid fa-clock"></i>
+      </a>
+
+      <!-- 7. النقل -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-bus-simple"></i>
         </div>
-      </div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">النقل</h3>
+          <p class="text-xs text-gray-500 mt-1">خطوط الحافلات، المحطات، والتوقيت</p>
+        </div>
+      </a>
+
+      <!-- 8. المطاعم -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-utensils"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">المطاعم</h3>
+          <p class="text-xs text-gray-500 mt-1">مطاعم الجامعة، المقاهي، وقوائم الطعام</p>
+        </div>
+      </a>
+
+      <!-- 9. التسوق -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg">التسوق</h3>
+          <p class="text-xs text-gray-500 mt-1">المحلات، المكتبات، والمراكز التجارية القريبة</p>
+        </div>
+      </a>
+
+      <!-- 10. Loisirs à alger -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-2xl shadow-sm">
+          <i class="fa-solid fa-map-location-dot"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg font-sans" dir="ltr">Loisirs à Alger</h3>
+          <p class="text-xs text-gray-500 mt-1">أماكن الترفيه والسياحة في العاصمة</p>
+        </div>
+      </a>
+
+      <!-- 11. Qr code -->
+      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group">
+        <div class="icon-box w-16 h-16 rounded-2xl bg-gray-100 text-gray-700 flex items-center justify-center text-2xl shadow-sm border border-gray-200">
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-lg font-sans" dir="ltr">QR Code</h3>
+          <p class="text-xs text-gray-500 mt-1">مسح الرموز للوصول السريع للخدمات</p>
+        </div>
+      </a>
 
     </div>
-
-    <!-- قسم: جدول التوقيت التفاعلي المدمج -->
-    <div id="schedule-section" class="glass-card rounded-3xl p-6 lg:p-10 border border-white space-y-8 shadow-xl">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b pb-4">
-        <div>
-          <span class="px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs uppercase tracking-wider border border-emerald-100 inline-flex items-center gap-1.5">
-            <i class="fa-solid fa-calendar-check"></i>
-            <span>التحديث التلقائي حسب اليوم</span>
-          </span>
-          <h3 class="text-2xl font-black text-gray-900 mt-2">جدول التوقيت الأسبوعي</h3>
-        </div>
-        <div class="flex items-center gap-2">
-          <span id="real-today-tag" class="px-4 py-2 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100">
-            اليوم: جارِ التحقق...
-          </span>
-        </div>
-      </div>
-
-      <!-- الفلاتر: التخصص والسنة -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label for="select-dept" class="block text-xs font-bold text-gray-700 mb-1">التخصص / القسم:</label>
-          <select id="select-dept" onchange="updateSubCategories()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
-            <option value="prep">السنة التحضيرية (Classes Préparatoires)</option>
-            <option value="dib">قسم المنشآت القاعدية (DIB)</option>
-            <option value="dms">قسم المواد والهياكل (DMS)</option>
-          </select>
-        </div>
-        <div>
-          <label for="select-year" class="block text-xs font-bold text-gray-700 mb-1">السنة الدراسية:</label>
-          <select id="select-year" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-xs font-bold bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
-            <!-- يُحقن بواسطة JavaScript -->
-          </select>
-        </div>
-      </div>
-
-      <!-- شريط الأيام -->
-      <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-        <button type="button" onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">السبت</button>
-        <button type="button" onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأحد</button>
-        <button type="button" onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الإثنين</button>
-        <button type="button" onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الثلاثاء</button>
-        <button type="button" onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الأربعاء</button>
-        <button type="button" onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-4 py-2.5 rounded-2xl font-bold text-xs bg-white text-gray-700 border border-gray-200 transition">الخميس</button>
-      </div>
-
-      <!-- قائمة البرنامج -->
-      <div class="space-y-3">
-        <h4 id="schedule-title" class="font-extrabold text-sm text-gray-800 border-r-4 border-indigo-600 pr-3">برنامج الحصص</h4>
-        <div id="schedule-list" class="space-y-3">
-          <!-- يُحقن بواسطة JavaScript -->
-        </div>
-      </div>
-    </div>
-
   </main>
 
-  <!-- الفوتر / أسفل الصفحة -->
+  <!-- الفوتر -->
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500">
-    <p>© 2026 المدرسة الوطنية العليا للأشغال العمومية بالقبة — قسم المنشآت القاعدية (المجموعة 02). مشروع مقاولاتية "صفر دينار".</p>
+    <p>© 2026 ENSTP القبة — تصميم فريق التطوير الطلابي.</p>
   </footer>
 
-  <!-- البرمجة باستخدام JAVASCRIPT -->
-  <script>
-    const scheduleDatabase = {
-      'prep_1': {
-        'Saturday': [{ time: '08:00 - 11:05', subject: 'Calculus 1', prof: 'أ. بن علي', room: 'مدرج A' }],
-        'Sunday': [{ time: '08:00 - 09:30', subject: 'Physics 1', prof: 'أ. قادي', room: 'مدرج A' }],
-        'Monday': [{ time: '09:35 - 11:05', subject: 'Chemistry 1', prof: 'أ. تواتي', room: 'مدرج B' }],
-        'Tuesday': [{ time: '08:00 - 11:05', subject: 'Computer Science 1', prof: 'أ. خان', room: 'مخبر الإعلام الآلي' }],
-        'Wednesday': [{ time: '08:00 - 09:30', subject: 'Algebra 1', prof: 'أ. زروقي', room: 'مدرج A' }],
-        'Thursday': [{ time: '08:00 - 12:40', subject: 'أعمال تطبيقية (فيزياء / كيمياء)', prof: 'فريق المخابر', room: 'المخابر' }]
-      },
-      'prep_2': {
-        'Saturday': [
-          { time: '08:00 - 09:30', subject: 'Calculus 3', prof: 'أ. إبراهيمي', room: 'المدرج الرئيسي A' },
-          { time: '09:35 - 11:05', subject: 'Computer Science 3', prof: 'أ. ولد قدور', room: 'المدرج الرئيسي A' }
-        ],
-        'Sunday': [{ time: '08:00 - 11:05', subject: 'Physics 3', prof: 'فريق الأساتذة', room: 'المدرج الرئيسي A' }],
-        'Monday': [
-          { time: '08:00 - 09:30', subject: 'Calculus 3', prof: 'أ. إبراهيمي', room: 'المدرج الرئيسي A' },
-          { time: '09:35 - 11:05', subject: 'Numerical Analysis 1', prof: 'أ. حمادي', room: 'المدرج الرئيسي A' }
-        ],
-        'Tuesday': [
-          { time: '08:00 - 09:30', subject: 'Chemistry 3', prof: 'أ. بوهارة', room: 'المدرج الرئيسي A' },
-          { time: '09:35 - 11:05', subject: 'Fluid Mechanics', prof: 'أ. قلو', room: 'المدرج الرئيسي A' }
-        ],
-        'Wednesday': [
-          { time: '08:00 - 09:30', subject: 'Rational Mech 1', prof: 'أ. زوادي', room: 'المدرج الرئيسي A' },
-          { time: '09:35 - 11:05', subject: 'English 3', prof: 'أ. يعلى', room: 'المدرج الرئيسي A' }
-        ],
-        'Thursday': [{ time: '08:00 - 12:40', subject: 'أعمال تطبيقية (كيمياء / فيزياء / كهرباء)', prof: 'فريق المخابر', room: 'المخابر' }]
-      },
-      'dib_1': {
-        'Saturday': [{ time: '09:35 - 11:05', subject: 'مواد البناء (Constr Mat)', prof: 'أ. بدوي', room: 'عن بُعد' }],
-        'Sunday': [
-          { time: '08:00 - 09:30', subject: 'مقاومة المواد (SOM)', prof: 'أ. العايب', room: 'القاعة 7' },
-          { time: '09:35 - 11:05', subject: 'الهيدروليك التطبيقي (Appl Hydr)', prof: 'أ. بوساعدي', room: 'القاعة 8' },
-          { time: '11:10 - 12:40', subject: 'ميكانيكا الأوساط المتصلة (MMC)', prof: 'أ. مردود', room: 'القاعة 9' }
-        ],
-        'Monday': [
-          { time: '08:00 - 09:30', subject: 'الجيولوجيا التطبيقية (Appl Geology)', prof: 'أ. عمرانشي', room: 'القاعة 7' },
-          { time: '09:35 - 11:05', subject: 'ميكانيكا التربة 1 (Soil Mech 1)', prof: 'أ. بن اومشيرة', room: 'القاعة 8' },
-          { time: '11:10 - 12:40', subject: 'الطبوغرافيا (Topo)', prof: 'أ. عالم', room: 'القاعة 9' }
-        ],
-        'Tuesday': [
-          { time: '08:00 - 09:30', subject: 'مقاومة المواد (SOM)', prof: 'أ. العايب', room: 'القاعة 6' },
-          { time: '09:35 - 11:05', subject: 'ميكانيكا الأوساط المتصلة (MMC)', prof: 'أ. مردود', room: 'القاعة 7' },
-          { time: '11:10 - 12:40', subject: 'الهيدروليك التطبيقي (Appl Hydr)', prof: 'أ. رحماني', room: 'القاعة 8' }
-        ],
-        'Wednesday': [
-          { time: '08:00 - 09:30', subject: 'تهيئة الإقليم والبيئة (Ter Plan Env Sust)', prof: 'أ. ساعدي', room: 'القاعة 7' },
-          { time: '09:35 - 11:05', subject: 'ميكانيكا التربة 1 (Soil Mech 1)', prof: 'أ. بن اومشيرة', room: 'القاعة 8' }
-        ],
-        'Thursday': [
-          { time: '08:00 - 11:00', subject: 'أعمال تطبيقية (طبوغرافيا / مواد / جيولوجيا)', prof: 'عالم / قتاش', room: 'المخبر' },
-          { time: '11:05 - 12:35', subject: 'الذكاء الاصطناعي (IA)', prof: 'أ. شامي', room: 'القاعة 8' }
-        ]
-      },
-      'dib_2': {
-        'Sunday': [{ time: '08:00 - 11:05', subject: 'الطرقات 2 (Routes 2)', prof: 'أ. مهدي', room: 'القاعة 3' }],
-        'Monday': [{ time: '09:35 - 12:40', subject: 'المنشآت الفنية (Ouvrages d\'art)', prof: 'أ. شريف', room: 'القاعة 4' }]
-      },
-      'dms_1': {
-        'Sunday': [{ time: '08:00 - 11:05', subject: 'الخرسانة المسلحة (Béton Armé)', prof: 'أ. قاسي', room: 'القاعة 1' }],
-        'Tuesday': [{ time: '09:35 - 12:40', subject: 'ديناميكية الهياكل', prof: 'أ. بلقاسم', room: 'القاعة 2' }]
-      }
-    };
-
-    let selectedDay = 'Sunday';
-    const dayNamesAr = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
-
-    function updateSubCategories() {
-      const dept = document.getElementById('select-dept').value;
-      const yearSelect = document.getElementById('select-year');
-      yearSelect.innerHTML = '';
-
-      if (dept === 'prep') {
-        yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
-      } else if (dept === 'dib') {
-        yearSelect.innerHTML = `<option value="dib_1">السنة الأولى منشآت قاعدية (1st DIB)</option><option value="dib_2">السنة الثانية منشآت قاعدية (2nd DIB)</option>`;
-      } else {
-        yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مواد وهياكل (1st DMS)</option>`;
-      }
-      renderSchedule();
-    }
-
-    function changeDay(day) {
-      selectedDay = day;
-      document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById(`day-${day}`);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      document.getElementById('schedule-title').innerText = `برنامج الحصص ليوم ${dayNamesAr[day] || day}`;
-      renderSchedule();
-    }
-
-    function detectCurrentDay() {
-      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      let today = days[new Date().getDay()];
-      if (today === 'Friday') today = 'Sunday'; // يوم الجمعة ينتقل تلقائياً للأحد
-      
-      const realTag = document.getElementById('real-today-tag');
-      if (realTag) {
-        realTag.innerText = `اليوم الحالي: ${dayNamesAr[today] || today}`;
-      }
-      changeDay(today);
-    }
-
-    function renderSchedule() {
-      const yearKey = document.getElementById('select-year').value;
-      const container = document.getElementById('schedule-list');
-      container.innerHTML = '';
-
-      const items = (scheduleDatabase[yearKey] && scheduleDatabase[yearKey][selectedDay]) || [
-        { time: '08:00 - 12:00', subject: 'محاضرات عامة / أعمال توجيهية', prof: 'فريق الأساتذة', room: 'مدرج المدرسة' }
-      ];
-
-      items.forEach(item => {
-        const row = document.createElement('div');
-        row.className = "p-4 bg-white/90 rounded-2xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm";
-        row.innerHTML = `
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs flex-shrink-0">
-              <i class="fa-solid fa-book"></i>
-            </div>
-            <div>
-              <h5 class="font-extrabold text-sm text-gray-900">${item.subject}</h5>
-              <p class="text-xs text-gray-500">الأستاذ: <span class="font-bold text-gray-700">${item.prof}</span></p>
-            </div>
-          </div>
-          <div class="flex flex-wrap items-center gap-2 text-xs font-bold text-gray-600">
-            <span class="px-3 py-1 rounded-lg bg-gray-100"><i class="fa-regular fa-clock ml-1 text-indigo-500"></i> ${item.time}</span>
-            <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700"><i class="fa-solid fa-location-dot ml-1"></i> ${item.room}</span>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      updateSubCategories();
-      detectCurrentDay();
-    });
-  </script>
 </body>
 </html>
