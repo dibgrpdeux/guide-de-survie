@@ -1,6 +1,6 @@
 // استيراد المكتبات
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // إعدادات Firebase الخاصة بك
@@ -20,15 +20,10 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// إضافة النطاق المصرح به ديناميكياً (لتجنب مشاكل تسجيل الدخول)
-provider.setCustomParameters({
-  prompt: 'select_account'
-});
-
 // المتغيرات العامة
 let currentUser = null;
 let currentChannelId = 'general';
-let unsubscribePosts = null; // لإلغاء الاستماع القديم عند تغيير الغرفة
+let unsubscribePosts = null;
 
 // عناصر DOM
 const loadingOverlay = document.getElementById('loadingOverlay');
@@ -41,71 +36,75 @@ const postsFeed = document.getElementById('postsFeed');
 const postContent = document.getElementById('postContent');
 const submitPostBtn = document.getElementById('submitPostBtn');
 
-// 1. تسجيل الدخول
+// 1. التحقق من نتيجة إعادة التوجيه (عند العودة من صفحة جوجل)
+getRedirectResult(auth)
+  .then((result) => {
+    if (result) {
+      const email = result.user.email;
+      if (!email.toLowerCase().endsWith("@enstp.edu.dz")) {
+        authError.classList.remove('hidden');
+        signOut(auth);
+      }
+    }
+  })
+  .catch((error) => {
+    console.error("خطأ في نتيجة إعادة التوجيه:", error);
+  });
+
+// 2. زر تسجيل الدخول (يستخدم إعادة التوجيه بدلاً من النافذة المنبثقة)
 if (loginBtn) {
   loginBtn.addEventListener('click', () => {
-    // نستخدم signInWithPopup لمنع مشكلة الشاشة البيضاء
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const email = result.user.email;
-        // التحقق من نطاق البريد
-        if (!email.toLowerCase().endsWith("@enstp.edu.dz")) {
-          authError.classList.remove('hidden');
-          signOut(auth);
-        } else {
-          authError.classList.add('hidden');
-        }
-      })
+    // إخفاء أي رسالة خطأ سابقة
+    authError.classList.add('hidden');
+    
+    // استخدام signInWithRedirect لتجنب حظر النوافذ المنبثقة
+    signInWithRedirect(auth, provider)
       .catch((error) => {
-        console.error("خطأ أثناء تسجيل الدخول:", error);
-        alert("حدث خطأ أثناء تسجيل الدخول. تأكد من السماح بالنوافذ المنبثقة (Popups).");
+        console.error("خطأ أثناء بدء تسجيل الدخول:", error);
+        alert("حدث خطأ أثناء الاتصال بجوجل. يرجى المحاولة مرة أخرى.");
       });
   });
 }
 
-// 2. مراقبة حالة الجلسة
+// 3. مراقبة حالة الجلسة
 onAuthStateChanged(auth, (user) => {
-  // إخفاء شاشة التحميل المبدئية
   if (loadingOverlay) loadingOverlay.style.display = 'none';
 
   if (user && user.email.toLowerCase().endsWith("@enstp.edu.dz")) {
-    // المستخدم مسجل ونطاقه صحيح
     currentUser = user;
     authOverlay.classList.add('hidden');
     forumMain.classList.remove('hidden');
     
-    // تحديث بيانات المستخدم في القائمة الجانبية
     document.getElementById('userName').innerText = user.displayName || 'طالب';
     document.getElementById('userEmail').innerText = user.email;
     document.getElementById('userAvatar').src = user.photoURL || 'https://ui-avatars.com/api/?name=' + (user.displayName || 'Student') + '&background=random';
 
-    // تحميل منشورات الغرفة الافتراضية
-    loadPosts(currentChannelId);
+    if (!unsubscribePosts) {
+      loadPosts(currentChannelId);
+    }
   } else {
-    // غير مسجل أو نطاقه غير صحيح
     currentUser = null;
     authOverlay.classList.remove('hidden');
     forumMain.classList.add('hidden');
-    if (user) signOut(auth); // طرد المستخدم إذا كان بريده غير صحيح
+    if (user) signOut(auth);
   }
 });
 
-// 3. تسجيل الخروج
+// 4. تسجيل الخروج
 if (logoutBtn) {
   logoutBtn.addEventListener('click', () => {
-    if (unsubscribePosts) unsubscribePosts(); // إيقاف الاستماع
+    if (unsubscribePosts) { unsubscribePosts(); unsubscribePosts = null; }
     signOut(auth);
   });
 }
 
-// 4. التبديل بين القنوات
+// 5. التبديل بين القنوات
 window.selectChannel = (channelId, channelTitle) => {
-  if (currentChannelId === channelId) return; // لا تفعل شيئاً إذا كانت نفس الغرفة
+  if (currentChannelId === channelId) return;
   
   currentChannelId = channelId;
   document.getElementById('currentChannelTitle').innerHTML = `<i class="fa-solid fa-hashtag text-gray-400"></i> ${channelTitle}`;
   
-  // تحديث تصميم الأزرار
   document.querySelectorAll('.channel-btn').forEach(btn => {
     btn.classList.remove('bg-gray-800', 'text-white');
     btn.classList.add('text-gray-400');
@@ -113,15 +112,15 @@ window.selectChannel = (channelId, channelTitle) => {
   event.currentTarget.classList.remove('text-gray-400');
   event.currentTarget.classList.add('bg-gray-800', 'text-white');
 
-  if (currentUser) loadPosts(channelId);
+  if (currentUser) {
+    if (unsubscribePosts) unsubscribePosts();
+    loadPosts(channelId);
+  }
 };
 
-// 5. تحميل المنشورات لحظياً
+// 6. تحميل المنشورات
 function loadPosts(channelId) {
   if (!postsFeed) return;
-  
-  // إلغاء الاستماع للسابق إذا وجد
-  if (unsubscribePosts) unsubscribePosts();
   
   postsFeed.innerHTML = '<div class="flex justify-center py-10"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>';
 
@@ -167,25 +166,18 @@ function loadPosts(channelId) {
       `;
       postsFeed.appendChild(postElement);
     });
-    
-    // التمرير للأسفل (أحدث المنشورات في الأعلى، لذا لا نحتاج للتمرير للأسفل)
   }, (error) => {
     console.error("خطأ في جلب المنشورات:", error);
     postsFeed.innerHTML = '<p class="text-center text-red-500 font-bold py-10">حدث خطأ في تحميل المنشورات.</p>';
   });
 }
 
-// 6. نشر مشاركة جديدة
+// 7. نشر مشاركة جديدة
 if (submitPostBtn) {
   submitPostBtn.addEventListener('click', async () => {
     const text = postContent.value.trim();
+    if (!text) { postContent.focus(); return; }
 
-    if (!text) {
-      postContent.focus();
-      return;
-    }
-
-    // تعطيل الزر أثناء الإرسال
     submitPostBtn.disabled = true;
     submitPostBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
 
@@ -198,20 +190,19 @@ if (submitPostBtn) {
         createdAt: serverTimestamp()
       });
 
-      postContent.value = ''; // مسح الحقل
-      postContent.style.height = 'auto'; // إعادة ضبط الطول
+      postContent.value = '';
+      postContent.style.height = 'auto';
     } catch (error) {
       console.error("خطأ أثناء النشر:", error);
       alert("تعذر نشر المشاركة. تحقق من اتصالك بالإنترنت.");
     } finally {
-      // إعادة الزر لحالته الطبيعية
       submitPostBtn.disabled = false;
       submitPostBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>';
     }
   });
 }
 
-// 7. جعل مربع النص يتمدد تلقائياً
+// 8. تمدد مربع النص
 if (postContent) {
   postContent.addEventListener('input', function() {
     this.style.height = 'auto';
@@ -219,7 +210,6 @@ if (postContent) {
     if(this.value === '') this.style.height = 'auto';
   });
   
-  // دعم الضغط على Enter للإرسال (مع Shift لسطر جديد)
   postContent.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
