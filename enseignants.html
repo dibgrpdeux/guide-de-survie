@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guide ENSTP - Corps Enseignant & Matières</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  
   <style>
     :root { --primary: #4f46e5; --primary-hover: #4338ca; --primary-light: #eef2ff; }
     body { font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif; background: #f8fafc; color: #0f172a; }
@@ -21,14 +23,17 @@
 <body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
 
   <div class="max-w-6xl mx-auto w-full space-y-8">
+    
+    <!-- Header -->
     <div class="text-center space-y-2">
       <span class="px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 font-bold text-xs uppercase tracking-wider border border-indigo-100">
         <i class="fa-solid fa-graduation-cap mr-1"></i> ENSTP Kouba — Mon École
       </span>
-      <h1 class="text-3xl lg:text-4xl font-black text-gray-900">Corps Enseignant par Année & Matière</h1>
-      <p class="text-xs lg:text-sm text-gray-500 font-cairo">اختر السنة الدراسية (أولى أو ثانية تحضيري)، ثم انقر على المادة لعرض الأساتذة والاطلاع على ملفاتهم الشخصية.</p>
+      <h1 class="text-3xl lg:text-4xl font-black text-gray-900">Corps Enseignant</h1>
+      <p class="text-xs lg:text-sm text-gray-500 font-cairo">اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.</p>
     </div>
 
+    <!-- 1. اختيار السنة -->
     <div class="flex flex-wrap items-center justify-center gap-4">
       <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-6 py-3 rounded-2xl font-bold text-sm bg-white text-gray-700 border border-gray-200 shadow-sm transition-all flex items-center gap-2">
         <i class="fa-solid fa-1"></i><span>1ère Année Préparatoire (1CP)</span>
@@ -38,71 +43,152 @@
       </button>
     </div>
 
+    <!-- 2. اختيار المادة -->
     <div class="glass-card p-5 rounded-3xl border border-white space-y-3">
       <span class="text-xs font-bold text-gray-400 block uppercase tracking-wider">Sélectionner une Matière / اختر المادة:</span>
       <div id="subjects-container" class="flex flex-wrap gap-2"></div>
     </div>
 
+    <!-- 3. شبكة الأساتذة -->
     <div id="teachers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
   </div>
 
-  <!-- Modal -->
+  <!-- Modal: بطاقة الأستاذ -->
   <div id="teacher-modal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md hidden flex items-center justify-center p-4">
     <div class="glass-card bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 border border-white shadow-2xl relative max-h-[90vh] overflow-y-auto">
-      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition">
+      
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition z-10">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
+      <!-- رأس البطاقة -->
       <div class="flex flex-col sm:flex-row items-center gap-5 border-b pb-6">
-        <div id="modal-img-box" class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center text-3xl font-black shadow-lg overflow-hidden flex-shrink-0"></div>
+        <div id="modal-img-box" class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center text-3xl font-black shadow-lg overflow-hidden flex-shrink-0">
+          <!-- الصورة ستوضع هنا -->
+        </div>
         <div class="space-y-1 text-center sm:text-left">
           <h2 id="modal-name" class="text-2xl font-black text-gray-900"></h2>
           <p id="modal-grade" class="text-xs font-bold text-indigo-600 uppercase tracking-wide"></p>
           <p id="modal-email" class="text-xs font-semibold text-gray-500 flex items-center justify-center sm:justify-start gap-1.5 pt-1">
-            <i class="fa-solid fa-envelope text-indigo-500"></i><span></span>
+            <i class="fa-solid fa-envelope text-indigo-500"></i>
+            <span></span>
           </p>
         </div>
       </div>
 
+      <!-- تفاصيل البطاقة -->
       <div class="space-y-4 text-xs text-gray-600 leading-relaxed font-cairo">
         <div>
           <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-book-bookmark text-indigo-500 mr-1.5"></i> Matière / Module:</h4>
           <p id="modal-modules" class="bg-indigo-50/60 p-3 rounded-xl border border-indigo-100 font-semibold text-indigo-900"></p>
         </div>
+
         <div id="modal-advice-box">
           <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-comment-dots text-amber-500 mr-1.5"></i> Conseil aux étudiants:</h4>
           <p id="modal-advice" class="bg-amber-50/60 p-3 rounded-xl border border-amber-100 italic text-amber-900"></p>
         </div>
+
         <div id="modal-research-box">
           <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-microscope text-emerald-500 mr-1.5"></i> Recherche:</h4>
           <p id="modal-research" class="bg-emerald-50/60 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p>
         </div>
+
         <div id="modal-links-box">
           <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-link text-cyan-500 mr-1.5"></i> Liens utiles:</h4>
           <div id="modal-links" class="flex flex-wrap gap-2 pt-1"></div>
         </div>
       </div>
+
     </div>
   </div>
 
   <script>
+    // قاعدة بيانات الأساتذة مع ربط أسماء الصور
     const teachersData = {
       '1cp': [
-        { id: 'haddouche', name: 'HADDOUCHE Abdeslam', grade: 'Professor (Enseignant Permanent)', email: 'a.haddouche@enstp.edu.dz', subject: 'Physique 1', year: '1ère année préparatoire', advice: 'Time management + self confidence.', research: 'Quantum Supersymmetry, Theoretical Nuclear Structure.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/abdeslam-haddouche-46a420a6' }] },
-        { id: 'zikem', name: 'ZIKEM Afifa', grade: 'Professor (Enseignant Permanent)', email: 'a.zikem@enstp.edu.dz', subject: 'Physique 1', year: '1ère année préparatoire', advice: "Soyez réguliers, curieux et persévérants.", research: 'Contribution to the study of the physical properties of some double perovskite crystals.' },
-        { id: 'makhfi', name: 'MAKHFI', email: 'makhfi@enstp.edu.dz', subject: 'Algèbre 1', year: '1ère année préparatoire' },
-        { id: 'hebbache', name: 'HEBBACHE Zineb', grade: 'Professor (Enseignant Permanent)', email: 'zinebhebache@gmail.com', subject: 'Algèbre 1', year: '1ère année préparatoire', advice: "Improve yourselves and don't waste your time.", research: 'Codes over skew rings.', links: [{ label: 'Google Scholar', url: 'https://share.google/TvrlY2iAfZWaqEcJZ' }] },
-        { id: 'bali', name: 'BALI', email: 'bali@enstp.edu.dz', subject: 'Chimie 1', year: '1ère année préparatoire' },
-        { id: 'bader', name: 'BADER', email: 'bader@enstp.edu.dz', subject: 'Informatique 1', year: '1ère année préparatoire' },
-        { id: 'yala', name: 'YALA Ahmed', grade: 'Professor (Enseignant Permanent)', email: 'a.yala@enstp.edu.dz', subject: 'Anglais 1', year: '1ère année préparatoire', advice: 'Do not study engineering only to pass exams; study it to become someone who can solve real life problems.', research: 'The Use of Mobile Assisted Language Learning to Foster Students EFL Sentence Writing.', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=fVI2fEUAAAAJ&hl=fr' }] }
+        { id: 'haddouche', name: 'HADDOUCHE Abdeslam', grade: 'Professor (Enseignant Permanent)', email: 'a.haddouche@enstp.edu.dz', subject: 'Physique 1', advice: 'Time management + self confidence.', research: 'Quantum Supersymmetry, Theoretical Nuclear Structure.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/abdeslam-haddouche-46a420a6' }], photo: 'haddouche.png' },
+        { id: 'zikem', name: 'ZIKEM Afifa', grade: 'Professor (Enseignant Permanent)', email: 'a.zikem@enstp.edu.dz', subject: 'Physique 1', advice: "À l'université, vous allez parfois rencontrer des difficultés... Soyez réguliers, curieux et persévérants.", research: 'Contribution to the study of the physical properties of some double perovskite crystals via first principles methods.' },
+        { id: 'kias_1', name: 'KIAS', grade: 'Enseignant', email: 'm.kias@enstp.edu.dz', subject: 'Physique 1' },
+        { id: 'benyettou_1', name: 'BENYETTOU Fethi', grade: 'Enseignant Permanent', email: 'f.benyettou@enstp.edu.dz', subject: 'Physique 1' },
+        { id: 'ouanoufi', name: 'OUANOUFI', grade: 'Enseignant', email: 'ouanoufi@enstp.edu.dz', subject: 'Physique 1' },
+        
+        { id: 'bellal', name: 'BELLAL', grade: 'Enseignant', email: 'r.bellal@enstp.edu.dz', subject: 'Analyse 1' },
+        { id: 'kechiche', name: 'KECHICHE', grade: 'Enseignant', email: 'kechiche@enstp.edu.dz', subject: 'Analyse 1' },
+        { id: 'benahmed', name: 'BENAHMED', grade: 'Enseignant', email: 'benahmed@enstp.edu.dz', subject: 'Analyse 1' },
+        
+        { id: 'makhfi', name: 'MAKHFI', grade: 'Enseignant', email: 'makhfi@enstp.edu.dz', subject: 'Algèbre 1' },
+        { id: 'hebbache', name: 'HEBBACHE Zineb', grade: 'Professor (Enseignant Permanent)', email: 'zinebhebache@gmail.com', subject: 'Algèbre 1', advice: "Improve yourselves and don't waste your time.", research: 'Codes over skew rings.', links: [{ label: 'Google Scholar', url: 'https://share.google/TvrlY2iAfZWaqEcJZ' }] },
+        
+        { id: 'chouchaoui', name: 'CHOUCHAOUI', grade: 'Enseignant', email: 'chouchaoui@enstp.edu.dz', subject: 'Proba Stat' },
+        { id: 'masrour', name: 'MASROUR', grade: 'Enseignant', email: 'masrour@enstp.edu.dz', subject: 'Proba Stat' },
+        
+        { id: 'bali', name: 'BALI', grade: 'Enseignant', email: 'bali@enstp.edu.dz', subject: 'Chimie 1' },
+        { id: 'benaissa_1', name: 'BENAISSA S.', grade: 'Enseignant', email: 's.benaissa@enstp.edu.dz', subject: 'Chimie 1' },
+        { id: 'ferhat', name: 'FERHAT', grade: 'Vacataire', email: 'ferhat@enstp.edu.dz', subject: 'Chimie 1' },
+        { id: 'bouchama', name: 'BOUCHAMA', grade: 'Vacataire', email: 'bouchama@enstp.edu.dz', subject: 'Chimie 1' },
+        { id: 'boudiaf', name: 'BOUDIAF', grade: 'Vacataire', email: 'boudiaf@enstp.edu.dz', subject: 'Chimie 1' },
+        
+        { id: 'bader', name: 'BADER', grade: 'Enseignant', email: 'bader@enstp.edu.dz', subject: 'Info 1' },
+        { id: 'rezgui', name: 'REZGUI', grade: 'Vacataire', email: 'rezgui@enstp.edu.dz', subject: 'Info 1' },
+        { id: 'rouibah', name: 'ROUIBAH', grade: 'Vacataire', email: 'rouibah@enstp.edu.dz', subject: 'Info 1' },
+        
+        { id: 'mahrez', name: 'MAHREZ', grade: 'Enseignant', email: 'mahrez@enstp.edu.dz', subject: 'Ingénierie Humaine 1' },
+        { id: 'chouchaoui_eco', name: 'CHOUCHAOUI', grade: 'Enseignant', email: 'chouchaoui.eco@enstp.edu.dz', subject: 'Economie Gle' },
+        
+        { id: 'yala', name: 'YALA Ahmed', grade: 'Professor (Enseignant Permanent)', email: 'a.yala@enstp.edu.dz', subject: 'Anglais 1', advice: 'Do not study engineering only to pass exams; study it to become someone who can solve real life problems.', research: "The Use of Mobile Assisted Language Learning to Foster Students' EFL Sentence Writing.", links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=fVI2fEUAAAAJ&hl=fr' }], photo: 'yalla.png' },
+        { id: 'khalfi', name: 'KHALFI', grade: 'Enseignant', email: 'khalfi@enstp.edu.dz', subject: 'Anglais 1' },
+        { id: 'hassaine', name: 'HASSAINE', grade: 'Enseignant', email: 'hassaine@enstp.edu.dz', subject: 'Anglais 1' },
+        
+        { id: 'belhadj', name: 'BELHADJ F.', grade: 'Enseignant', email: 'f.belhadj@enstp.edu.dz', subject: 'Français 1' },
+        { id: 'ouslimane', name: 'OUSLIMANE S.', grade: 'Vacataire', email: 's.ouslimane@enstp.edu.dz', subject: 'Français 1' },
+        
+        { id: 'benkraled', name: 'BENKRALED', grade: 'Vacataire', email: 'benkraled@enstp.edu.dz', subject: 'Dessin Technique' },
+        { id: 'azzouz', name: 'AZZOUZ', grade: 'Vacataire', email: 'azzouz@enstp.edu.dz', subject: 'Dessin Technique' },
+        { id: 'nasri', name: 'NASRI', grade: 'Vacataire', email: 'nasri@enstp.edu.dz', subject: 'Dessin Technique' },
+        { id: 'boubidi', name: 'BOUBIDI', grade: 'Vacataire', email: 'boubidi@enstp.edu.dz', subject: 'Dessin Technique' }
       ],
+      
       '2cp': [
-        { id: 'berroudji', name: 'BERROUDJI Sid-Ahmed', grade: 'Professor (Enseignant Permanent)', email: 's.berroudji@enstp.edu.dz', subject: 'Physique 3 / MDF', year: '2ème année préparatoire', modules: 'Physics 3, Physics 4, Fluids mechanics', advice: 'Travaillez régulièrement.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/sid-ahmed-berroudji/' }] },
-        { id: 'hamadi', name: 'HAMADI Ahmed', grade: 'Professor (Enseignant Permanent)', email: 'a.hamadi@enstp.edu.dz', subject: 'Analyse Numérique 2', year: '2ème année préparatoire', advice: 'Il faut suivre tous vos cours et TD sans aucune absence pour assurer vos succès.', research: 'Structure Algorithmique de graphes parfaits.' },
-        { id: 'bendada', name: 'BENDADA Kheiredine', grade: 'Professor (Enseignant Permanent)', email: 'k.bendada@enstp.edu.dz', subject: 'Chimie 3', year: '2ème année préparatoire', modules: 'Chimie des solutions et Chimie organique', advice: 'Développer votre curiosité scientifique.', research: 'Caractérisation des paramètres thermodynamiques de surface des roches réservoirs pétroliers.', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?hl=fr&user=Oy0kr_UAAAAJ' }] },
-        { id: 'bouhara', name: 'BOUHARA Safia', grade: 'Professor (Enseignant Permanent)', email: 's.bouhara@enstp.edu.dz', subject: 'Chimie 3', year: '2ème année préparatoire', advice: 'Soyez respectueux, patients et ne pas se decourager.', research: 'Adsorption du glyphosate sur les nanotubes de carbone.', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=AK2HZyYAAAAJ&hl=fr' }] },
-        { id: 'rahoui', name: 'RAHOUI Adel', grade: 'Professor (Enseignant Permanent)', email: 'a.rahoui@enstp.edu.dz', subject: 'Électricité Générale', year: '2ème année préparatoire', modules: 'Électricité Générale S3 / Électronique Générale S4', research: 'Commande, observation et synchronisation avancées des convertisseurs d’électronique de puissance.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/adelrahoui' }] },
-        { id: 'chiali', name: 'CHIALI Soumiya', grade: 'Professor (Enseignant Permanent)', email: 's.chiali@enstp.edu.dz', subject: 'Ingénierie 1', year: '2ème année préparatoire', advice: "Lorsqu'on entreprend un travail, il faut le faire avec soin.", research: 'Valorisation des vases de barrage en technique routière.' }
+        { id: 'berroudji', name: 'BERROUDJI Sid-Ahmed', grade: 'Professor (Enseignant Permanent)', email: 's.berroudji@enstp.edu.dz', subject: 'Physique 3 / MDF', modules: 'Physics 3, Physics 4, Fluids mechanics', advice: 'Travaillez régulièrement et ne baissez pas les bras.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/sid-ahmed-berroudji/' }], photo: 'berroudji.png' },
+        { id: 'toumi', name: 'TOUMI', grade: 'Enseignant', email: 'toumi@enstp.edu.dz', subject: 'Physique 3' },
+        { id: 'kellou', name: 'KELLOU H.', grade: 'Enseignant', email: 'h.kellou@enstp.edu.dz', subject: 'Physique 3 / MDF' },
+        { id: 'kias_2', name: 'KIAS', grade: 'Enseignant', email: 'm.kias@enstp.edu.dz', subject: 'Physique 3' },
+        { id: 'meddah', name: 'MEDDAH', grade: 'Vacataire', email: 'meddah@enstp.edu.dz', subject: 'Physique 3' },
+        { id: 'taibi', name: 'TAIBI', grade: 'Vacataire', email: 'taibi@enstp.edu.dz', subject: 'Physique 3' },
+        
+        { id: 'brahmi', name: 'BRAHMI', grade: 'Enseignant', email: 'brahmi@enstp.edu.dz', subject: 'Analyse 3' },
+        { id: 'dehimi', name: 'DEHIMI', grade: 'Enseignant', email: 'dehimi@enstp.edu.dz', subject: 'Analyse 3' },
+        { id: 'boulatiour', name: 'BOULATIOUR', grade: 'Vacataire', email: 'boulatiour@enstp.edu.dz', subject: 'Analyse 3' },
+        
+        { id: 'hamadi', name: 'HAMADI Ahmed', grade: 'Professor (Enseignant Permanent)', email: 'a.hamadi@enstp.edu.dz', subject: 'Analyse Numérique 2', advice: 'Il faut suivre tous vos cours et TD sans aucune absence pour assurer vos succès.', research: 'Structure Algorithmique de graphes parfaits.' },
+        { id: 'kiouche', name: 'KIOUCHE', grade: 'Enseignant', email: 's.khouche@enstp.edu.dz', subject: 'Analyse Numérique 2' },
+        
+        { id: 'dib', name: 'DIB K.', grade: 'Enseignant', email: 'k.dib@enstp.edu.dz', subject: 'Chimie 3' },
+        { id: 'bendada', name: 'BENDADA Kheiredine', grade: 'Professor (Enseignant Permanent)', email: 'k.bendada@enstp.edu.dz', subject: 'Chimie 3', modules: 'Chimie des solutions et Chimie organique', advice: 'Je conseille aux étudiants de développer leur curiosité scientifique, de ne pas hésiter à poser des questions et de toujours chercher à comprendre...', research: 'Caractérisation des paramètres thermodynamiques de surface des roches réservoirs pétroliers...', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?hl=fr&user=Oy0kr_UAAAAJ' }], photo: 'bendada.png' },
+        { id: 'haouchine', name: 'HAOUCHINE', grade: 'Enseignant', email: 'haouchine@enstp.edu.dz', subject: 'Chimie 3' },
+        { id: 'bouhara', name: 'BOUHARA Safia', grade: 'Professor (Enseignant Permanent)', email: 's.bouhara@enstp.edu.dz', subject: 'Chimie 3', advice: "Je conseille les étudiants d'être respectueux, patients et ne pas se décourager.", research: 'Adsorption du glyphosate (herbicide) sur les nanotubes de carbone et bore azote.', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=AK2HZyYAAAAJ&hl=fr' }] },
+        
+        { id: 'rahoui', name: 'RAHOUI Adel', grade: 'Professor (Enseignant Permanent)', email: 'a.rahoui@enstp.edu.dz', subject: 'Electricité Gle', modules: 'Électricité Générale S3 / Électronique Générale S4', research: 'Ma thématique de recherche porte sur la commande, l’observation et la synchronisation avancées des convertisseurs d’électronique de puissance...', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/adelrahoui' }, { label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Adel_Rahoui' }], photo: 'rahoui.png' },
+        { id: 'benyettou_2', name: 'BENYETTOU Fethi', grade: 'Professor (Enseignant Permanent)', email: 'f.benyettou@enstp.edu.dz', subject: 'Electricité Gle', advice: 'Cherchez, vous trouvez.', research: 'Modélisation et simulation des nano-structures BQs, PQs, et NFs pour le photovoltaïque.', links: [{ label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Benyettou-Fethi-2' }] },
+        { id: 'boudina', name: 'BOUDINA Nour El Houda', grade: 'Enseignant Vacataire', email: 'nourelhouda.boudina@enstp.edu.dz', subject: 'Electricité Gle', advice: "Ne cessez jamais d'apprendre et de croire en vous. Construisez votre carrière professionnelle sur les bases théoriques acquises...", links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/nour-el-houda-boudina-93215b2b5' }] },
+        { id: 'nemouchi', name: 'NEMOUCHI', grade: 'Vacataire', email: 'nemouchi@enstp.edu.dz', subject: 'Electricité Gle' },
+        
+        { id: 'ould_kaddour', name: 'OULD KADDOUR', grade: 'Enseignant', email: 'm.ouladkaddour@enstp.edu.dz', subject: 'Info 3' },
+        { id: 'lhaddad', name: 'LHADDAD', grade: 'Enseignant', email: 's.lhaddad@enstp.edu.dz', subject: 'Info 3' },
+        { id: 'larbi', name: 'LARBI', grade: 'Vacataire', email: 'b.larbi@enstp.edu.dz', subject: 'Info 3' },
+        
+        { id: 'zouadi', name: 'ZOUADI N.', grade: 'Vacataire', email: 'n.zouadi@enstp.edu.dz', subject: 'Meca Rationnelle 1' },
+        { id: 'guerbas', name: 'GUERBAS', grade: 'Vacataire', email: 'guerbas@enstp.edu.dz', subject: 'Meca Rationnelle 1' },
+        { id: 'mezrag', name: 'MEZRAG', grade: 'Vacataire', email: 'mezrag@enstp.edu.dz', subject: 'Meca Rationnelle 1' },
+        
+        { id: 'chiali', name: 'CHIALI Soumiya', grade: 'Professor (Enseignant Permanent)', email: 's.chiali@enstp.edu.dz', subject: 'Ingénierie 1', advice: "Lorsqu'on entreprend un travail, il faut le faire avec soin et le mener à la perfection.", research: 'Valorisation des vases de barrage en technique routière.' },
+        { id: 'oumoussa', name: 'OUMOUSSA', grade: 'Vacataire', email: 'oumoussa@enstp.edu.dz', subject: 'Ingénierie 1' },
+        
+        { id: 'azzi', name: 'AZZI', grade: 'Enseignant', email: 'azzi@enstp.edu.dz', subject: 'Anglais 3' },
+        { id: 'omar', name: 'BELLABES Omar', grade: 'Enseignant', email: 'o.bellabes@enstp.edu.dz', subject: 'Anglais 3' },
+        
+        { id: 'benyettou_tce', name: 'BENYETTOU', grade: 'Enseignant', email: 'f.benyettou@enstp.edu.dz', subject: "Technique d'expression" }
       ]
     };
 
@@ -113,6 +199,7 @@
       selectedYear = year;
       document.getElementById('btn-1cp').className = `btn-year px-6 py-3 rounded-2xl font-bold text-sm border border-gray-200 transition ${year === '1cp' ? 'active' : 'bg-white text-gray-700'}`;
       document.getElementById('btn-2cp').className = `btn-year px-6 py-3 rounded-2xl font-bold text-sm border border-gray-200 transition ${year === '2cp' ? 'active' : 'bg-white text-gray-700'}`;
+      
       selectedSubject = 'Toutes';
       renderSubjects();
       renderTeachers();
@@ -122,12 +209,17 @@
       const subjectsBox = document.getElementById('subjects-container');
       const list = teachersData[selectedYear];
       const uniqueSubjects = ['Toutes', ...new Set(list.map(t => t.subject))];
+
       subjectsBox.innerHTML = '';
       uniqueSubjects.forEach(sub => {
         const btn = document.createElement('button');
         btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'}`;
         btn.innerText = sub;
-        btn.onclick = () => { selectedSubject = sub; renderSubjects(); renderTeachers(); };
+        btn.onclick = () => {
+          selectedSubject = sub;
+          renderSubjects();
+          renderTeachers();
+        };
         subjectsBox.appendChild(btn);
       });
     }
@@ -135,20 +227,29 @@
     function renderTeachers() {
       const grid = document.getElementById('teachers-grid');
       grid.innerHTML = '';
+
       let list = teachersData[selectedYear];
-      if (selectedSubject !== 'Toutes') { list = list.filter(t => t.subject === selectedSubject); }
+      if (selectedSubject !== 'Toutes') {
+        list = list.filter(t => t.subject === selectedSubject);
+      }
 
       list.forEach(t => {
         const card = document.createElement('div');
         card.className = "glass-card p-5 rounded-3xl border border-white space-y-3 hover:shadow-xl transition cursor-pointer flex flex-col justify-between";
         card.onclick = () => openModal(t);
+
         card.innerHTML = `
           <div class="space-y-2">
             <span class="text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100 uppercase">${t.subject}</span>
             <h3 class="font-bold text-base text-gray-900">${t.name}</h3>
-            <p class="text-xs text-gray-500 flex items-center gap-1 truncate"><i class="fa-solid fa-envelope text-indigo-400"></i> ${t.email}</p>
+            <p class="text-xs text-gray-500 flex items-center gap-1 truncate">
+              <i class="fa-solid fa-envelope text-indigo-400"></i> ${t.email}
+            </p>
           </div>
-          <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600"><span>Afficher la fiche</span><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
+            <span>Afficher la fiche</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
         `;
         grid.appendChild(card);
       });
@@ -156,34 +257,59 @@
 
     function openModal(t) {
       document.getElementById('modal-name').innerText = t.name;
-      document.getElementById('modal-grade').innerText = t.grade || 'Enseignant Permanent à l\'ENSTP';
+      document.getElementById('modal-grade').innerText = t.grade || 'Enseignant';
       document.getElementById('modal-email').querySelector('span').innerText = t.email;
       document.getElementById('modal-modules').innerText = t.modules || t.subject;
 
       const advBox = document.getElementById('modal-advice-box');
-      if (t.advice) { advBox.classList.remove('hidden'); document.getElementById('modal-advice').innerText = t.advice; } else { advBox.classList.add('hidden'); }
+      if (t.advice) {
+        advBox.classList.remove('hidden');
+        document.getElementById('modal-advice').innerText = t.advice;
+      } else {
+        advBox.classList.add('hidden');
+      }
 
       const resBox = document.getElementById('modal-research-box');
-      if (t.research) { resBox.classList.remove('hidden'); document.getElementById('modal-research').innerText = t.research; } else { resBox.classList.add('hidden'); }
+      if (t.research) {
+        resBox.classList.remove('hidden');
+        document.getElementById('modal-research').innerText = t.research;
+      } else {
+        resBox.classList.add('hidden');
+      }
 
       const linksBox = document.getElementById('modal-links-box');
       const linksContainer = document.getElementById('modal-links');
       if (t.links && t.links.length > 0) {
         linksBox.classList.remove('hidden');
         linksContainer.innerHTML = '';
-        t.links.forEach(l => { linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1 rounded-lg bg-cyan-50 text-cyan-700 border border-cyan-200 text-xs font-bold hover:bg-cyan-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`; });
-      } else { linksBox.classList.add('hidden'); }
+        t.links.forEach(l => {
+          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1 rounded-lg bg-cyan-50 text-cyan-700 border border-cyan-200 text-xs font-bold hover:bg-cyan-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
+        });
+      } else {
+        linksBox.classList.add('hidden');
+      }
 
+      // إعداد الصورة أو الحرف الأول
       const imgBox = document.getElementById('modal-img-box');
-      const initials = t.name.split(' ').map(n => n[0]).join('').substring(0, 2);
-      imgBox.innerHTML = initials;
+      if (t.photo) {
+        // إذا كان للأستاذ صورة، نعرضها. ونضع (onerror) في حال لم يتم العثور على الملف، نرجع للأحرف الأولى
+        imgBox.innerHTML = `<img src="${t.photo}" alt="${t.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}';">`;
+      } else {
+        // إذا لم تكن هناك صورة، نعرض الأحرف الأولى
+        const initials = t.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+        imgBox.innerHTML = initials;
+      }
 
       document.getElementById('teacher-modal').classList.remove('hidden');
     }
 
-    function closeModal() { document.getElementById('teacher-modal').classList.add('hidden'); }
+    function closeModal() {
+      document.getElementById('teacher-modal').classList.add('hidden');
+    }
 
-    window.addEventListener('DOMContentLoaded', () => { selectYear('1cp'); });
+    window.addEventListener('DOMContentLoaded', () => {
+      selectYear('1cp');
+    });
   </script>
 </body>
 </html>
