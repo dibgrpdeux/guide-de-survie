@@ -17,10 +17,10 @@ const db = getFirestore(app);
 
 let isLoginMode = true;
 let currentUserData = null;
-let currentChannelId = 'general';
-let unsubscribePosts = null;
+let currentChannelId = 'general_posts';
+let currentChannelType = 'posts'; // 'posts' أو 'chat'
+let unsubscribeMessages = null;
 
-// قائمة الولايات الـ 58 (الرسمية)
 const wilayas = [
   "01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة",
   "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة",
@@ -30,7 +30,6 @@ const wilayas = [
   "49 - تيميمون", "50 - برج باجي مختار", "51 - أولاد جلال", "52 - بني عباس", "53 - عين صالح", "54 - عين قزام", "55 - تقرت", "56 - جانت", "57 - المغير", "58 - المنيعة"
 ];
 
-// DOM Elements
 const loadingScreen = document.getElementById('loadingScreen');
 const authScreen = document.getElementById('authScreen');
 const forumScreen = document.getElementById('forumScreen');
@@ -43,12 +42,10 @@ const postsContainer = document.getElementById('postsContainer');
 const postBtn = document.getElementById('postBtn');
 const postText = document.getElementById('postText');
 
-// تعبئة الولايات
 const wilayaSelect = document.getElementById('wilayaInput');
-wilayaSelect.innerHTML = ''; // تفريغ القائمة أولاً
 wilayas.forEach(w => { wilayaSelect.innerHTML += `<option value="${w}">${w}</option>`; });
 
-// --- الدخول والتسجيل ---
+// --- Auth ---
 toggleBtn.addEventListener('click', () => {
   isLoginMode = !isLoginMode;
   errorMsg.classList.add('hidden');
@@ -101,7 +98,6 @@ submitBtn.addEventListener('click', async () => {
 
 function showError(msg) { errorMsg.innerText = msg; errorMsg.classList.remove('hidden'); }
 
-// --- حالة المستخدم ---
 onAuthStateChanged(auth, async (user) => {
   loadingScreen.classList.add('hidden');
   if (user) {
@@ -119,10 +115,11 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById('userInfo').innerText = `${currentUserData.year} | ${currentUserData.wilaya}`;
 
     renderChannels();
-    selectChannel('general', 'Salle Général', 'النقاشات العامة');
+    // فتح غرفة المنشورات العامة افتراضياً
+    selectChannel('general_posts', 'Salle Général', 'شارك أفكارك مع الجميع', 'posts');
   } else {
     currentUserData = null;
-    if (unsubscribePosts) unsubscribePosts();
+    if (unsubscribeMessages) unsubscribeMessages();
     authScreen.classList.remove('hidden');
     forumScreen.classList.add('hidden');
   }
@@ -130,62 +127,62 @@ onAuthStateChanged(auth, async (user) => {
 
 document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
 
-// --- الغرف ---
+// --- القنوات والغرف ---
 function renderChannels() {
-  const wilayaContainer = document.getElementById('wilayaChannels');
-  wilayaContainer.innerHTML = '';
-  wilayas.forEach(w => {
-    const isCurrent = w === currentUserData.wilaya;
-    wilayaContainer.innerHTML += `
-      <button onclick="selectChannel('wilaya_${w}', '${w}', 'غرفة أبناء ولاية ${w}')" 
-        class="w-full text-right p-2.5 rounded-lg hover:bg-gray-800 flex items-center gap-3 text-xs text-gray-300 ${isCurrent ? 'border border-gray-700 bg-gray-800/30' : ''}">
-        <i class="fa-solid fa-location-dot text-emerald-500"></i> ${w}
-        ${isCurrent ? '<span class="text-[9px] bg-emerald-900 text-emerald-300 px-1.5 rounded ml-auto">ولايتك</span>' : ''}
-      </button>
-    `;
-  });
-
   const customContainer = document.getElementById('customChannels');
   onSnapshot(collection(db, "rooms"), (snapshot) => {
     customContainer.innerHTML = '';
     if (snapshot.empty) customContainer.innerHTML = '<div class="text-xs text-gray-500 px-2">لا توجد غرف.</div>';
-    snapshot.forEach((doc) => {
-      const room = doc.data();
+    snapshot.forEach((docSnap) => {
+      const room = docSnap.data();
+      const icon = room.type === 'chat' ? 'fa-comments text-green-400' : 'fa-newspaper text-blue-400';
       customContainer.innerHTML += `
-        <button onclick="selectChannel('room_${doc.id}', '${room.name}', 'غرفة طلابية')" 
+        <button onclick="selectChannel('room_${docSnap.id}', '${room.name}', 'غرفة طلابية', '${room.type}')" 
           class="w-full text-right p-2.5 rounded-lg hover:bg-gray-800 flex items-center gap-3 text-xs text-gray-300">
-          <i class="fa-solid fa-comments text-purple-400"></i> ${room.name}
+          <i class="fa-solid ${icon}"></i> ${room.name}
         </button>
       `;
     });
   });
 }
 
-window.selectChannel = (id, title, subtitle) => {
+window.selectChannel = (id, title, subtitle, type) => {
   currentChannelId = id;
-  document.getElementById('channelTitle').innerHTML = `<i class="fa-solid fa-hashtag text-blue-500"></i> ${title}`;
+  currentChannelType = type; // 'posts' أو 'chat'
+  
+  document.getElementById('channelTitle').innerHTML = `<i class="fa-solid ${type === 'chat' ? 'fa-comments text-green-500' : 'fa-globe text-blue-500'}"></i> ${title}`;
   document.getElementById('channelSubtitle').innerText = subtitle;
   
-  // تحديث تصميم الأزرار
-  document.querySelectorAll('aside button').forEach(btn => btn.classList.remove('bg-gray-800', 'text-blue-400'));
-  if(event && event.currentTarget) {
-    event.currentTarget.classList.add('bg-gray-800', 'text-blue-400');
+  const badge = document.getElementById('channelTypeBadge');
+  if (type === 'chat') {
+    badge.innerText = 'دردشة مباشرة';
+    badge.className = "text-[10px] bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold";
+    postText.placeholder = "اكتب رسالة دردشة...";
+  } else {
+    badge.innerText = 'منشورات';
+    badge.className = "text-[10px] bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold";
+    postText.placeholder = "بماذا تفكر؟...";
   }
 
-  loadPosts(id);
+  // تحديث تصميم الأزرار
+  document.querySelectorAll('aside button').forEach(btn => btn.classList.remove('bg-gray-800', 'text-blue-400', 'text-green-400'));
+  if(event && event.currentTarget) event.currentTarget.classList.add('bg-gray-800', type === 'chat' ? 'text-green-400' : 'text-blue-400');
+
+  loadMessages(id, type);
 };
 
 window.createRoom = async () => {
   const name = document.getElementById('newRoomName').value.trim();
+  const type = document.getElementById('newRoomType').value;
   if (!name) return alert("أدخل اسم الغرفة");
   try {
-    await addDoc(collection(db, "rooms"), { name, createdBy: currentUserData.name, createdAt: serverTimestamp() });
+    await addDoc(collection(db, "rooms"), { name, type, createdBy: currentUserData.name, createdAt: serverTimestamp() });
     document.getElementById('createRoomModal').classList.add('hidden');
     document.getElementById('newRoomName').value = '';
   } catch (e) { alert("خطأ في الإنشاء"); }
 };
 
-// --- المنشورات والتعليقات ---
+// --- إرسال رسالة أو منشور ---
 postBtn.addEventListener('click', async () => {
   const text = postText.value.trim();
   if (!text) return;
@@ -194,6 +191,7 @@ postBtn.addEventListener('click', async () => {
   try {
     await addDoc(collection(db, "posts"), {
       channelId: currentChannelId,
+      channelType: currentChannelType,
       content: text,
       authorName: currentUserData.name,
       authorYear: currentUserData.year,
@@ -203,65 +201,90 @@ postBtn.addEventListener('click', async () => {
     });
     postText.value = '';
     postText.style.height = 'auto';
-  } catch (e) { alert("تعذر النشر"); } 
-  finally { postBtn.disabled = false; postBtn.innerText = 'نشر'; }
+  } catch (e) { alert("تعذر الإرسال"); } 
+  finally { postBtn.disabled = false; postBtn.innerText = 'إرسال'; }
 });
 
-function loadPosts(channelId) {
-  if (unsubscribePosts) unsubscribePosts();
+// --- تحميل الرسائل/المنشورات ---
+function loadMessages(channelId, type) {
+  if (unsubscribeMessages) unsubscribeMessages();
   postsContainer.innerHTML = '<div class="text-center mt-10 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl"></i></div>';
 
+  // جلب البيانات من قاعدة البيانات (الكل في مجموعة posts لكننا نفرق بينهم بـ channelId)
   const q = query(collection(db, "posts"), where("channelId", "==", channelId), orderBy("createdAt", "desc"));
 
-  unsubscribePosts = onSnapshot(q, (snapshot) => {
+  unsubscribeMessages = onSnapshot(q, (snapshot) => {
     postsContainer.innerHTML = '';
     if (snapshot.empty) {
-      postsContainer.innerHTML = '<div class="text-center text-gray-400 mt-10">لا توجد منشورات. كن الأول!</div>';
+      postsContainer.innerHTML = `<div class="text-center text-gray-400 mt-10">لا توجد ${type === 'chat' ? 'رسائل' : 'منشورات'} بعد.</div>`;
       return;
     }
 
-    snapshot.forEach((docSnap) => {
+    // إذا كانت دردشة، نعكس الترتيب لكي تكون الأحدث في الأسفل (مثل واتساب)
+    let docs = [];
+    snapshot.forEach(doc => docs.push(doc));
+    if (type === 'chat') docs.reverse(); 
+
+    docs.forEach((docSnap) => {
       const post = docSnap.data();
       const postId = docSnap.id;
       const isMe = post.authorEmail === currentUserData.email;
-      const date = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString('ar-DZ') : 'الآن';
+      const date = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString('ar-DZ', { hour: '2-digit', minute:'2-digit' }) : 'الآن';
       
-      let commentsHTML = '';
-      if (post.comments && post.comments.length > 0) {
-        post.comments.forEach(c => {
-          commentsHTML += `
-            <div class="bg-gray-50 p-2 rounded-lg mt-2 text-sm flex gap-2 items-start">
-              <div class="w-6 h-6 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">${c.author.charAt(0)}</div>
-              <div>
-                <p class="font-bold text-gray-800 text-xs">${c.author}</p>
-                <p class="text-gray-600 text-xs">${c.text}</p>
-              </div>
+      if (type === 'chat') {
+        // تصميم رسائل الدردشة (مثل واتساب)
+        postsContainer.innerHTML += `
+          <div class="flex ${isMe ? 'justify-end' : 'justify-start'} mb-2 w-full max-w-3xl mx-auto">
+            <div class="bg-${isMe ? 'blue-600 text-white' : 'white text-gray-800'} px-4 py-2 rounded-2xl shadow-sm max-w-[75%] relative">
+              ${!isMe ? `<p class="text-[10px] font-bold text-gray-500 mb-1">${post.authorName}</p>` : ''}
+              <p class="text-sm whitespace-pre-line">${post.content}</p>
+              <span class="text-[9px] ${isMe ? 'text-blue-200' : 'text-gray-400'} block text-left mt-1">${date}</span>
             </div>
-          `;
-        });
-      }
+          </div>
+        `;
+      } else {
+        // تصميم المنشورات (مثل فيسبوك)
+        let commentsHTML = '';
+        if (post.comments && post.comments.length > 0) {
+          post.comments.forEach(c => {
+            commentsHTML += `
+              <div class="bg-gray-50 p-2 rounded-lg mt-2 text-sm flex gap-2 items-start">
+                <div class="w-6 h-6 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">${c.author.charAt(0)}</div>
+                <div>
+                  <p class="font-bold text-gray-800 text-xs">${c.author}</p>
+                  <p class="text-gray-600 text-xs">${c.text}</p>
+                </div>
+              </div>
+            `;
+          });
+        }
 
-      postsContainer.innerHTML += `
-        <div class="bg-white p-4 rounded-xl shadow-sm border ${isMe ? 'border-blue-200' : 'border-gray-100'} max-w-3xl mx-auto w-full mb-4">
-          <div class="flex justify-between items-start mb-3">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full ${isMe ? 'bg-blue-600' : 'bg-indigo-600'} text-white flex items-center justify-center font-bold text-lg">${post.authorName.charAt(0)}</div>
-              <div>
-                <p class="text-sm font-bold text-gray-800">${post.authorName}</p>
-                <p class="text-[11px] text-gray-500">${post.authorYear}</p>
+        postsContainer.innerHTML += `
+          <div class="bg-white p-4 rounded-xl shadow-sm border ${isMe ? 'border-blue-200' : 'border-gray-100'} max-w-3xl mx-auto w-full mb-4">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full ${isMe ? 'bg-blue-600' : 'bg-indigo-600'} text-white flex items-center justify-center font-bold text-lg">${post.authorName.charAt(0)}</div>
+                <div>
+                  <p class="text-sm font-bold text-gray-800">${post.authorName}</p>
+                  <p class="text-[11px] text-gray-500">${post.authorYear}</p>
+                </div>
               </div>
+              <span class="text-[11px] text-gray-400 bg-gray-50 px-2 py-1 rounded">${date}</span>
             </div>
-            <span class="text-[11px] text-gray-400 bg-gray-50 px-2 py-1 rounded">${date}</span>
+            <p class="text-gray-800 text-[15px] mb-3 whitespace-pre-line">${post.content}</p>
+            <div class="mt-2 mb-3 space-y-1">${commentsHTML}</div>
+            <div class="pt-3 border-t border-gray-100 flex gap-2">
+              <input type="text" id="comment-input-${postId}" placeholder="اكتب تعليقاً..." class="flex-1 bg-gray-100 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-1 focus:ring-blue-400">
+              <button onclick="addComment('${postId}')" class="bg-gray-200 hover:bg-blue-600 hover:text-white px-3 py-1.5 rounded-lg text-sm font-bold transition">إرسال</button>
+            </div>
           </div>
-          <p class="text-gray-800 text-[15px] mb-3 whitespace-pre-line">${post.content}</p>
-          <div class="mt-2 mb-3 space-y-1">${commentsHTML}</div>
-          <div class="pt-3 border-t border-gray-100 flex gap-2">
-            <input type="text" id="comment-input-${postId}" placeholder="اكتب تعليقاً..." class="flex-1 bg-gray-100 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-1 focus:ring-blue-400">
-            <button onclick="addComment('${postId}')" class="bg-gray-200 hover:bg-blue-600 hover:text-white px-3 py-1.5 rounded-lg text-sm font-bold transition">إرسال</button>
-          </div>
-        </div>
-      `;
+        `;
+      }
     });
+    
+    // تمرير لأسفل في حالة الدردشة
+    if (type === 'chat') postsContainer.scrollTop = postsContainer.scrollHeight;
+    
   }, (error) => {
     postsContainer.innerHTML = `<div class="text-red-500 text-center mt-10 font-bold">خطأ: ${error.message}</div>`;
   });
