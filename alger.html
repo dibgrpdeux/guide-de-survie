@@ -25,32 +25,25 @@
   </header>
 
   <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
-    <!-- شريط التصنيفات -->
     <div id="categoriesBar" class="flex flex-wrap gap-2 justify-center sticky top-[60px] z-40 bg-white/80 p-2 rounded-2xl backdrop-blur-md shadow-sm border border-gray-100"></div>
-
-    <!-- شبكة الأماكن -->
     <div id="placesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
   </main>
 
-  <!-- نافذة التفاصيل -->
   <div id="placeModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
       <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
-      
       <div class="border-b pb-4 pr-10">
         <h2 id="modalTitle" class="text-2xl font-black text-gray-900"></h2>
         <p id="modalSubtitle" class="text-sm text-indigo-600 font-bold mt-1"></p>
       </div>
-
       <div id="modalGalleryContainer" class="space-y-2">
         <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-images text-indigo-500 mr-1.5"></i> معرض الصور:</h4>
         <div id="modalGallery" class="flex overflow-x-auto gap-3 pb-2 snap-x"></div>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
           <div>
-            <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-circle-info text-blue-500 mr-1.5"></i> معلومات إضافية:</h4>
+            <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-circle-info text-blue-500 mr-1.5"></i> لمحة تاريخية:</h4>
             <p id="modalHistory" class="bg-blue-50/60 p-3 rounded-xl border border-blue-100"></p>
           </div>
           <div>
@@ -63,7 +56,6 @@
           <div id="modalVideo" class="video-container bg-gray-200"></div>
         </div>
       </div>
-
       <div class="space-y-2">
         <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-map-location-dot text-indigo-500 mr-1.5"></i> الموقع على الخريطة:</h4>
         <div id="modalMap" class="map-container bg-gray-200"></div>
@@ -72,14 +64,12 @@
   </div>
 
   <script>
-    // البيانات الشاملة (شواطئ، حدائق، ثقافة، مساجد، وكالات)
     const placesData = [
       // === الشواطئ (Plages) ===
-      { id: 'sidi_fredj', category: 'شواطئ', title: 'سيدي فرج (Sidi Fredj)', icon: '🏖️', desc: 'شاطئ عائلي مع مرسى ومطاعم.', history: 'يبعد 25 كم عن وسط العاصمة (30 دقيقة). يتميز بمرسى ترفيهي ومطاعم أسماك. الدخول مجاني، ومواقف السيارات متوفرة.', transport: 'الطريق السيار A1. يمكن الجمع بينه وبين زرالدة في نفس اليوم (10 دقائق بينهما).', map: 'Sidi Fredj Alger', images: ['SIDI-FREDJ.png', 'images (9).jpeg', 'images (10).jpeg'], videos: [] },
-      { id: 'zeralda', category: 'شواطئ', title: 'زرالدة (Zeralda)', icon: '🏖️', desc: 'شاطئ عائلي برمل ناعم.', history: 'يبعد 35 كم (40 دقيقة). الخيار الآمن للعائلات، به منتجعات ومرافق. مواقف السيارات مدفوعة (~200 دج).', transport: 'الطريق السيار A1. يفضل الوصول قبل الساعة 10 صباحاً في الصيف.', map: 'Zeralda plage Alger', images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], videos: [] },
-      { id: 'ain_taya', category: 'شواطئ', title: 'عين طاية (Ain Taya)', icon: '🏖️', desc: 'أقرب شاطئ للعاصمة.', history: 'يبعد 22 كم فقط (25 دقيقة). شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع. الدخول مجاني لكن المواقف محدودة.', transport: 'الاتجاه شرقاً. يفضل الذهاب في أيام الأسبوع لتجنب الازدحام.', map: 'Ain Taya plage Alger', images: [], videos: [] },
-      { id: 'club_pins', category: 'شواطئ', title: 'نادي الصنوبر (Club des Pins)', icon: '🏖️', desc: 'شاطئ هادئ بمياه ضحلة.', history: 'يبعد 28 كم (35 دقيقة). أقل ازدحاماً، مثالي للأطفال الصغار نظراً لهدوء المياه. الدخول حسب توفر المنطقة.', transport: 'الطريق السيار A1 باتجاه الغرب.', map: 'Club des Pins Alger', images: [], videos: [] },
-      { id: 'tipaza', category: 'شواطئ', title: 'تيبازة / شنوة (Tipaza/Chenoua)', icon: '🏖️', desc: 'مياه صافية وخلجان صخرية.', history: 'تبعد 70 كم (ساعة و10 دقائق). من أجمل الشواطئ، يمكن الجمع بين السباحة وزيارة الآثار الرومانية. الوصول محدود، يفضل الوصول قبل 9 صباحاً.', transport: 'الطريق الوطني RN11 (طريق جميل لكنه متعرج).', map: 'Chenoua Tipaza', images: [], videos: [] },
+      { id: 'sidi_fredj', category: 'شواطئ', title: 'سيدي فرج (Sidi Fredj)', icon: '🏖️', desc: 'شاطئ عائلي مع مرسى ومطاعم.', history: 'يبعد 25 كم عن وسط العاصمة. يتميز بمرسى ترفيهي ومطاعم أسماك. الدخول مجاني، ومواقف السيارات متوفرة.', transport: 'الطريق السيار A1. يمكن الجمع بينه وبين زرالدة في نفس اليوم.', map: 'Sidi Fredj Alger', images: ['SIDI-FREDJ.png', 'images (9).jpeg', 'images (10).jpeg'], videos: [] },
+      { id: 'zeralda', category: 'شواطئ', title: 'زرالدة (Zeralda)', icon: '🏖️', desc: 'شاطئ عائلي برمل ناعم.', history: 'يبعد 35 كم. الخيار الآمن للعائلات، به منتجعات ومرافق. مواقف السيارات مدفوعة (~200 دج).', transport: 'الطريق السيار A1. يفضل الوصول قبل الساعة 10 صباحاً في الصيف.', map: 'Zeralda plage Alger', images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], videos: [] },
+      { id: 'ain_taya', category: 'شواطئ', title: 'عين طاية (Ain Taya)', icon: '🏖️', desc: 'أقرب شاطئ للعاصمة.', history: 'يبعد 22 كم فقط. شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع. الدخول مجاني لكن المواقف محدودة.', transport: 'الاتجاه شرقاً. يفضل الذهاب في أيام الأسبوع لتجنب الازدحام.', map: 'Ain Taya plage Alger', images: [], videos: [] },
+      { id: 'club_pins', category: 'شواطئ', title: 'نادي الصنوبر (Club des Pins)', icon: '🏖️', desc: 'شاطئ هادئ بمياه ضحلة.', history: 'يبعد 28 كم. أقل ازدحاماً، مثالي للأطفال الصغار نظراً لهدوء المياه.', transport: 'الطريق السيار A1 باتجاه الغرب.', map: 'Club des Pins Alger', images: [], videos: [] },
 
       // === الحدائق (Parcs et jardins) ===
       { id: 'jardin_essai', category: 'حدائق', title: 'حديقة التجارب بالحامة', icon: '🌳', desc: 'الرئة الخضراء للجزائر.', history: 'تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم، تضم آلاف الأنواع النباتية النادرة.', transport: 'مترو الأنفاق (محطة الحامة) أو الحافلات.', map: 'Jardin d\'Essai El Hamma Alger', images: [], videos: [{ id: 'DOHY1JVqmDU', title: 'زيارة حديقة التجارب' }] },
@@ -87,11 +77,15 @@
       { id: 'bois_arcades', category: 'حدائق', title: 'غابة الأركاد (حيدرة)', icon: '🌳', desc: 'مثالي للجري.', history: 'غابة حضرية هادئة في قلب حيدرة، تحتوي على مسارات للمشي والجري، وتوفر متنفساً للأهالي.', transport: 'سيارة أو حافلة إلى حيدرة.', map: 'Bois des Arcades Hydra Alger', images: ['images (13).jpeg', 'images (14).jpeg', 'images (15).jpeg'], videos: [] },
       { id: 'hamma_park', category: 'حدائق', title: 'حديقة الحامة (Hamma Park)', icon: '🌳', desc: 'حديقة خضراء في قلب الجزائر.', history: 'من أكبر الحدائق الحضرية في إفريقيا، تضم بحيرة اصطناعية ومساحات خضراء شاسعة.', transport: 'مترو الأنفاق (محطة الحامة).', map: 'Hamma Park Alger', images: [], videos: [{ id: 'NNHh_lcMfPo', title: 'زيارة حديقة الحامة' }] },
 
-      // === الثقافة (Culture et patrimoine) ===
-      { id: 'casbah', category: 'ثقافة', title: 'قصبة الجزائر', icon: '🏛️', desc: 'تراث عالمي لليونسكو.', history: 'موقع تراثي عالمي، القصبة هي المدينة القديمة للجزائر، تضم قصوراً عثمانية ومساجد تاريخية وأزقة ضيقة.', transport: 'محطة مترو ساحة الشهداء، أو الحافلات.', map: 'Casbah Alger', images: [], videos: [{ id: 'K7f2zx0UFsg', title: 'زيارة القصبة' }] },
-      { id: 'musee_bardo', category: 'ثقافة', title: 'متحف الباردو', icon: '🏛️', desc: 'فن وتاريخ.', history: 'متحف يضم مقتنيات أثرية وإسلامية وفنوناً إفريقية، ويقع في حي الحامة.', transport: 'حافلات أو طاكسي.', map: 'Musée du Bardo Alger', images: [], videos: [{ id: 'Bx-EhrdmjbA', title: 'زيارة متحف الباردو' }] },
-      { id: 'notre_dame', category: 'ثقافة', title: 'كنيسة سيدة إفريقيا', icon: '⛪', desc: 'إطلالة بانورامية على الخليج.', history: 'كنيسة كاثوليكية تقع على تلة تطل على خليج الجزائر، تتميز بمعمارها البيزنطي وقبتها الزرقاء.', transport: 'الترامواي أو الحافلات.', map: 'Notre-Dame d\'Afrique Alger', images: ['images (17).jpeg', 'images (18).jpeg', 'images (19).jpeg'], videos: [] },
-      { id: 'grande_poste', category: 'ثقافة', title: 'البريد المركزي (Grande Poste)', icon: '🏛️', desc: 'معلم مميز.', history: 'مبنى تاريخي في قلب العاصمة، يتميز بمعماره الموريسكي، ويعد رمزاً للجزائر.', transport: 'مترو الأنفاق (محطة البريد المركزي).', map: 'Grande Poste Alger', images: [], videos: [{ id: 'QQbkX8MeCWI', title: 'زيارة البريد المركزي' }] },
+      // === الثقافة والتاريخ (Culture & Histoire) ===
+      { id: 'casbah', category: 'ثقافة وتاريخ', title: 'قصبة الجزائر', icon: '🏛️', desc: 'تراث عالمي لليونسكو.', history: 'موقع تراثي عالمي منذ 1992. المدينة القديمة للجزائر، تأسست في القرن العاشر، وتضم قصوراً عثمانية ومساجد تاريخية وأزقة ضيقة. كانت مركزاً للمقاومة خلال الاحتلال الفرنسي [citation:1][citation:7].', transport: 'محطة مترو ساحة الشهداء، أو الحافلات.', map: 'Casbah Alger', images: [], videos: [{ id: 'K7f2zx0UFsg', title: 'زيارة القصبة' }] },
+      { id: 'martyrs_memorial', category: 'ثقافة وتاريخ', title: 'مقام الشهيد (Maqam Echahid)', icon: '🗼', desc: 'نصب تذكاري لضحايا الثورة.', history: 'نصب تذكاري ضخم يخلد ذكرى شهداء حرب الاستقلال الجزائرية. يقع على تلة تطل على العاصمة، ويضم متحف المجاهد (المتحف الوطني للجهاد) الذي يوثق الثورة [citation:1][citation:10].', transport: 'سيارة أو حافلة إلى منطقة رياض الفتح.', map: 'Maqam Echahid Alger', images: [], videos: [] },
+      { id: 'bardo_museum', category: 'ثقافة وتاريخ', title: 'المتحف الوطني باردو', icon: '🏛️', desc: 'فن وتاريخ وإثنوغرافيا.', history: 'يقع في قصر يعود للقرن الثامن عشر. يضم مجموعات أثرية لما قبل التاريخ، وفنوناً إفريقية وتقليدية. تم ترسيمه كمتحف عام 1930 [citation:3][citation:9].', transport: 'حافلات أو طاكسي (حي الحامة/المدنية).', map: 'Musée du Bardo Alger', images: [], videos: [{ id: 'Bx-EhrdmjbA', title: 'زيارة متحف الباردو' }] },
+      { id: 'antiquities_museum', category: 'ثقافة وتاريخ', title: 'المتحف الوطني للآثار القديمة', icon: '🏺', desc: 'من أقدم متاحف الجزائر.', history: 'دُشن في موقعه الحالي عام 1897. يضم كنوزاً أثرية من مختلف الحضارات التي تعاقبت على الجزائر (الرومانية، الإسلامية، العثمانية). يتميز بطرازه الأندلسي المغربي [citation:3][citation:9].', transport: 'وسط العاصمة، حديقة الحرية.', map: 'National Museum of Antiquities Alger', images: [], videos: [] },
+      { id: 'fine_arts_museum', category: 'ثقافة وتاريخ', title: 'المتحف الوطني للفنون الجميلة', icon: '🎨', desc: 'أكبر متاحف الفن في إفريقيا.', history: 'افتُتح عام 1930. يضم مجموعة كبيرة من اللوحات والمنحوتات الأوروبية والجزائرية. يقع في منطقة رياض الفتح [citation:3][citation:12].', transport: 'قريب من مقام الشهيد.', map: 'Musée des Beaux-Arts Alger', images: [], videos: [] },
+      { id: 'notre_dame', category: 'ثقافة وتاريخ', title: 'كنيسة سيدة إفريقيا', icon: '⛪', desc: 'إطلالة بانورامية على الخليج.', history: 'كنيسة كاثوليكية تقع على تلة تطل على خليج الجزائر، تتميز بمعمارها البيزنطي وقبتها الزرقاء. اكتمل بناؤها عام 1872.', transport: 'الترامواي أو الحافلات.', map: 'Notre-Dame d\'Afrique Alger', images: ['images (17).jpeg', 'images (18).jpeg', 'images (19).jpeg'], videos: [] },
+      { id: 'grande_poste', category: 'ثقافة وتاريخ', title: 'البريد المركزي (Grande Poste)', icon: '🏛️', desc: 'معلم معماري مميز.', history: 'مبنى تاريخي في قلب العاصمة، يتميز بمعماره الموريسكي (أوائل القرن العشرين). أصبح اليوم متحفاً مخصصاً لتاريخ البريد في الجزائر [citation:1][citation:10].', transport: 'مترو الأنفاق (محطة البريد المركزي).', map: 'Grande Poste Alger', images: [], videos: [{ id: 'QQbkX8MeCWI', title: 'زيارة البريد المركزي' }] },
+      { id: 'tipaza_ruins', category: 'ثقافة وتاريخ', title: 'آثار تيبازة (Tipaza)', icon: '🏛️', desc: 'موقع أثري روماني وفينيقي.', history: 'تبعد 70 كم عن العاصمة. موقع تراث عالمي لليونسكو. كانت مركزاً تجارياً فينقياً ثم قاعدة رومانية. تضم آثاراً رومانية، بازيليكا مسيحية، ومقبرة ملكية موريتانية [citation:2][citation:5][citation:8].', transport: 'الطريق الوطني RN11. يمكن الجمع بين زيارة الآثار والشاطئ.', map: 'Tipaza Ruins', images: [], videos: [] },
 
       // === المساجد (Mosquées) ===
       { id: 'djamaa_djazair', category: 'مساجد', title: 'جامع الجزائر الأعظم', icon: '🕌', desc: 'أكبر مسجد في إفريقيا.', history: 'ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً)، ويقع على البحر مباشرة. الدخول مجاني.', transport: 'مترو الأنفاق أو الحافلات، يقع في المحمدية.', map: 'Djamaa El Djazair Alger', images: [], videos: [] },
@@ -99,7 +93,7 @@
 
       // === وكالات السفر (Agences) ===
       { id: 'agence_sofiane', category: 'وكالات سفر', title: 'وكالة صفيان (Sofiane)', icon: '✈️', desc: 'رحلات منظمة ومخصصة في الجزائر.', history: 'وكالة محلية مقرها الجزائر العاصمة. تنظم رحلات إلى الصحراء (غرداية، جانت، تاسيلي) والشمال (قسنطينة، جميلة، تيمقاد). أسعار الرحلات الجماعية تبدأ من حوالي 1,560 يورو (7 أيام).', transport: 'الاتصال عبر منصة Evaneos.', map: 'Alger', images: [], videos: [], links: { web: 'https://www.evaneos.fr/algerie/voyage/agences/69793-sofiane/' } },
-      { id: 'kenzia_travel', category: 'وكالات سفر', title: 'كنزيا ترافل (Kenzia Travel)', icon: '✈️', desc: 'رحلات إلى القالة وعنابة.', history: 'عروض خاصة لرحلات 4 أيام إلى القالة وعنابة (فندق المهدي). السعر يبدأ من 19,999 دج للشخص (يشمل الإقامة، النقل، الفطور، والجولات).', transport: 'الاتصال: 0553176311 / 0551407193.', map: 'Alger', images: [], videos: [], links: { phone: '0553176311' } }
+      { id: 'kenzia_travel', category: 'وكالات سفر', title: 'كنزيا ترافل (Kenzia Travel)', icon: '✈️', desc: 'رحلات إلى القالة وعنابة.', history: 'عروض خاصة لرحلات 4 أيام إلى القالة وعنابة. السعر يبدأ من 19,999 دج للشخص (يشمل الإقامة، النقل، الفطور، والجولات).', transport: 'الاتصال: 0553176311 / 0551407193.', map: 'Alger', images: [], videos: [], links: { phone: '0553176311' } }
     ];
 
     let currentCategory = 'الكل';
