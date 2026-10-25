@@ -3,35 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تجربة المساعد الذكي</title>
-    <!-- 1. استدعاء مكتبة Puter (ضروري جداً) -->
+    <title>المساعد الذكي</title>
+    <!-- السطر الأهم: استدعاء مكتبة Puter -->
     <script src="https://js.puter.com/v2/"></script>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background: #f4f4f9; }
-        button { padding: 15px 30px; font-size: 18px; background: #4f46e5; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #f8fafc; }
+        .box { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        button { padding: 12px 24px; font-size: 16px; background: #4f46e5; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 15px; }
         button:hover { background: #4338ca; }
-        #response { margin-top: 20px; font-size: 18px; color: #333; max-width: 600px; margin-left: auto; margin-right: auto; }
+        #result { margin-top: 20px; font-size: 16px; color: #333; text-align: right; white-space: pre-wrap; }
     </style>
 </head>
 <body>
-
-    <h2>اضغط على الزر لاختبار الذكاء الاصطناعي</h2>
-    <button onclick="askAI()">اسأل الذكاء الاصطناعي</button>
-    <div id="response"></div>
+    <div class="box">
+        <h2>جرب المساعد الذكي</h2>
+        <p>اضغط على الزر أدناه لبدء المحادثة.</p>
+        
+        <!-- زر التشغيل -->
+        <button onclick="askAI()">اضغط هنا للتحدث مع AI</button>
+        
+        <!-- مكان ظهور الإجابة -->
+        <div id="result"></div>
+    </div>
 
     <script>
         async function askAI() {
-            const resDiv = document.getElementById('response');
-            resDiv.innerText = "جاري التفكير...";
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerText = "جاري التفكير...";
             
             try {
-                // 2. إرسال السؤال (بدون مفاتيح API)
-                const response = await puter.ai.chat("مرحباً، أعطني معلومة مفيدة عن الهندسة المدنية.");
-                
-                // 3. عرض النتيجة
-                resDiv.innerText = response;
+                // استدعاء Puter
+                const response = await puter.ai.chat("مرحباً! ما هو أفضل تخصص هندسي في ENSTP؟ أجب بالعربية.");
+                resultDiv.innerText = response;
             } catch (error) {
-                resDiv.innerText = "حدث خطأ: " + error.message;
+                // إذا حدث خطأ، سيظهر هنا
+                resultDiv.innerText = "حدث خطأ: " + error.message + "\n\nتأكد من السماح بالنوافذ المنبثقة.";
                 console.error(error);
             }
         }
