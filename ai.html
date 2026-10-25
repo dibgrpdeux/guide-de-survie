@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساعد الذكي - ENSTP</title>
+    
+    <!-- 1. استدعاء مكتبة Puter (هذا السطر هو سر عمل الذكاء الاصطناعي مجاناً) -->
+    <script src="https://js.puter.com/v2/"></script>
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: #f8fafc; text-align: center; padding: 50px; }
+        .box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 600px; margin: auto; }
+        h2 { color: #1e293b; }
+        button { padding: 12px 24px; font-size: 16px; background: #4f46e5; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #4338ca; }
+        #response { margin-top: 25px; font-size: 16px; color: #334155; text-align: right; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>مرحباً بك في المساعد الذكي لـ ENSTP</h2>
+        <p>اضغط على الزر أدناه لبدء المحادثة.</p>
+        
+        <button onclick="askAI()">اضغط هنا للتحدث مع AI</button>
+        
+        <div id="response"></div>
+    </div>
+
+    <script>
+        async function askAI() {
+            const resDiv = document.getElementById('response');
+            resDiv.innerText = "جاري التفكير...";
+            
+            try {
+                // 2. إرسال السؤال إلى الذكاء الاصطناعي
+                const response = await puter.ai.chat("مرحباً! أعطني نصيحة قصيرة لطالب هندسة.");
+                
+                // 3. عرض الإجابة
+                resDiv.innerText = response;
+            } catch (error) {
+                resDiv.innerText = "حدث خطأ: " + error.message + "\nتأكد من السماح بالنوافذ المنبثقة.";
+            }
+        }
+    </script>
+</body>
+</html>
