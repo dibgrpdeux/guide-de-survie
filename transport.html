@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>النقل والمواصلات الذكية - ENSTP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8fafc; }
+    .tab-btn.active { background-color: #4f46e5; color: white; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .table-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <h1 class="font-bold text-gray-900 text-lg"><i class="fa-solid fa-bus-simple text-cyan-600"></i> دليل النقل الذكي</h1>
+      <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold">الرئيسية</a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
+
+    <!-- 🌟 مخطط الرحلة الذكي (جديد) 🌟 -->
+    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-6 lg:p-8 text-white shadow-xl">
+      <h2 class="text-2xl font-black mb-2"><i class="fa-solid fa-route"></i> مخطط الرحلة الذكي</h2>
+      <p class="text-sm text-indigo-100 mb-6">أين أنت الآن؟ وإلى أين تريد الذهاب؟ سنخبرك بأفضل وسيلة نقل.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/20">
+        <div class="md:col-span-2">
+          <label class="block text-xs font-bold mb-1 text-indigo-100">الانطلاق من (أنا هنا):</label>
+          <select id="startPoint" class="w-full px-4 py-3 rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-white">
+            <option value="kouba">القبة / ENSTP</option>
+            <option value="bachdjarah">بشدجرح / الحراش</option>
+            <option value="centre">وسط العاصمة</option>
+            <option value="babezzouar">باب الزوار</option>
+            <option value="benaknoun">بن عكنون</option>
+          </select>
+        </div>
+        <div class="flex justify-center pb-3">
+          <i class="fa-solid fa-arrow-left text-2xl text-white/70"></i>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-xs font-bold mb-1 text-indigo-100">الوجهة (أريد الذهاب إلى):</label>
+          <select id="endPoint" class="w-full px-4 py-3 rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-white">
+            <option value="zeralda">زرالدة</option>
+            <option value="tajenan">تاجنانت</option>
+            <option value="centre">وسط العاصمة</option>
+            <option value="benaknoun">بن عكنون</option>
+            <option value="boudouaou">بودواو</option>
+          </select>
+        </div>
+      </div>
+      <button onclick="calculateRoute()" class="mt-4 w-full md:w-auto bg-white text-indigo-700 hover:bg-gray-100 px-8 py-3 rounded-xl font-black shadow-md transition">
+        <i class="fa-solid fa-magnifying-glass-location"></i> احسب مسار الرحلة
+      </button>
+
+      <!-- نتيجة البحث -->
+      <div id="routeResult" class="mt-6 hidden bg-white text-gray-800 p-6 rounded-2xl shadow-lg border-r-4 border-emerald-500">
+        <!-- سيتم إدراج النتيجة هنا -->
+      </div>
+    </div>
+
+    <!-- أزرار التبويب -->
+    <div class="flex flex-wrap gap-2 justify-center mt-8">
+      <button onclick="openTab('bus')" id="btn-bus" class="tab-btn active px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition">
+        <i class="fa-solid fa-bus"></i> الحافلات الجامعية
+      </button>
+      <button onclick="openTab('metro')" id="btn-metro" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition">
+        <i class="fa-solid fa-train-subway"></i> المترو والترامواي
+      </button>
+      <button onclick="openTab('taxi')" id="btn-taxi" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition">
+        <i class="fa-solid fa-taxi"></i> سيارات الأجرة
+      </button>
+    </div>
+
+    <!-- 1. الحافلات الجامعية -->
+    <div id="tab-bus" class="tab-content active space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-clock text-indigo-500"></i> مواقيت الحافلات الجامعية (القطب الجامعي)</h2>
+        <p class="text-sm text-gray-600 mb-4">تنطلق الحافلات من المحطة البرية (القبة) إلى مختلف الولايات. <strong>توقيت انطلاق أول حافلة 7:00 صباحاً، وآخر حافلة 16:30 مساءً.</strong></p>
+        
+        <div class="overflow-x-auto table-scroll rounded-xl border border-gray-200">
+          <table class="w-full text-sm text-right">
+            <thead class="bg-indigo-50 text-indigo-900 font-bold">
+              <tr>
+                <th class="p-3 border-b">الرقم</th>
+                <th class="p-3 border-b">الوجهة / الاتجاه</th>
+                <th class="p-3 border-b">ساعات الانطلاق</th>
+                <th class="p-3 border-b">ساعة التلاقي</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">01</td><td class="p-3">تافورة / بن عكنون</td><td class="p-3 text-xs" dir="ltr">7:00 - 7:30 - 8:00</td><td class="p-3 text-xs" dir="ltr">15:30 / 14:30 / 13:30</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">02</td><td class="p-3">بوزريعة / شمالي</td><td class="p-3 text-xs" dir="ltr">7:15</td><td class="p-3 text-xs" dir="ltr">16:30 / 13:30</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">03</td><td class="p-3">باب الوادي</td><td class="p-3 text-xs" dir="ltr">7:15</td><td class="p-3 text-xs" dir="ltr">16:30 / 13:30</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">04</td><td class="p-3">سيدي يحيى / البليدة</td><td class="p-3 text-xs" dir="ltr">7:30</td><td class="p-3 text-xs" dir="ltr">16:30 / 13:30</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">05</td><td class="p-3">حجوط / عين تموشنت</td><td class="p-3 text-xs" dir="ltr">6:30</td><td class="p-3 text-xs" dir="ltr">16:30</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">12</td><td class="p-3">عين البناء / زرالدة</td><td class="p-3 text-xs" dir="ltr">7:30</td><td class="p-3 text-xs" dir="ltr">16:30</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">13</td><td class="p-3">بوفاريك / البليدة</td><td class="p-3 text-xs" dir="ltr">7:00</td><td class="p-3 text-xs" dir="ltr">16:30</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. المترو والترامواي -->
+    <div id="tab-metro" class="tab-content space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-train-subway text-blue-500"></i> المترو والترامواي</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+            <h3 class="font-bold text-blue-900 mb-2">الوصول إلى المترو من المدرسة</h3>
+            <p class="text-sm text-blue-800">خذ حافلة من محطة القبة باتجاه بشدجرح، وانزل في محطة المترو (حي البدر).</p>
+          </div>
+          <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+            <h3 class="font-bold text-emerald-900 mb-2">الوصول إلى الترامواي</h3>
+            <p class="text-sm text-emerald-800">خذ المترو من حي البدر باتجاه الوسط، وانزل في "Les Fusillés"، ستجد الترامواي بجانبك.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. سيارات الأجرة -->
+    <div id="tab-taxi" class="tab-content space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-taxi text-amber-500"></i> سيارات الأجرة (Taxi)</h2>
+        <p class="text-sm text-gray-600 mb-4">محطات التاكسي الرئيسية القريبة من ENSTP:</p>
+        <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+          <li><strong>محطة خروبة (Kharouba):</strong> خطوط بين الولايات.</li>
+          <li><strong>بن عمر (Ben Omar):</strong> سيارات إلى بئر خادم، بئر مراد رايس.</li>
+          <li><strong>القبة القديمة (Vieux Kouba):</strong> إلى وادي السمار، حسين داي، الوسط.</li>
+        </ul>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 bg-white">
+    <p>© 2026 ENSTP القبة — تصميم فريق التطوير الطلابي.</p>
+  </footer>
+
+  <script>
+    function openTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-indigo-600', 'text-white');
+        btn.classList.add('bg-white', 'text-gray-700');
+      });
+      document.getElementById('tab-' + tabName).classList.add('active');
+      const activeBtn = document.getElementById('btn-' + tabName);
+      activeBtn.classList.add('active', 'bg-indigo-600', 'text-white');
+      activeBtn.classList.remove('bg-white', 'text-gray-700');
+    }
+
+    // 🧠 محرك حساب المسار (المنطق)
+    function calculateRoute() {
+      const start = document.getElementById('startPoint').value;
+      const end = document.getElementById('endPoint').value;
+      const resultDiv = document.getElementById('routeResult');
+      resultDiv.classList.remove('hidden');
+
+      let html = '';
+
+      // إذا كان الانطلاق من المدرسة (القبة)
+      if (start === 'kouba') {
+        if (end === 'zeralda') {
+          html = `
+            <h3 class="font-bold text-lg text-emerald-600 mb-2"><i class="fa-solid fa-bus"></i> أفضل خيار: حافلة جامعية مباشرة</h3>
+            <p class="text-sm">توجه إلى <strong>المحطة البرية للقطب الجامعي (القبة)</strong>، وستجد حافلة مباشرة باتجاه <strong>عين البناء / زرالدة</strong>. تنطلق الحافلة في تمام الساعة 7:30 صباحاً.</p>
+          `;
+        } else if (end === 'tajenan') {
+          html = `
+            <h3 class="font-bold text-lg text-amber-600 mb-2"><i class="fa-solid fa-train-subway"></i> خيار 1: حافلة جامعية</h3>
+            <p class="text-sm mb-2">الحافلات الجامعية المتجهة إلى <strong>بني مزاب / الجلفة</strong> تمر عبر تاجنانت. تنطلق الساعة 7:00 من المحطة البرية.</p>
+            <h3 class="font-bold text-lg text-blue-600 mb-2 mt-4"><i class="fa-solid fa-route"></i> خيار 2: نقل عمومي</h3>
+            <p class="text-sm">خذ حافلة من القبة إلى <strong>محطة الحافلات (خروبة)</strong>، ومنها حافلة باتجاه الجنوب.</p>
+          `;
+        } else if (end === 'centre') {
+          html = `
+            <h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> الأسرع: مترو</h3>
+            <p class="text-sm">خذ حافلة صغيرة إلى <strong>محطة مترو حي البدر</strong>، ثم المترو مباشرة إلى وسط العاصمة.</p>
+          `;
+        } else if (end === 'benaknoun') {
+          html = `
+            <h3 class="font-bold text-lg text-emerald-600 mb-2"><i class="fa-solid fa-bus"></i> حافلة جامعية مباشرة</h3>
+            <p class="text-sm">توجه إلى المحطة البرية، الحافلة رقم 01 تتجه مباشرة إلى <strong>تافورة / بن عكنون</strong>. الانطلاق 7:00 صباحاً.</p>
+          `;
+        } else {
+          html = `<p class="text-sm text-gray-600">يرجى التحقق من المحطات الرئيسية (القبة أو خروبة).</p>`;
+        }
+      } 
+      // إذا كان الانطلاق من مكان آخر (مثلاً الحراش / بشدجرح)
+      else if (start === 'bachdjarah') {
+        if (end === 'zeralda') {
+          html = `
+            <h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> الخطة: مترو + حافلة</h3>
+            <ol class="list-decimal list-inside text-sm space-y-1">
+              <li>خذ المترو من <strong>حي البدر</strong> باتجاه الوسط.</li>
+              <li>انزل في محطة <strong>تافورة (Tafourah)</strong>.</li>
+              <li>من محطة الحافلات بتافورة، خذ حافلة باتجاه <strong>زرالدة</strong>.</li>
+            </ol>
+          `;
+        } else if (end === 'centre') {
+          html = `
+            <h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> مباشر: مترو</h3>
+            <p class="text-sm">أنت قريب جداً من المترو. توجه إلى محطة <strong>حي البدر</strong> وخذ المترو مباشرة إلى وسط العاصمة.</p>
+          `;
+        } else {
+           html = `
+            <h3 class="font-bold text-lg text-amber-600 mb-2"><i class="fa-solid fa-taxi"></i> الأفضل: سيارة أجرة</h3>
+            <p class="text-sm">منطقة الحراش/بشدجرح بعيدة عن خطوط الحافلات الجامعية. الأفضل استخدام تطبيق <strong>Yassir</strong> أو التاكسي.</p>
+          `;
+        }
+      }
+      // باقي الخيارات
+      else {
+        html = `
+          <h3 class="font-bold text-lg text-gray-800 mb-2"><i class="fa-solid fa-circle-info"></i> نصيحة عامة</h3>
+          <p class="text-sm">لعدم وجود خط مباشر، ننصحك بالاتجاه أولاً إلى محطة مركزية مثل <strong>تافورة (وسط العاصمة)</strong> أو <strong>خروبة</strong>، ومنها ستجد حافلات لكل الوجهات.</p>
+        `;
+      }
+
+      resultDiv.innerHTML = html;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      openTab('bus');
+    });
+  </script>
+</body>
+</html>
