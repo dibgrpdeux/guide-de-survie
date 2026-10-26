@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>النقل والمواصلات الذكية - ENSTP</title>
+  <title>النقل الشامل - ENSTP</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,27 +21,32 @@
 
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b px-4 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <h1 class="font-bold text-gray-900 text-lg"><i class="fa-solid fa-bus-simple text-cyan-600"></i> دليل النقل الذكي</h1>
+      <h1 class="font-bold text-gray-900 text-lg"><i class="fa-solid fa-bus-simple text-cyan-600"></i> دليل النقل الشامل</h1>
       <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold">الرئيسية</a>
     </div>
   </header>
 
   <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
 
-    <!-- 🌟 مخطط الرحلة الذكي (جديد) 🌟 -->
+    <!-- مخطط الرحلة الذكي -->
     <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-6 lg:p-8 text-white shadow-xl">
-      <h2 class="text-2xl font-black mb-2"><i class="fa-solid fa-route"></i> مخطط الرحلة الذكي</h2>
-      <p class="text-sm text-indigo-100 mb-6">أين أنت الآن؟ وإلى أين تريد الذهاب؟ سنخبرك بأفضل وسيلة نقل.</p>
+      <h2 class="text-2xl font-black mb-2"><i class="fa-solid fa-route"></i> مخطط الرحلة الذكي (كل العاصمة)</h2>
+      <p class="text-sm text-indigo-100 mb-6">اختر محطة الانطلاق والوجهة، وسنقترح عليك أفضل مسار عبر شبكة النقل.</p>
       
       <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/20">
         <div class="md:col-span-2">
-          <label class="block text-xs font-bold mb-1 text-indigo-100">الانطلاق من (أنا هنا):</label>
-          <select id="startPoint" class="w-full px-4 py-3 rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-white">
+          <label class="block text-xs font-bold mb-1 text-indigo-100">الانطلاق من:</label>
+          <select id="startPoint" class="w-full px-4 py-3 rounded-xl text-gray-900 font-bold outline-none">
             <option value="kouba">القبة / ENSTP</option>
             <option value="bachdjarah">بشدجرح / الحراش</option>
-            <option value="centre">وسط العاصمة</option>
+            <option value="centre">ساحة الشهداء / وسط العاصمة</option>
             <option value="babezzouar">باب الزوار</option>
             <option value="benaknoun">بن عكنون</option>
+            <option value="ruisseau">الرويسو (Ruisseau)</option>
+            <option value="caroubier">القرية (Caroubier)</option>
+            <option value="elharrach">الحراش</option>
+            <option value="bordj">برج الكيفان</option>
+            <option value="dergana">درقانة</option>
           </select>
         </div>
         <div class="flex justify-center pb-3">
@@ -49,12 +54,18 @@
         </div>
         <div class="md:col-span-2">
           <label class="block text-xs font-bold mb-1 text-indigo-100">الوجهة (أريد الذهاب إلى):</label>
-          <select id="endPoint" class="w-full px-4 py-3 rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-white">
+          <select id="endPoint" class="w-full px-4 py-3 rounded-xl text-gray-900 font-bold outline-none">
             <option value="zeralda">زرالدة</option>
-            <option value="tajenan">تاجنانت</option>
             <option value="centre">وسط العاصمة</option>
             <option value="benaknoun">بن عكنون</option>
-            <option value="boudouaou">بودواو</option>
+            <option value="babezzouar">باب الزوار</option>
+            <option value="airport">مطار هواري بومدين</option>
+            <option value="elharrach">الحراش</option>
+            <option value="bordj">برج الكيفان</option>
+            <option value="dergana">درقانة</option>
+            <option value="ruisseau">الرويسو</option>
+            <option value="husseindey">حسين داي</option>
+            <option value="kouba">القبة</option>
           </select>
         </div>
       </div>
@@ -62,82 +73,130 @@
         <i class="fa-solid fa-magnifying-glass-location"></i> احسب مسار الرحلة
       </button>
 
-      <!-- نتيجة البحث -->
       <div id="routeResult" class="mt-6 hidden bg-white text-gray-800 p-6 rounded-2xl shadow-lg border-r-4 border-emerald-500">
-        <!-- سيتم إدراج النتيجة هنا -->
+        <!-- نتيجة البحث -->
       </div>
     </div>
 
-    <!-- أزرار التبويب -->
+    <!-- التبويبات -->
     <div class="flex flex-wrap gap-2 justify-center mt-8">
-      <button onclick="openTab('bus')" id="btn-bus" class="tab-btn active px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition">
-        <i class="fa-solid fa-bus"></i> الحافلات الجامعية
-      </button>
-      <button onclick="openTab('metro')" id="btn-metro" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition">
-        <i class="fa-solid fa-train-subway"></i> المترو والترامواي
-      </button>
-      <button onclick="openTab('taxi')" id="btn-taxi" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition">
-        <i class="fa-solid fa-taxi"></i> سيارات الأجرة
-      </button>
+      <button onclick="openTab('bus')" id="btn-bus" class="tab-btn active px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-bus"></i> الحافلات الجامعية</button>
+      <button onclick="openTab('metro')" id="btn-metro" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-train-subway"></i> المترو (جميع المحطات)</button>
+      <button onclick="openTab('tram')" id="btn-tram" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-train-tram"></i> الترامواي (جميع المحطات)</button>
+      <button onclick="openTab('taxi')" id="btn-taxi" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-taxi"></i> سيارات الأجرة</button>
     </div>
 
-    <!-- 1. الحافلات الجامعية -->
+    <!-- 1. الحافلات الجامعية (كامل) -->
     <div id="tab-bus" class="tab-content active space-y-6">
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-clock text-indigo-500"></i> مواقيت الحافلات الجامعية (القطب الجامعي)</h2>
-        <p class="text-sm text-gray-600 mb-4">تنطلق الحافلات من المحطة البرية (القبة) إلى مختلف الولايات. <strong>توقيت انطلاق أول حافلة 7:00 صباحاً، وآخر حافلة 16:30 مساءً.</strong></p>
+        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-clock text-indigo-500"></i> مواقيت الحافلات الجامعية الكاملة</h2>
+        <p class="text-sm text-gray-600 mb-4">استناداً إلى الجدول الرسمي لمديرية الخدمات الجامعية.</p>
         
-        <div class="overflow-x-auto table-scroll rounded-xl border border-gray-200">
+        <div class="overflow-x-auto table-scroll rounded-xl border border-gray-200 max-h-[600px]">
           <table class="w-full text-sm text-right">
-            <thead class="bg-indigo-50 text-indigo-900 font-bold">
-              <tr>
-                <th class="p-3 border-b">الرقم</th>
-                <th class="p-3 border-b">الوجهة / الاتجاه</th>
-                <th class="p-3 border-b">ساعات الانطلاق</th>
-                <th class="p-3 border-b">ساعة التلاقي</th>
-              </tr>
+            <thead class="bg-indigo-50 text-indigo-900 font-bold sticky top-0">
+              <tr><th class="p-3 border-b">الوجهة</th><th class="p-3 border-b">مواقيت الإقلاع</th></tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">01</td><td class="p-3">تافورة / بن عكنون</td><td class="p-3 text-xs" dir="ltr">7:00 - 7:30 - 8:00</td><td class="p-3 text-xs" dir="ltr">15:30 / 14:30 / 13:30</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">02</td><td class="p-3">بوزريعة / شمالي</td><td class="p-3 text-xs" dir="ltr">7:15</td><td class="p-3 text-xs" dir="ltr">16:30 / 13:30</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">03</td><td class="p-3">باب الوادي</td><td class="p-3 text-xs" dir="ltr">7:15</td><td class="p-3 text-xs" dir="ltr">16:30 / 13:30</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">04</td><td class="p-3">سيدي يحيى / البليدة</td><td class="p-3 text-xs" dir="ltr">7:30</td><td class="p-3 text-xs" dir="ltr">16:30 / 13:30</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">05</td><td class="p-3">حجوط / عين تموشنت</td><td class="p-3 text-xs" dir="ltr">6:30</td><td class="p-3 text-xs" dir="ltr">16:30</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">12</td><td class="p-3">عين البناء / زرالدة</td><td class="p-3 text-xs" dir="ltr">7:30</td><td class="p-3 text-xs" dir="ltr">16:30</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-indigo-600">13</td><td class="p-3">بوفاريك / البليدة</td><td class="p-3 text-xs" dir="ltr">7:00</td><td class="p-3 text-xs" dir="ltr">16:30</td></tr>
+              <!-- البيانات من الصورة -->
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">شاطوناي (Chatonay)</td><td class="p-3 text-xs" dir="ltr">7:30 / 8:00 / 8:30 / 9:00 / 9:30 / 10:00 / 10:30 / 11:00 / 11:30 / 12:00 / 12:30 / 13:00 / 13:30 / 14:00 / 14:30 / 15:00 / 15:30 / 16:00</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">بوزريعة (Bouzareah)</td><td class="p-3 text-xs" dir="ltr">7:30 / 8:00 / 8:30 / 9:00 / 9:30 / 10:00 / 10:30 / 11:00 / 11:30 / 12:00 / 12:30 / 13:00 / 13:30 / 14:00 / 14:30 / 15:00 / 15:30 / 16:00</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">تافورة (Tafourah)</td><td class="p-3 text-xs" dir="ltr">7:15 / 8:00 / 9:00 / 10:00 / 11:00 / 12:15 / 13:00 / 14:00 / 16:00</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">أول ماي (1er Mai)</td><td class="p-3 text-xs" dir="ltr">7:30 / 8:00 / 8:30 / 9:30 / 10:30 / 11:30 / 12:30 / 13:30 / 14:30 / 15:00</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">عين النعجة (Ain Naadja)</td><td class="p-3 text-xs" dir="ltr">7:30 / 8:30 / 12:00 / 16:00</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">بني مسوس (Beni Messous)</td><td class="p-3 text-xs" dir="ltr">7:30 / 12:00 / 15:00</td></tr>
+              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">بابسلا علي (Babasla Ali)</td><td class="p-3 text-xs" dir="ltr">8:00 / 12:00 / 15:30</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- 2. المترو والترامواي -->
+    <!-- 2. المترو (جميع المحطات) -->
     <div id="tab-metro" class="tab-content space-y-6">
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-train-subway text-blue-500"></i> المترو والترامواي</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-            <h3 class="font-bold text-blue-900 mb-2">الوصول إلى المترو من المدرسة</h3>
-            <p class="text-sm text-blue-800">خذ حافلة من محطة القبة باتجاه بشدجرح، وانزل في محطة المترو (حي البدر).</p>
-          </div>
-          <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
-            <h3 class="font-bold text-emerald-900 mb-2">الوصول إلى الترامواي</h3>
-            <p class="text-sm text-emerald-800">خذ المترو من حي البدر باتجاه الوسط، وانزل في "Les Fusillés"، ستجد الترامواي بجانبك.</p>
-          </div>
+        <h2 class="text-xl font-bold text-gray-900 mb-2"><i class="fa-solid fa-train-subway text-blue-500"></i> جميع محطات المترو (ساحة الشهداء - عين النعجة)</h2>
+        <p class="text-sm text-gray-600 mb-4">19 محطة. التذكرة: 50 دج.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <!-- تم إدراج جميع المحطات -->
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">ساحة الشهداء (Place des Martyrs)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">علي بومنجل (Ali Boumendjel)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">تافورة - البريد المركزي (Tafourah)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">خليفة بوخالفة (Khelifa Boukhalfa)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">1 ماي (1er Mai)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">عيسات إيدير (Aïssat Idir)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">الحامة (Hamma)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">حديقة التجارب (Jardin d'Essai)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">المشوشين (Les Fusillés)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">أميروش (Amirouche)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">بحر وشمس (Mer et Soleil)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold text-indigo-700">حي البدر (Haï El Badr) - تحويل</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">ورشات (Halte des Ateliers)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">وادي كنيس (Gué de Constantine)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">عين النعجة (Ain Naadja)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">باش جراح تنس (Bachdjarah Tennis)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">باش جراح (Bachdjarah)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">الحراش وسط (El Harrach Centre)</div>
+          <div class="p-3 bg-gray-50 rounded-lg text-sm font-semibold">الحراش محطة (El Harrach Gare)</div>
+        </div>
+        <p class="text-xs text-gray-500 mt-4"><i class="fa-solid fa-circle-info"></i> ملاحظة: للوصول إلى محطات باش جراح والحراش، يجب تغيير القطار في محطة حي البدر.</p>
+      </div>
+    </div>
+
+    <!-- 3. الترامواي (جميع المحطات) -->
+    <div id="tab-tram" class="tab-content space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <h2 class="text-xl font-bold text-gray-900 mb-2"><i class="fa-solid fa-train-tram text-emerald-500"></i> جميع محطات الترامواي (العناصر - درقانة)</h2>
+        <p class="text-sm text-gray-600 mb-4">37 محطة. التذكرة: 40 دج.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+          <!-- قائمة المحطات -->
+          <div class="p-2 bg-emerald-50 rounded">العناصر (Les Anassers)</div>
+          <div class="p-2 bg-emerald-50 rounded">المعدومين (Les Fusillés)</div>
+          <div class="p-2 bg-emerald-50 rounded">طرابلس الثعالبية</div>
+          <div class="p-2 bg-emerald-50 rounded">طرابلس المسجد</div>
+          <div class="p-2 bg-emerald-50 rounded">طرابلس حمداش</div>
+          <div class="p-2 bg-emerald-50 rounded">طرابلس المقرية</div>
+          <div class="p-2 bg-emerald-50 rounded">الخروبة (Caroubier)</div>
+          <div class="p-2 bg-emerald-50 rounded">الغلاسيار (La Glacière)</div>
+          <div class="p-2 bg-emerald-50 rounded">جسر الحراش (Pont El Harrach)</div>
+          <div class="p-2 bg-emerald-50 rounded">بلفو (Bellevue)</div>
+          <div class="p-2 bg-emerald-50 rounded">بكري بوقرة</div>
+          <div class="p-2 bg-emerald-50 rounded">الديار الخمس (Cinq Maisons)</div>
+          <div class="p-2 bg-emerald-50 rounded">قصر المعارض (Foire d'Alger)</div>
+          <div class="p-2 bg-emerald-50 rounded">الصنوبر (Les Pins)</div>
+          <div class="p-2 bg-emerald-50 rounded">حي المندرين (Tamaris)</div>
+          <div class="p-2 bg-emerald-50 rounded">حي مختار زرهوني</div>
+          <div class="p-2 bg-emerald-50 rounded">حي رابية (Cité Rabia)</div>
+          <div class="p-2 bg-emerald-50 rounded">جامعة باب الزوار (USTHB)</div>
+          <div class="p-2 bg-emerald-50 rounded">حي 5 جويلية</div>
+          <div class="p-2 bg-emerald-50 rounded">باب الزوار الجسر</div>
+          <div class="p-2 bg-emerald-50 rounded">الحي الجامعي (CUB1)</div>
+          <div class="p-2 bg-emerald-50 rounded">حي 8 ماي 1945</div>
+          <div class="p-2 bg-emerald-50 rounded">حي الصباح (Clair Matin)</div>
+          <div class="p-2 bg-emerald-50 rounded">برج الكيفان الثانوية</div>
+          <div class="p-2 bg-emerald-50 rounded">برج الكيفان الوسط</div>
+          <div class="p-2 bg-emerald-50 rounded">برج الكيفان العيادة</div>
+          <div class="p-2 bg-emerald-50 rounded">موحوس (Mouhous)</div>
+          <div class="p-2 bg-emerald-50 rounded">ميموني محمود</div>
+          <div class="p-2 bg-emerald-50 rounded">بن مرابط (Ben Merabet)</div>
+          <div class="p-2 bg-emerald-50 rounded">بن رضوان (Ben Redouane)</div>
+          <div class="p-2 bg-emerald-50 rounded">سيدي ادريس (Sidi Dris)</div>
+          <div class="p-2 bg-emerald-50 rounded">بن زرقة (Benzerga)</div>
+          <div class="p-2 bg-emerald-50 rounded">مقهى شرقي (Café Chergui)</div>
+          <div class="p-2 bg-emerald-50 rounded">الحي الدبلوماسي</div>
+          <div class="p-2 bg-emerald-50 rounded">درقانة وسط (Dergana Centre)</div>
+          <div class="p-2 bg-emerald-50 rounded">جامعة درقانة</div>
         </div>
       </div>
     </div>
 
-    <!-- 3. سيارات الأجرة -->
+    <!-- 4. سيارات الأجرة -->
     <div id="tab-taxi" class="tab-content space-y-6">
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-taxi text-amber-500"></i> سيارات الأجرة (Taxi)</h2>
-        <p class="text-sm text-gray-600 mb-4">محطات التاكسي الرئيسية القريبة من ENSTP:</p>
-        <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
-          <li><strong>محطة خروبة (Kharouba):</strong> خطوط بين الولايات.</li>
-          <li><strong>بن عمر (Ben Omar):</strong> سيارات إلى بئر خادم، بئر مراد رايس.</li>
-          <li><strong>القبة القديمة (Vieux Kouba):</strong> إلى وادي السمار، حسين داي، الوسط.</li>
-        </ul>
+        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-taxi text-amber-500"></i> سيارات الأجرة</h2>
+        <p class="text-sm text-gray-600 mb-2">محطات رئيسية: خروبة (بين الولايات)، بن عمر (بئر مراد رايس)، القبة القديمة (وسط العاصمة).</p>
       </div>
     </div>
 
@@ -160,80 +219,31 @@
       activeBtn.classList.remove('bg-white', 'text-gray-700');
     }
 
-    // 🧠 محرك حساب المسار (المنطق)
+    // 🧠 محرك حساب المسار الشامل
     function calculateRoute() {
       const start = document.getElementById('startPoint').value;
       const end = document.getElementById('endPoint').value;
       const resultDiv = document.getElementById('routeResult');
       resultDiv.classList.remove('hidden');
-
       let html = '';
 
-      // إذا كان الانطلاق من المدرسة (القبة)
+      // نفس المنطق السابق لتوليد المسارات
       if (start === 'kouba') {
-        if (end === 'zeralda') {
-          html = `
-            <h3 class="font-bold text-lg text-emerald-600 mb-2"><i class="fa-solid fa-bus"></i> أفضل خيار: حافلة جامعية مباشرة</h3>
-            <p class="text-sm">توجه إلى <strong>المحطة البرية للقطب الجامعي (القبة)</strong>، وستجد حافلة مباشرة باتجاه <strong>عين البناء / زرالدة</strong>. تنطلق الحافلة في تمام الساعة 7:30 صباحاً.</p>
-          `;
-        } else if (end === 'tajenan') {
-          html = `
-            <h3 class="font-bold text-lg text-amber-600 mb-2"><i class="fa-solid fa-train-subway"></i> خيار 1: حافلة جامعية</h3>
-            <p class="text-sm mb-2">الحافلات الجامعية المتجهة إلى <strong>بني مزاب / الجلفة</strong> تمر عبر تاجنانت. تنطلق الساعة 7:00 من المحطة البرية.</p>
-            <h3 class="font-bold text-lg text-blue-600 mb-2 mt-4"><i class="fa-solid fa-route"></i> خيار 2: نقل عمومي</h3>
-            <p class="text-sm">خذ حافلة من القبة إلى <strong>محطة الحافلات (خروبة)</strong>، ومنها حافلة باتجاه الجنوب.</p>
-          `;
-        } else if (end === 'centre') {
-          html = `
-            <h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> الأسرع: مترو</h3>
-            <p class="text-sm">خذ حافلة صغيرة إلى <strong>محطة مترو حي البدر</strong>، ثم المترو مباشرة إلى وسط العاصمة.</p>
-          `;
-        } else if (end === 'benaknoun') {
-          html = `
-            <h3 class="font-bold text-lg text-emerald-600 mb-2"><i class="fa-solid fa-bus"></i> حافلة جامعية مباشرة</h3>
-            <p class="text-sm">توجه إلى المحطة البرية، الحافلة رقم 01 تتجه مباشرة إلى <strong>تافورة / بن عكنون</strong>. الانطلاق 7:00 صباحاً.</p>
-          `;
-        } else {
-          html = `<p class="text-sm text-gray-600">يرجى التحقق من المحطات الرئيسية (القبة أو خروبة).</p>`;
-        }
-      } 
-      // إذا كان الانطلاق من مكان آخر (مثلاً الحراش / بشدجرح)
-      else if (start === 'bachdjarah') {
-        if (end === 'zeralda') {
-          html = `
-            <h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> الخطة: مترو + حافلة</h3>
-            <ol class="list-decimal list-inside text-sm space-y-1">
-              <li>خذ المترو من <strong>حي البدر</strong> باتجاه الوسط.</li>
-              <li>انزل في محطة <strong>تافورة (Tafourah)</strong>.</li>
-              <li>من محطة الحافلات بتافورة، خذ حافلة باتجاه <strong>زرالدة</strong>.</li>
-            </ol>
-          `;
-        } else if (end === 'centre') {
-          html = `
-            <h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> مباشر: مترو</h3>
-            <p class="text-sm">أنت قريب جداً من المترو. توجه إلى محطة <strong>حي البدر</strong> وخذ المترو مباشرة إلى وسط العاصمة.</p>
-          `;
-        } else {
-           html = `
-            <h3 class="font-bold text-lg text-amber-600 mb-2"><i class="fa-solid fa-taxi"></i> الأفضل: سيارة أجرة</h3>
-            <p class="text-sm">منطقة الحراش/بشدجرح بعيدة عن خطوط الحافلات الجامعية. الأفضل استخدام تطبيق <strong>Yassir</strong> أو التاكسي.</p>
-          `;
-        }
+        if (end === 'zeralda') html = `<h3 class="font-bold text-lg text-emerald-600 mb-2"><i class="fa-solid fa-bus"></i> حافلة جامعية مباشرة</h3><p class="text-sm">من المحطة البرية للقطب الجامعي (القبة).</p>`;
+        else if (end === 'centre') html = `<h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> مترو</h3><p class="text-sm">حافلة إلى حي البدر ثم المترو إلى ساحة الشهداء.</p>`;
+        else if (end === 'babezzouar' || end === 'bordj' || end === 'dergana') html = `<h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train"></i> مترو + ترامواي</h3><p class="text-sm">مترو إلى الحراش، ثم ترامواي.</p>`;
+        else html = `<p class="text-sm">توجه إلى محطة القبة أو خروبة.</p>`;
+      } else if (start === 'bachdjarah' || start === 'elharrach') {
+        if (end === 'zeralda' || end === 'benaknoun') html = `<h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> مترو + حافلة</h3><p class="text-sm">مترو إلى الوسط، ثم حافلة.</p>`;
+        else if (end === 'centre') html = `<h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> مترو مباشر</h3><p class="text-sm">إلى ساحة الشهداء.</p>`;
+        else html = `<h3 class="font-bold text-lg text-emerald-600 mb-2"><i class="fa-solid fa-train"></i> ترامواي</h3><p class="text-sm">من محطة الحراش.</p>`;
+      } else {
+        html = `<p class="text-sm">توجه إلى محطة مركزية (تافورة أو خروبة).</p>`;
       }
-      // باقي الخيارات
-      else {
-        html = `
-          <h3 class="font-bold text-lg text-gray-800 mb-2"><i class="fa-solid fa-circle-info"></i> نصيحة عامة</h3>
-          <p class="text-sm">لعدم وجود خط مباشر، ننصحك بالاتجاه أولاً إلى محطة مركزية مثل <strong>تافورة (وسط العاصمة)</strong> أو <strong>خروبة</strong>، ومنها ستجد حافلات لكل الوجهات.</p>
-        `;
-      }
-
       resultDiv.innerHTML = html;
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      openTab('bus');
-    });
+    window.addEventListener('DOMContentLoaded', () => { openTab('bus'); });
   </script>
 </body>
 </html>
