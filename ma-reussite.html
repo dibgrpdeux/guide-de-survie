@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr" data-theme="indigo">
+<html lang="ar" dir="rtl" data-theme="indigo">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,6 +24,8 @@
     .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
     .btn-custom { background-color: var(--primary); color: white; transition: all 0.3s ease; }
     .btn-custom:hover { background-color: var(--primary-hover); }
+    .link-card { transition: all 0.3s ease; }
+    .link-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.2); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -42,13 +44,13 @@
       </div>
       <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
         <i class="fa-solid fa-arrow-right"></i>
-        <span>Retour à l'Accueil</span>
+        <span>الرئيسية</span>
       </a>
     </div>
   </header>
 
   <!-- MAIN CONTENT -->
-  <main class="max-w-6xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-8">
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-12">
     
     <!-- Hero Section -->
     <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white flex flex-col md:flex-row items-center justify-between gap-6">
@@ -57,9 +59,9 @@
           <i class="fa-solid fa-trophy"></i>
           <span>قسم التفوق والنجاح (Ma Réussite)</span>
         </span>
-        <h2 class="text-3xl font-black text-gray-900">Votre Espace Académique</h2>
+        <h2 class="text-3xl font-black text-gray-900">مساحتك الأكاديمية</h2>
         <p class="text-xs lg:text-sm text-gray-600 font-cairo leading-relaxed max-w-2xl">
-          كل ما تحتاجه للنجاح في مسارك الدراسي في مكان واحد. اختر الخدمة التي تريدها أدناه للوصول السريع إليها.
+          كل ما تحتاجه للنجاح في مسارك الدراسي في مكان واحد. اطلع على جدولك الدراسي، حمل الدروس والامتحانات، وتابع أفضل قنوات اليوتيوب والأساتذة.
         </p>
       </div>
       <div class="w-24 h-24 rounded-3xl bg-amber-50 text-amber-500 flex items-center justify-center text-4xl shadow-md flex-shrink-0">
@@ -67,55 +69,148 @@
       </div>
     </div>
 
-    <!-- Sub-sections Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <!-- 1. Emploi du temps (هنا قمنا بربطه بملف schedule.html) -->
-      <a href="schedule.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
-        <div class="space-y-3">
-          <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition">
-            <i class="fa-solid fa-calendar-days"></i>
+    <!-- 1. Emploi du Temps -->
+    <div class="space-y-4">
+      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-calendar-days text-indigo-600"></i> استعمال الزمن</h3>
+      <a href="schedule.html" class="glass-card link-card flex items-center justify-between p-6 rounded-2xl border border-gray-100 group">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock"></i></div>
+          <div>
+            <h4 class="font-bold text-gray-900 text-lg">جدول التوقيت الخاص بفوجك</h4>
+            <p class="text-xs text-gray-500">اطلع على أوقات المحاضرات، الأعمال الموجهة (TD) والتطبيقية (TP).</p>
           </div>
-          <h3 class="font-extrabold text-xl text-gray-900">Emploi du Temps</h3>
-          <p class="text-xs text-gray-500 font-cairo">استعمال الزمن الدقيق الخاص بفوجك (محاضرات، أعمال موجهة وتطبيقية).</p>
         </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
-          <span>Ouvrir le planning</span>
-          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-        </div>
+        <i class="fa-solid fa-arrow-left text-indigo-500 group-hover:-translate-x-1 transition"></i>
       </a>
-
-      <!-- 2. Cours & TD -->
-      <button type="button" onclick="alert('قريباً: قسم لتحميل الدروس والملخصات بصيغة PDF.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
-        <div class="space-y-3 w-full">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition">
-            <i class="fa-solid fa-book-open"></i>
-          </div>
-          <h3 class="font-extrabold text-xl text-gray-900">Cours & TD</h3>
-          <p class="text-xs text-gray-500 font-cairo">تحميل الدروس، الملخصات، وسلاسل التمارين الخاصة بكل مادة.</p>
-        </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
-          <span>Bientôt disponible</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </button>
-
-      <!-- 3. Examens -->
-      <button type="button" onclick="alert('قريباً: قسم للامتحانات السابقة ونماذج الاختبارات.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
-        <div class="space-y-3 w-full">
-          <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:bg-rose-600 group-hover:text-white transition">
-            <i class="fa-solid fa-file-signature"></i>
-          </div>
-          <h3 class="font-extrabold text-xl text-gray-900">Examens</h3>
-          <p class="text-xs text-gray-500 font-cairo">مواضيع الامتحانات السابقة ونماذج للإجابة لمساعدتك على التحضير.</p>
-        </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-rose-600 w-full">
-          <span>Bientôt disponible</span>
-          <i class="fa-solid fa-clock"></i>
-        </div>
-      </button>
-
     </div>
+
+    <!-- 2. Devoirs & Examens (Google Drives) -->
+    <div class="space-y-4">
+      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-file-signature text-emerald-600"></i> الواجبات والامتحانات (دروس 2CP)</h3>
+      <p class="text-sm text-gray-500 mb-2">مجموعة من روابط Google Drive تحتوي على دروس، تمارين وامتحانات سابقة للسنة الثانية تحضيري.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Drive 1 -->
+        <a href="https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 1 (Dossiers 2CP)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 2 -->
+        <a href="https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 2 (Cours & TD)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 3 -->
+        <a href="https://drive.google.com/drive/folders/0BzXU8qpz3MR4VXFZTlV4dEFpRjg" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 3 (Examens)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 4 -->
+        <a href="https://drive.google.com/drive/folders/1SZmGuMJM3-9C8VfAudUlaXVVJJ-bs1ik" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 4 (Résumés)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 5 -->
+        <a href="https://drive.google.com/drive/folders/1ObXGyxubN5d7MgtTyts1H7vUfTPSs3Z7" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 5 (Analyses)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 6 -->
+        <a href="https://drive.google.com/drive/folders/15N8LPatF0r-1AimmRPbpLa9aNUmV0cod" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 6 (Chimie/Physique)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 7 -->
+        <a href="https://drive.google.com/drive/folders/0B0pugt6XdltcQ09UR2h6UTdwWkU" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 7 (Maths)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 8 -->
+        <a href="https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 8 (Info)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 9 -->
+        <a href="https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 9 (Génie Civil)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 10 -->
+        <a href="https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 10 (Sujets divers)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+        <!-- Drive 11 (الأخير) -->
+        <a href="https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i>
+            <span class="font-bold text-gray-800 text-sm">Drive 11 (Concours 2018)</span>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 text-xs group-hover:text-emerald-500"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Profs & Chaînes YouTube -->
+    <div class="space-y-4">
+      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-600"></i> أساتذة وقنوات يوتيوب مفيدة</h3>
+      <p class="text-sm text-gray-500 mb-2">أفضل القنوات والمصادر التعليمية لطلبة السنة الأولى والثانية تحضيري (ST).</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 1ère Année -->
+        <div class="glass-card p-6 rounded-2xl border border-gray-100">
+          <h4 class="font-black text-indigo-900 mb-4 border-b pb-2">1ère Année (السنة الأولى)</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <a href="https://www.youtube.com/@Maths_CP" target="_blank" class="hover:text-indigo-600 font-bold">Maths CP - Analyse & Algèbre</a></li>
+            <li class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <a href="https://www.youtube.com/@Physique_CP" target="_blank" class="hover:text-indigo-600 font-bold">Physique 1 & 2 (Mécanique)</a></li>
+            <li class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <a href="https://www.youtube.com/@Chimie_CP" target="_blank" class="hover:text-indigo-600 font-bold">Chimie 1 (Structure de la matière)</a></li>
+            <li class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <a href="https://www.youtube.com/@Info_CP" target="_blank" class="hover:text-indigo-600 font-bold">Informatique 1 (Python & C)</a></li>
+          </ul>
+        </div>
+
+        <!-- 2ème Année -->
+        <div class="glass-card p-6 rounded-2xl border border-gray-100">
+          <h4 class="font-black text-emerald-900 mb-4 border-b pb-2">2ème Année (السنة الثانية)</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <a href="https://www.youtube.com/@Maths_2CP" target="_blank" class="hover:text-emerald-600 font-bold">Analyse 3 & Analyse Numérique</a></li>
+            <li class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <a href="https://www.youtube.com/@Meca_Rat" target="_blank" class="hover:text-emerald-600 font-bold">Mécanique Rationnelle</a></li>
+            <li class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <a href="https://www.youtube.com/@RDM" target="_blank" class="hover:text-emerald-600 font-bold">RDM & MDF (Résistance des Matériaux)</a></li>
+            <li class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <a href="https://www.youtube.com/@Elec" target="_blank" class="hover:text-emerald-600 font-bold">Électricité Générale</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- FOOTER -->
