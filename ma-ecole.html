@@ -22,11 +22,14 @@
     .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
     .btn-custom { background-color: var(--primary); color: white; transition: all 0.3s ease; }
     .btn-custom:hover { background-color: var(--primary-hover); }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
   <div class="ambient-bg"></div>
 
+  <!-- HEADER -->
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -37,13 +40,16 @@
         </div>
       </div>
       <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
-        <i class="fa-solid fa-arrow-right"></i>
+        <i class="fa-solid fa-arrow-left"></i>
         <span>Retour à l'Accueil</span>
       </a>
     </div>
   </header>
 
+  <!-- MAIN CONTENT -->
   <main class="max-w-6xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-8">
+    
+    <!-- Hero Section -->
     <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white space-y-4">
       <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
         <i class="fa-solid fa-school"></i> <span>Section Principale</span>
@@ -54,8 +60,10 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- رابط الأساتذة -->
+    <!-- Sub-sections Grid (4 أزرار) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- 1. Enseignants (الأساتذة) -->
       <a href="enseignants.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
         <div class="space-y-3">
           <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition">
@@ -70,8 +78,8 @@
         </div>
       </a>
 
-      <!-- المباني -->
-      <button type="button" onclick="alert('قريباً: خريطة تفاعلية للمدرجات (A, B, C) وقاعات التدريس والمخابر العلمية.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+      <!-- 2. Bâtiments & Amphis (المباني) -->
+      <button type="button" onclick="openModal('batiments')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
         <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-2xl group-hover:bg-pink-600 group-hover:text-white transition">
             <i class="fa-solid fa-building-columns"></i>
@@ -80,13 +88,13 @@
           <p class="text-xs text-gray-500 font-cairo">مواقع المدرجات الرئيسية (A, B, C)، القاعات والمخابر العلمية.</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600 w-full">
-          <span>En cours</span>
+          <span>Explorer</span>
           <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
       </button>
 
-      <!-- التاريخ -->
-      <button type="button" onclick="alert('قريباً: نبذة تاريخية شاملة عن تأسيس المدرسة الوطنية العليا للأشغال العمومية ودورها الريادي.')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+      <!-- 3. Histoire & À propos (التاريخ) -->
+      <button type="button" onclick="openModal('histoire')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
         <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition">
             <i class="fa-solid fa-landmark"></i>
@@ -95,15 +103,161 @@
           <p class="text-xs text-gray-500 font-cairo">نبذة تاريخية عن تأسيس المدرسة ودورها في تكوين مهندسي الأشغال العمومية.</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
-          <span>En cours</span>
+          <span>Lire l'histoire</span>
           <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
       </button>
+
+      <!-- 4. Carte 3D (الخريطة ثلاثية الأبعاد) -->
+      <a href="https://quad-route-finder.lovable.app" target="_blank" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
+        <div class="space-y-3">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl group-hover:bg-cyan-600 group-hover:text-white transition">
+            <i class="fa-solid fa-cube"></i>
+          </div>
+          <h3 class="font-extrabold text-xl text-gray-900">Carte 3D</h3>
+          <p class="text-xs text-gray-500 font-cairo">خريطة تفاعلية ثلاثية الأبعاد للتنقل داخل الحرم الجامعي.</p>
+        </div>
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-cyan-600">
+          <span>Ouvrir la carte</span>
+          <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-1 transition"></i>
+        </div>
+      </a>
+
     </div>
   </main>
 
+  <!-- MODAL: نافذة منبثقة للمباني والتاريخ -->
+  <div id="info-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+    <div class="glass-card rounded-3xl p-6 lg:p-8 max-w-4xl w-full space-y-4 shadow-2xl border border-white max-h-[90vh] overflow-y-auto relative">
+      
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition z-10">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 id="modal-title" class="font-black text-2xl text-gray-900 border-b pb-3"></h3>
+      
+      <div id="modal-body" class="text-sm text-gray-700 font-cairo leading-relaxed space-y-4"></div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
     <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02).</p>
   </footer>
+
+  <script>
+    // دالة فتح النافذة المنبثقة
+    function openModal(type) {
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+      const modal = document.getElementById('info-modal');
+
+      if (type === 'batiments') {
+        title.innerText = "Bâtiments & Amphis (الخريطة والفيديوهات)";
+        body.innerHTML = `
+          <div class="space-y-6">
+            <!-- 1. الخريطة ثلاثية الأبعاد -->
+            <div class="bg-pink-50 p-4 rounded-xl border border-pink-100">
+              <h4 class="font-bold text-pink-900 mb-2"><i class="fa-solid fa-map"></i> خريطة الحرم الجامعي (3D)</h4>
+              <p class="text-xs text-pink-800 mb-3">استكشف المدرسة بشكل ثلاثي الأبعاد للوصول إلى المدرجات والقاعات.</p>
+              <a href="https://quad-route-finder.lovable.app" target="_blank" class="inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition">
+                <i class="fa-solid fa-cube"></i> فتح الخريطة ثلاثية الأبعاد
+              </a>
+            </div>
+
+            <!-- 2. الفيديوهات -->
+            <div>
+              <h4 class="font-bold text-gray-900 mb-3"><i class="fa-brands fa-youtube text-red-500"></i> فيديوهات تعريفية للمدرسة</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <div class="space-y-1">
+                  <div class="video-container bg-gray-200 shadow-sm">
+                    <iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe>
+                  </div>
+                  <p class="text-xs font-bold text-gray-700 text-center">جولة في المدرسة (Tour)</p>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="video-container bg-gray-200 shadow-sm">
+                    <iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe>
+                  </div>
+                  <p class="text-xs font-bold text-gray-700 text-center">الأقسام التحضيرية (Prépa)</p>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="video-container bg-gray-200 shadow-sm">
+                    <iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe>
+                  </div>
+                  <p class="text-xs font-bold text-gray-700 text-center">المدرجات (Amphis)</p>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="video-container bg-gray-200 shadow-sm">
+                    <iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe>
+                  </div>
+                  <p class="text-xs font-bold text-gray-700 text-center">المنشآت القاعدية (Infra)</p>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="video-container bg-gray-200 shadow-sm">
+                    <iframe src="https://www.youtube.com/embed/GUCHDgEJaIk" allowfullscreen></iframe>
+                  </div>
+                  <p class="text-xs font-bold text-gray-700 text-center">مدخل المدرسة (Entrée)</p>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="video-container bg-gray-200 shadow-sm">
+                    <iframe src="https://www.youtube.com/embed/sFwHEHhgAbQ" allowfullscreen></iframe>
+                  </div>
+                  <p class="text-xs font-bold text-gray-700 text-center">قسم الإعلام الآلي (Info)</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        `;
+      } 
+      else if (type === 'histoire') {
+        title.innerText = "Histoire de l'ENSTP (نبذة تاريخية)";
+        body.innerHTML = `
+          <div class="space-y-4 text-justify">
+            <p>
+              <strong>المدرسة الوطنية العليا للأشغال العمومية (ENSTP)</strong> هي مؤسسة عمومية ذات طابع علمي وتكنولوجي وثقافي، تقع في بلدية القبة بالجزائر العاصمة. تعتبر من أعرق وأهم المدارس الهندسية في الجزائر.
+            </p>
+            <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-emerald-500 space-y-2">
+              <h5 class="font-bold text-gray-900">النشأة والتأسيس:</h5>
+              <p class="text-sm">
+                تأسست المدرسة في الأصل عام <strong>1925</strong> تحت اسم "مدرسة الأشغال العمومية" (École des Travaux Publics) في العهد الاستعماري. بعد استقلال الجزائر عام 1962، تم تعريبها وإعادة هيكلتها لتصبح مؤسسة وطنية.
+              </p>
+            </div>
+            <div class="space-y-2">
+              <h5 class="font-bold text-gray-900">التطور والتخصصات:</h5>
+              <p class="text-sm">
+                على مر العقود، تطورت المدرسة لتواكب احتياجات التنمية في الجزائر. اليوم، تقدم المدرسة تكوينات هندسية عالية المستوى في عدة تخصصات دقيقة، أبرزها:
+              </p>
+              <ul class="list-disc list-inside text-sm text-gray-600 space-y-1 mt-1 pr-4">
+                <li>المنشآت القاعدية (DIB): يشمل هندسة الطرق، الجسور، والسكك الحديدية.</li>
+                <li>المواد والهياكل (DMS): يشمل هندسة البناء، الميكانيكا، والمواد.</li>
+                <li>الأقسام التحضيرية (CP): لتأهيل الطلبة للالتحاق بالمدارس العليا.</li>
+              </ul>
+            </div>
+            <p class="text-sm">
+              تخرج المدرسة سنوياً نخبة من المهندسين الذين يساهمون في بناء المشاريع الكبرى في الجزائر (كالطرق السريعة، الموانئ، والمنشآت الحيوية). وتتميز بوجود حرم جامعي يضم مدرجات عملاقة (Amphis)، مخابر علمية متطورة، ومكتبة مركزية غنية بالمراجع الهندسية.
+            </p>
+          </div>
+        `;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    // دالة إغلاق النافذة
+    function closeModal() {
+      document.getElementById('info-modal').classList.add('hidden');
+      // إيقاف الفيديوهات عند الإغلاق
+      document.getElementById('modal-body').innerHTML = '';
+    }
+  </script>
 </body>
 </html>
