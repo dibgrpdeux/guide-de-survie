@@ -1,878 +1,191 @@
-// ==========================================
-// 1. قاموس الترجمات (النسخة النهائية المنظفة)
-// ==========================================
-const translations = {
-  ar: {
-    // --- الصفحة الرئيسية (index.html) ---
-    nav_app_name: "دليل ENSTP",
-    nav_app_sub: "المدرسة الوطنية العليا",
-    nav_home: "الرئيسية",
-    home_welcome: "مرحباً بك في فضائك الجامعي",
-    home_desc: "اكتشف كل ما تحتاجه لتسهيل مسارك الدراسي وحياتك اليومية في المدرسة الوطنية العليا للأشغال العمومية (ENSTP). اختر القسم المناسب أدناه للبدء.",
-    nav_school: "مدرستي",
-    nav_school_desc: "تعرف على المدرسة، المرافق، والمكتبة",
-    nav_admin: "إدارتي",
-    nav_admin_desc: "الوثائق، الشهادات، والإجراءات الإدارية",
-    nav_success: "نجاحي",
-    nav_success_desc: "الدروس، الامتحانات، وجداول التوقيت",
-    nav_residence: "إقامتي الجامعية",
-    nav_residence_desc: "معلومات الإيواء والخدمات الجامعية",
-    nav_sport: "الرياضة",
-    nav_sport_desc: "الأنشطة الرياضية، الملاعب، والنوادي",
-    nav_forum: "ملتقى الطلبة",
-    nav_forum_desc: "النوادي العلمية، الفعاليات، والنقاشات",
-    nav_transport: "النقل",
-    nav_transport_desc: "خطوط الحافلات، المحطات، والتوقيت",
-    nav_food: "المطاعم والتسوق",
-    nav_food_desc: "مطاعم الجامعة، المقاهي، وقوائم الطعام",
-    nav_leisure: "السياحة في العاصمة",
-    nav_leisure_desc: "أماكن الترفيه والسياحة في العاصمة",
-    nav_schedule_badge: "استعمال الزمن",
-    nav_qr: "رمز QR",
-    nav_qr_desc: "مسح الرموز...",
-
-    // --- صفحة مدرستي (ma-ecole.html) ---
-    ecole_title: "مدرستي",
-    ecole_subtitle: "مرحباً بك في المدرسة الوطنية العليا للأشغال العمومية",
-    ecole_desc: "المدرسة الوطنية العليا للأشغال العمومية بالقبة هي صرح أثري وعلمي عريق لتكوين المهندسين. اختر أحد الأقسام الفرعية أدناه لاستعراض التفاصيل والمرافق والأساتذة.",
-    ecole_teachers: "هيئة التدريس",
-    ecole_teachers_desc: "استعراض أساتذة المواد للسنة الأولى والثانية تحضيري مع التفاصيل.",
-    ecole_teachers_btn: "عرض القائمة",
-    ecole_buildings: "المباني والمدرجات",
-    ecole_buildings_desc: "مواقع المدرجات الرئيسية (A, B)، القاعات والمخابر العلمية.",
-    ecole_buildings_btn: "استكشف",
-    ecole_history: "التاريخ والنبذة",
-    ecole_history_desc: "نبذة تاريخية عن تأسيس المدرسة ودورها في تكوين مهندسي الأشغال العمومية.",
-    ecole_history_btn: "اقرأ التاريخ",
-    ecole_map3d: "الخريطة ثلاثية الأبعاد",
-    ecole_map3d_desc: "خريطة تفاعلية ثلاثية الأبعاد للتنقل داخل الحرم الجامعي.",
-    ecole_map3d_btn: "فتح الخريطة",
-    modal_buildings_title: "المباني والمدرجات (Bâtiments & Amphis)",
-    modal_buildings_map: "خريطة الحرم الجامعي",
-    modal_buildings_map_desc: "استكشف المدرسة بشكل ثلاثي الأبعاد للوصول إلى المدرجات والقاعات.",
-    modal_buildings_map_btn: "فتح الخريطة ثلاثية الأبعاد",
-    modal_buildings_videos: "فيديوهات تعريفية للمدرسة",
-    modal_history_title: "نبذة تاريخية عن المدرسة",
-    modal_video_tour: "جولة في المدرسة (Tour)",
-    modal_video_prepa: "الأقسام التحضيرية (Prépa)",
-    modal_video_amphi: "المدرجات (Amphis)",
-    modal_video_infra: "المنشآت القاعدية (Infra)",
-    modal_video_entree: "مدخل المدرسة (Entrée)",
-    modal_video_info: "قسم الإعلام الآلي (Info)",
-
-    // --- صفحة الأساتذة (enseignants.html) ---
-    ens_title: "هيئة التدريس (الأساتذة)",
-    ens_subtitle: "اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.",
-    ens_year1: "السنة الأولى تحضيري (1CP)",
-    ens_year2: "السنة الثانية تحضيري (2CP)",
-    ens_select_subject: "اختر المادة:",
-    ens_all: "الكل",
-    ens_show_card: "عرض البطاقة",
-    ens_module: "المواد المدرّسة:",
-    ens_advice: "نصيحة للطلبة:",
-    ens_research: "البحث العلمي:",
-    ens_links: "روابط مفيدة:",
-    ens_grade_prof: "أستاذ محاضر (دائم)",
-    ens_grade_temp: "أستاذ مؤقت (Vacataire)",
-
-    // --- صفحة نجاحي (ma-reussite.html) ---
-    reussite_title: "مساحتك الأكاديمية",
-    reussite_subtitle: "قسم التفوق والنجاح (Ma Réussite)",
-    reussite_desc: "كل ما تحتاجه للنجاح في مسارك الدراسي في مكان واحد. اطلع على جدولك الدراسي، حمل الدروس والامتحانات، وتابع أفضل قنوات اليوتيوب والأساتذة.",
-    reussite_schedule_title: "استعمال الزمن",
-    reussite_schedule_desc: "جدول التوقيت الخاص بفوجك",
-    reussite_schedule_sub: "اطلع على أوقات المحاضرات، الأعمال الموجهة (TD) والتطبيقية (TP).",
-    reussite_drives_title: "الواجبات والامتحانات (دروس 2CP)",
-    reussite_drives_desc: "مجموعة من روابط Google Drive تحتوي على دروس، تمارين وامتحانات سابقة.",
-    reussite_youtube_title: "أساتذة وقنوات يوتيوب مفيدة",
-    reussite_youtube_desc: "أفضل القنوات والمصادر التعليمية لطلبة السنة الأولى والثانية تحضيري.",
-    reussite_1cp: "السنة الأولى (1CP)",
-    reussite_2cp: "السنة الثانية (2CP)",
-    reussite_profs_title: "نصائح وإرشادات الأساتذة:",
-    advice_mdf: "MDF: أستاذ سليمان جلال (Slimane DJELLAL) يشرح المادة كاملة. الأستاذة S تشرح القليل فقط.",
-    advice_rdm: "RDM: أستاذ سليمان جلال (Slimane DJELLAL).",
-    advice_phys: "الفيزياء 3/4: أستاذ مغلاوي (Meghlaoui). لا تشاهدوا البث المباشر، ركزوا على الملخصات وحلوا التمارين (4 تمارين على الأقل).",
-    advice_chimie3: "الكيمياء 3: قناة Prepa Chimie.",
-    advice_chimie4: "الكيمياء 4: دروس.",
-    advice_elec: "الكهرباء: أستاذ مكحلة، اقرأ من كتاب المسكي، فهو شامل وممتاز. وأيضاً قناة Elmostafa Elkacem.",
-    advice_electro: "الإلكترونيك: Elmostafa Elkacem أو FA Learning.",
-    advice_meca: "الميكانيكا العقلانية 3+4: أستاذ S أو Symphony of Study. اقرأ من الكورس أفضل من البداية.",
-    advice_inge: "الهندسة الإنسانية 3: ابحث عنها بالتفصيل على يوتيوب، مليئة بالمواضيع. لا تتركها للدقيقة الأخيرة.",
-    advice_analyse: "التحليل 3/4: اقرأ من الكورس أفضل، وإذا لم تفهم ابحث عن 'أستاذ الرياضيات العزيري هواري'. نصيحة: ركز على الملخصات و2-3 تمارين في 30 دقيقة.",
-
-    // --- صفحة استعمال الزمن (schedule.html) ---
-    sched_title: "استعمال الزمن الدقيق (حسب الفوج)",
-    sched_desc: "حدد قسمك، سنتك الدراسية، وفوجك للحصول على توقيتك الخاص (المحاضرات والأعمال التطبيقية/الموجهة).",
-    sched_dept: "القسم / التخصص:",
-    sched_year: "السنة الدراسية:",
-    sched_group: "الفوج (Groupe):",
-    sched_dep_prep: "الطبقة التحضيرية (CP)",
-    sched_dep_dib: "المنشآت القاعدية (DIB)",
-    sched_dep_dms: "المواد والهياكل (DMS)",
-    sched_day_sat: "السبت", sched_day_sun: "الأحد", sched_day_mon: "الإثنين", sched_day_tue: "الثلاثاء", sched_day_wed: "الأربعاء", sched_day_thu: "الخميس",
-    sched_no_classes: "لا توجد حصص مبرمجة في هذا اليوم لهذا الفوج.",
-    sched_teacher: "الأستاذ:",
-    sched_cours: "محاضرة",
-    sched_td: "أعمال موجهة (TD)",
-    sched_tp: "أعمال تطبيقية (TP)",
-    sched_yr_prep1: "السنة الأولى تحضيري (1CP)", sched_yr_prep2: "السنة الثانية تحضيري (2CP)",
-    sched_yr_dib1: "السنة الأولى مهندس (DIB)", sched_yr_dib2: "السنة الثانية مهندس (DIB)", sched_yr_dib3: "السنة الثالثة مهندس (DIB)",
-    sched_yr_dms1: "السنة الأولى مهندس (DMS)", sched_yr_dms2: "السنة الثانية مهندس (DMS)", sched_yr_dms3: "السنة الثالثة مهندس (DMS)",
-    sched_group_lbl: "الفوج", sched_sec_lbl: "Section", sched_promo_lbl: "الدفعة كاملة (Promo)",
-
-    // --- صفحة إدارتي (administration.html) ---
-    admin_title: "دليل الإدارة والخدمات",
-    admin_subtitle: "إدارتي (Administration)",
-    admin_desc: "كل ما يخص الوثائق، الخدمات الجامعية، الضمان الاجتماعي، والمكتبة.",
-    admin_cnas: "التأمين والضمان الاجتماعي (CNAS)",
-    admin_cnas_q1: "أين يقع مكتب الضمان الاجتماعي؟", admin_cnas_a1: "يقع المكتب داخل المدرسة (ENSTP)...",
-    admin_cnas_q2: "ما هي الوثائق المطلوبة لملف الضمان الاجتماعي؟", admin_cnas_a2: "شهادة الميلاد...",
-    admin_cnas_q3: "ما هي أيام استقبال الملفات؟", admin_cnas_a3: "الاثنين، الثلاثاء، والخميس.",
-    admin_cnas_q4: "كيف أسجل في منصة الهناء (EL HANAA)؟", admin_cnas_a4: "بعد حصولك على رقم الضمان...",
-    admin_cnas_btn: "الدخول إلى منصة الهناء",
-    admin_biblio: "مكتبة المدرسة (Bibliothèque)",
-    admin_biblio_q1: "ما هي أوقات عمل المكتبة؟", admin_biblio_a1: "الفترة الصباحية...",
-    admin_biblio_q2: "ما هي شروط ووثائق التسجيل في المكتبة؟", admin_biblio_a2: "شهادة مدرسية...",
-    admin_biblio_q3: "ما هي القواعد الداخلية للمكتبة؟", admin_biblio_a3: "منع الصوت العالي...",
-    admin_univ: "الخدمات الجامعية (الإقامة والمنحة)",
-    admin_univ_q1: "كيف يتم التسجيل في الإقامة الجامعية؟", admin_univ_a1: "التسجيل يتم رقمياً...",
-    admin_univ_q2: "كيف أتقدم بطلب للحصول على المنحة الجامعية؟", admin_univ_a2: "يتم إيداع ملف...",
-    admin_univ_q3: "ما هي المشاكل الشائعة لتجميد المنحة؟", admin_univ_a3: "يتوقف صرف المنحة...",
-    admin_scol: "مصلحة التمدرس (Scolarité) والوثائق",
-    admin_scol_q1: "ضاع مني بطاقة الطالب؟", admin_scol_a1: "يجب التوجه فوراً...",
-    admin_scol_q2: "كيف أحصل على كشف النقاط؟", admin_scol_a2: "كشوف النقاط...",
-    admin_scol_q3: "كيف أتحصل على البريد الإلكتروني؟", admin_scol_a3: "تمنح إدارة المدرسة...",
-    admin_exam: "الامتحانات، الغيابات، والانتقال",
-    admin_exam_q1: "كيف أبرر الغيابات؟", admin_exam_a1: "يجب تقديم تبرير...",
-    admin_exam_q2: "كيف يتم التعامل مع الاستدراك؟", admin_exam_a2: "إذا كان معدلك...",
-    admin_exam_q3: "شروط الانتقال للسنة الثانية؟", admin_exam_a3: "الانتقال يتطلب...",
-
-    // --- صفحة الإقامة (residence.html) ---
-    res_title: "اختر إقامتك الجامعية",
-    res_subtitle: "تعرف على موقع إقامتك، المسافة بينها وبين المدرسة، والفيديوهات والمرافق القريبة منها.",
-    res_gueridi: "الإقامة الجامعية قاريدي", res_gueridi_loc: "قاريدي، الجزائر العاصمة",
-    res_youssefi: "الإقامة الجامعية امحمد يوسفي", res_youssefi_loc: "حسين داي، الجزائر العاصمة",
-    res_hamdine: "الإقامة الجامعية سعيد حمدين", res_hamdine_loc: "سعيد حمدين، الجزائر العاصمة",
-    res_back: "العودة لقائمة الإقامات",
-    res_map: "الموقع على الخريطة",
-    res_distance: "المسافة إلى المدرسة",
-    res_transport: "وسيلة النقل المقترحة:",
-    res_video: "فيديو تعريفي عن الإقامة",
-    res_facilities: "المحلات والمرافق القريبة",
-    res_open: "أوقات العمل:",
-    res_dist: "المسافة:",
-
-    // --- صفحة النقل (transport.html) ---
-    trans_title: "دليل النقل الشامل",
-    trans_planner: "مخطط الرحلة الذكي",
-    trans_planner_desc: "اختر محطة الانطلاق والوجهة، وسنقترح عليك أفضل مسار.",
-    trans_start: "الانطلاق من:",
-    trans_end: "الوجهة (أريد الذهاب إلى):",
-    trans_calc_btn: "احسب مسار الرحلة",
-    trans_tab_bus: "الحافلات الجامعية",
-    trans_tab_metro: "المترو",
-    trans_tab_tram: "الترامواي",
-    trans_tab_urban: "النقل الحضري",
-    trans_tab_map: "الخريطة",
-    trans_bus_title: "مواقيت الحافلات الجامعية (من القبة)",
-    trans_bus_desc: "جميع الحافلات تنطلق من المحطة البرية للقطب الجامعي (القبة).",
-    trans_dest: "الوجهة",
-    trans_times: "مواقيت الإقلاع",
-    trans_metro_title: "محطات المترو (ساحة الشهداء - عين النعجة)",
-    trans_metro_desc: "التذكرة: 50 دج. محطات رئيسية قريبة من المدرسة: حي البدر.",
-    trans_tram_title: "محطات الترامواي (العناصر - درقانة)",
-    trans_tram_desc: "التذكرة: 40 دج. محطات رئيسية: الحراش، باب الزوار، برج الكيفان.",
-    trans_urban_title: "النقل الحضري القريب من ENSTP",
-    trans_urban_c: "محطة C (أمام بنك CNEP)", trans_urban_c_desc: "الوجهات: محطة بن عمر...",
-    trans_urban_b: "محطة B (المحطة البرية القبة)", trans_urban_b_desc: "الوجهات: معظم أنحاء العاصمة...",
-    trans_urban_d: "محطة D (مقابل ENS)", trans_urban_d_desc: "الوجهات: وجهات محددة...",
-    trans_taxis_title: "محطات سيارات الأجرة",
-    trans_map_title: "خريطة محطات النقل",
-    trans_route_direct_bus: "حافلة جامعية مباشرة", trans_route_from_kouba: "من المحطة البرية للقطب الجامعي (القبة).",
-    trans_route_metro: "مترو", trans_route_bus_metro: "حافلة إلى حي البدر ثم المترو إلى ساحة الشهداء.",
-    trans_route_metro_tram: "مترو + ترامواي", trans_route_via_harrach: "مترو إلى الحراش، ثم ترامواي.",
-    trans_route_go_kouba: "توجه إلى محطة القبة أو خروبة.",
-    trans_route_metro_bus: "مترو + حافلة", trans_route_via_centre: "مترو إلى الوسط، ثم حافلة.",
-    trans_route_metro_direct: "مترو مباشر", trans_route_to_martyrs: "إلى ساحة الشهداء.",
-    trans_route_tram: "ترامواي", trans_route_from_harrach: "من محطة الحراش.",
-    trans_route_central: "توجه إلى محطة مركزية (تافورة أو خروبة).",
-
-    // --- صفحة التسوق والمطاعم (shopping.html) ---
-    shopping_title: "المطاعم والتسوق",
-    shopping_subtitle: "اكتشف أفضل المطاعم والمقاهي والمحلات القريبة من المدرسة.",
-    filter_all: "الكل",
-    sort_by: "فرز حسب:",
-    sort_default: "الافتراضي",
-    sort_dist: "المسافة (الأقرب)",
-    sort_price: "السعر (الأرخص)",
-    sort_rating: "التقييم (الأعلى)",
-    label_hours: "أوقات العمل:",
-    label_menu: "القائمة:",
-    btn_call: "اتصل",
-    btn_map: "الخريطة",
-    btn_details: "التفاصيل",
-    no_items: "لا توجد عناصر في هذا القسم.",
-
-    // --- صفحة الترفيه (alger.html) ---
-    leisure_title: "الترفيه والرحلات في العاصمة",
-    cat_all: "الكل",
-    cat_beaches: "شواطئ",
-    cat_parks: "حدائق",
-    cat_culture: "ثقافة وتاريخ",
-    cat_mosques: "مساجد",
-    modal_category: "الفئة:",
-    modal_gallery: "معرض الصور:",
-    modal_history: "لمحة تاريخية:",
-    modal_transport: "كيفية الوصول:",
-    modal_video: "فيديو تعريفي:",
-    modal_map: "الموقع على الخريطة:",
-    img_not_avail: "صورة غير متوفرة",
-
-    // --- صفحة المنتدى (forum.html & forum.js) ---
-    forum_loading: "جاري الاتصال...",
-    forum_welcome: "ملتقى طلبة ENSTP",
-    forum_welcome_sub: "مساحة آمنة للنقاش وتبادل الأفكار",
-    forum_email: "البريد المهني",
-    forum_password: "كلمة السر",
-    forum_name: "الاسم واللقب",
-    forum_year: "السنة الدراسية",
-    forum_wilaya: "الولاية",
-    forum_login_btn: "تسجيل الدخول",
-    forum_register_btn: "إنشاء حساب جديد",
-    forum_no_account: "ليس لديك حساب؟",
-    forum_have_account: "لديك حساب بالفعل؟",
-    forum_posts_section: "ساحة المنشورات",
-    forum_chats_section: "غرف الدردشة (Chat)",
-    forum_student_rooms: "غرف الطلبة",
-    forum_general_salle: "القاعة العامة",
-    forum_share_thoughts: "شارك أفكارك مع الجميع",
-    forum_direct_chat: "نقاش مباشر",
-    forum_type_here: "اكتب هنا...",
-    forum_send: "إرسال",
-    forum_badge_posts: "منشورات",
-    forum_badge_chat: "دردشة مباشرة",
-    forum_create_room: "إنشاء غرفة جديدة",
-    forum_room_name: "اسم الغرفة",
-    forum_room_type: "نوع الغرفة",
-    forum_type_chat: "دردشة (Chat)",
-    forum_type_posts: "منشورات (Publications)",
-    forum_cancel: "إلغاء",
-    forum_create: "إنشاء",
-    forum_logout: "خروج",
-    forum_placeholder_email: "student@enstp.edu.dz",
-    forum_general_room: "القاعة العامة",
-    forum_general_sub: "شارك أفكارك مع الجميع",
-    forum_type_chat_ph: "اكتب رسالة دردشة...",
-    forum_type_post_ph: "بماذا تفكر؟...",
-    forum_no_messages: "لا توجد رسائل بعد.",
-    forum_no_posts: "لا توجد منشورات بعد.",
-    forum_add_comment: "اكتب تعليقاً...",
-    forum_empty_rooms: "لا توجد غرف.",
-    forum_student_room: "غرفة طلابية",
-    forum_login: "تسجيل الدخول",
-    forum_register: "إنشاء حساب",
-    forum_processing: "جاري المعالجة...",
-    forum_err_email: "يجب استخدام بريد @enstp.edu.dz",
-    forum_err_pass: "كلمة السر 6 أحرف على الأقل",
-    forum_err_name: "يرجى إدخال الاسم",
-    forum_err_used: "البريد مسجل مسبقاً",
-    forum_err_wrong: "البريد أو كلمة السر خاطئة",
-    forum_err_room: "أدخل اسم الغرفة",
-    forum_err_send: "تعذر الإرسال",
-    forum_err_comment: "تعذر إضافة التعليق"
-  },
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="indigo">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مدرستي - ENSTP</title>
   
-  fr: {
-    // --- Page d'accueil (index.html) ---
-    nav_app_name: "Guide ENSTP",
-    nav_app_sub: "École Nationale Supérieure",
-    nav_home: "Accueil",
-    home_welcome: "Bienvenue dans votre espace universitaire",
-    home_desc: "Découvrez tout ce dont vous avez besoin pour faciliter votre parcours académique et votre vie quotidienne à l'École Nationale Supérieure des Travaux Publics (ENSTP). Choisissez une section ci-dessous pour commencer.",
-    nav_school: "Mon École",
-    nav_school_desc: "Découvrez l'école, les installations et la bibliothèque",
-    nav_admin: "Mon Administration",
-    nav_admin_desc: "Documents, certificats et procédures administratives",
-    nav_success: "Ma Réussite",
-    nav_success_desc: "Cours, examens et emplois du temps",
-    nav_residence: "Ma Résidence",
-    nav_residence_desc: "Informations sur le logement et les services universitaires",
-    nav_sport: "Sports",
-    nav_sport_desc: "Activités sportives, terrains et clubs",
-    nav_forum: "Forum Étudiant",
-    nav_forum_desc: "Clubs scientifiques, événements et discussions",
-    nav_transport: "Transport",
-    nav_transport_desc: "Lignes de bus, stations et horaires",
-    nav_food: "Restauration & Shopping",
-    nav_food_desc: "Restaurants universitaires, cafés et menus",
-    nav_leisure: "Loisirs à Alger",
-    nav_leisure_desc: "Lieux de divertissement et tourisme dans la capitale",
-    nav_schedule_badge: "Emploi du temps",
-    nav_qr: "QR Code",
-    nav_qr_desc: "Scanner pour un accès rapide...",
+  <script src="translate.js"></script>
+  <style>
+    body { top: 0 !important; }
+    .skiptranslate iframe { display: none !important; }
+    .goog-te-banner-frame { display: none !important; }
+    #google_translate_element { display: none; } 
+    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
+    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
+    .lang-btn.active { background: #4f46e5; color: white; }
+  </style>
 
-    // --- Page Mon École (ma-ecole.html) ---
-    ecole_title: "Mon École",
-    ecole_subtitle: "Bienvenue à l'ENSTP Kouba",
-    ecole_desc: "L'École Nationale Supérieure des Travaux Publics de Kouba est une institution historique et scientifique pour la formation des ingénieurs. Choisissez une section ci-dessous.",
-    ecole_teachers: "Corps Enseignant",
-    ecole_teachers_desc: "Découvrez les enseignants des matières pour les 1ère et 2ème années préparatoires.",
-    ecole_teachers_btn: "Ouvrir la liste",
-    ecole_buildings: "Bâtiments & Amphis",
-    ecole_buildings_desc: "Emplacements des amphis principaux (A, B), salles et laboratoires.",
-    ecole_buildings_btn: "Explorer",
-    ecole_history: "Histoire & À propos",
-    ecole_history_desc: "Aperçu historique de la fondation de l'école et de son rôle.",
-    ecole_history_btn: "Lire l'histoire",
-    ecole_map3d: "Carte 3D",
-    ecole_map3d_desc: "Carte interactive en 3D pour naviguer sur le campus.",
-    ecole_map3d_btn: "Ouvrir la carte",
-    modal_buildings_title: "Bâtiments & Amphis",
-    modal_buildings_map: "Carte du Campus",
-    modal_buildings_map_desc: "Explorez l'école en 3D pour trouver les amphis et les salles.",
-    modal_buildings_map_btn: "Ouvrir la carte 3D",
-    modal_buildings_videos: "Vidéos de présentation",
-    modal_history_title: "Histoire de l'ENSTP",
-    modal_video_tour: "Visite de l'école",
-    modal_video_prepa: "Classes Préparatoires",
-    modal_video_amphi: "Amphithéâtres",
-    modal_video_infra: "Infrastructures",
-    modal_video_entree: "Entrée de l'école",
-    modal_video_info: "Département Informatique",
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    // --- Page Enseignants (enseignants.html) ---
-    ens_title: "Corps Enseignant",
-    ens_subtitle: "Choisissez l'année, puis la matière, et cliquez sur un enseignant pour voir sa fiche.",
-    ens_year1: "1ère Année Préparatoire (1CP)",
-    ens_year2: "2ème Année Préparatoire (2CP)",
-    ens_select_subject: "Sélectionner une matière :",
-    ens_all: "Toutes",
-    ens_show_card: "Afficher la fiche",
-    ens_module: "Matière / Module :",
-    ens_advice: "Conseil aux étudiants :",
-    ens_research: "Recherche :",
-    ens_links: "Liens utiles :",
-    ens_grade_prof: "Professeur (Enseignant Permanent)",
-    ens_grade_temp: "Enseignant Vacataire",
+  <style>
+    :root { --primary: #4f46e5; --primary-light: #eef2ff; }
+    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
+    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
+    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
+    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+  <div class="ambient-bg"></div>
 
-    // --- Page Ma Réussite (ma-reussite.html) ---
-    reussite_title: "Votre Espace Académique",
-    reussite_subtitle: "Ma Réussite",
-    reussite_desc: "Tout ce dont vous avez besoin pour réussir est au même endroit. Consultez votre emploi du temps, téléchargez les cours et suivez les meilleures chaînes YouTube.",
-    reussite_schedule_title: "Emploi du Temps",
-    reussite_schedule_desc: "Votre planning",
-    reussite_schedule_sub: "Consultez les horaires des cours, TD et TP.",
-    reussite_drives_title: "Devoirs & Examens (2CP)",
-    reussite_drives_desc: "Liens Google Drive avec cours, exercices et anciens examens.",
-    reussite_youtube_title: "Profs & Chaînes YouTube Utiles",
-    reussite_youtube_desc: "Les meilleures chaînes pour les 1ère et 2ème années préparatoires.",
-    reussite_1cp: "1ère Année (1CP)",
-    reussite_2cp: "2ème Année (2CP)",
-    reussite_profs_title: "Conseils des Professeurs :",
-    advice_mdf: "MDF : Slimane DJELLAL (complet). Prof S (partiel).",
-    advice_rdm: "RDM : Slimane DJELLAL.",
-    advice_phys: "Physique 3/4 : Meghlaoui. Ne regardez pas les lives, lisez les résumés et faites les exercices (min 4 exos).",
-    advice_chimie3: "Chimie 3 : Prepa Chimie.",
-    advice_chimie4: "Chimie 4 : Cours.",
-    advice_elec: "Électricité : Makalah. Lisez le livre d'El Miski (très complet). Chaine Elmostafa Elkacem.",
-    advice_electro: "Électronique : Elmostafa Elkacem / FA Learning.",
-    advice_meca: "Mécanique Rationnelle 3+4 : Prof S / Symphony of Study. Lisez le cours dès le début.",
-    advice_inge: "Ingénierie Humaine 3 : Cherchez sur YouTube, très riche. Ne laissez pas à la dernière minute.",
-    advice_analyse: "Analyse 3/4 : Lisez le cours. Si bloqué, cherchez 'El Azizri Houari'. Faites résumé + 2-3 exos en 30 min.",
+  <header class="sticky top-0 z-50 glass-nav px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg">E</div>
+        <div>
+          <h1 class="font-bold text-gray-900 text-base" data-i18n="nav_app_name">دليل ENSTP</h1>
+          <p class="text-[11px] text-gray-500" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+        </div>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+      </div>
+    </div>
+  </header>
 
-    // --- Page Emploi du temps (schedule.html) ---
-    sched_title: "Emploi du temps précis (par Groupe)",
-    sched_desc: "Sélectionnez votre département, année et groupe pour obtenir votre emploi du temps (Cours, TD, TP).",
-    sched_dept: "Département / Spécialité :",
-    sched_year: "Année d'études :",
-    sched_group: "Groupe :",
-    sched_dep_prep: "Classes Préparatoires (CP)",
-    sched_dep_dib: "Infrastructures de Base (DIB)",
-    sched_dep_dms: "Matériaux et Structures (DMS)",
-    sched_day_sat: "Samedi", sched_day_sun: "Dimanche", sched_day_mon: "Lundi", sched_day_tue: "Mardi", sched_day_wed: "Mercredi", sched_day_thu: "Jeudi",
-    sched_no_classes: "Aucun cours programmé pour ce jour dans ce groupe.",
-    sched_teacher: "Enseignant :",
-    sched_cours: "Cours",
-    sched_td: "TD",
-    sched_tp: "TP",
-    sched_yr_prep1: "1ère Année Préparatoire (1CP)", sched_yr_prep2: "2ème Année Préparatoire (2CP)",
-    sched_yr_dib1: "1ère Année Ingénieur (DIB)", sched_yr_dib2: "2ème Année Ingénieur (DIB)", sched_yr_dib3: "3ème Année Ingénieur (DIB)",
-    sched_yr_dms1: "1ère Année Ingénieur (DMS)", sched_yr_dms2: "2ème Année Ingénieur (DMS)", sched_yr_dms3: "3ème Année Ingénieur (DMS)",
-    sched_group_lbl: "Groupe", sched_sec_lbl: "Section", sched_promo_lbl: "Promo entière",
+  <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full space-y-8">
+    <div class="glass-card rounded-3xl p-8 border border-white space-y-4">
+      <span class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600">ENSTP</span>
+      <h2 class="text-3xl font-black text-gray-900" data-i18n="ecole_title">مدرستي</h2>
+      <p class="text-sm text-gray-600" data-i18n="ecole_desc">المدرسة الوطنية العليا للأشغال العمومية بالقبة هي صرح أثري وعلمي عريق لتكوين المهندسين.</p>
+    </div>
 
-    // --- Page Administration (administration.html) ---
-    admin_title: "Guide de l'Administration et des Services",
-    admin_subtitle: "Mon Administration",
-    admin_desc: "Tout ce qui concerne les documents, les services universitaires, la sécurité sociale et la bibliothèque.",
-    admin_cnas: "Assurance et Sécurité Sociale (CNAS)",
-    admin_cnas_q1: "Où se trouve le bureau de la sécurité sociale ?", admin_cnas_a1: "Le bureau se trouve à l'intérieur de l'ENSTP...",
-    admin_cnas_q2: "Quels sont les documents requis pour le dossier de sécurité sociale ?", admin_cnas_a2: "Extrait de naissance...",
-    admin_cnas_q3: "Quels sont les jours de réception des dossiers ?", admin_cnas_a3: "Lundi, mardi et jeudi.",
-    admin_cnas_q4: "Comment s'inscrire sur la plateforme EL HANAA ?", admin_cnas_a4: "Après avoir obtenu votre numéro...",
-    admin_cnas_btn: "Accéder à EL HANAA",
-    admin_biblio: "Bibliothèque de l'École",
-    admin_biblio_q1: "Quels sont les horaires d'ouverture de la bibliothèque ?", admin_biblio_a1: "Matin : 09h00 à 11h45...",
-    admin_biblio_q2: "Quelles sont les conditions et les documents d'inscription à la bibliothèque ?", admin_biblio_a2: "Certificat de scolarité...",
-    admin_biblio_q3: "Quel est le règlement intérieur de la bibliothèque ?", admin_biblio_a3: "Interdiction de faire du bruit...",
-    admin_univ: "Services Universitaires (Résidence et Bourse)",
-    admin_univ_q1: "Comment s'inscrire à la résidence universitaire ?", admin_univ_a1: "L'inscription se fait numériquement...",
-    admin_univ_q2: "Comment faire une demande de bourse universitaire ?", admin_univ_a2: "Le dossier de bourse est déposé...",
-    admin_univ_q3: "Quels sont les problèmes courants pouvant entraîner le gel de la bourse ?", admin_univ_a3: "Le versement de la bourse s'arrête...",
-    admin_scol: "Service Scolarité et Documents",
-    admin_scol_q1: "J'ai perdu ma carte d'étudiant, que faire ?", admin_scol_a1: "Vous devez vous rendre immédiatement...",
-    admin_scol_q2: "Comment obtenir mon relevé de notes ?", admin_scol_a2: "Les relevés de notes périodiques...",
-    admin_scol_q3: "Comment obtenir mon adresse e-mail institutionnelle ?", admin_scol_a3: "L'administration de l'école attribue...",
-    admin_exam: "Examens, Absences et Passage",
-    admin_exam_q1: "Quelles sont les procédures légales pour justifier une absence ?", admin_exam_a1: "Vous devez présenter un justificatif...",
-    admin_exam_q2: "Comment se déroulent les examens de rattrapage ?", admin_exam_a2: "Si votre moyenne annuelle est inférieure...",
-    admin_exam_q3: "Quelles sont les conditions de passage de la 1ère à la 2ème année ?", admin_exam_a3: "Le passage nécessite une moyenne annuelle...",
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <a href="enseignants.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
+        <div class="space-y-3">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition"><i class="fa-solid fa-chalkboard-user"></i></div>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_teachers">هيئة التدريس</h3>
+          <p class="text-xs text-gray-500" data-i18n="ecole_teachers_desc">استعراض أساتذة المواد للسنة الأولى والثانية تحضيري مع التفاصيل.</p>
+        </div>
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
+          <span data-i18n="ecole_teachers_btn">عرض القائمة</span>
+          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+        </div>
+      </a>
 
-    // --- Page Résidence (residence.html) ---
-    res_title: "Choisissez votre résidence universitaire",
-    res_subtitle: "Découvrez l'emplacement de votre résidence, la distance par rapport à l'école, les vidéos et les installations à proximité.",
-    res_gueridi: "Résidence Universitaire Gueridi", res_gueridi_loc: "Ben Aknoun, Alger",
-    res_youssefi: "Résidence Universitaire Mohamed Youssefi", res_youssefi_loc: "Hussein Dey, Alger",
-    res_hamdine: "Résidence Universitaire Saïd Hamdine", res_hamdine_loc: "Saïd Hamdine, Alger",
-    res_back: "Retour à la liste",
-    res_map: "Emplacement sur la carte",
-    res_distance: "Distance à l'école",
-    res_transport: "Moyen de transport suggéré :",
-    res_video: "Vidéo de présentation de la résidence",
-    res_facilities: "Commerces et installations à proximité",
-    res_open: "Horaires :",
-    res_dist: "Distance :",
+      <button type="button" onclick="openModal('batiments')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+        <div class="space-y-3 w-full">
+          <div class="w-14 h-14 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-2xl group-hover:bg-pink-600 group-hover:text-white transition"><i class="fa-solid fa-building-columns"></i></div>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_buildings">المباني والمدرجات</h3>
+          <p class="text-xs text-gray-500" data-i18n="ecole_buildings_desc">مواقع المدرجات الرئيسية (A, B)، القاعات والمخابر العلمية.</p>
+        </div>
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600 w-full">
+          <span data-i18n="ecole_buildings_btn">استكشف</span>
+          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+        </div>
+      </button>
 
-    // --- Page Transport (transport.html) ---
-    trans_title: "Guide Complet des Transports",
-    trans_planner: "Planificateur d'itinéraire intelligent",
-    trans_planner_desc: "Choisissez votre point de départ et votre destination, nous vous suggérerons le meilleur itinéraire.",
-    trans_start: "Départ de :",
-    trans_end: "Destination (Je veux aller à) :",
-    trans_calc_btn: "Calculer l'itinéraire",
-    trans_tab_bus: "Bus Universitaires",
-    trans_tab_metro: "Métro",
-    trans_tab_tram: "Tramway",
-    trans_tab_urban: "Transport Urbain",
-    trans_tab_map: "Carte",
-    trans_bus_title: "Horaires des Bus Universitaires (depuis Kouba)",
-    trans_bus_desc: "Tous les bus partent de la gare routière du campus (Kouba).",
-    trans_dest: "Destination",
-    trans_times: "Heures de départ",
-    trans_metro_title: "Stations de Métro (Place des Martyrs - Ain Naadja)",
-    trans_metro_desc: "Ticket : 50 DA. Stations proches de l'école : Haï El Badr.",
-    trans_tram_title: "Stations de Tramway (Les Anassers - Dergana)",
-    trans_tram_desc: "Ticket : 40 DA. Stations principales : El Harrach, Bab Ezzouar, Bordj El Kiffan.",
-    trans_urban_title: "Transport Urbain près de l'ENSTP",
-    trans_urban_c: "Arrêt C (Face à la banque CNEP)", trans_urban_c_desc: "Destinations : Station Ben Omar...",
-    trans_urban_b: "Arrêt B (Gare routière de Kouba)", trans_urban_b_desc: "Destinations : Plusieurs destinations...",
-    trans_urban_d: "Arrêt D (Face à l'ENS)", trans_urban_d_desc: "Destinations : Destinations spécifiques...",
-    trans_taxis_title: "Stations de Taxis",
-    trans_map_title: "Carte des stations de transport",
-    trans_route_direct_bus: "Bus universitaire direct", trans_route_from_kouba: "Depuis la gare routière du campus (Kouba).",
-    trans_route_metro: "Métro", trans_route_bus_metro: "Bus jusqu'à Haï El Badr puis métro jusqu'à la Place des Martyrs.",
-    trans_route_metro_tram: "Métro + Tramway", trans_route_via_harrach: "Métro jusqu'à El Harrach, puis tramway.",
-    trans_route_go_kouba: "Dirigez-vous vers la station Kouba ou Caroubier.",
-    trans_route_metro_bus: "Métro + Bus", trans_route_via_centre: "Métro jusqu'au centre, puis bus.",
-    trans_route_metro_direct: "Métro direct", trans_route_to_martyrs: "Jusqu'à la Place des Martyrs.",
-    trans_route_tram: "Tramway", trans_route_from_harrach: "Depuis la station El Harrach.",
-    trans_route_central: "Dirigez-vous vers une station centrale (Tafourah ou Caroubier).",
+      <button type="button" onclick="openModal('histoire')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
+        <div class="space-y-3 w-full">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fa-solid fa-landmark"></i></div>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_history">التاريخ والنبذة</h3>
+          <p class="text-xs text-gray-500" data-i18n="ecole_history_desc">نبذة تاريخية عن تأسيس المدرسة ودورها في تكوين مهندسي الأشغال العمومية.</p>
+        </div>
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
+          <span data-i18n="ecole_history_btn">اقرأ التاريخ</span>
+          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+        </div>
+      </button>
 
-    // --- Page Shopping (shopping.html) ---
-    shopping_title: "Restauration & Shopping",
-    shopping_subtitle: "Découvrez les meilleurs restaurants, cafés et magasins près de l'école.",
-    filter_all: "Tous",
-    sort_by: "Trier par :",
-    sort_default: "Par défaut",
-    sort_dist: "Distance (Plus proche)",
-    sort_price: "Prix (Moins cher)",
-    sort_rating: "Note (Plus élevée)",
-    label_hours: "Horaires :",
-    label_menu: "Menu :",
-    btn_call: "Appeler",
-    btn_map: "Carte",
-    btn_details: "Détails",
-    no_items: "Aucun élément dans cette section.",
+      <a href="https://quad-route-finder.lovable.app" target="_blank" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
+        <div class="space-y-3">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl group-hover:bg-cyan-600 group-hover:text-white transition"><i class="fa-solid fa-cube"></i></div>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_map3d">الخريطة ثلاثية الأبعاد</h3>
+          <p class="text-xs text-gray-500" data-i18n="ecole_map3d_desc">خريطة تفاعلية ثلاثية الأبعاد للتنقل داخل الحرم الجامعي.</p>
+        </div>
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-cyan-600">
+          <span data-i18n="ecole_map3d_btn">فتح الخريطة</span>
+          <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-1 transition"></i>
+        </div>
+      </a>
+    </div>
+  </main>
 
-    // --- Page Loisirs (alger.html) ---
-    leisure_title: "Loisirs & Voyages à Alger",
-    cat_all: "Tous",
-    cat_beaches: "Plages",
-    cat_parks: "Parcs et jardins",
-    cat_culture: "Culture et Histoire",
-    cat_mosques: "Mosquées",
-    modal_category: "Catégorie :",
-    modal_gallery: "Galerie photos :",
-    modal_history: "Aperçu historique :",
-    modal_transport: "Comment s'y rendre :",
-    modal_video: "Vidéo de présentation :",
-    modal_map: "Emplacement sur la carte :",
-    img_not_avail: "Image non disponible",
+  <div id="info-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+    <div class="glass-card rounded-3xl p-6 lg:p-8 max-w-4xl w-full space-y-4 shadow-2xl border border-white max-h-[90vh] overflow-y-auto relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition z-10"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="modal-title" class="font-black text-2xl text-gray-900 border-b pb-3"></h3>
+      <div id="modal-body" class="text-sm text-gray-700 leading-relaxed space-y-4"></div>
+    </div>
+  </div>
 
-    // --- Page Forum (forum.html & forum.js) ---
-    forum_loading: "Connexion au forum...",
-    forum_welcome: "Forum des étudiants ENSTP",
-    forum_welcome_sub: "Un espace sécurisé pour discuter et échanger des idées",
-    forum_email: "Email professionnel",
-    forum_password: "Mot de passe",
-    forum_name: "Nom et prénom",
-    forum_year: "Année d'études",
-    forum_wilaya: "Wilaya",
-    forum_login_btn: "Se connecter",
-    forum_register_btn: "Créer un compte",
-    forum_no_account: "Pas de compte ?",
-    forum_have_account: "Déjà un compte ?",
-    forum_posts_section: "Espace Publications",
-    forum_chats_section: "Salles de Chat",
-    forum_student_rooms: "Salles des étudiants",
-    forum_general_salle: "Salle Générale",
-    forum_share_thoughts: "Partagez vos pensées avec tout le monde",
-    forum_direct_chat: "Discussion directe",
-    forum_type_here: "Écrivez ici...",
-    forum_send: "Envoyer",
-    forum_badge_posts: "Publications",
-    forum_badge_chat: "Chat direct",
-    forum_create_room: "Créer une nouvelle salle",
-    forum_room_name: "Nom de la salle",
-    forum_room_type: "Type de salle",
-    forum_type_chat: "Chat",
-    forum_type_posts: "Publications",
-    forum_cancel: "Annuler",
-    forum_create: "Créer",
-    forum_logout: "Déconnexion",
-    forum_placeholder_email: "student@enstp.edu.dz",
-    forum_general_room: "Salle Générale",
-    forum_general_sub: "Partagez vos pensées avec tout le monde",
-    forum_type_chat_ph: "Écrivez un message...",
-    forum_type_post_ph: "À quoi pensez-vous ?...",
-    forum_no_messages: "Aucun message pour le moment.",
-    forum_no_posts: "Aucune publication pour le moment.",
-    forum_add_comment: "Écrire un commentaire...",
-    forum_empty_rooms: "Aucune salle.",
-    forum_student_room: "Salle d'étudiants",
-    forum_login: "Se connecter",
-    forum_register: "Créer un compte",
-    forum_processing: "Traitement...",
-    forum_err_email: "Utilisez un email @enstp.edu.dz",
-    forum_err_pass: "Mot de passe de 6 caractères min",
-    forum_err_name: "Veuillez entrer votre nom",
-    forum_err_used: "Email déjà utilisé",
-    forum_err_wrong: "Email ou mot de passe incorrect",
-    forum_err_room: "Entrez le nom de la salle",
-    forum_err_send: "Échec de l'envoi",
-    forum_err_comment: "Échec de l'ajout du commentaire"
-  },
+  <footer class="glass-nav border-t border-gray-200 py-6 text-center text-xs text-gray-500">© 2026 ENSTP Kouba.</footer>
 
-  en: {
-    // --- Home Page (index.html) ---
-    nav_app_name: "ENSTP Guide",
-    nav_app_sub: "National Higher School",
-    nav_home: "Home",
-    home_welcome: "Welcome to your university space",
-    home_desc: "Discover everything you need to facilitate your academic journey and daily life at the National Higher School of Public Works (ENSTP). Choose a section below to get started.",
-    nav_school: "My School",
-    nav_school_desc: "Discover the school, facilities, and library",
-    nav_admin: "My Administration",
-    nav_admin_desc: "Documents, certificates, and administrative procedures",
-    nav_success: "My Success",
-    nav_success_desc: "Courses, exams, and schedules",
-    nav_residence: "My Residence",
-    nav_residence_desc: "Accommodation and university services information",
-    nav_sport: "Sports",
-    nav_sport_desc: "Sports activities, fields, and clubs",
-    nav_forum: "Student Forum",
-    nav_forum_desc: "Scientific clubs, events, and discussions",
-    nav_transport: "Transport",
-    nav_transport_desc: "Bus lines, stations, and schedules",
-    nav_food: "Food & Shopping",
-    nav_food_desc: "University restaurants, cafes, and menus",
-    nav_leisure: "Leisure in Algiers",
-    nav_leisure_desc: "Entertainment and tourism places in the capital",
-    nav_schedule_badge: "Schedule",
-    nav_qr: "QR Code",
-    nav_qr_desc: "Scan for quick access...",
+  <script>
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+    function t(key) { return window.translations && window.translations[currentLang] && window.translations[currentLang][key] ? window.translations[currentLang][key] : key; }
 
-    // --- My School Page (ma-ecole.html) ---
-    ecole_title: "My School",
-    ecole_subtitle: "Welcome to ENSTP Kouba",
-    ecole_desc: "The National Higher School of Public Works in Kouba is a historic and scientific institution for engineering training. Choose a section below.",
-    ecole_teachers: "Faculty Members",
-    ecole_teachers_desc: "Explore subject teachers for 1st and 2nd preparatory years.",
-    ecole_teachers_btn: "Open List",
-    ecole_buildings: "Buildings & Amphis",
-    ecole_buildings_desc: "Locations of main amphitheaters (A, B), classrooms, and labs.",
-    ecole_buildings_btn: "Explore",
-    ecole_history: "History & About",
-    ecole_history_desc: "Historical overview of the school's founding and its role.",
-    ecole_history_btn: "Read History",
-    ecole_map3d: "3D Map",
-    ecole_map3d_desc: "Interactive 3D map to navigate the campus.",
-    ecole_map3d_btn: "Open Map",
-    modal_buildings_title: "Buildings & Amphis",
-    modal_buildings_map: "Campus Map",
-    modal_buildings_map_desc: "Explore the school in 3D to find amphitheaters and classrooms.",
-    modal_buildings_map_btn: "Open 3D Map",
-    modal_buildings_videos: "Presentation Videos",
-    modal_history_title: "History of ENSTP",
-    modal_video_tour: "School Tour",
-    modal_video_prepa: "Preparatory Classes",
-    modal_video_amphi: "Amphitheaters",
-    modal_video_infra: "Infrastructures",
-    modal_video_entree: "School Entrance",
-    modal_video_info: "Computer Science Dept",
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      if(originalSetLanguage) originalSetLanguage(lang);
+      if(!document.getElementById('info-modal').classList.contains('hidden')) {
+        const title = document.getElementById('modal-title').innerText;
+        if(title.includes('Bâtiments') || title.includes('المباني') || title.includes('Buildings')) openModal('batiments');
+        else openModal('histoire');
+      }
+    };
 
-    // --- Teachers Page (enseignants.html) ---
-    ens_title: "Faculty Members",
-    ens_subtitle: "Select the year, then the subject, and click on a teacher to view their full profile.",
-    ens_year1: "1st Preparatory Year (1CP)",
-    ens_year2: "2nd Preparatory Year (2CP)",
-    ens_select_subject: "Select a subject:",
-    ens_all: "All",
-    ens_show_card: "View Profile",
-    ens_module: "Module:",
-    ens_advice: "Advice for students:",
-    ens_research: "Research:",
-    ens_links: "Useful links:",
-    ens_grade_prof: "Professor (Permanent)",
-    ens_grade_temp: "Temporary Teacher (Vacataire)",
+    function openModal(type) {
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+      const modal = document.getElementById('info-modal');
 
-    // --- My Success Page (ma-reussite.html) ---
-    reussite_title: "Your Academic Space",
-    reussite_subtitle: "My Success",
-    reussite_desc: "Everything you need to succeed in one place. Check your schedule, download courses, and follow the best YouTube channels.",
-    reussite_schedule_title: "Schedule",
-    reussite_schedule_desc: "Your Class Schedule",
-    reussite_schedule_sub: "Check lecture, TD, and TP times.",
-    reussite_drives_title: "Assignments & Exams (2CP)",
-    reussite_drives_desc: "Google Drive links with courses, exercises, and past exams.",
-    reussite_youtube_title: "Useful Teachers & YouTube Channels",
-    reussite_youtube_desc: "Best educational channels for 1st and 2nd preparatory years.",
-    reussite_1cp: "1st Year (1CP)",
-    reussite_2cp: "2nd Year (2CP)",
-    reussite_profs_title: "Teacher Tips:",
-    advice_mdf: "MDF: Slimane DJELLAL (complete). Prof S (partial).",
-    advice_rdm: "RDM: Slimane DJELLAL.",
-    advice_phys: "Physics 3/4: Meghlaoui. Don't watch lives, read summaries and do exercises (min 4 exos).",
-    advice_chimie3: "Chemistry 3: Prepa Chimie.",
-    advice_chimie4: "Chemistry 4: Cours.",
-    advice_elec: "Electricity: Makalah. Read El Miski's book (comprehensive). Elmostafa Elkacem channel.",
-    advice_electro: "Electronics: Elmostafa Elkacem / FA Learning.",
-    advice_meca: "Rational Mechanics 3+4: Prof S / Symphony of Study. Read the course from the start.",
-    advice_inge: "Human Engineering 3: Search YouTube, very rich. Don't leave for the last minute.",
-    advice_analyse: "Analysis 3/4: Read course. If stuck, search 'El Azizri Houari'. Do summary + 2-3 exos in 30 min.",
-
-    // --- Schedule Page (schedule.html) ---
-    sched_title: "Precise Schedule (by Group)",
-    sched_desc: "Select your department, year, and group to get your schedule (Lectures, TD, TP).",
-    sched_dept: "Department / Specialty:",
-    sched_year: "Academic Year:",
-    sched_group: "Group:",
-    sched_dep_prep: "Preparatory Classes (CP)",
-    sched_dep_dib: "Basic Infrastructure (DIB)",
-    sched_dep_dms: "Materials and Structures (DMS)",
-    sched_day_sat: "Saturday", sched_day_sun: "Sunday", sched_day_mon: "Monday", sched_day_tue: "Tuesday", sched_day_wed: "Wednesday", sched_day_thu: "Thursday",
-    sched_no_classes: "No classes scheduled for this day in this group.",
-    sched_teacher: "Teacher:",
-    sched_cours: "Lecture",
-    sched_td: "TD",
-    sched_tp: "TP",
-    sched_yr_prep1: "1st Preparatory Year (1CP)", sched_yr_prep2: "2nd Preparatory Year (2CP)",
-    sched_yr_dib1: "1st Engineer Year (DIB)", sched_yr_dib2: "2nd Engineer Year (DIB)", sched_yr_dib3: "3rd Engineer Year (DIB)",
-    sched_yr_dms1: "1st Engineer Year (DMS)", sched_yr_dms2: "2nd Engineer Year (DMS)", sched_yr_dms3: "3rd Engineer Year (DMS)",
-    sched_group_lbl: "Group", sched_sec_lbl: "Section", sched_promo_lbl: "Full Promo",
-
-    // --- Administration Page (administration.html) ---
-    admin_title: "Administration & Services Guide",
-    admin_subtitle: "My Administration",
-    admin_desc: "Everything related to documents, university services, social security, and the library.",
-    admin_cnas: "Insurance and Social Security (CNAS)",
-    admin_cnas_q1: "Where is the social security office located?", admin_cnas_a1: "The office is located inside ENSTP...",
-    admin_cnas_q2: "What are the required documents for the social security file?", admin_cnas_a2: "Birth certificate...",
-    admin_cnas_q3: "What are the days for receiving files?", admin_cnas_a3: "Monday, Tuesday, and Thursday.",
-    admin_cnas_q4: "How do I register on the EL HANAA platform?", admin_cnas_a4: "After obtaining your social security number...",
-    admin_cnas_btn: "Access EL HANAA",
-    admin_biblio: "School Library",
-    admin_biblio_q1: "What are the library's opening hours?", admin_biblio_a1: "Morning: 09:00 to 11:45...",
-    admin_biblio_q2: "What are the conditions and documents for library registration?", admin_biblio_a2: "A school certificate...",
-    admin_biblio_q3: "What are the library's internal rules?", admin_biblio_a3: "No loud noise...",
-    admin_univ: "University Services (Residence and Scholarship)",
-    admin_univ_q1: "How do I register for the university residence?", admin_univ_a1: "Registration is done digitally...",
-    admin_univ_q2: "How do I apply for a university scholarship?", admin_univ_a2: "The scholarship file is submitted...",
-    admin_univ_q3: "What are the common problems that may lead to the freezing of the scholarship?", admin_univ_a3: "The scholarship payment stops...",
-    admin_scol: "Scolarité Service and Documents",
-    admin_scol_q1: "I lost my student card, what should I do?", admin_scol_a1: "You must go immediately...",
-    admin_scol_q2: "How do I get my transcript?", admin_scol_a2: "Periodic and annual transcripts...",
-    admin_scol_q3: "How do I get my institutional email and password?", admin_scol_a3: "The school administration grants...",
-    admin_exam: "Exams, Absences, and Progression",
-    admin_exam_q1: "What are the legal procedures to justify absences?", admin_exam_a1: "You must present an absence justification...",
-    admin_exam_q2: "How are remedial exams handled?", admin_exam_a2: "If your annual average is less than 10/20...",
-    admin_exam_q3: "What are the conditions for moving from the 1st to the 2nd year?", admin_exam_a3: "Progression requires an annual general average...",
-
-    // --- Residence Page (residence.html) ---
-    res_title: "Choose your university residence",
-    res_subtitle: "Discover your residence's location, distance from the school, videos, and nearby facilities.",
-    res_gueridi: "Gueridi University Residence", res_gueridi_loc: "Ben Aknoun, Algiers",
-    res_youssefi: "Mohamed Youssefi University Residence", res_youssefi_loc: "Hussein Dey, Algiers",
-    res_hamdine: "Saïd Hamdine University Residence", res_hamdine_loc: "Saïd Hamdine, Algiers",
-    res_back: "Back to list",
-    res_map: "Location on Map",
-    res_distance: "Distance to School",
-    res_transport: "Suggested Transport:",
-    res_video: "Residence Presentation Video",
-    res_facilities: "Nearby Shops & Facilities",
-    res_open: "Hours:",
-    res_dist: "Distance:",
-
-    // --- Transport Page (transport.html) ---
-    trans_title: "Comprehensive Transport Guide",
-    trans_planner: "Smart Route Planner",
-    trans_planner_desc: "Choose your starting point and destination, and we will suggest the best route.",
-    trans_start: "Starting from:",
-    trans_end: "Destination (I want to go to):",
-    trans_calc_btn: "Calculate Route",
-    trans_tab_bus: "University Buses",
-    trans_tab_metro: "Metro",
-    trans_tab_tram: "Tramway",
-    trans_tab_urban: "Urban Transport",
-    trans_tab_map: "Map",
-    trans_bus_title: "University Bus Schedules (from Kouba)",
-    trans_bus_desc: "All buses depart from the campus bus station (Kouba).",
-    trans_dest: "Destination",
-    trans_times: "Departure Times",
-    trans_metro_title: "Metro Stations (Martyrs' Square - Ain Naadja)",
-    trans_metro_desc: "Ticket: 50 DA. Key stations near the school: Haï El Badr.",
-    trans_tram_title: "Tramway Stations (Les Anassers - Dergana)",
-    trans_tram_desc: "Ticket: 40 DA. Key stations: El Harrach, Bab Ezzouar, Bordj El Kiffan.",
-    trans_urban_title: "Urban Transport near ENSTP",
-    trans_urban_c: "Stop C (Opposite CNEP Bank)", trans_urban_c_desc: "Destinations: Ben Omar station...",
-    trans_urban_b: "Stop B (Kouba Bus Station)", trans_urban_b_desc: "Destinations: Various across Algiers...",
-    trans_urban_d: "Stop D (Opposite ENS)", trans_urban_d_desc: "Destinations: Specific...",
-    trans_taxis_title: "Taxi Stations",
-    trans_map_title: "Transport Stations Map",
-    trans_route_direct_bus: "Direct University Bus", trans_route_from_kouba: "From the campus bus station (Kouba).",
-    trans_route_metro: "Metro", trans_route_bus_metro: "Bus to Haï El Badr then metro to Martyrs' Square.",
-    trans_route_metro_tram: "Metro + Tramway", trans_route_via_harrach: "Metro to El Harrach, then tramway.",
-    trans_route_go_kouba: "Head to Kouba or Caroubier station.",
-    trans_route_metro_bus: "Metro + Bus", trans_route_via_centre: "Metro to the center, then bus.",
-    trans_route_metro_direct: "Direct Metro", trans_route_to_martyrs: "To Martyrs' Square.",
-    trans_route_tram: "Tramway", trans_route_from_harrach: "From El Harrach station.",
-    trans_route_central: "Head to a central station (Tafourah or Caroubier).",
-
-    // --- Shopping Page (shopping.html) ---
-    shopping_title: "Food & Shopping",
-    shopping_subtitle: "Discover the best restaurants, cafes, and shops near the school.",
-    filter_all: "All",
-    sort_by: "Sort by:",
-    sort_default: "Default",
-    sort_dist: "Distance (Nearest)",
-    sort_price: "Price (Cheapest)",
-    sort_rating: "Rating (Highest)",
-    label_hours: "Hours:",
-    label_menu: "Menu:",
-    btn_call: "Call",
-    btn_map: "Map",
-    btn_details: "Details",
-    no_items: "No items in this section.",
-
-    // --- Leisure Page (alger.html) ---
-    leisure_title: "Leisure & Travel in Algiers",
-    cat_all: "All",
-    cat_beaches: "Beaches",
-    cat_parks: "Parks and Gardens",
-    cat_culture: "Culture and History",
-    cat_mosques: "Mosques",
-    modal_category: "Category:",
-    modal_gallery: "Photo Gallery:",
-    modal_history: "Historical Overview:",
-    modal_transport: "How to get there:",
-    modal_video: "Presentation Video:",
-    modal_map: "Location on Map:",
-    img_not_avail: "Image not available",
-
-    // --- Forum Page (forum.html & forum.js) ---
-    forum_loading: "Connecting to forum...",
-    forum_welcome: "ENSTP Student Forum",
-    forum_welcome_sub: "A safe space to discuss and exchange ideas",
-    forum_email: "Professional Email",
-    forum_password: "Password",
-    forum_name: "Full Name",
-    forum_year: "Academic Year",
-    forum_wilaya: "Wilaya",
-    forum_login_btn: "Login",
-    forum_register_btn: "Create Account",
-    forum_no_account: "Don't have an account?",
-    forum_have_account: "Already have an account?",
-    forum_posts_section: "Posts Area",
-    forum_chats_section: "Chat Rooms",
-    forum_student_rooms: "Student Rooms",
-    forum_general_salle: "General Room",
-    forum_share_thoughts: "Share your thoughts with everyone",
-    forum_direct_chat: "Direct Chat",
-    forum_type_here: "Type here...",
-    forum_send: "Send",
-    forum_badge_posts: "Posts",
-    forum_badge_chat: "Direct Chat",
-    forum_create_room: "Create New Room",
-    forum_room_name: "Room Name",
-    forum_room_type: "Room Type",
-    forum_type_chat: "Chat",
-    forum_type_posts: "Posts",
-    forum_cancel: "Cancel",
-    forum_create: "Create",
-    forum_logout: "Logout",
-    forum_placeholder_email: "student@enstp.edu.dz",
-    forum_general_room: "General Room",
-    forum_general_sub: "Share your thoughts with everyone",
-    forum_type_chat_ph: "Type a chat message...",
-    forum_type_post_ph: "What's on your mind?...",
-    forum_no_messages: "No messages yet.",
-    forum_no_posts: "No posts yet.",
-    forum_add_comment: "Write a comment...",
-    forum_empty_rooms: "No rooms.",
-    forum_student_room: "Student Room",
-    forum_login: "Login",
-    forum_register: "Register",
-    forum_processing: "Processing...",
-    forum_err_email: "Use an @enstp.edu.dz email",
-    forum_err_pass: "Password must be at least 6 chars",
-    forum_err_name: "Please enter your name",
-    forum_err_used: "Email already in use",
-    forum_err_wrong: "Wrong email or password",
-    forum_err_room: "Enter room name",
-    forum_err_send: "Failed to send",
-    forum_err_comment: "Failed to add comment"
-  }
-};
-
-// ==========================================
-// 2. دالة تغيير اللغة
-// ==========================================
-function setLanguage(lang) {
-  // حفظ اللغة في المتصفح
-  localStorage.setItem('enstp_lang', lang);
-  
-  // تحديث اتجاه الصفحة (RTL للعربية، LTR للفرنسية والإنجليزية)
-  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-  document.documentElement.lang = lang;
-
-  // تغيير جميع العناصر التي تحتوي على data-i18n
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (translations[lang] && translations[lang][key]) {
-      el.innerText = translations[lang][key];
+      if (type === 'batiments') {
+        title.innerText = t('modal_buildings_title');
+        body.innerHTML = `
+          <div class="space-y-6">
+            <div class="bg-pink-50 p-4 rounded-xl border border-pink-100">
+              <h4 class="font-bold text-pink-900 mb-2"><i class="fa-solid fa-map"></i> ${t('modal_buildings_map')}</h4>
+              <p class="text-xs text-pink-800 mb-3">${t('modal_buildings_map_desc')}</p>
+              <a href="https://quad-route-finder.lovable.app" target="_blank" class="inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition"><i class="fa-solid fa-cube"></i> ${t('modal_buildings_map_btn')}</a>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-3"><i class="fa-brands fa-youtube text-red-500"></i> ${t('modal_buildings_videos')}</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_tour')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_prepa')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_amphi')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_infra')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/GUCHDgEJaIk" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_entree')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/sFwHEHhgAbQ" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_info')}</p></div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (type === 'histoire') {
+        title.innerText = t('modal_history_title');
+        body.innerHTML = `
+          <div class="space-y-4 text-justify">
+            <p>${currentLang === 'ar' ? '<strong>المدرسة الوطنية العليا للأشغال العمومية (ENSTP)</strong> هي مؤسسة عمومية ذات طابع علمي وتكنولوجي وثقافي، تقع في بلدية القبة بالجزائر العاصمة.' : (currentLang === 'fr' ? '<strong>L\'École Nationale Supérieure des Travaux Publics (ENSTP)</strong> est un établissement public situé à Kouba, Alger.' : '<strong>The National Higher School of Public Works (ENSTP)</strong> is a public institution located in Kouba, Algiers.')}</p>
+            <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-emerald-500 space-y-2">
+              <h5 class="font-bold text-gray-900">${currentLang === 'ar' ? 'النشأة والتأسيس:' : (currentLang === 'fr' ? 'Création et fondation :' : 'Creation:')}</h5>
+              <p class="text-sm">${currentLang === 'ar' ? 'تأسست المدرسة في الأصل عام <strong>1925</strong> تحت اسم "مدرسة الأشغال العمومية".' : (currentLang === 'fr' ? 'Fondée en <strong>1925</strong> sous le nom d\'École des Travaux Publics.' : 'Originally founded in <strong>1925</strong> as the School of Public Works.')}</p>
+            </div>
+          </div>
+        `;
+      }
+      modal.classList.remove('hidden');
     }
-  });
-  
-  // تحديث تصميم الأزرار (تلوين الزر النشط)
-  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-  const activeBtn = document.getElementById('btn-' + lang);
-  if(activeBtn) activeBtn.classList.add('active');
-}
 
-// ==========================================
-// 3. تشغيل اللغة المحفوظة عند فتح الصفحة
-// ==========================================
-window.addEventListener('DOMContentLoaded', () => {
-  const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-  // تأخير بسيط لضمان تحميل الصفحة
-  setTimeout(() => setLanguage(savedLang), 100);
-});
+    function closeModal() {
+      document.getElementById('info-modal').classList.add('hidden');
+      document.getElementById('modal-body').innerHTML = '';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if(window.setLanguage) setTimeout(() => setLanguage(currentLang), 100);
+    });
+  </script>
+</body>
+</html>
