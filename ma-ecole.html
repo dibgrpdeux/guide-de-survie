@@ -17,12 +17,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guide ENSTP - Mon École</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
   <style>
     :root[data-theme="indigo"] {
       --bg-gradient: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12), transparent 40%),
@@ -55,7 +56,6 @@
       </div>
       
       <div class="flex items-center gap-3">
-        <!-- أزرار الترجمة -->
         <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
           <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
           <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
@@ -76,21 +76,21 @@
       </span>
       <h2 class="text-3xl font-black text-gray-900" data-i18n="ecole_title">مدرستي</h2>
       <p class="text-sm text-gray-600 leading-relaxed" data-i18n="ecole_desc">
-        المدرسة الوطنية العليا...
+        المدرسة الوطنية العليا للأشغال العمومية بالقبة هي صرح أثري وعلمي عريق لتكوين المهندسين. اختر أحد الأقسام الفرعية أدناه لاستعراض التفاصيل والمرافق والأساتذة.
       </p>
     </div>
 
     <!-- Sub-sections Grid (4 أزرار) -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       
-      <!-- 1. Enseignants -->
+      <!-- 1. Enseignants (الأساتذة) -->
       <a href="enseignants.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
         <div class="space-y-3">
           <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition">
             <i class="fa-solid fa-chalkboard-user"></i>
           </div>
           <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_teachers">هيئة التدريس</h3>
-          <p class="text-xs text-gray-500" data-i18n="ecole_teachers_desc">استعراض أساتذة المواد...</p>
+          <p class="text-xs text-gray-500" data-i18n="ecole_teachers_desc">استعراض أساتذة المواد للسنة الأولى والثانية تحضيري مع التفاصيل.</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
           <span data-i18n="ecole_teachers_btn">عرض القائمة</span>
@@ -98,14 +98,14 @@
         </div>
       </a>
 
-      <!-- 2. Bâtiments -->
+      <!-- 2. Bâtiments & Amphis (المباني) -->
       <button type="button" onclick="openModal('batiments')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
         <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-2xl group-hover:bg-pink-600 group-hover:text-white transition">
             <i class="fa-solid fa-building-columns"></i>
           </div>
           <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_buildings">المباني والمدرجات</h3>
-          <p class="text-xs text-gray-500" data-i18n="ecole_buildings_desc">مواقع المدرجات...</p>
+          <p class="text-xs text-gray-500" data-i18n="ecole_buildings_desc">مواقع المدرجات الرئيسية (A, B)، القاعات والمخابر العلمية.</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600 w-full">
           <span data-i18n="ecole_buildings_btn">استكشف</span>
@@ -113,14 +113,14 @@
         </div>
       </button>
 
-      <!-- 3. Histoire -->
+      <!-- 3. Histoire & À propos (التاريخ) -->
       <button type="button" onclick="openModal('histoire')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
         <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition">
             <i class="fa-solid fa-landmark"></i>
           </div>
           <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_history">التاريخ والنبذة</h3>
-          <p class="text-xs text-gray-500" data-i18n="ecole_history_desc">نبذة تاريخية...</p>
+          <p class="text-xs text-gray-500" data-i18n="ecole_history_desc">نبذة تاريخية عن تأسيس المدرسة ودورها في تكوين مهندسي الأشغال العمومية.</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
           <span data-i18n="ecole_history_btn">اقرأ التاريخ</span>
@@ -128,14 +128,14 @@
         </div>
       </button>
 
-      <!-- 4. Carte 3D -->
+      <!-- 4. Carte 3D (الخريطة) -->
       <a href="https://quad-route-finder.lovable.app" target="_blank" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
         <div class="space-y-3">
           <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl group-hover:bg-cyan-600 group-hover:text-white transition">
             <i class="fa-solid fa-cube"></i>
           </div>
           <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_map3d">الخريطة ثلاثية الأبعاد</h3>
-          <p class="text-xs text-gray-500" data-i18n="ecole_map3d_desc">خريطة تفاعلية...</p>
+          <p class="text-xs text-gray-500" data-i18n="ecole_map3d_desc">خريطة تفاعلية ثلاثية الأبعاد للتنقل داخل الحرم الجامعي.</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-cyan-600">
           <span data-i18n="ecole_map3d_btn">فتح الخريطة</span>
@@ -157,7 +157,6 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500">
     <p>© 2026 ENSTP Kouba.</p>
   </footer>
@@ -165,20 +164,21 @@
   <script>
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
+    function t(key) {
+      return window.translations && window.translations[currentLang] && window.translations[currentLang][key] ? window.translations[currentLang][key] : key;
+    }
+
     const originalSetLanguage = window.setLanguage;
     window.setLanguage = function(lang) {
       currentLang = lang;
-      originalSetLanguage(lang);
+      if(originalSetLanguage) originalSetLanguage(lang);
       // إعادة فتح النافذة المنبثقة لتحديث لغتها إذا كانت مفتوحة
       if(!document.getElementById('info-modal').classList.contains('hidden')) {
-        const type = document.getElementById('modal-title').innerText.includes('Bâtiments') || document.getElementById('modal-title').innerText.includes('المباني') ? 'batiments' : 'histoire';
-        openModal(type);
+        const title = document.getElementById('modal-title').innerText;
+        if(title.includes('Bâtiments') || title.includes('المباني') || title.includes('Buildings')) openModal('batiments');
+        else openModal('histoire');
       }
     };
-
-    function t(key) {
-      return window.translations[currentLang][key] || key;
-    }
 
     function openModal(type) {
       const title = document.getElementById('modal-title');
@@ -213,10 +213,12 @@
       else if (type === 'histoire') {
         title.innerText = t('modal_history_title');
         body.innerHTML = `
-          <div class="space-y-4 text-justify" data-i18n="ecole_history_text">
-            <!-- يمكنك إضافة النص التاريخي المترجم هنا بنفس الطريقة -->
-            <p>${currentLang === 'ar' ? 'المدرسة الوطنية العليا للأشغال العمومية (ENSTP)...' : (currentLang === 'fr' ? 'L\'École Nationale Supérieure des Travaux Publics (ENSTP)...' : 'The National Higher School of Public Works (ENSTP)...')}</p>
-            <!-- ... -->
+          <div class="space-y-4 text-justify">
+            <p>${currentLang === 'ar' ? '<strong>المدرسة الوطنية العليا للأشغال العمومية (ENSTP)</strong> هي مؤسسة عمومية ذات طابع علمي وتكنولوجي وثقافي، تقع في بلدية القبة بالجزائر العاصمة. تعتبر من أعرق وأهم المدارس الهندسية في الجزائر.' : (currentLang === 'fr' ? '<strong>L\'École Nationale Supérieure des Travaux Publics (ENSTP)</strong> est un établissement public à caractère scientifique, technologique et culturel, situé à Kouba, Alger.' : '<strong>The National Higher School of Public Works (ENSTP)</strong> is a public institution located in Kouba, Algiers.')}</p>
+            <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-emerald-500 space-y-2">
+              <h5 class="font-bold text-gray-900">${currentLang === 'ar' ? 'النشأة والتأسيس:' : (currentLang === 'fr' ? 'Création et fondation :' : 'Creation and foundation:')}</h5>
+              <p class="text-sm">${currentLang === 'ar' ? 'تأسست المدرسة في الأصل عام <strong>1925</strong> تحت اسم "مدرسة الأشغال العمومية". بعد استقلال الجزائر عام 1962، تم تعريبها وإعادة هيكلتها لتصبح مؤسسة وطنية.' : (currentLang === 'fr' ? 'Fondée en <strong>1925</strong> sous le nom d\'École des Travaux Publics. Après l\'indépendance en 1962, elle a été restructurée pour devenir une institution nationale.' : 'Originally founded in <strong>1925</strong> as the School of Public Works. After Algeria\'s independence in 1962, it was restructured to become a national institution.')}</p>
+            </div>
           </div>
         `;
       }
@@ -230,7 +232,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => setLanguage(currentLang), 100);
+      if(window.setLanguage) setTimeout(() => setLanguage(currentLang), 100);
     });
   </script>
 </body>
