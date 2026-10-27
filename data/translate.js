@@ -1,191 +1,201 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="indigo">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مدرستي - ENSTP</title>
+// ==========================================
+// قاموس الترجمات الأساسي (آمن ومحمي)
+// ==========================================
+const translations = {
+  ar: {
+    nav_app_name: "دليل ENSTP",
+    nav_app_sub: "المدرسة الوطنية العليا",
+    nav_home: "الرئيسية",
+    nav_school: "مدرستي",
+    nav_school_desc: "تعرف على المدرسة، المرافق، والمكتبة",
+    nav_admin: "إدارتي",
+    nav_admin_desc: "الوثائق، الشهادات، والإجراءات الإدارية",
+    nav_success: "نجاحي",
+    nav_success_desc: "الدروس، الامتحانات، وجداول التوقيت",
+    nav_residence: "إقامتي الجامعية",
+    nav_residence_desc: "معلومات الإيواء والخدمات الجامعية",
+    nav_sport: "الرياضة",
+    nav_sport_desc: "الأنشطة الرياضية، الملاعب، والنوادي",
+    nav_forum: "ملتقى الطلبة",
+    nav_forum_desc: "النوادي العلمية، الفعاليات، والنقاشات",
+    nav_transport: "النقل",
+    nav_transport_desc: "خطوط الحافلات، المحطات، والتوقيت",
+    nav_food: "المطاعم والتسوق",
+    nav_food_desc: "مطاعم الجامعة، المقاهي، وقوائم الطعام",
+    nav_leisure: "Loisirs à Alger",
+    nav_leisure_desc: "أماكن الترفيه والسياحة في العاصمة",
+    nav_schedule_badge: "استعمال الزمن",
+    nav_qr: "QR Code",
+    nav_qr_desc: "مسح الرموز للوصول السريع للخدمات",
+    home_welcome: "مرحباً بك في فضائك الجامعي",
+    home_desc: "اكتشف كل ما تحتاجه لتسهيل مسارك الدراسي وحياتك اليومية في المدرسة الوطنية العليا للأشغال العمومية (ENSTP). اختر القسم المناسب أدناه للبدء.",
+    
+    // مدرستي
+    ecole_title: "مدرستي",
+    ecole_desc: "المدرسة الوطنية العليا للأشغال العمومية بالقبة هي صرح أثري وعلمي عريق لتكوين المهندسين.",
+    ecole_teachers: "هيئة التدريس",
+    ecole_teachers_desc: "استعراض أساتذة المواد للسنة الأولى والثانية تحضيري مع التفاصيل.",
+    ecole_teachers_btn: "عرض القائمة",
+    ecole_buildings: "المباني والمدرجات",
+    ecole_buildings_desc: "مواقع المدرجات الرئيسية (A, B)، القاعات والمخابر العلمية.",
+    ecole_buildings_btn: "استكشف",
+    ecole_history: "التاريخ والنبذة",
+    ecole_history_desc: "نبذة تاريخية عن تأسيس المدرسة ودورها في تكوين مهندسي الأشغال العمومية.",
+    ecole_history_btn: "اقرأ التاريخ",
+    ecole_map3d: "الخريطة ثلاثية الأبعاد",
+    ecole_map3d_desc: "خريطة تفاعلية ثلاثية الأبعاد للتنقل داخل الحرم الجامعي.",
+    ecole_map3d_btn: "فتح الخريطة",
+    
+    // المباني
+    modal_buildings_title: "المباني والمدرجات",
+    modal_buildings_map: "خريطة الحرم الجامعي",
+    modal_buildings_map_desc: "استكشف المدرسة بشكل ثلاثي الأبعاد.",
+    modal_buildings_map_btn: "فتح الخريطة ثلاثية الأبعاد",
+    modal_buildings_videos: "فيديوهات تعريفية للمدرسة",
+    modal_video_tour: "جولة في المدرسة",
+    modal_video_prepa: "الأقسام التحضيرية",
+    modal_video_amphi: "المدرجات",
+    modal_video_infra: "المنشآت القاعدية",
+    modal_video_entree: "مدخل المدرسة",
+    modal_video_info: "قسم الإعلام الآلي",
+    
+    // التاريخ
+    modal_history_title: "نبذة تاريخية عن المدرسة"
+  },
+  fr: {
+    nav_app_name: "Guide ENSTP",
+    nav_app_sub: "École Nationale Supérieure",
+    nav_home: "Accueil",
+    nav_school: "Mon École",
+    nav_school_desc: "Découvrez l'école, les installations et la bibliothèque",
+    nav_admin: "Mon Administration",
+    nav_admin_desc: "Documents, certificats et procédures administratives",
+    nav_success: "Ma Réussite",
+    nav_success_desc: "Cours, examens et emplois du temps",
+    nav_residence: "Ma Résidence",
+    nav_residence_desc: "Informations sur le logement et les services universitaires",
+    nav_sport: "Sports",
+    nav_sport_desc: "Activités sportives, terrains et clubs",
+    nav_forum: "Forum Étudiant",
+    nav_forum_desc: "Clubs scientifiques, événements et discussions",
+    nav_transport: "Transport",
+    nav_transport_desc: "Lignes de bus, stations et horaires",
+    nav_food: "Restauration & Shopping",
+    nav_food_desc: "Restaurants universitaires, cafés et menus",
+    nav_leisure: "Loisirs à Alger",
+    nav_leisure_desc: "Lieux de divertissement et tourisme dans la capitale",
+    nav_schedule_badge: "Emploi du temps",
+    nav_qr: "QR Code",
+    nav_qr_desc: "Scanner pour un accès rapide",
+    home_welcome: "Bienvenue dans votre espace universitaire",
+    home_desc: "Découvrez tout ce dont vous avez besoin pour faciliter votre parcours académique et votre vie quotidienne à l'École Nationale Supérieure des Travaux Publics (ENSTP).",
+    
+    ecole_title: "Mon École",
+    ecole_desc: "L'École Nationale Supérieure des Travaux Publics de Kouba est une institution historique et scientifique pour la formation des ingénieurs.",
+    ecole_teachers: "Corps Enseignant",
+    ecole_teachers_desc: "Découvrez les enseignants des matières pour les 1ère et 2ème années préparatoires.",
+    ecole_teachers_btn: "Ouvrir la liste",
+    ecole_buildings: "Bâtiments & Amphis",
+    ecole_buildings_desc: "Emplacements des amphis principaux (A, B), salles et laboratoires.",
+    ecole_buildings_btn: "Explorer",
+    ecole_history: "Histoire & À propos",
+    ecole_history_desc: "Aperçu historique de la fondation de l'école et de son rôle.",
+    ecole_history_btn: "Lire l'histoire",
+    ecole_map3d: "Carte 3D",
+    ecole_map3d_desc: "Carte interactive en 3D pour naviguer sur le campus.",
+    ecole_map3d_btn: "Ouvrir la carte",
+    
+    modal_buildings_title: "Bâtiments & Amphis",
+    modal_buildings_map: "Carte du Campus",
+    modal_buildings_map_desc: "Explorez l'école en 3D pour trouver les amphis et les salles.",
+    modal_buildings_map_btn: "Ouvrir la carte 3D",
+    modal_buildings_videos: "Vidéos de présentation",
+    modal_video_tour: "Visite de l'école",
+    modal_video_prepa: "Classes Préparatoires",
+    modal_video_amphi: "Amphithéâtres",
+    modal_video_infra: "Infrastructures",
+    modal_video_entree: "Entrée de l'école",
+    modal_video_info: "Département Informatique",
+    modal_history_title: "Histoire de l'ENSTP"
+  },
+  en: {
+    nav_app_name: "ENSTP Guide",
+    nav_app_sub: "National Higher School",
+    nav_home: "Home",
+    nav_school: "My School",
+    nav_school_desc: "Discover the school, facilities, and library",
+    nav_admin: "My Administration",
+    nav_admin_desc: "Documents, certificates, and administrative procedures",
+    nav_success: "My Success",
+    nav_success_desc: "Courses, exams, and schedules",
+    nav_residence: "My Residence",
+    nav_residence_desc: "Accommodation and university services information",
+    nav_sport: "Sports",
+    nav_sport_desc: "Sports activities, fields, and clubs",
+    nav_forum: "Student Forum",
+    nav_forum_desc: "Scientific clubs, events, and discussions",
+    nav_transport: "Transport",
+    nav_transport_desc: "Bus lines, stations, and schedules",
+    nav_food: "Food & Shopping",
+    nav_food_desc: "University restaurants, cafes, and menus",
+    nav_leisure: "Leisure in Algiers",
+    nav_leisure_desc: "Entertainment and tourism places in the capital",
+    nav_schedule_badge: "Schedule",
+    nav_qr: "QR Code",
+    nav_qr_desc: "Scan for quick access",
+    home_welcome: "Welcome to your university space",
+    home_desc: "Discover everything you need to facilitate your academic journey and daily life at the National Higher School of Public Works (ENSTP).",
+    
+    ecole_title: "My School",
+    ecole_desc: "The National Higher School of Public Works in Kouba is a historic and scientific institution for engineering training.",
+    ecole_teachers: "Faculty Members",
+    ecole_teachers_desc: "Explore subject teachers for 1st and 2nd preparatory years.",
+    ecole_teachers_btn: "Open List",
+    ecole_buildings: "Buildings & Amphis",
+    ecole_buildings_desc: "Locations of main amphitheaters (A, B), classrooms, and labs.",
+    ecole_buildings_btn: "Explore",
+    ecole_history: "History & About",
+    ecole_history_desc: "Historical overview of the school's founding and its role.",
+    ecole_history_btn: "Read History",
+    ecole_map3d: "3D Map",
+    ecole_map3d_desc: "Interactive 3D map to navigate the campus.",
+    ecole_map3d_btn: "Open Map",
+    
+    modal_buildings_title: "Buildings & Amphis",
+    modal_buildings_map: "Campus Map",
+    modal_buildings_map_desc: "Explore the school in 3D to find amphitheaters and classrooms.",
+    modal_buildings_map_btn: "Open 3D Map",
+    modal_buildings_videos: "Presentation Videos",
+    modal_video_tour: "School Tour",
+    modal_video_prepa: "Preparatory Classes",
+    modal_video_amphi: "Amphitheaters",
+    modal_video_infra: "Infrastructures",
+    modal_video_entree: "School Entrance",
+    modal_video_info: "Computer Science Dept",
+    modal_history_title: "History of ENSTP"
+  }
+};
+
+// دالة تغيير اللغة
+function setLanguage(lang) {
+  localStorage.setItem('enstp_lang', lang);
+  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerText = translations[lang][key];
+    }
+  });
   
-  <script src="translate.js"></script>
-  <style>
-    body { top: 0 !important; }
-    .skiptranslate iframe { display: none !important; }
-    .goog-te-banner-frame { display: none !important; }
-    #google_translate_element { display: none; } 
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
-  </style>
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById('btn-' + lang);
+  if(activeBtn) activeBtn.classList.add('active');
+}
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    :root { --primary: #4f46e5; --primary-light: #eef2ff; }
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
-    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
-    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
-    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col justify-between">
-  <div class="ambient-bg"></div>
-
-  <header class="sticky top-0 z-50 glass-nav px-4 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg">E</div>
-        <div>
-          <h1 class="font-bold text-gray-900 text-base" data-i18n="nav_app_name">دليل ENSTP</h1>
-          <p class="text-[11px] text-gray-500" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
-        </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full space-y-8">
-    <div class="glass-card rounded-3xl p-8 border border-white space-y-4">
-      <span class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600">ENSTP</span>
-      <h2 class="text-3xl font-black text-gray-900" data-i18n="ecole_title">مدرستي</h2>
-      <p class="text-sm text-gray-600" data-i18n="ecole_desc">المدرسة الوطنية العليا للأشغال العمومية بالقبة هي صرح أثري وعلمي عريق لتكوين المهندسين.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <a href="enseignants.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
-        <div class="space-y-3">
-          <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition"><i class="fa-solid fa-chalkboard-user"></i></div>
-          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_teachers">هيئة التدريس</h3>
-          <p class="text-xs text-gray-500" data-i18n="ecole_teachers_desc">استعراض أساتذة المواد للسنة الأولى والثانية تحضيري مع التفاصيل.</p>
-        </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
-          <span data-i18n="ecole_teachers_btn">عرض القائمة</span>
-          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-        </div>
-      </a>
-
-      <button type="button" onclick="openModal('batiments')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
-        <div class="space-y-3 w-full">
-          <div class="w-14 h-14 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-2xl group-hover:bg-pink-600 group-hover:text-white transition"><i class="fa-solid fa-building-columns"></i></div>
-          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_buildings">المباني والمدرجات</h3>
-          <p class="text-xs text-gray-500" data-i18n="ecole_buildings_desc">مواقع المدرجات الرئيسية (A, B)، القاعات والمخابر العلمية.</p>
-        </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600 w-full">
-          <span data-i18n="ecole_buildings_btn">استكشف</span>
-          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-        </div>
-      </button>
-
-      <button type="button" onclick="openModal('histoire')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
-        <div class="space-y-3 w-full">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fa-solid fa-landmark"></i></div>
-          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_history">التاريخ والنبذة</h3>
-          <p class="text-xs text-gray-500" data-i18n="ecole_history_desc">نبذة تاريخية عن تأسيس المدرسة ودورها في تكوين مهندسي الأشغال العمومية.</p>
-        </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
-          <span data-i18n="ecole_history_btn">اقرأ التاريخ</span>
-          <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-        </div>
-      </button>
-
-      <a href="https://quad-route-finder.lovable.app" target="_blank" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
-        <div class="space-y-3">
-          <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl group-hover:bg-cyan-600 group-hover:text-white transition"><i class="fa-solid fa-cube"></i></div>
-          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_map3d">الخريطة ثلاثية الأبعاد</h3>
-          <p class="text-xs text-gray-500" data-i18n="ecole_map3d_desc">خريطة تفاعلية ثلاثية الأبعاد للتنقل داخل الحرم الجامعي.</p>
-        </div>
-        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-cyan-600">
-          <span data-i18n="ecole_map3d_btn">فتح الخريطة</span>
-          <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-1 transition"></i>
-        </div>
-      </a>
-    </div>
-  </main>
-
-  <div id="info-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-    <div class="glass-card rounded-3xl p-6 lg:p-8 max-w-4xl w-full space-y-4 shadow-2xl border border-white max-h-[90vh] overflow-y-auto relative">
-      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition z-10"><i class="fa-solid fa-xmark"></i></button>
-      <h3 id="modal-title" class="font-black text-2xl text-gray-900 border-b pb-3"></h3>
-      <div id="modal-body" class="text-sm text-gray-700 leading-relaxed space-y-4"></div>
-    </div>
-  </div>
-
-  <footer class="glass-nav border-t border-gray-200 py-6 text-center text-xs text-gray-500">© 2026 ENSTP Kouba.</footer>
-
-  <script>
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-    function t(key) { return window.translations && window.translations[currentLang] && window.translations[currentLang][key] ? window.translations[currentLang][key] : key; }
-
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-      currentLang = lang;
-      if(originalSetLanguage) originalSetLanguage(lang);
-      if(!document.getElementById('info-modal').classList.contains('hidden')) {
-        const title = document.getElementById('modal-title').innerText;
-        if(title.includes('Bâtiments') || title.includes('المباني') || title.includes('Buildings')) openModal('batiments');
-        else openModal('histoire');
-      }
-    };
-
-    function openModal(type) {
-      const title = document.getElementById('modal-title');
-      const body = document.getElementById('modal-body');
-      const modal = document.getElementById('info-modal');
-
-      if (type === 'batiments') {
-        title.innerText = t('modal_buildings_title');
-        body.innerHTML = `
-          <div class="space-y-6">
-            <div class="bg-pink-50 p-4 rounded-xl border border-pink-100">
-              <h4 class="font-bold text-pink-900 mb-2"><i class="fa-solid fa-map"></i> ${t('modal_buildings_map')}</h4>
-              <p class="text-xs text-pink-800 mb-3">${t('modal_buildings_map_desc')}</p>
-              <a href="https://quad-route-finder.lovable.app" target="_blank" class="inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition"><i class="fa-solid fa-cube"></i> ${t('modal_buildings_map_btn')}</a>
-            </div>
-            <div>
-              <h4 class="font-bold text-gray-900 mb-3"><i class="fa-brands fa-youtube text-red-500"></i> ${t('modal_buildings_videos')}</h4>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_tour')}</p></div>
-                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_prepa')}</p></div>
-                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_amphi')}</p></div>
-                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_infra')}</p></div>
-                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/GUCHDgEJaIk" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_entree')}</p></div>
-                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/sFwHEHhgAbQ" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_info')}</p></div>
-              </div>
-            </div>
-          </div>
-        `;
-      } else if (type === 'histoire') {
-        title.innerText = t('modal_history_title');
-        body.innerHTML = `
-          <div class="space-y-4 text-justify">
-            <p>${currentLang === 'ar' ? '<strong>المدرسة الوطنية العليا للأشغال العمومية (ENSTP)</strong> هي مؤسسة عمومية ذات طابع علمي وتكنولوجي وثقافي، تقع في بلدية القبة بالجزائر العاصمة.' : (currentLang === 'fr' ? '<strong>L\'École Nationale Supérieure des Travaux Publics (ENSTP)</strong> est un établissement public situé à Kouba, Alger.' : '<strong>The National Higher School of Public Works (ENSTP)</strong> is a public institution located in Kouba, Algiers.')}</p>
-            <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-emerald-500 space-y-2">
-              <h5 class="font-bold text-gray-900">${currentLang === 'ar' ? 'النشأة والتأسيس:' : (currentLang === 'fr' ? 'Création et fondation :' : 'Creation:')}</h5>
-              <p class="text-sm">${currentLang === 'ar' ? 'تأسست المدرسة في الأصل عام <strong>1925</strong> تحت اسم "مدرسة الأشغال العمومية".' : (currentLang === 'fr' ? 'Fondée en <strong>1925</strong> sous le nom d\'École des Travaux Publics.' : 'Originally founded in <strong>1925</strong> as the School of Public Works.')}</p>
-            </div>
-          </div>
-        `;
-      }
-      modal.classList.remove('hidden');
-    }
-
-    function closeModal() {
-      document.getElementById('info-modal').classList.add('hidden');
-      document.getElementById('modal-body').innerHTML = '';
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if(window.setLanguage) setTimeout(() => setLanguage(currentLang), 100);
-    });
-  </script>
-</body>
-</html>
+// تشغيل اللغة المحفوظة
+window.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+  setTimeout(() => setLanguage(savedLang), 100);
+});
