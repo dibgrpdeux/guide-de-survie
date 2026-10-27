@@ -1,82 +1,260 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <script src="translate.js"></script>
-  <style>body{top:0!important}.lang-btn.active{background:#4f46e5;color:#fff}</style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>إدارتي - ENSTP</title>
+  
+  <!-- كود الترجمة -->
+  <script src="translate.js"></script>
+  <style>
+    body { top: 0 !important; }
+    .skiptranslate iframe { display: none !important; }
+    .goog-te-banner-frame { display: none !important; }
+    #google_translate_element { display: none; } 
+    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
+    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
+    .lang-btn.active { background: #4f46e5; color: white; }
+  </style>
+
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>.accordion-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out}.accordion-content.active{max-height:2000px}</style>
+  
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8fafc; }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .accordion-content.active { max-height: 2000px; transition: max-height 0.5s ease-in; }
+    .rotate-180 { transform: rotate(180deg); }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <header class="sticky top-0 z-50 bg-white/90 border-b px-4 py-3">
-    <div class="max-w-4xl mx-auto flex justify-between items-center">
-      <h1 class="font-bold text-gray-900 text-lg" data-i18n="admin_subtitle">إدارتي</h1>
+<body class="min-h-screen flex flex-col">
+
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b px-4 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <h1 class="font-bold text-gray-900 text-lg"><i class="fa-solid fa-building-user text-indigo-600"></i> دليل الإدارة والخدمات</h1>
+      
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">EN</button>
+        <!-- أزرار الترجمة -->
+        <div class="flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200 shadow-sm">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
       </div>
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-8 space-y-4">
-    <p class="text-gray-600 text-center mb-6" data-i18n="admin_desc">كل ما يخص الوثائق والخدمات الجامعية...</p>
+  <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
 
-    <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
-      <button onclick="toggleAccordion('cnas')" class="w-full flex justify-between items-center p-5 bg-indigo-50 text-right">
-        <h3 class="font-bold text-lg text-indigo-900" data-i18n="admin_cnas">التأمين والضمان الاجتماعي</h3>
-        <i class="fa-solid fa-chevron-down" id="icon-cnas"></i>
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-black text-gray-900" data-i18n="admin_subtitle">إدارتي (Administration)</h2>
+      <p class="text-gray-600 mt-2" data-i18n="admin_desc">كل ما يخص الوثائق، الخدمات الجامعية، الضمان الاجتماعي، والمكتبة.</p>
+    </div>
+
+    <!-- 1. الضمان الاجتماعي (CNAS) -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <button onclick="toggleAccordion('cnas')" class="w-full flex items-center justify-between p-5 bg-indigo-50 hover:bg-indigo-100 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-indigo-200 text-indigo-700 flex items-center justify-center font-bold"><i class="fa-solid fa-shield-heart"></i></div>
+          <h3 class="font-bold text-lg text-indigo-900" data-i18n="admin_cnas">التأمين والضمان الاجتماعي (CNAS)</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-indigo-500 transition-transform" id="icon-cnas"></i>
       </button>
       <div id="content-cnas" class="accordion-content">
-        <div class="p-5 space-y-4 text-sm">
-          <p><strong data-i18n="admin_cnas_q1">أين يقع المكتب؟</strong><br><span data-i18n="admin_cnas_a1">يقع المكتب داخل المدرسة...</span></p>
-          <img src="cnas.png" class="w-48 rounded-lg shadow-sm" onerror="this.style.display='none'">
-          <p><strong data-i18n="admin_cnas_q2">الوثائق المطلوبة؟</strong><br><span data-i18n="admin_cnas_a2">شهادة الميلاد...</span></p>
-          <a href="https://elhanaa.cnas.dz/inscription.xhtml" target="_blank" class="inline-block bg-purple-600 text-white px-4 py-2 rounded-lg font-bold" data-i18n="admin_cnas_btn">الدخول إلى منصة الهناء</a>
+        <div class="p-5 space-y-4 text-sm text-gray-700 leading-relaxed">
+          
+          <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+            <p class="font-bold text-blue-900 mb-2" data-i18n="admin_cnas_q1"><i class="fa-solid fa-location-dot"></i> أين يقع مكتب الضمان الاجتماعي؟</p>
+            <p data-i18n="admin_cnas_a1">يقع المكتب داخل المدرسة (ENSTP)، مقابل الحاضنة (Incubateur) وبيت الطالب، بجانب مكتب الطبيب مباشرة.</p>
+            <img src="cnas.png" alt="مكتب الضمان الاجتماعي" class="mt-3 rounded-lg w-full max-w-sm mx-auto shadow-sm" onerror="this.style.display='none'">
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_cnas_q2"><i class="fa-solid fa-folder-open text-amber-500"></i> ما هي الوثائق المطلوبة؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_cnas_a2">شهادة الميلاد، شهادة الإقامة، نسخة من بطاقة التعريف الوطنية البيومترية، نسخة من شهادة التسجيل المدرسي، وصك بريدي (Chèque postal barré).</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_cnas_q3"><i class="fa-regular fa-calendar-days text-emerald-500"></i> ما هي أيام استقبال الملفات؟</p>
+            <p class="bg-emerald-50 p-2 rounded-lg inline-block text-emerald-800 font-bold" data-i18n="admin_cnas_a3">الاثنين، الثلاثاء، والخميس.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_cnas_q4"><i class="fa-solid fa-laptop-medical text-purple-500"></i> كيف أسجل في منصة الهناء (EL HANAA)؟</p>
+            <p class="mb-2" data-i18n="admin_cnas_a4">بعد حصولك على رقم الضمان الاجتماعي، يمكنك إنشاء حسابك عبر الرابط الرسمي:</p>
+            <a href="https://elhanaa.cnas.dz/inscription.xhtml" target="_blank" class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold transition">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-i18n="admin_cnas_btn">الدخول إلى منصة الهناء</span>
+            </a>
+          </div>
+
         </div>
       </div>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
-      <button onclick="toggleAccordion('biblio')" class="w-full flex justify-between items-center p-5 bg-amber-50 text-right">
-        <h3 class="font-bold text-lg text-amber-900" data-i18n="admin_biblio">مكتبة المدرسة</h3>
-        <i class="fa-solid fa-chevron-down" id="icon-biblio"></i>
+    <!-- 2. مكتبة المدرسة -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <button onclick="toggleAccordion('biblio')" class="w-full flex items-center justify-between p-5 bg-amber-50 hover:bg-amber-100 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center font-bold"><i class="fa-solid fa-book-open"></i></div>
+          <h3 class="font-bold text-lg text-amber-900" data-i18n="admin_biblio">مكتبة المدرسة (Bibliothèque)</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-amber-500 transition-transform" id="icon-biblio"></i>
       </button>
       <div id="content-biblio" class="accordion-content">
-        <div class="p-5 space-y-4 text-sm">
-          <p><strong data-i18n="admin_biblio_q1">أوقات العمل؟</strong><br><span data-i18n="admin_biblio_a1">صباحاً 9:00 - 11:45...</span></p>
-          <p><strong data-i18n="admin_biblio_q3">القواعد الداخلية؟</strong><br><span data-i18n="admin_biblio_a3">منع الصوت العالي...</span></p>
+        <div class="p-5 space-y-4 text-sm text-gray-700 leading-relaxed">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <img src="library1.png" alt="إعلان التسجيل" class="rounded-lg w-full object-cover shadow-sm" onerror="this.style.display='none'">
+            <img src="library2.png" alt="مدخل المكتبة" class="rounded-lg w-full object-cover shadow-sm" onerror="this.style.display='none'">
+            <img src="library3.png" alt="قاعة المطالعة" class="rounded-lg w-full object-cover shadow-sm" onerror="this.style.display='none'">
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_biblio_q1"><i class="fa-regular fa-clock text-amber-600"></i> ما هي أوقات عمل المكتبة؟</p>
+            <p class="bg-amber-50 p-2 rounded-lg text-amber-900" data-i18n="admin_biblio_a1">الفترة الصباحية: 09:00 إلى 11:45 | الفترة المسائية: 13:00 إلى 15:00.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_biblio_q2"><i class="fa-solid fa-list-check text-emerald-600"></i> ما هي شروط التسجيل؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_biblio_a2">شهادة مدرسية تثبت الانتماء للمدرسة، صورة شخصية حديثة، وملء استمارة التسجيل الإلكترونية. يمكنك التسجيل عبر مسح رمز الاستجابة السريعة (QR Code) الموجود في الإعلان بالمكتبة.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_biblio_q3"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> ما هي القواعد الداخلية؟</p>
+            <p class="bg-red-50 text-red-800 p-3 rounded-lg" data-i18n="admin_biblio_a3">منع الصوت العالي لضمان تركيز الطلبة. يُمنع منعاً باتاً تناول الأكل أو المشروبات (باستثناء الماء). الحفاظ على نظافة المكان وأثاث المكتبة.</p>
+          </div>
+
         </div>
       </div>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
-      <button onclick="toggleAccordion('scol')" class="w-full flex justify-between items-center p-5 bg-blue-50 text-right">
-        <h3 class="font-bold text-lg text-blue-900" data-i18n="admin_scol">مصلحة التمدرس</h3>
-        <i class="fa-solid fa-chevron-down" id="icon-scol"></i>
+    <!-- 3. الخدمات الجامعية -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <button onclick="toggleAccordion('univ')" class="w-full flex items-center justify-between p-5 bg-emerald-50 hover:bg-emerald-100 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-emerald-200 text-emerald-700 flex items-center justify-center font-bold"><i class="fa-solid fa-building"></i></div>
+          <h3 class="font-bold text-lg text-emerald-900" data-i18n="admin_univ">الخدمات الجامعية (الإقامة والمنحة)</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-emerald-500 transition-transform" id="icon-univ"></i>
       </button>
-      <div id="content-scol" class="accordion-content">
-        <div class="p-5 space-y-4 text-sm">
-          <p><strong data-i18n="admin_scol_q1">ضاع مني بطاقة الطالب؟</strong><br><span data-i18n="admin_scol_a1">توجه فوراً لمصلحة التمدرس...</span></p>
-          <p><strong data-i18n="admin_scol_q3">البريد الإلكتروني؟</strong><br><span data-i18n="admin_scol_a3">يُمنح من مركز الأنظمة...</span></p>
+      <div id="content-univ" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700 leading-relaxed">
+          
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_univ_q1"><i class="fa-solid fa-house-user text-emerald-600"></i> كيف يتم التسجيل في الإقامة؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_univ_a1">التسجيل يتم رقمياً عبر منصة PROGRES. الطلبة المقيمون يوجهون عادةً إلى الإقامات الجامعية المتواجدة بالقبة أو بئر مراد رايس (مثل إقامة قاريدي للذكور أو إقامات البنات المجاورة كإقامة امحمد يوسفي)، حسب التوزيع السنوي لمديرية الخدمات الجامعية لوسط الجزائر.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_univ_q2"><i class="fa-solid fa-hand-holding-dollar text-emerald-600"></i> كيف أتقدم للمنحة؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_univ_a2">يتم إيداع ملف المنحة رقمياً عبر المنصة الوطنية للخدمات الجامعية PROGRES في المواعيد التي تحددها الوزارة. يتكون الملف عادة من وثائق الحالة المدنية، شهادة التسجيل بالمدرسة، وكشف مداخيل الأبوين.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_univ_q3"><i class="fa-solid fa-ban text-red-500"></i> ما هي مشاكل تجميد المنحة؟</p>
+            <p class="bg-red-50 text-red-800 p-3 rounded-lg" data-i18n="admin_univ_a3">يتوقف صرف المنحة تلقائياً في حالتين: الرسوب وتكرار السنة الدراسية، أو في حالة عدم تجديد الملف السنوي للمنحة (Réinscription) لدى مصلحة المنح بالإقامة الجامعية.</p>
+          </div>
+
         </div>
       </div>
     </div>
+
+    <!-- 4. مصلحة التمدرس -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <button onclick="toggleAccordion('scolarite')" class="w-full flex items-center justify-between p-5 bg-blue-50 hover:bg-blue-100 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-blue-200 text-blue-700 flex items-center justify-center font-bold"><i class="fa-solid fa-file-signature"></i></div>
+          <h3 class="font-bold text-lg text-blue-900" data-i18n="admin_scol">مصلحة التمدرس (Scolarité) والوثائق</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-blue-500 transition-transform" id="icon-scolarite"></i>
+      </button>
+      <div id="content-scolarite" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700 leading-relaxed">
+          
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_scol_q1"><i class="fa-solid fa-id-card text-blue-600"></i> ضاع مني بطاقة الطالب؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_scol_a1">يجب التوجه فوراً إلى مصلحة التمدرس (Service Scolarité). يتطلب استخراج بدل ضائع تقديم طلب خطي، تصريح بالضياع مستخرج من مصالح الأمن (الشرطة أو الدرك)، وصورة شمسية حديثة.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_scol_q2"><i class="fa-solid fa-file-invoice text-blue-600"></i> كيف أحصل على كشف النقاط؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_scol_a2">كشوف النقاط الفصلية والسنوية تُسلم رسمياً من مصلحة التمدرس بعد إعلان النتائج. كما يمكن في كثير من الأحيان الاطلاع على النتائج الدورية عبر أرضية webetu progress.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_scol_q3"><i class="fa-solid fa-envelope text-blue-600"></i> كيف أتحصل على البريد الإلكتروني؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_scol_a3">تمنح إدارة المدرسة لكل طالب حساب بريد رسمي (name.surname@enstp.edu.dz). لتسلم الحساب وكلمة السر الأولية، يجب التوجه إلى مركز الأنظمة والشبكات (CSR) المتواجد بالمدرسة.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. الامتحانات -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <button onclick="toggleAccordion('examens')" class="w-full flex items-center justify-between p-5 bg-purple-50 hover:bg-purple-100 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-purple-200 text-purple-700 flex items-center justify-center font-bold"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h3 class="font-bold text-lg text-purple-900" data-i18n="admin_exam">الامتحانات، الغيابات، والانتقال</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-purple-500 transition-transform" id="icon-examens"></i>
+      </button>
+      <div id="content-examens" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700 leading-relaxed">
+          
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_exam_q1"><i class="fa-solid fa-user-slash text-red-500"></i> كيف أبرر الغيابات؟</p>
+            <p class="bg-red-50 text-red-800 p-3 rounded-lg" data-i18n="admin_exam_a1">يجب تقديم تبرير الغياب (شهادة طبية من طبيب محلف أو وثيقة إدارية رسمية) إلى مصلحة التمدرس في غضون 48 ساعة كحد أقصى من تاريخ الغياب، وإلا يُحسب الغياب غير مبرر ويؤدي إلى علامة 00 أو الإقصاء.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_exam_q2"><i class="fa-solid fa-rotate-left text-purple-600"></i> كيف يتم التعامل مع الاستدراك؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_exam_a2">إذا كان معدلك السنوي أقل من 10/20، توفر المدرسة دورة استدراكية في المواد التي لم تحقق فيها علامة 10. تُحتسب العلامة الأعلى المحصل عليها لإعادة حساب المعدل السنوي.</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-gray-900 mb-1" data-i18n="admin_exam_q3"><i class="fa-solid fa-arrow-up-right-dots text-purple-600"></i> شروط الانتقال للسنة الثانية؟</p>
+            <p class="bg-gray-50 p-3 rounded-lg" data-i18n="admin_exam_a3">الانتقال يتطلب الحصول على معدل سنوي عام يساوي أو يفوق 10/20، بشرط عدم الحصول على علامة إقصائية في المواد الأساسية (الرياضيات، الفيزياء، الكيمياء).</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </main>
+
+  <footer class="border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 bg-white">
+    <p>© 2026 ENSTP القبة — تصميم فريق التطوير الطلابي.</p>
+  </footer>
 
   <script>
     function toggleAccordion(id) {
       const content = document.getElementById('content-' + id);
       const icon = document.getElementById('icon-' + id);
-      content.classList.toggle('active');
-      icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0)';
+      
+      document.querySelectorAll('.accordion-content').forEach(el => {
+        if (el.id !== 'content-' + id) {
+          el.classList.remove('active');
+          el.style.maxHeight = null;
+        }
+      });
+      document.querySelectorAll('[id^="icon-"]').forEach(el => {
+        if (el.id !== 'icon-' + id) {
+          el.classList.remove('rotate-180');
+        }
+      });
+
+      if (content.classList.contains('active')) {
+        content.classList.remove('active');
+        content.style.maxHeight = null;
+        icon.classList.remove('rotate-180');
+      } else {
+        content.classList.add('active');
+        content.style.maxHeight = content.scrollHeight + "px";
+        icon.classList.add('rotate-180');
+      }
     }
   </script>
 </body>
