@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr" data-theme="indigo">
+<html lang="ar" dir="rtl" data-theme="indigo">
 <head>
     <!-- كود الترجمة -->
   <script src="translate.js"></script>
@@ -13,6 +13,7 @@
     .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
     .lang-btn.active { background: #4f46e5; color: white; }
   </style>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guide ENSTP - Mon École</title>
@@ -21,6 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  
   <style>
     :root[data-theme="indigo"] {
       --bg-gradient: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12), transparent 40%),
@@ -28,7 +30,7 @@
                      linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
       --primary: #4f46e5; --primary-hover: #4338ca; --primary-light: #eef2ff;
     }
-    body { font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
+    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
     .ambient-bg { position: fixed; inset: 0; z-index: -1; background: var(--bg-gradient); }
     .glass-card { background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.04); }
     .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
@@ -48,13 +50,19 @@
         <div class="w-10 h-10 rounded-2xl btn-custom flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
         <div>
           <h1 class="font-bold text-gray-900 text-base leading-tight">ENSTP <span style="color:var(--primary)">Mon École</span></h1>
-          <p class="text-[11px] text-gray-500 font-cairo">المدرسة الوطنية العليا للأشغال العمومية</p>
+          <p class="text-[11px] text-gray-500" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
         </div>
       </div>
-      <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span>Retour à l'Accueil</span>
-      </a>
+      
+      <div class="flex items-center gap-3">
+        <!-- أزرار الترجمة -->
+        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+        </div>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition" data-i18n="nav_home">الرئيسية</a>
+      </div>
     </div>
   </header>
 
@@ -64,73 +72,73 @@
     <!-- Hero Section -->
     <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white space-y-4">
       <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5" style="background:var(--primary-light); color:var(--primary);">
-        <i class="fa-solid fa-school"></i> <span>Section Principale</span>
+        <i class="fa-solid fa-school"></i> <span>ENSTP Kouba</span>
       </span>
-      <h2 class="text-3xl font-black text-gray-900">Bienvenue à l'ENSTP Kouba / قسم مدرستي</h2>
-      <p class="text-sm text-gray-600 font-cairo leading-relaxed">
-        المدرسة الوطنية العليا للأشغال العمومية بالقبة هي صرح أثري وعلمي عريق لتكوين المهندسين. اختر أحد الأقسام الفرعية أدناه لاستعراض التفاصيل والمرافق والأساتذة.
+      <h2 class="text-3xl font-black text-gray-900" data-i18n="ecole_title">مدرستي</h2>
+      <p class="text-sm text-gray-600 leading-relaxed" data-i18n="ecole_desc">
+        المدرسة الوطنية العليا...
       </p>
     </div>
 
     <!-- Sub-sections Grid (4 أزرار) -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       
-      <!-- 1. Enseignants (الأساتذة) -->
+      <!-- 1. Enseignants -->
       <a href="enseignants.html" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
         <div class="space-y-3">
           <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition">
             <i class="fa-solid fa-chalkboard-user"></i>
           </div>
-          <h3 class="font-extrabold text-xl text-gray-900">Corps Enseignant</h3>
-          <p class="text-xs text-gray-500 font-cairo">استعراض أساتذة المواد للسنة الأولى والثانية تحضيري مع الإيماءات والتفاصيل.</p>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_teachers">هيئة التدريس</h3>
+          <p class="text-xs text-gray-500" data-i18n="ecole_teachers_desc">استعراض أساتذة المواد...</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
-          <span>Ouvrir la liste</span>
+          <span data-i18n="ecole_teachers_btn">عرض القائمة</span>
           <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
       </a>
 
-      <!-- 2. Bâtiments & Amphis (المباني) -->
+      <!-- 2. Bâtiments -->
       <button type="button" onclick="openModal('batiments')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
         <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-2xl group-hover:bg-pink-600 group-hover:text-white transition">
             <i class="fa-solid fa-building-columns"></i>
           </div>
-          <h3 class="font-extrabold text-xl text-gray-900">Bâtiments & Amphis</h3>
-          <p class="text-xs text-gray-500 font-cairo">مواقع المدرجات الرئيسية (A, B, C)، القاعات والمخابر العلمية.</p>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_buildings">المباني والمدرجات</h3>
+          <p class="text-xs text-gray-500" data-i18n="ecole_buildings_desc">مواقع المدرجات...</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-pink-600 w-full">
-          <span>Explorer</span>
+          <span data-i18n="ecole_buildings_btn">استكشف</span>
           <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
       </button>
 
-      <!-- 3. Histoire & À propos (التاريخ) -->
+      <!-- 3. Histoire -->
       <button type="button" onclick="openModal('histoire')" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group text-left w-full">
         <div class="space-y-3 w-full">
           <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition">
             <i class="fa-solid fa-landmark"></i>
           </div>
-          <h3 class="font-extrabold text-xl text-gray-900">Histoire & À propos</h3>
-          <p class="text-xs text-gray-500 font-cairo">نبذة تاريخية عن تأسيس المدرسة ودورها في تكوين مهندسي الأشغال العمومية.</p>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_history">التاريخ والنبذة</h3>
+          <p class="text-xs text-gray-500" data-i18n="ecole_history_desc">نبذة تاريخية...</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600 w-full">
-          <span>Lire l'histoire</span>
+          <span data-i18n="ecole_history_btn">اقرأ التاريخ</span>
           <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
         </div>
       </button>
 
-      <!-- 4. Carte 3D (الخريطة ثلاثية الأبعاد) -->
+      <!-- 4. Carte 3D -->
       <a href="https://quad-route-finder.lovable.app" target="_blank" class="glass-card p-6 rounded-3xl border border-white space-y-4 hover:scale-105 transition cursor-pointer flex flex-col justify-between group">
         <div class="space-y-3">
           <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl group-hover:bg-cyan-600 group-hover:text-white transition">
             <i class="fa-solid fa-cube"></i>
           </div>
-          <h3 class="font-extrabold text-xl text-gray-900">Carte 3D</h3>
-          <p class="text-xs text-gray-500 font-cairo">خريطة تفاعلية ثلاثية الأبعاد للتنقل داخل الحرم الجامعي.</p>
+          <h3 class="font-extrabold text-xl text-gray-900" data-i18n="ecole_map3d">الخريطة ثلاثية الأبعاد</h3>
+          <p class="text-xs text-gray-500" data-i18n="ecole_map3d_desc">خريطة تفاعلية...</p>
         </div>
         <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-cyan-600">
-          <span>Ouvrir la carte</span>
+          <span data-i18n="ecole_map3d_btn">فتح الخريطة</span>
           <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-1 transition"></i>
         </div>
       </a>
@@ -138,125 +146,77 @@
     </div>
   </main>
 
-  <!-- MODAL: نافذة منبثقة للمباني والتاريخ -->
+  <!-- MODAL -->
   <div id="info-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
     <div class="glass-card rounded-3xl p-6 lg:p-8 max-w-4xl w-full space-y-4 shadow-2xl border border-white max-h-[90vh] overflow-y-auto relative">
-      
       <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition z-10">
         <i class="fa-solid fa-xmark"></i>
       </button>
-
       <h3 id="modal-title" class="font-black text-2xl text-gray-900 border-b pb-3"></h3>
-      
-      <div id="modal-body" class="text-sm text-gray-700 font-cairo leading-relaxed space-y-4"></div>
-
+      <div id="modal-body" class="text-sm text-gray-700 leading-relaxed space-y-4"></div>
     </div>
   </div>
 
   <!-- FOOTER -->
-  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 font-cairo">
-    <p>© 2026 ENSTP Kouba — Département Infrastructures de Base (Groupe 02).</p>
+  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500">
+    <p>© 2026 ENSTP Kouba.</p>
   </footer>
 
   <script>
-    // دالة فتح النافذة المنبثقة
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      originalSetLanguage(lang);
+      // إعادة فتح النافذة المنبثقة لتحديث لغتها إذا كانت مفتوحة
+      if(!document.getElementById('info-modal').classList.contains('hidden')) {
+        const type = document.getElementById('modal-title').innerText.includes('Bâtiments') || document.getElementById('modal-title').innerText.includes('المباني') ? 'batiments' : 'histoire';
+        openModal(type);
+      }
+    };
+
+    function t(key) {
+      return window.translations[currentLang][key] || key;
+    }
+
     function openModal(type) {
       const title = document.getElementById('modal-title');
       const body = document.getElementById('modal-body');
       const modal = document.getElementById('info-modal');
 
       if (type === 'batiments') {
-        title.innerText = "Bâtiments & Amphis (الخريطة والفيديوهات)";
+        title.innerText = t('modal_buildings_title');
         body.innerHTML = `
           <div class="space-y-6">
-            <!-- 1. الخريطة ثلاثية الأبعاد -->
             <div class="bg-pink-50 p-4 rounded-xl border border-pink-100">
-              <h4 class="font-bold text-pink-900 mb-2"><i class="fa-solid fa-map"></i> خريطة الحرم الجامعي (3D)</h4>
-              <p class="text-xs text-pink-800 mb-3">استكشف المدرسة بشكل ثلاثي الأبعاد للوصول إلى المدرجات والقاعات.</p>
+              <h4 class="font-bold text-pink-900 mb-2"><i class="fa-solid fa-map"></i> ${t('modal_buildings_map')}</h4>
+              <p class="text-xs text-pink-800 mb-3">${t('modal_buildings_map_desc')}</p>
               <a href="https://quad-route-finder.lovable.app" target="_blank" class="inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition">
-                <i class="fa-solid fa-cube"></i> فتح الخريطة ثلاثية الأبعاد
+                <i class="fa-solid fa-cube"></i> ${t('modal_buildings_map_btn')}
               </a>
             </div>
-
-            <!-- 2. الفيديوهات -->
             <div>
-              <h4 class="font-bold text-gray-900 mb-3"><i class="fa-brands fa-youtube text-red-500"></i> فيديوهات تعريفية للمدرسة</h4>
+              <h4 class="font-bold text-gray-900 mb-3"><i class="fa-brands fa-youtube text-red-500"></i> ${t('modal_buildings_videos')}</h4>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                
-                <div class="space-y-1">
-                  <div class="video-container bg-gray-200 shadow-sm">
-                    <iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe>
-                  </div>
-                  <p class="text-xs font-bold text-gray-700 text-center">جولة في المدرسة (Tour)</p>
-                </div>
-
-                <div class="space-y-1">
-                  <div class="video-container bg-gray-200 shadow-sm">
-                    <iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe>
-                  </div>
-                  <p class="text-xs font-bold text-gray-700 text-center">الأقسام التحضيرية (Prépa)</p>
-                </div>
-
-                <div class="space-y-1">
-                  <div class="video-container bg-gray-200 shadow-sm">
-                    <iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe>
-                  </div>
-                  <p class="text-xs font-bold text-gray-700 text-center">المدرجات (Amphis)</p>
-                </div>
-
-                <div class="space-y-1">
-                  <div class="video-container bg-gray-200 shadow-sm">
-                    <iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe>
-                  </div>
-                  <p class="text-xs font-bold text-gray-700 text-center">المنشآت القاعدية (Infra)</p>
-                </div>
-
-                <div class="space-y-1">
-                  <div class="video-container bg-gray-200 shadow-sm">
-                    <iframe src="https://www.youtube.com/embed/GUCHDgEJaIk" allowfullscreen></iframe>
-                  </div>
-                  <p class="text-xs font-bold text-gray-700 text-center">مدخل المدرسة (Entrée)</p>
-                </div>
-
-                <div class="space-y-1">
-                  <div class="video-container bg-gray-200 shadow-sm">
-                    <iframe src="https://www.youtube.com/embed/sFwHEHhgAbQ" allowfullscreen></iframe>
-                  </div>
-                  <p class="text-xs font-bold text-gray-700 text-center">قسم الإعلام الآلي (Info)</p>
-                </div>
-
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_tour')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_prepa')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_amphi')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_infra')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/GUCHDgEJaIk" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_entree')}</p></div>
+                <div class="space-y-1"><div class="video-container bg-gray-200 shadow-sm"><iframe src="https://www.youtube.com/embed/sFwHEHhgAbQ" allowfullscreen></iframe></div><p class="text-xs font-bold text-gray-700 text-center">${t('modal_video_info')}</p></div>
               </div>
             </div>
           </div>
         `;
       } 
       else if (type === 'histoire') {
-        title.innerText = "Histoire de l'ENSTP (نبذة تاريخية)";
+        title.innerText = t('modal_history_title');
         body.innerHTML = `
-          <div class="space-y-4 text-justify">
-            <p>
-              <strong>المدرسة الوطنية العليا للأشغال العمومية (ENSTP)</strong> هي مؤسسة عمومية ذات طابع علمي وتكنولوجي وثقافي، تقع في بلدية القبة بالجزائر العاصمة. تعتبر من أعرق وأهم المدارس الهندسية في الجزائر.
-            </p>
-            <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-emerald-500 space-y-2">
-              <h5 class="font-bold text-gray-900">النشأة والتأسيس:</h5>
-              <p class="text-sm">
-                تأسست المدرسة في الأصل عام <strong>1925</strong> تحت اسم "مدرسة الأشغال العمومية" (École des Travaux Publics) في العهد الاستعماري. بعد استقلال الجزائر عام 1962، تم تعريبها وإعادة هيكلتها لتصبح مؤسسة وطنية.
-              </p>
-            </div>
-            <div class="space-y-2">
-              <h5 class="font-bold text-gray-900">التطور والتخصصات:</h5>
-              <p class="text-sm">
-                على مر العقود، تطورت المدرسة لتواكب احتياجات التنمية في الجزائر. اليوم، تقدم المدرسة تكوينات هندسية عالية المستوى في عدة تخصصات دقيقة، أبرزها:
-              </p>
-              <ul class="list-disc list-inside text-sm text-gray-600 space-y-1 mt-1 pr-4">
-                <li>المنشآت القاعدية (DIB): يشمل هندسة الطرق، الجسور، والسكك الحديدية.</li>
-                <li>المواد والهياكل (DMS): يشمل هندسة البناء، الميكانيكا، والمواد.</li>
-                <li>الأقسام التحضيرية (CP): لتأهيل الطلبة للالتحاق بالمدارس العليا.</li>
-              </ul>
-            </div>
-            <p class="text-sm">
-              تخرج المدرسة سنوياً نخبة من المهندسين الذين يساهمون في بناء المشاريع الكبرى في الجزائر (كالطرق السريعة، الموانئ، والمنشآت الحيوية). وتتميز بوجود حرم جامعي يضم مدرجات عملاقة (Amphis)، مخابر علمية متطورة، ومكتبة مركزية غنية بالمراجع الهندسية.
-            </p>
+          <div class="space-y-4 text-justify" data-i18n="ecole_history_text">
+            <!-- يمكنك إضافة النص التاريخي المترجم هنا بنفس الطريقة -->
+            <p>${currentLang === 'ar' ? 'المدرسة الوطنية العليا للأشغال العمومية (ENSTP)...' : (currentLang === 'fr' ? 'L\'École Nationale Supérieure des Travaux Publics (ENSTP)...' : 'The National Higher School of Public Works (ENSTP)...')}</p>
+            <!-- ... -->
           </div>
         `;
       }
@@ -264,12 +224,14 @@
       modal.classList.remove('hidden');
     }
 
-    // دالة إغلاق النافذة
     function closeModal() {
       document.getElementById('info-modal').classList.add('hidden');
-      // إيقاف الفيديوهات عند الإغلاق
       document.getElementById('modal-body').innerHTML = '';
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => setLanguage(currentLang), 100);
+    });
   </script>
 </body>
 </html>
