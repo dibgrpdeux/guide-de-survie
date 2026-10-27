@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الرياضة - ENSTP</title>
-
+  <title>الرياضة والأنشطة - ENSTP</title>
+  
   <!-- كود الترجمة -->
   <script src="translate.js"></script>
   <style>
@@ -27,30 +27,27 @@
   <style>
     body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
     .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 1); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05); }
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
+    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
+<body class="min-h-screen flex flex-col justify-between">
 
   <div class="ambient-bg"></div>
 
-  <main class="max-w-6xl mx-auto w-full space-y-8">
-
-    <!-- الترويسة -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-4">
-        <div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
-          <i class="fa-solid fa-dumbbell"></i>
-        </div>
+  <!-- الهيدر -->
+  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-orange-500 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
         <div>
-          <h1 class="text-2xl md:text-3xl font-black text-gray-900 mb-1" data-i18n="sport_title">الرياضة والأنشطة</h1>
-          <p class="text-gray-600 text-sm" data-i18n="sport_desc">اكتشف المرافق الرياضية، النوادي، والفيديوهات التحفيزية.</p>
+          <h1 class="font-bold text-gray-900 text-base leading-tight">ENSTP <span class="text-orange-500">Sports</span></h1>
+          <p class="text-[11px] text-gray-500" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
         </div>
       </div>
       
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
+        <!-- أزرار الترجمة -->
         <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
           <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
           <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
@@ -59,134 +56,67 @@
         <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
       </div>
     </div>
+  </header>
 
-    <!-- 1. فيديوهات تحفيزية -->
-    <div class="space-y-4">
-      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2 border-r-4 border-orange-500 pr-3">
-        <i class="fa-brands fa-youtube text-red-600"></i> <span data-i18n="sport_videos">فيديوهات تحفيزية ورياضية</span>
-      </h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- فيديو 1 -->
-        <div class="glass-card p-4 rounded-2xl space-y-3">
-          <div class="video-container shadow-sm bg-gray-200">
-            <iframe src="https://www.youtube.com/embed/aqPng7nyFZU" allowfullscreen></iframe>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 text-sm" data-i18n="sport_vid1_title">المركب الرياضي القبة</h3>
-            <p class="text-xs text-gray-500" data-i18n="sport_vid1_desc">جولة في المركب الرياضي.</p>
-            <span class="text-[10px] bg-gray-100 px-2 py-1 rounded mt-2 inline-block"><i class="fa-solid fa-location-dot text-orange-500 mr-1"></i> Kouba, Alger</span>
-          </div>
-        </div>
+  <!-- المحتوى الرئيسي -->
+  <main class="max-w-5xl mx-auto px-4 py-10 flex-grow w-full space-y-8">
 
-        <!-- فيديو 2 -->
-        <div class="glass-card p-4 rounded-2xl space-y-3">
-          <div class="video-container shadow-sm bg-gray-200">
-            <iframe src="https://www.youtube.com/embed/byDM5wQ3wcc" allowfullscreen></iframe>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 text-sm" data-i18n="sport_vid2_title">غيّر نفسك (قاريدي)</h3>
-            <p class="text-xs text-gray-500" data-i18n="sport_vid2_desc">فيديو تحفيزي تم تصويره في قاريدي.</p>
-          </div>
-        </div>
-
-        <!-- فيديو 3 (Shorts) -->
-        <div class="glass-card p-4 rounded-2xl space-y-3">
-          <div class="video-container shadow-sm bg-gray-200">
-            <!-- استخدمنا رابط embed للشورت -->
-            <iframe src="https://www.youtube.com/embed/s4IcvPRD5dY" allowfullscreen></iframe>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 text-sm" data-i18n="sport_vid3_title">كن مختلفاً (Be Different)</h3>
-            <p class="text-xs text-gray-500" data-i18n="sport_vid3_desc">فيديو قصير ملهم لتجاوز نفسك.</p>
-          </div>
-        </div>
-
+    <!-- قسم الترحيب -->
+    <div class="glass-card rounded-3xl p-8 border border-white space-y-4 text-center">
+      <div class="w-20 h-20 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center text-4xl mx-auto shadow-sm">
+        <i class="fa-solid fa-dumbbell"></i>
       </div>
+      <h2 class="text-3xl font-black text-gray-900" data-i18n="sport_title">الرياضة في ENSTP</h2>
+      <p class="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed" data-i18n="sport_desc">
+        المدرسة توفر فضاءات رياضية متنوعة للطلبة. سواء كنت تحب كرة القدم، كرة السلة، أو الجري، ستجد مكانك هنا.
+      </p>
     </div>
 
-    <!-- 2. المرافق الرياضية (أفكار مضافة) -->
-    <div class="space-y-4">
-      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2 border-r-4 border-indigo-500 pr-3">
-        <i class="fa-solid fa-location-dot text-indigo-600"></i> <span data-i18n="sport_facilities">المرافق الرياضية القريبة</span>
-      </h2>
+    <!-- الأنشطة المتاحة -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
-        <div class="glass-card p-5 rounded-2xl flex items-start gap-4">
-          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0">
-            <i class="fa-solid fa-futbol"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 text-base" data-i18n="sport_f1_title">ملعب كرة القدم (قاريدي)</h3>
-            <p class="text-xs text-gray-500 mt-1" data-i18n="sport_f1_desc">ملعب معشب للتدريبات والمباريات الودية.</p>
-          </div>
-        </div>
-
-        <div class="glass-card p-5 rounded-2xl flex items-start gap-4">
-          <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl shrink-0">
-            <i class="fa-solid fa-swimming-pool"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 text-base" data-i18n="sport_f2_title">مسبح القبة الأولمبي</h3>
-            <p class="text-xs text-gray-500 mt-1" data-i18n="sport_f2_desc">مسبح مجهز للسباحة والتدريبات.</p>
-          </div>
-        </div>
-
-        <div class="glass-card p-5 rounded-2xl flex items-start gap-4">
-          <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl shrink-0">
-            <i class="fa-solid fa-basketball"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 text-base" data-i18n="sport_f3_title">ملاعب متعددة الرياضات</h3>
-            <p class="text-xs text-gray-500 mt-1" data-i18n="sport_f3_desc">ملاعب كرة السلة، الطائرة، وكرة اليد.</p>
-          </div>
-        </div>
-
-        <div class="glass-card p-5 rounded-2xl flex items-start gap-4">
-          <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl shrink-0">
-            <i class="fa-solid fa-dumbbell"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900 text-base" data-i18n="sport_f4_title">قاعات اللياقة البدنية (Gym)</h3>
-            <p class="text-xs text-gray-500 mt-1" data-i18n="sport_f4_desc">قاعات مجهزة برفع الأثقال والكارديو.</p>
-          </div>
-        </div>
-
+      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
+        <div class="w-14 h-14 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-futbol"></i></div>
+        <h3 class="font-bold text-gray-900" data-i18n="sport_football">ملعب كرة القدم</h3>
+        <p class="text-xs text-gray-500" data-i18n="sport_football_desc">ملعب معشب متاح للتدريبات والمباريات.</p>
       </div>
-    </div>
 
-    <!-- 3. النوادي الرياضية (أفكار مضافة) -->
-    <div class="space-y-4">
-      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2 border-r-4 border-emerald-500 pr-3">
-        <i class="fa-solid fa-users text-emerald-600"></i> <span data-i18n="sport_clubs">النوادي الرياضية بالجامعة</span>
-      </h2>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div class="bg-white p-4 rounded-xl text-center shadow-sm border border-gray-100 hover:scale-105 transition">
-          <i class="fa-solid fa-table-tennis text-2xl text-orange-500 mb-2"></i>
-          <p class="font-bold text-sm text-gray-800" data-i18n="sport_club1">تنس الطاولة</p>
-        </div>
-        <div class="bg-white p-4 rounded-xl text-center shadow-sm border border-gray-100 hover:scale-105 transition">
-          <i class="fa-solid fa-chess text-2xl text-gray-700 mb-2"></i>
-          <p class="font-bold text-sm text-gray-800" data-i18n="sport_club2">الشطرنج</p>
-        </div>
-        <div class="bg-white p-4 rounded-xl text-center shadow-sm border border-gray-100 hover:scale-105 transition">
-          <i class="fa-solid fa-person-running text-2xl text-blue-500 mb-2"></i>
-          <p class="font-bold text-sm text-gray-800" data-i18n="sport_club3">ألعاب القوى</p>
-        </div>
-        <div class="bg-white p-4 rounded-xl text-center shadow-sm border border-gray-100 hover:scale-105 transition">
-          <i class="fa-solid fa-hand-fist text-2xl text-red-500 mb-2"></i>
-          <p class="font-bold text-sm text-gray-800" data-i18n="sport_club4">الفنون القتالية</p>
-        </div>
+      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
+        <div class="w-14 h-14 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-basketball"></i></div>
+        <h3 class="font-bold text-gray-900" data-i18n="sport_basket">ملعب كرة السلة</h3>
+        <p class="text-xs text-gray-500" data-i18n="sport_basket_desc">ملعب خارجي متاح للممارسة الحرة.</p>
       </div>
+
+      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
+        <div class="w-14 h-14 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-table-tennis-paddle-ball"></i></div>
+        <h3 class="font-bold text-gray-900" data-i18n="sport_pingpong">تنس الطاولة</h3>
+        <p class="text-xs text-gray-500" data-i18n="sport_pingpong_desc">قاعات مجهزة داخل المدرسة.</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
+        <div class="w-14 h-14 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-dumbbell"></i></div>
+        <h3 class="font-bold text-gray-900" data-i18n="sport_gym">قاعة تقوية العضلات</h3>
+        <p class="text-xs text-gray-500" data-i18n="sport_gym_desc">أجهزة رياضية حديثة (تتوفر في إقامة امحمد يوسفي).</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
+        <div class="w-14 h-14 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-person-running"></i></div>
+        <h3 class="font-bold text-gray-900" data-i18n="sport_running">الجري والمشي</h3>
+        <p class="text-xs text-gray-500" data-i18n="sport_running_desc">مسارات مخصصة داخل الحرم الجامعي.</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
+        <div class="w-14 h-14 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-medal"></i></div>
+        <h3 class="font-bold text-gray-900" data-i18n="sport_clubs">النوادي الرياضية</h3>
+        <p class="text-xs text-gray-500" data-i18n="sport_clubs_desc">انضم إلى النوادي للمشاركة في البطولات الجامعية.</p>
+      </div>
+
     </div>
 
   </main>
 
-  <footer class="border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 bg-white">
-    <p>© 2026 ENSTP القبة.</p>
+  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500">
+    <p>© 2026 ENSTP Kouba.</p>
   </footer>
 
 </body>
