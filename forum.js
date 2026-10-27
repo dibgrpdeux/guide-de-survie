@@ -18,8 +18,9 @@ const db = getFirestore(app);
 let isLoginMode = true;
 let currentUserData = null;
 let currentChannelId = 'general_posts';
-let currentChannelType = 'posts'; // 'posts' أو 'chat'
+let currentChannelType = 'posts';
 let unsubscribeMessages = null;
+let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
 const wilayas = [
   "01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة",
@@ -45,20 +46,43 @@ const postText = document.getElementById('postText');
 const wilayaSelect = document.getElementById('wilayaInput');
 wilayas.forEach(w => { wilayaSelect.innerHTML += `<option value="${w}">${w}</option>`; });
 
+// دالة مساعدة للترجمة
+function t(key) {
+  return window.translations[currentLang][key] || key;
+}
+
+// تحديث اللغة عند الضغط على الأزرار
+const originalSetLanguage = window.setLanguage;
+window.setLanguage = function(lang) {
+  currentLang = lang;
+  originalSetLanguage(lang);
+  
+  // تحديث واجهة المنتدى إذا كانت مفتوحة
+  if (currentUserData) {
+    renderChannels();
+    selectChannel(currentChannelId, document.getElementById('channelTitle').innerText, document.getElementById('channelSubtitle').innerText, currentChannelType);
+  } else {
+    // تحديث نصوص شاشة الدخول
+    submitBtn.innerText = isLoginMode ? t('forum_login') : t('forum_register');
+    toggleText.innerText = isLoginMode ? t('forum_no_account') : t('forum_have_account');
+    toggleBtn.innerText = isLoginMode ? t('forum_register_btn') : t('forum_login_btn');
+  }
+};
+
 // --- Auth ---
 toggleBtn.addEventListener('click', () => {
   isLoginMode = !isLoginMode;
   errorMsg.classList.add('hidden');
   if (isLoginMode) {
     registerFields.classList.add('hidden');
-    submitBtn.innerText = 'تسجيل الدخول';
-    toggleText.innerText = 'ليس لديك حساب؟';
-    toggleBtn.innerText = 'إنشاء حساب';
+    submitBtn.innerText = t('forum_login');
+    toggleText.innerText = t('forum_no_account');
+    toggleBtn.innerText = t('forum_register_btn');
   } else {
     registerFields.classList.remove('hidden');
-    submitBtn.innerText = 'إنشاء حساب';
-    toggleText.innerText = 'لديك حساب بالفعل؟';
-    toggleBtn.innerText = 'تسجيل الدخول';
+    submitBtn.innerText = t('forum_register');
+    toggleText.innerText = t('forum_have_account');
+    toggleBtn.innerText = t('forum_login_btn');
   }
 });
 
@@ -66,11 +90,11 @@ submitBtn.addEventListener('click', async () => {
   const email = document.getElementById('emailInput').value.trim();
   const pass = document.getElementById('passInput').value;
   
-  if (!email.endsWith('@enstp.edu.dz')) return showError('يجب استخدام بريد @enstp.edu.dz');
-  if (pass.length < 6) return showError('كلمة السر 6 أحرف على الأقل');
+  if (!email.endsWith('@enstp.edu.dz')) return showError(t('forum_err_email'));
+  if (pass.length < 6) return showError(t('forum_err_pass'));
 
   submitBtn.disabled = true;
-  submitBtn.innerText = 'جاري المعالجة...';
+  submitBtn.innerText = t('forum_processing');
   errorMsg.classList.add('hidden');
 
   try {
@@ -80,19 +104,19 @@ submitBtn.addEventListener('click', async () => {
       const name = document.getElementById('nameInput').value.trim();
       const year = document.getElementById('yearInput').value;
       const wilaya = document.getElementById('wilayaInput').value;
-      if (!name) throw new Error("يرجى إدخال الاسم");
+      if (!name) throw new Error(t('forum_err_name'));
 
       const userCred = await createUserWithEmailAndPassword(auth, email, pass);
       await updateProfile(userCred.user, { displayName: name });
       await setDoc(doc(db, "users", userCred.user.uid), { name, email, year, wilaya });
     }
   } catch (error) {
-    if (error.code === 'auth/email-already-in-use') showError('البريد مسجل مسبقاً');
-    else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') showError('البريد أو كلمة السر خاطئة');
+    if (error.code === 'auth/email-already-in-use') showError(t('forum_err_used'));
+    else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') showError(t('forum_err_wrong'));
     else showError(error.message);
   } finally {
     submitBtn.disabled = false;
-    submitBtn.innerText = isLoginMode ? 'تسجيل الدخول' : 'إنشاء حساب';
+    submitBtn.innerText = isLoginMode ? t('forum_login') : t('forum_register');
   }
 });
 
@@ -115,8 +139,7 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById('userInfo').innerText = `${currentUserData.year} | ${currentUserData.wilaya}`;
 
     renderChannels();
-    // فتح غرفة المنشورات العامة افتراضياً
-    selectChannel('general_posts', 'Salle Général', 'شارك أفكارك مع الجميع', 'posts');
+    selectChannel('general_posts', t('forum_general_room'), t('forum_general_sub'), 'posts');
   } else {
     currentUserData = null;
     if (unsubscribeMessages) unsubscribeMessages();
@@ -132,12 +155,12 @@ function renderChannels() {
   const customContainer = document.getElementById('customChannels');
   onSnapshot(collection(db, "rooms"), (snapshot) => {
     customContainer.innerHTML = '';
-    if (snapshot.empty) customContainer.innerHTML = '<div class="text-xs text-gray-500 px-2">لا توجد غرف.</div>';
+    if (snapshot.empty) customContainer.innerHTML = `<div class="text-xs text-gray-500 px-2">${t('forum_empty_rooms')}</div>`;
     snapshot.forEach((docSnap) => {
       const room = docSnap.data();
       const icon = room.type === 'chat' ? 'fa-comments text-green-400' : 'fa-newspaper text-blue-400';
       customContainer.innerHTML += `
-        <button onclick="selectChannel('room_${docSnap.id}', '${room.name}', 'غرفة طلابية', '${room.type}')" 
+        <button onclick="selectChannel('room_${docSnap.id}', '${room.name}', '${t('forum_student_room')}', '${room.type}')" 
           class="w-full text-right p-2.5 rounded-lg hover:bg-gray-800 flex items-center gap-3 text-xs text-gray-300">
           <i class="fa-solid ${icon}"></i> ${room.name}
         </button>
@@ -148,23 +171,22 @@ function renderChannels() {
 
 window.selectChannel = (id, title, subtitle, type) => {
   currentChannelId = id;
-  currentChannelType = type; // 'posts' أو 'chat'
+  currentChannelType = type;
   
   document.getElementById('channelTitle').innerHTML = `<i class="fa-solid ${type === 'chat' ? 'fa-comments text-green-500' : 'fa-globe text-blue-500'}"></i> ${title}`;
   document.getElementById('channelSubtitle').innerText = subtitle;
   
   const badge = document.getElementById('channelTypeBadge');
   if (type === 'chat') {
-    badge.innerText = 'دردشة مباشرة';
+    badge.innerText = t('forum_direct_chat');
     badge.className = "text-[10px] bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold";
-    postText.placeholder = "اكتب رسالة دردشة...";
+    postText.placeholder = t('forum_type_chat_ph');
   } else {
-    badge.innerText = 'منشورات';
+    badge.innerText = t('forum_badge_posts');
     badge.className = "text-[10px] bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold";
-    postText.placeholder = "بماذا تفكر؟...";
+    postText.placeholder = t('forum_type_post_ph');
   }
 
-  // تحديث تصميم الأزرار
   document.querySelectorAll('aside button').forEach(btn => btn.classList.remove('bg-gray-800', 'text-blue-400', 'text-green-400'));
   if(event && event.currentTarget) event.currentTarget.classList.add('bg-gray-800', type === 'chat' ? 'text-green-400' : 'text-blue-400');
 
@@ -174,12 +196,12 @@ window.selectChannel = (id, title, subtitle, type) => {
 window.createRoom = async () => {
   const name = document.getElementById('newRoomName').value.trim();
   const type = document.getElementById('newRoomType').value;
-  if (!name) return alert("أدخل اسم الغرفة");
+  if (!name) return alert(t('forum_err_room'));
   try {
     await addDoc(collection(db, "rooms"), { name, type, createdBy: currentUserData.name, createdAt: serverTimestamp() });
     document.getElementById('createRoomModal').classList.add('hidden');
     document.getElementById('newRoomName').value = '';
-  } catch (e) { alert("خطأ في الإنشاء"); }
+  } catch (e) { alert(t('forum_err_send')); }
 };
 
 // --- إرسال رسالة أو منشور ---
@@ -201,8 +223,8 @@ postBtn.addEventListener('click', async () => {
     });
     postText.value = '';
     postText.style.height = 'auto';
-  } catch (e) { alert("تعذر الإرسال"); } 
-  finally { postBtn.disabled = false; postBtn.innerText = 'إرسال'; }
+  } catch (e) { alert(t('forum_err_send')); } 
+  finally { postBtn.disabled = false; postBtn.innerHTML = `${t('forum_send')} <i class="fa-solid fa-paper-plane text-xs"></i>`; }
 });
 
 // --- تحميل الرسائل/المنشورات ---
@@ -210,17 +232,15 @@ function loadMessages(channelId, type) {
   if (unsubscribeMessages) unsubscribeMessages();
   postsContainer.innerHTML = '<div class="text-center mt-10 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl"></i></div>';
 
-  // جلب البيانات من قاعدة البيانات (الكل في مجموعة posts لكننا نفرق بينهم بـ channelId)
   const q = query(collection(db, "posts"), where("channelId", "==", channelId), orderBy("createdAt", "desc"));
 
   unsubscribeMessages = onSnapshot(q, (snapshot) => {
     postsContainer.innerHTML = '';
     if (snapshot.empty) {
-      postsContainer.innerHTML = `<div class="text-center text-gray-400 mt-10">لا توجد ${type === 'chat' ? 'رسائل' : 'منشورات'} بعد.</div>`;
+      postsContainer.innerHTML = `<div class="text-center text-gray-400 mt-10">${type === 'chat' ? t('forum_no_messages') : t('forum_no_posts')}</div>`;
       return;
     }
 
-    // إذا كانت دردشة، نعكس الترتيب لكي تكون الأحدث في الأسفل (مثل واتساب)
     let docs = [];
     snapshot.forEach(doc => docs.push(doc));
     if (type === 'chat') docs.reverse(); 
@@ -229,10 +249,9 @@ function loadMessages(channelId, type) {
       const post = docSnap.data();
       const postId = docSnap.id;
       const isMe = post.authorEmail === currentUserData.email;
-      const date = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString('ar-DZ', { hour: '2-digit', minute:'2-digit' }) : 'الآن';
+      const date = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR', { hour: '2-digit', minute:'2-digit' }) : '...';
       
       if (type === 'chat') {
-        // تصميم رسائل الدردشة (مثل واتساب)
         postsContainer.innerHTML += `
           <div class="flex ${isMe ? 'justify-end' : 'justify-start'} mb-2 w-full max-w-3xl mx-auto">
             <div class="bg-${isMe ? 'blue-600 text-white' : 'white text-gray-800'} px-4 py-2 rounded-2xl shadow-sm max-w-[75%] relative">
@@ -243,7 +262,6 @@ function loadMessages(channelId, type) {
           </div>
         `;
       } else {
-        // تصميم المنشورات (مثل فيسبوك)
         let commentsHTML = '';
         if (post.comments && post.comments.length > 0) {
           post.comments.forEach(c => {
@@ -274,19 +292,18 @@ function loadMessages(channelId, type) {
             <p class="text-gray-800 text-[15px] mb-3 whitespace-pre-line">${post.content}</p>
             <div class="mt-2 mb-3 space-y-1">${commentsHTML}</div>
             <div class="pt-3 border-t border-gray-100 flex gap-2">
-              <input type="text" id="comment-input-${postId}" placeholder="اكتب تعليقاً..." class="flex-1 bg-gray-100 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-1 focus:ring-blue-400">
-              <button onclick="addComment('${postId}')" class="bg-gray-200 hover:bg-blue-600 hover:text-white px-3 py-1.5 rounded-lg text-sm font-bold transition">إرسال</button>
+              <input type="text" id="comment-input-${postId}" placeholder="${t('forum_add_comment')}" class="flex-1 bg-gray-100 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-1 focus:ring-blue-400">
+              <button onclick="addComment('${postId}')" class="bg-gray-200 hover:bg-blue-600 hover:text-white px-3 py-1.5 rounded-lg text-sm font-bold transition">${t('forum_send')}</button>
             </div>
           </div>
         `;
       }
     });
     
-    // تمرير لأسفل في حالة الدردشة
     if (type === 'chat') postsContainer.scrollTop = postsContainer.scrollHeight;
     
   }, (error) => {
-    postsContainer.innerHTML = `<div class="text-red-500 text-center mt-10 font-bold">خطأ: ${error.message}</div>`;
+    postsContainer.innerHTML = `<div class="text-red-500 text-center mt-10 font-bold">Error: ${error.message}</div>`;
   });
 }
 
@@ -296,13 +313,20 @@ window.addComment = async (postId) => {
   if (!text) return;
   try {
     await updateDoc(doc(db, "posts", postId), {
-      comments: arrayUnion({ author: currentUserData.name, text: text, date: new Date().toLocaleString('ar-DZ') })
+      comments: arrayUnion({ author: currentUserData.name, text: text, date: new Date().toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR') })
     });
     input.value = '';
-  } catch (e) { alert("تعذر إضافة التعليق"); }
+  } catch (e) { alert(t('forum_err_comment')); }
 };
 
 postText.addEventListener('input', function() {
   this.style.height = 'auto';
   this.style.height = (this.scrollHeight) + 'px';
+});
+
+// تشغيل الترجمة عند التحميل
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    if (typeof setLanguage === 'function') setLanguage(currentLang);
+  }, 200);
 });
