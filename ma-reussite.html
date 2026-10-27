@@ -1,61 +1,113 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="indigo">
 <head>
-  <script src="translate.js"></script>
-  <style>body{top:0!important}.lang-btn.active{background:#4f46e5;color:#fff}</style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>نجاحي - ENSTP</title>
+  <title>Guide ENSTP - Ma Réussite</title>
+  <script src="translate.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
+    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
+    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+    .link-card { transition: all 0.3s ease; }
+    .link-card:hover { transform: translateY(-3px); border-color: #4f46e5; box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.2); }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <header class="sticky top-0 z-50 bg-white/90 border-b px-4 py-3">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <h1 class="font-bold text-gray-900 text-lg" data-i18n="reussite_subtitle">قسم التفوق والنجاح</h1>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">EN</button>
+        <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
+        <div>
+          <h1 class="font-bold text-gray-900 text-base leading-tight">ENSTP <span class="text-indigo-600">Ma Réussite</span></h1>
+          <p class="text-[11px] text-gray-500" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="text-xs font-bold px-2 py-1 rounded bg-indigo-600 text-white">عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="text-xs font-bold px-2 py-1 rounded text-gray-600">FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="text-xs font-bold px-2 py-1 rounded text-gray-600">EN</button>
+        </div>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
       </div>
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-8 space-y-6">
-    <div class="text-center space-y-2">
-      <h2 class="text-3xl font-black" data-i18n="reussite_title">مساحتك الأكاديمية</h2>
-      <p class="text-sm text-gray-600" data-i18n="reussite_desc">كل ما تحتاجه للنجاح...</p>
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-12">
+    
+    <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-3 text-center md:text-left">
+        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600" data-i18n="reussite_subtitle">قسم التفوق والنجاح</span>
+        <h2 class="text-3xl font-black text-gray-900" data-i18n="reussite_title">مساحتك الأكاديمية</h2>
+        <p class="text-xs lg:text-sm text-gray-600 leading-relaxed max-w-2xl" data-i18n="reussite_desc">كل ما تحتاجه للنجاح...</p>
+      </div>
+      <div class="w-24 h-24 rounded-3xl bg-amber-50 text-amber-500 flex items-center justify-center text-4xl shadow-md flex-shrink-0"><i class="fa-solid fa-award"></i></div>
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow-sm border">
-      <a href="schedule.html" class="flex justify-between items-center">
-        <div><h3 class="font-bold text-lg" data-i18n="reussite_schedule_title">استعمال الزمن</h3><p class="text-xs text-gray-500" data-i18n="reussite_schedule_desc">جدول التوقيت الخاص بفوجك</p></div>
-        <i class="fa-solid fa-arrow-left text-indigo-500"></i>
+    <!-- استعمال الزمن -->
+    <div class="space-y-4">
+      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-calendar-days text-indigo-600"></i> <span data-i18n="reussite_schedule_title">استعمال الزمن</span></h3>
+      <a href="schedule.html" class="glass-card link-card flex items-center justify-between p-6 rounded-2xl border border-gray-100 group">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock"></i></div>
+          <div>
+            <h4 class="font-bold text-gray-900 text-lg" data-i18n="reussite_schedule_desc">جدول التوقيت الخاص بفوجك</h4>
+            <p class="text-xs text-gray-500" data-i18n="reussite_schedule_sub">اطلع على أوقات المحاضرات...</p>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-left text-indigo-500 group-hover:-translate-x-1 transition"></i>
       </a>
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow-sm border">
-      <h3 class="font-bold text-lg mb-4" data-i18n="reussite_drives_title">الواجبات والامتحانات</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <a href="#" class="p-4 bg-gray-50 rounded-xl flex items-center gap-3"><i class="fa-brands fa-google-drive text-emerald-500 text-2xl"></i><span class="font-bold">Drive 1 (Dossiers 2CP)</span></a>
-        <a href="#" class="p-4 bg-gray-50 rounded-xl flex items-center gap-3"><i class="fa-brands fa-google-drive text-emerald-500 text-2xl"></i><span class="font-bold">Drive 2 (Cours & TD)</span></a>
+    <!-- روابط Drive الـ 11 -->
+    <div class="space-y-4">
+      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-file-signature text-emerald-600"></i> <span data-i18n="reussite_drives_title">الواجبات والامتحانات</span></h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 1 (2CP)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 2 (Cours)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/0BzXU8qpz3MR4VXFZTlV4dEFpRjg" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 3 (Examens)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1SZmGuMJM3-9C8VfAudUlaXVVJJ-bs1ik" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 4 (Résumés)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1ObXGyxubN5d7MgtTyts1H7vUfTPSs3Z7" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 5 (Analyses)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/15N8LPatF0r-1AimmRPbpLa9aNUmV0cod" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 6 (Chimie/Physique)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/0B0pugt6XdltcQ09UR2h6UTdwWkU" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 7 (Maths)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 8 (Info)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 9 (Génie Civil)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 10 (Sujets divers)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 11 (Concours)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
       </div>
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow-sm border">
-      <h3 class="font-bold text-lg mb-4" data-i18n="reussite_youtube_title">قنوات يوتيوب مفيدة</h3>
-      <ul class="space-y-3 text-sm">
-        <li><strong data-i18n="advice_mdf">MDF:</strong> Slimane DJELLAL</li>
-        <li><strong data-i18n="advice_rdm">RDM:</strong> Slimane DJELLAL</li>
-        <li><strong data-i18n="advice_phys">Physique 3/4:</strong> Meghlaoui</li>
-        <li><strong data-i18n="advice_elec">Électricité:</strong> El Miski / Elmostafa Elkacem</li>
-        <li><strong data-i18n="advice_analyse">Analyse 3/4:</strong> El Azizri Houari</li>
-      </ul>
+    <!-- أساتذة ويوتيوب -->
+    <div class="space-y-4">
+      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-600"></i> <span data-i18n="reussite_youtube_title">أساتذة وقنوات يوتيوب</span></h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass-card p-6 rounded-2xl border border-gray-100">
+          <h4 class="font-black text-emerald-900 mb-4 border-b pb-2" data-i18n="reussite_2cp">السنة الثانية (2CP)</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">MDF:</span> <span data-i18n="advice_mdf">أستاذ سليمان جلال...</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">RDM:</span> <span data-i18n="advice_rdm">أستاذ سليمان جلال...</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Physique 3/4:</span> <span data-i18n="advice_phys">أستاذ مغلاوي...</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Chimie 3:</span> <span data-i18n="advice_chimie3">قناة Prepa Chimie</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Chimie 4:</span> <span data-i18n="advice_chimie4">دروس</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Électricité:</span> <span data-i18n="advice_elec">أستاذ مكحلة وكتاب المسكي...</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Électronique:</span> <span data-i18n="advice_electro">Elmostafa Elkacem / FA Learning</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Mécanique 3/4:</span> <span data-i18n="advice_meca">أستاذ S / Symphony of Study...</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Ingénierie Humaine:</span> <span data-i18n="advice_inge">ابحث عنها بالتفصيل على يوتيوب...</span></li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Analyse 3/4:</span> <span data-i18n="advice_analyse">اقرأ من الكورس... أستاذ العزيري هواري...</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
+
   </main>
+
+  <footer class="glass-nav border-t border-gray-200 py-6 text-center text-xs text-gray-500">
+    <p>© 2026 ENSTP Kouba.</p>
+  </footer>
 </body>
 </html>
