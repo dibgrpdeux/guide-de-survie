@@ -51,7 +51,6 @@
       </div>
       
       <div class="flex items-center gap-2">
-        <!-- أزرار الترجمة -->
         <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
           <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
           <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
@@ -61,7 +60,7 @@
       </div>
     </div>
 
-    <!-- 1. مواقيت الحافلات (ENS - Revoil) من الصورة -->
+    <!-- 1. مواقيت الحافلات (ENS - Revoil) -->
     <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
       <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
         <i class="fa-solid fa-clock text-indigo-600"></i> <span data-i18n="trans_bus_schedule">مواقيت حافلات (ENS - Revoil)</span>
@@ -97,27 +96,27 @@
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_c">📍 محطة  (أمام CNEP)</h4>
+          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_c">📍 محطة C (أمام CNEP)</h4>
           <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_c_desc">350 متر (5 دقائق). الوجهة: محطة بن عمر.</p>
         </div>
         <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_b">📍 محطة  (المحطة البرية القبة)</h4>
+          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_b">📍 محطة B (المحطة البرية القبة)</h4>
           <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_b_desc">500 متر (7 دقائق). وجهات متعددة.</p>
         </div>
         <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_d">📍 محطة  (مقابل ENS)</h4>
+          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_d">📍 محطة D (مقابل ENS)</h4>
           <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_d_desc">950 متر (14 دقيقة). توقيتات 7:30 و 16:00.</p>
         </div>
       </div>
     </div>
 
-    <!-- 3. المترو والترامواي -->
+    <!-- 3. دليل المترو والترامواي (مع قائمة المحطات) -->
     <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
       <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
         <i class="fa-solid fa-train-subway text-blue-500"></i> <span data-i18n="trans_metro">المترو والترامواي</span>
       </h2>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
           <h4 class="font-bold text-blue-900 mb-2" data-i18n="trans_metro_how">كيفية الوصول للمترو (حي البدر)</h4>
           <p class="text-sm text-blue-800" data-i18n="trans_metro_how_desc">حافلة إلى بشدجرح، ثم النزول في محطة المترو.</p>
@@ -128,10 +127,48 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap gap-4 mt-2">
+      <div class="flex flex-wrap gap-4 mb-4">
         <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-bold text-gray-700"><i class="fa-solid fa-ticket text-indigo-500 mr-1"></i> <span data-i18n="trans_ticket_metro">مترو: 50 دج</span></span>
         <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-bold text-gray-700"><i class="fa-solid fa-ticket text-indigo-500 mr-1"></i> <span data-i18n="trans_ticket_tram">ترامواي: 40 دج</span></span>
         <span class="bg-emerald-100 px-3 py-1 rounded-lg text-sm font-bold text-emerald-800"><i class="fa-solid fa-graduation-cap mr-1"></i> <span data-i18n="trans_etwassel">بطاقة الطالب eTWASSEL: 150 دج/سنة</span></span>
+      </div>
+
+      <!-- قائمة محطات المترو -->
+      <div>
+        <h4 class="font-bold text-gray-800 mb-2" data-i18n="trans_metro_stations">محطات المترو (ساحة الشهداء - عين النعجة):</h4>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">ساحة الشهداء</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">علي بومنجل</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">تافورة</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">خليفة بوخالفة</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">1 ماي</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">عيسات إيدير</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">الحامة</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">حديقة التجارب</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">المشوشين</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">أميروش</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">بحر وشمس</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100 font-bold">حي البدر (تحويل)</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">وادي كنيس</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">عين النعجة</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">باش جراح</span>
+          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">الحراش</span>
+        </div>
+      </div>
+
+      <!-- قائمة محطات الترامواي -->
+      <div>
+        <h4 class="font-bold text-gray-800 mb-2" data-i18n="trans_tram_stations">محطات الترامواي (العناصر - درقانة):</h4>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">العناصر</span>
+          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">المشوشين</span>
+          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">الخروبة</span>
+          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">الغلاسيار</span>
+          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">جسر الحراش</span>
+          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">باب الزوار</span>
+          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">برج الكيفان</span>
+          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">درقانة</span>
+        </div>
       </div>
     </div>
 
@@ -153,7 +190,6 @@
         <i class="fa-solid fa-map text-teal-500"></i> <span data-i18n="trans_map">الخريطة التفاعلية</span>
       </h2>
       <div class="map-container bg-gray-200">
-        <!-- تم دمج الخريطة الجديدة هنا -->
         <iframe src="https://www.google.com/maps/d/embed?mid=1jNWEeyOC9kYXRnYmFzZXMvKGRlZm1HbQpL2NvbGxY3Rpb25Hcm91c9zdHMvaW5kZXhleC9fEABaDQoJY3J1Z2V0X2VtYWlsEAo&ehbc=2E312F" allowfullscreen="" loading="lazy"></iframe>
       </div>
       <p class="text-xs text-gray-500 text-center" data-i18n="trans_map_desc">خريطة توضح محطات الحافلات، المترو، والترامواي القريبة من ENSTP.</p>
