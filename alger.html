@@ -4,20 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loisirs & Voyages à Alger - ENSTP</title>
-  
-  <!-- كود الترجمة -->
-  <script src="translate.js"></script>
-  <style>
-    body { top: 0 !important; }
-    .skiptranslate iframe { display: none !important; }
-    .goog-te-banner-frame { display: none !important; }
-    #goog-gt-tt { display: none !important; }
-    #google_translate_element { display: none; } 
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
-  </style>
-
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +14,6 @@
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .gallery-scroll::-webkit-scrollbar { height: 6px; }
-    .gallery-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
     .gallery-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
   </style>
 </head>
@@ -36,16 +21,14 @@
 
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b px-4 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <h1 class="font-bold text-gray-900 text-lg" data-i18n="leisure_title"><i class="fa-solid fa-map-location-dot text-teal-600"></i> الترفيه والرحلات في العاصمة</h1>
-      
+      <h1 class="font-bold text-gray-900 text-lg"><i class="fa-solid fa-map-location-dot text-teal-600"></i> الترفيه والرحلات في العاصمة</h1>
       <div class="flex items-center gap-3">
-        <!-- أزرار الترجمة -->
         <div class="flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200 shadow-sm">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active text-xs font-bold px-2 py-1 rounded bg-indigo-600 text-white">عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn text-xs font-bold px-2 py-1 rounded text-gray-600">FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn text-xs font-bold px-2 py-1 rounded text-gray-600">EN</button>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold">الرئيسية</a>
       </div>
     </div>
   </header>
@@ -55,7 +38,6 @@
     <div id="placesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
   </main>
 
-  <!-- Modal -->
   <div id="placeModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
       <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -64,232 +46,74 @@
         <p id="modalSubtitle" class="text-sm text-indigo-600 font-bold mt-1"></p>
       </div>
       <div id="modalGalleryContainer" class="space-y-2">
-        <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-images text-indigo-500 mr-1.5"></i> <span data-i18n="modal_gallery">معرض الصور:</span></h4>
+        <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-images text-indigo-500 mr-1.5"></i> معرض الصور:</h4>
         <div id="modalGallery" class="flex overflow-x-auto gap-3 pb-2 snap-x gallery-scroll"></div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
           <div>
-            <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-circle-info text-blue-500 mr-1.5"></i> <span data-i18n="modal_history">لمحة تاريخية:</span></h4>
+            <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-circle-info text-blue-500 mr-1.5"></i> لمحة تاريخية:</h4>
             <p id="modalHistory" class="bg-blue-50/60 p-3 rounded-xl border border-blue-100"></p>
           </div>
           <div>
-            <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-bus text-amber-500 mr-1.5"></i> <span data-i18n="modal_transport">كيفية الوصول:</span></h4>
+            <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-bus text-amber-500 mr-1.5"></i> كيفية الوصول:</h4>
             <p id="modalTransport" class="bg-amber-50/60 p-3 rounded-xl border border-amber-100"></p>
           </div>
         </div>
         <div id="modalVideoContainer" class="space-y-2 hidden">
-          <h4 class="font-bold text-gray-900 text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> <span data-i18n="modal_video">فيديو تعريفي:</span></h4>
+          <h4 class="font-bold text-gray-900 text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
           <div id="modalVideo" class="video-container bg-gray-200"></div>
         </div>
       </div>
       <div class="space-y-2">
-        <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-map-location-dot text-indigo-500 mr-1.5"></i> <span data-i18n="modal_map">الموقع على الخريطة:</span></h4>
+        <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-map-location-dot text-indigo-500 mr-1.5"></i> الموقع على الخريطة:</h4>
         <div id="modalMap" class="map-container bg-gray-200"></div>
       </div>
     </div>
   </div>
 
   <script>
-    // البيانات مع الترجمات
     const placesData = [
       // === الشواطئ ===
-      { 
-        id: 'sidi_fredj', 
-        category: { ar: 'شواطئ', fr: 'Plages', en: 'Beaches' }, 
-        title: { ar: 'سيدي فرج', fr: 'Sidi Fredj', en: 'Sidi Fredj' }, 
-        icon: '🏖️', 
-        history: { 
-          ar: 'يبعد 25 كم عن وسط العاصمة. يتميز بمرسى ترفيهي ومطاعم أسماك. الدخول مجاني، ومواقف السيارات متوفرة.', 
-          fr: 'À 25 km du centre-ville. Dispose d\'une marina de plaisance et de restaurants de poissons. Entrée gratuite, parkings disponibles.', 
-          en: '25 km from the city center. Features a recreational marina and fish restaurants. Free entry, parking available.' 
-        }, 
-        transport: { 
-          ar: 'الطريق السيار A1. يمكن الجمع بينه وبين زرالدة في نفس اليوم.', 
-          fr: 'Autoroute A1. Peut être combiné avec Zeralda le même jour.', 
-          en: 'A1 highway. Can be combined with Zeralda on the same day.' 
-        }, 
-        map: 'Sidi Fredj Alger', 
-        images: ['SIDI-FREDJ.png', 'images (9).jpeg', 'images (10).jpeg'], 
-        videos: [] 
-      },
-      { 
-        id: 'zeralda', 
-        category: { ar: 'شواطئ', fr: 'Plages', en: 'Beaches' }, 
-        title: { ar: 'زرالدة', fr: 'Zeralda', en: 'Zeralda' }, 
-        icon: '🏖️', 
-        history: { 
-          ar: 'يبعد 35 كم. الخيار الآمن للعائلات، به منتجعات ومرافق. مواقف السيارات مدفوعة (~200 دج).', 
-          fr: 'À 35 km. L\'option sûre pour les familles, avec des complexes et des installations. Parkings payants (~200 DA).', 
-          en: '35 km away. The safe option for families, with resorts and facilities. Paid parking (~200 DA).' 
-        }, 
-        transport: { 
-          ar: 'الطريق السيار A1. يفضل الوصول قبل الساعة 10 صباحاً في الصيف.', 
-          fr: 'Autoroute A1. Il est préférable d\'arriver avant 10h en été.', 
-          en: 'A1 highway. It is best to arrive before 10 AM in summer.' 
-        }, 
-        map: 'Zeralda plage Alger', 
-        images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], 
-        videos: [] 
-      },
-      { 
-        id: 'ain_taya', 
-        category: { ar: 'شواطئ', fr: 'Plages', en: 'Beaches' }, 
-        title: { ar: 'عين طاية', fr: 'Ain Taya', en: 'Ain Taya' }, 
-        icon: '🏖️', 
-        history: { 
-          ar: 'يبعد 22 كم فقط. شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع. الدخول مجاني لكن المواقف محدودة.', 
-          fr: 'À seulement 22 km. Plage populaire et bondée le week-end. Entrée gratuite mais places de parking limitées.', 
-          en: 'Only 22 km away. Popular and crowded beach on weekends. Free entry but limited parking.' 
-        }, 
-        transport: { 
-          ar: 'الاتجاه شرقاً. يفضل الذهاب في أيام الأسبوع لتجنب الازدحام.', 
-          fr: 'Direction est. Préférez les jours de semaine pour éviter la foule.', 
-          en: 'East direction. Prefer weekdays to avoid crowds.' 
-        }, 
-        map: 'Ain Taya plage Alger', 
-        images: ['images (22).jpeg','images (23).jpeg', 'images (24).jpeg','images (25).jpeg' ], 
-        videos: [] 
-      },
-      
+      { id: 'sidi_fredj', category: 'شواطئ', title: 'سيدي فرج (Sidi Fredj)', icon: '🏖️', history: 'يبعد 25 كم عن وسط العاصمة. يتميز بمرسى ترفيهي ومطاعم أسماك. الدخول مجاني، ومواقف السيارات متوفرة.', transport: 'الطريق السيار A1. يمكن الجمع بينه وبين زرالدة في نفس اليوم.', map: 'Sidi Fredj Alger', images: ['SIDI-FREDJ.png', 'images (9).jpeg', 'images (10).jpeg'], videos: [] },
+      { id: 'zeralda', category: 'شواطئ', title: 'زرالدة (Zeralda)', icon: '🏖️', history: 'يبعد 35 كم. الخيار الآمن للعائلات، به منتجعات ومرافق. مواقف السيارات مدفوعة (~200 دج).', transport: 'الطريق السيار A1. يفضل الوصول قبل الساعة 10 صباحاً في الصيف.', map: 'Zeralda plage Alger', images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], videos: [] },
+      { id: 'ain_taya', category: 'شواطئ', title: 'عين طاية (Ain Taya)', icon: '🏖️', history: 'يبعد 22 كم فقط. شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع. الدخول مجاني لكن المواقف محدودة.', transport: 'الاتجاه شرقاً. يفضل الذهاب في أيام الأسبوع لتجنب الازدحام.', map: 'Ain Taya plage Alger', images: ['images (22).jpeg','images (23).jpeg', 'images (24).jpeg','images (25).jpeg' ], videos: [] },
+      { id: 'club_pins', category: 'شواطئ', title: 'نادي الصنوبر (Club des Pins)', icon: '🏖️', history: 'يبعد 28 كم. أقل ازدحاماً، مثالي للأطفال الصغار نظراً لهدوء المياه.', transport: 'الطريق السيار A1 باتجاه الغرب.', map: 'Club des Pins Alger', images: [ 'images (26).jpeg', 'images (27).jpeg','images (28).jpeg' ], videos: [] },
+      { id: 'tipaza', category: 'شواطئ', title: 'تيبازة / شنوة (Tipaza)', icon: '🏖️', history: 'تبعد 70 كم. من أجمل الشواطئ، يمكن الجمع بين السباحة وزيارة الآثار الرومانية.', transport: 'الطريق الوطني RN11.', map: 'Chenoua Tipaza', images: [], videos: [] },
+
       // === الحدائق ===
-      { 
-        id: 'jardin_essai', 
-        category: { ar: 'حدائق', fr: 'Parcs', en: 'Parks' }, 
-        title: { ar: 'حديقة التجارب بالحامة', fr: 'Jardin d\'Essai du Hamma', en: 'Jardin d\'Essai du Hamma' }, 
-        icon: '🌳', 
-        history: { 
-          ar: 'تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم، تضم آلاف الأنواع النباتية النادرة.', 
-          fr: 'Fondé en 1832, c\'est l\'un des jardins botaniques les plus importants au monde, abritant des milliers d\'espèces rares.', 
-          en: 'Founded in 1832, it is one of the most important botanical gardens in the world, housing thousands of rare species.' 
-        }, 
-        transport: { 
-          ar: 'مترو الأنفاق (محطة الحامة) أو الحافلات.', 
-          fr: 'Métro (station Hamma) ou bus.', 
-          en: 'Metro (Hamma station) or buses.' 
-        }, 
-        map: 'Jardin d\'Essai El Hamma Alger', 
-        images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], 
-        videos: [{ id: 'DOHY1JVqmDU', title: 'Tour' }] 
-      },
-      { 
-        id: 'parc_ben_aknoun', 
-        category: { ar: 'حدائق', fr: 'Parcs', en: 'Parks' }, 
-        title: { ar: 'حديقة بن عكنون', fr: 'Parc de Ben Aknoun', en: 'Ben Aknoun Park' }, 
-        icon: '🌳', 
-        history: { 
-          ar: 'حديقة ترفيهية شهيرة تضم حديقة حيوانات كبيرة ومساحات خضراء واسعة، وجهة عائلية بامتياز.', 
-          fr: 'Parc de loisirs populaire avec un grand zoo et de vastes espaces verts, une destination familiale par excellence.', 
-          en: 'Popular amusement park with a large zoo and vast green spaces, a family destination par excellence.' 
-        }, 
-        transport: { 
-          ar: 'حافلات أو طاكسي.', 
-          fr: 'Bus ou taxi.', 
-          en: 'Bus or taxi.' 
-        }, 
-        map: 'Parc Ben Aknoun Alger', 
-        images: ['images (11).jpeg', 'images (12).jpeg'], 
-        videos: [] 
-      },
+      { id: 'jardin_essai', category: 'حدائق', title: 'حديقة التجارب بالحامة', icon: '🌳', history: 'تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم، تضم آلاف الأنواع النباتية النادرة.', transport: 'مترو الأنفاق (محطة الحامة) أو الحافلات.', map: 'Jardin d\'Essai El Hamma Alger', images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], videos: [{ id: 'DOHY1JVqmDU', title: 'زيارة حديقة التجارب' }] },
+      { id: 'parc_ben_aknoun', category: 'حدائق', title: 'حديقة بن عكنون', icon: '🌳', history: 'حديقة ترفيهية شهيرة تضم حديقة حيوانات كبيرة ومساحات خضراء واسعة.', transport: 'حافلات أو طاكسي.', map: 'Parc Ben Aknoun Alger', images: ['images (11).jpeg', 'images (12).jpeg'], videos: [] },
+      { id: 'bois_arcades', category: 'حدائق', title: 'غابة الأركاد (حيدرة)', icon: '🌳', history: 'غابة حضرية هادئة في قلب حيدرة، تحتوي على مسارات للمشي والجري.', transport: 'سيارة أو حافلة إلى حيدرة.', map: 'Bois des Arcades Hydra Alger', images: ['images (13).jpeg', 'images (14).jpeg', 'images (15).jpeg'], videos: [] },
 
       // === الثقافة والتاريخ ===
-      { 
-        id: 'casbah', 
-        category: { ar: 'ثقافة وتاريخ', fr: 'Culture', en: 'Culture' }, 
-        title: { ar: 'قصبة الجزائر', fr: 'La Casbah d\'Alger', en: 'The Casbah of Algiers' }, 
-        icon: '🏛️', 
-        history: { 
-          ar: 'موقع تراثي عالمي منذ 1992. المدينة القديمة للجزائر، تأسست في القرن العاشر، وتضم قصوراً عثمانية ومساجد تاريخية وأزقة ضيقة.', 
-          fr: 'Site du patrimoine mondial depuis 1992. La vieille ville d\'Alger, fondée au Xe siècle, abrite des palais ottomans, des mosquées historiques et des ruelles étroites.', 
-          en: 'World Heritage site since 1992. The old city of Algiers, founded in the 10th century, houses Ottoman palaces, historic mosques, and narrow alleys.' 
-        }, 
-        transport: { 
-          ar: 'محطة مترو ساحة الشهداء، أو الحافلات.', 
-          fr: 'Station de métro Place des Martyrs, ou bus.', 
-          en: 'Place des Martyrs metro station, or buses.' 
-        }, 
-        map: 'Casbah Alger', 
-        images: ['images (29).jpeg', 'images (35).jpeg', 'images (36).jpeg', 'images (37).jpeg', 'images (38).jpeg', 'images (39).jpeg', 'images (40).jpeg', 'images (41).jpeg', 'images (42).jpeg' ], 
-        videos: [{ id: 'K7f2zx0UFsg', title: 'Visit' }] 
-      },
-      { 
-        id: 'martyrs_memorial', 
-        category: { ar: 'ثقافة وتاريخ', fr: 'Culture', en: 'Culture' }, 
-        title: { ar: 'مقام الشهيد', fr: 'Maqam Echahid', en: 'Martyrs\' Memorial' }, 
-        icon: '🗼', 
-        history: { 
-          ar: 'نصب تذكاري ضخم يخلد ذكرى شهداء حرب الاستقلال الجزائرية. يقع على تلة تطل على العاصمة، ويضم متحف المجاهد.', 
-          fr: 'Monument massif commémorant les martyrs de la guerre d\'indépendance algérienne. Situé sur une colline surplombant la capitale, il abrite le musée du Moudjahid.', 
-          en: 'Massive monument commemorating the martyrs of the Algerian War of Independence. Located on a hill overlooking the capital, it houses the Mujahid Museum.' 
-        }, 
-        transport: { 
-          ar: 'سيارة أو حافلة إلى منطقة رياض الفتح.', 
-          fr: 'Voiture ou bus jusqu\'à Riad El Feth.', 
-          en: 'Car or bus to Riad El Feth.' 
-        }, 
-        map: 'Maqam Echahid Alger', 
-        images: ['images (45).jpeg', 'images (43).jpeg', 'images (44).jpeg' ], 
-        videos: [] 
-      },
+      { id: 'casbah', category: 'ثقافة وتاريخ', title: 'قصبة الجزائر', icon: '🏛️', history: 'موقع تراثي عالمي منذ 1992. المدينة القديمة للجزائر، تأسست في القرن العاشر، وتضم قصوراً عثمانية ومساجد تاريخية.', transport: 'محطة مترو ساحة الشهداء، أو الحافلات.', map: 'Casbah Alger', images: ['images (29).jpeg', 'images (35).jpeg', 'images (36).jpeg', 'images (37).jpeg', 'images (38).jpeg', 'images (39).jpeg', 'images (40).jpeg', 'images (41).jpeg', 'images (42).jpeg' ], videos: [{ id: 'K7f2zx0UFsg', title: 'زيارة القصبة' }] },
+      { id: 'martyrs_memorial', category: 'ثقافة وتاريخ', title: 'مقام الشهيد', icon: '🗼', history: 'نصب تذكاري ضخم يخلد ذكرى شهداء حرب الاستقلال الجزائرية.', transport: 'سيارة أو حافلة إلى منطقة رياض الفتح.', map: 'Maqam Echahid Alger', images: ['images (45).jpeg', 'images (43).jpeg', 'images (44).jpeg' ], videos: [] },
+      { id: 'bardo_museum', category: 'ثقافة وتاريخ', title: 'المتحف الوطني باردو', icon: '🏛️', history: 'يقع في قصر يعود للقرن الثامن عشر. يضم مجموعات أثرية وفنوناً إفريقية وتقليدية.', transport: 'حافلات أو طاكسي (حي الحامة).', map: 'Musée du Bardo Alger', images: ['images (51).jpeg', 'images (52).jpeg', 'images (53).jpeg', 'images (54).jpeg'], videos: [{ id: 'Bx-EhrdmjbA', title: 'زيارة متحف الباردو' }] },
+      { id: 'notre_dame', category: 'ثقافة وتاريخ', title: 'كنيسة سيدة إفريقيا', icon: '⛪', history: 'كنيسة كاثوليكية تقع على تلة تطل على خليج الجزائر، تتميز بمعمارها البيزنطي وقبتها الزرقاء.', transport: 'الترامواي أو الحافلات.', map: 'Notre-Dame d\'Afrique Alger', images: ['images (17).jpeg', 'images (18).jpeg', 'images (19).jpeg'], videos: [] },
+      { id: 'grande_poste', category: 'ثقافة وتاريخ', title: 'البريد المركزي', icon: '🏛️', history: 'مبنى تاريخي في قلب العاصمة، يتميز بمعماره الموريسكي.', transport: 'مترو الأنفاق (محطة البريد المركزي).', map: 'Grande Poste Alger', images: [ 'images (58).jpeg', 'images (59).jpeg' ], videos: [{ id: 'QQbkX8MeCWI', title: 'زيارة البريد المركزي' }] },
 
       // === المساجد ===
-      { 
-        id: 'djamaa_djazair', 
-        category: { ar: 'مساجد', fr: 'Mosquées', en: 'Mosques' }, 
-        title: { ar: 'جامع الجزائر الأعظم', fr: 'Djamaa El Djazair', en: 'Djamaa El Djazair' }, 
-        icon: '🕌', 
-        history: { 
-          ar: 'ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً)، ويقع على البحر مباشرة. الدخول مجاني.', 
-          fr: 'Troisième plus grande mosquée du monde, avec le plus haut minaret du monde (265 mètres), située directement au bord de la mer. Entrée gratuite.', 
-          en: 'Third largest mosque in the world, featuring the world\'s tallest minaret (265 meters), located directly by the sea. Free entry.' 
-        }, 
-        transport: { 
-          ar: 'مترو الأنفاق أو الحافلات، يقع في المحمدية.', 
-          fr: 'Métro ou bus, situé à Mohammadia.', 
-          en: 'Metro or bus, located in Mohammadia.' 
-        }, 
-        map: 'Djamaa El Djazair Alger', 
-        images: ['images (60).jpeg','images (61).jpeg','images (62).jpeg','images (63).jpeg','images (64).jpeg','images (65).jpeg','images (66).jpeg','images (67).jpeg'], 
-        videos: [] 
-      }
+      { id: 'djamaa_djazair', category: 'مساجد', title: 'جامع الجزائر الأعظم', icon: '🕌', history: 'ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً).', transport: 'مترو الأنفاق أو الحافلات، يقع في المحمدية.', map: 'Djamaa El Djazair Alger', images: ['images (60).jpeg','images (61).jpeg','images (62).jpeg','images (63).jpeg'], videos: [] },
+      { id: 'ketchaoua', category: 'مساجد', title: 'مسجد كتشاوة', icon: '🕌', history: 'من أقدم مساجد الجزائر (يعود للعهد العثماني).', transport: 'محطة مترو ساحة الشهداء، ثم مشياً إلى القصبة.', map: 'Ketchaoua Mosque Alger', images: ['images (68).jpeg','images (69).jpeg','images (70).jpeg','images (71).jpeg','images (72).jpeg'], videos: [] },
+
+      // === وكالات السفر ===
+      { id: 'agence_sofiane', category: 'وكالات سفر', title: 'وكالة صفيان (Sofiane)', icon: '✈️', history: 'وكالة محلية مقرها الجزائر العاصمة. تنظم رحلات إلى الصحراء والشمال. أسعار الرحلات تبدأ من حوالي 1,560 يورو.', transport: 'الاتصال عبر منصة Evaneos.', map: 'Alger', images: [], videos: [], links: { web: 'https://www.evaneos.fr/algerie/voyage/agences/69793-sofiane/' } },
+      { id: 'kenzia_travel', category: 'وكالات سفر', title: 'كنزيا ترافل', icon: '✈️', history: 'عروض خاصة لرحلات 4 أيام إلى القالة وعنابة. السعر يبدأ من 19,999 دج للشخص.', transport: 'الاتصال: 0553176311.', map: 'Alger', images: [], videos: [], links: { phone: '0553176311' } }
     ];
 
-    let currentCategory = { ar: 'الكل', fr: 'Tous', en: 'All' };
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-
-    // تحديث اللغة
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-      currentLang = lang;
-      originalSetLanguage(lang);
-      renderCategories();
-      renderCards();
-    };
+    let currentCategory = 'الكل';
 
     function renderCategories() {
       const bar = document.getElementById('categoriesBar');
       bar.innerHTML = '';
+      const cats = ['الكل', ...new Set(placesData.map(p => p.category))];
       
-      // إضافة زر "الكل"
-      const allBtn = document.createElement('button');
-      allBtn.className = `px-4 py-2 rounded-xl font-bold text-sm transition ${currentCategory === 'all' ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-gray-600 border hover:bg-gray-50'}`;
-      allBtn.innerText = currentLang === 'ar' ? 'الكل' : (currentLang === 'fr' ? 'Tous' : 'All');
-      allBtn.onclick = () => { currentCategory = 'all'; renderCategories(); renderCards(); };
-      bar.appendChild(allBtn);
-
-      // إضافة باقي التصنيفات
-      const uniqueCats = [];
-      placesData.forEach(p => {
-        if (!uniqueCats.some(c => c.ar === p.category.ar)) {
-          uniqueCats.push(p.category);
-        }
-      });
-
-      uniqueCats.forEach(cat => {
+      cats.forEach(cat => {
         const btn = document.createElement('button');
-        btn.className = `px-4 py-2 rounded-xl font-bold text-sm transition ${currentCategory === cat.ar ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-gray-600 border hover:bg-gray-50'}`;
-        btn.innerText = cat[currentLang];
-        btn.onclick = () => { currentCategory = cat.ar; renderCategories(); renderCards(); };
+        btn.className = `px-4 py-2 rounded-xl font-bold text-sm transition ${cat === currentCategory ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-gray-600 border hover:bg-gray-50'}`;
+        btn.innerText = cat;
+        btn.onclick = () => { currentCategory = cat; renderCategories(); renderCards(); };
         bar.appendChild(btn);
       });
     }
@@ -298,7 +122,7 @@
       const grid = document.getElementById('placesGrid');
       grid.innerHTML = '';
       
-      const filtered = currentCategory === 'all' ? placesData : placesData.filter(p => p.category.ar === currentCategory);
+      const filtered = currentCategory === 'الكل' ? placesData : placesData.filter(p => p.category === currentCategory);
       
       filtered.forEach(place => {
         let randomImage = null;
@@ -317,8 +141,8 @@
         card.innerHTML = `
           ${imageHTML}
           <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">${place.category[currentLang]}</span>
-            <h3 class="font-bold text-gray-900 text-sm mt-1">${place.title[currentLang]}</h3>
+            <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">${place.category}</span>
+            <h3 class="font-bold text-gray-900 text-sm mt-1">${place.title}</h3>
           </div>
         `;
         grid.appendChild(card);
@@ -327,10 +151,10 @@
 
     function openModal(place) {
       document.getElementById('placeModal').classList.remove('hidden');
-      document.getElementById('modalTitle').innerText = place.title[currentLang];
-      document.getElementById('modalSubtitle').innerText = `${currentLang === 'ar' ? 'الفئة' : (currentLang === 'fr' ? 'Catégorie' : 'Category')}: ${place.category[currentLang]}`;
-      document.getElementById('modalHistory').innerText = place.history[currentLang];
-      document.getElementById('modalTransport').innerText = place.transport[currentLang];
+      document.getElementById('modalTitle').innerText = place.title;
+      document.getElementById('modalSubtitle').innerText = `الفئة: ${place.category}`;
+      document.getElementById('modalHistory').innerText = place.history;
+      document.getElementById('modalTransport').innerText = place.transport;
       
       const mapQuery = encodeURIComponent(place.map);
       document.getElementById('modalMap').innerHTML = `<iframe src="https://www.google.com/maps?q=${mapQuery}&output=embed" allowfullscreen="" loading="lazy"></iframe>`;
@@ -341,7 +165,7 @@
       if (place.images && place.images.length > 0) {
         galleryContainer.classList.remove('hidden');
         place.images.forEach(img => {
-          gallery.innerHTML += `<div class="flex-shrink-0 w-48 h-32 snap-center rounded-xl overflow-hidden border border-gray-200 bg-gray-50"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs\\'>${window.translations[currentLang].img_not_avail}</div>'"></div>`;
+          gallery.innerHTML += `<div class="flex-shrink-0 w-48 h-32 snap-center rounded-xl overflow-hidden border border-gray-200 bg-gray-50"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs\\'>صورة غير متوفرة</div>'"></div>`;
         });
       } else {
         galleryContainer.classList.add('hidden');
@@ -368,7 +192,6 @@
     window.addEventListener('DOMContentLoaded', () => {
       renderCategories();
       renderCards();
-      setTimeout(() => setLanguage(currentLang), 100);
     });
   </script>
 </body>
