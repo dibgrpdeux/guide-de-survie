@@ -1,57 +1,169 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="indigo">
 <head>
-  <script src="translate.js"></script>
-  <style>body{top:0!important}.lang-btn.active{background:#4f46e5;color:#fff}.tab-content{display:none}.tab-content.active{display:block}</style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>النقل - ENSTP</title>
+  <title>دليل النقل الشامل - ENSTP</title>
+
+  <!-- كود الترجمة -->
+  <script src="translate.js"></script>
+  <style>
+    body { top: 0 !important; }
+    .skiptranslate iframe { display: none !important; }
+    .goog-te-banner-frame { display: none !important; }
+    #goog-gt-tt { display: none !important; }
+    #google_translate_element { display: none; } 
+    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
+    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
+    .lang-btn.active { background: #4f46e5; color: white; }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
+    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 1); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05); }
+    .map-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+    .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <header class="sticky top-0 z-50 bg-white/90 border-b px-4 py-3">
-    <div class="max-w-4xl mx-auto flex justify-between items-center">
-      <h1 class="font-bold text-gray-900" data-i18n="trans_title">دليل النقل</h1>
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">EN</button>
+<body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
+
+  <div class="ambient-bg"></div>
+
+  <main class="max-w-5xl mx-auto w-full space-y-6">
+
+    <!-- الترويسة -->
+    <div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 bg-cyan-100 text-cyan-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
+          <i class="fa-solid fa-bus-simple"></i>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+        <div>
+          <h1 class="text-2xl md:text-3xl font-black text-gray-900 mb-1" data-i18n="trans_title">دليل النقل والمواصلات</h1>
+          <p class="text-gray-600 text-sm" data-i18n="trans_desc">كل ما تحتاجه للتنقل من وإلى المدرسة بسهولة.</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <!-- أزرار الترجمة -->
+        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+        </div>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
       </div>
     </div>
-  </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-8 space-y-6">
-    <div class="flex gap-2 justify-center flex-wrap">
-      <button onclick="openTab('bus')" class="px-4 py-2 rounded-xl font-bold bg-indigo-600 text-white"><span data-i18n="trans_tab_bus">الحافلات الجامعية</span></button>
-      <button onclick="openTab('metro')" class="px-4 py-2 rounded-xl font-bold bg-white text-gray-700 border"><span data-i18n="trans_tab_metro">المترو</span></button>
+    <!-- 1. مواقيت الحافلات (ENS - Revoil) من الصورة -->
+    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
+      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+        <i class="fa-solid fa-clock text-indigo-600"></i> <span data-i18n="trans_bus_schedule">مواقيت حافلات (ENS - Revoil)</span>
+      </h2>
+      <p class="text-sm text-gray-500" data-i18n="trans_bus_schedule_desc">الجدول الخاص بالفصل الأول 2026/2027.</p>
+      
+      <div class="overflow-x-auto rounded-xl border border-gray-200">
+        <table class="w-full text-sm text-right">
+          <thead class="bg-indigo-50 text-indigo-900 font-bold">
+            <tr>
+              <th class="p-3 border-b" data-i18n="trans_day">اليوم</th>
+              <th class="p-3 border-b" data-i18n="trans_departure">الانطلاق</th>
+              <th class="p-3 border-b" data-i18n="trans_return">العودة</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_sat">السبت</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30</td></tr>
+            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_sun">الأحد</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">17h30</td></tr>
+            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_mon">الإثنين</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">11h30 / 14h30</td></tr>
+            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_tue">الثلاثاء</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
+            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_wed">الأربعاء</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
+            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_thu">الخميس</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div id="tab-bus" class="tab-content active bg-white p-6 rounded-2xl shadow-sm border">
-      <h2 class="font-bold text-lg mb-4" data-i18n="trans_bus_title">مواقيت الحافلات الجامعية</h2>
-      <ul class="text-sm space-y-2">
-        <li>شاطوناي: 7:30 - 16:00</li>
-        <li>تافورة: 7:15 - 16:00</li>
-        <li>زرالدة: 7:30</li>
+    <!-- 2. محطات الحافلات القريبة -->
+    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
+      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+        <i class="fa-solid fa-location-dot text-rose-500"></i> <span data-i18n="trans_bus_stops">محطات الحافلات القريبة</span>
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
+          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_c">📍 محطة  (أمام CNEP)</h4>
+          <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_c_desc">350 متر (5 دقائق). الوجهة: محطة بن عمر.</p>
+        </div>
+        <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
+          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_b">📍 محطة  (المحطة البرية القبة)</h4>
+          <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_b_desc">500 متر (7 دقائق). وجهات متعددة.</p>
+        </div>
+        <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
+          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_d">📍 محطة  (مقابل ENS)</h4>
+          <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_d_desc">950 متر (14 دقيقة). توقيتات 7:30 و 16:00.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. المترو والترامواي -->
+    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
+      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+        <i class="fa-solid fa-train-subway text-blue-500"></i> <span data-i18n="trans_metro">المترو والترامواي</span>
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+          <h4 class="font-bold text-blue-900 mb-2" data-i18n="trans_metro_how">كيفية الوصول للمترو (حي البدر)</h4>
+          <p class="text-sm text-blue-800" data-i18n="trans_metro_how_desc">حافلة إلى بشدجرح، ثم النزول في محطة المترو.</p>
+        </div>
+        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+          <h4 class="font-bold text-emerald-900 mb-2" data-i18n="trans_tram_how">كيفية الوصول للترامواي</h4>
+          <p class="text-sm text-emerald-800" data-i18n="trans_tram_how_desc">مترو إلى "Les Fusillés"، ثم الترامواي.</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-4 mt-2">
+        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-bold text-gray-700"><i class="fa-solid fa-ticket text-indigo-500 mr-1"></i> <span data-i18n="trans_ticket_metro">مترو: 50 دج</span></span>
+        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-bold text-gray-700"><i class="fa-solid fa-ticket text-indigo-500 mr-1"></i> <span data-i18n="trans_ticket_tram">ترامواي: 40 دج</span></span>
+        <span class="bg-emerald-100 px-3 py-1 rounded-lg text-sm font-bold text-emerald-800"><i class="fa-solid fa-graduation-cap mr-1"></i> <span data-i18n="trans_etwassel">بطاقة الطالب eTWASSEL: 150 دج/سنة</span></span>
+      </div>
+    </div>
+
+    <!-- 4. سيارات الأجرة -->
+    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
+      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+        <i class="fa-solid fa-taxi text-amber-500"></i> <span data-i18n="trans_taxi">سيارات الأجرة (تاكسي)</span>
+      </h2>
+      <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+        <li data-i18n="trans_taxi_benomar"><strong>بن عمر:</strong> بئر خادم، بئر مراد رايس، براقي.</li>
+        <li data-i18n="trans_taxi_vieux"><strong>القبة القديمة:</strong> الرويسو، حسين داي، وسط العاصمة.</li>
+        <li data-i18n="trans_taxi_kharouba"><strong>خروبة:</strong> خطوط بين الولايات.</li>
       </ul>
     </div>
 
-    <div id="tab-metro" class="tab-content bg-white p-6 rounded-2xl shadow-sm border">
-      <h2 class="font-bold text-lg mb-4" data-i18n="trans_metro_title">محطات المترو</h2>
-      <ul class="text-sm grid grid-cols-2 gap-2">
-        <li>ساحة الشهداء</li><li>تافورة</li><li>1 ماي</li><li>حي البدر</li>
-      </ul>
+    <!-- 5. الخريطة التفاعلية -->
+    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
+      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+        <i class="fa-solid fa-map text-teal-500"></i> <span data-i18n="trans_map">الخريطة التفاعلية</span>
+      </h2>
+      <div class="map-container bg-gray-200">
+        <!-- تم دمج الخريطة الجديدة هنا -->
+        <iframe src="https://www.google.com/maps/d/embed?mid=1jNWEeyOC9kYXRnYmFzZXMvKGRlZm1HbQpL2NvbGxY3Rpb25Hcm91c9zdHMvaW5kZXhleC9fEABaDQoJY3J1Z2V0X2VtYWlsEAo&ehbc=2E312F" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+      <p class="text-xs text-gray-500 text-center" data-i18n="trans_map_desc">خريطة توضح محطات الحافلات، المترو، والترامواي القريبة من ENSTP.</p>
     </div>
+
   </main>
 
-  <script>
-    function openTab(id) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById('tab-' + id).classList.add('active');
-    }
-  </script>
+  <footer class="border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 bg-white">
+    <p>© 2026 ENSTP القبة.</p>
+  </footer>
+
 </body>
 </html>
