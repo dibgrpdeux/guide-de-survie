@@ -29,6 +29,8 @@
     .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
     .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
     .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -68,47 +70,47 @@
       </div>
       <h2 class="text-3xl font-black text-gray-900" data-i18n="sport_title">الرياضة في ENSTP</h2>
       <p class="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed" data-i18n="sport_desc">
-        المدرسة توفر فضاءات رياضية متنوعة للطلبة. سواء كنت تحب كرة القدم، كرة السلة، أو الجري، ستجد مكانك هنا.
+        المدرسة توفر فضاءات رياضية متنوعة للطلبة. شاهد الفيديوهات أدناه لاستكشاف المرافق.
       </p>
     </div>
 
-    <!-- الأنشطة المتاحة -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- معرض الفيديوهات -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       
-      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
-        <div class="w-14 h-14 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-futbol"></i></div>
-        <h3 class="font-bold text-gray-900" data-i18n="sport_football">ملعب كرة القدم</h3>
-        <p class="text-xs text-gray-500" data-i18n="sport_football_desc">ملعب معشب متاح للتدريبات والمباريات.</p>
+      <!-- فيديو 1: جولة  -->
+      <div class="glass-card p-4 rounded-2xl border border-gray-100 space-y-2">
+        <div class="video-container bg-gray-200 shadow-sm">
+          <!-- ضع هنا رابط الفيديو الأول -->
+          <iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe>
+        </div>
+        <h3 class="font-bold text-gray-900 text-center text-sm" data-i18n="sport_vid_tour">جولة في الملاعب الرياضية</h3>
       </div>
 
-      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
-        <div class="w-14 h-14 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-basketball"></i></div>
-        <h3 class="font-bold text-gray-900" data-i18n="sport_basket">ملعب كرة السلة</h3>
-        <p class="text-xs text-gray-500" data-i18n="sport_basket_desc">ملعب خارجي متاح للممارسة الحرة.</p>
+      <!-- فيديو 2: الأنشطة الطلابية -->
+      <div class="glass-card p-4 rounded-2xl border border-gray-100 space-y-2">
+        <div class="video-container bg-gray-200 shadow-sm">
+          <!-- ضع هنا رابط الفيديو الثاني -->
+          <iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe>
+        </div>
+        <h3 class="font-bold text-gray-900 text-center text-sm" data-i18n="sport_vid_activities">الأنشطة الرياضية الطلابية</h3>
       </div>
 
-      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
-        <div class="w-14 h-14 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-table-tennis-paddle-ball"></i></div>
-        <h3 class="font-bold text-gray-900" data-i18n="sport_pingpong">تنس الطاولة</h3>
-        <p class="text-xs text-gray-500" data-i18n="sport_pingpong_desc">قاعات مجهزة داخل المدرسة.</p>
+      <!-- فيديو 3:م -->
+      <div class="glass-card p-4 rounded-2xl border border-gray-100 space-y-2">
+        <div class="video-container bg-gray-200 shadow-sm">
+          <!-- ضع هنا رابط الفيديو الثالث -->
+          <iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe>
+        </div>
+        <h3 class="font-bold text-gray-900 text-center text-sm" data-i18n="sport_vid_football">تدريبات كرة القدم</h3>
       </div>
 
-      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
-        <div class="w-14 h-14 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-dumbbell"></i></div>
-        <h3 class="font-bold text-gray-900" data-i18n="sport_gym">قاعة تقوية العضلات</h3>
-        <p class="text-xs text-gray-500" data-i18n="sport_gym_desc">أجهزة رياضية حديثة (تتوفر في إقامة امحمد يوسفي).</p>
-      </div>
-
-      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
-        <div class="w-14 h-14 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-person-running"></i></div>
-        <h3 class="font-bold text-gray-900" data-i18n="sport_running">الجري والمشي</h3>
-        <p class="text-xs text-gray-500" data-i18n="sport_running_desc">مسارات مخصصة داخل الحرم الجامعي.</p>
-      </div>
-
-      <div class="glass-card p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center gap-3">
-        <div class="w-14 h-14 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-medal"></i></div>
-        <h3 class="font-bold text-gray-900" data-i18n="sport_clubs">النوادي الرياضية</h3>
-        <p class="text-xs text-gray-500" data-i18n="sport_clubs_desc">انضم إلى النوادي للمشاركة في البطولات الجامعية.</p>
+      <!-- فيديو 4: النوادي الرياضية -->
+      <div class="glass-card p-4 rounded-2xl border border-gray-100 space-y-2">
+        <div class="video-container bg-gray-200 shadow-sm">
+          <!-- ضع هنا رابط الفيديو الرابع -->
+          <iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe>
+        </div>
+        <h3 class="font-bold text-gray-900 text-center text-sm" data-i18n="sport_vid_clubs">النوادي الرياضية</h3>
       </div>
 
     </div>
