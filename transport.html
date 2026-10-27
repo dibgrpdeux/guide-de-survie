@@ -1,287 +1,57 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <script src="translate.js"></script>
+  <style>body{top:0!important}.lang-btn.active{background:#4f46e5;color:#fff}.tab-content{display:none}.tab-content.active{display:block}</style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>النقل الشامل - ENSTP</title>
-  
-  <!-- كود الترجمة -->
-  <script src="translate.js"></script>
-  <style>
-    body { top: 0 !important; }
-    .skiptranslate iframe { display: none !important; }
-    .goog-te-banner-frame { display: none !important; }
-    #goog-gt-tt { display: none !important; }
-    #google_translate_element { display: none; } 
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
-  </style>
-
+  <title>النقل - ENSTP</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; }
-    .tab-btn.active { background-color: #4f46e5; color: white; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2); }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-    .table-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    .map-container { position: relative; padding-bottom: 75%; height: 0; overflow: hidden; border-radius: 1rem; }
-    .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-  </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
-
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b px-4 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <h1 class="font-bold text-gray-900 text-lg"><i class="fa-solid fa-bus-simple text-cyan-600"></i> <span data-i18n="trans_title">دليل النقل الشامل</span></h1>
-      
+<body class="bg-gray-50 min-h-screen">
+  <header class="sticky top-0 z-50 bg-white/90 border-b px-4 py-3">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+      <h1 class="font-bold text-gray-900" data-i18n="trans_title">دليل النقل</h1>
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200 shadow-sm">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">EN</button>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
       </div>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
-
-    <!-- مخطط الرحلة الذكي -->
-    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-6 lg:p-8 text-white shadow-xl">
-      <h2 class="text-2xl font-black mb-2" data-i18n="trans_planner"><i class="fa-solid fa-route"></i> مخطط الرحلة الذكي</h2>
-      <p class="text-sm text-indigo-100 mb-6" data-i18n="trans_planner_desc">اختر محطة الانطلاق والوجهة...</p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/20">
-        <div class="md:col-span-2">
-          <label class="block text-xs font-bold mb-1 text-indigo-100" data-i18n="trans_start">الانطلاق من:</label>
-          <select id="startPoint" class="w-full px-4 py-3 rounded-xl text-gray-900 font-bold outline-none">
-            <option value="kouba">القبة / ENSTP</option>
-            <option value="bachdjarah">بشدجرح / الحراش</option>
-            <option value="centre">ساحة الشهداء / وسط العاصمة</option>
-            <option value="babezzouar">باب الزوار</option>
-            <option value="benaknoun">بن عكنون</option>
-            <option value="ruisseau">الرويسو (Ruisseau)</option>
-            <option value="caroubier">القرية (Caroubier)</option>
-          </select>
-        </div>
-        <div class="flex justify-center pb-3">
-          <i class="fa-solid fa-arrow-left text-2xl text-white/70"></i>
-        </div>
-        <div class="md:col-span-2">
-          <label class="block text-xs font-bold mb-1 text-indigo-100" data-i18n="trans_end">الوجهة:</label>
-          <select id="endPoint" class="w-full px-4 py-3 rounded-xl text-gray-900 font-bold outline-none">
-            <option value="zeralda">زرالدة</option>
-            <option value="centre">وسط العاصمة</option>
-            <option value="benaknoun">بن عكنون</option>
-            <option value="babezzouar">باب الزوار</option>
-            <option value="airport">مطار هواري بومدين</option>
-            <option value="elharrach">الحراش</option>
-            <option value="bordj">برج الكيفان</option>
-            <option value="dergana">درقانة</option>
-          </select>
-        </div>
-      </div>
-      <button onclick="calculateRoute()" class="mt-4 w-full md:w-auto bg-white text-indigo-700 hover:bg-gray-100 px-8 py-3 rounded-xl font-black shadow-md transition" data-i18n="trans_calc_btn">
-        <i class="fa-solid fa-magnifying-glass-location"></i> احسب مسار الرحلة
-      </button>
-
-      <div id="routeResult" class="mt-6 hidden bg-white text-gray-800 p-6 rounded-2xl shadow-lg border-r-4 border-emerald-500"></div>
+  <main class="max-w-4xl mx-auto px-4 py-8 space-y-6">
+    <div class="flex gap-2 justify-center flex-wrap">
+      <button onclick="openTab('bus')" class="px-4 py-2 rounded-xl font-bold bg-indigo-600 text-white"><span data-i18n="trans_tab_bus">الحافلات الجامعية</span></button>
+      <button onclick="openTab('metro')" class="px-4 py-2 rounded-xl font-bold bg-white text-gray-700 border"><span data-i18n="trans_tab_metro">المترو</span></button>
     </div>
 
-    <!-- التبويبات -->
-    <div class="flex flex-wrap gap-2 justify-center mt-8">
-      <button onclick="openTab('bus')" id="btn-bus" class="tab-btn active px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-bus"></i> <span data-i18n="trans_tab_bus">الحافلات الجامعية</span></button>
-      <button onclick="openTab('metro')" id="btn-metro" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-train-subway"></i> <span data-i18n="trans_tab_metro">المترو</span></button>
-      <button onclick="openTab('tram')" id="btn-tram" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-train-tram"></i> <span data-i18n="trans_tab_tram">الترامواي</span></button>
-      <button onclick="openTab('urban')" id="btn-urban" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-city"></i> <span data-i18n="trans_tab_urban">النقل الحضري</span></button>
-      <button onclick="openTab('map')" id="btn-map" class="tab-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-gray-700 border border-gray-200 transition"><i class="fa-solid fa-map"></i> <span data-i18n="trans_tab_map">الخريطة</span></button>
+    <div id="tab-bus" class="tab-content active bg-white p-6 rounded-2xl shadow-sm border">
+      <h2 class="font-bold text-lg mb-4" data-i18n="trans_bus_title">مواقيت الحافلات الجامعية</h2>
+      <ul class="text-sm space-y-2">
+        <li>شاطوناي: 7:30 - 16:00</li>
+        <li>تافورة: 7:15 - 16:00</li>
+        <li>زرالدة: 7:30</li>
+      </ul>
     </div>
 
-    <!-- 1. الحافلات الجامعية -->
-    <div id="tab-bus" class="tab-content active space-y-6">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-clock text-indigo-500"></i> <span data-i18n="trans_bus_title">مواقيت الحافلات الجامعية</span></h2>
-        <p class="text-sm text-gray-600 mb-4" data-i18n="trans_bus_desc">جميع الحافلات تنطلق من المحطة البرية...</p>
-        
-        <div class="overflow-x-auto table-scroll rounded-xl border border-gray-200 max-h-[500px]">
-          <table class="w-full text-sm text-right">
-            <thead class="bg-indigo-50 text-indigo-900 font-bold sticky top-0">
-              <tr><th class="p-3 border-b" data-i18n="trans_dest">الوجهة</th><th class="p-3 border-b" data-i18n="trans_times">مواقيت الإقلاع</th></tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">شاطوناي (Chatonay)</td><td class="p-3 text-xs" dir="ltr">7:30 / 8:00 / 8:30 / 9:00 / 9:30 / 10:00 / 10:30 / 11:00 / 11:30 / 12:00 / 12:30 / 13:00 / 13:30 / 14:00 / 14:30 / 15:00 / 15:30 / 16:00</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">بوزريعة (Bouzareah)</td><td class="p-3 text-xs" dir="ltr">7:30 / 8:00 / 8:30 / 9:00 / 9:30 / 10:00 / 10:30 / 11:00 / 11:30 / 12:00 / 12:30 / 13:00 / 13:30 / 14:00 / 14:30 / 15:00 / 15:30 / 16:00</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">تافورة (Tafourah)</td><td class="p-3 text-xs" dir="ltr">7:15 / 8:00 / 9:00 / 10:00 / 11:00 / 12:15 / 13:00 / 14:00 / 16:00</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">أول ماي (1er Mai)</td><td class="p-3 text-xs" dir="ltr">7:30 / 8:00 / 8:30 / 9:30 / 10:30 / 11:30 / 12:30 / 13:30 / 14:30 / 15:00</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">عين النعجة (Ain Naadja)</td><td class="p-3 text-xs" dir="ltr">7:30 / 8:30 / 12:00 / 16:00</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">بني مسوس (Beni Messous)</td><td class="p-3 text-xs" dir="ltr">7:30 / 12:00 / 15:00</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">بابسلا علي (Babasla Ali)</td><td class="p-3 text-xs" dir="ltr">8:00 / 12:00 / 15:30</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div id="tab-metro" class="tab-content bg-white p-6 rounded-2xl shadow-sm border">
+      <h2 class="font-bold text-lg mb-4" data-i18n="trans_metro_title">محطات المترو</h2>
+      <ul class="text-sm grid grid-cols-2 gap-2">
+        <li>ساحة الشهداء</li><li>تافورة</li><li>1 ماي</li><li>حي البدر</li>
+      </ul>
     </div>
-
-    <!-- 2. المترو -->
-    <div id="tab-metro" class="tab-content space-y-6">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold text-gray-900 mb-2"><i class="fa-solid fa-train-subway text-blue-500"></i> <span data-i18n="trans_metro_title">محطات المترو</span></h2>
-        <p class="text-sm text-gray-600 mb-4" data-i18n="trans_metro_desc">التذكرة: 50 دج...</p>
-        
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
-          <div class="p-2 bg-blue-50 rounded">ساحة الشهداء</div>
-          <div class="p-2 bg-blue-50 rounded">علي بومنجل</div>
-          <div class="p-2 bg-blue-50 rounded">تافورة</div>
-          <div class="p-2 bg-blue-50 rounded">خليفة بوخالفة</div>
-          <div class="p-2 bg-blue-50 rounded">1 ماي</div>
-          <div class="p-2 bg-blue-50 rounded">عيسات إيدير</div>
-          <div class="p-2 bg-blue-50 rounded">الحامة</div>
-          <div class="p-2 bg-blue-50 rounded">حديقة التجارب</div>
-          <div class="p-2 bg-blue-50 rounded">المشوشين (Fusillés)</div>
-          <div class="p-2 bg-blue-50 rounded">أميروش</div>
-          <div class="p-2 bg-blue-50 rounded">بحر وشمس</div>
-          <div class="p-2 bg-blue-50 rounded text-indigo-700 font-bold">حي البدر (تحويل)</div>
-          <div class="p-2 bg-blue-50 rounded">وادي كنيس</div>
-          <div class="p-2 bg-blue-50 rounded">عين النعجة</div>
-          <div class="p-2 bg-blue-50 rounded">باش جراح</div>
-          <div class="p-2 bg-blue-50 rounded">الحراش</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. الترامواي -->
-    <div id="tab-tram" class="tab-content space-y-6">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold text-gray-900 mb-2"><i class="fa-solid fa-train-tram text-emerald-500"></i> <span data-i18n="trans_tram_title">محطات الترامواي</span></h2>
-        <p class="text-sm text-gray-600 mb-4" data-i18n="trans_tram_desc">التذكرة: 40 دج...</p>
-        
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
-          <div class="p-2 bg-emerald-50 rounded">العناصر</div>
-          <div class="p-2 bg-emerald-50 rounded">المشوشين</div>
-          <div class="p-2 bg-emerald-50 rounded">الخروبة (Caroubier)</div>
-          <div class="p-2 bg-emerald-50 rounded">الغلاسيار</div>
-          <div class="p-2 bg-emerald-50 rounded">جسر الحراش</div>
-          <div class="p-2 bg-emerald-50 rounded">باب الزوار</div>
-          <div class="p-2 bg-emerald-50 rounded">برج الكيفان</div>
-          <div class="p-2 bg-emerald-50 rounded">درقانة</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. النقل الحضري -->
-    <div id="tab-urban" class="tab-content space-y-6">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-city text-rose-500"></i> <span data-i18n="trans_urban_title">النقل الحضري</span></h2>
-        
-        <div class="space-y-4">
-          <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-            <div class="flex justify-between items-center mb-2">
-              <h3 class="font-bold text-indigo-700" data-i18n="trans_urban_c">📍 محطة C</h3>
-              <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded">350 متر / 5 دقائق</span>
-            </div>
-            <p class="text-sm text-gray-600" data-i18n="trans_urban_c_desc">الوجهات: محطة بن عمر...</p>
-          </div>
-          <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-            <div class="flex justify-between items-center mb-2">
-              <h3 class="font-bold text-indigo-700" data-i18n="trans_urban_b">📍 محطة B</h3>
-              <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded">500 متر / 7 دقائق</span>
-            </div>
-            <p class="text-sm text-gray-600" data-i18n="trans_urban_b_desc">الوجهات: معظم أنحاء العاصمة...</p>
-          </div>
-          <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-            <div class="flex justify-between items-center mb-2">
-              <h3 class="font-bold text-indigo-700" data-i18n="trans_urban_d">📍 محطة D</h3>
-              <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded">950 متر / 14 دقيقة</span>
-            </div>
-            <p class="text-sm text-gray-600" data-i18n="trans_urban_d_desc">الوجهات: وجهات محددة...</p>
-          </div>
-        </div>
-
-        <h3 class="text-lg font-bold text-gray-900 mt-6 mb-3" data-i18n="trans_taxis_title"><i class="fa-solid fa-taxi text-amber-500"></i> محطات سيارات الأجرة</h3>
-        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-          <li>بن عمر (Ben Omar)</li>
-          <li>القبة القديمة (Vieux Kouba)</li>
-          <li>خروبة (Kharouba)</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 5. الخريطة -->
-    <div id="tab-map" class="tab-content space-y-6">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-        <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-map text-teal-500"></i> <span data-i18n="trans_map_title">خريطة محطات النقل</span></h2>
-        <div class="map-container">
-          <iframe src="https://www.google.com/maps/d/embed?mid=1jNWEeyOC9kYXRnYmFzZXMvKGRlZm1HbQpL2NvbGxY3Rpb25Hcm91c9zdHMvaW5kZXhleC9fEABaDQoJY3J1Z2V0X2VtYWlsEAo&ehbc=2E312F" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-      </div>
-    </div>
-
   </main>
 
-  <footer class="border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 bg-white">
-    <p>© 2026 ENSTP Kouba.</p>
-  </footer>
-
   <script>
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-
-    function t(key) {
-      return window.translations[currentLang][key] || key;
+    function openTab(id) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
     }
-
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-      currentLang = lang;
-      originalSetLanguage(lang);
-      if(!document.getElementById('routeResult').classList.contains('hidden')) {
-        calculateRoute();
-      }
-    };
-
-    function openTab(tabName) {
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active', 'bg-indigo-600', 'text-white');
-        btn.classList.add('bg-white', 'text-gray-700');
-      });
-      document.getElementById('tab-' + tabName).classList.add('active');
-      const activeBtn = document.getElementById('btn-' + tabName);
-      activeBtn.classList.add('active', 'bg-indigo-600', 'text-white');
-      activeBtn.classList.remove('bg-white', 'text-gray-700');
-    }
-
-    function calculateRoute() {
-      const start = document.getElementById('startPoint').value;
-      const end = document.getElementById('endPoint').value;
-      const resultDiv = document.getElementById('routeResult');
-      resultDiv.classList.remove('hidden');
-      let html = '';
-
-      if (start === 'kouba') {
-        if (end === 'zeralda') html = `<h3 class="font-bold text-lg text-emerald-600 mb-2"><i class="fa-solid fa-bus"></i> ${t('trans_route_direct_bus')}</h3><p class="text-sm">${t('trans_route_from_kouba')}</p>`;
-        else if (end === 'centre') html = `<h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> ${t('trans_route_metro')}</h3><p class="text-sm">${t('trans_route_bus_metro')}</p>`;
-        else if (end === 'babezzouar' || end === 'bordj' || end === 'dergana') html = `<h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train"></i> ${t('trans_route_metro_tram')}</h3><p class="text-sm">${t('trans_route_via_harrach')}</p>`;
-        else html = `<p class="text-sm">${t('trans_route_go_kouba')}</p>`;
-      } else if (start === 'bachdjarah' || start === 'elharrach') {
-        if (end === 'zeralda' || end === 'benaknoun') html = `<h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> ${t('trans_route_metro_bus')}</h3><p class="text-sm">${t('trans_route_via_centre')}</p>`;
-        else if (end === 'centre') html = `<h3 class="font-bold text-lg text-blue-600 mb-2"><i class="fa-solid fa-train-subway"></i> ${t('trans_route_metro_direct')}</h3><p class="text-sm">${t('trans_route_to_martyrs')}</p>`;
-        else html = `<h3 class="font-bold text-lg text-emerald-600 mb-2"><i class="fa-solid fa-train"></i> ${t('trans_route_tram')}</h3><p class="text-sm">${t('trans_route_from_harrach')}</p>`;
-      } else {
-        html = `<p class="text-sm">${t('trans_route_central')}</p>`;
-      }
-      resultDiv.innerHTML = html;
-    }
-
-    window.addEventListener('DOMContentLoaded', () => { 
-      openTab('bus'); 
-      setTimeout(() => setLanguage(currentLang), 100);
-    });
   </script>
 </body>
 </html>
