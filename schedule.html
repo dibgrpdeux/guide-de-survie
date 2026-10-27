@@ -5,31 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>استعمال الزمن - حسب الفوج</title>
 
-  <!-- كود الترجمة -->
-  <script src="translate.js"></script>
-  <style>
-    body { top: 0 !important; }
-    .skiptranslate iframe { display: none !important; }
-    .goog-te-banner-frame { display: none !important; }
-    #goog-gt-tt { display: none !important; }
-    #google_translate_element { display: none; } 
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
-  </style>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
-    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 1); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05); }
-    .btn-day { transition: all 0.3s; }
-    .btn-day.active { background-color: #4f46e5; color: white; border-color: #4f46e5; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+    }
+    .btn-day {
+      transition: all 0.3s;
+    }
+    .btn-day.active {
+      background-color: #4f46e5;
+      color: white;
+      border-color: #4f46e5;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
@@ -37,85 +46,83 @@
   <div class="ambient-bg"></div>
 
   <main class="max-w-5xl mx-auto w-full space-y-6">
+<!-- الترويسة -->
+<div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+  <div class="flex items-center gap-4">
+    <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
+      <i class="fa-solid fa-calendar-days"></i>
+    </div>
+    <div>
+      <h1 class="text-2xl md:text-3xl font-black text-gray-900 mb-1" data-i18n="sched_title">استعمال الزمن الدقيق</h1>
+      <p class="text-gray-600 text-sm" data-i18n="sched_desc">حدد قسمك، سنتك الدراسية، وفوجك...</p>
+    </div>
+  </div>
+  
+  <div class="flex items-center gap-2">
+    <!-- أزرار الترجمة -->
+    <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
+      <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
+      <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
+      <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+    </div>
+    <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+  </div>
+</div>
 
-    <!-- الترويسة -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-4">
-        <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
-          <i class="fa-solid fa-calendar-days"></i>
-        </div>
-        <div>
-          <h1 class="text-2xl md:text-3xl font-black text-gray-900 mb-1" data-i18n="sched_title">استعمال الزمن الدقيق</h1>
-          <p class="text-gray-600 text-sm" data-i18n="sched_desc">حدد قسمك، سنتك الدراسية، وفوجك...</p>
-        </div>
-      </div>
-      
-      <div class="flex items-center gap-2">
-        <!-- أزرار الترجمة -->
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
-        </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
-      </div>
+   <!-- الفلاتر -->
+<div class="glass-card rounded-3xl p-6 md:p-8 space-y-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div>
+      <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="sched_dept">القسم / التخصص:</label>
+      <select id="select-dept" onchange="updateYears()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition">
+        <option value="prep" data-i18n="sched_prep">الطبقة التحضيرية (CP)</option>
+        <option value="dib" data-i18n="sched_dib">المنشآت القاعدية (DIB)</option>
+        <option value="dms" data-i18n="sched_dms">المواد والهياكل (DMS)</option>
+      </select>
     </div>
 
-    <!-- الفلاتر -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="sched_dept">القسم / التخصص:</label>
-          <select id="select-dept" onchange="updateYears()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition">
-            <option value="prep" data-i18n="sched_prep">الطبقة التحضيرية (CP)</option>
-            <option value="dib" data-i18n="sched_dib">المنشآت القاعدية (DIB)</option>
-            <option value="dms" data-i18n="sched_dms">المواد والهياكل (DMS)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="sched_year">السنة الدراسية:</label>
-          <select id="select-year" onchange="updateGroups()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition"></select>
-        </div>
-
-        <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="sched_group">الفوج (Groupe):</label>
-          <select id="select-group" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition"></select>
-        </div>
-      </div>
-
-      <hr class="border-gray-100">
-
-      <div class="flex flex-wrap gap-2 justify-center">
-        <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_sat">السبت</button>
-        <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_sun">الأحد</button>
-        <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_mon">الإثنين</button>
-        <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_tue">الثلاثاء</button>
-        <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_wed">الأربعاء</button>
-        <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_thu">الخميس</button>
-      </div>
-
-      <div class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100">
-        <h3 id="schedule-title" class="font-bold text-lg text-indigo-900 mb-4 border-r-4 border-indigo-500 pr-3">برنامج الحصص</h3>
-        <div id="schedule-list" class="space-y-3"></div>
-      </div>
+    <div>
+      <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="sched_year">السنة الدراسية:</label>
+      <select id="select-year" onchange="updateGroups()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition"></select>
     </div>
-  </main>
+
+    <div>
+      <label class="block text-sm font-bold text-gray-700 mb-2" data-i18n="sched_group">الفوج (Groupe):</label>
+      <select id="select-group" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition"></select>
+    </div>
+  </div>
+
+  <hr class="border-gray-100">
+
+  <div class="flex flex-wrap gap-2 justify-center">
+    <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_sat">السبت</button>
+    <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_sun">الأحد</button>
+    <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_mon">الإثنين</button>
+    <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_tue">الثلاثاء</button>
+    <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_wed">الأربعاء</button>
+    <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600" data-i18n="sched_thu">الخميس</button>
+  </div>
+
+  <div class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100">
+    <h3 id="schedule-title" class="font-bold text-lg text-indigo-900 mb-4 border-r-4 border-indigo-500 pr-3">برنامج الحصص</h3>
+    <div id="schedule-list" class="space-y-3"></div>
+  </div>
+</div>
 
   <script>
     // 1. تعريف الأفواج لكل سنة
     const groupsDatabase = {
-      'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `Groupe ${i+1}` })),
-      'prep_2': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `Groupe ${i+1}` })),
-      'dib_1': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `Groupe ${i+1}` })),
-      'dib_2': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `Groupe ${i+1}` })),
-      'dib_3': [{ value: 'promo', label: 'Promo' }],
+      'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'prep_2': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_1': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_2': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }],
       'dms_1': Array.from({length: 4}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
       'dms_2': Array.from({length: 2}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
-      'dms_3': [{ value: 'promo', label: 'Promo' }]
+      'dms_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }]
     };
 
-    // 2. قاعدة بيانات استعمال الزمن (البيانات الضخمة الخاصة بك)
+    // 2. قاعدة بيانات استعمال الزمن
     const scheduleDatabase = {
       // ==========================================
       // 1CP - Groupes 1 à 12
@@ -1466,145 +1473,143 @@
         }
       }
     };
+let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
-    let selectedDay = 'Sunday';
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+function t(key) {
+  return window.translations[currentLang][key] || key;
+}
 
-    // دالة مساعدة للترجمة
-    function t(key) {
-      return window.translations[currentLang][key] || key;
-    }
+// تحديث اللغة
+const originalSetLanguage = window.setLanguage;
+window.setLanguage = function(lang) {
+  currentLang = lang;
+  originalSetLanguage(lang);
+  updateYears();
+  renderSchedule();
+};
 
-    // تحديث اللغة عند الضغط على الأزرار
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-      currentLang = lang;
-      originalSetLanguage(lang);
-      updateYears();
-      renderSchedule();
-    };
+function updateYears() {
+  const dept = document.getElementById('select-dept').value;
+  const yearSelect = document.getElementById('select-year');
+  yearSelect.innerHTML = '';
 
-    function updateYears() {
-      const dept = document.getElementById('select-dept').value;
-      const yearSelect = document.getElementById('select-year');
-      yearSelect.innerHTML = '';
+  if (dept === 'prep') {
+    yearSelect.innerHTML = `
+      <option value="prep_1" data-i18n="sched_1cp">1CP</option>
+      <option value="prep_2" data-i18n="sched_2cp">2CP</option>
+    `;
+  } else if (dept === 'dib') {
+    yearSelect.innerHTML = `
+      <option value="dib_1" data-i18n="sched_dib1">1 DIB</option>
+      <option value="dib_2" data-i18n="sched_dib2">2 DIB</option>
+      <option value="dib_3" data-i18n="sched_dib3">3 DIB</option>
+    `;
+  } else if (dept === 'dms') {
+    yearSelect.innerHTML = `
+      <option value="dms_1" data-i18n="sched_dms1">1 DMS</option>
+      <option value="dms_2" data-i18n="sched_dms2">2 DMS</option>
+      <option value="dms_3" data-i18n="sched_dms3">3 DMS</option>
+    `;
+  }
+  
+  yearSelect.querySelectorAll('option').forEach(opt => {
+    const key = opt.getAttribute('data-i18n');
+    if(key) opt.innerText = t(key);
+  });
 
-      if (dept === 'prep') {
-        yearSelect.innerHTML = `
-          <option value="prep_1" data-i18n="sched_1cp">1CP</option>
-          <option value="prep_2" data-i18n="sched_2cp">2CP</option>
-        `;
-      } else if (dept === 'dib') {
-        yearSelect.innerHTML = `
-          <option value="dib_1" data-i18n="sched_dib1">1 DIB</option>
-          <option value="dib_2" data-i18n="sched_dib2">2 DIB</option>
-          <option value="dib_3" data-i18n="sched_dib3">3 DIB</option>
-        `;
-      } else if (dept === 'dms') {
-        yearSelect.innerHTML = `
-          <option value="dms_1" data-i18n="sched_dms1">1 DMS</option>
-          <option value="dms_2" data-i18n="sched_dms2">2 DMS</option>
-          <option value="dms_3" data-i18n="sched_dms3">3 DMS</option>
-        `;
-      }
-      
-      yearSelect.querySelectorAll('option').forEach(opt => {
-        const key = opt.getAttribute('data-i18n');
-        if(key) opt.innerText = t(key);
-      });
+  updateGroups();
+}
 
-      updateGroups();
-    }
+function updateGroups() {
+  const year = document.getElementById('select-year').value;
+  const groupSelect = document.getElementById('select-group');
+  groupSelect.innerHTML = '';
 
-    function updateGroups() {
-      const year = document.getElementById('select-year').value;
-      const groupSelect = document.getElementById('select-group');
-      groupSelect.innerHTML = '';
+  const groups = groupsDatabase[year] || [];
+  groups.forEach(g => {
+    const option = document.createElement('option');
+    option.value = g.value;
+    option.textContent = g.label;
+    groupSelect.appendChild(option);
+  });
 
-      const groups = groupsDatabase[year] || [];
-      groups.forEach(g => {
-        const option = document.createElement('option');
-        option.value = g.value;
-        option.textContent = g.label;
-        groupSelect.appendChild(option);
-      });
+  renderSchedule();
+}
 
-      renderSchedule();
-    }
+function changeDay(day) {
+  selectedDay = day;
+  document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById(`day-${day}`);
+  if (activeBtn) activeBtn.classList.add('active');
 
-    function changeDay(day) {
-      selectedDay = day;
-      document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById(`day-${day}`);
-      if (activeBtn) activeBtn.classList.add('active');
+  const dayKeyMap = { 'Saturday': 'sched_sat', 'Sunday': 'sched_sun', 'Monday': 'sched_mon', 'Tuesday': 'sched_tue', 'Wednesday': 'sched_wed', 'Thursday': 'sched_thu' };
+  document.getElementById('schedule-title').innerText = `${t('sched_schedule_for')} ${t(dayKeyMap[day])}`;
+  
+  renderSchedule();
+}
 
-      const dayKeyMap = { 'Saturday': 'sched_sat', 'Sunday': 'sched_sun', 'Monday': 'sched_mon', 'Tuesday': 'sched_tue', 'Wednesday': 'sched_wed', 'Thursday': 'sched_thu' };
-      document.getElementById('schedule-title').innerText = `${t('sched_schedule_for')} ${t(dayKeyMap[day])}`;
-      
-      renderSchedule();
-    }
+function renderSchedule() {
+  const year = document.getElementById('select-year').value;
+  const group = document.getElementById('select-group').value;
+  const container = document.getElementById('schedule-list');
 
-    function renderSchedule() {
-      const year = document.getElementById('select-year').value;
-      const group = document.getElementById('select-group').value;
-      const container = document.getElementById('schedule-list');
+  container.innerHTML = '';
 
-      container.innerHTML = '';
+  let items = [];
+  if (scheduleDatabase[year] && scheduleDatabase[year][group] && scheduleDatabase[year][group][selectedDay]) {
+    items = scheduleDatabase[year][group][selectedDay];
+  }
 
-      let items = [];
-      if (scheduleDatabase[year] && scheduleDatabase[year][group] && scheduleDatabase[year][group][selectedDay]) {
-        items = scheduleDatabase[year][group][selectedDay];
-      }
+  if (items.length === 0) {
+    container.innerHTML = `
+      <div class="text-center p-6 text-gray-500 font-bold bg-white rounded-xl border border-gray-200">
+        <i class="fa-regular fa-face-smile-wink text-2xl mb-2 text-indigo-300 block"></i>
+        ${t('sched_no_class')}
+      </div>
+    `;
+    return;
+  }
 
-      if (items.length === 0) {
-        container.innerHTML = `
-          <div class="text-center p-6 text-gray-500 font-bold bg-white rounded-xl border border-gray-200">
-            <i class="fa-regular fa-face-smile-wink text-2xl mb-2 text-indigo-300 block"></i>
-            ${t('sched_no_class')}
+  items.forEach(item => {
+    let typeBadge = '';
+    if (item.type === 'Cours') typeBadge = `<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[10px] font-black">${t('sched_cours')}</span>`;
+    if (item.type === 'TD') typeBadge = `<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-black">${t('sched_td')}</span>`;
+    if (item.type === 'TP') typeBadge = `<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-black">${t('sched_tp')}</span>`;
+
+    const row = document.createElement('div');
+    row.className = "p-4 bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 hover:shadow-md transition";
+    row.innerHTML = `
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold shrink-0">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <h5 class="font-bold text-gray-900 text-base">${item.subject}</h5>
+            ${typeBadge}
           </div>
-        `;
-        return;
-      }
+          <p class="text-sm text-gray-500 font-semibold"><i class="fa-solid fa-user-tie text-gray-400 ml-1"></i> ${t('sched_prof')} ${item.prof}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 bg-gray-50 p-2 rounded-xl border border-gray-100 w-fit shrink-0">
+        <span class="text-xs font-bold text-gray-700 px-2"><i class="fa-solid fa-hourglass-start text-indigo-400 ml-1"></i> ${item.time}</span>
+        <span class="w-px h-4 bg-gray-300"></span>
+        <span class="text-xs font-bold text-indigo-700 px-2"><i class="fa-solid fa-location-dot text-indigo-400 ml-1"></i> ${item.room}</span>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
 
-      items.forEach(item => {
-        let typeBadge = '';
-        if (item.type === 'Cours') typeBadge = `<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[10px] font-black">${t('sched_cours')}</span>`;
-        if (item.type === 'TD') typeBadge = `<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-black">${t('sched_td')}</span>`;
-        if (item.type === 'TP') typeBadge = `<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-black">${t('sched_tp')}</span>`;
-
-        const row = document.createElement('div');
-        row.className = "p-4 bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 hover:shadow-md transition";
-        row.innerHTML = `
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold shrink-0">
-              <i class="fa-solid fa-clock"></i>
-            </div>
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <h5 class="font-bold text-gray-900 text-base">${item.subject}</h5>
-                ${typeBadge}
-              </div>
-              <p class="text-sm text-gray-500 font-semibold"><i class="fa-solid fa-user-tie text-gray-400 ml-1"></i> ${t('sched_prof')} ${item.prof}</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 bg-gray-50 p-2 rounded-xl border border-gray-100 w-fit shrink-0">
-            <span class="text-xs font-bold text-gray-700 px-2"><i class="fa-solid fa-hourglass-start text-indigo-400 ml-1"></i> ${item.time}</span>
-            <span class="w-px h-4 bg-gray-300"></span>
-            <span class="text-xs font-bold text-indigo-700 px-2"><i class="fa-solid fa-location-dot text-indigo-400 ml-1"></i> ${item.room}</span>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      updateYears();
-      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      let today = days[new Date().getDay()];
-      if (today === 'Friday') today = 'Saturday';
-      changeDay(today);
-      setTimeout(() => setLanguage(currentLang), 100);
-    });
+window.addEventListener('DOMContentLoaded', () => {
+  updateYears();
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  let today = days[new Date().getDay()];
+  if (today === 'Friday') today = 'Saturday';
+  changeDay(today);
+  setTimeout(() => setLanguage(currentLang), 100);
+});
+  
   </script>
 </body>
 </html>
