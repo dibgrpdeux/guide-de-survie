@@ -112,14 +112,17 @@
 
       // البحث عن قسم الرياضة في البيانات
       const sportSection = window.SECTIONS.find(s => s.id === 'sport');
-      if (!sportSection || !sportSection.items) return;
+      if (!sportSection || !sportSection.items) {
+        container.innerHTML = '<p class="text-center text-gray-500 col-span-full">لا توجد بيانات.</p>';
+        return;
+      }
 
       sportSection.items.forEach(item => {
         const title = item.title[currentLang] || item.title['ar'];
         const desc = item.desc ? (item.desc[currentLang] || item.desc['ar']) : '';
         const extra = item.extra || '';
         
-        // استخراج معرف الفيديو سواء كان في video أو videoUrl
+        // استخراج معرف الفيديو سواء كان في video (معرف) أو videoUrl (رابط كامل)
         let videoId = item.video;
         if (!videoId && item.videoUrl) {
           videoId = getYoutubeId(item.videoUrl);
@@ -130,7 +133,7 @@
         
         card.innerHTML = `
           <div class="video-container bg-gray-200 shadow-sm">
-            ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>` : '<div class="flex items-center justify-center h-full text-gray-400">Video not available</div>'}
+            ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>` : '<div class="flex items-center justify-center h-full text-gray-400 font-bold">Video not available</div>'}
           </div>
           <div class="text-center space-y-1">
             <h3 class="font-bold text-gray-900 text-sm">${title}</h3>
