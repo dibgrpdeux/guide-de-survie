@@ -70,11 +70,11 @@
       </div>
       <h2 class="text-3xl font-black text-gray-900" data-i18n="sport_title">الرياضة في ENSTP</h2>
       <p class="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed" data-i18n="sport_desc">
-        شاهد الفيديوهات أدناه لاستكشاف المرافق الرياضية والأنشطة في المدرسة والمحيط.
+        شاهد الفيديوهات أدناه لاستكشاف المرافق الرياضية في المدرسة والمحيط.
       </p>
     </div>
 
-    <!-- حاوية الفيديوهات -->
+    <!-- حاوية الفيديوهات (شبكة) -->
     <div id="sportContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 
   </main>
@@ -94,10 +94,10 @@
     window.setLanguage = function(lang) {
       currentLang = lang;
       originalSetLanguage(lang);
-      renderSport(); // إعادة عرض الفيديوهات عند تغيير اللغة
+      renderSport();
     };
 
-    // دالة استخراج معرف الفيديو من الروابط المختلفة (عادية أو Shorts)
+    // دالة استخراج معرف الفيديو من روابط يوتيوب (بما فيها Shorts)
     function getYoutubeId(url) {
       if (!url) return null;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
@@ -105,47 +105,34 @@
       return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // دالة عرض الفيديوهات
+    // دالة عرض الفيديوهات فقط (بدون عناوين أو أوصاف)
     function renderSport() {
       const container = document.getElementById('sportContainer');
       container.innerHTML = '';
 
-      // البحث عن قسم الرياضة في البيانات
       const sportSection = window.SECTIONS.find(s => s.id === 'sport');
-      if (!sportSection || !sportSection.items) {
-        container.innerHTML = '<p class="text-center text-gray-500 col-span-full">لا توجد بيانات.</p>';
-        return;
-      }
+      if (!sportSection || !sportSection.items) return;
 
       sportSection.items.forEach(item => {
-        const title = item.title[currentLang] || item.title['ar'];
-        const desc = item.desc ? (item.desc[currentLang] || item.desc['ar']) : '';
-        const extra = item.extra || '';
-        
-        // استخراج معرف الفيديو سواء كان في video (معرف) أو videoUrl (رابط كامل)
+        // استخراج معرف الفيديو
         let videoId = item.video;
         if (!videoId && item.videoUrl) {
           videoId = getYoutubeId(item.videoUrl);
         }
 
         const card = document.createElement('div');
-        card.className = "glass-card p-4 rounded-2xl border border-gray-100 space-y-3";
+        card.className = "glass-card p-2 rounded-2xl border border-gray-100 shadow-sm";
         
+        // عرض الفيديو فقط
         card.innerHTML = `
-          <div class="video-container bg-gray-200 shadow-sm">
-            ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>` : '<div class="flex items-center justify-center h-full text-gray-400 font-bold">Video not available</div>'}
-          </div>
-          <div class="text-center space-y-1">
-            <h3 class="font-bold text-gray-900 text-sm">${title}</h3>
-            <p class="text-xs text-gray-500">${desc}</p>
-            ${extra ? `<p class="text-[10px] font-bold text-indigo-500 mt-1">${extra}</p>` : ''}
+          <div class="video-container bg-gray-200">
+            ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>` : '<div class="flex items-center justify-center h-full text-gray-400">Video unavailable</div>'}
           </div>
         `;
         container.appendChild(card);
       });
     }
 
-    // التشغيل عند تحميل الصفحة
     window.addEventListener('DOMContentLoaded', () => {
       renderSport();
       setTimeout(() => setLanguage(currentLang), 100);
