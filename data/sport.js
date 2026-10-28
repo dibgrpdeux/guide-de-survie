@@ -24,15 +24,15 @@ window.SECTIONS.push({
       extra: "📍 Kouba, Alger"
     },
     {
-      title: { fr: "Change Yourself (Garidi)", ar: "غيّر نفسك (قاريدي)", en: "Change Yourself (Garidi)" },
+      title: { fr: "", ar: "", en: "" },
       icon: "🔥",
       desc: { fr: "Une vidéo motivante tournée à Garidi.", ar: "فيديو تحفيزي تم تصويره في قاريدي.", en: "A motivating video filmed in Garidi." },
       video: "byDM5wQ3wcc"
     },
     {
-      title: { fr: "Dépassement de soi", ar: "تجاوز الذات", en: "Self-Overcoming" },
+      title: { fr: "", ar: "", en: "" },
       icon: "✨",
-      desc: { fr: "Un short inspirant .", ar: "فيديو قصير.", en: "An inspiring short to push your limits." },
+      desc: { fr: "Un short inspirant .", ar: "فيديو قصير.", en: "An inspiring short ." },
       videoUrl: "https://youtube.com/shorts/s4IcvPRD5dY",
       extra: "🎬 YouTube Shorts"
     }
