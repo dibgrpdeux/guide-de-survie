@@ -70,50 +70,12 @@
       </div>
       <h2 class="text-3xl font-black text-gray-900" data-i18n="sport_title">الرياضة في ENSTP</h2>
       <p class="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed" data-i18n="sport_desc">
-        المدرسة توفر فضاءات رياضية متنوعة للطلبة. شاهد الفيديوهات أدناه لاستكشاف المرافق.
+        شاهد الفيديوهات أدناه لاستكشاف المرافق الرياضية والأنشطة في المدرسة والمحيط.
       </p>
     </div>
 
-    <!-- معرض الفيديوهات -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      
-      <!-- فيديو 1: جولة  -->
-      <div class="glass-card p-4 rounded-2xl border border-gray-100 space-y-2">
-        <div class="video-container bg-gray-200 shadow-sm">
-          <!-- ضع هنا رابط الفيديو الأول -->
-          <iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe>
-        </div>
-        <h3 class="font-bold text-gray-900 text-center text-sm" data-i18n="sport_vid_tour">جولة في الملاعب الرياضية</h3>
-      </div>
-
-      <!-- فيديو 2: الأنشطة الطلابية -->
-      <div class="glass-card p-4 rounded-2xl border border-gray-100 space-y-2">
-        <div class="video-container bg-gray-200 shadow-sm">
-          <!-- ضع هنا رابط الفيديو الثاني -->
-          <iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe>
-        </div>
-        <h3 class="font-bold text-gray-900 text-center text-sm" data-i18n="sport_vid_activities">الأنشطة الرياضية الطلابية</h3>
-      </div>
-
-      <!-- فيديو 3:م -->
-      <div class="glass-card p-4 rounded-2xl border border-gray-100 space-y-2">
-        <div class="video-container bg-gray-200 shadow-sm">
-          <!-- ضع هنا رابط الفيديو الثالث -->
-          <iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe>
-        </div>
-        <h3 class="font-bold text-gray-900 text-center text-sm" data-i18n="sport_vid_football">تدريبات كرة القدم</h3>
-      </div>
-
-      <!-- فيديو 4: النوادي الرياضية -->
-      <div class="glass-card p-4 rounded-2xl border border-gray-100 space-y-2">
-        <div class="video-container bg-gray-200 shadow-sm">
-          <!-- ضع هنا رابط الفيديو الرابع -->
-          <iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe>
-        </div>
-        <h3 class="font-bold text-gray-900 text-center text-sm" data-i18n="sport_vid_clubs">النوادي الرياضية</h3>
-      </div>
-
-    </div>
+    <!-- حاوية الفيديوهات -->
+    <div id="sportContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 
   </main>
 
@@ -121,5 +83,70 @@
     <p>© 2026 ENSTP Kouba.</p>
   </footer>
 
+  <!-- استدعاء ملف البيانات -->
+  <script src="data/sport.js"></script>
+
+  <script>
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+
+    // تحديث اللغة
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      originalSetLanguage(lang);
+      renderSport(); // إعادة عرض الفيديوهات عند تغيير اللغة
+    };
+
+    // دالة استخراج معرف الفيديو من الروابط المختلفة (عادية أو Shorts)
+    function getYoutubeId(url) {
+      if (!url) return null;
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    // دالة عرض الفيديوهات
+    function renderSport() {
+      const container = document.getElementById('sportContainer');
+      container.innerHTML = '';
+
+      // البحث عن قسم الرياضة في البيانات
+      const sportSection = window.SECTIONS.find(s => s.id === 'sport');
+      if (!sportSection || !sportSection.items) return;
+
+      sportSection.items.forEach(item => {
+        const title = item.title[currentLang] || item.title['ar'];
+        const desc = item.desc ? (item.desc[currentLang] || item.desc['ar']) : '';
+        const extra = item.extra || '';
+        
+        // استخراج معرف الفيديو سواء كان في video أو videoUrl
+        let videoId = item.video;
+        if (!videoId && item.videoUrl) {
+          videoId = getYoutubeId(item.videoUrl);
+        }
+
+        const card = document.createElement('div');
+        card.className = "glass-card p-4 rounded-2xl border border-gray-100 space-y-3";
+        
+        card.innerHTML = `
+          <div class="video-container bg-gray-200 shadow-sm">
+            ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>` : '<div class="flex items-center justify-center h-full text-gray-400">Video not available</div>'}
+          </div>
+          <div class="text-center space-y-1">
+            <h3 class="font-bold text-gray-900 text-sm">${title}</h3>
+            <p class="text-xs text-gray-500">${desc}</p>
+            ${extra ? `<p class="text-[10px] font-bold text-indigo-500 mt-1">${extra}</p>` : ''}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // التشغيل عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', () => {
+      renderSport();
+      setTimeout(() => setLanguage(currentLang), 100);
+    });
+  </script>
 </body>
 </html>
