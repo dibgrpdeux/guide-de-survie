@@ -16,80 +16,113 @@
       --primary: #d97706;       /* برتقالي ذهبي */
       --primary-dark: #b45309;  /* برتقالي غامق */
       --primary-light: #fef3c7; /* كريمي */
-      --navy: #0f172a;          /* أزرق داكن جداً */
-      --blue-header: #1e3a8a;   /* أزرق الهيدر */
+      --deep: #78350f;          /* بني داكن للهيدر */
+      --deep-light: #92400e;    /* بني متوسط */
     }
     
     body { font-family: 'Cairo', sans-serif; background: #fffbeb; color: #1e293b; }
     
-    /* خلفية متدرجة */
+    /* خلفية متدرجة دافئة */
     .ambient-bg { 
       position: fixed; inset: 0; z-index: -1; 
-      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #e0f2fe 100%); 
+      background: 
+        radial-gradient(circle at 20% 10%, rgba(251, 191, 36, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 90%, rgba(217, 119, 6, 0.12) 0%, transparent 40%),
+        linear-gradient(135deg, #fffbeb 0%, #fef3c7 60%, #fde68a 100%);
     }
 
     .glass-card { 
-      background: rgba(255, 255, 255, 0.95); 
+      background: rgba(255, 255, 255, 0.96); 
       backdrop-filter: blur(16px); 
-      border: 1px solid rgba(255, 255, 255, 0.9); 
-      box-shadow: 0 10px 30px -10px rgba(146, 64, 14, 0.1); 
+      border: 1px solid rgba(251, 191, 36, 0.3); 
+      box-shadow: 0 10px 30px -10px rgba(146, 64, 14, 0.15); 
     }
 
     /* أزرار اختيار السنة */
-    .btn-year { background: white; border: 2px solid #e2e8f0; color: #475569; }
+    .btn-year { background: white; border: 2px solid #fed7aa; color: #92400e; font-weight: 700; }
+    .btn-year:hover { border-color: #f59e0b; }
     .btn-year.active { 
       background: linear-gradient(135deg, #d97706, #f59e0b); 
       color: white; 
       border-color: transparent;
-      box-shadow: 0 10px 20px -5px rgba(217, 119, 6, 0.4); 
+      box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.5); 
     }
 
     /* أزرار المواد */
     .badge-subject { transition: all 0.3s ease; }
     .badge-subject.active { 
-      background-color: var(--primary); 
+      background: linear-gradient(135deg, #d97706, #f59e0b); 
       color: white; 
-      border-color: var(--primary); 
-      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25); 
+      border-color: transparent; 
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35); 
+      transform: translateY(-1px);
     }
     
     /* أزرار اللغة */
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #fef3c7; color: #92400e; }
-    .lang-btn.active { background: #d97706; color: white; }
+    .lang-btn { background: transparent; border: none; padding: 5px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #92400e; }
+    .lang-btn:hover { background: #fef3c7; color: #78350f; }
+    .lang-btn.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; box-shadow: 0 4px 10px rgba(217,119,6,0.3); }
 
-    /* تصميم بطاقة الأستاذ (مطابق للصورة) */
+    /* ============================================
+       🎨 تصميم بطاقة الأستاذ المطوّر
+       ============================================ */
     .teacher-card {
       background: white;
-      border-radius: 24px;
+      border-radius: 28px;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 10px 30px -10px rgba(146, 64, 14, 0.12);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
       display: flex;
       flex-direction: column;
+      border: 1px solid rgba(251, 191, 36, 0.2);
     }
     
     .teacher-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px -15px rgba(217, 119, 6, 0.2);
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -15px rgba(217, 119, 6, 0.35);
     }
 
-    /* الجزء العلوي الأزرق */
+    /* الهيدر العلوي - بني/برتقالي دافئ (بدلاً من الأزرق) */
     .card-header-bg {
-      height: 100px;
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      height: 110px;
+      background: 
+        radial-gradient(circle at 30% 20%, rgba(251, 191, 36, 0.4) 0%, transparent 50%),
+        linear-gradient(135deg, #78350f 0%, #b45309 50%, #d97706 100%);
       position: relative;
+      overflow: hidden;
+    }
+    
+    /* نقشة زخرفية في الهيدر */
+    .card-header-bg::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 100px;
+      height: 100px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+    .card-header-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      right: 40%;
+      width: 120px;
+      height: 120px;
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
     }
 
     /* زر صح في الزاوية */
     .check-badge {
       position: absolute;
-      top: 12px;
-      left: 12px;
-      width: 28px;
-      height: 28px;
-      background: rgba(255,255,255,0.25);
+      top: 14px;
+      left: 14px;
+      width: 30px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(5px);
       border-radius: 50%;
       display: flex;
@@ -97,39 +130,47 @@
       justify-content: center;
       color: white;
       font-size: 12px;
-      border: 1px solid rgba(255,255,255,0.4);
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      z-index: 2;
     }
 
     /* شارة القسم (يمين) */
     .dept-badge {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      top: 14px;
+      right: 14px;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
       color: #78350f;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 20px;
       font-size: 11px;
       font-weight: 800;
-      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+      box-shadow: 0 4px 12px rgba(120, 53, 15, 0.3);
+      z-index: 2;
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
     /* صورة الأستاذ الدائرية */
     .teacher-photo-wrap {
       position: absolute;
-      bottom: -45px;
+      bottom: -50px;
       right: 24px;
-      width: 90px;
-      height: 90px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      border: 4px solid white;
-      background: #f1f5f9;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border: 5px solid white;
+      background: #fef3c7;
+      box-shadow: 0 10px 25px rgba(120, 53, 15, 0.25);
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2;
+      z-index: 3;
+      transition: transform 0.3s ease;
+    }
+    
+    .teacher-card:hover .teacher-photo-wrap {
+      transform: scale(1.05);
     }
     
     .teacher-photo-wrap img {
@@ -147,12 +188,13 @@
       align-items: center;
       justify-content: center;
       font-weight: 900;
-      font-size: 1.8rem;
+      font-size: 2rem;
+      letter-spacing: 1px;
     }
 
     /* محتوى البطاقة */
     .card-content {
-      padding: 55px 24px 24px 24px;
+      padding: 60px 24px 24px 24px;
       text-align: right;
       display: flex;
       flex-direction: column;
@@ -160,33 +202,45 @@
     }
 
     .teacher-name {
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       font-weight: 900;
-      color: #1e293b;
+      color: #78350f;
       margin-bottom: 4px;
+      line-height: 1.2;
     }
 
     .teacher-title {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #b45309;
-      font-weight: 700;
-      margin-bottom: 12px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef3c7;
+      padding: 3px 10px;
+      border-radius: 8px;
+      align-self: flex-start;
     }
 
     .teacher-desc {
       font-size: 0.85rem;
       color: #64748b;
-      line-height: 1.6;
+      line-height: 1.7;
       margin-bottom: 20px;
       flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     /* الأزرار السفلية */
     .btn-card-primary {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      color: #451a03;
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: white;
       font-weight: 800;
-      padding: 12px;
+      padding: 13px;
       border-radius: 14px;
       text-align: center;
       display: flex;
@@ -194,20 +248,23 @@
       justify-content: center;
       gap: 8px;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      box-shadow: 0 6px 15px rgba(217, 119, 6, 0.35);
       cursor: pointer;
       border: none;
       width: 100%;
+      font-family: inherit;
+      font-size: 0.9rem;
     }
     
     .btn-card-primary:hover { 
-      background: linear-gradient(135deg, #f59e0b, #d97706); 
+      background: linear-gradient(135deg, #b45309, #d97706); 
       transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(217, 119, 6, 0.5);
     }
 
     .btn-card-secondary {
-      background: #f8fafc;
-      color: #475569;
+      background: #fffbeb;
+      color: #92400e;
       font-weight: 700;
       padding: 12px;
       border-radius: 14px;
@@ -217,71 +274,87 @@
       justify-content: center;
       gap: 8px;
       transition: all 0.3s ease;
-      border: 1px solid #e2e8f0;
+      border: 1.5px solid #fed7aa;
       cursor: pointer;
       width: 100%;
       margin-top: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
     }
     
-    .btn-card-secondary:hover { background: #f1f5f9; }
+    .btn-card-secondary:hover { 
+      background: #fef3c7; 
+      border-color: #f59e0b;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      background: rgba(120, 53, 15, 0.7);
+      backdrop-filter: blur(8px);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
   <div class="ambient-bg"></div>
 
-  <div class="max-w-6xl mx-auto w-full space-y-8">
+  <div class="max-w-7xl mx-auto w-full space-y-8">
     
     <!-- Header -->
-    <div class="text-center space-y-2 relative pt-12 md:pt-0">
+    <div class="text-center space-y-3 relative pt-14 md:pt-0">
       <!-- أزرار الترجمة -->
-      <div class="absolute top-0 left-0 flex items-center gap-1 bg-white p-1 rounded-xl border border-amber-200 shadow-sm">
+      <div class="absolute top-0 left-0 flex items-center gap-1 bg-white/90 backdrop-blur p-1.5 rounded-2xl border-2 border-amber-200 shadow-lg">
         <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
         <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
         <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
       </div>
 
-      <span class="px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 font-bold text-xs uppercase tracking-wider border border-amber-200">
-        <i class="fa-solid fa-graduation-cap mr-1"></i> ENSTP Kouba
-      </span>
-      <h1 class="text-3xl lg:text-4xl font-black text-amber-900" data-i18n="ens_title">هيئة التدريس</h1>
-      <p class="text-xs lg:text-sm text-amber-700" data-i18n="ens_subtitle">اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.</p>
+      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 font-bold text-xs uppercase tracking-wider border-2 border-amber-300 shadow-sm">
+        <i class="fa-solid fa-graduation-cap"></i> ENSTP Kouba
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-800 via-orange-700 to-amber-600">
+        <span data-i18n="ens_title">هيئة التدريس</span>
+      </h1>
+      <p class="text-sm lg:text-base text-amber-800 max-w-2xl mx-auto" data-i18n="ens_subtitle">اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.</p>
     </div>
 
     <!-- 1. اختيار السنة -->
     <div class="flex flex-wrap items-center justify-center gap-4">
-      <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-1"></i><span data-i18n="ens_year1">السنة الأولى (1CP)</span>
+      <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-8 py-4 rounded-2xl text-base transition-all flex items-center gap-3">
+        <i class="fa-solid fa-1 text-lg"></i><span data-i18n="ens_year1">السنة الأولى (1CP)</span>
       </button>
-      <button onclick="selectYear('2cp')" id="btn-2cp" class="btn-year px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-2"></i><span data-i18n="ens_year2">السنة الثانية (2CP)</span>
+      <button onclick="selectYear('2cp')" id="btn-2cp" class="btn-year px-8 py-4 rounded-2xl text-base transition-all flex items-center gap-3">
+        <i class="fa-solid fa-2 text-lg"></i><span data-i18n="ens_year2">السنة الثانية (2CP)</span>
       </button>
     </div>
 
     <!-- 2. اختيار المادة -->
-    <div class="glass-card p-5 rounded-3xl border border-amber-200 space-y-3">
-      <span class="text-xs font-bold text-amber-700 block uppercase tracking-wider" data-i18n="ens_select_subject">اختر المادة:</span>
+    <div class="glass-card p-6 rounded-3xl space-y-4">
+      <span class="text-xs font-black text-amber-800 block uppercase tracking-wider flex items-center gap-2">
+        <i class="fa-solid fa-filter text-amber-600"></i>
+        <span data-i18n="ens_select_subject">اختر المادة:</span>
+      </span>
       <div id="subjects-container" class="flex flex-wrap gap-2"></div>
     </div>
 
     <!-- 3. شبكة الأساتذة -->
-    <div id="teachers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="teachers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 
   </div>
 
-  <!-- Modal: بطاقة الأستاذ -->
-  <div id="teacher-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="glass-card bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 border border-amber-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+  <!-- Modal -->
+  <div id="teacher-modal" class="fixed inset-0 z-50 modal-overlay hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 border-2 border-amber-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
       
-      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center justify-center transition z-10">
-        <i class="fa-solid fa-xmark"></i>
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center justify-center transition z-10 shadow-sm">
+        <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <div class="flex flex-col sm:flex-row items-center gap-5 border-b border-amber-100 pb-6">
-        <div id="modal-img-box" class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white flex items-center justify-center text-3xl font-black shadow-lg overflow-hidden flex-shrink-0"></div>
+      <div class="flex flex-col sm:flex-row items-center gap-5 border-b-2 border-amber-100 pb-6">
+        <div id="modal-img-box" class="w-28 h-28 rounded-2xl bg-gradient-to-tr from-amber-600 to-orange-400 text-white flex items-center justify-center text-3xl font-black shadow-xl overflow-hidden flex-shrink-0 border-4 border-white"></div>
         <div class="space-y-1 text-center sm:text-right">
           <h2 id="modal-name" class="text-2xl font-black text-amber-900"></h2>
-          <p id="modal-grade" class="text-xs font-bold text-amber-600 uppercase tracking-wide"></p>
-          <p id="modal-email" class="text-xs font-semibold text-slate-500 flex items-center justify-center sm:justify-start gap-1.5 pt-1" dir="ltr">
+          <p id="modal-grade" class="text-xs font-bold text-amber-700 uppercase tracking-wide bg-amber-50 inline-block px-3 py-1 rounded-lg"></p>
+          <p id="modal-email" class="text-xs font-semibold text-slate-500 flex items-center justify-center sm:justify-start gap-1.5 pt-2" dir="ltr">
             <i class="fa-solid fa-envelope text-amber-500"></i>
             <span></span>
           </p>
@@ -290,22 +363,22 @@
 
       <div class="space-y-4 text-sm text-slate-700 leading-relaxed text-right" dir="rtl">
         <div>
-          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-book-bookmark text-amber-500 mr-1.5"></i> <span data-i18n="ens_module">المواد المدرّسة:</span></h4>
-          <p id="modal-modules" class="bg-amber-50 p-3 rounded-xl border border-amber-100 font-semibold text-amber-900"></p>
+          <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-book-bookmark text-amber-500"></i> <span data-i18n="ens_module">المواد المدرّسة:</span></h4>
+          <p id="modal-modules" class="bg-amber-50 p-3 rounded-xl border-2 border-amber-100 font-semibold text-amber-900"></p>
         </div>
 
         <div id="modal-advice-box">
-          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-comment-dots text-orange-500 mr-1.5"></i> <span data-i18n="ens_advice">نصيحة للطلبة:</span></h4>
-          <p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border border-orange-100 italic text-orange-900"></p>
+          <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-comment-dots text-orange-500"></i> <span data-i18n="ens_advice">نصيحة للطلبة:</span></h4>
+          <p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border-2 border-orange-100 italic text-orange-900"></p>
         </div>
 
         <div id="modal-research-box">
-          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-microscope text-emerald-500 mr-1.5"></i> <span data-i18n="ens_research">البحث العلمي:</span></h4>
-          <p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p>
+          <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-microscope text-emerald-600"></i> <span data-i18n="ens_research">البحث العلمي:</span></h4>
+          <p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border-2 border-emerald-100 text-emerald-900"></p>
         </div>
 
         <div id="modal-links-box">
-          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-link text-blue-500 mr-1.5"></i> <span data-i18n="ens_links">روابط مفيدة:</span></h4>
+          <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-link text-amber-600"></i> <span data-i18n="ens_links">روابط مفيدة:</span></h4>
           <div id="modal-links" class="flex flex-wrap gap-2 pt-1"></div>
         </div>
       </div>
@@ -314,59 +387,12 @@
   </div>
 
   <script>
-    // 1. قاعدة بيانات الترجمة
     const translations = {
-      ar: {
-        ens_title: "هيئة التدريس",
-        ens_subtitle: "اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.",
-        ens_year1: "السنة الأولى (1CP)",
-        ens_year2: "السنة الثانية (2CP)",
-        ens_select_subject: "اختر المادة:",
-        ens_all: "الكل",
-        ens_show_card: "عرض الملف الشخصي",
-        ens_contact: "تواصل عبر البريد",
-        ens_module: "المواد المدرّسة:",
-        ens_advice: "نصيحة للطلبة:",
-        ens_research: "البحث العلمي:",
-        ens_links: "روابط مفيدة:",
-        ens_grade_prof: "أستاذ دائم",
-        ens_grade_temp: "أستاذ مؤقت"
-      },
-      fr: {
-        ens_title: "Corps Enseignant",
-        ens_subtitle: "Choisissez l'année, puis la matière, et cliquez sur un enseignant pour voir sa fiche.",
-        ens_year1: "1ère Année (1CP)",
-        ens_year2: "2ème Année (2CP)",
-        ens_select_subject: "Sélectionner une matière :",
-        ens_all: "Toutes",
-        ens_show_card: "Voir le profil",
-        ens_contact: "Contacter par email",
-        ens_module: "Matière / Module :",
-        ens_advice: "Conseil aux étudiants :",
-        ens_research: "Recherche :",
-        ens_links: "Liens utiles :",
-        ens_grade_prof: "Professeur (Permanent)",
-        ens_grade_temp: "Enseignant Vacataire"
-      },
-      en: {
-        ens_title: "Faculty Members",
-        ens_subtitle: "Select the year, then the subject, and click on a teacher to view their full profile.",
-        ens_year1: "1st Year (1CP)",
-        ens_year2: "2nd Year (2CP)",
-        ens_select_subject: "Select a subject:",
-        ens_all: "All",
-        ens_show_card: "View Profile",
-        ens_contact: "Contact via Email",
-        ens_module: "Module:",
-        ens_advice: "Advice for students:",
-        ens_research: "Research:",
-        ens_links: "Useful links:",
-        ens_grade_prof: "Professor (Permanent)",
-        ens_grade_temp: "Temporary Teacher"
-      }
+      ar: { ens_title: "هيئة التدريس", ens_subtitle: "اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.", ens_year1: "السنة الأولى (1CP)", ens_year2: "السنة الثانية (2CP)", ens_select_subject: "اختر المادة:", ens_all: "الكل", ens_show_card: "عرض الملف الشخصي", ens_contact: "تواصل عبر البريد", ens_module: "المواد المدرّسة:", ens_advice: "نصيحة للطلبة:", ens_research: "البحث العلمي:", ens_links: "روابط مفيدة:", ens_grade_prof: "أستاذ دائم", ens_grade_temp: "أستاذ مؤقت" },
+      fr: { ens_title: "Corps Enseignant", ens_subtitle: "Choisissez l'année, puis la matière, et cliquez sur un enseignant pour voir sa fiche.", ens_year1: "1ère Année (1CP)", ens_year2: "2ème Année (2CP)", ens_select_subject: "Sélectionner une matière :", ens_all: "Toutes", ens_show_card: "Voir le profil", ens_contact: "Contacter par email", ens_module: "Matière / Module :", ens_advice: "Conseil aux étudiants :", ens_research: "Recherche :", ens_links: "Liens utiles :", ens_grade_prof: "Professeur (Permanent)", ens_grade_temp: "Enseignant Vacataire" },
+      en: { ens_title: "Faculty Members", ens_subtitle: "Select the year, then the subject, and click on a teacher to view their full profile.", ens_year1: "1st Year (1CP)", ens_year2: "2nd Year (2CP)", ens_select_subject: "Select a subject:", ens_all: "All", ens_show_card: "View Profile", ens_contact: "Contact via Email", ens_module: "Module:", ens_advice: "Advice for students:", ens_research: "Research:", ens_links: "Useful links:", ens_grade_prof: "Professor (Permanent)", ens_grade_temp: "Temporary Teacher" }
     };
 
-    // 2. دالة تغيير اللغة
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
     function setLanguage(lang) {
@@ -393,7 +419,6 @@
       renderTeachers();
     }
 
-    // 3. ترجمة المواد
     const subjectTranslations = {
       'Physique 1': { ar: 'الفيزياء 1', fr: 'Physique 1', en: 'Physics 1' },
       'Analyse 1': { ar: 'التحليل الرياضي 1', fr: 'Analyse 1', en: 'Analysis 1' },
@@ -419,7 +444,6 @@
       "Technique d'expression": { ar: 'تقنيات التعبير', fr: "Technique d'expression", en: 'Expression Techniques' }
     };
 
-    // 4. بيانات الأساتذة (مع إضافة الصور)
     const teachersData = {
       '1cp': [
         { id: 'haddouche', name: 'HADDOUCHE Abdeslam', grade: 'prof', email: 'a.haddouche@enstp.edu.dz', subject: 'Physique 1', advice: 'Time management + self confidence.', research: 'Quantum Supersymmetry, Theoretical Nuclear Structure.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/abdeslam-haddouche-46a420a6' }], photo: 'haddouche.jpg', dept: 'الفيزياء' },
@@ -427,10 +451,7 @@
         { id: 'kias_1', name: 'KIAS', grade: 'temp', email: 'm.kias@enstp.edu.dz', subject: 'Physique 1', dept: 'الفيزياء' },
         { id: 'benyettou_1', name: 'BENYETTOU Fethi', grade: 'prof', email: 'f.benyettou@enstp.edu.dz', subject: 'Physique 1', dept: 'الفيزياء' },
         { id: 'ouanoufi', name: 'OUANOUFI', grade: 'temp', email: 'ouanoufi@enstp.edu.dz', subject: 'Physique 1', dept: 'الفيزياء' },
-        
-        // إضافة الصورة للأستاذ bellal
         { id: 'bellal', name: 'BELLAL', grade: 'temp', email: 'r.bellal@enstp.edu.dz', subject: 'Analyse 1', photo: 'bellal.jpg', dept: 'الرياضيات' },
-        
         { id: 'kechiche', name: 'KECHICHE', grade: 'temp', email: 'kechiche@enstp.edu.dz', subject: 'Analyse 1', dept: 'الرياضيات' },
         { id: 'benahmed', name: 'BENAHMED', grade: 'temp', email: 'benahmed@enstp.edu.dz', subject: 'Analyse 1', dept: 'الرياضيات' },
         { id: 'makhfi', name: 'MAKHFI', grade: 'temp', email: 'makhfi@enstp.edu.dz', subject: 'Algèbre 1', dept: 'الرياضيات' },
@@ -469,10 +490,7 @@
         { id: 'boulatiour', name: 'BOULATIOUR', grade: 'temp', email: 'boulatiour@enstp.edu.dz', subject: 'Analyse 3', dept: 'الرياضيات' },
         { id: 'hamadi', name: 'HAMADI Ahmed', grade: 'prof', email: 'a.hamadi@enstp.edu.dz', subject: 'Analyse Numérique 2', advice: 'Il faut suivre tous vos cours et TD sans aucune absence pour assurer vos succès.', research: 'Structure Algorithmique de graphes parfaits.', dept: 'الرياضيات' },
         { id: 'kiouche', name: 'KIOUCHE', grade: 'temp', email: 's.khouche@enstp.edu.dz', subject: 'Analyse Numérique 2', dept: 'الرياضيات' },
-        
-        // إضافة صورة dib
         { id: 'dib', name: 'DIB K.', grade: 'temp', email: 'k.dib@enstp.edu.dz', subject: 'Chimie 3', photo: 'dib.jpg', dept: 'الكيمياء' },
-        
         { id: 'bendada', name: 'BENDADA Kheiredine', grade: 'prof', email: 'k.bendada@enstp.edu.dz', subject: 'Chimie 3', modules: 'Chimie des solutions et Chimie organique', advice: 'Je conseille aux étudiants de développer leur curiosité scientifique...', research: 'Caractérisation des paramètres thermodynamiques...', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?hl=fr&user=Oy0kr_UAAAAJ' }], photo: 'bendada.jpg', dept: 'الكيمياء' },
         { id: 'haouchine', name: 'HAOUCHINE', grade: 'temp', email: 'haouchine@enstp.edu.dz', subject: 'Chimie 3', dept: 'الكيمياء' },
         { id: 'bouhara', name: 'BOUHARA Safia', grade: 'prof', email: 's.bouhara@enstp.edu.dz', subject: 'Chimie 3', advice: "Je conseille les étudiants d'être respectueux...", research: 'Adsorption du glyphosate sur les nanotubes...', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=AK2HZyYAAAAJ&hl=fr' }], dept: 'الكيمياء' },
@@ -480,10 +498,7 @@
         { id: 'benyettou_2', name: 'BENYETTOU Fethi', grade: 'prof', email: 'f.benyettou@enstp.edu.dz', subject: 'Electricité Gle', advice: 'Cherchez, vous trouvez.', research: 'Modélisation et simulation des nano-structures...', links: [{ label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Benyettou-Fethi-2' }], dept: 'الكهرباء' },
         { id: 'boudina', name: 'BOUDINA Nour El Houda', grade: 'temp', email: 'nourelhouda.boudina@enstp.edu.dz', subject: 'Electricité Gle', advice: "Ne cessez jamais d'apprendre...", links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/nour-el-houda-boudina-93215b2b5' }], dept: 'الكهرباء' },
         { id: 'nemouchi', name: 'NEMOUCHI', grade: 'temp', email: 'nemouchi@enstp.edu.dz', subject: 'Electricité Gle', dept: 'الكهرباء' },
-        
-        // إضافة صورة ouled_kaddour
         { id: 'ould_kaddour', name: 'OULD KADDOUR', grade: 'temp', email: 'm.ouladkaddour@enstp.edu.dz', subject: 'Info 3', photo: 'ouled_kaddour.jpg', dept: 'الإعلام الآلي' },
-        
         { id: 'lhaddad', name: 'LHADDAD', grade: 'temp', email: 's.lhaddad@enstp.edu.dz', subject: 'Info 3', dept: 'الإعلام الآلي' },
         { id: 'larbi', name: 'LARBI', grade: 'temp', email: 'b.larbi@enstp.edu.dz', subject: 'Info 3', dept: 'الإعلام الآلي' },
         { id: 'zouadi', name: 'ZOUADI N.', grade: 'temp', email: 'n.zouadi@enstp.edu.dz', subject: 'Meca Rationnelle 1', dept: 'الميكانيك' },
@@ -502,8 +517,8 @@
 
     function selectYear(year) {
       selectedYear = year;
-      document.getElementById('btn-1cp').className = `btn-year px-6 py-3 rounded-2xl font-bold text-sm border border-gray-200 transition ${year === '1cp' ? 'active' : 'bg-white text-gray-700'}`;
-      document.getElementById('btn-2cp').className = `btn-year px-6 py-3 rounded-2xl font-bold text-sm border border-gray-200 transition ${year === '2cp' ? 'active' : 'bg-white text-gray-700'}`;
+      document.getElementById('btn-1cp').className = `btn-year px-8 py-4 rounded-2xl text-base transition-all flex items-center gap-3 ${year === '1cp' ? 'active' : ''}`;
+      document.getElementById('btn-2cp').className = `btn-year px-8 py-4 rounded-2xl text-base transition-all flex items-center gap-3 ${year === '2cp' ? 'active' : ''}`;
       
       selectedSubject = 'all';
       renderSubjects();
@@ -518,14 +533,14 @@
       subjectsBox.innerHTML = '';
       
       const allBtn = document.createElement('button');
-      allBtn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-amber-50'}`;
+      allBtn.className = `badge-subject px-4 py-2 rounded-xl border-2 text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
       allBtn.innerText = translations[currentLang].ens_all;
       allBtn.onclick = () => { selectedSubject = 'all'; renderSubjects(); renderTeachers(); };
       subjectsBox.appendChild(allBtn);
 
       uniqueSubjects.forEach(sub => {
         const btn = document.createElement('button');
-        btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-amber-50'}`;
+        btn.className = `badge-subject px-4 py-2 rounded-xl border-2 text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
         btn.innerText = subjectTranslations[sub] ? subjectTranslations[sub][currentLang] : sub;
         btn.onclick = () => {
           selectedSubject = sub;
@@ -601,7 +616,6 @@
     }
 
     function openModal(teacherId) {
-      // البحث عن الأستاذ في كلتا السنتين
       let t = teachersData['1cp'].find(x => x.id === teacherId);
       if (!t) t = teachersData['2cp'].find(x => x.id === teacherId);
       if (!t) return;
@@ -641,7 +655,7 @@
         linksBox.classList.remove('hidden');
         linksContainer.innerHTML = '';
         t.links.forEach(l => {
-          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold hover:bg-blue-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
+          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border-2 border-amber-200 text-xs font-bold hover:bg-amber-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
         });
       } else {
         linksBox.classList.add('hidden');
