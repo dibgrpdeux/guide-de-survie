@@ -40,6 +40,9 @@
       overflow-x: hidden;
     }
 
+    /* ============================================
+       الشريط العلوي
+       ============================================ */
     .top-navbar {
       position: fixed;
       top: 15px;
@@ -59,16 +62,11 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-   .nav-logo {
-  height: 40px;
-  object-fit: contain;
-  background: transparent;
-  padding: 0;
-  border-radius: 8px;
-  /* ✨ Efface le fond blanc du JPG */
-  mix-blend-mode: multiply;
-  filter: contrast(1.1);
-}
+    .nav-logo {
+      height: 45px;
+      width: auto;
+      object-fit: contain;
+    }
 
     .lang-switch {
       display: flex;
@@ -121,6 +119,9 @@
 
     .sound-btn.muted { opacity: 0.5; }
 
+    /* ============================================
+       🦘 زر الكنغر (البحث)
+       ============================================ */
     .kangaroo-btn {
       position: relative;
       width: 48px;
@@ -184,6 +185,9 @@
       border-color: rgba(249, 115, 22, 0.6);
     }
 
+    /* ============================================
+       قسم الهيرو
+       ============================================ */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -212,12 +216,10 @@
     }
 
     .hero-logo {
-  width: 140px;
-  margin-bottom: 20px;
-  /* ✨ Efface le fond blanc sur fond sombre */
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)) brightness(1.05);
-}
+      width: 150px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 10px 25px rgba(0,0,0,0.5));
+    }
 
     .hero-badge {
       background: rgba(255, 255, 255, 0.15);
@@ -298,6 +300,9 @@
       50% { transform: translateY(5px); }
     }
 
+    /* ============================================
+       شريط الأقسام
+       ============================================ */
     .sections-slider-container {
       width: 100%;
       max-width: 1200px;
@@ -380,6 +385,9 @@
     .section-pill i { font-size: 1.1rem; color: var(--primary-hover); }
     .section-pill:hover i { color: #000; }
 
+    /* ============================================
+       شبكة البطاقات
+       ============================================ */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -533,6 +541,9 @@
       background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.6));
     }
 
+    /* ============================================
+       نافذة البحث
+       ============================================ */
     .search-overlay {
       position: fixed;
       inset: 0;
@@ -586,6 +597,9 @@
       color: var(--text-main);
     }
 
+    /* ============================================
+       🦘 الكنغر المتحرك
+       ============================================ */
     .mascot-container {
       position: fixed;
       bottom: 20px;
@@ -698,10 +712,10 @@
     }
 
     /* ============================================
-       📱 Responsive — 1 SEULE CARTE PAR LIGNE
+       📱 الهاتف — بطاقة واحدة في السطر
        ============================================ */
     @media (max-width: 600px) {
-      .hero-logo { width: 100px; }
+      .hero-logo { width: 110px; }
       .top-navbar { width: 100%; top: 0; border-radius: 0; border-left: none; border-right: none; }
       .lang-btn { padding: 5px 8px; font-size: 0.7rem; }
       .sections-slider-container { margin-top: 10px; }
@@ -710,8 +724,9 @@
       .kangaroo-svg { width: 32px; height: 32px; }
       .mascot-kangaroo { width: 55px; height: 70px; }
       .action-btn, .sound-btn { width: 36px; height: 36px; }
+      .nav-logo { height: 38px; }
       
-      /* ✅ MODIFICATION : Une seule carte par ligne */
+      /* ✅ بطاقة واحدة في السطر */
       .cards-grid { 
         grid-template-columns: 1fr; 
         gap: 20px; 
@@ -736,8 +751,11 @@
 </head>
 <body>
 
+  <!-- ==========================================
+       الشريط العلوي
+       ========================================== -->
   <nav class="top-navbar">
-<img src="logo.jpg" alt="ENSTP Logo" class="nav-logo" onerror="this.style.display='none'">
+    <img src="logo.png" alt="ENSTP Logo" class="nav-logo" onerror="this.style.display='none'">
 
     <div class="lang-switch">
       <button class="lang-btn active" onclick="setLang('ar', event)">العربية</button>
@@ -780,11 +798,14 @@
     </div>
   </nav>
 
+  <!-- ==========================================
+       قسم الهيرو
+       ========================================== -->
   <header class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
 
-<img src="logo.jpg" alt="ENSTP Logo" class="hero-logo" onerror="this.src='https://via.placeholder.com/150x150/ffffff/000000?text=ENSTP'">
+    <img src="logo.png" alt="ENSTP Logo" class="hero-logo" onerror="this.style.display='none'">
 
     <div class="hero-badge">
       <i class="fa-solid fa-location-dot"></i> الدليل الميداني الشامل للطلبة
@@ -803,6 +824,9 @@
     </a>
   </header>
 
+  <!-- ==========================================
+       شريط الأقسام
+       ========================================== -->
   <div class="sections-slider-container" id="sections">
     <div class="sections-slider">
       <a href="ma-ecole.html" class="section-pill"><i class="fa-solid fa-school"></i> مدرستي</a>
@@ -821,7 +845,7 @@
   </div>
 
   <!-- ==========================================
-       شبكة البطاقات — images inchangées
+       شبكة البطاقات
        ========================================== -->
   <section class="cards-grid" id="cardsGrid">
 
@@ -832,7 +856,7 @@
       <div class="card-body">
         <h3 class="card-title">مدرستي</h3>
         <p class="card-sub">الأساتذة، المباني، والتاريخ</p>
-      </div>
+              </div>
     </a>
 
     <a href="administration.html" class="card">
@@ -925,7 +949,6 @@
       </div>
     </a>
 
-    <!-- 🎭 الترفيه (AJOUTÉE) -->
     <a href="loisirs.html" class="card">
       <div class="card-img-wrap">
         <img src="images (81).jpeg" alt="الترفيه" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=الترفيه'">
@@ -949,7 +972,7 @@
   </section>
 
   <!-- ==========================================
-       🦘 Mascotte Kangourou Interactive
+       🦘 الكنغر المتحرك
        ========================================== -->
   <div class="mascot-container" id="mascotContainer">
     <div class="mascot-bubble" id="mascotBubble">مرحبا! 👋</div>
@@ -1076,7 +1099,7 @@
       });
     });
 
-    /* 5. ✨ Apparition une par une */
+    /* 5. ظهور البطاقات واحدة تلو الأخرى */
     const cards = document.querySelectorAll('.card');
     
     const observer = new IntersectionObserver((entries) => {
@@ -1098,7 +1121,7 @@
 
     cards.forEach(card => observer.observe(card));
 
-    /* 6. 🔊 SYSTÈME DE SONS */
+    /* 6. 🔊 نظام الأصوات */
     let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
     let audioCtx = null;
 
@@ -1159,7 +1182,7 @@
       }
     }
 
-    /* 7. Bouton On/Off du son */
+    /* 7. زر تشغيل/إيقاف الصوت */
     const soundToggle = document.getElementById('soundToggle');
     const soundIcon = document.getElementById('soundIcon');
     
@@ -1185,7 +1208,7 @@
       setTimeout(() => soundToggle.classList.remove('sound-pulse'), 400);
     });
 
-    /* 8. Sons sur les interactions */
+    /* 8. الأصوات على التفاعلات */
     document.querySelectorAll('.card, .section-pill').forEach(el => {
       el.addEventListener('mouseenter', () => playSound('hover'));
       el.addEventListener('click', () => playSound('click'));
@@ -1211,7 +1234,7 @@
       exploreBtn.addEventListener('click', () => playSound('success'));
     }
 
-    /* 9. 🦘 ACTIONS INTERACTIVES DU KANGOUROU */
+    /* 9. 🦘 تفاعلات الكنغر */
     const mascotContainer = document.getElementById('mascotContainer');
     const mascotKangaroo = document.getElementById('mascotKangaroo');
     const mascotBubble = document.getElementById('mascotBubble');
@@ -1233,7 +1256,7 @@
       }, 2500);
     }
 
-    // Saut au clic
+    // قفزة عند النقر
     mascotContainer.addEventListener('click', () => {
       if (mascotContainer.classList.contains('dragging')) return;
       mascotKangaroo.classList.add('jump');
@@ -1243,7 +1266,7 @@
       setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
     });
 
-    // Suit la souris
+    // يتبع الفأرة
     document.addEventListener('mousemove', (e) => {
       if (mascotContainer.classList.contains('dragging')) return;
       const rect = mascotKangaroo.getBoundingClientRect();
@@ -1259,14 +1282,14 @@
       mascotKangaroo.style.transform = '';
     });
 
-    // Danse toutes les 15 secondes
+    // يرقص كل 15 ثانية
     setInterval(() => {
       if (mascotContainer.classList.contains('dragging')) return;
       mascotKangaroo.classList.add('dance');
       setTimeout(() => mascotKangaroo.classList.remove('dance'), 3000);
     }, 15000);
 
-    // Réagit au scroll
+    // يتفاعل مع التمرير
     let lastScrollY = window.scrollY;
     window.addEventListener('scroll', () => {
       if (mascotContainer.classList.contains('dragging')) return;
@@ -1278,7 +1301,7 @@
       lastScrollY = currentScrollY;
     });
 
-    // Drag & Drop
+    // السحب والإفلات
     let isDragging = false;
     let offsetX, offsetY;
 
@@ -1331,13 +1354,13 @@
       }, 800);
     }
 
-    // Message au survol
+    // رسالة عند المرور
     mascotContainer.addEventListener('mouseenter', () => {
       const randomMsg = messages[Math.floor(Math.random() * messages.length)];
       showBubble(randomMsg);
     });
 
-    // Touche Espace pour sauter
+    // زر المسافة للقفز
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
         mascotKangaroo.classList.add('jump');
