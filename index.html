@@ -10,7 +10,7 @@
   
   <style>
     /* ============================================
-       المتغيرات الأساسية
+       المتغيرات
        ============================================ */
     :root {
       --primary: #fbbf24;
@@ -19,7 +19,7 @@
       --orange-dark: #ea580c;
       --bg-color: #f8fafc;
       --text-main: #1e293b;
-      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-bg: rgba(255, 255, 255, 0.95);
       --nav-bg: rgba(255, 255, 255, 0.95);
       --border-color: rgba(226, 232, 240, 0.8);
     }
@@ -27,7 +27,7 @@
     [data-theme="dark"] {
       --bg-color: #0f172a;
       --text-main: #f8fafc;
-      --card-bg: rgba(30, 41, 59, 0.8);
+      --card-bg: rgba(30, 41, 59, 0.85);
       --nav-bg: rgba(15, 23, 42, 0.95);
       --border-color: rgba(51, 65, 85, 0.8);
     }
@@ -125,7 +125,7 @@
     .sound-btn.muted { opacity: 0.5; }
 
     /* ============================================
-       🦘 Bouton Kangourou Orange (Recherche)
+       🦘 Bouton Kangourou (Recherche)
        ============================================ */
     .kangaroo-btn {
       position: relative;
@@ -141,7 +141,6 @@
       padding: 0;
       transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
-      overflow: visible;
     }
 
     .kangaroo-btn::before {
@@ -186,25 +185,9 @@
       60% { transform: translateY(-4px) rotate(5deg); }
     }
 
-    .kangaroo-btn:active { transform: scale(0.92); }
-
-    .kangaroo-btn:active .kangaroo-svg {
-      animation: kangarooSquash 0.4s ease;
-    }
-
-    @keyframes kangarooSquash {
-      0% { transform: scale(1, 1); }
-      40% { transform: scale(1.15, 0.85); }
-      100% { transform: scale(1, 1); }
-    }
-
     [data-theme="dark"] .kangaroo-btn {
       background: linear-gradient(135deg, #1e293b, #0f172a);
       border-color: rgba(249, 115, 22, 0.6);
-    }
-
-    [data-theme="dark"] .kangaroo-svg {
-      filter: drop-shadow(0 0 6px rgba(249,115,22,0.5));
     }
 
     /* ============================================
@@ -408,47 +391,63 @@
     .section-pill:hover i { color: #000; }
 
     /* ============================================
-       شبكة البطاقات
+       ✨ شبكة البطاقات — Blanc & Orange élégant
        ============================================ */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 30px;
       max-width: 1200px;
       margin: 0 auto 80px;
       padding: 0 20px;
     }
 
     .card {
-      background: var(--card-bg);
-      border-radius: 20px;
+      position: relative;
+      background: linear-gradient(145deg, #ffffff 0%, #fff7ed 50%, #ffedd5 100%);
+      border-radius: 24px;
       overflow: hidden;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(249, 115, 22, 0.15);
       text-decoration: none;
-      color: var(--text-main);
+      color: #1e293b;
       display: flex;
       flex-direction: column;
-      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 
+        0 4px 12px rgba(249, 115, 22, 0.08),
+        0 1px 3px rgba(0, 0, 0, 0.04);
+      
+      /* Animation d'apparition (une par une) */
       opacity: 0;
-      transform: translateY(30px);
-      position: relative;
+      transform: translateY(60px) scale(0.9);
+      transition: 
+        opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.4s ease;
+      will-change: transform, opacity;
     }
 
+    /* Apparition UNE PAR UNE (cascade) */
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Bordure dégradée animée au survol */
     .card::before {
       content: "";
       position: absolute;
       inset: 0;
-      border-radius: 20px;
-      padding: 2px;
-      background: linear-gradient(135deg, #fbbf24, #f97316, #fbbf24);
-      background-size: 200% 200%;
+      border-radius: 24px;
+      padding: 2.5px;
+      background: linear-gradient(135deg, #f97316, #fbbf24, #f97316);
+      background-size: 300% 300%;
       -webkit-mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
       animation: gradientRotate 3s linear infinite;
       pointer-events: none;
       z-index: 3;
@@ -458,29 +457,102 @@
 
     @keyframes gradientRotate {
       0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
-    }
-
-    .card.visible {
-      opacity: 1;
-      transform: translateY(0);
+      100% { background-position: 300% 50%; }
     }
 
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(251, 191, 36, 0.15);
-      border-color: var(--primary);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 
+        0 25px 50px rgba(249, 115, 22, 0.25),
+        0 8px 20px rgba(249, 115, 22, 0.15);
+    }
+
+    /* Image de la carte */
+    .card-img-wrap {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #fed7aa, #fbbf24);
     }
 
     .card img {
       width: 100%;
-      height: 170px;
+      height: 100%;
       object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .card-body { padding: 20px 15px; text-align: center; }
-    .card-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
-    .card-sub { font-size: 0.85rem; opacity: 0.7; font-weight: 600; }
+    .card:hover img {
+      transform: scale(1.12) rotate(1.5deg);
+    }
+
+    /* Overlay orange au survol de l'image */
+    .card-img-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(249, 115, 22, 0.45), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .card:hover .card-img-wrap::after { opacity: 1; }
+
+    /* Corps de la carte */
+    .card-body {
+      padding: 20px 18px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.6));
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+      color: #7c2d12;
+      transition: color 0.3s ease;
+    }
+
+    .card:hover .card-title { color: #ea580c; }
+
+    .card-sub {
+      font-size: 0.85rem;
+      color: #78716c;
+      font-weight: 600;
+    }
+
+    /* Petit trait décoratif sous le titre */
+    .card-title::after {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(90deg, #f97316, #fbbf24);
+      border-radius: 2px;
+      margin: 8px auto 0;
+      transition: width 0.4s ease;
+    }
+
+    .card:hover .card-title::after { width: 70px; }
+
+    /* Mode sombre */
+    [data-theme="dark"] .card {
+      background: linear-gradient(145deg, #1e293b 0%, #1a1410 50%, #2d1b0e 100%);
+      color: #f8fafc;
+      border-color: rgba(249, 115, 22, 0.3);
+    }
+
+    [data-theme="dark"] .card-title { color: #fbbf24; }
+    [data-theme="dark"] .card:hover .card-title { color: #f97316; }
+    [data-theme="dark"] .card-sub { color: #a8a29e; }
+    [data-theme="dark"] .card-body {
+      background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.6));
+    }
 
     /* ============================================
        نافذة البحث
@@ -539,18 +611,65 @@
     }
 
     /* ============================================
-       🦘 Mascotte Kangourou en bas à droite
+       🦘 Mascotte Kangourou Interactive
        ============================================ */
-    .mascot-kangaroo {
+    .mascot-container {
       position: fixed;
       bottom: 20px;
       right: 20px;
+      z-index: 900;
+      cursor: grab;
+      user-select: none;
+      transition: bottom 0.3s ease, right 0.3s ease;
+    }
+
+    .mascot-container:active { cursor: grabbing; }
+
+    .mascot-kangaroo {
       width: 70px;
       height: 90px;
-      z-index: 900;
+      display: block;
       animation: mascotFloat 3s ease-in-out infinite;
       filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3));
-      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: bottom center;
+    }
+
+    .mascot-container:hover .mascot-kangaroo {
+      transform: scale(1.1);
+    }
+
+    .mascot-kangaroo.jump {
+      animation: kangarooBigJump 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes kangarooBigJump {
+      0% { transform: translateY(0) scale(1); }
+      20% { transform: translateY(-40px) scale(1.1) rotate(-10deg); }
+      50% { transform: translateY(-50px) scale(1) rotate(5deg); }
+      80% { transform: translateY(-10px) scale(0.95); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    .mascot-kangaroo.dance {
+      animation: kangarooDance 1s ease-in-out infinite;
+    }
+
+    @keyframes kangarooDance {
+      0%, 100% { transform: rotate(-8deg) scale(1); }
+      25% { transform: rotate(8deg) scale(1.05); }
+      50% { transform: rotate(-8deg) scale(1); }
+      75% { transform: rotate(8deg) scale(1.05); }
+    }
+
+    .mascot-kangaroo .kangaroo-eye {
+      animation: blinkEye 4s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    @keyframes blinkEye {
+      0%, 90%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
     }
 
     @keyframes mascotFloat {
@@ -558,15 +677,43 @@
       50% { transform: translateY(-12px) rotate(3deg); }
     }
 
-    /* Feedback visuel au clic */
-    .card:active, .section-pill:active, .kangaroo-btn:active {
-      animation: tapFeedback 0.2s ease;
+    .mascot-bubble {
+      position: absolute;
+      bottom: 100%;
+      right: 50%;
+      transform: translateX(50%) translateY(10px);
+      background: var(--card-bg);
+      color: var(--text-main);
+      padding: 10px 15px;
+      border-radius: 15px;
+      border: 2px solid var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 10;
     }
 
-    @keyframes tapFeedback {
-      0% { transform: scale(1); }
-      50% { transform: scale(0.96); }
-      100% { transform: scale(1); }
+    .mascot-bubble::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: var(--primary);
+    }
+
+    .mascot-bubble.visible {
+      opacity: 1;
+      transform: translateX(50%) translateY(0);
+    }
+
+    .mascot-container.dragging .mascot-kangaroo {
+      transform: scale(1.15) rotate(15deg);
     }
 
     .sound-pulse { animation: soundPulse 0.4s ease; }
@@ -586,8 +733,13 @@
       .btn-explore { font-size: 1rem; padding: 10px 25px; }
       .kangaroo-btn { width: 42px; height: 42px; }
       .kangaroo-svg { width: 32px; height: 32px; }
-      .mascot-kangaroo { width: 55px; height: 70px; bottom: 15px; right: 15px; }
+      .mascot-kangaroo { width: 55px; height: 70px; }
       .action-btn, .sound-btn { width: 36px; height: 36px; }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+      .card-title { font-size: 1rem; }
+      .card-sub { font-size: 0.75rem; }
+      .card-img-wrap { height: 130px; }
+      .mascot-bubble { font-size: 0.7rem; padding: 6px 10px; }
     }
 
     /* Scrollbar */
@@ -615,7 +767,6 @@
     </div>
 
     <div class="nav-actions">
-      <!-- 🔊 Bouton Son -->
       <button class="sound-btn" id="soundToggle" title="تشغيل/إيقاف الصوت">
         <i class="fa-solid fa-volume-high" id="soundIcon"></i>
       </button>
@@ -624,7 +775,6 @@
         <i class="fa-solid fa-moon"></i>
       </button>
 
-      <!-- 🦘 Bouton Kangourou (Recherche) -->
       <button class="kangaroo-btn" id="searchBtn" title="بحث / Recherche">
         <svg class="kangaroo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
           <path d="M14 48 Q6 44 8 52 Q10 58 16 54 Z" fill="#ea580c"/>
@@ -698,11 +848,14 @@
   </div>
 
   <!-- ==========================================
-       شبكة البطاقات
+       شبكة البطاقات — apparition une par une
        ========================================== -->
-  <section class="cards-grid">
+  <section class="cards-grid" id="cardsGrid">
+
     <a href="ma-ecole.html" class="card">
-      <img src="image_5ab38fe5 (1).jpg" alt="مدرستي" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=مدرستي'">
+            <div class="card-img-wrap">
+        <img src="image_5ab38fe5 (1).jpg" alt="مدرستي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=مدرستي'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">مدرستي</h3>
         <p class="card-sub">الأساتذة، المباني، والتاريخ</p>
@@ -710,7 +863,9 @@
     </a>
 
     <a href="administration.html" class="card">
-      <img src="images (74).jpeg" alt="إدارتي" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=إدارتي'">
+      <div class="card-img-wrap">
+        <img src="images (74).jpeg" alt="إدارتي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=إدارتي'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">إدارتي</h3>
         <p class="card-sub">الوثائق، الشهادات، والخدمات</p>
@@ -718,7 +873,9 @@
     </a>
 
     <a href="ma-reussite.html" class="card">
-      <img src="image_806ac8b5.jpg" alt="نجاحي" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=نجاحي'">
+      <div class="card-img-wrap">
+        <img src="image_806ac8b5.jpg" alt="نجاحي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=نجاحي'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">نجاحي</h3>
         <p class="card-sub">الدروس، الامتحانات، والتوقيت</p>
@@ -726,7 +883,9 @@
     </a>
 
     <a href="residence.html" class="card">
-      <img src="images (76).jpeg" alt="حياتي الجامعية" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=حياتي'">
+      <div class="card-img-wrap">
+        <img src="images (76).jpeg" alt="حياتي الجامعية" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=حياتي'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">حياتي الجامعية</h3>
         <p class="card-sub">الإقامة، الوجبات، والمرافق</p>
@@ -734,7 +893,9 @@
     </a>
 
     <a href="sport.html" class="card">
-      <img src="images (77).jpeg" alt="صحتي ورياضتي" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=رياضتي'">
+      <div class="card-img-wrap">
+        <img src="images (77).jpeg" alt="صحتي ورياضتي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=رياضتي'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">صحتي ورياضتي</h3>
         <p class="card-sub">الرياضة، الأنشطة، والصحة</p>
@@ -742,7 +903,9 @@
     </a>
 
     <a href="forum.html" class="card">
-      <img src="images71.jpeg" alt="ملتقى الطلبة" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=ملتقى'">
+      <div class="card-img-wrap">
+        <img src="images71.jpg" alt="ملتقى الطلبة" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=ملتقى'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">ملتقى الطلبة</h3>
         <p class="card-sub">النقاشات، النوادي، والفعاليات</p>
@@ -750,7 +913,9 @@
     </a>
 
     <a href="transport.html" class="card">
-      <img src="images80.jpg" alt="النقل" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=النقل'">
+      <div class="card-img-wrap">
+        <img src="images80.jpg" alt="النقل" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=النقل'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">النقل</h3>
         <p class="card-sub">الحافلات، المترو، والترامواي</p>
@@ -758,65 +923,84 @@
     </a>
 
     <a href="shopping.html" class="card">
-      <img src="images (79).jpeg" alt="المطاعم" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=المطاعم'">
+      <div class="card-img-wrap">
+        <img src="images (79).jpeg" alt="المطاعم" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=المطاعم'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">المطاعم</h3>
         <p class="card-sub">أفضل الوجهات القريبة</p>
       </div>
     </a>
 
-    <!-- 🛒 التسوق -->
+    <a href="alger.html" class="card">
+      <div class="card-img-wrap">
+        <img src="images82.jpg" alt="السياحة" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=السياحة'">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">السياحة</h3>
+        <p class="card-sub">معالم الجزائر العاصمة</p>
+      </div>
+    </a>
+
     <a href="shopping.html" class="card">
-      <img src="images (80).jpeg" alt="التسوق" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=التسوق'">
+      <div class="card-img-wrap">
+        <img src="images (80).jpeg" alt="التسوق" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=التسوق'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">التسوق</h3>
         <p class="card-sub">المحلات، الأسعار، والعروض</p>
       </div>
     </a>
 
-    <!-- 🎭 الترفيه -->
     <a href="loisirs.html" class="card">
-      <img src="images82.jpg" alt="الترفيه" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=الترفيه'">
+      <div class="card-img-wrap">
+        <img src="images82.jpg" alt="الترفيه" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=الترفيه'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">الترفيه</h3>
-        <p class="card-sub">السياحة، المتاحف، والأنشطة</p>
+        <p class="card-sub">الأنشطة، المتاحف، والسينما</p>
       </div>
     </a>
 
-    <!-- 📱 QR Codes -->
     <a href="qr.html" class="card">
-      <img src="images (78).jpeg" alt="QR Codes" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=QR+Codes'">
+      <div class="card-img-wrap">
+        <img src="images (78).jpeg" alt="QR Codes" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=QR+Codes'">
+      </div>
       <div class="card-body">
         <h3 class="card-title">QR Codes</h3>
         <p class="card-sub">رموز سريعة للوصول المباشر</p>
       </div>
     </a>
+
   </section>
 
   <!-- ==========================================
-       🦘 Mascotte Kangourou
+       🦘 Mascotte Kangourou Interactive
        ========================================== -->
-  <svg class="mascot-kangaroo" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
-    <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
+  <div class="mascot-container" id="mascotContainer">
+    <div class="mascot-bubble" id="mascotBubble">مرحبا! 👋</div>
+    <svg class="mascot-kangaroo" id="mascotKangaroo" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
+      <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
       <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
-    <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
-    <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
-    <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
-    <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
-    <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
-    <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
-    <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
-    <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
-    <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
-    <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
-    <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
-    <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
-    <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-    <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
-    <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
-    <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
-  </svg>
+      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
+      <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
+      <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
+      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
+      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
+      <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
+      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
+      <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
+      <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
+      <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
+      <circle cx="46" cy="26" r="2.5" fill="#1a1410" class="kangaroo-eye"/>
+      <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
+      <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
+      <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
+      <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
 
   <!-- ==========================================
        نافذة البحث
@@ -927,24 +1111,34 @@
     });
 
     /* ============================================
-       5. حركة الظهور المتدرج للبطاقات
+       5. ✨ APPARITION UNE PAR UNE (cascade)
        ============================================ */
     const cards = document.querySelectorAll('.card');
+    
+    // Options de l'observateur
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          // Calculer le délai basé sur la position de la carte
+          const cardIndex = Array.from(cards).indexOf(entry.target);
+          const visibleCards = Array.from(cards).filter(c => c.classList.contains('visible')).length;
+          
           setTimeout(() => {
             entry.target.classList.add('visible');
-          }, index * 100);
+          }, visibleCards * 120); // 120ms entre chaque carte
+          
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { 
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    });
 
     cards.forEach(card => observer.observe(card));
 
     /* ============================================
-       6. 🔊 SYSTÈME DE SONS (Web Audio API)
+       6. 🔊 SYSTÈME DE SONS
        ============================================ */
     let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
     let audioCtx = null;
@@ -1037,35 +1231,188 @@
     /* ============================================
        8. Attacher les sons aux interactions
        ============================================ */
-    // Survol des cartes et pills
     document.querySelectorAll('.card, .section-pill').forEach(el => {
       el.addEventListener('mouseenter', () => playSound('hover'));
       el.addEventListener('click', () => playSound('click'));
     });
 
-    // Kangourou
-    searchBtn.addEventListener('click', () => playSound('kangaroo'));
-
-    // Ouverture / fermeture recherche
-    searchBtn.addEventListener('click', () => playSound('open'));
+    searchBtn.addEventListener('click', () => {
+      playSound('kangaroo');
+      playSound('open');
+    });
     closeSearch.addEventListener('click', () => playSound('close'));
     searchOverlay.addEventListener('click', (e) => {
       if (e.target === searchOverlay) playSound('close');
     });
 
-    // Thème
     themeToggle.addEventListener('click', () => playSound('theme'));
 
-    // Langues
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', () => playSound('click'));
     });
 
-    // Bouton "ابدأ الاستكشاف"
     const exploreBtn = document.querySelector('.btn-explore');
     if (exploreBtn) {
       exploreBtn.addEventListener('click', () => playSound('success'));
     }
+
+    /* ============================================
+       9. 🦘 ACTIONS INTERACTIVES DU KANGOUROU
+       ============================================ */
+    const mascotContainer = document.getElementById('mascotContainer');
+    const mascotKangaroo = document.getElementById('mascotKangaroo');
+    const mascotBubble = document.getElementById('mascotBubble');
+
+    const messages = [
+      'مرحبا! 👋',
+      'كيف حالك؟ 😊',
+      'هل تحتاج مساعدة؟ 🔍',
+      'جرب البحث! 🦘',
+      'أنا هنا دائماً! 💛',
+      'مدرسة رائعة! 🏫',
+      'بالتوفيق في دراستك! 📚',
+      'اضغط عليّ لأقفز! ⬆️',
+      'اسحبني لأين تشاء! 🎯'
+    ];
+
+    let bubbleTimeout;
+
+    function showBubble(text) {
+      clearTimeout(bubbleTimeout);
+      mascotBubble.textContent = text;
+      mascotBubble.classList.add('visible');
+      bubbleTimeout = setTimeout(() => {
+        mascotBubble.classList.remove('visible');
+      }, 2500);
+    }
+
+    // 9.1 Saut au clic
+    mascotContainer.addEventListener('click', () => {
+      if (mascotContainer.classList.contains('dragging')) return;
+      
+      mascotKangaroo.classList.add('jump');
+      playSound('kangaroo');
+      
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+      showBubble(randomMsg);
+      
+      setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
+    });
+
+    // 9.2 Suit la souris
+    document.addEventListener('mousemove', (e) => {
+      if (mascotContainer.classList.contains('dragging')) return;
+      
+      const rect = mascotKangaroo.getBoundingClientRect();
+      const kangarooX = rect.left + rect.width / 2;
+      const kangarooY = rect.top + rect.height / 2;
+      
+      const angle = Math.atan2(e.clientY - kangarooY, e.clientX - kangarooX);
+      const tilt = (angle * 180) / Math.PI;
+      const limitedTilt = Math.max(-15, Math.min(15, tilt));
+      
+      mascotKangaroo.style.transform = `rotate(${limitedTilt}deg)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      mascotKangaroo.style.transform = '';
+    });
+
+    // 9.3 Danse toutes les 15 secondes
+    setInterval(() => {
+      if (mascotContainer.classList.contains('dragging')) return;
+      mascotKangaroo.classList.add('dance');
+      setTimeout(() => mascotKangaroo.classList.remove('dance'), 3000);
+    }, 15000);
+
+    // 9.4 Réagit au scroll
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      if (mascotContainer.classList.contains('dragging')) return;
+      const currentScrollY = window.scrollY;
+      if (Math.abs(currentScrollY - lastScrollY) > 50) {
+        mascotKangaroo.classList.add('jump');
+        setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
+      }
+      lastScrollY = currentScrollY;
+    });
+
+    // 9.5 Drag & Drop
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    mascotContainer.addEventListener('mousedown', startDrag);
+    mascotContainer.addEventListener('touchstart', startDrag, { passive: false });
+
+    function startDrag(e) {
+      isDragging = true;
+      mascotContainer.classList.add('dragging');
+      
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      
+      const rect = mascotContainer.getBoundingClientRect();
+      offsetX = clientX - rect.left;
+      offsetY = clientY - rect.top;
+      
+      mascotContainer.style.bottom = 'auto';
+      mascotContainer.style.right = 'auto';
+      mascotContainer.style.left = rect.left + 'px';
+      mascotContainer.style.top = rect.top + 'px';
+      
+      if (e.preventDefault) e.preventDefault();
+    }
+
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('touchmove', onDrag, { passive: false });
+
+    function onDrag(e) {
+      if (!isDragging) return;
+      
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      
+      const maxLeft = window.innerWidth - mascotContainer.offsetWidth;
+      const maxTop = window.innerHeight - mascotContainer.offsetHeight;
+      
+      mascotContainer.style.left = Math.max(0, Math.min(maxLeft, clientX - offsetX)) + 'px';
+      mascotContainer.style.top = Math.max(0, Math.min(maxTop, clientY - offsetY)) + 'px';
+      
+      if (e.preventDefault) e.preventDefault();
+    }
+
+    document.addEventListener('mouseup', endDrag);
+    document.addEventListener('touchend', endDrag);
+
+    function endDrag() {
+      if (!isDragging) return;
+      isDragging = false;
+      mascotContainer.classList.remove('dragging');
+      
+      setTimeout(() => {
+        mascotContainer.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        mascotContainer.style.left = '';
+        mascotContainer.style.top = '';
+        mascotContainer.style.bottom = '20px';
+        mascotContainer.style.right = '20px';
+        setTimeout(() => mascotContainer.style.transition = '', 500);
+      }, 800);
+    }
+
+    // 9.6 Message au survol
+    mascotContainer.addEventListener('mouseenter', () => {
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+      showBubble(randomMsg);
+    });
+
+    // 9.7 Touche Espace pour sauter
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        mascotKangaroo.classList.add('jump');
+        playSound('kangaroo');
+        setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
+      }
+    });
   </script>
 </body>
 </html>
