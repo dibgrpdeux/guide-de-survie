@@ -59,13 +59,16 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-    .nav-logo {
-      height: 40px;
-      object-fit: contain;
-      background: #fff;
-      padding: 4px 8px;
-      border-radius: 8px;
-    }
+   .nav-logo {
+  height: 40px;
+  object-fit: contain;
+  background: transparent;
+  padding: 0;
+  border-radius: 8px;
+  /* ✨ Efface le fond blanc du JPG */
+  mix-blend-mode: multiply;
+  filter: contrast(1.1);
+}
 
     .lang-switch {
       display: flex;
@@ -209,10 +212,12 @@
     }
 
     .hero-logo {
-      width: 140px;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
-    }
+  width: 140px;
+  margin-bottom: 20px;
+  /* ✨ Efface le fond blanc sur fond sombre */
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)) brightness(1.05);
+}
 
     .hero-badge {
       background: rgba(255, 255, 255, 0.15);
@@ -732,7 +737,7 @@
 <body>
 
   <nav class="top-navbar">
-    <img src="enstp_logo.png" alt="ENSTP Logo" class="nav-logo" onerror="this.style.display='none'">
+<img src="logo.jpg" alt="ENSTP Logo" class="nav-logo" onerror="this.style.display='none'">
 
     <div class="lang-switch">
       <button class="lang-btn active" onclick="setLang('ar', event)">العربية</button>
@@ -779,7 +784,7 @@
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
 
-    <img src="enstp_logo_white.png" alt="ENSTP Logo" class="hero-logo" onerror="this.src='https://via.placeholder.com/150x150/ffffff/000000?text=ENSTP'">
+<img src="logo.jpg" alt="ENSTP Logo" class="hero-logo" onerror="this.src='https://via.placeholder.com/150x150/ffffff/000000?text=ENSTP'">
 
     <div class="hero-badge">
       <i class="fa-solid fa-location-dot"></i> الدليل الميداني الشامل للطلبة
