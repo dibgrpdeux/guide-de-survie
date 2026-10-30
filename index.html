@@ -8,7 +8,7 @@
   <!-- الخطوط -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
@@ -16,305 +16,668 @@
        المتغيرات — الوضع النهاري والليلي
        ============================================ */
     :root {
-      --bg: #f8fafc;
+      --bg: #fef9f3;
       --bg-soft: #ffffff;
-      --text: #0f172a;
-      --text-soft: #64748b;
-      --card: rgba(255,255,255,0.9);
-      --border: rgba(226,232,240,0.9);
-      --accent: #f97316;          /* البرتقالي */
+      --text: #1a1410;
+      --text-soft: #78716c;
+      --card: rgba(255,255,255,0.92);
+      --border: rgba(249,115,22,0.15);
+      --accent: #f97316;
       --accent-dark: #ea580c;
-      --shadow: 0 20px 40px -15px rgba(0,0,0,0.08);
+      --accent-light: #fed7aa;
+      --gold: #fbbf24;
+      --shadow-sm: 0 4px 12px -2px rgba(249,115,22,0.08);
+      --shadow-md: 0 20px 40px -15px rgba(249,115,22,0.18);
+      --shadow-lg: 0 30px 60px -20px rgba(249,115,22,0.3);
     }
 
     html[data-theme="dark"] {
-      --bg: #0b1120;
-      --bg-soft: #111827;
-      --text: #f1f5f9;
-      --text-soft: #94a3b8;
-      --card: rgba(30,41,59,0.85);
-      --border: rgba(51,65,85,0.8);
+      --bg: #0f0a05;
+      --bg-soft: #1a1410;
+      --text: #fef9f3;
+      --text-soft: #a8a29e;
+      --card: rgba(26,20,16,0.85);
+      --border: rgba(249,115,22,0.25);
       --accent: #fb923c;
       --accent-dark: #f97316;
-      --shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+      --accent-light: #7c2d12;
+      --gold: #fcd34d;
+      --shadow-sm: 0 4px 12px -2px rgba(0,0,0,0.4);
+      --shadow-md: 0 20px 40px -15px rgba(0,0,0,0.6);
+      --shadow-lg: 0 30px 60px -20px rgba(249,115,22,0.4);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Cairo', sans-serif;
+      font-family: 'Cairo', 'Tajawal', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      transition: background 0.4s ease, color 0.4s ease;
+      transition: background 0.5s ease, color 0.5s ease;
       overflow-x: hidden;
-    }
-
-    /* خلفية متحركة خفيفة */
-    .ambient-bg {
-      position: fixed; inset: 0; z-index: -1;
-      background: radial-gradient(circle at 20% 20%, rgba(249,115,22,0.08), transparent 45%),
-                  radial-gradient(circle at 80% 70%, rgba(249,115,22,0.06), transparent 45%);
-      transition: background 0.4s ease;
+      position: relative;
     }
 
     /* ============================================
-       الشريط العلوي الصغير
+       خلفية متحركة — فقاعات برتقالية
+       ============================================ */
+    .bg-animated {
+      position: fixed; inset: 0; z-index: -1; overflow: hidden;
+      background: var(--bg);
+      transition: background 0.5s ease;
+    }
+    .bg-animated::before,
+    .bg-animated::after {
+      content: ""; position: absolute; border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.12), transparent 70%);
+      filter: blur(40px);
+      animation: floatBubble 20s ease-in-out infinite;
+    }
+    .bg-animated::before {
+      width: 500px; height: 500px;
+      top: -150px; right: -150px;
+      animation-delay: 0s;
+    }
+    .bg-animated::after {
+      width: 600px; height: 600px;
+      bottom: -200px; left: -200px;
+      background: radial-gradient(circle, rgba(251,191,36,0.08), transparent 70%);
+      animation-delay: -10s;
+    }
+    @keyframes floatBubble {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(60px,-40px) scale(1.1); }
+      66% { transform: translate(-40px,60px) scale(0.9); }
+    }
+
+    /* ============================================
+       الشريط العلوي
        ============================================ */
     .top-bar {
       position: sticky; top: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0.65rem 1.25rem;
+      padding: 0.7rem 1.25rem;
       background: var(--card);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--border);
-      transition: background 0.4s ease, border-color 0.4s ease;
+      transition: all 0.4s ease;
+      box-shadow: var(--shadow-sm);
     }
 
     .brand {
-      display: flex; align-items: center; gap: 0.6rem;
-      font-weight: 900; font-size: 1rem;
+      display: flex; align-items: center; gap: 0.7rem;
+      font-weight: 900; font-size: 1.05rem;
     }
     .brand .logo {
-      width: 34px; height: 34px; border-radius: 12px;
-      background: var(--accent); color: #fff;
+      width: 40px; height: 40px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #fff;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; font-weight: 900;
+      font-size: 1.15rem; font-weight: 900;
+      box-shadow: 0 6px 16px -4px rgba(249,115,22,0.5);
+      position: relative;
+      overflow: hidden;
     }
-    .brand span { color: var(--accent); }
+    .brand .logo::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+      transform: translateX(-100%);
+      animation: shimmerLogo 3s ease-in-out infinite;
+    }
+    @keyframes shimmerLogo {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .brand-text .main { font-weight: 900; }
+    .brand-text .main span { color: var(--accent); }
+    .brand-text .sub { font-size: 0.62rem; color: var(--text-soft); font-weight: 600; }
 
     .controls { display: flex; align-items: center; gap: 0.5rem; }
 
     /* زر الترجمة */
     .lang-wrap { position: relative; }
     .lang-btn {
-      display: flex; align-items: center; gap: 0.4rem;
-      background: transparent; border: 1px solid var(--border);
-      color: var(--text); padding: 0.4rem 0.75rem;
-      border-radius: 10px; font-weight: 700; font-size: 0.78rem;
-      cursor: pointer; transition: 0.2s;
+      display: flex; align-items: center; gap: 0.45rem;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text); padding: 0.5rem 0.85rem;
+      border-radius: 12px; font-weight: 800; font-size: 0.8rem;
+      cursor: pointer; transition: all 0.25s ease;
+      font-family: inherit;
     }
-    .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .lang-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
     .lang-menu {
-      position: absolute; top: calc(100% + 0.4rem); left: 0;
-      background: var(--bg-soft); border: 1px solid var(--border);
-      border-radius: 12px; box-shadow: var(--shadow);
-      min-width: 130px; overflow: hidden; opacity: 0; visibility: hidden;
-      transform: translateY(-6px); transition: 0.2s; z-index: 200;
+      position: absolute; top: calc(100% + 0.5rem); left: 0;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 16px; box-shadow: var(--shadow-md);
+      min-width: 160px; overflow: hidden;
+      opacity: 0; visibility: hidden;
+      transform: translateY(-10px) scale(0.95);
+      transition: all 0.25s cubic-bezier(0.2,0.8,0.2,1);
+      z-index: 200;
+      padding: 0.4rem;
     }
-    .lang-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .lang-menu.open {
+      opacity: 1; visibility: visible;
+      transform: translateY(0) scale(1);
+    }
     .lang-menu button {
-      display: flex; align-items: center; gap: 0.5rem;
-      width: 100%; padding: 0.6rem 0.9rem; background: transparent;
-      border: none; color: var(--text); font-family: inherit;
-      font-weight: 700; font-size: 0.8rem; cursor: pointer; text-align: right;
-      transition: 0.15s;
+      display: flex; align-items: center; gap: 0.6rem;
+      width: 100%; padding: 0.65rem 0.9rem;
+      background: transparent; border: none;
+      color: var(--text); font-family: inherit;
+      font-weight: 700; font-size: 0.85rem;
+      cursor: pointer; text-align: right;
+      border-radius: 10px; transition: all 0.2s ease;
     }
-    .lang-menu button:hover { background: rgba(249,115,22,0.1); color: var(--accent); }
+    .lang-menu button:hover {
+      background: linear-gradient(135deg, rgba(249,115,22,0.12), rgba(251,191,36,0.08));
+      color: var(--accent);
+      transform: translateX(-4px);
+    }
 
     /* زر الوضع الليلي */
     .theme-btn {
-      width: 38px; height: 38px; border-radius: 10px;
-      background: transparent; border: 1px solid var(--border);
+      width: 42px; height: 42px; border-radius: 12px;
+      background: transparent;
+      border: 1.5px solid var(--border);
       color: var(--text); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: 0.25s;
+      transition: all 0.35s cubic-bezier(0.2,0.8,0.2,1);
+      position: relative;
+      overflow: hidden;
     }
-    .theme-btn:hover { border-color: var(--accent); color: var(--accent); transform: rotate(15deg); }
+    .theme-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: rotate(20deg) scale(1.05);
+      box-shadow: 0 0 20px -4px rgba(249,115,22,0.4);
+    }
+    .theme-btn i { transition: transform 0.4s ease; }
 
     /* ============================================
-       Hero — الصورة + الوصف
+       Hero
        ============================================ */
     .hero {
-      max-width: 900px; margin: 2rem auto 1rem; padding: 0 1rem;
+      max-width: 920px;
+      margin: 3rem auto 2rem;
+      padding: 0 1.25rem;
       display: flex; flex-direction: column; align-items: center; text-align: center;
+      position: relative;
     }
 
+    /* شارة صغيرة فوق الصورة */
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.4rem 0.9rem;
+      background: linear-gradient(135deg, rgba(249,115,22,0.12), rgba(251,191,36,0.08));
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.72rem; font-weight: 800;
+      color: var(--accent-dark);
+      margin-bottom: 1.25rem;
+      animation: fadeInDown 0.8s ease both;
+    }
+    .hero-badge i { animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+    /* الصورة الرئيسية */
     .hero-img-wrap {
-      width: 100%; max-width: 520px;
-      border-radius: 28px; overflow: hidden;
-      box-shadow: var(--shadow);
+      width: 100%; max-width: 480px;
+      border-radius: 32px; overflow: hidden;
+      box-shadow: var(--shadow-lg);
       position: relative;
-      animation: heroIn 0.9s cubic-bezier(0.2,0.8,0.2,1) both;
+      animation: heroIn 1s cubic-bezier(0.2,0.8,0.2,1) both;
+      background: linear-gradient(135deg, var(--accent-light), var(--bg-soft));
     }
     .hero-img-wrap img {
       width: 100%; height: auto; display: block;
-      transition: transform 0.6s ease;
+      transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);
     }
-    .hero-img-wrap:hover img { transform: scale(1.03); }
+    .hero-img-wrap:hover img { transform: scale(1.05) rotate(1deg); }
 
-    /* شريط متحرك برتقالي حول الصورة */
+    /* إطار برتقالي دوّار */
     .hero-img-wrap::before {
-      content: ""; position: absolute; inset: -3px; z-index: -1;
-      border-radius: 30px;
-      background: conic-gradient(from 0deg, var(--accent), transparent 30%, var(--accent) 60%, transparent 90%, var(--accent));
-      animation: spin 6s linear infinite;
-      opacity: 0.55;
+      content: ""; position: absolute; inset: -4px; z-index: -1;
+      border-radius: 34px;
+      background: conic-gradient(from 0deg,
+        var(--accent),
+        var(--gold),
+        var(--accent-dark),
+        var(--gold),
+        var(--accent));
+      animation: spin 8s linear infinite;
+      opacity: 0.7;
+      filter: blur(6px);
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes heroIn { from { opacity: 0; transform: translateY(24px) scale(0.96); } to { opacity: 1; transform: none; } }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.94); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: none; }
+    }
 
+    /* العنوان الرئيسي */
     .hero h1 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 900; margin-top: 1.5rem;
-      background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-      -webkit-background-clip: text; background-clip: text;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      margin-top: 1.75rem;
+      background: linear-gradient(135deg, var(--accent), var(--gold), var(--accent-dark));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: gradientText 4s ease-in-out infinite;
+      line-height: 1.2;
+      position: relative;
+    }
+    @keyframes gradientText {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* خط زخرفي تحت العنوان */
+    .hero h1::after {
+      content: "◆ ◆ ◆";
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 8px;
+      color: var(--accent);
+      -webkit-text-fill-color: var(--accent);
+      margin-top: 0.5rem;
+      animation: fadeInUp 1s ease 0.3s both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
     }
 
     .hero p {
-      margin-top: 0.8rem; max-width: 620px;
-      color: var(--text-soft); font-size: 0.95rem; line-height: 1.8;
+      margin-top: 1rem;
+      max-width: 680px;
+      color: var(--text-soft);
+      font-size: 1rem;
+      line-height: 1.9;
+      font-weight: 500;
+      animation: fadeInUp 1s ease 0.5s both;
     }
 
     /* ============================================
        محرك البحث
        ============================================ */
     .search-wrap {
-      max-width: 560px; margin: 1.6rem auto 0; width: 100%;
+      max-width: 580px; margin: 2rem auto 0; width: 100%;
       position: relative;
+      animation: fadeInUp 1s ease 0.7s both;
     }
     .search-wrap input {
-      width: 100%; padding: 0.9rem 1rem 0.9rem 3.2rem;
-      border-radius: 16px; border: 1.5px solid var(--border);
-      background: var(--bg-soft); color: var(--text);
-      font-family: inherit; font-size: 0.9rem; font-weight: 600;
-      outline: none; transition: 0.25s;
+      width: 100%;
+      padding: 1rem 3.4rem 1rem 1.2rem;
+      border-radius: 18px;
+      border: 2px solid var(--border);
+      background: var(--bg-soft);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
     }
     .search-wrap input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(249,115,22,0.12);
+      box-shadow: 0 0 0 5px rgba(249,115,22,0.12), var(--shadow-md);
+      transform: translateY(-2px);
     }
+    .search-wrap input::placeholder { color: var(--text-soft); font-weight: 500; }
     .search-wrap .search-icon {
-      position: absolute; right: 1.1rem; top: 50%; transform: translateY(-50%);
-      color: var(--accent); font-size: 1rem; pointer-events: none;
+      position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%);
+      color: var(--accent); font-size: 1.05rem; pointer-events: none;
+      animation: searchPulse 3s ease-in-out infinite;
     }
+    @keyframes searchPulse {
+      0%,100% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(1.15); }
+    }
+
     .search-results {
-      position: absolute; top: calc(100% + 0.5rem); left: 0; right: 0;
-      background: var(--bg-soft); border: 1px solid var(--border);
-      border-radius: 14px; box-shadow: var(--shadow);
-      max-height: 300px; overflow-y: auto; z-index: 150;
+      position: absolute; top: calc(100% + 0.6rem); left: 0; right: 0;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow-md);
+      max-height: 340px; overflow-y: auto;
+      z-index: 150;
       display: none;
+      animation: dropIn 0.25s ease;
+    }
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: none; }
     }
     .search-results.open { display: block; }
     .search-results a {
-      display: flex; align-items: center; gap: 0.7rem;
-      padding: 0.7rem 1rem; text-decoration: none; color: var(--text);
-      font-weight: 700; font-size: 0.85rem; transition: 0.15s;
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.8rem 1rem;
+      text-decoration: none; color: var(--text);
+      font-weight: 700; font-size: 0.88rem;
+      transition: all 0.2s ease;
       border-bottom: 1px solid var(--border);
     }
     .search-results a:last-child { border-bottom: none; }
-    .search-results a:hover { background: rgba(249,115,22,0.08); color: var(--accent); }
-    .search-results .no-result { padding: 1rem; text-align: center; color: var(--text-soft); font-size: 0.8rem; }
+    .search-results a:hover {
+      background: linear-gradient(90deg, rgba(249,115,22,0.1), transparent);
+      color: var(--accent);
+      padding-right: 1.4rem;
+    }
+    .search-results .no-result {
+      padding: 1.2rem; text-align: center;
+      color: var(--text-soft); font-size: 0.85rem;
+    }
 
     /* ============================================
-       الأقسام — ظهور تدريجي + سمات متحركة
+       عنوان الأقسام
        ============================================ */
+    .sections-title-wrap {
+      text-align: center;
+      margin: 4rem 0 2rem;
+      padding: 0 1rem;
+    }
     .sections-title {
-      text-align: center; margin: 3rem 0 1.5rem;
-      font-size: 1.4rem; font-weight: 900; color: var(--text);
-      position: relative; display: inline-block;
-      left: 50%; transform: translateX(-50%);
+      display: inline-block;
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 900;
+      color: var(--text);
+      position: relative;
+      padding-bottom: 1rem;
     }
+    .sections-title::before,
     .sections-title::after {
-      content: ""; display: block; width: 60px; height: 4px;
-      background: var(--accent); border-radius: 2px; margin: 0.5rem auto 0;
-      animation: pulseBar 2s ease-in-out infinite;
+      content: "✦";
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin: 0 0.8rem;
+      display: inline-block;
+      animation: sparkle 2s ease-in-out infinite;
     }
-    @keyframes pulseBar { 0%,100% { width: 60px; } 50% { width: 100px; } }
+    .sections-title::after { animation-delay: 1s; }
+    @keyframes sparkle {
+      0%,100% { transform: rotate(0) scale(1); opacity: 0.7; }
+      50% { transform: rotate(180deg) scale(1.3); opacity: 1; }
+    }
 
+    .title-underline {
+      display: block;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
+      border-radius: 2px;
+      margin-top: 0.5rem;
+      animation: underlinePulse 3s ease-in-out infinite;
+    }
+    @keyframes underlinePulse {
+      0%, 100% { transform: scaleX(0.6); opacity: 0.8; }
+      50% { transform: scaleX(1); opacity: 1; }
+    }
+
+    /* ============================================
+       شبكة الأقسام
+       ============================================ */
     .sections-grid {
-      max-width: 1100px; margin: 0 auto 4rem; padding: 0 1rem;
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.4rem;
+      max-width: 1180px;
+      margin: 0 auto 5rem;
+      padding: 0 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1.6rem;
     }
 
     .section-card {
-      position: relative; border-radius: 22px; overflow: hidden;
-      cursor: pointer; text-decoration: none; color: inherit;
-      background: var(--card); border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      opacity: 0; transform: translateY(30px) scale(0.96);
-      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2,0.8,0.2,1),
-                  box-shadow 0.35s ease, border-color 0.35s ease;
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      transform: translateY(40px) scale(0.94);
+      transition: opacity 0.7s ease,
+                  transform 0.7s cubic-bezier(0.2,0.8,0.2,1),
+                  box-shadow 0.4s ease,
+                  border-color 0.4s ease;
+      isolation: isolate;
     }
-    .section-card.visible { opacity: 1; transform: none; }
+    .section-card.visible {
+      opacity: 1;
+      transform: none;
+    }
 
     .section-card:hover {
-      transform: translateY(-6px) scale(1.02);
+      transform: translateY(-8px) scale(1.03);
       border-color: var(--accent);
-      box-shadow: 0 28px 50px -18px rgba(249,115,22,0.35);
+      box-shadow: var(--shadow-lg);
+      z-index: 2;
     }
 
-    /* شريط برتقالي متحرك حول البطاقة عند التحويم */
-    .section-card::before {
-      content: ""; position: absolute; inset: 0; border-radius: 22px;
-      padding: 2px; background: linear-gradient(135deg, var(--accent), transparent, var(--accent));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      opacity: 0; transition: opacity 0.35s ease;
-      background-size: 200% 200%;
-      animation: gradientMove 3s linear infinite;
+    /* حاوية الصورة */
+    .section-img-wrap {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, var(--accent-light), var(--bg-soft));
+    }
+    .section-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1), filter 0.4s ease;
+    }
+    .section-card:hover .section-img {
+      transform: scale(1.12) rotate(1.5deg);
+    }
+
+    /* طبقة تظليل تظهر عند التحويم */
+    .section-img-wrap::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(249,115,22,0.35), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
       pointer-events: none;
     }
-    .section-card:hover::before { opacity: 1; }
-    @keyframes gradientMove { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    .section-card:hover .section-img-wrap::after { opacity: 1; }
 
-    .section-img {
-      width: 100%; aspect-ratio: 4/3; object-fit: cover;
-      display: block; transition: transform 0.5s ease;
+    /* شريط متدرج متحرك حول البطاقة */
+    .section-card::before {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: 24px;
+      padding: 2.5px;
+      background: linear-gradient(135deg, var(--accent), var(--gold), var(--accent), var(--accent-dark));
+      background-size: 300% 300%;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      animation: gradientShift 4s linear infinite;
+      pointer-events: none;
+      z-index: 3;
     }
-    .section-card:hover .section-img { transform: scale(1.08); }
+    .section-card:hover::before { opacity: 1; }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
 
+    /* معلومات القسم */
     .section-info {
-      padding: 0.9rem 0.8rem 1rem; text-align: center;
-      position: relative; z-index: 2;
+      padding: 1rem 0.85rem 1.15rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      background: var(--card);
     }
     .section-info h3 {
-      font-size: 0.95rem; font-weight: 900; color: var(--text);
+      font-size: 0.98rem;
+      font-weight: 900;
+      color: var(--text);
       transition: color 0.3s ease;
+      line-height: 1.4;
+      min-height: 2.6rem;
+      display: flex; align-items: center; justify-content: center;
     }
-    .section-card:hover .section-info h3 { color: var(--accent); }
+    .section-card:hover .section-info h3 {
+      color: var(--accent);
+    }
 
-    .section-info .arrow {
-      display: inline-block; margin-top: 0.3rem;
-      font-size: 0.75rem; color: var(--accent);
-      opacity: 0; transform: translateX(-6px);
-      transition: 0.3s ease;
+    .section-info .cta {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      margin-top: 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all 0.35s ease;
     }
-    .section-card:hover .arrow { opacity: 1; transform: translateX(0); }
+    .section-card:hover .section-info .cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     /* ============================================
        Footer
        ============================================ */
     footer {
-      text-align: center; padding: 1.6rem 1rem;
+      text-align: center;
+      padding: 2rem 1rem;
       border-top: 1px solid var(--border);
-      color: var(--text-soft); font-size: 0.75rem;
-      background: var(--card); backdrop-filter: blur(10px);
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before {
+      content: "";
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
+      animation: footerShine 4s linear infinite;
+      background-size: 200% 100%;
+    }
+    @keyframes footerShine {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    footer .heart {
+      color: var(--accent);
+      display: inline-block;
+      animation: beat 1.5s ease-in-out infinite;
+    }
+    @keyframes beat {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    /* ============================================
+       زر العودة للأعلى
+       ============================================ */
+    .back-top {
+      position: fixed; bottom: 1.5rem; left: 1.5rem;
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #fff;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: var(--shadow-md);
+      opacity: 0; visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
+      z-index: 90;
+    }
+    .back-top.show {
+      opacity: 1; visibility: visible;
+      transform: translateY(0);
+    }
+    .back-top:hover {
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: var(--shadow-lg);
     }
 
     /* ============================================
        Responsive
        ============================================ */
-    @media (max-width: 640px) {
-      .sections-grid { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
-      .section-info h3 { font-size: 0.8rem; }
-      .brand span { display: none; }
+    @media (max-width: 720px) {
+      .sections-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      .section-info h3 { font-size: 0.82rem; min-height: 2.3rem; }
+      .brand-text .sub { display: none; }
+      .hero { margin-top: 2rem; }
+      .hero-img-wrap { max-width: 320px; }
+      .sections-title::before,
+      .sections-title::after { font-size: 0.9rem; margin: 0 0.4rem; }
     }
+
+    @media (max-width: 420px) {
+      .brand-text .main { font-size: 0.85rem; }
+      .lang-btn { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
+      .theme-btn { width: 38px; height: 38px; }
+      .sections-grid { padding: 0 0.75rem; gap: 0.75rem; }
+    }
+
+    /* ============================================
+       Scrollbar
+       ============================================ */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--accent), var(--accent-dark));
+      border-radius: 10px;
+      border: 2px solid var(--bg);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-dark); }
   </style>
 </head>
 <body>
 
-  <div class="ambient-bg"></div>
+  <div class="bg-animated"></div>
 
   <!-- ==========================================
-       الشريط العلوي: الترجمة + الوضع الليلي
+       الشريط العلوي
        ========================================== -->
   <header class="top-bar">
     <div class="brand">
       <div class="logo">E</div>
-      <div data-i18n="app_name">دليل <span>ENSTP</span></div>
+      <div class="brand-text">
+        <div class="main" data-i18n="brand_main">دليل <span>ENSTP</span></div>
+        <div class="sub" data-i18n="brand_sub">المدرسة الوطنية العليا للأشغال العمومية</div>
+      </div>
     </div>
 
     <div class="controls">
@@ -323,45 +686,46 @@
         <button class="lang-btn" onclick="toggleLangMenu(event)" id="langBtn">
           <i class="fa-solid fa-globe"></i>
           <span id="langLabel">العربية</span>
-          <i class="fa-solid fa-chevron-down" style="font-size:0.6rem"></i>
+          <i class="fa-solid fa-chevron-down" style="font-size:0.55rem;transition:transform 0.3s" id="langChevron"></i>
         </button>
         <div class="lang-menu" id="langMenu">
-          <button onclick="changeLang('ar')">🇩🇿 العربية</button>
-          <button onclick="changeLang('fr')">🇫🇷 Français</button>
-          <button onclick="changeLang('en')">🇬🇧 English</button>
+          <button onclick="changeLang('ar')"><span style="font-size:1rem">🇩🇿</span> العربية</button>
+          <button onclick="changeLang('fr')"><span style="font-size:1rem">🇫🇷</span> Français</button>
+          <button onclick="changeLang('en')"><span style="font-size:1rem">🇬🇧</span> English</button>
         </div>
       </div>
 
       <!-- زر الوضع الليلي -->
-      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="الوضع الليلي / النهاري">
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="تبديل الوضع">
         <i class="fa-solid fa-moon" id="themeIcon"></i>
       </button>
     </div>
   </header>
 
   <!-- ==========================================
-       Hero: الصورة + الوصف + البحث
+       Hero
        ========================================== -->
   <section class="hero">
+    <div class="hero-badge">
+      <i class="fa-solid fa-star"></i>
+      <span data-i18n="badge">منصة الطالب الرسمية</span>
+    </div>
+
     <div class="hero-img-wrap">
-      <img src="images (73).jpeg" alt="دليل الطالب ENSTP" />
+      <img src="images (73).jpeg" alt="دليل الطالب ENSTP"
+           onerror="this.src='https://via.placeholder.com/600x400/f97316/ffffff?text=ENSTP'" />
     </div>
 
     <h1 data-i18n="hero_title">دليل الطالب</h1>
     <p data-i18n="hero_desc">
-      منصتك الرقمية الشاملة في المدرسة الوطنية العليا للأشغال العمومية — كل ما تحتاجه
-      للتوجيه الأكاديمي، الخدمات اليومية، النقل، الإقامة، والترفيه في مكان واحد.
+      منصتك الرقمية الشاملة في المدرسة الوطنية العليا للأشغال العمومية —
+      كل ما تحتاجه للتوجيه الأكاديمي، الخدمات اليومية، النقل، الإقامة، والترفيه في مكان واحد.
     </p>
 
     <!-- محرك البحث -->
     <div class="search-wrap">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="ابحث عن قسم… (مثال: النقل، المطاعم، الإدارة)"
-        autocomplete="off"
-      />
+      <input type="text" id="searchInput" autocomplete="off" />
       <div class="search-results" id="searchResults"></div>
     </div>
   </section>
@@ -369,298 +733,264 @@
   <!-- ==========================================
        الأقسام
        ========================================== -->
-  <h2 class="sections-title" data-i18n="sections_title">استكشف الأقسام</h2>
+  <div class="sections-title-wrap">
+    <h2 class="sections-title" data-i18n="sections_title">استكشف الأقسام</h2>
+    <span class="title-underline" style="width:200px;margin:0.5rem auto 0"></span>
+  </div>
 
   <div class="sections-grid" id="sectionsGrid"></div>
 
   <footer>
-    <p>© 2026 ENSTP Kouba — <span data-i18n="footer_text">دليل الطالب</span></p>
+    <p>
+      © 2026 ENSTP Kouba —
+      <span data-i18n="footer_text">دليل الطالب</span>
+      <span class="heart">❤</span>
+    </p>
   </footer>
+
+  <!-- زر العودة للأعلى -->
+  <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
 
   <!-- ==========================================
        JavaScript
        ========================================== -->
   <script>
     /* ============================================
-       1. بيانات الأقسام (مع الترجمات)
+       1. بيانات الأقسام
        ============================================ */
     const SECTIONS = [
-      {
-        id: 'ecole',
-        img: 'image_5ab38fe5 (1).jpg',
-        href: 'ma-ecole.html',
-        title: { ar: 'مدرستي', fr: 'Mon École', en: 'My School' }
-      },
-      {
-        id: 'admin',
-        img: 'images(74).jpeg',
-        href: 'administration.html',
-        title: { ar: 'إدارتي', fr: 'Mon Administration', en: 'My Administration' }
-      },
-      {
-        id: 'success',
-        img: 'image_806ac8b5.jpg',
-        href: 'ma-reussite.html',
-        title: { ar: 'نجاحي', fr: 'Ma Réussite', en: 'My Success' }
-      },
-      {
-        id: 'residence',
-        img: 'images (76).jpeg',
-        href: 'residence.html',
-        title: { ar: 'حياتي الجامعية', fr: 'Ma Vie Universitaire', en: 'My University Life' }
-      },
-      {
-        id: 'sport',
-        img: 'images (77).jpeg',
-        href: 'sport.html',
-        title: { ar: 'صحتي و رياضتي', fr: 'Santé & Sport', en: 'Health & Sport' }
-      },
-      {
-        id: 'forum',
-        img: 'images71.jpeg',
-        href: 'forum.html',
-        title: { ar: 'ملتقى الطلبة', fr: 'Forum Étudiant', en: 'Student Forum' }
-      },
-      {
-        id: 'transport',
-        img: 'Images80.jpeg',
-        href: 'transport.html',
-        title: { ar: 'النقل', fr: 'Transport', en: 'Transport' }
-      },
-      {
-        id: 'food',
-        img: 'images(79).jpeg',
-        href: 'shopping.html',
-        title: { ar: 'المطاعم', fr: 'Restaurants', en: 'Restaurants' }
-      },
-      {
-        id: 'shopping',
-        img: 'images 80.jpeg',
-        href: 'shopping.html',
-        title: { ar: 'التسوق', fr: 'Shopping', en: 'Shopping' }
-      },
-      {
-        id: 'leisure',
-        img: 'Images82.jpeg',
-        href: 'alger.html',
-        title: { ar: 'السياحة في الجزائر العاصمة', fr: 'Tourisme à Alger', en: 'Tourism in Algiers' }
-      },
-      {
-        id: 'qr',
-        img: 'images(78).jpeg',
-        href: '#',
-        title: { ar: 'QR Codes', fr: 'QR Codes', en: 'QR Codes' }
-      }
+      { id: 'ecole',     img: 'image_5ab38fe5 (1).jpg', href: 'ma-ecole.html',      title: { ar: 'مدرستي', fr: 'Mon École', en: 'My School' } },
+      { id: 'admin',     img: 'images(74).jpeg',        href: 'administration.html', title: { ar: 'إدارتي', fr: 'Mon Administration', en: 'My Administration' } },
+      { id: 'success',   img: 'image_806ac8b5.jpg',     href: 'ma-reussite.html',    title: { ar: 'نجاحي', fr: 'Ma Réussite', en: 'My Success' } },
+      { id: 'residence', img: 'images (76).jpeg',       href: 'residence.html',      title: { ar: 'حياتي الجامعية', fr: 'Ma Vie Universitaire', en: 'My University Life' } },
+      { id: 'sport',     img: 'images (77).jpeg',       href: 'sport.html',          title: { ar: 'صحتي و رياضتي', fr: 'Santé & Sport', en: 'Health & Sport' } },
+      { id: 'forum',     img: 'images71.jpeg',          href: 'forum.html',          title: { ar: 'ملتقى الطلبة', fr: 'Forum Étudiant', en: 'Student Forum' } },
+      { id: 'transport', img: 'Images80.jpeg',          href: 'transport.html',      title: { ar: 'النقل', fr: 'Transport', en: 'Transport' } },
+      { id: 'food',      img: 'images(79).jpeg',        href: 'shopping.html',       title: { ar: 'المطاعم', fr: 'Restaurants', en: 'Restaurants' } },
+      { id: 'shopping',  img: 'images 80.jpeg',         href: 'shopping.html',       title: { ar: 'التسوق', fr: 'Shopping', en: 'Shopping' } },
+      { id: 'leisure',   img: 'Images82.jpeg',          href: 'alger.html',          title: { ar: 'السياحة في الجزائر العاصمة', fr: 'Tourisme à Alger', en: 'Tourism in Algiers' } },
+      { id: 'qr',        img: 'images(78).jpeg',        href: '#',                   title: { ar: 'QR Codes', fr: 'QR Codes',
+               title: { ar: 'QR Codes', fr: 'QR Codes', en: 'QR Codes' } }
     ];
 
     /* ============================================
-       2. الترجمات
+       2. الترجمة
        ============================================ */
-    const TRANSLATIONS = {
+    const I18N = {
       ar: {
-        app_name: 'دليل ENSTP',
+        brand_main: 'دليل <span>ENSTP</span>',
+        brand_sub: 'المدرسة الوطنية العليا للأشغال العمومية',
+        badge: 'منصة الطالب الرسمية',
         hero_title: 'دليل الطالب',
         hero_desc: 'منصتك الرقمية الشاملة في المدرسة الوطنية العليا للأشغال العمومية — كل ما تحتاجه للتوجيه الأكاديمي، الخدمات اليومية، النقل، الإقامة، والترفيه في مكان واحد.',
+        search_ph: 'ابحث عن قسم…',
         sections_title: 'استكشف الأقسام',
         footer_text: 'دليل الطالب',
-        search_placeholder: 'ابحث عن قسم… (مثال: النقل، المطاعم، الإدارة)',
-        no_result: 'لا توجد نتائج مطابقة'
+        cta: 'استكشف'
       },
       fr: {
-        app_name: 'Guide ENSTP',
+        brand_main: 'Guide <span>ENSTP</span>',
+        brand_sub: 'École Nationale Supérieure des Travaux Publics',
+        badge: 'Plateforme officielle',
         hero_title: 'Guide de l\'Étudiant',
-        hero_desc: 'Votre plateforme numérique complète à l\'ENSTP — tout ce dont vous avez besoin pour l\'orientation académique, les services quotidiens, le transport, le logement et les loisirs.',
-        sections_title: 'Explorez les sections',
+        hero_desc: 'Votre plateforme numérique complète à l\'ENSTP — orientation, services, transport, résidence et loisirs en un seul endroit.',
+        search_ph: 'Rechercher une section…',
+        sections_title: 'Explorer les sections',
         footer_text: 'Guide de l\'Étudiant',
-        search_placeholder: 'Rechercher une section… (ex: Transport, Restaurants)',
-        no_result: 'Aucun résultat trouvé'
+        cta: 'Explorer'
       },
       en: {
-        app_name: 'ENSTP Guide',
+        brand_main: '<span>ENSTP</span> Guide',
+        brand_sub: 'National Higher School of Public Works',
+        badge: 'Official Student Platform',
         hero_title: 'Student Guide',
-        hero_desc: 'Your complete digital platform at ENSTP — everything you need for academic guidance, daily services, transport, accommodation, and leisure in one place.',
+        hero_desc: 'Your complete digital platform at ENSTP — academic orientation, daily services, transport, residence and leisure in one place.',
+        search_ph: 'Search a section…',
         sections_title: 'Explore Sections',
         footer_text: 'Student Guide',
-        search_placeholder: 'Search a section… (e.g. Transport, Restaurants)',
-        no_result: 'No matching results'
+        cta: 'Explore'
       }
     };
 
-    /* ============================================
-       3. الحالة الحالية
-       ============================================ */
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-    let currentTheme = localStorage.getItem('enstp_theme') || 'light';
+    let currentLang = 'ar';
 
     /* ============================================
-       4. تطبيق اللغة
+       3. القائمة المنسدلة للترجمة
        ============================================ */
-    function applyLang(lang) {
+    function toggleLangMenu(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('langMenu');
+      const chevron = document.getElementById('langChevron');
+      menu.classList.toggle('open');
+      chevron.style.transform = menu.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+    }
+    document.addEventListener('click', () => {
+      document.getElementById('langMenu').classList.remove('open');
+      document.getElementById('langChevron').style.transform = 'rotate(0)';
+    });
+
+    /* ============================================
+       4. تبديل اللغة
+       ============================================ */
+    function changeLang(lang) {
       currentLang = lang;
-      localStorage.setItem('enstp_lang', lang);
-      document.documentElement.lang = lang;
-      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      const html = document.documentElement;
+      html.setAttribute('lang', lang);
+      html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
 
-      // تحديث النصوص الثابتة
+      // تحديث النصوص
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) {
-          el.textContent = TRANSLATIONS[lang][key];
+        if (I18N[lang][key]) {
+          el.innerHTML = I18N[lang][key];
         }
       });
 
       // تحديث placeholder البحث
-      document.getElementById('searchInput').placeholder = TRANSLATIONS[lang].search_placeholder;
+      document.getElementById('searchInput').placeholder = I18N[lang].search_ph;
 
-      // تحديث اسم اللغة في الزر
+      // تحديث اسم اللغة
       const labels = { ar: 'العربية', fr: 'Français', en: 'English' };
       document.getElementById('langLabel').textContent = labels[lang];
 
-      // إعادة رسم البطاقات والأقسام
+      // إعادة رسم البطاقات
       renderSections();
-    }
 
-    function changeLang(lang) {
-      applyLang(lang);
-      closeLangMenu();
-    }
-
-    /* ============================================
-       5. قائمة الترجمة
-       ============================================ */
-    function toggleLangMenu(e) {
-      e.stopPropagation();
-      document.getElementById('langMenu').classList.toggle('open');
-    }
-    function closeLangMenu() {
       document.getElementById('langMenu').classList.remove('open');
     }
-    document.addEventListener('click', closeLangMenu);
 
     /* ============================================
-       6. الوضع الليلي / النهاري
+       5. الوضع الليلي / النهاري
        ============================================ */
-    function applyTheme(theme) {
-      currentTheme = theme;
-      localStorage.setItem('enstp_theme', theme);
-      document.documentElement.setAttribute('data-theme', theme);
-      const icon = document.getElementById('themeIcon');
-      icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    }
     function toggleTheme() {
-      applyTheme(currentTheme === 'light' ? 'dark' : 'light');
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+
+      const icon = document.getElementById('themeIcon');
+      icon.className = newTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
     }
+    // تحميل الوضع المحفوظ
+    (function() {
+      const saved = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+      const icon = document.getElementById('themeIcon');
+      if (icon && saved === 'dark') icon.className = 'fa-solid fa-sun';
+    })();
 
     /* ============================================
-       7. رسم الأقسام
+       6. رسم الأقسام
        ============================================ */
     function renderSections() {
       const grid = document.getElementById('sectionsGrid');
       grid.innerHTML = '';
 
-      SECTIONS.forEach((sec, idx) => {
-        const a = document.createElement('a');
-        a.className = 'section-card';
-        a.href = sec.href;
-        a.dataset.sectionId = sec.id;
+      SECTIONS.forEach((sec, i) => {
+        const card = document.createElement('a');
+        card.href = sec.href;
+        card.className = 'section-card';
+        card.dataset.id = sec.id;
+        card.dataset.search = (sec.title.ar + ' ' + sec.title.fr + ' ' + sec.title.en + ' ' + sec.id).toLowerCase();
+        card.style.transitionDelay = (i * 0.06) + 's';
 
-        // دعم صور متعددة الصيغ عبر onerror
-        a.innerHTML = `
-          <img
-            class="section-img"
-            src="${sec.img}"
-            alt="${sec.title[currentLang]}"
-            loading="lazy"
-            onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=${encodeURIComponent(sec.title[currentLang])}';"
-          />
+        card.innerHTML = `
+          <div class="section-img-wrap">
+            <img class="section-img" src="${sec.img}" alt="${sec.title[currentLang]}" loading="lazy"
+                 onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=${encodeURIComponent(sec.title[currentLang])}'" />
+          </div>
           <div class="section-info">
             <h3>${sec.title[currentLang]}</h3>
-            <span class="arrow"><i class="fa-solid fa-arrow-${currentLang === 'ar' ? 'left' : 'right'}"></i> اكتشف</span>
+            <span class="cta">${I18N[currentLang].cta} <i class="fa-solid fa-arrow-left"></i></span>
           </div>
         `;
 
-        // ظهور تدريجي عند التمرير
-        a.style.transitionDelay = (idx * 60) + 'ms';
-        grid.appendChild(a);
+        grid.appendChild(card);
       });
 
-      // إعداد IntersectionObserver للظهور التدريجي
-      setupRevealObserver();
+      setupObserver();
+      setupSearch();
     }
 
-    function setupRevealObserver() {
+    /* ============================================
+       7. IntersectionObserver لظهور البطاقات
+       ============================================ */
+    function setupObserver() {
       const cards = document.querySelectorAll('.section-card');
-      if (!('IntersectionObserver' in window)) {
-        // fallback
-        cards.forEach(c => c.classList.add('visible'));
-        return;
-      }
-
-      const observer = new IntersectionObserver((entries, obs) => {
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            obs.unobserve(entry.target);
+            observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      }, { threshold: 0.1 });
 
-      cards.forEach(c => observer.observe(c));
+      cards.forEach(card => observer.observe(card));
     }
 
     /* ============================================
        8. محرك البحث
        ============================================ */
-    const searchInput = document.getElementById('searchInput');
-    const searchResults = document.getElementById('searchResults');
+    function setupSearch() {
+      const input = document.getElementById('searchInput');
+      const results = document.getElementById('searchResults');
 
-    function performSearch(query) {
-      const q = query.trim().toLowerCase();
-      searchResults.innerHTML = '';
+      // منع إضافة مستمعين متعددين
+      input.oninput = function() {
+        const q = this.value.trim().toLowerCase();
+        results.innerHTML = '';
 
-      if (!q) {
-        searchResults.classList.remove('open');
-        return;
-      }
+        if (!q) {
+          results.classList.remove('open');
+          return;
+        }
 
-      const matches = SECTIONS.filter(sec => {
-        const t = sec.title[currentLang].toLowerCase();
-        return t.includes(q) || sec.id.toLowerCase().includes(q);
+        const matches = SECTIONS.filter(sec =>
+          (sec.title.ar + ' ' + sec.title.fr + ' ' + sec.title.en + ' ' + sec.id)
+            .toLowerCase().includes(q)
+        );
+
+        if (matches.length === 0) {
+          results.innerHTML = `<div class="no-result">لا توجد نتائج مطابقة</div>`;
+        } else {
+          matches.forEach(sec => {
+            const a = document.createElement('a');
+            a.href = sec.href;
+            a.innerHTML = `<i class="fa-solid fa-location-dot" style="color:var(--accent)"></i> ${sec.title[currentLang]}`;
+            results.appendChild(a);
+          });
+        }
+        results.classList.add('open');
+      };
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-wrap')) {
+          results.classList.remove('open');
+        }
       });
-
-      if (matches.length === 0) {
-        searchResults.innerHTML = `<div class="no-result">${TRANSLATIONS[currentLang].no_result}</div>`;
-      } else {
-        matches.forEach(sec => {
-          const link = document.createElement('a');
-          link.href = sec.href;
-          link.innerHTML = `
-            <img src="${sec.img}" alt="" style="width:32px;height:32px;border-radius:8px;object-fit:cover;"
-                 onerror="this.style.display='none'">
-            <span>${sec.title[currentLang]}</span>
-          `;
-          searchResults.appendChild(link);
-        });
-      }
-      searchResults.classList.add('open');
     }
 
-    searchInput.addEventListener('input', e => performSearch(e.target.value));
-    searchInput.addEventListener('focus', e => {
-      if (e.target.value.trim()) performSearch(e.target.value);
-    });
-
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.search-wrap')) searchResults.classList.remove('open');
+    /* ============================================
+       9. زر العودة للأعلى
+       ============================================ */
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('backTop');
+      if (window.scrollY > 400) btn.classList.add('show');
+      else btn.classList.remove('show');
     });
 
     /* ============================================
-       9. التهيئة
+       10. التشغيل الأولي
        ============================================ */
     document.addEventListener('DOMContentLoaded', () => {
-      applyTheme(currentTheme);
-      applyLang(currentLang);
+      renderSections();
+      document.getElementById('searchInput').placeholder = I18N[currentLang].search_ph;
     });
+
   </script>
 </body>
-</html>
+</html>                                                                                      
