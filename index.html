@@ -1,58 +1,666 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="indigo">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
-  <script src="translate.js"></script>
-  <style>body{top:0!important}.skiptranslate iframe{display:none!important}.goog-te-banner-frame{display:none!important}.lang-btn{background:transparent;border:none;padding:4px 8px;border-radius:6px;font-weight:bold;cursor:pointer;font-size:12px;transition:.2s;color:#64748b}.lang-btn:hover{background:#f1f5f9;color:#1e293b}.lang-btn.active{background:#4f46e5;color:#fff}</style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>دليل ENSTP</title>
+  <title>دليل الطالب — ENSTP</title>
+
+  <!-- الخطوط -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    body{font-family:'Cairo',sans-serif;background:#f8fafc;color:#1e293b}.ambient-bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,#f8fafc 0%,#eef2ff 100%)}.glass-nav{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid #e2e8f0}.glass-card{background:rgba(255,255,255,.9);backdrop-filter:blur(20px);border:1px solid #fff;transition:.3s}.glass-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px -10px rgba(79,70,229,.15);border-color:#c7d2fe}.icon-box{transition:.3s}.glass-card:hover .icon-box{background-color:#4f46e5;color:#fff;transform:scale(1.1) rotate(-5deg)}
+    /* ============================================
+       المتغيرات — الوضع النهاري والليلي
+       ============================================ */
+    :root {
+      --bg: #f8fafc;
+      --bg-soft: #ffffff;
+      --text: #0f172a;
+      --text-soft: #64748b;
+      --card: rgba(255,255,255,0.9);
+      --border: rgba(226,232,240,0.9);
+      --accent: #f97316;          /* البرتقالي */
+      --accent-dark: #ea580c;
+      --shadow: 0 20px 40px -15px rgba(0,0,0,0.08);
+    }
+
+    html[data-theme="dark"] {
+      --bg: #0b1120;
+      --bg-soft: #111827;
+      --text: #f1f5f9;
+      --text-soft: #94a3b8;
+      --card: rgba(30,41,59,0.85);
+      --border: rgba(51,65,85,0.8);
+      --accent: #fb923c;
+      --accent-dark: #f97316;
+      --shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
+
+    /* خلفية متحركة خفيفة */
+    .ambient-bg {
+      position: fixed; inset: 0; z-index: -1;
+      background: radial-gradient(circle at 20% 20%, rgba(249,115,22,0.08), transparent 45%),
+                  radial-gradient(circle at 80% 70%, rgba(249,115,22,0.06), transparent 45%);
+      transition: background 0.4s ease;
+    }
+
+    /* ============================================
+       الشريط العلوي الصغير
+       ============================================ */
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.65rem 1.25rem;
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-weight: 900; font-size: 1rem;
+    }
+    .brand .logo {
+      width: 34px; height: 34px; border-radius: 12px;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 900;
+    }
+    .brand span { color: var(--accent); }
+
+    .controls { display: flex; align-items: center; gap: 0.5rem; }
+
+    /* زر الترجمة */
+    .lang-wrap { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 0.4rem;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text); padding: 0.4rem 0.75rem;
+      border-radius: 10px; font-weight: 700; font-size: 0.78rem;
+      cursor: pointer; transition: 0.2s;
+    }
+    .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .lang-menu {
+      position: absolute; top: calc(100% + 0.4rem); left: 0;
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 12px; box-shadow: var(--shadow);
+      min-width: 130px; overflow: hidden; opacity: 0; visibility: hidden;
+      transform: translateY(-6px); transition: 0.2s; z-index: 200;
+    }
+    .lang-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .lang-menu button {
+      display: flex; align-items: center; gap: 0.5rem;
+      width: 100%; padding: 0.6rem 0.9rem; background: transparent;
+      border: none; color: var(--text); font-family: inherit;
+      font-weight: 700; font-size: 0.8rem; cursor: pointer; text-align: right;
+      transition: 0.15s;
+    }
+    .lang-menu button:hover { background: rgba(249,115,22,0.1); color: var(--accent); }
+
+    /* زر الوضع الليلي */
+    .theme-btn {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: 0.25s;
+    }
+    .theme-btn:hover { border-color: var(--accent); color: var(--accent); transform: rotate(15deg); }
+
+    /* ============================================
+       Hero — الصورة + الوصف
+       ============================================ */
+    .hero {
+      max-width: 900px; margin: 2rem auto 1rem; padding: 0 1rem;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+
+    .hero-img-wrap {
+      width: 100%; max-width: 520px;
+      border-radius: 28px; overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+      animation: heroIn 0.9s cubic-bezier(0.2,0.8,0.2,1) both;
+    }
+    .hero-img-wrap img {
+      width: 100%; height: auto; display: block;
+      transition: transform 0.6s ease;
+    }
+    .hero-img-wrap:hover img { transform: scale(1.03); }
+
+    /* شريط متحرك برتقالي حول الصورة */
+    .hero-img-wrap::before {
+      content: ""; position: absolute; inset: -3px; z-index: -1;
+      border-radius: 30px;
+      background: conic-gradient(from 0deg, var(--accent), transparent 30%, var(--accent) 60%, transparent 90%, var(--accent));
+      animation: spin 6s linear infinite;
+      opacity: 0.55;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes heroIn { from { opacity: 0; transform: translateY(24px) scale(0.96); } to { opacity: 1; transform: none; } }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900; margin-top: 1.5rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      margin-top: 0.8rem; max-width: 620px;
+      color: var(--text-soft); font-size: 0.95rem; line-height: 1.8;
+    }
+
+    /* ============================================
+       محرك البحث
+       ============================================ */
+    .search-wrap {
+      max-width: 560px; margin: 1.6rem auto 0; width: 100%;
+      position: relative;
+    }
+    .search-wrap input {
+      width: 100%; padding: 0.9rem 1rem 0.9rem 3.2rem;
+      border-radius: 16px; border: 1.5px solid var(--border);
+      background: var(--bg-soft); color: var(--text);
+      font-family: inherit; font-size: 0.9rem; font-weight: 600;
+      outline: none; transition: 0.25s;
+    }
+    .search-wrap input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(249,115,22,0.12);
+    }
+    .search-wrap .search-icon {
+      position: absolute; right: 1.1rem; top: 50%; transform: translateY(-50%);
+      color: var(--accent); font-size: 1rem; pointer-events: none;
+    }
+    .search-results {
+      position: absolute; top: calc(100% + 0.5rem); left: 0; right: 0;
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 14px; box-shadow: var(--shadow);
+      max-height: 300px; overflow-y: auto; z-index: 150;
+      display: none;
+    }
+    .search-results.open { display: block; }
+    .search-results a {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.7rem 1rem; text-decoration: none; color: var(--text);
+      font-weight: 700; font-size: 0.85rem; transition: 0.15s;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-results a:last-child { border-bottom: none; }
+    .search-results a:hover { background: rgba(249,115,22,0.08); color: var(--accent); }
+    .search-results .no-result { padding: 1rem; text-align: center; color: var(--text-soft); font-size: 0.8rem; }
+
+    /* ============================================
+       الأقسام — ظهور تدريجي + سمات متحركة
+       ============================================ */
+    .sections-title {
+      text-align: center; margin: 3rem 0 1.5rem;
+      font-size: 1.4rem; font-weight: 900; color: var(--text);
+      position: relative; display: inline-block;
+      left: 50%; transform: translateX(-50%);
+    }
+    .sections-title::after {
+      content: ""; display: block; width: 60px; height: 4px;
+      background: var(--accent); border-radius: 2px; margin: 0.5rem auto 0;
+      animation: pulseBar 2s ease-in-out infinite;
+    }
+    @keyframes pulseBar { 0%,100% { width: 60px; } 50% { width: 100px; } }
+
+    .sections-grid {
+      max-width: 1100px; margin: 0 auto 4rem; padding: 0 1rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .section-card {
+      position: relative; border-radius: 22px; overflow: hidden;
+      cursor: pointer; text-decoration: none; color: inherit;
+      background: var(--card); border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      opacity: 0; transform: translateY(30px) scale(0.96);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2,0.8,0.2,1),
+                  box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    .section-card.visible { opacity: 1; transform: none; }
+
+    .section-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: var(--accent);
+      box-shadow: 0 28px 50px -18px rgba(249,115,22,0.35);
+    }
+
+    /* شريط برتقالي متحرك حول البطاقة عند التحويم */
+    .section-card::before {
+      content: ""; position: absolute; inset: 0; border-radius: 22px;
+      padding: 2px; background: linear-gradient(135deg, var(--accent), transparent, var(--accent));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: 0; transition: opacity 0.35s ease;
+      background-size: 200% 200%;
+      animation: gradientMove 3s linear infinite;
+      pointer-events: none;
+    }
+    .section-card:hover::before { opacity: 1; }
+    @keyframes gradientMove { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+    .section-img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      display: block; transition: transform 0.5s ease;
+    }
+    .section-card:hover .section-img { transform: scale(1.08); }
+
+    .section-info {
+      padding: 0.9rem 0.8rem 1rem; text-align: center;
+      position: relative; z-index: 2;
+    }
+    .section-info h3 {
+      font-size: 0.95rem; font-weight: 900; color: var(--text);
+      transition: color 0.3s ease;
+    }
+    .section-card:hover .section-info h3 { color: var(--accent); }
+
+    .section-info .arrow {
+      display: inline-block; margin-top: 0.3rem;
+      font-size: 0.75rem; color: var(--accent);
+      opacity: 0; transform: translateX(-6px);
+      transition: 0.3s ease;
+    }
+    .section-card:hover .arrow { opacity: 1; transform: translateX(0); }
+
+    /* ============================================
+       Footer
+       ============================================ */
+    footer {
+      text-align: center; padding: 1.6rem 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-soft); font-size: 0.75rem;
+      background: var(--card); backdrop-filter: blur(10px);
+    }
+
+    /* ============================================
+       Responsive
+       ============================================ */
+    @media (max-width: 640px) {
+      .sections-grid { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+      .section-info h3 { font-size: 0.8rem; }
+      .brand span { display: none; }
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body>
+
   <div class="ambient-bg"></div>
-  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
-        <div>
-          <h1 class="font-bold text-gray-900 text-base leading-tight" data-i18n="nav_app_name">دليل ENSTP</h1>
-          <p class="text-[11px] text-gray-500" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
+
+  <!-- ==========================================
+       الشريط العلوي: الترجمة + الوضع الليلي
+       ========================================== -->
+  <header class="top-bar">
+    <div class="brand">
+      <div class="logo">E</div>
+      <div data-i18n="app_name">دليل <span>ENSTP</span></div>
+    </div>
+
+    <div class="controls">
+      <!-- زر الترجمة -->
+      <div class="lang-wrap">
+        <button class="lang-btn" onclick="toggleLangMenu(event)" id="langBtn">
+          <i class="fa-solid fa-globe"></i>
+          <span id="langLabel">العربية</span>
+          <i class="fa-solid fa-chevron-down" style="font-size:0.6rem"></i>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button onclick="changeLang('ar')">🇩🇿 العربية</button>
+          <button onclick="changeLang('fr')">🇫🇷 Français</button>
+          <button onclick="changeLang('en')">🇬🇧 English</button>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
-        </div>
-        <button class="w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition"><i class="fa-regular fa-bell"></i></button>
-      </div>
+
+      <!-- زر الوضع الليلي -->
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="الوضع الليلي / النهاري">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+      </button>
     </div>
   </header>
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-10">
-    <div class="text-center space-y-3">
-      <h2 class="text-3xl md:text-4xl font-black text-gray-900" data-i18n="home_welcome">مرحباً بك في فضائك الجامعي</h2>
-      <p class="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed" data-i18n="home_desc">اكتشف كل ما تحتاجه لتسهيل مسارك الدراسي...</p>
+
+  <!-- ==========================================
+       Hero: الصورة + الوصف + البحث
+       ========================================== -->
+  <section class="hero">
+    <div class="hero-img-wrap">
+      <img src="images (73).jpeg" alt="دليل الطالب ENSTP" />
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <!-- الأزرار الـ 11 (مكتوبة بالعربية مباشرة) -->
-      <a href="ma-ecole.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-school"></i></div><div><h3 class="font-bold text-gray-900 text-lg" data-i18n="nav_school">مدرستي</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_school_desc">تعرف على المدرسة...</p></div></a>
-      <a href="administration.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-file-signature"></i></div><div><h3 class="font-bold text-gray-900 text-lg" data-i18n="nav_admin">إدارتي</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_admin_desc">الوثائق والشهادات...</p></div></a>
-      <a href="ma-reussite.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-indigo-100 relative overflow-hidden"><div class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl" data-i18n="nav_schedule_badge">استعمال الزمن</div><div class="icon-box w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl shadow-sm mt-2"><i class="fa-solid fa-user-graduate"></i></div><div><h3 class="font-bold text-gray-900 text-lg" data-i18n="nav_success">نجاحي</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_success_desc">الدروس والامتحانات...</p></div></a>
-      <a href="residence.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-bed"></i></div><div><h3 class="font-bold text-gray-900 text-lg" data-i18n="nav_residence">إقامتي الجامعية</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_residence_desc">معلومات الإيواء...</p></div></a>
-      <a href="sport.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-dumbbell"></i></div><div><h3 class="font-bold text-gray-900 text-lg" data-i18n="nav_sport">الرياضة</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_sport_desc">الأنشطة الرياضية...</p></div></a>
-      <a href="forum.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-users-rays"></i></div><div><h3 class="font-bold text-gray-900 text-lg" data-i18n="nav_forum">ملتقى الطلبة</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_forum_desc">النوادي العلمية...</p></div></a>
-      <a href="transport.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-bus-simple"></i></div><div><h3 class="font-bold text-gray-900 text-lg" data-i18n="nav_transport">النقل</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_transport_desc">خطوط الحافلات...</p></div></a>
-      <a href="shopping.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-utensils"></i></div><div><h3 class="font-bold text-gray-900 text-lg" data-i18n="nav_food">المطاعم والتسوق</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_food_desc">مطاعم الجامعة...</p></div></a>
-      <a href="alger.html" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-2xl shadow-sm"><i class="fa-solid fa-map-location-dot"></i></div><div><h3 class="font-bold text-gray-900 text-lg font-sans" dir="ltr" data-i18n="nav_leisure">Loisirs à Alger</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_leisure_desc">أماكن الترفيه...</p></div></a>
-      <a href="#" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group"><div class="icon-box w-16 h-16 rounded-2xl bg-gray-100 text-gray-700 flex items-center justify-center text-2xl shadow-sm border border-gray-200"><i class="fa-solid fa-qrcode"></i></div><div><h3 class="font-bold text-gray-900 text-lg font-sans" dir="ltr" data-i18n="nav_qr">QR Code</h3><p class="text-xs text-gray-500 mt-1" data-i18n="nav_qr_desc">مسح الرموز...</p></div></a>
+
+    <h1 data-i18n="hero_title">دليل الطالب</h1>
+    <p data-i18n="hero_desc">
+      منصتك الرقمية الشاملة في المدرسة الوطنية العليا للأشغال العمومية — كل ما تحتاجه
+      للتوجيه الأكاديمي، الخدمات اليومية، النقل، الإقامة، والترفيه في مكان واحد.
+    </p>
+
+    <!-- محرك البحث -->
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="ابحث عن قسم… (مثال: النقل، المطاعم، الإدارة)"
+        autocomplete="off"
+      />
+      <div class="search-results" id="searchResults"></div>
     </div>
-  </main>
-  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500"><p>© 2026 ENSTP Kouba.</p></footer>
+  </section>
+
+  <!-- ==========================================
+       الأقسام
+       ========================================== -->
+  <h2 class="sections-title" data-i18n="sections_title">استكشف الأقسام</h2>
+
+  <div class="sections-grid" id="sectionsGrid"></div>
+
+  <footer>
+    <p>© 2026 ENSTP Kouba — <span data-i18n="footer_text">دليل الطالب</span></p>
+  </footer>
+
+  <!-- ==========================================
+       JavaScript
+       ========================================== -->
+  <script>
+    /* ============================================
+       1. بيانات الأقسام (مع الترجمات)
+       ============================================ */
+    const SECTIONS = [
+      {
+        id: 'ecole',
+        img: 'image_5ab38fe5 (1).jpg',
+        href: 'ma-ecole.html',
+        title: { ar: 'مدرستي', fr: 'Mon École', en: 'My School' }
+      },
+      {
+        id: 'admin',
+        img: 'images(74).jpeg',
+        href: 'administration.html',
+        title: { ar: 'إدارتي', fr: 'Mon Administration', en: 'My Administration' }
+      },
+      {
+        id: 'success',
+        img: 'image_806ac8b5.jpg',
+        href: 'ma-reussite.html',
+        title: { ar: 'نجاحي', fr: 'Ma Réussite', en: 'My Success' }
+      },
+      {
+        id: 'residence',
+        img: 'images (76).jpeg',
+        href: 'residence.html',
+        title: { ar: 'حياتي الجامعية', fr: 'Ma Vie Universitaire', en: 'My University Life' }
+      },
+      {
+        id: 'sport',
+        img: 'images (77).jpeg',
+        href: 'sport.html',
+        title: { ar: 'صحتي و رياضتي', fr: 'Santé & Sport', en: 'Health & Sport' }
+      },
+      {
+        id: 'forum',
+        img: 'images71.jpeg',
+        href: 'forum.html',
+        title: { ar: 'ملتقى الطلبة', fr: 'Forum Étudiant', en: 'Student Forum' }
+      },
+      {
+        id: 'transport',
+        img: 'Images80.jpeg',
+        href: 'transport.html',
+        title: { ar: 'النقل', fr: 'Transport', en: 'Transport' }
+      },
+      {
+        id: 'food',
+        img: 'images(79).jpeg',
+        href: 'shopping.html',
+        title: { ar: 'المطاعم', fr: 'Restaurants', en: 'Restaurants' }
+      },
+      {
+        id: 'shopping',
+        img: 'images 80.jpeg',
+        href: 'shopping.html',
+        title: { ar: 'التسوق', fr: 'Shopping', en: 'Shopping' }
+      },
+      {
+        id: 'leisure',
+        img: 'Images82.jpeg',
+        href: 'alger.html',
+        title: { ar: 'السياحة في الجزائر العاصمة', fr: 'Tourisme à Alger', en: 'Tourism in Algiers' }
+      },
+      {
+        id: 'qr',
+        img: 'images(78).jpeg',
+        href: '#',
+        title: { ar: 'QR Codes', fr: 'QR Codes', en: 'QR Codes' }
+      }
+    ];
+
+    /* ============================================
+       2. الترجمات
+       ============================================ */
+    const TRANSLATIONS = {
+      ar: {
+        app_name: 'دليل ENSTP',
+        hero_title: 'دليل الطالب',
+        hero_desc: 'منصتك الرقمية الشاملة في المدرسة الوطنية العليا للأشغال العمومية — كل ما تحتاجه للتوجيه الأكاديمي، الخدمات اليومية، النقل، الإقامة، والترفيه في مكان واحد.',
+        sections_title: 'استكشف الأقسام',
+        footer_text: 'دليل الطالب',
+        search_placeholder: 'ابحث عن قسم… (مثال: النقل، المطاعم، الإدارة)',
+        no_result: 'لا توجد نتائج مطابقة'
+      },
+      fr: {
+        app_name: 'Guide ENSTP',
+        hero_title: 'Guide de l\'Étudiant',
+        hero_desc: 'Votre plateforme numérique complète à l\'ENSTP — tout ce dont vous avez besoin pour l\'orientation académique, les services quotidiens, le transport, le logement et les loisirs.',
+        sections_title: 'Explorez les sections',
+        footer_text: 'Guide de l\'Étudiant',
+        search_placeholder: 'Rechercher une section… (ex: Transport, Restaurants)',
+        no_result: 'Aucun résultat trouvé'
+      },
+      en: {
+        app_name: 'ENSTP Guide',
+        hero_title: 'Student Guide',
+        hero_desc: 'Your complete digital platform at ENSTP — everything you need for academic guidance, daily services, transport, accommodation, and leisure in one place.',
+        sections_title: 'Explore Sections',
+        footer_text: 'Student Guide',
+        search_placeholder: 'Search a section… (e.g. Transport, Restaurants)',
+        no_result: 'No matching results'
+      }
+    };
+
+    /* ============================================
+       3. الحالة الحالية
+       ============================================ */
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+    let currentTheme = localStorage.getItem('enstp_theme') || 'light';
+
+    /* ============================================
+       4. تطبيق اللغة
+       ============================================ */
+    function applyLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('enstp_lang', lang);
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+      // تحديث النصوص الثابتة
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) {
+          el.textContent = TRANSLATIONS[lang][key];
+        }
+      });
+
+      // تحديث placeholder البحث
+      document.getElementById('searchInput').placeholder = TRANSLATIONS[lang].search_placeholder;
+
+      // تحديث اسم اللغة في الزر
+      const labels = { ar: 'العربية', fr: 'Français', en: 'English' };
+      document.getElementById('langLabel').textContent = labels[lang];
+
+      // إعادة رسم البطاقات والأقسام
+      renderSections();
+    }
+
+    function changeLang(lang) {
+      applyLang(lang);
+      closeLangMenu();
+    }
+
+    /* ============================================
+       5. قائمة الترجمة
+       ============================================ */
+    function toggleLangMenu(e) {
+      e.stopPropagation();
+      document.getElementById('langMenu').classList.toggle('open');
+    }
+    function closeLangMenu() {
+      document.getElementById('langMenu').classList.remove('open');
+    }
+    document.addEventListener('click', closeLangMenu);
+
+    /* ============================================
+       6. الوضع الليلي / النهاري
+       ============================================ */
+    function applyTheme(theme) {
+      currentTheme = theme;
+      localStorage.setItem('enstp_theme', theme);
+      document.documentElement.setAttribute('data-theme', theme);
+      const icon = document.getElementById('themeIcon');
+      icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+    function toggleTheme() {
+      applyTheme(currentTheme === 'light' ? 'dark' : 'light');
+    }
+
+    /* ============================================
+       7. رسم الأقسام
+       ============================================ */
+    function renderSections() {
+      const grid = document.getElementById('sectionsGrid');
+      grid.innerHTML = '';
+
+      SECTIONS.forEach((sec, idx) => {
+        const a = document.createElement('a');
+        a.className = 'section-card';
+        a.href = sec.href;
+        a.dataset.sectionId = sec.id;
+
+        // دعم صور متعددة الصيغ عبر onerror
+        a.innerHTML = `
+          <img
+            class="section-img"
+            src="${sec.img}"
+            alt="${sec.title[currentLang]}"
+            loading="lazy"
+            onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=${encodeURIComponent(sec.title[currentLang])}';"
+          />
+          <div class="section-info">
+            <h3>${sec.title[currentLang]}</h3>
+            <span class="arrow"><i class="fa-solid fa-arrow-${currentLang === 'ar' ? 'left' : 'right'}"></i> اكتشف</span>
+          </div>
+        `;
+
+        // ظهور تدريجي عند التمرير
+        a.style.transitionDelay = (idx * 60) + 'ms';
+        grid.appendChild(a);
+      });
+
+      // إعداد IntersectionObserver للظهور التدريجي
+      setupRevealObserver();
+    }
+
+    function setupRevealObserver() {
+      const cards = document.querySelectorAll('.section-card');
+      if (!('IntersectionObserver' in window)) {
+        // fallback
+        cards.forEach(c => c.classList.add('visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+      cards.forEach(c => observer.observe(c));
+    }
+
+    /* ============================================
+       8. محرك البحث
+       ============================================ */
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    function performSearch(query) {
+      const q = query.trim().toLowerCase();
+      searchResults.innerHTML = '';
+
+      if (!q) {
+        searchResults.classList.remove('open');
+        return;
+      }
+
+      const matches = SECTIONS.filter(sec => {
+        const t = sec.title[currentLang].toLowerCase();
+        return t.includes(q) || sec.id.toLowerCase().includes(q);
+      });
+
+      if (matches.length === 0) {
+        searchResults.innerHTML = `<div class="no-result">${TRANSLATIONS[currentLang].no_result}</div>`;
+      } else {
+        matches.forEach(sec => {
+          const link = document.createElement('a');
+          link.href = sec.href;
+          link.innerHTML = `
+            <img src="${sec.img}" alt="" style="width:32px;height:32px;border-radius:8px;object-fit:cover;"
+                 onerror="this.style.display='none'">
+            <span>${sec.title[currentLang]}</span>
+          `;
+          searchResults.appendChild(link);
+        });
+      }
+      searchResults.classList.add('open');
+    }
+
+    searchInput.addEventListener('input', e => performSearch(e.target.value));
+    searchInput.addEventListener('focus', e => {
+      if (e.target.value.trim()) performSearch(e.target.value);
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.search-wrap')) searchResults.classList.remove('open');
+    });
+
+    /* ============================================
+       9. التهيئة
+       ============================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+      applyTheme(currentTheme);
+      applyLang(currentLang);
+    });
+  </script>
 </body>
 </html>
