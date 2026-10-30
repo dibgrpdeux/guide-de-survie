@@ -52,7 +52,7 @@
       left: 50%;
       transform: translateX(-50%);
       width: 95%;
-      max-width: 900px;
+      max-width: 950px;
       background: var(--nav-bg);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border-color);
@@ -100,9 +100,9 @@
       box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3);
     }
 
-    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .nav-actions { display: flex; gap: 8px; align-items: center; }
 
-    .action-btn {
+    .action-btn, .sound-btn {
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -116,7 +116,13 @@
       transition: 0.3s;
     }
 
-    .action-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+    .action-btn:hover, .sound-btn:hover {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+    }
+
+    .sound-btn.muted { opacity: 0.5; }
 
     /* ============================================
        🦘 Bouton Kangourou Orange (Recherche)
@@ -252,9 +258,7 @@
       backdrop-filter: blur(5px);
     }
 
-    .hero-badge i {
-      animation: pulseIcon 2s ease-in-out infinite;
-    }
+    .hero-badge i { animation: pulseIcon 2s ease-in-out infinite; }
 
     @keyframes pulseIcon {
       0%, 100% { transform: scale(1); }
@@ -311,9 +315,7 @@
       box-shadow: 0 12px 25px rgba(251, 191, 36, 0.6);
     }
 
-    .btn-explore i {
-      animation: bounceArrow 1.5s ease-in-out infinite;
-    }
+    .btn-explore i { animation: bounceArrow 1.5s ease-in-out infinite; }
 
     @keyframes bounceArrow {
       0%, 100% { transform: translateY(0); }
@@ -556,20 +558,39 @@
       50% { transform: translateY(-12px) rotate(3deg); }
     }
 
+    /* Feedback visuel au clic */
+    .card:active, .section-pill:active, .kangaroo-btn:active {
+      animation: tapFeedback 0.2s ease;
+    }
+
+    @keyframes tapFeedback {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+
+    .sound-pulse { animation: soundPulse 0.4s ease; }
+
+    @keyframes soundPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    /* Responsive */
     @media (max-width: 600px) {
       .hero-logo { width: 100px; }
       .top-navbar { width: 100%; top: 0; border-radius: 0; border-left: none; border-right: none; }
-      .lang-btn { padding: 5px 10px; font-size: 0.75rem; }
+      .lang-btn { padding: 5px 8px; font-size: 0.7rem; }
       .sections-slider-container { margin-top: 10px; }
       .btn-explore { font-size: 1rem; padding: 10px 25px; }
       .kangaroo-btn { width: 42px; height: 42px; }
       .kangaroo-svg { width: 32px; height: 32px; }
       .mascot-kangaroo { width: 55px; height: 70px; bottom: 15px; right: 15px; }
+      .action-btn, .sound-btn { width: 36px; height: 36px; }
     }
 
-    /* ============================================
-       Scrollbar
-       ============================================ */
+    /* Scrollbar */
     ::-webkit-scrollbar { width: 10px; }
     ::-webkit-scrollbar-track { background: var(--bg-color); }
     ::-webkit-scrollbar-thumb {
@@ -594,6 +615,11 @@
     </div>
 
     <div class="nav-actions">
+      <!-- 🔊 Bouton Son -->
+      <button class="sound-btn" id="soundToggle" title="تشغيل/إيقاف الصوت">
+        <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+      </button>
+
       <button class="action-btn" id="themeToggle" title="تبديل الوضع">
         <i class="fa-solid fa-moon"></i>
       </button>
@@ -601,38 +627,24 @@
       <!-- 🦘 Bouton Kangourou (Recherche) -->
       <button class="kangaroo-btn" id="searchBtn" title="بحث / Recherche">
         <svg class="kangaroo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <!-- Queue -->
           <path d="M14 48 Q6 44 8 52 Q10 58 16 54 Z" fill="#ea580c"/>
-          <!-- Corps -->
           <ellipse cx="34" cy="42" rx="16" ry="14" fill="#f97316"/>
-          <!-- Ventre clair -->
           <ellipse cx="36" cy="44" rx="9" ry="9" fill="#fed7aa"/>
-          <!-- Patte arrière -->
           <ellipse cx="46" cy="54" rx="8" ry="4" fill="#ea580c"/>
-          <!-- Patte avant -->
           <ellipse cx="26" cy="52" rx="5" ry="3" fill="#ea580c"/>
-          <!-- Tête -->
           <ellipse cx="44" cy="22" rx="11" ry="10" fill="#f97316"/>
-          <!-- Oreilles -->
           <ellipse cx="40" cy="10" rx="3.5" ry="7" fill="#f97316" transform="rotate(-15 40 10)"/>
           <ellipse cx="40" cy="11" rx="1.8" ry="4.5" fill="#fed7aa" transform="rotate(-15 40 10)"/>
           <ellipse cx="50" cy="10" rx="3.5" ry="7" fill="#f97316" transform="rotate(15 50 10)"/>
           <ellipse cx="50" cy="11" rx="1.8" ry="4.5" fill="#fed7aa" transform="rotate(15 50 10)"/>
-          <!-- Museau -->
           <ellipse cx="48" cy="26" rx="6" ry="5" fill="#fed7aa"/>
-          <!-- Nez -->
           <ellipse cx="52" cy="24" rx="1.8" ry="1.4" fill="#7c2d12"/>
-          <!-- Œil -->
           <circle cx="46" cy="20" r="2" fill="#1a1410"/>
           <circle cx="46.7" cy="19.3" r="0.7" fill="#ffffff"/>
-          <!-- Sourire -->
           <path d="M48 28 Q51 30 54 28" stroke="#7c2d12" stroke-width="1" fill="none" stroke-linecap="round"/>
-          <!-- Bras tenant la loupe -->
           <ellipse cx="30" cy="36" rx="4" ry="2.5" fill="#ea580c" transform="rotate(40 30 36)"/>
-          <!-- Loupe -->
           <circle cx="22" cy="30" r="6" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="2"/>
           <line x1="26" y1="34" x2="31" y2="39" stroke="#c2410c" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- Reflet loupe -->
           <path d="M19 27 Q20 25 23 26" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round"/>
         </svg>
       </button>
@@ -679,6 +691,9 @@
       <a href="transport.html" class="section-pill"><i class="fa-solid fa-bus"></i> النقل</a>
       <a href="shopping.html" class="section-pill"><i class="fa-solid fa-utensils"></i> المطاعم</a>
       <a href="alger.html" class="section-pill"><i class="fa-solid fa-map-location-dot"></i> السياحة</a>
+      <a href="shopping.html" class="section-pill"><i class="fa-solid fa-cart-shopping"></i> التسوق</a>
+      <a href="loisirs.html" class="section-pill"><i class="fa-solid fa-masks-theater"></i> الترفيه</a>
+      <a href="qr.html" class="section-pill"><i class="fa-solid fa-qrcode"></i> QR Codes</a>
     </div>
   </div>
 
@@ -749,43 +764,56 @@
         <p class="card-sub">أفضل الوجهات القريبة</p>
       </div>
     </a>
+
+    <!-- 🛒 التسوق -->
+    <a href="shopping.html" class="card">
+      <img src="images (80).jpeg" alt="التسوق" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=التسوق'">
+      <div class="card-body">
+        <h3 class="card-title">التسوق</h3>
+        <p class="card-sub">المحلات، الأسعار، والعروض</p>
+      </div>
+    </a>
+
+    <!-- 🎭 الترفيه -->
+    <a href="loisirs.html" class="card">
+      <img src="images82.jpg" alt="الترفيه" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=الترفيه'">
+      <div class="card-body">
+        <h3 class="card-title">الترفيه</h3>
+        <p class="card-sub">السياحة، المتاحف، والأنشطة</p>
+      </div>
+    </a>
+
+    <!-- 📱 QR Codes -->
+    <a href="qr.html" class="card">
+      <img src="images (78).jpeg" alt="QR Codes" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=QR+Codes'">
+      <div class="card-body">
+        <h3 class="card-title">QR Codes</h3>
+        <p class="card-sub">رموز سريعة للوصول المباشر</p>
+      </div>
+    </a>
   </section>
 
   <!-- ==========================================
        🦘 Mascotte Kangourou
        ========================================== -->
   <svg class="mascot-kangaroo" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
-    <!-- Ombre -->
     <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
-    <!-- Queue -->
     <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
-    <!-- Jambe arrière -->
-    <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
-    <!-- Corps -->
+      <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
     <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
-    <!-- Ventre -->
     <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
-    <!-- Patte avant -->
     <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
-    <!-- Tête -->
     <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
-    <!-- Oreilles -->
     <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
     <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
     <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
     <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
-    <!-- Museau -->
     <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
-    <!-- Nez -->
     <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
-    <!-- Œil -->
     <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
     <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
-    <!-- Sourire -->
     <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-    <!-- Bras qui salue -->
     <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
-    <!-- Petite loupe dans la main -->
     <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
     <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
   </svg>
@@ -796,7 +824,7 @@
   <div class="search-overlay" id="searchOverlay">
     <div class="search-box">
       <div class="search-input-wrapper">
-                <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
+        <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
         <input type="text" placeholder="ابحث عن قسم، خدمة، أو معلومة..." id="searchInput">
         <button id="closeSearch" style="background:none; border:none; cursor:pointer; color:var(--text-main); font-size: 1.2rem;"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -804,14 +832,15 @@
   </div>
 
   <!-- ==========================================
-       السكريبت
+       السكريبت الكامل
        ========================================== -->
   <script>
-    // 1. الوضع الليلي والنهاري
+    /* ============================================
+       1. الوضع الليلي والنهاري
+       ============================================ */
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
     
-    // تحميل الوضع المحفوظ
     if (localStorage.getItem('theme') === 'dark') {
       html.setAttribute('data-theme', 'dark');
       themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
@@ -829,7 +858,9 @@
       }
     });
 
-    // 2. تغيير اللغة
+    /* ============================================
+       2. تغيير اللغة
+       ============================================ */
     function setLang(lang, event) {
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
       if (event) event.target.classList.add('active');
@@ -843,7 +874,9 @@
       localStorage.setItem('enstp_lang', lang);
     }
 
-    // 3. نافذة البحث (Kangourou)
+    /* ============================================
+       3. نافذة البحث
+       ============================================ */
     const searchBtn = document.getElementById('searchBtn');
     const searchOverlay = document.getElementById('searchOverlay');
     const closeSearch = document.getElementById('closeSearch');
@@ -856,38 +889,27 @@
 
     closeSearch.addEventListener('click', () => {
       searchOverlay.classList.remove('active');
+      searchInput.value = '';
+      document.querySelectorAll('.card').forEach(card => {
+        card.style.display = 'flex';
+      });
     });
 
-    // إغلاق البحث عند الضغط خارج المربع
     searchOverlay.addEventListener('click', (e) => {
       if (e.target === searchOverlay) {
         searchOverlay.classList.remove('active');
       }
     });
 
-    // إغلاق البحث عند الضغط على Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         searchOverlay.classList.remove('active');
       }
     });
 
-    // 4. حركة الظهور المتدرج للبطاقات
-    const cards = document.querySelectorAll('.card');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, index * 100);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    cards.forEach(card => observer.observe(card));
-
-    // 5. تفعيل البحث الفوري (فلترة البطاقات)
+    /* ============================================
+       4. البحث الفوري
+       ============================================ */
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.trim().toLowerCase();
       const cards = document.querySelectorAll('.card');
@@ -904,14 +926,146 @@
       });
     });
 
-    // 6. إعادة تعيين البحث عند إغلاق النافذة
-    closeSearch.addEventListener('click', () => {
-      searchInput.value = '';
-      document.querySelectorAll('.card').forEach(card => {
-        card.style.display = 'flex';
+    /* ============================================
+       5. حركة الظهور المتدرج للبطاقات
+       ============================================ */
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 100);
+          observer.unobserve(entry.target);
+        }
       });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => observer.observe(card));
+
+    /* ============================================
+       6. 🔊 SYSTÈME DE SONS (Web Audio API)
+       ============================================ */
+    let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playSound(type = 'click') {
+      if (!soundEnabled) return;
+      
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        const sounds = {
+          click:    { freq: 800,  duration: 0.08, wave: 'sine',     vol: 0.15 },
+          hover:    { freq: 1200, duration: 0.04, wave: 'sine',     vol: 0.07 },
+          open:     { freq: 600,  duration: 0.15, wave: 'triangle', vol: 0.2  },
+          close:    { freq: 400,  duration: 0.12, wave: 'triangle', vol: 0.15 },
+          theme:    { freq: 1000, duration: 0.1,  wave: 'sine',     vol: 0.18 },
+          success:  { freq: 1400, duration: 0.2,  wave: 'sine',     vol: 0.2  },
+          kangaroo: { freq: 700,  duration: 0.18, wave: 'triangle', vol: 0.22 }
+        };
+        
+        const s = sounds[type] || sounds.click;
+        
+        osc.type = s.wave;
+        osc.frequency.setValueAtTime(s.freq, ctx.currentTime);
+        
+        if (type === 'kangaroo') {
+          osc.frequency.exponentialRampToValueAtTime(s.freq * 2.5, ctx.currentTime + s.duration);
+        } else if (type === 'success') {
+          osc.frequency.exponentialRampToValueAtTime(s.freq * 1.5, ctx.currentTime + s.duration);
+        } else if (type === 'open') {
+          osc.frequency.exponentialRampToValueAtTime(s.freq * 1.8, ctx.currentTime + s.duration);
+        } else if (type === 'close') {
+          osc.frequency.exponentialRampToValueAtTime(s.freq * 0.5, ctx.currentTime + s.duration);
+        }
+        
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(s.vol, ctx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + s.duration);
+        
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + s.duration);
+      } catch (err) {
+        console.warn('Son non disponible:', err);
+      }
+    }
+
+    /* ============================================
+       7. Bouton On/Off du son
+       ============================================ */
+    const soundToggle = document.getElementById('soundToggle');
+    const soundIcon = document.getElementById('soundIcon');
+    
+    if (!soundEnabled) {
+      soundIcon.className = 'fa-solid fa-volume-xmark';
+      soundToggle.classList.add('muted');
+    }
+    
+    soundToggle.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      localStorage.setItem('soundEnabled', soundEnabled);
+      
+      if (soundEnabled) {
+        soundIcon.className = 'fa-solid fa-volume-high';
+        soundToggle.classList.remove('muted');
+        playSound('success');
+      } else {
+        soundIcon.className = 'fa-solid fa-volume-xmark';
+        soundToggle.classList.add('muted');
+      }
+      
+      soundToggle.classList.add('sound-pulse');
+      setTimeout(() => soundToggle.classList.remove('sound-pulse'), 400);
     });
 
+    /* ============================================
+       8. Attacher les sons aux interactions
+       ============================================ */
+    // Survol des cartes et pills
+    document.querySelectorAll('.card, .section-pill').forEach(el => {
+      el.addEventListener('mouseenter', () => playSound('hover'));
+      el.addEventListener('click', () => playSound('click'));
+    });
+
+    // Kangourou
+    searchBtn.addEventListener('click', () => playSound('kangaroo'));
+
+    // Ouverture / fermeture recherche
+    searchBtn.addEventListener('click', () => playSound('open'));
+    closeSearch.addEventListener('click', () => playSound('close'));
+    searchOverlay.addEventListener('click', (e) => {
+      if (e.target === searchOverlay) playSound('close');
+    });
+
+    // Thème
+    themeToggle.addEventListener('click', () => playSound('theme'));
+
+    // Langues
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => playSound('click'));
+    });
+
+    // Bouton "ابدأ الاستكشاف"
+    const exploreBtn = document.querySelector('.btn-explore');
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', () => playSound('success'));
+    }
   </script>
 </body>
 </html>
