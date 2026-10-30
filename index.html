@@ -9,9 +9,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
   <style>
+    /* ============================================
+       المتغيرات الأساسية
+       ============================================ */
     :root {
-      --primary: #fbbf24; /* لون أصفر ذهبي مطابق للصورة */
+      --primary: #fbbf24;
       --primary-hover: #f59e0b;
+      --orange: #f97316;
+      --orange-dark: #ea580c;
       --bg-color: #f8fafc;
       --text-main: #1e293b;
       --card-bg: rgba(255, 255, 255, 0.9);
@@ -39,7 +44,7 @@
     }
 
     /* ============================================
-       الشريط العلوي العائم (Navbar)
+       الشريط العلوي
        ============================================ */
     .top-navbar {
       position: fixed;
@@ -95,7 +100,7 @@
       box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3);
     }
 
-    .nav-actions { display: flex; gap: 10px; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
 
     .action-btn {
       width: 40px;
@@ -114,11 +119,94 @@
     .action-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
 
     /* ============================================
-       قسم الهيرو (Hero) - الصورة كخلفية
+       🦘 Bouton Kangourou Orange (Recherche)
+       ============================================ */
+    .kangaroo-btn {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid rgba(249, 115, 22, 0.4);
+      background: linear-gradient(135deg, #fff7ed, #ffedd5);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+      overflow: visible;
+    }
+
+    .kangaroo-btn::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.4), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+      animation: haloPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes haloPulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.25); opacity: 0.6; }
+    }
+
+    .kangaroo-btn:hover {
+      transform: translateY(-3px) scale(1.08);
+      border-color: #f97316;
+      box-shadow: 0 8px 20px rgba(249, 115, 22, 0.45);
+    }
+
+    .kangaroo-btn:hover::before { opacity: 1; }
+
+    .kangaroo-svg {
+      width: 38px;
+      height: 38px;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+    }
+
+    .kangaroo-btn:hover .kangaroo-svg {
+      animation: kangarooJump 0.6s ease;
+    }
+
+    @keyframes kangarooJump {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      30% { transform: translateY(-8px) rotate(-8deg); }
+      60% { transform: translateY(-4px) rotate(5deg); }
+    }
+
+    .kangaroo-btn:active { transform: scale(0.92); }
+
+    .kangaroo-btn:active .kangaroo-svg {
+      animation: kangarooSquash 0.4s ease;
+    }
+
+    @keyframes kangarooSquash {
+      0% { transform: scale(1, 1); }
+      40% { transform: scale(1.15, 0.85); }
+      100% { transform: scale(1, 1); }
+    }
+
+    [data-theme="dark"] .kangaroo-btn {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-color: rgba(249, 115, 22, 0.6);
+    }
+
+    [data-theme="dark"] .kangaroo-svg {
+      filter: drop-shadow(0 0 6px rgba(249,115,22,0.5));
+    }
+
+    /* ============================================
+       قسم الهيرو
        ============================================ */
     .hero {
       position: relative;
-      min-height: 100vh; /* يغطي كامل الشاشة */
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -130,7 +218,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('images (73).jpeg'); /* مسار الصورة الأولى */
+      background-image: url('images (73).jpeg');
       background-size: cover;
       background-position: center;
       z-index: -2;
@@ -164,6 +252,15 @@
       backdrop-filter: blur(5px);
     }
 
+    .hero-badge i {
+      animation: pulseIcon 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseIcon {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); color: #fbbf24; }
+    }
+
     .hero-title {
       color: #fff;
       font-size: clamp(2rem, 5vw, 3.5rem);
@@ -172,7 +269,18 @@
       margin-bottom: 20px;
     }
 
-    .hero-title span { color: var(--primary); }
+    .hero-title span {
+      background: linear-gradient(90deg, #fbbf24, #f97316, #fbbf24);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 3s linear infinite;
+    }
+
+    @keyframes shimmerText {
+      to { background-position: 200% center; }
+    }
 
     .hero-desc {
       color: #e2e8f0;
@@ -182,7 +290,6 @@
       margin-bottom: 40px;
     }
 
-    /* زر ابدأ الاستكشاف */
     .btn-explore {
       background: var(--primary);
       color: #000;
@@ -204,16 +311,44 @@
       box-shadow: 0 12px 25px rgba(251, 191, 36, 0.6);
     }
 
+    .btn-explore i {
+      animation: bounceArrow 1.5s ease-in-out infinite;
+    }
+
+    @keyframes bounceArrow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
     /* ============================================
-       شريط الأقسام الأفقي (بين الصورة والبطاقات)
+       شريط الأقسام
        ============================================ */
     .sections-slider-container {
       width: 100%;
       max-width: 1200px;
-      margin: -40px auto 30px; /* يطفو فوق نهاية الصورة قليلاً */
+      margin: -40px auto 30px;
       position: relative;
       z-index: 10;
       padding: 0 20px;
+    }
+
+    .sections-slider-container::before,
+    .sections-slider-container::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 40px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .sections-slider-container::before {
+      right: 0;
+      background: linear-gradient(to left, var(--bg-color), transparent);
+    }
+    .sections-slider-container::after {
+      left: 0;
+      background: linear-gradient(to right, var(--bg-color), transparent);
     }
 
     .sections-slider {
@@ -222,7 +357,7 @@
       overflow-x: auto;
       padding: 15px 5px;
       scroll-snap-type: x mandatory;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
     }
     .sections-slider::-webkit-scrollbar { display: none; }
 
@@ -243,7 +378,22 @@
       scroll-snap-align: start;
       transition: 0.3s;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
     }
+
+    .section-pill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .section-pill:hover::after { left: 100%; }
 
     .section-pill:hover {
       background: var(--primary);
@@ -256,7 +406,7 @@
     .section-pill:hover i { color: #000; }
 
     /* ============================================
-       شبكة البطاقات (Cards Grid)
+       شبكة البطاقات
        ============================================ */
     .cards-grid {
       display: grid;
@@ -279,6 +429,34 @@
       transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       opacity: 0;
       transform: translateY(30px);
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 2px;
+      background: linear-gradient(135deg, #fbbf24, #f97316, #fbbf24);
+      background-size: 200% 200%;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      animation: gradientRotate 3s linear infinite;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    @keyframes gradientRotate {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
     }
 
     .card.visible {
@@ -303,7 +481,7 @@
     .card-sub { font-size: 0.85rem; opacity: 0.7; font-weight: 600; }
 
     /* ============================================
-       النافذة المنبثقة للبحث (Modal)
+       نافذة البحث
        ============================================ */
     .search-overlay {
       position: fixed;
@@ -359,93 +537,136 @@
     }
 
     /* ============================================
-       النحلة (BEE) في الزاوية
+       🦘 Mascotte Kangourou en bas à droite
        ============================================ */
-    .bee-img {
+    .mascot-kangaroo {
       position: fixed;
       bottom: 20px;
       right: 20px;
       width: 70px;
+      height: 90px;
       z-index: 900;
-      animation: floatBee 3s ease-in-out infinite;
-      filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+      animation: mascotFloat 3s ease-in-out infinite;
+      filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3));
+      pointer-events: none;
     }
 
-    @keyframes floatBee {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(5deg); }
+    @keyframes mascotFloat {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
       .hero-logo { width: 100px; }
       .top-navbar { width: 100%; top: 0; border-radius: 0; border-left: none; border-right: none; }
       .lang-btn { padding: 5px 10px; font-size: 0.75rem; }
       .sections-slider-container { margin-top: 10px; }
       .btn-explore { font-size: 1rem; padding: 10px 25px; }
+      .kangaroo-btn { width: 42px; height: 42px; }
+      .kangaroo-svg { width: 32px; height: 32px; }
+      .mascot-kangaroo { width: 55px; height: 70px; bottom: 15px; right: 15px; }
     }
+
+    /* ============================================
+       Scrollbar
+       ============================================ */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg-color); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #fbbf24, #f97316);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #ea580c; }
   </style>
 </head>
 <body>
 
   <!-- ==========================================
-       الشريط العلوي (Navbar)
+       الشريط العلوي
        ========================================== -->
   <nav class="top-navbar">
-    <!-- شعار الموقع (يمين) -->
     <img src="enstp_logo.png" alt="ENSTP Logo" class="nav-logo" onerror="this.style.display='none'">
 
-    <!-- تبديل اللغة (وسط) -->
     <div class="lang-switch">
       <button class="lang-btn active" onclick="setLang('ar', event)">العربية</button>
       <button class="lang-btn" onclick="setLang('fr', event)">Français</button>
       <button class="lang-btn" onclick="setLang('en', event)">English</button>
     </div>
 
-    <!-- أزرار الإجراءات (يسار) -->
     <div class="nav-actions">
       <button class="action-btn" id="themeToggle" title="تبديل الوضع">
         <i class="fa-solid fa-moon"></i>
       </button>
-      <button class="action-btn" id="searchBtn" title="بحث">
-        <i class="fa-solid fa-magnifying-glass"></i>
+
+      <!-- 🦘 Bouton Kangourou (Recherche) -->
+      <button class="kangaroo-btn" id="searchBtn" title="بحث / Recherche">
+        <svg class="kangaroo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <!-- Queue -->
+          <path d="M14 48 Q6 44 8 52 Q10 58 16 54 Z" fill="#ea580c"/>
+          <!-- Corps -->
+          <ellipse cx="34" cy="42" rx="16" ry="14" fill="#f97316"/>
+          <!-- Ventre clair -->
+          <ellipse cx="36" cy="44" rx="9" ry="9" fill="#fed7aa"/>
+          <!-- Patte arrière -->
+          <ellipse cx="46" cy="54" rx="8" ry="4" fill="#ea580c"/>
+          <!-- Patte avant -->
+          <ellipse cx="26" cy="52" rx="5" ry="3" fill="#ea580c"/>
+          <!-- Tête -->
+          <ellipse cx="44" cy="22" rx="11" ry="10" fill="#f97316"/>
+          <!-- Oreilles -->
+          <ellipse cx="40" cy="10" rx="3.5" ry="7" fill="#f97316" transform="rotate(-15 40 10)"/>
+          <ellipse cx="40" cy="11" rx="1.8" ry="4.5" fill="#fed7aa" transform="rotate(-15 40 10)"/>
+          <ellipse cx="50" cy="10" rx="3.5" ry="7" fill="#f97316" transform="rotate(15 50 10)"/>
+          <ellipse cx="50" cy="11" rx="1.8" ry="4.5" fill="#fed7aa" transform="rotate(15 50 10)"/>
+          <!-- Museau -->
+          <ellipse cx="48" cy="26" rx="6" ry="5" fill="#fed7aa"/>
+          <!-- Nez -->
+          <ellipse cx="52" cy="24" rx="1.8" ry="1.4" fill="#7c2d12"/>
+          <!-- Œil -->
+          <circle cx="46" cy="20" r="2" fill="#1a1410"/>
+          <circle cx="46.7" cy="19.3" r="0.7" fill="#ffffff"/>
+          <!-- Sourire -->
+          <path d="M48 28 Q51 30 54 28" stroke="#7c2d12" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <!-- Bras tenant la loupe -->
+          <ellipse cx="30" cy="36" rx="4" ry="2.5" fill="#ea580c" transform="rotate(40 30 36)"/>
+          <!-- Loupe -->
+          <circle cx="22" cy="30" r="6" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="2"/>
+          <line x1="26" y1="34" x2="31" y2="39" stroke="#c2410c" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Reflet loupe -->
+          <path d="M19 27 Q20 25 23 26" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </svg>
       </button>
     </div>
   </nav>
 
   <!-- ==========================================
-       قسم الهيرو (Hero)
+       قسم الهيرو
        ========================================== -->
   <header class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
 
-    <!-- الشعار الأبيض الكبير -->
     <img src="enstp_logo_white.png" alt="ENSTP Logo" class="hero-logo" onerror="this.src='https://via.placeholder.com/150x150/ffffff/000000?text=ENSTP'">
 
-    <!-- شارة الدليل -->
     <div class="hero-badge">
       <i class="fa-solid fa-location-dot"></i> الدليل الميداني الشامل للطلبة
     </div>
 
-    <!-- العنوان الرئيسي -->
     <h1 class="hero-title">
       المدرسة العليا<br><span>للأشغال العمومية</span>
     </h1>
 
-    <!-- الوصف -->
     <p class="hero-desc">
       منصة رقمية متكاملة تجمع كل ما يحتاجه طالب ENSTP: التوجيه الميداني، التواصل الأكاديمي، الخدمات اليومية، النقل، الإقامة الجامعية، وشبكة التضامن الأخوي.
     </p>
 
-    <!-- زر ابدأ الاستكشاف -->
     <a href="#sections" class="btn-explore">
       <i class="fa-solid fa-arrow-down"></i> ابدأ الاستكشاف
     </a>
   </header>
 
   <!-- ==========================================
-       شريط الأقسام (بين الصورة والبطاقات)
+       شريط الأقسام
        ========================================== -->
   <div class="sections-slider-container" id="sections">
     <div class="sections-slider">
@@ -462,7 +683,7 @@
   </div>
 
   <!-- ==========================================
-       شبكة البطاقات (Cards)
+       شبكة البطاقات
        ========================================== -->
   <section class="cards-grid">
     <a href="ma-ecole.html" class="card">
@@ -506,7 +727,7 @@
     </a>
 
     <a href="forum.html" class="card">
-      <img src="images71.jpeg" alt="ملتقى الطلبة" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=ملتقى'">
+      <img src="images71.jpg" alt="ملتقى الطلبة" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=ملتقى'">
       <div class="card-body">
         <h3 class="card-title">ملتقى الطلبة</h3>
         <p class="card-sub">النقاشات، النوادي، والفعاليات</p>
@@ -514,7 +735,7 @@
     </a>
 
     <a href="transport.html" class="card">
-      <img src="Images80.jpeg" alt="النقل" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=النقل'">
+      <img src="images80.jpg" alt="النقل" onerror="this.src='https://via.placeholder.com/400x300/cccccc/ffffff?text=النقل'">
       <div class="card-body">
         <h3 class="card-title">النقل</h3>
         <p class="card-sub">الحافلات، المترو، والترامواي</p>
@@ -530,44 +751,52 @@
     </a>
   </section>
 
- /* ============================================
-   النحلة الصغيرة (Boucoule) في الزاوية
-   ============================================ */
-.boucoule-img {
-  position: fixed;
-  bottom: 20px;       /* المسافة من الأسفل */
-  right: 20px;        /* المسافة من اليمين */
-  width: 55px;        /* العرض صغير جداً */
-  height: 55px;       /* الارتفاع صغير جداً */
-  object-fit: contain; /* الحفاظ على نسبة الصورة */
-  z-index: 900;
-  pointer-events: none; /* لا تمنع الضغط على العناصر خلفها */
-  animation: floatBee 3s ease-in-out infinite;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
-}
-
-@keyframes floatBee {
-  0%, 100% { transform: translateY(0) rotate(-5deg); }
-  50% { transform: translateY(-10px) rotate(5deg); }
-}
-
-/* تصغير إضافي على الشاشات الصغيرة */
-@media (max-width: 600px) {
-  .boucoule-img {
-    width: 45px;
-    height: 45px;
-    bottom: 15px;
-    right: 15px;
-  }
-}
+  <!-- ==========================================
+       🦘 Mascotte Kangourou
+       ========================================== -->
+  <svg class="mascot-kangaroo" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
+    <!-- Ombre -->
+    <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
+    <!-- Queue -->
+    <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
+    <!-- Jambe arrière -->
+    <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
+    <!-- Corps -->
+    <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
+    <!-- Ventre -->
+    <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
+    <!-- Patte avant -->
+    <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
+    <!-- Tête -->
+    <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
+    <!-- Oreilles -->
+    <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
+    <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
+    <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
+    <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
+    <!-- Museau -->
+    <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
+    <!-- Nez -->
+    <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
+    <!-- Œil -->
+    <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
+    <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
+    <!-- Sourire -->
+    <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <!-- Bras qui salue -->
+    <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
+    <!-- Petite loupe dans la main -->
+    <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
+    <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
+  </svg>
 
   <!-- ==========================================
-       نافذة البحث (Modal)
+       نافذة البحث
        ========================================== -->
   <div class="search-overlay" id="searchOverlay">
     <div class="search-box">
       <div class="search-input-wrapper">
-        <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
         <input type="text" placeholder="ابحث عن قسم، خدمة، أو معلومة..." id="searchInput">
         <button id="closeSearch" style="background:none; border:none; cursor:pointer; color:var(--text-main); font-size: 1.2rem;"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -603,9 +832,8 @@
     // 2. تغيير اللغة
     function setLang(lang, event) {
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      if(event) event.target.classList.add('active');
+      if (event) event.target.classList.add('active');
       
-      // تغيير اتجاه الصفحة بناءً على اللغة
       if (lang === 'ar') {
         document.documentElement.setAttribute('dir', 'rtl');
       } else {
@@ -613,10 +841,9 @@
       }
       
       localStorage.setItem('enstp_lang', lang);
-      // هنا يتم استدعاء دالة الترجمة الخاصة بك
     }
 
-    // 3. نافذة البحث
+    // 3. نافذة البحث (Kangourou)
     const searchBtn = document.getElementById('searchBtn');
     const searchOverlay = document.getElementById('searchOverlay');
     const closeSearch = document.getElementById('closeSearch');
@@ -638,6 +865,13 @@
       }
     });
 
+    // إغلاق البحث عند الضغط على Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchOverlay.classList.remove('active');
+      }
+    });
+
     // 4. حركة الظهور المتدرج للبطاقات
     const cards = document.querySelectorAll('.card');
     const observer = new IntersectionObserver((entries) => {
@@ -645,13 +879,39 @@
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.classList.add('visible');
-          }, index * 100); // تأخير لكل بطاقة
+          }, index * 100);
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
     cards.forEach(card => observer.observe(card));
+
+    // 5. تفعيل البحث الفوري (فلترة البطاقات)
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.trim().toLowerCase();
+      const cards = document.querySelectorAll('.card');
+      
+      cards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const sub = card.querySelector('.card-sub').textContent.toLowerCase();
+        
+        if (title.includes(query) || sub.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // 6. إعادة تعيين البحث عند إغلاق النافذة
+    closeSearch.addEventListener('click', () => {
+      searchInput.value = '';
+      document.querySelectorAll('.card').forEach(card => {
+        card.style.display = 'flex';
+      });
+    });
+
   </script>
 </body>
 </html>
