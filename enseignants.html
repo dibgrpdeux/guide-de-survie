@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="indigo">
+<html lang="ar" dir="rtl" data-theme="warm">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,56 +7,259 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   
   <style>
-    :root { --primary: #4f46e5; --primary-hover: #4338ca; --primary-light: #eef2ff; }
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #0f172a; }
-    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.05); }
-    .btn-year.active { background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4); }
-    .badge-subject { transition: all 0.3s ease; }
-    .badge-subject.active { background-color: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); }
+    :root { 
+      --primary: #d97706;       /* برتقالي ذهبي */
+      --primary-dark: #b45309;  /* برتقالي غامق */
+      --primary-light: #fef3c7; /* كريمي */
+      --navy: #0f172a;          /* أزرق داكن جداً */
+      --blue-header: #1e3a8a;   /* أزرق الهيدر */
+    }
     
+    body { font-family: 'Cairo', sans-serif; background: #fffbeb; color: #1e293b; }
+    
+    /* خلفية متدرجة */
+    .ambient-bg { 
+      position: fixed; inset: 0; z-index: -1; 
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #e0f2fe 100%); 
+    }
+
+    .glass-card { 
+      background: rgba(255, 255, 255, 0.95); 
+      backdrop-filter: blur(16px); 
+      border: 1px solid rgba(255, 255, 255, 0.9); 
+      box-shadow: 0 10px 30px -10px rgba(146, 64, 14, 0.1); 
+    }
+
+    /* أزرار اختيار السنة */
+    .btn-year { background: white; border: 2px solid #e2e8f0; color: #475569; }
+    .btn-year.active { 
+      background: linear-gradient(135deg, #d97706, #f59e0b); 
+      color: white; 
+      border-color: transparent;
+      box-shadow: 0 10px 20px -5px rgba(217, 119, 6, 0.4); 
+    }
+
+    /* أزرار المواد */
+    .badge-subject { transition: all 0.3s ease; }
+    .badge-subject.active { 
+      background-color: var(--primary); 
+      color: white; 
+      border-color: var(--primary); 
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25); 
+    }
+    
+    /* أزرار اللغة */
     .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
+    .lang-btn:hover { background: #fef3c7; color: #92400e; }
+    .lang-btn.active { background: #d97706; color: white; }
+
+    /* تصميم بطاقة الأستاذ (مطابق للصورة) */
+    .teacher-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .teacher-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px -15px rgba(217, 119, 6, 0.2);
+    }
+
+    /* الجزء العلوي الأزرق */
+    .card-header-bg {
+      height: 100px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      position: relative;
+    }
+
+    /* زر صح في الزاوية */
+    .check-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(5px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    /* شارة القسم (يمين) */
+    .dept-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #78350f;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+    }
+
+    /* صورة الأستاذ الدائرية */
+    .teacher-photo-wrap {
+      position: absolute;
+      bottom: -45px;
+      right: 24px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 4px solid white;
+      background: #f1f5f9;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    
+    .teacher-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .teacher-photo-initials {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.8rem;
+    }
+
+    /* محتوى البطاقة */
+    .card-content {
+      padding: 55px 24px 24px 24px;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .teacher-name {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .teacher-title {
+      font-size: 0.85rem;
+      color: #b45309;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .teacher-desc {
+      font-size: 0.85rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    /* الأزرار السفلية */
+    .btn-card-primary {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #451a03;
+      font-weight: 800;
+      padding: 12px;
+      border-radius: 14px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      cursor: pointer;
+      border: none;
+      width: 100%;
+    }
+    
+    .btn-card-primary:hover { 
+      background: linear-gradient(135deg, #f59e0b, #d97706); 
+      transform: translateY(-2px);
+    }
+
+    .btn-card-secondary {
+      background: #f8fafc;
+      color: #475569;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 14px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+    }
+    
+    .btn-card-secondary:hover { background: #f1f5f9; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
+  <div class="ambient-bg"></div>
 
   <div class="max-w-6xl mx-auto w-full space-y-8">
     
     <!-- Header -->
-    <div class="text-center space-y-2 relative">
+    <div class="text-center space-y-2 relative pt-12 md:pt-0">
       <!-- أزرار الترجمة -->
-      <div class="absolute top-0 left-0 flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
+      <div class="absolute top-0 left-0 flex items-center gap-1 bg-white p-1 rounded-xl border border-amber-200 shadow-sm">
         <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
         <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
         <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
       </div>
 
-      <span class="px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 font-bold text-xs uppercase tracking-wider border border-indigo-100">
+      <span class="px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 font-bold text-xs uppercase tracking-wider border border-amber-200">
         <i class="fa-solid fa-graduation-cap mr-1"></i> ENSTP Kouba
       </span>
-      <h1 class="text-3xl lg:text-4xl font-black text-gray-900" data-i18n="ens_title">هيئة التدريس</h1>
-      <p class="text-xs lg:text-sm text-gray-500" data-i18n="ens_subtitle">اختر السنة الدراسية...</p>
+      <h1 class="text-3xl lg:text-4xl font-black text-amber-900" data-i18n="ens_title">هيئة التدريس</h1>
+      <p class="text-xs lg:text-sm text-amber-700" data-i18n="ens_subtitle">اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.</p>
     </div>
 
     <!-- 1. اختيار السنة -->
     <div class="flex flex-wrap items-center justify-center gap-4">
-      <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-6 py-3 rounded-2xl font-bold text-sm bg-white text-gray-700 border border-gray-200 shadow-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-1"></i><span data-i18n="ens_year1">1ère Année (1CP)</span>
+      <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2">
+        <i class="fa-solid fa-1"></i><span data-i18n="ens_year1">السنة الأولى (1CP)</span>
       </button>
-      <button onclick="selectYear('2cp')" id="btn-2cp" class="btn-year px-6 py-3 rounded-2xl font-bold text-sm bg-white text-gray-700 border border-gray-200 shadow-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-2"></i><span data-i18n="ens_year2">2ème Année (2CP)</span>
+      <button onclick="selectYear('2cp')" id="btn-2cp" class="btn-year px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2">
+        <i class="fa-solid fa-2"></i><span data-i18n="ens_year2">السنة الثانية (2CP)</span>
       </button>
     </div>
 
     <!-- 2. اختيار المادة -->
-    <div class="glass-card p-5 rounded-3xl border border-white space-y-3">
-      <span class="text-xs font-bold text-gray-400 block uppercase tracking-wider" data-i18n="ens_select_subject">اختر المادة:</span>
+    <div class="glass-card p-5 rounded-3xl border border-amber-200 space-y-3">
+      <span class="text-xs font-bold text-amber-700 block uppercase tracking-wider" data-i18n="ens_select_subject">اختر المادة:</span>
       <div id="subjects-container" class="flex flex-wrap gap-2"></div>
     </div>
 
@@ -66,43 +269,43 @@
   </div>
 
   <!-- Modal: بطاقة الأستاذ -->
-  <div id="teacher-modal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="glass-card bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 border border-white shadow-2xl relative max-h-[90vh] overflow-y-auto">
+  <div id="teacher-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 border border-amber-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
       
-      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition z-10">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center justify-center transition z-10">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <div class="flex flex-col sm:flex-row items-center gap-5 border-b pb-6">
-        <div id="modal-img-box" class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center text-3xl font-black shadow-lg overflow-hidden flex-shrink-0"></div>
-        <div class="space-y-1 text-center sm:text-left">
-          <h2 id="modal-name" class="text-2xl font-black text-gray-900"></h2>
-          <p id="modal-grade" class="text-xs font-bold text-indigo-600 uppercase tracking-wide"></p>
-          <p id="modal-email" class="text-xs font-semibold text-gray-500 flex items-center justify-center sm:justify-start gap-1.5 pt-1" dir="ltr">
-            <i class="fa-solid fa-envelope text-indigo-500"></i>
+      <div class="flex flex-col sm:flex-row items-center gap-5 border-b border-amber-100 pb-6">
+        <div id="modal-img-box" class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white flex items-center justify-center text-3xl font-black shadow-lg overflow-hidden flex-shrink-0"></div>
+        <div class="space-y-1 text-center sm:text-right">
+          <h2 id="modal-name" class="text-2xl font-black text-amber-900"></h2>
+          <p id="modal-grade" class="text-xs font-bold text-amber-600 uppercase tracking-wide"></p>
+          <p id="modal-email" class="text-xs font-semibold text-slate-500 flex items-center justify-center sm:justify-start gap-1.5 pt-1" dir="ltr">
+            <i class="fa-solid fa-envelope text-amber-500"></i>
             <span></span>
           </p>
         </div>
       </div>
 
-      <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
+      <div class="space-y-4 text-sm text-slate-700 leading-relaxed text-right" dir="rtl">
         <div>
-          <h4 class="font-bold text-gray-900 text-sm mb-1" data-i18n="ens_module"><i class="fa-solid fa-book-bookmark text-indigo-500 mr-1.5"></i> المواد المدرّسة:</h4>
-          <p id="modal-modules" class="bg-indigo-50/60 p-3 rounded-xl border border-indigo-100 font-semibold text-indigo-900"></p>
+          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-book-bookmark text-amber-500 mr-1.5"></i> <span data-i18n="ens_module">المواد المدرّسة:</span></h4>
+          <p id="modal-modules" class="bg-amber-50 p-3 rounded-xl border border-amber-100 font-semibold text-amber-900"></p>
         </div>
 
         <div id="modal-advice-box">
-          <h4 class="font-bold text-gray-900 text-sm mb-1" data-i18n="ens_advice"><i class="fa-solid fa-comment-dots text-amber-500 mr-1.5"></i> نصيحة للطلبة:</h4>
-          <p id="modal-advice" class="bg-amber-50/60 p-3 rounded-xl border border-amber-100 italic text-amber-900"></p>
+          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-comment-dots text-orange-500 mr-1.5"></i> <span data-i18n="ens_advice">نصيحة للطلبة:</span></h4>
+          <p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border border-orange-100 italic text-orange-900"></p>
         </div>
 
         <div id="modal-research-box">
-          <h4 class="font-bold text-gray-900 text-sm mb-1" data-i18n="ens_research"><i class="fa-solid fa-microscope text-emerald-500 mr-1.5"></i> البحث العلمي:</h4>
-          <p id="modal-research" class="bg-emerald-50/60 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p>
+          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-microscope text-emerald-500 mr-1.5"></i> <span data-i18n="ens_research">البحث العلمي:</span></h4>
+          <p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p>
         </div>
 
         <div id="modal-links-box">
-          <h4 class="font-bold text-gray-900 text-sm mb-1" data-i18n="ens_links"><i class="fa-solid fa-link text-cyan-500 mr-1.5"></i> روابط مفيدة:</h4>
+          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-link text-blue-500 mr-1.5"></i> <span data-i18n="ens_links">روابط مفيدة:</span></h4>
           <div id="modal-links" class="flex flex-wrap gap-2 pt-1"></div>
         </div>
       </div>
@@ -111,7 +314,7 @@
   </div>
 
   <script>
-    // 1. قاعدة بيانات الترجمة (مدمجة لضمان العمل)
+    // 1. قاعدة بيانات الترجمة
     const translations = {
       ar: {
         ens_title: "هيئة التدريس",
@@ -120,7 +323,8 @@
         ens_year2: "السنة الثانية (2CP)",
         ens_select_subject: "اختر المادة:",
         ens_all: "الكل",
-        ens_show_card: "عرض البطاقة",
+        ens_show_card: "عرض الملف الشخصي",
+        ens_contact: "تواصل عبر البريد",
         ens_module: "المواد المدرّسة:",
         ens_advice: "نصيحة للطلبة:",
         ens_research: "البحث العلمي:",
@@ -135,7 +339,8 @@
         ens_year2: "2ème Année (2CP)",
         ens_select_subject: "Sélectionner une matière :",
         ens_all: "Toutes",
-        ens_show_card: "Afficher la fiche",
+        ens_show_card: "Voir le profil",
+        ens_contact: "Contacter par email",
         ens_module: "Matière / Module :",
         ens_advice: "Conseil aux étudiants :",
         ens_research: "Recherche :",
@@ -151,6 +356,7 @@
         ens_select_subject: "Select a subject:",
         ens_all: "All",
         ens_show_card: "View Profile",
+        ens_contact: "Contact via Email",
         ens_module: "Module:",
         ens_advice: "Advice for students:",
         ens_research: "Research:",
@@ -168,7 +374,6 @@
       localStorage.setItem('enstp_lang', lang);
       document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
 
-      // تحديث الأزرار
       ['ar', 'fr', 'en'].forEach(l => {
         const btn = document.getElementById(`btn-${l}`);
         if (btn) {
@@ -177,7 +382,6 @@
         }
       });
 
-      // تحديث النصوص الثابتة
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) {
@@ -185,7 +389,6 @@
         }
       });
 
-      // إعادة رسم البطاقات
       renderSubjects();
       renderTeachers();
     }
@@ -213,75 +416,84 @@
       'Meca Rationnelle 1': { ar: 'الميكانيكا العقلانية 1', fr: 'Meca Rationnelle 1', en: 'Rational Mechanics 1' },
       'Ingénierie 1': { ar: 'الهندسة 1', fr: 'Ingénierie 1', en: 'Engineering 1' },
       'Anglais 3': { ar: 'الإنجليزية 3', fr: 'Anglais 3', en: 'English 3' },
-      'Technique d\'expression': { ar: 'تقنيات التعبير', fr: 'Technique d\'expression', en: 'Expression Techniques' }
+      "Technique d'expression": { ar: 'تقنيات التعبير', fr: "Technique d'expression", en: 'Expression Techniques' }
     };
 
-    // 4. بيانات الأساتذة
+    // 4. بيانات الأساتذة (مع إضافة الصور)
     const teachersData = {
       '1cp': [
-        { id: 'haddouche', name: 'HADDOUCHE Abdeslam', grade: 'prof', email: 'a.haddouche@enstp.edu.dz', subject: 'Physique 1', advice: 'Time management + self confidence.', research: 'Quantum Supersymmetry, Theoretical Nuclear Structure.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/abdeslam-haddouche-46a420a6' }], photo: 'haddouche.jpg' },
-        { id: 'zikem', name: 'ZIKEM Afifa', grade: 'prof', email: 'a.zikem@enstp.edu.dz', subject: 'Physique 1', advice: "À l'université, vous allez parfois rencontrer des difficultés... Soyez réguliers, curieux et persévérants.", research: 'Contribution to the study of the physical properties of some double perovskite crystals via first principles methods.' },
-        { id: 'kias_1', name: 'KIAS', grade: 'temp', email: 'm.kias@enstp.edu.dz', subject: 'Physique 1' },
-        { id: 'benyettou_1', name: 'BENYETTOU Fethi', grade: 'prof', email: 'f.benyettou@enstp.edu.dz', subject: 'Physique 1' },
-        { id: 'ouanoufi', name: 'OUANOUFI', grade: 'temp', email: 'ouanoufi@enstp.edu.dz', subject: 'Physique 1' },
-        { id: 'bellal', name: 'BELLAL', grade: 'temp', email: 'r.bellal@enstp.edu.dz', subject: 'Analyse 1' },
-        { id: 'kechiche', name: 'KECHICHE', grade: 'temp', email: 'kechiche@enstp.edu.dz', subject: 'Analyse 1' },
-        { id: 'benahmed', name: 'BENAHMED', grade: 'temp', email: 'benahmed@enstp.edu.dz', subject: 'Analyse 1' },
-        { id: 'makhfi', name: 'MAKHFI', grade: 'temp', email: 'makhfi@enstp.edu.dz', subject: 'Algèbre 1' },
-        { id: 'hebbache', name: 'HEBBACHE Zineb', grade: 'prof', email: 'zinebhebache@gmail.com', subject: 'Algèbre 1', advice: "Improve yourselves and don't waste your time.", research: 'Codes over skew rings.', links: [{ label: 'Google Scholar', url: 'https://share.google/TvrlY2iAfZWaqEcJZ' }] },
-        { id: 'chouchaoui', name: 'CHOUCHAOUI', grade: 'temp', email: 'chouchaoui@enstp.edu.dz', subject: 'Proba Stat' },
-        { id: 'masrour', name: 'MASROUR', grade: 'temp', email: 'masrour@enstp.edu.dz', subject: 'Proba Stat' },
-        { id: 'bali', name: 'BALI', grade: 'temp', email: 'bali@enstp.edu.dz', subject: 'Chimie 1' },
-        { id: 'benaissa_1', name: 'BENAISSA S.', grade: 'temp', email: 's.benaissa@enstp.edu.dz', subject: 'Chimie 1' },
-        { id: 'ferhat', name: 'FERHAT', grade: 'temp', email: 'ferhat@enstp.edu.dz', subject: 'Chimie 1' },
-        { id: 'bouchama', name: 'BOUCHAMA', grade: 'temp', email: 'bouchama@enstp.edu.dz', subject: 'Chimie 1' },
-        { id: 'boudiaf', name: 'BOUDIAF', grade: 'temp', email: 'boudiaf@enstp.edu.dz', subject: 'Chimie 1' },
-        { id: 'bader', name: 'BADER', grade: 'temp', email: 'bader@enstp.edu.dz', subject: 'Info 1' },
-        { id: 'rezgui', name: 'REZGUI', grade: 'temp', email: 'rezgui@enstp.edu.dz', subject: 'Info 1' },
-        { id: 'rouibah', name: 'ROUIBAH', grade: 'temp', email: 'rouibah@enstp.edu.dz', subject: 'Info 1' },
-        { id: 'mahrez', name: 'MAHREZ', grade: 'temp', email: 'mahrez@enstp.edu.dz', subject: 'Ingénierie Humaine 1' },
-        { id: 'chouchaoui_eco', name: 'CHOUCHAOUI', grade: 'temp', email: 'chouchaoui.eco@enstp.edu.dz', subject: 'Economie Gle' },
-        { id: 'yala', name: 'YALA Ahmed', grade: 'prof', email: 'a.yala@enstp.edu.dz', subject: 'Anglais 1', advice: 'Do not study engineering only to pass exams; study it to become someone who can solve real life problems.', research: "The Use of Mobile Assisted Language Learning to Foster Students' EFL Sentence Writing.", links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=fVI2fEUAAAAJ&hl=fr' }], photo: 'yalla.jpg' },
-        { id: 'khalfi', name: 'KHALFI', grade: 'temp', email: 'khalfi@enstp.edu.dz', subject: 'Anglais 1' },
-        { id: 'hassaine', name: 'HASSAINE', grade: 'temp', email: 'hassaine@enstp.edu.dz', subject: 'Anglais 1' },
-        { id: 'belhadj', name: 'BELHADJ F.', grade: 'temp', email: 'f.belhadj@enstp.edu.dz', subject: 'Français 1' },
-        { id: 'ouslimane', name: 'OUSLIMANE S.', grade: 'temp', email: 's.ouslimane@enstp.edu.dz', subject: 'Français 1' },
-        { id: 'benkraled', name: 'BENKRALED', grade: 'temp', email: 'benkraled@enstp.edu.dz', subject: 'Dessin Technique' },
-        { id: 'azzouz', name: 'AZZOUZ', grade: 'temp', email: 'azzouz@enstp.edu.dz', subject: 'Dessin Technique' },
-        { id: 'nasri', name: 'NASRI', grade: 'temp', email: 'nasri@enstp.edu.dz', subject: 'Dessin Technique' },
-        { id: 'boubidi', name: 'BOUBIDI', grade: 'temp', email: 'boubidi@enstp.edu.dz', subject: 'Dessin Technique' }
+        { id: 'haddouche', name: 'HADDOUCHE Abdeslam', grade: 'prof', email: 'a.haddouche@enstp.edu.dz', subject: 'Physique 1', advice: 'Time management + self confidence.', research: 'Quantum Supersymmetry, Theoretical Nuclear Structure.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/abdeslam-haddouche-46a420a6' }], photo: 'haddouche.jpg', dept: 'الفيزياء' },
+        { id: 'zikem', name: 'ZIKEM Afifa', grade: 'prof', email: 'a.zikem@enstp.edu.dz', subject: 'Physique 1', advice: "À l'université, vous allez parfois rencontrer des difficultés... Soyez réguliers, curieux et persévérants.", research: 'Contribution to the study of the physical properties of some double perovskite crystals via first principles methods.', dept: 'الفيزياء' },
+        { id: 'kias_1', name: 'KIAS', grade: 'temp', email: 'm.kias@enstp.edu.dz', subject: 'Physique 1', dept: 'الفيزياء' },
+        { id: 'benyettou_1', name: 'BENYETTOU Fethi', grade: 'prof', email: 'f.benyettou@enstp.edu.dz', subject: 'Physique 1', dept: 'الفيزياء' },
+        { id: 'ouanoufi', name: 'OUANOUFI', grade: 'temp', email: 'ouanoufi@enstp.edu.dz', subject: 'Physique 1', dept: 'الفيزياء' },
+        
+        // إضافة الصورة للأستاذ bellal
+        { id: 'bellal', name: 'BELLAL', grade: 'temp', email: 'r.bellal@enstp.edu.dz', subject: 'Analyse 1', photo: 'bellal.jpg', dept: 'الرياضيات' },
+        
+        { id: 'kechiche', name: 'KECHICHE', grade: 'temp', email: 'kechiche@enstp.edu.dz', subject: 'Analyse 1', dept: 'الرياضيات' },
+        { id: 'benahmed', name: 'BENAHMED', grade: 'temp', email: 'benahmed@enstp.edu.dz', subject: 'Analyse 1', dept: 'الرياضيات' },
+        { id: 'makhfi', name: 'MAKHFI', grade: 'temp', email: 'makhfi@enstp.edu.dz', subject: 'Algèbre 1', dept: 'الرياضيات' },
+        { id: 'hebbache', name: 'HEBBACHE Zineb', grade: 'prof', email: 'zinebhebache@gmail.com', subject: 'Algèbre 1', advice: "Improve yourselves and don't waste your time.", research: 'Codes over skew rings.', links: [{ label: 'Google Scholar', url: 'https://share.google/TvrlY2iAfZWaqEcJZ' }], dept: 'الرياضيات' },
+        { id: 'chouchaoui', name: 'CHOUCHAOUI', grade: 'temp', email: 'chouchaoui@enstp.edu.dz', subject: 'Proba Stat', dept: 'الرياضيات' },
+        { id: 'masrour', name: 'MASROUR', grade: 'temp', email: 'masrour@enstp.edu.dz', subject: 'Proba Stat', dept: 'الرياضيات' },
+        { id: 'bali', name: 'BALI', grade: 'temp', email: 'bali@enstp.edu.dz', subject: 'Chimie 1', dept: 'الكيمياء' },
+        { id: 'benaissa_1', name: 'BENAISSA S.', grade: 'temp', email: 's.benaissa@enstp.edu.dz', subject: 'Chimie 1', dept: 'الكيمياء' },
+        { id: 'ferhat', name: 'FERHAT', grade: 'temp', email: 'ferhat@enstp.edu.dz', subject: 'Chimie 1', dept: 'الكيمياء' },
+        { id: 'bouchama', name: 'BOUCHAMA', grade: 'temp', email: 'bouchama@enstp.edu.dz', subject: 'Chimie 1', dept: 'الكيمياء' },
+        { id: 'boudiaf', name: 'BOUDIAF', grade: 'temp', email: 'boudiaf@enstp.edu.dz', subject: 'Chimie 1', dept: 'الكيمياء' },
+        { id: 'bader', name: 'BADER', grade: 'temp', email: 'bader@enstp.edu.dz', subject: 'Info 1', dept: 'الإعلام الآلي' },
+        { id: 'rezgui', name: 'REZGUI', grade: 'temp', email: 'rezgui@enstp.edu.dz', subject: 'Info 1', dept: 'الإعلام الآلي' },
+        { id: 'rouibah', name: 'ROUIBAH', grade: 'temp', email: 'rouibah@enstp.edu.dz', subject: 'Info 1', dept: 'الإعلام الآلي' },
+        { id: 'mahrez', name: 'MAHREZ', grade: 'temp', email: 'mahrez@enstp.edu.dz', subject: 'Ingénierie Humaine 1', dept: 'الهندسة الإنسانية' },
+        { id: 'chouchaoui_eco', name: 'CHOUCHAOUI', grade: 'temp', email: 'chouchaoui.eco@enstp.edu.dz', subject: 'Economie Gle', dept: 'الاقتصاد' },
+        { id: 'yala', name: 'YALA Ahmed', grade: 'prof', email: 'a.yala@enstp.edu.dz', subject: 'Anglais 1', advice: 'Do not study engineering only to pass exams; study it to become someone who can solve real life problems.', research: "The Use of Mobile Assisted Language Learning to Foster Students' EFL Sentence Writing.", links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=fVI2fEUAAAAJ&hl=fr' }], photo: 'yalla.jpg', dept: 'اللغات' },
+        { id: 'khalfi', name: 'KHALFI', grade: 'temp', email: 'khalfi@enstp.edu.dz', subject: 'Anglais 1', dept: 'اللغات' },
+        { id: 'hassaine', name: 'HASSAINE', grade: 'temp', email: 'hassaine@enstp.edu.dz', subject: 'Anglais 1', dept: 'اللغات' },
+        { id: 'belhadj', name: 'BELHADJ F.', grade: 'temp', email: 'f.belhadj@enstp.edu.dz', subject: 'Français 1', dept: 'اللغات' },
+        { id: 'ouslimane', name: 'OUSLIMANE S.', grade: 'temp', email: 's.ouslimane@enstp.edu.dz', subject: 'Français 1', dept: 'اللغات' },
+        { id: 'benkraled', name: 'BENKRALED', grade: 'temp', email: 'benkraled@enstp.edu.dz', subject: 'Dessin Technique', dept: 'الرسم التقني' },
+        { id: 'azzouz', name: 'AZZOUZ', grade: 'temp', email: 'azzouz@enstp.edu.dz', subject: 'Dessin Technique', dept: 'الرسم التقني' },
+        { id: 'nasri', name: 'NASRI', grade: 'temp', email: 'nasri@enstp.edu.dz', subject: 'Dessin Technique', dept: 'الرسم التقني' },
+        { id: 'boubidi', name: 'BOUBIDI', grade: 'temp', email: 'boubidi@enstp.edu.dz', subject: 'Dessin Technique', dept: 'الرسم التقني' }
       ],
       '2cp': [
-        { id: 'berroudji', name: 'BERROUDJI Sid-Ahmed', grade: 'prof', email: 's.berroudji@enstp.edu.dz', subject: 'Physique 3 / MDF', modules: 'Physics 3, Physics 4, Fluids mechanics', advice: 'Travaillez régulièrement et ne baissez pas les bras.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/sid-ahmed-berroudji/' }], photo: 'berroudji.jpg' },
-        { id: 'toumi', name: 'TOUMI', grade: 'temp', email: 'toumi@enstp.edu.dz', subject: 'Physique 3' },
-        { id: 'kellou', name: 'KELLOU H.', grade: 'temp', email: 'h.kellou@enstp.edu.dz', subject: 'Physique 3 / MDF' },
-        { id: 'kias_2', name: 'KIAS', grade: 'temp', email: 'm.kias@enstp.edu.dz', subject: 'Physique 3' },
-        { id: 'meddah', name: 'MEDDAH', grade: 'temp', email: 'meddah@enstp.edu.dz', subject: 'Physique 3' },
-        { id: 'taibi', name: 'TAIBI', grade: 'temp', email: 'taibi@enstp.edu.dz', subject: 'Physique 3' },
-        { id: 'brahmi', name: 'BRAHMI', grade: 'temp', email: 'brahmi@enstp.edu.dz', subject: 'Analyse 3' },
-        { id: 'dehimi', name: 'DEHIMI', grade: 'temp', email: 'dehimi@enstp.edu.dz', subject: 'Analyse 3' },
-        { id: 'boulatiour', name: 'BOULATIOUR', grade: 'temp', email: 'boulatiour@enstp.edu.dz', subject: 'Analyse 3' },
-        { id: 'hamadi', name: 'HAMADI Ahmed', grade: 'prof', email: 'a.hamadi@enstp.edu.dz', subject: 'Analyse Numérique 2', advice: 'Il faut suivre tous vos cours et TD sans aucune absence pour assurer vos succès.', research: 'Structure Algorithmique de graphes parfaits.' },
-        { id: 'kiouche', name: 'KIOUCHE', grade: 'temp', email: 's.khouche@enstp.edu.dz', subject: 'Analyse Numérique 2' },
-        { id: 'dib', name: 'DIB K.', grade: 'temp', email: 'k.dib@enstp.edu.dz', subject: 'Chimie 3' },
-        { id: 'bendada', name: 'BENDADA Kheiredine', grade: 'prof', email: 'k.bendada@enstp.edu.dz', subject: 'Chimie 3', modules: 'Chimie des solutions et Chimie organique', advice: 'Je conseille aux étudiants de développer leur curiosité scientifique...', research: 'Caractérisation des paramètres thermodynamiques...', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?hl=fr&user=Oy0kr_UAAAAJ' }], photo: 'bendada.jpg' },
-        { id: 'haouchine', name: 'HAOUCHINE', grade: 'temp', email: 'haouchine@enstp.edu.dz', subject: 'Chimie 3' },
-        { id: 'bouhara', name: 'BOUHARA Safia', grade: 'prof', email: 's.bouhara@enstp.edu.dz', subject: 'Chimie 3', advice: "Je conseille les étudiants d'être respectueux...", research: 'Adsorption du glyphosate sur les nanotubes...', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=AK2HZyYAAAAJ&hl=fr' }] },
-        { id: 'rahoui', name: 'RAHOUI Adel', grade: 'prof', email: 'a.rahoui@enstp.edu.dz', subject: 'Electricité Gle', modules: 'Électricité Générale S3 / Électronique Générale S4', research: 'Ma thématique de recherche porte sur la commande...', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/adelrahoui' }, { label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Adel_Rahoui' }], photo: 'rahoui.jpg' },
-        { id: 'benyettou_2', name: 'BENYETTOU Fethi', grade: 'prof', email: 'f.benyettou@enstp.edu.dz', subject: 'Electricité Gle', advice: 'Cherchez, vous trouvez.', research: 'Modélisation et simulation des nano-structures...', links: [{ label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Benyettou-Fethi-2' }] },
-        { id: 'boudina', name: 'BOUDINA Nour El Houda', grade: 'temp', email: 'nourelhouda.boudina@enstp.edu.dz', subject: 'Electricité Gle', advice: "Ne cessez jamais d'apprendre...", links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/nour-el-houda-boudina-93215b2b5' }] },
-        { id: 'nemouchi', name: 'NEMOUCHI', grade: 'temp', email: 'nemouchi@enstp.edu.dz', subject: 'Electricité Gle' },
-        { id: 'ould_kaddour', name: 'OULD KADDOUR', grade: 'temp', email: 'm.ouladkaddour@enstp.edu.dz', subject: 'Info 3' },
-        { id: 'lhaddad', name: 'LHADDAD', grade: 'temp', email: 's.lhaddad@enstp.edu.dz', subject: 'Info 3' },
-        { id: 'larbi', name: 'LARBI', grade: 'temp', email: 'b.larbi@enstp.edu.dz', subject: 'Info 3' },
-        { id: 'zouadi', name: 'ZOUADI N.', grade: 'temp', email: 'n.zouadi@enstp.edu.dz', subject: 'Meca Rationnelle 1' },
-        { id: 'guerbas', name: 'GUERBAS', grade: 'temp', email: 'guerbas@enstp.edu.dz', subject: 'Meca Rationnelle 1' },
-        { id: 'mezrag', name: 'MEZRAG', grade: 'temp', email: 'mezrag@enstp.edu.dz', subject: 'Meca Rationnelle 1' },
-        { id: 'chiali', name: 'CHIALI Soumiya', grade: 'prof', email: 's.chiali@enstp.edu.dz', subject: 'Ingénierie 1', advice: "Lorsqu'on entreprend un travail...", research: 'Valorisation des vases de barrage...' },
-        { id: 'oumoussa', name: 'OUMOUSSA', grade: 'temp', email: 'oumoussa@enstp.edu.dz', subject: 'Ingénierie 1' },
-        { id: 'azzi', name: 'AZZI', grade: 'temp', email: 'azzi@enstp.edu.dz', subject: 'Anglais 3' },
-        { id: 'omar', name: 'BELLABES Omar', grade: 'temp', email: 'o.bellabes@enstp.edu.dz', subject: 'Anglais 3' },
-        { id: 'benyettou_tce', name: 'BENYETTOU', grade: 'temp', email: 'f.benyettou@enstp.edu.dz', subject: "Technique d'expression" }
+        { id: 'berroudji', name: 'BERROUDJI Sid-Ahmed', grade: 'prof', email: 's.berroudji@enstp.edu.dz', subject: 'Physique 3 / MDF', modules: 'Physics 3, Physics 4, Fluids mechanics', advice: 'Travaillez régulièrement et ne baissez pas les bras.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/sid-ahmed-berroudji/' }], photo: 'berroudji.jpg', dept: 'الفيزياء' },
+        { id: 'toumi', name: 'TOUMI', grade: 'temp', email: 'toumi@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
+        { id: 'kellou', name: 'KELLOU H.', grade: 'temp', email: 'h.kellou@enstp.edu.dz', subject: 'Physique 3 / MDF', dept: 'الفيزياء' },
+        { id: 'kias_2', name: 'KIAS', grade: 'temp', email: 'm.kias@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
+        { id: 'meddah', name: 'MEDDAH', grade: 'temp', email: 'meddah@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
+        { id: 'taibi', name: 'TAIBI', grade: 'temp', email: 'taibi@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
+        { id: 'brahmi', name: 'BRAHMI', grade: 'temp', email: 'brahmi@enstp.edu.dz', subject: 'Analyse 3', dept: 'الرياضيات' },
+        { id: 'dehimi', name: 'DEHIMI', grade: 'temp', email: 'dehimi@enstp.edu.dz', subject: 'Analyse 3', dept: 'الرياضيات' },
+        { id: 'boulatiour', name: 'BOULATIOUR', grade: 'temp', email: 'boulatiour@enstp.edu.dz', subject: 'Analyse 3', dept: 'الرياضيات' },
+        { id: 'hamadi', name: 'HAMADI Ahmed', grade: 'prof', email: 'a.hamadi@enstp.edu.dz', subject: 'Analyse Numérique 2', advice: 'Il faut suivre tous vos cours et TD sans aucune absence pour assurer vos succès.', research: 'Structure Algorithmique de graphes parfaits.', dept: 'الرياضيات' },
+        { id: 'kiouche', name: 'KIOUCHE', grade: 'temp', email: 's.khouche@enstp.edu.dz', subject: 'Analyse Numérique 2', dept: 'الرياضيات' },
+        
+        // إضافة صورة dib
+        { id: 'dib', name: 'DIB K.', grade: 'temp', email: 'k.dib@enstp.edu.dz', subject: 'Chimie 3', photo: 'dib.jpg', dept: 'الكيمياء' },
+        
+        { id: 'bendada', name: 'BENDADA Kheiredine', grade: 'prof', email: 'k.bendada@enstp.edu.dz', subject: 'Chimie 3', modules: 'Chimie des solutions et Chimie organique', advice: 'Je conseille aux étudiants de développer leur curiosité scientifique...', research: 'Caractérisation des paramètres thermodynamiques...', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?hl=fr&user=Oy0kr_UAAAAJ' }], photo: 'bendada.jpg', dept: 'الكيمياء' },
+        { id: 'haouchine', name: 'HAOUCHINE', grade: 'temp', email: 'haouchine@enstp.edu.dz', subject: 'Chimie 3', dept: 'الكيمياء' },
+        { id: 'bouhara', name: 'BOUHARA Safia', grade: 'prof', email: 's.bouhara@enstp.edu.dz', subject: 'Chimie 3', advice: "Je conseille les étudiants d'être respectueux...", research: 'Adsorption du glyphosate sur les nanotubes...', links: [{ label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=AK2HZyYAAAAJ&hl=fr' }], dept: 'الكيمياء' },
+        { id: 'rahoui', name: 'RAHOUI Adel', grade: 'prof', email: 'a.rahoui@enstp.edu.dz', subject: 'Electricité Gle', modules: 'Électricité Générale S3 / Électronique Générale S4', research: 'Ma thématique de recherche porte sur la commande...', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/adelrahoui' }, { label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Adel_Rahoui' }], photo: 'rahoui.jpg', dept: 'الكهرباء' },
+        { id: 'benyettou_2', name: 'BENYETTOU Fethi', grade: 'prof', email: 'f.benyettou@enstp.edu.dz', subject: 'Electricité Gle', advice: 'Cherchez, vous trouvez.', research: 'Modélisation et simulation des nano-structures...', links: [{ label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Benyettou-Fethi-2' }], dept: 'الكهرباء' },
+        { id: 'boudina', name: 'BOUDINA Nour El Houda', grade: 'temp', email: 'nourelhouda.boudina@enstp.edu.dz', subject: 'Electricité Gle', advice: "Ne cessez jamais d'apprendre...", links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/nour-el-houda-boudina-93215b2b5' }], dept: 'الكهرباء' },
+        { id: 'nemouchi', name: 'NEMOUCHI', grade: 'temp', email: 'nemouchi@enstp.edu.dz', subject: 'Electricité Gle', dept: 'الكهرباء' },
+        
+        // إضافة صورة ouled_kaddour
+        { id: 'ould_kaddour', name: 'OULD KADDOUR', grade: 'temp', email: 'm.ouladkaddour@enstp.edu.dz', subject: 'Info 3', photo: 'ouled_kaddour.jpg', dept: 'الإعلام الآلي' },
+        
+        { id: 'lhaddad', name: 'LHADDAD', grade: 'temp', email: 's.lhaddad@enstp.edu.dz', subject: 'Info 3', dept: 'الإعلام الآلي' },
+        { id: 'larbi', name: 'LARBI', grade: 'temp', email: 'b.larbi@enstp.edu.dz', subject: 'Info 3', dept: 'الإعلام الآلي' },
+        { id: 'zouadi', name: 'ZOUADI N.', grade: 'temp', email: 'n.zouadi@enstp.edu.dz', subject: 'Meca Rationnelle 1', dept: 'الميكانيك' },
+        { id: 'guerbas', name: 'GUERBAS', grade: 'temp', email: 'guerbas@enstp.edu.dz', subject: 'Meca Rationnelle 1', dept: 'الميكانيك' },
+        { id: 'mezrag', name: 'MEZRAG', grade: 'temp', email: 'mezrag@enstp.edu.dz', subject: 'Meca Rationnelle 1', dept: 'الميكانيك' },
+        { id: 'chiali', name: 'CHIALI Soumiya', grade: 'prof', email: 's.chiali@enstp.edu.dz', subject: 'Ingénierie 1', advice: "Lorsqu'on entreprend un travail...", research: 'Valorisation des vases de barrage...', dept: 'الهندسة' },
+        { id: 'oumoussa', name: 'OUMOUSSA', grade: 'temp', email: 'oumoussa@enstp.edu.dz', subject: 'Ingénierie 1', dept: 'الهندسة' },
+        { id: 'azzi', name: 'AZZI', grade: 'temp', email: 'azzi@enstp.edu.dz', subject: 'Anglais 3', dept: 'اللغات' },
+        { id: 'omar', name: 'BELLABES Omar', grade: 'temp', email: 'o.bellabes@enstp.edu.dz', subject: 'Anglais 3', dept: 'اللغات' },
+        { id: 'benyettou_tce', name: 'BENYETTOU', grade: 'temp', email: 'f.benyettou@enstp.edu.dz', subject: "Technique d'expression", dept: 'اللغات' }
       ]
     };
 
@@ -306,14 +518,14 @@
       subjectsBox.innerHTML = '';
       
       const allBtn = document.createElement('button');
-      allBtn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'}`;
+      allBtn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-amber-50'}`;
       allBtn.innerText = translations[currentLang].ens_all;
       allBtn.onclick = () => { selectedSubject = 'all'; renderSubjects(); renderTeachers(); };
       subjectsBox.appendChild(allBtn);
 
       uniqueSubjects.forEach(sub => {
         const btn = document.createElement('button');
-        btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'}`;
+        btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-amber-50'}`;
         btn.innerText = subjectTranslations[sub] ? subjectTranslations[sub][currentLang] : sub;
         btn.onclick = () => {
           selectedSubject = sub;
@@ -335,29 +547,65 @@
 
       list.forEach(t => {
         const card = document.createElement('div');
-        card.className = "glass-card p-5 rounded-3xl border border-white space-y-3 hover:shadow-xl transition cursor-pointer flex flex-col justify-between";
-        card.onclick = () => openModal(t);
-
+        card.className = "teacher-card";
+        
         const subjectName = subjectTranslations[t.subject] ? subjectTranslations[t.subject][currentLang] : t.subject;
+        const deptName = t.dept || subjectName;
+
+        // الصورة أو الحروف الأولى
+        let imgHtml = '';
+        if (t.photo) {
+          imgHtml = `
+            <img src="${t.photo}" alt="${t.name}" 
+                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'teacher-photo-initials\\'>${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}</div>';">
+          `;
+        } else {
+          imgHtml = `<div class="teacher-photo-initials">${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}</div>`;
+        }
+
+        // العنوان (أستاذ دائم/مؤقت)
+        const gradeText = t.grade === 'prof' ? translations[currentLang].ens_grade_prof : translations[currentLang].ens_grade_temp;
+
+        // وصف قصير (نصيحة أو بحث)
+        let descText = t.advice || t.research || subjectName;
+        if (descText.length > 100) descText = descText.substring(0, 100) + '...';
 
         card.innerHTML = `
-          <div class="space-y-2">
-            <span class="text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100 uppercase">${subjectName}</span>
-            <h3 class="font-bold text-base text-gray-900" dir="ltr">${t.name}</h3>
-            <p class="text-xs text-gray-500 flex items-center gap-1 truncate" dir="ltr">
-              <i class="fa-solid fa-envelope text-indigo-400"></i> ${t.email}
-            </p>
+          <div class="card-header-bg">
+            <div class="check-badge"><i class="fa-solid fa-check"></i></div>
+            <div class="dept-badge">${deptName}</div>
+            <div class="teacher-photo-wrap">
+              ${imgHtml}
+            </div>
           </div>
-          <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-indigo-600">
-            <span>${translations[currentLang].ens_show_card}</span>
-            <i class="fa-solid ${currentLang === 'ar' ? 'fa-arrow-left' : 'fa-arrow-right'}"></i>
+          
+          <div class="card-content">
+            <h3 class="teacher-name" dir="ltr">${t.name}</h3>
+            <p class="teacher-title">${gradeText}</p>
+            <p class="teacher-desc">${descText}</p>
+            
+            <button class="btn-card-primary" onclick="openModal('${t.id}')">
+              <span>${translations[currentLang].ens_show_card}</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            
+            <a href="mailto:${t.email}" class="btn-card-secondary" onclick="event.stopPropagation()">
+              <i class="fa-solid fa-envelope"></i>
+              <span>${translations[currentLang].ens_contact}</span>
+            </a>
           </div>
         `;
+        
         grid.appendChild(card);
       });
     }
 
-    function openModal(t) {
+    function openModal(teacherId) {
+      // البحث عن الأستاذ في كلتا السنتين
+      let t = teachersData['1cp'].find(x => x.id === teacherId);
+      if (!t) t = teachersData['2cp'].find(x => x.id === teacherId);
+      if (!t) return;
+
       document.getElementById('modal-name').innerText = t.name;
       
       let gradeText = '';
@@ -393,7 +641,7 @@
         linksBox.classList.remove('hidden');
         linksContainer.innerHTML = '';
         t.links.forEach(l => {
-          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1 rounded-lg bg-cyan-50 text-cyan-700 border border-cyan-200 text-xs font-bold hover:bg-cyan-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
+          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold hover:bg-blue-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
         });
       } else {
         linksBox.classList.add('hidden');
