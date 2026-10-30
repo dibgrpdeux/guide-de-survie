@@ -24,8 +24,8 @@
     :root { 
       --primary: #d97706;
       --primary-light: #fef3c7;
-      --accent: #0369a1;
-      --accent-light: #e0f2fe;
+      --accent: #b45309;
+      --accent-light: #fffbeb;
       --warm: #92400e;
     }
 
@@ -39,7 +39,7 @@
       position: fixed; 
       inset: 0; 
       z-index: -1; 
-      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #e0f2fe 100%); 
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%); 
     }
 
     .glass-card { 
@@ -258,7 +258,7 @@
       border-radius: 1.5rem;
       padding: 2rem;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 2rem;
       margin-top: 2rem;
       box-shadow: 0 15px 30px -10px rgba(217, 119, 6, 0.2);
@@ -276,7 +276,7 @@
 
     .director-info h3 {
       color: #78350f;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 900;
       margin-bottom: 0.25rem;
     }
@@ -291,13 +291,15 @@
     .director-info .bio {
       color: #92400e;
       font-size: 0.9rem;
-      line-height: 1.7;
+      line-height: 1.8;
+      text-align: justify;
     }
 
     @media (max-width: 640px) {
       .director-card { flex-direction: column; text-align: center; padding: 1.5rem; }
-      .director-photo { width: 120px; height: 120px; }
-      .director-info h3 { font-size: 1.2rem; }
+      .director-photo { width: 120px; height: 120px; margin: 0 auto; }
+      .director-info h3 { font-size: 1.1rem; }
+      .director-info .bio { text-align: center; font-size: 0.85rem; }
     }
 
     .btn-amber {
@@ -418,10 +420,10 @@
         <div class="director-card">
           <img src="images (81).jpeg" alt="المديرة" class="director-photo" onerror="this.src='https://via.placeholder.com/140x140/d97706/ffffff?text=Directrice'" />
           <div class="director-info">
-            <h3 data-i18n="director_name">الأستاذة المديرة</h3>
-            <p class="role" data-i18n="director_role">مديرة المدرسة الوطنية العليا للأشغال العمومية</p>
+            <h3 data-i18n="director_name">الأستاذة الدكتورة فوزية شافة (مقيدش)</h3>
+            <p class="role" data-i18n="director_role">مديرة المدرسة الوطنية العليا للأشغال العمومية (ENSTP)</p>
             <p class="bio" data-i18n="director_bio">
-              أستاذة باحثة في مجال الهندسة المدنية والأشغال العمومية، تشرف على إدارة المؤسسة وتطوير برامجها الأكاديمية والبحثية. حاصلة على درجة الدكتوراه في الهندسة المدنية، ولها العديد من المنشورات العلمية في مجالها. تسعى دائماً للارتقاء بمستوى التكوين والبحث العلمي داخل المدرسة، وتعزيز الشراكات مع المؤسسات الوطنية والدولية.
+              شخصية أكاديمية جزائرية بارزة تشغل منصب مديرة المدرسة الوطنية العليا للأشغال العمومية (ENSTP). نالت أعلى الشهادات الأكاديمية العليا وتدرجت في سلك التعليم العالي والبحث العلمي لتصبح من الكفاءات القيادية في قطاع المدارس العليا بالجزائر. تتمحور أبرز أعمالها ومسؤولياتها حول تسيير وإدارة المؤسسة الجامعية التي ترأسها، حيث تركز جهودها على تسريع عملية التحول الرقمي وعصرنة الهياكل البيداغوجية، إلى جانب إبرام اتفاقيات تعاون وشراكات إستراتيجية مع مختلف الهيئات والمؤسسات الوطنية لدعم حاضنات الأعمال، وتشجيع الابتكار، وتسهيل ولوج الطلبة والباحثين إلى مصادر المعرفة الأكاديمية.
             </p>
           </div>
         </div>
@@ -448,22 +450,27 @@
           <i class="fa-solid fa-arrow-left"></i>
         </a>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <!-- 3 أقسام فقط -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
-            <h3 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-bridge text-amber-600 ml-2"></i> قسم المنشآت والجسور</h3>
-            <p class="text-sm text-amber-700">Ouvrages - تخصص المنشآت الفنية والهندسة المدنية</p>
+            <h3 class="font-bold text-amber-900 mb-2">
+              <i class="fa-solid fa-flask text-amber-600 ml-2"></i> القسم التحضيري
+            </h3>
+            <p class="text-sm text-amber-700">Classes Préparatoires - السنة الأولى والثانية تحضيري</p>
           </div>
+
           <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
-            <h3 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-road text-amber-600 ml-2"></i> قسم الطرقات والمرور</h3>
-            <p class="text-sm text-amber-700">Infrastructures - تصميم الطرق والتبليط وإدارة الحركة</p>
+            <h3 class="font-bold text-amber-900 mb-2">
+              <i class="fa-solid fa-cubes text-amber-600 ml-2"></i> قسم مواد وهياكل
+            </h3>
+            <p class="text-sm text-amber-700">Matériaux & Structures - مواد البناء والهياكل</p>
           </div>
+
           <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
-            <h3 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-building text-amber-600 ml-2"></i> قسم البناء</h3>
-            <p class="text-sm text-amber-700">Bâtiment - مواد البناء والهندسة المعمارية</p>
-          </div>
-          <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
-            <h3 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-flask text-amber-600 ml-2"></i> مخبر المواد والخرسانة</h3>
-            <p class="text-sm text-amber-700">Bâtiment Labo - ورشات التطبيق والبحث</p>
+            <h3 class="font-bold text-amber-900 mb-2">
+              <i class="fa-solid fa-bridge text-amber-600 ml-2"></i> قسم منشآت قاعدية
+            </h3>
+            <p class="text-sm text-amber-700">Infrastructures - الطرقات والمنشآت القاعدية</p>
           </div>
         </div>
       </div>
@@ -512,42 +519,42 @@
       </div>
     </div>
 
-    <!-- 🗺️ الخريطة -->
+    <!-- 🗺️ الخريطة - لون بني دافئ -->
     <div id="tab-map" class="tab-content">
-      <div class="glass-card rounded-3xl p-8 border border-cyan-200 space-y-6 bg-gradient-to-br from-white to-cyan-50">
+      <div class="glass-card rounded-3xl p-8 border-2 border-amber-300 space-y-6" style="background: linear-gradient(135deg, #fffbeb, #fef3c7);">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-xl">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl text-white shadow-lg" style="background: linear-gradient(135deg, #b45309, #d97706);">
             <i class="fa-solid fa-cube"></i>
           </div>
-          <h2 class="text-2xl font-black text-cyan-900" data-i18n="map_title">الخريطة ثلاثية الأبعاد</h2>
+          <h2 class="text-2xl font-black" style="color: #78350f;" data-i18n="map_title">الخريطة ثلاثية الأبعاد</h2>
         </div>
 
-        <p class="text-cyan-800" data-i18n="map_desc">
+        <p style="color: #92400e;" data-i18n="map_desc">
           خريطة تفاعلية ثلاثية الأبعاد تتيح لك التنقل بين المباني، المدرجات، والمرافق داخل المدرسة بسهولة. اضغط على الزر أدناه لفتح الخريطة في نافذة جديدة.
         </p>
 
-        <a href="https://quad-route-finder.lovable.app" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-white text-lg transition shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #0369a1, #0284c7);">
+        <a href="https://quad-route-finder.lovable.app" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-white text-lg transition shadow-lg hover:shadow-xl hover:-translate-y-0.5" style="background: linear-gradient(135deg, #b45309, #d97706);">
           <i class="fa-solid fa-map-location-dot"></i>
           <span data-i18n="map_btn">فتح الخريطة ثلاثية الأبعاد</span>
           <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-          <div class="bg-cyan-50 p-4 rounded-xl border border-cyan-200 text-center">
-            <i class="fa-solid fa-school text-cyan-600 text-2xl mb-2"></i>
-            <p class="text-xs font-bold text-cyan-900">المدخل الرئيسي</p>
+          <div class="p-4 rounded-xl border-2 border-amber-200 text-center" style="background: #fffbeb;">
+            <i class="fa-solid fa-school text-2xl mb-2" style="color: #b45309;"></i>
+            <p class="text-xs font-bold" style="color: #78350f;">المدخل الرئيسي</p>
           </div>
-          <div class="bg-cyan-50 p-4 rounded-xl border border-cyan-200 text-center">
-            <i class="fa-solid fa-chalkboard text-cyan-600 text-2xl mb-2"></i>
-            <p class="text-xs font-bold text-cyan-900">المدرجات</p>
+          <div class="p-4 rounded-xl border-2 border-amber-200 text-center" style="background: #fffbeb;">
+            <i class="fa-solid fa-chalkboard text-2xl mb-2" style="color: #b45309;"></i>
+            <p class="text-xs font-bold" style="color: #78350f;">المدرجات</p>
           </div>
-          <div class="bg-cyan-50 p-4 rounded-xl border border-cyan-200 text-center">
-            <i class="fa-solid fa-flask text-cyan-600 text-2xl mb-2"></i>
-            <p class="text-xs font-bold text-cyan-900">المخابر</p>
+          <div class="p-4 rounded-xl border-2 border-amber-200 text-center" style="background: #fffbeb;">
+            <i class="fa-solid fa-flask text-2xl mb-2" style="color: #b45309;"></i>
+            <p class="text-xs font-bold" style="color: #78350f;">المخابر</p>
           </div>
-          <div class="bg-cyan-50 p-4 rounded-xl border border-cyan-200 text-center">
-            <i class="fa-solid fa-book text-cyan-600 text-2xl mb-2"></i>
-            <p class="text-xs font-bold text-cyan-900">المكتبة</p>
+          <div class="p-4 rounded-xl border-2 border-amber-200 text-center" style="background: #fffbeb;">
+            <i class="fa-solid fa-book text-2xl mb-2" style="color: #b45309;"></i>
+            <p class="text-xs font-bold" style="color: #78350f;">المكتبة</p>
           </div>
         </div>
       </div>
