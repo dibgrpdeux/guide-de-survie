@@ -101,7 +101,6 @@
       transform: scale(1.1);
     }
 
-    /* Dégradé brun chaud pour lisibilité */
     .school-hero-overlay {
       position: absolute;
       inset: 0;
@@ -146,7 +145,7 @@
     }
 
     /* ============================================
-       📑 Onglets (4 sections)
+       📑 Onglets
        ============================================ */
     .tabs-container {
       display: grid;
@@ -251,7 +250,7 @@
     }
 
     /* ============================================
-       👩‍💼 Carte directrice (dans "نبذة عن المدرسة")
+       👩‍💼 Carte directrice
        ============================================ */
     .director-card {
       background: linear-gradient(135deg, #fef3c7, #fde68a);
@@ -301,7 +300,6 @@
       .director-info h3 { font-size: 1.2rem; }
     }
 
-    /* Bouton retour */
     .btn-amber {
       background: linear-gradient(135deg, #d97706, #f59e0b);
       color: white;
@@ -318,9 +316,7 @@
 <body class="min-h-screen flex flex-col justify-between">
   <div class="ambient-bg"></div>
 
-  <!-- ==========================================
-       Navbar
-       ========================================== -->
+  <!-- Navbar -->
   <header class="sticky top-0 z-50 glass-nav px-4 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -341,56 +337,43 @@
     </div>
   </header>
 
-  <!-- ==========================================
-       Main Content
-       ========================================== -->
+  <!-- Main -->
   <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full space-y-8">
 
-    <!-- ==========================================
-         🏫 Hero - Image مدرستي
-         ========================================== -->
+    <!-- Hero -->
     <section class="school-hero">
       <div class="school-hero-bg"></div>
       <div class="school-hero-overlay"></div>
-
       <div class="school-content">
         <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-white/25 text-white backdrop-blur-sm mb-4">
-          <i class="fa-solid fa-school ml-2"></i>
-          ENSTP
+          <i class="fa-solid fa-school ml-2"></i> ENSTP
         </span>
         <h1 data-i18n="ecole_title">مدرستي</h1>
         <p data-i18n="ecole_hero_subtitle">المدرسة الوطنية العليا للأشغال العمومية - القبة</p>
       </div>
     </section>
 
-    <!-- ==========================================
-         📑 4 Sections cliquables
-         ========================================== -->
+    <!-- Onglets -->
     <div class="tabs-container">
       <button class="tab-btn active" onclick="showTab('about')" data-tab="about">
         <div class="tab-icon"><i class="fa-solid fa-book-open"></i></div>
         <span class="tab-label" data-i18n="tab_about">نبذة عن المدرسة</span>
       </button>
-
       <button class="tab-btn" onclick="showTab('teachers')" data-tab="teachers">
         <div class="tab-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
         <span class="tab-label" data-i18n="tab_teachers">هيئة التدريس</span>
       </button>
-
       <button class="tab-btn" onclick="showTab('buildings')" data-tab="buildings">
         <div class="tab-icon"><i class="fa-solid fa-building-columns"></i></div>
         <span class="tab-label" data-i18n="tab_buildings">مباني المدرسة</span>
       </button>
-
       <button class="tab-btn" onclick="showTab('map')" data-tab="map">
         <div class="tab-icon"><i class="fa-solid fa-cube"></i></div>
         <span class="tab-label" data-i18n="tab_map">الخريطة</span>
       </button>
     </div>
 
-    <!-- ==========================================
-         📄 Contenu : نبذة عن المدرسة
-         ========================================== -->
+    <!-- 📖 نبذة عن المدرسة -->
     <div id="tab-about" class="tab-content active">
       <div class="glass-card rounded-3xl p-8 border border-amber-200 space-y-6">
         <div class="flex items-center gap-3">
@@ -412,7 +395,26 @@
           </p>
         </div>
 
-        <!-- 👩‍💼 Carte de la directrice (DANS la section نبذة) -->
+        <!-- 🌐 الموقع الرسمي للمدرسة -->
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xl shadow-lg">
+              <i class="fa-solid fa-globe"></i>
+            </div>
+            <div>
+              <h3 class="font-black text-amber-900 text-lg" data-i18n="about_website_title">الموقع الإلكتروني الرسمي</h3>
+              <p class="text-xs text-amber-700" data-i18n="about_website_desc">زيارة الموقع الرسمي للمدرسة للحصول على آخر الأخبار والتسجيلات</p>
+            </div>
+          </div>
+          <a href="https://www.enstp.edu.dz" target="_blank" rel="noopener noreferrer" 
+             class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white transition shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+             style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+            <span data-i18n="about_website_btn">زيارة الموقع</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <!-- 👩‍💼 بطاقة المديرة -->
         <div class="director-card">
           <img src="images (81).jpeg" alt="المديرة" class="director-photo" onerror="this.src='https://via.placeholder.com/140x140/d97706/ffffff?text=Directrice'" />
           <div class="director-info">
@@ -426,9 +428,7 @@
       </div>
     </div>
 
-    <!-- ==========================================
-         📄 Contenu : هيئة التدريس
-         ========================================== -->
+    <!-- 👨‍🏫 هيئة التدريس -->
     <div id="tab-teachers" class="tab-content">
       <div class="glass-card rounded-3xl p-8 border border-amber-200 space-y-6">
         <div class="flex items-center gap-3">
@@ -448,7 +448,6 @@
           <i class="fa-solid fa-arrow-left"></i>
         </a>
 
-        <!-- Aperçu des départements -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
             <h3 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-bridge text-amber-600 ml-2"></i> قسم المنشآت والجسور</h3>
@@ -470,9 +469,7 @@
       </div>
     </div>
 
-    <!-- ==========================================
-         📄 Contenu : مباني المدرسة (فيديوهات)
-         ========================================== -->
+    <!-- 🏛️ مباني المدرسة -->
     <div id="tab-buildings" class="tab-content">
       <div class="glass-card rounded-3xl p-8 border border-amber-200 space-y-6">
         <div class="flex items-center gap-3">
@@ -488,65 +485,34 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe>
-            </div>
-            <div class="p-4 text-center">
-              <p class="text-sm font-bold text-amber-900">جولة عامة في المدرسة</p>
-            </div>
+            <div class="video-container"><iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">جولة عامة في المدرسة</p></div>
           </div>
-
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe>
-            </div>
-            <div class="p-4 text-center">
-              <p class="text-sm font-bold text-amber-900">أقسام التحضيري</p>
-            </div>
+            <div class="video-container"><iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">أقسام التحضيري</p></div>
           </div>
-
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe>
-            </div>
-            <div class="p-4 text-center">
-              <p class="text-sm font-bold text-amber-900">المدرج الكبير</p>
-            </div>
+            <div class="video-container"><iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">المدرج الكبير</p></div>
           </div>
-
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe>
-            </div>
-            <div class="p-4 text-center">
-              <p class="text-sm font-bold text-amber-900">الأقسام العلمية</p>
-            </div>
+            <div class="video-container"><iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">الأقسام العلمية</p></div>
           </div>
-
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/GUCHDgEJaIk" allowfullscreen></iframe>
-            </div>
-            <div class="p-4 text-center">
-              <p class="text-sm font-bold text-amber-900">مدخل المدرسة</p>
-            </div>
+            <div class="video-container"><iframe src="https://www.youtube.com/embed/GUCHDgEJaIk" allowfullscreen></iframe></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">مدخل المدرسة</p></div>
           </div>
-
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/sFwHEHhgAbQ" allowfullscreen></iframe>
-            </div>
-            <div class="p-4 text-center">
-              <p class="text-sm font-bold text-amber-900">المكتبة والمرافق</p>
-            </div>
+            <div class="video-container"><iframe src="https://www.youtube.com/embed/sFwHEHhgAbQ" allowfullscreen></iframe></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">المكتبة والمرافق</p></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ==========================================
-         📄 Contenu : الخريطة
-         ========================================== -->
+    <!-- 🗺️ الخريطة -->
     <div id="tab-map" class="tab-content">
       <div class="glass-card rounded-3xl p-8 border border-cyan-200 space-y-6 bg-gradient-to-br from-white to-cyan-50">
         <div class="flex items-center gap-3">
@@ -566,7 +532,6 @@
           <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
 
-        <!-- Aperçu des points d'intérêt -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
           <div class="bg-cyan-50 p-4 rounded-xl border border-cyan-200 text-center">
             <i class="fa-solid fa-school text-cyan-600 text-2xl mb-2"></i>
@@ -590,14 +555,15 @@
 
   </main>
 
-  <!-- ==========================================
-       Footer
-       ========================================== -->
-  <footer class="glass-nav border-t border-amber-200 py-6 text-center text-xs text-amber-800">© 2026 ENSTP Kouba.</footer>
+  <!-- Footer -->
+  <footer class="glass-nav border-t border-amber-200 py-6 text-center text-xs text-amber-800">
+    © 2026 ENSTP Kouba — 
+    <a href="https://www.enstp.edu.dz" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-amber-900 transition">
+      www.enstp.edu.dz
+    </a>
+  </footer>
 
-  <!-- ==========================================
-       Script
-       ========================================== -->
+  <!-- Script -->
   <script>
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
     function t(key) { return window.translations && window.translations[currentLang] && window.translations[currentLang][key] ? window.translations[currentLang][key] : key; }
@@ -608,32 +574,13 @@
       if(originalSetLanguage) originalSetLanguage(lang);
     };
 
-    /* ============================================
-       📑 Système d'onglets
-       ============================================ */
     function showTab(tabName) {
-      // Masquer tous les contenus
-      document.querySelectorAll('.tab-content').forEach(el => {
-        el.classList.remove('active');
-      });
-      
-      // Retirer active de tous les boutons
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      
-      // Afficher le contenu sélectionné
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById('tab-' + tabName).classList.add('active');
-      
-      // Activer le bouton sélectionné
       const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
       if (activeBtn) activeBtn.classList.add('active');
-      
-      // Scroll doux vers les onglets
-      document.querySelector('.tabs-container').scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
+      document.querySelector('.tabs-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
