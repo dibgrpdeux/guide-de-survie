@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,66 +15,92 @@
     #google_translate_element { display: none; } 
     .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
     .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
+    .lang-btn.active { background: #f97316; color: white; }
   </style>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   
-  <style> 
-    body { font-family: 'Cairo', sans-serif; }
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' },
+            tg: { bg: '#ffffff', dark: '#0f172a', side: '#f8fafc', sideDark: '#1e293b', bubble: '#e0f2fe', bubbleDark: '#334155' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+    
+    @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .animate-pop { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+    /* Telegram-like bubbles */
+    .chat-bubble-me { background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-radius: 18px 18px 4px 18px; }
+    .chat-bubble-other { background: #ffffff; color: #1e293b; border-radius: 18px 18px 18px 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .dark .chat-bubble-other { background: #1e293b; color: #f8fafc; border: 1px solid #334155; }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-800 h-screen overflow-hidden">
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 h-screen overflow-hidden">
 
-  <!-- شاشة تحميل مبدئية -->
-  <div id="loadingScreen" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
-    <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-    <p class="font-bold text-gray-600" data-i18n="forum_loading">جاري الاتصال بالمنتدى...</p>
+  <!-- شاشة التحميل -->
+  <div id="loadingScreen" class="fixed inset-0 bg-white dark:bg-slate-900 flex flex-col items-center justify-center z-50">
+    <div class="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+    <p class="font-bold text-gray-600 dark:text-gray-400">جاري الاتصال بالمنتدى...</p>
   </div>
 
   <!-- شاشة تسجيل الدخول -->
-  <div id="authScreen" class="fixed inset-0 bg-slate-900 bg-opacity-95 flex items-center justify-center z-40 p-4 backdrop-blur-md hidden">
-    <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
+  <div id="authScreen" class="fixed inset-0 bg-slate-900/95 flex items-center justify-center z-40 p-4 backdrop-blur-md hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-8 w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-pop">
       
-      <!-- أزرار الترجمة -->
-      <div class="absolute top-4 left-4 flex items-center gap-1 bg-gray-50 p-1 rounded-lg border border-gray-200">
+      <div class="absolute top-4 left-4 flex items-center gap-1 bg-gray-100 dark:bg-slate-700 p-1 rounded-lg border border-gray-200 dark:border-slate-600">
         <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">عربي</button>
         <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">FR</button>
         <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">EN</button>
       </div>
 
       <div class="text-center mb-6 mt-4">
-        <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl shadow-inner">
+        <div class="w-20 h-20 bg-gradient-to-br from-brand-400 to-brand-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 text-3xl shadow-lg">
           <i class="fa-solid fa-users-rays"></i>
         </div>
-        <h2 class="text-2xl font-black text-gray-800" data-i18n="forum_welcome">ملتقى طلبة ENSTP</h2>
-        <p class="text-sm text-gray-500" data-i18n="forum_welcome_sub">مساحة آمنة للنقاش وتبادل الأفكار</p>
+        <h2 class="text-2xl font-black text-gray-900 dark:text-white">ملتقى طلبة ENSTP</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">مساحة آمنة للنقاش وتبادل الأفكار</p>
       </div>
 
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-bold mb-1" data-i18n="forum_email">البريد المهني</label>
-          <input type="email" id="emailInput" placeholder="student@enstp.edu.dz" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" dir="ltr">
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">البريد المهني</label>
+          <input type="email" id="emailInput" placeholder="student@enstp.edu.dz" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition" dir="ltr">
         </div>
         <div>
-          <label class="block text-sm font-bold mb-1" data-i18n="forum_password">كلمة السر</label>
-          <input type="password" id="passInput" placeholder="********" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" dir="ltr">
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">كلمة السر</label>
+          <input type="password" id="passInput" placeholder="********" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition" dir="ltr">
         </div>
 
-        <div id="registerFields" class="hidden space-y-4 pt-2 border-t">
+        <div id="registerFields" class="hidden space-y-4 pt-4 border-t border-gray-200 dark:border-slate-700">
           <div>
-            <label class="block text-sm font-bold mb-1" data-i18n="forum_name">الاسم واللقب</label>
-            <input type="text" id="nameInput" placeholder="مثال: أحمد بن علي" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">الاسم واللقب</label>
+            <input type="text" id="nameInput" placeholder="مثال: أحمد بن علي" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
           </div>
           <div>
-            <label class="block text-sm font-bold mb-1" data-i18n="forum_year">السنة الدراسية</label>
-            <select id="yearInput" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">السنة الدراسية</label>
+            <select id="yearInput" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
               <option value="1CP">1CP</option>
               <option value="2CP">2CP</option>
               <option value="DIB">DIB</option>
@@ -82,17 +108,18 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm font-bold mb-1" data-i18n="forum_wilaya">الولاية</label>
-            <select id="wilayaInput" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"></select>
+            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">الولاية</label>
+            <select id="wilayaInput" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition"></select>
           </div>
         </div>
 
-        <p id="errorMsg" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded"></p>
+        <p id="errorMsg" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 dark:bg-red-900/30 p-2 rounded-lg border border-red-200 dark:border-red-800"></p>
 
-        <button id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition" data-i18n="forum_login_btn">تسجيل الدخول</button>
+        <button id="submitBtn" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-bold py-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">تسجيل الدخول</button>
+        
         <div class="text-center mt-4 text-sm">
-          <span id="toggleText" class="text-gray-500" data-i18n="forum_no_account">ليس لديك حساب؟</span>
-          <button id="toggleBtn" class="text-blue-600 font-bold hover:underline" data-i18n="forum_register_btn">إنشاء حساب جديد</button>
+          <span id="toggleText" class="text-gray-500 dark:text-gray-400">ليس لديك حساب؟</span>
+          <button id="toggleBtn" class="text-brand-600 dark:text-brand-400 font-bold hover:underline ml-1">إنشاء حساب جديد</button>
         </div>
       </div>
     </div>
@@ -101,43 +128,60 @@
   <!-- واجهة المنتدى الرئيسية -->
   <div id="forumScreen" class="hidden h-full flex flex-row relative">
     
-    <!-- القائمة الجانبية -->
-    <aside class="w-72 bg-gray-900 text-white flex flex-col h-full shrink-0">
-      <div class="p-4 border-b border-gray-800 flex items-center justify-between">
+    <!-- القائمة الجانبية (مثل تليجرام) -->
+    <aside id="sidebar" class="w-80 bg-white dark:bg-slate-800 border-l border-gray-200 dark:border-slate-700 flex flex-col h-full shrink-0 transition-all duration-300 z-20 absolute md:relative right-0">
+      
+      <!-- هيدر القائمة -->
+      <div class="p-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-between bg-white dark:bg-slate-800">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
+          <div class="w-10 h-10 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
           <div>
-            <h1 class="font-bold text-sm leading-tight text-white" data-i18n="forum_welcome">ملتقى الطلبة</h1>
-            <p class="text-[10px] text-gray-400">ENSTP Kouba</p>
+            <h1 class="font-bold text-sm text-gray-900 dark:text-white">ملتقى الطلبة</h1>
+            <p class="text-[10px] text-gray-500 dark:text-gray-400">ENSTP Kouba</p>
           </div>
         </div>
-        <!-- أزرار الترجمة في المنتدى -->
-        <div class="flex items-center gap-1 bg-gray-800 p-1 rounded-lg">
-          <button onclick="setLanguage('ar')" id="btn-ar2" class="lang-btn active text-[10px]">عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr2" class="lang-btn text-[10px]">FR</button>
-          <button onclick="setLanguage('en')" id="btn-en2" class="lang-btn text-[10px]">EN</button>
+        <div class="flex items-center gap-2">
+          <button onclick="toggleDarkMode()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-slate-600 transition">
+            <i class="fa-solid fa-moon dark:hidden text-sm"></i>
+            <i class="fa-solid fa-sun hidden dark:block text-sm text-brand-400"></i>
+          </button>
+          <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 flex items-center justify-center hover:bg-brand-200 dark:hover:bg-brand-900/60 transition">
+            <i class="fa-solid fa-plus text-sm"></i>
+          </button>
         </div>
       </div>
 
+      <!-- قائمة الغرف -->
       <div class="flex-1 overflow-y-auto p-3 space-y-6">
         
         <!-- قسم المنشورات -->
         <div>
-          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2"><i class="fa-solid fa-newspaper ml-1"></i> <span data-i18n="forum_posts_section">ساحة المنشورات</span></p>
-          <button onclick="selectChannel('general_posts', 'Salle Général', 'شارك أفكارك', 'posts')" class="w-full text-right p-2.5 rounded-lg hover:bg-gray-800 flex items-center gap-3 text-sm transition-colors text-blue-400 bg-gray-800/50">
-            <i class="fa-solid fa-globe"></i> <span data-i18n="forum_general_salle">القاعة العامة</span>
+          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">ساحة المنشورات</p>
+          <button onclick="selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300 active-room">
+            <div class="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center"><i class="fa-solid fa-globe"></i></div>
+            <span class="font-bold">القاعة العامة</span>
           </button>
         </div>
 
         <!-- قسم الدردشة -->
         <div>
-          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2"><i class="fa-solid fa-comments ml-1"></i> <span data-i18n="forum_chats_section">غرف الدردشة</span></p>
+          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">غرف الدردشة</p>
           <div class="space-y-1">
-            <button onclick="selectChannel('chat_1cp', 'Chat 1CP', 'نقاش مباشر', 'chat')" class="w-full text-right p-2.5 rounded-lg hover:bg-gray-800 flex items-center gap-3 text-sm transition-colors text-gray-300">
-              <i class="fa-solid fa-users text-green-400"></i> Chat 1CP
+            <button onclick="selectChannel('chat_1cp', 'Chat 1CP', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
+              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+              <span class="font-bold">Chat 1CP</span>
             </button>
-            <button onclick="selectChannel('chat_2cp', 'Chat 2CP', 'نقاش مباشر', 'chat')" class="w-full text-right p-2.5 rounded-lg hover:bg-gray-800 flex items-center gap-3 text-sm transition-colors text-gray-300">
-              <i class="fa-solid fa-users text-green-400"></i> Chat 2CP
+            <button onclick="selectChannel('chat_2cp', 'Chat 2CP', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
+              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+              <span class="font-bold">Chat 2CP</span>
+            </button>
+            <button onclick="selectChannel('chat_dib', 'Chat DIB', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
+              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+              <span class="font-bold">Chat DIB</span>
+            </button>
+            <button onclick="selectChannel('chat_dms', 'Chat DMS', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
+              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+              <span class="font-bold">Chat DMS</span>
             </button>
           </div>
         </div>
@@ -145,54 +189,70 @@
         <!-- غرف الطلبة -->
         <div>
           <div class="flex justify-between items-center px-2 mb-2">
-            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider" data-i18n="forum_student_rooms">غرف الطلبة</p>
-            <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="text-blue-400 hover:text-white transition text-xs" title="إنشاء غرفة"><i class="fa-solid fa-plus-circle"></i></button>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">غرف الطلبة</p>
           </div>
           <div id="customChannels" class="space-y-1"></div>
         </div>
       </div>
 
-      <div class="p-4 border-t border-gray-800 bg-gray-950 flex items-center justify-between">
+      <!-- بروفايل المستخدم -->
+      <div class="p-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 flex items-center justify-between">
         <div class="flex items-center gap-3 overflow-hidden">
-          <div id="userAvatar" class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
+          <div id="userAvatar" class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
           <div class="overflow-hidden">
-            <p id="userName" class="text-sm font-bold truncate text-white">طالب</p>
-            <p id="userInfo" class="text-[10px] text-gray-400 truncate dir-ltr">info</p>
+            <p id="userName" class="text-sm font-bold truncate text-gray-900 dark:text-white">طالب</p>
+            <p id="userInfo" class="text-[10px] text-gray-500 dark:text-gray-400 truncate" dir="ltr">info</p>
           </div>
         </div>
-        <button id="logoutBtn" class="text-gray-500 hover:text-red-500 transition text-lg" title="خروج"><i class="fa-solid fa-power-off"></i></button>
+        <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition text-lg p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fa-solid fa-power-off"></i></button>
       </div>
     </aside>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="flex-1 flex flex-col bg-gray-100 h-full relative">
-      <header class="bg-white p-4 shadow-sm border-b flex justify-between items-center z-10">
-        <div>
-          <h2 id="channelTitle" class="text-lg font-black text-gray-800 flex items-center gap-2">
-            <i class="fa-solid fa-globe text-blue-500"></i> Salle Général
-          </h2>
-          <p id="channelSubtitle" class="text-xs text-gray-500 font-cairo">النقاشات العامة لجميع الطلبة</p>
-        </div>
-        <span id="channelTypeBadge" class="text-[10px] bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold" data-i18n="forum_badge_posts">منشورات</span>
-      </header>
-
-      <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24">
-        <!-- المنشورات -->
+    <!-- المحتوى الرئيسي (الدردشة/المنشورات) -->
+    <main class="flex-1 flex flex-col bg-gray-50 dark:bg-slate-900 h-full relative transition-all duration-300">
+      
+      <!-- شريط علوي للموبايل -->
+      <div class="md:hidden bg-white dark:bg-slate-800 p-3 flex items-center justify-between border-b border-gray-200 dark:border-slate-700">
+        <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="text-gray-600 dark:text-gray-300 text-xl"><i class="fa-solid fa-bars"></i></button>
+        <h2 id="mobileTitle" class="font-bold text-gray-800 dark:text-white">القاعة العامة</h2>
+        <div class="w-8"></div>
       </div>
 
-      <div class="absolute bottom-0 left-0 right-0 bg-white border-t p-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-        <div class="max-w-3xl mx-auto flex gap-3 items-end">
-          <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold shrink-0 mb-1">
-            <span id="postAvatar">U</span>
-          </div>
-          <div class="flex-1 bg-gray-100 rounded-2xl border border-transparent focus-within:border-blue-300 focus-within:bg-white transition-all p-2">
-            <textarea id="postText" rows="1" placeholder="اكتب هنا..." class="w-full bg-transparent border-none outline-none resize-none px-2 text-sm text-gray-800 placeholder-gray-500" data-i18n="forum_type_here"></textarea>
-            <div class="flex justify-between items-center px-2 pt-2 border-t border-gray-200 mt-1">
-              <div class="flex gap-2 text-gray-400">
-                <button class="hover:text-blue-500"><i class="fa-solid fa-image"></i></button>
-              </div>
-              <button id="postBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-1.5 rounded-lg font-bold text-sm transition shadow-sm flex items-center gap-2">
-                <span data-i18n="forum_send">إرسال</span> <i class="fa-solid fa-paper-plane text-xs"></i>
+      <!-- هيدر القناة -->
+      <header class="bg-white dark:bg-slate-800 p-4 shadow-sm border-b border-gray-200 dark:border-slate-700 flex justify-between items-center z-10 hidden md:flex">
+        <div>
+          <h2 id="channelTitle" class="text-lg font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-globe text-blue-500"></i> القاعة العامة
+          </h2>
+          <p id="channelSubtitle" class="text-xs text-gray-500 dark:text-gray-400">النقاشات العامة لجميع الطلبة</p>
+        </div>
+        <span id="channelTypeBadge" class="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full font-bold">منشورات</span>
+      </header>
+
+      <!-- منطقة الرسائل -->
+      <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24 scroll-smooth">
+        <!-- سيتم تحميل الرسائل هنا -->
+      </div>
+
+      <!-- منطقة الإرسال -->
+      <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 p-3 shadow-lg">
+        <div class="max-w-3xl mx-auto flex gap-2 items-end">
+          
+          <!-- زر إرفاق ملفات -->
+          <button onclick="document.getElementById('fileInput').click()" class="w-11 h-11 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-300 flex items-center justify-center hover:bg-brand-100 dark:hover:bg-brand-900/40 hover:text-brand-600 transition shrink-0 mb-0.5">
+            <i class="fa-solid fa-paperclip text-lg"></i>
+          </button>
+          <input type="file" id="fileInput" class="hidden" accept="image/*,video/*,application/pdf" onchange="handleFileUpload(event)">
+
+          <div class="flex-1 bg-gray-100 dark:bg-slate-900 rounded-2xl border border-transparent focus-within:border-brand-300 dark:focus-within:border-brand-600 transition-all p-2">
+            <!-- معاينة الملف المرفق -->
+            <div id="filePreview" class="hidden px-2 pb-2"></div>
+            
+            <textarea id="postText" rows="1" placeholder="اكتب رسالة..." class="w-full bg-transparent border-none outline-none resize-none px-2 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-500" ></textarea>
+            
+            <div class="flex justify-end items-center px-2 pt-1">
+              <button id="postBtn" class="bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md flex items-center gap-2">
+                <span>إرسال</span> <i class="fa-solid fa-paper-plane text-xs"></i>
               </button>
             </div>
           </div>
@@ -203,28 +263,29 @@
 
   <!-- نافذة إنشاء غرفة -->
   <div id="createRoomModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl">
-      <h3 class="text-xl font-bold mb-4" data-i18n="forum_create_room">إنشاء غرفة جديدة</h3>
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-pop border border-gray-200 dark:border-slate-700">
+      <h3 class="text-xl font-black text-gray-900 dark:text-white mb-4">إنشاء غرفة جديدة</h3>
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-bold mb-1" data-i18n="forum_room_name">اسم الغرفة</label>
-          <input type="text" id="newRoomName" placeholder="..." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">اسم الغرفة</label>
+          <input type="text" id="newRoomName" placeholder="..." class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
         </div>
         <div>
-          <label class="block text-sm font-bold mb-1" data-i18n="forum_room_type">نوع الغرفة</label>
-          <select id="newRoomType" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-            <option value="chat" data-i18n="forum_type_chat">دردشة</option>
-            <option value="posts" data-i18n="forum_type_posts">منشورات</option>
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">نوع الغرفة</label>
+          <select id="newRoomType" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
+            <option value="chat">دردشة</option>
+            <option value="posts">منشورات</option>
           </select>
         </div>
-        <div class="flex gap-2 justify-end">
-          <button onclick="document.getElementById('createRoomModal').classList.add('hidden')" class="px-4 py-2 text-gray-600 font-bold hover:bg-gray-100 rounded-lg" data-i18n="forum_cancel">إلغاء</button>
-          <button onclick="createRoom()" class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 shadow-md" data-i18n="forum_create">إنشاء</button>
+        <div class="flex gap-2 justify-end pt-2">
+          <button onclick="document.getElementById('createRoomModal').classList.add('hidden')" class="px-5 py-2.5 text-gray-600 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-slate-700 rounded-xl transition">إلغاء</button>
+          <button onclick="createRoom()" class="px-5 py-2.5 bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition">إنشاء</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- استدعاء سكريبت Firebase -->
   <script type="module" src="forum.js"></script>
 </body>
 </html>
