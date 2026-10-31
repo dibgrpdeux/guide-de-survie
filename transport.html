@@ -1,204 +1,309 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="indigo">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>دليل النقل الشامل - ENSTP</title>
+  <title>النقل العمومي - ENSTP</title>
 
-  <!-- كود الترجمة -->
-  <script src="translate.js"></script>
-  <style>
-    body { top: 0 !important; }
-    .skiptranslate iframe { display: none !important; }
-    .goog-te-banner-frame { display: none !important; }
-    #goog-gt-tt { display: none !important; }
-    #google_translate_element { display: none; } 
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
-  </style>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
     body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
-    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 1); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05); }
-    .map-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
-    .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.3s ease; }
+    .glass-card:hover { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); transform: translateY(-2px); }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
+<body class="min-h-screen pb-12">
 
-  <div class="ambient-bg"></div>
+  <!-- الهيدر -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 px-4 py-4 mb-8">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="transport.html" class="w-10 h-10 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-brand-100 hover:text-brand-600 transition">
+          <i class="fa-solid fa-arrow-right text-lg"></i>
+        </a>
+        <div>
+          <h1 class="font-black text-xl text-gray-900">دليل النقل العمومي</h1>
+          <p class="text-xs text-gray-500">الجزائر العاصمة</p>
+        </div>
+      </div>
+      <div class="w-10 h-10 bg-brand-500 text-white rounded-xl flex items-center justify-center text-lg shadow-lg">
+        <i class="fa-solid fa-city"></i>
+      </div>
+    </div>
+  </header>
 
-  <main class="max-w-5xl mx-auto w-full space-y-6">
+  <main class="max-w-5xl mx-auto px-4 space-y-8">
 
-    <!-- الترويسة -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-4">
-        <div class="w-16 h-16 bg-cyan-100 text-cyan-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
-          <i class="fa-solid fa-bus-simple"></i>
+    <!-- 1. الحافلات و ETUSA -->
+    <section class="glass-card rounded-3xl p-6 md:p-8 space-y-4 border-r-4 border-brand-500">
+      <h2 class="text-2xl font-black text-gray-900 flex items-center gap-3">
+        <i class="fa-solid fa-bus text-brand-500"></i> الحافلات و ETUSA
+      </h2>
+      <p class="text-gray-600 leading-relaxed text-sm">
+        توفر مؤسسة النقل الحضري لمدينة الجزائر (ETUSA) شبكة واسعة من خطوط الحافلات التي تربط جميع بلديات العاصمة. يمكنك شراء التذاكر مباشرة من السائق أو استخدام بطاقات الاشتراك.
+      </p>
+      <div class="bg-brand-50 p-4 rounded-xl border border-brand-100 text-sm text-brand-900 flex items-center gap-3">
+        <i class="fa-solid fa-ticket text-brand-500 text-xl"></i>
+        <span>سعر التذكرة: <strong>50 دج</strong> (قابلة للدفع نقداً)</span>
+      </div>
+    </section>
+
+    <!-- 2. سيارات الأجرة -->
+    <section class="glass-card rounded-3xl p-6 md:p-8 space-y-4 border-r-4 border-amber-500">
+      <h2 class="text-2xl font-black text-gray-900 flex items-center gap-3">
+        <i class="fa-solid fa-taxi text-amber-500"></i> سيارات الأجرة (تاكسي)
+      </h2>
+      <ul class="list-disc list-inside text-sm text-gray-600 space-y-3">
+        <li><strong class="text-gray-800">بن عمر:</strong> خطوط نحو بئر خادم، بئر مراد رايس، براقي.</li>
+        <li><strong class="text-gray-800">القبة القديمة:</strong> الرويسو، حسين داي، وسط العاصمة.</li>
+        <li><strong class="text-gray-800">خروبة:</strong> خطوط بين الولايات.</li>
+        <li class="text-xs text-amber-700 bg-amber-50 p-2 rounded-lg mt-2 inline-block"><i class="fa-solid fa-info-circle"></i> يُنصح بالاتفاق على السعر مسبقاً أو طلب تشغيل العداد.</li>
+      </ul>
+    </section>
+
+    <!-- 3. القطار SNTF -->
+    <section class="space-y-6">
+      <div class="flex items-center gap-3 px-2">
+        <i class="fa-solid fa-train text-blue-600 text-2xl"></i>
+        <h2 class="text-2xl font-black text-gray-900">القطار (SNTF)</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- الجزائر - وهران -->
+        <div class="glass-card rounded-3xl overflow-hidden border-t-4 border-blue-600">
+          <div class="bg-blue-600 p-4 text-white">
+            <h3 class="font-bold text-lg">خط الجزائر - وهران (ALLER/RETOUR)</h3>
+            <p class="text-xs text-blue-100 mt-1">4 رحلات يومياً</p>
+          </div>
+          <div class="p-4 overflow-x-auto">
+            <table class="w-full text-xs text-center font-mono" dir="ltr">
+              <thead class="text-gray-500 border-b">
+                <tr>
+                  <th class="pb-2">Train</th>
+                  <th class="pb-2">1001</th>
+                  <th class="pb-2">1003</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr><td class="py-1 text-right font-bold" dir="rtl">الجزائر</td><td>08:00</td><td>14:00</td></tr>
+                <tr><td class="py-1 text-right font-bold" dir="rtl">البليدة</td><td>08:44</td><td>14:36</td></tr>
+                <tr><td class="py-1 text-right font-bold" dir="rtl">الشلف</td><td>10:38</td><td>16:42</td></tr>
+                <tr><td class="py-1 text-right font-bold" dir="rtl">وهران</td><td>12:38</td><td>19:24</td></tr>
+              </tbody>
+            </table>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <p class="text-xs font-bold text-gray-700 mb-2">رحلة العودة (وهران - الجزائر):</p>
+              <table class="w-full text-xs text-center font-mono" dir="ltr">
+                <thead class="text-gray-500 border-b">
+                  <tr><th class="pb-2">Train</th><th class="pb-2">1002</th><th class="pb-2">1004</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  <tr><td class="py-1 text-right font-bold" dir="rtl">وهران</td><td>06:00</td><td>14:00</td></tr>
+                  <tr><td class="py-1 text-right font-bold" dir="rtl">الشلف</td><td>07:44</td><td>16:23</td></tr>
+                  <tr><td class="py-1 text-right font-bold" dir="rtl">البليدة</td><td>09:08</td><td>18:11</td></tr>
+                  <tr><td class="py-1 text-right font-bold" dir="rtl">الجزائر</td><td>10:05</td><td>19:38</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- الجزائر - بجاية -->
+        <div class="glass-card rounded-3xl overflow-hidden border-t-4 border-green-600">
+          <div class="bg-green-600 p-4 text-white">
+            <h3 class="font-bold text-lg">خط الجزائر - بجاية</h3>
+            <p class="text-xs text-green-100 mt-1">رحلة يومية</p>
+          </div>
+          <div class="p-4 overflow-x-auto">
+            <p class="text-xs font-bold text-gray-700 mb-2">الذهاب (الجزائر - بجاية):</p>
+            <div class="flex flex-col gap-1 text-xs text-gray-600 font-mono" dir="ltr">
+              <div class="flex justify-between"><span>Alger</span> <span class="font-bold text-green-700">06:30</span></div>
+              <div class="flex justify-between"><span>Boumerdes</span> <span>10:08</span></div>
+              <div class="flex justify-between"><span>Bouira</span> <span>08:53</span></div>
+              <div class="flex justify-between"><span>Béjaïa</span> <span class="font-bold text-green-700">10:39</span></div>
+            </div>
+            <p class="text-xs font-bold text-gray-700 mb-2 mt-4">العودة (بجاية - الجزائر):</p>
+            <div class="flex flex-col gap-1 text-xs text-gray-600 font-mono" dir="ltr">
+              <div class="flex justify-between"><span>Béjaïa</span> <span class="font-bold text-green-700">14:33</span></div>
+              <div class="flex justify-between"><span>Bouira</span> <span>16:14</span></div>
+              <div class="flex justify-between"><span>Boumerdes</span> <span>15:03</span></div>
+              <div class="flex justify-between"><span>Alger</span> <span class="font-bold text-green-700">18:38</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الجزائر - باتنة -->
+        <div class="glass-card rounded-3xl overflow-hidden border-t-4 border-red-600">
+          <div class="bg-red-600 p-4 text-white">
+            <h3 class="font-bold text-lg">خط الجزائر - باتنة</h3>
+            <p class="text-xs text-red-100 mt-1">رحلات يومية</p>
+          </div>
+          <div class="p-4 text-xs text-gray-600 font-mono" dir="ltr">
+            <div class="flex justify-between mb-1"><span class="font-bold" dir="rtl">الجزائر</span> <span>22:50</span></div>
+            <div class="flex justify-between mb-1"><span>Bouira</span> <span>03:28</span></div>
+            <div class="flex justify-between mb-1"><span>M'Sila</span> <span>01:00</span></div>
+            <div class="flex justify-between font-bold text-red-700"><span>Batna</span> <span>05:23</span></div>
+          </div>
+        </div>
+
+        <!-- القطار الليلي (عنابة / تبسة / تقرت) -->
+        <div class="glass-card rounded-3xl overflow-hidden border-t-4 border-indigo-600">
+          <div class="bg-indigo-600 p-4 text-white">
+            <h3 class="font-bold text-lg">القطارات الليلية (عنابة، تبسة، تقرت)</h3>
+            <p class="text-xs text-indigo-100 mt-1">تنطلق من محطة آغا</p>
+          </div>
+          <div class="p-4 text-xs text-gray-600">
+            <ul class="space-y-2">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-moon text-indigo-400"></i> <strong>عنابة:</strong> انطلاق 18:40 (الجزائر) - وصول 05:28 (عنابة).</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-moon text-indigo-400"></i> <strong>تبسة:</strong> انطلاق 19:40 (الجزائر) - وصول 06:51 (تبسة).</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-moon text-indigo-400"></i> <strong>تقرت:</strong> انطلاق 18:13 (الجزائر) - وصول 05:00 (تقرت).</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- البطاقة الخضراء -->
+      <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-3xl p-6 flex flex-col md:flex-row items-center gap-6">
+        <div class="w-20 h-20 bg-green-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-lg shrink-0">
+          <i class="fa-solid fa-id-card"></i>
         </div>
         <div>
-          <h1 class="text-2xl md:text-3xl font-black text-gray-900 mb-1" data-i18n="trans_title">دليل النقل والمواصلات</h1>
-          <p class="text-gray-600 text-sm" data-i18n="trans_desc">كل ما تحتاجه للتنقل من وإلى المدرسة بسهولة.</p>
+          <h3 class="font-black text-green-900 text-xl mb-2">البطاقة الخضراء (Carte Verte)</h3>
+          <p class="text-sm text-green-800 leading-relaxed mb-2">صالح على متن القطارات الكهربائية لضواحي مدينة الجزائر.</p>
+          <ul class="list-disc list-inside text-xs text-green-700 space-y-1">
+            <li>تخفيض بـ <strong>30%</strong> للبطاقة الأسبوعية.</li>
+            <li>تخفيض بـ <strong>40%</strong> للبطاقة الشهرية، الفصلية، السداسية، والسنوية.</li>
+            <li>عدد الرحلات غير محدود.</li>
+          </ul>
         </div>
       </div>
+
+      <!-- تذكرة ذهاب وإياب -->
+      <div class="bg-blue-50 border border-blue-200 rounded-3xl p-6 flex flex-col md:flex-row items-center gap-6">
+        <div class="w-20 h-20 bg-blue-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-lg shrink-0">
+          <i class="fa-solid fa-ticket-simple"></i>
+        </div>
+        <div>
+          <h3 class="font-black text-blue-900 text-xl mb-2">تذكرة ذهاب وإياب (Billet Aller-Retour)</h3>
+          <p class="text-sm text-blue-800 leading-relaxed">
+                        يستفيد كل مسافر ببطاقة ذهاب وإياب من تخفيضات تصل إلى <strong>20%</strong> من سعر التذكرة، في حالة قطع مسافة أكثر من 400 كم. التذاكر صالحة لمدة شهرين (02) بدءاً من تاريخ اقتطاعها.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. المترو والترامواي -->
+    <section class="glass-card rounded-3xl p-6 md:p-8 space-y-6 border-r-4 border-cyan-500">
+      <h2 class="text-2xl font-black text-gray-900 flex items-center gap-3">
+        <i class="fa-solid fa-train-subway text-cyan-500"></i> المترو والترامواي
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- المترو -->
+        <div class="bg-cyan-50 rounded-2xl p-5 border border-cyan-100 space-y-3">
+          <h3 class="font-bold text-cyan-900 flex items-center gap-2"><i class="fa-solid fa-train"></i> مترو الجزائر</h3>
+          <p class="text-sm text-cyan-800 leading-relaxed">يربط وسط العاصمة (ساحة الشهداء) بضواحيها الشرقية (عين النعجة).</p>
+          <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-cyan-200 mt-2">
+            <span class="text-xs font-bold text-gray-600">سعر التذكرة</span>
+            <span class="font-black text-cyan-600">50 دج</span>
+          </div>
+          <div class="mt-2 text-xs text-cyan-700">
+            <strong>محطات رئيسية:</strong> ساحة الشهداء، تافورة، 1 ماي، حديقة التجارب، حي البدر (تحويل)، عين النعجة.
+          </div>
+        </div>
+
+        <!-- الترامواي -->
+        <div class="bg-emerald-50 rounded-2xl p-5 border border-emerald-100 space-y-3">
+          <h3 class="font-bold text-emerald-900 flex items-center gap-2"><i class="fa-solid fa-train-tram"></i> الترامواي</h3>
+          <p class="text-sm text-emerald-800 leading-relaxed">يربط الأحياء الشرقية بالعاصمة، من العناصر إلى درقانة.</p>
+          <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-emerald-200 mt-2">
+            <span class="text-xs font-bold text-gray-600">سعر التذكرة</span>
+            <span class="font-black text-emerald-600">40 دج</span>
+          </div>
+          <div class="mt-2 text-xs text-emerald-700">
+            <strong>محطات رئيسية:</strong> العناصر، الخروبة، جسر الحراش، باب الزوار، برج الكيفان، درقانة.
+          </div>
+        </div>
+      </div>
+
+      <!-- بطاقة eTWASSEL -->
+      <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900 text-sm">بطاقة الطالب eTWASSEL</h4>
+            <p class="text-xs text-gray-500">تخفيضات هائلة على المترو والترامواي</p>
+          </div>
+        </div>
+        <div class="text-brand-600 font-black bg-white px-4 py-2 rounded-xl border border-brand-200 shadow-sm text-sm">
+          150 دج / سنة
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. المطار -->
+    <section class="glass-card rounded-3xl p-6 md:p-8 space-y-4 border-r-4 border-purple-500">
+      <h2 class="text-2xl font-black text-gray-900 flex items-center gap-3">
+        <i class="fa-solid fa-plane text-purple-500"></i> مطار هواري بومدين الدولي (ALG)
+      </h2>
+      <p class="text-gray-600 leading-relaxed text-sm">
+        يقع المطار في بلدية الدار البيضاء شرق العاصمة. يمكنك الوصول إليه عبر عدة وسائل:
+      </p>
       
-      <div class="flex items-center gap-2">
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+        <div class="bg-purple-50 p-4 rounded-xl border border-purple-100 text-center">
+          <i class="fa-solid fa-bus text-purple-500 text-2xl mb-2"></i>
+          <h4 class="font-bold text-purple-900 text-sm mb-1">الحافلات</h4>
+          <p class="text-xs text-purple-700">خطوط ETUSA مباشرة من محطة وسط العاصمة إلى المطار.</p>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+        <div class="bg-purple-50 p-4 rounded-xl border border-purple-100 text-center">
+          <i class="fa-solid fa-taxi text-purple-500 text-2xl mb-2"></i>
+          <h4 class="font-bold text-purple-900 text-sm mb-1">التاكسي</h4>
+          <p class="text-xs text-purple-700">متاح على مدار الساعة، يُنصح باستخدام تطبيقات النقل أو التاكسي الرسمي.</p>
+        </div>
+        <div class="bg-purple-50 p-4 rounded-xl border border-purple-100 text-center">
+          <i class="fa-solid fa-train text-purple-500 text-2xl mb-2"></i>
+          <h4 class="font-bold text-purple-900 text-sm mb-1">القطار (SNTF)</h4>
+          <p class="text-xs text-purple-700">خط مباشر من محطة آغا (وسط العاصمة) إلى المطار.</p>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- 1. مواقيت الحافلات (ENS - Revoil) -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
+    <!-- الخريطة التفاعلية -->
+    <section class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
       <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-        <i class="fa-solid fa-clock text-indigo-600"></i> <span data-i18n="trans_bus_schedule">مواقيت حافلات (ENS - Revoil)</span>
+        <i class="fa-solid fa-map text-brand-500"></i> الخريطة التفاعلية
       </h2>
-      <p class="text-sm text-gray-500" data-i18n="trans_bus_schedule_desc">الجدول الخاص بالفصل الأول 2026/2027.</p>
-      
-      <div class="overflow-x-auto rounded-xl border border-gray-200">
-        <table class="w-full text-sm text-right">
-          <thead class="bg-indigo-50 text-indigo-900 font-bold">
-            <tr>
-              <th class="p-3 border-b" data-i18n="trans_day">اليوم</th>
-              <th class="p-3 border-b" data-i18n="trans_departure">الانطلاق</th>
-              <th class="p-3 border-b" data-i18n="trans_return">العودة</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-100">
-            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_sat">السبت</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30</td></tr>
-            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_sun">الأحد</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">17h30</td></tr>
-            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_mon">الإثنين</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">11h30 / 14h30</td></tr>
-            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_tue">الثلاثاء</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
-            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_wed">الأربعاء</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
-            <tr class="hover:bg-gray-50"><td class="p-3" data-i18n="sched_thu">الخميس</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
-          </tbody>
-        </table>
+      <div class="relative pb-[56.25%] h-0 overflow-hidden rounded-xl bg-gray-200">
+        <iframe src="https://www.google.com/maps/d/embed?mid=1jNWEeyOC9kYXRnYmFzZXMvKGRlZm1HbQpL2NvbGxY3Rpb25Hcm91c9zdHMvaW5kZXhleC9fEABaDQoJY3J1Z2V0X2VtYWlsEAo&ehbc=2E312F" class="absolute top-0 left-0 w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
       </div>
-    </div>
-
-    <!-- 2. محطات الحافلات القريبة -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
-      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-        <i class="fa-solid fa-location-dot text-rose-500"></i> <span data-i18n="trans_bus_stops">محطات الحافلات القريبة</span>
-      </h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_c">📍 محطة  (أمام CNEP)</h4>
-          <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_c_desc">350 متر (5 دقائق). الوجهة: محطة بن عمر.</p>
-        </div>
-        <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_b">📍 محطة  (المحطة البرية القبة)</h4>
-          <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_b_desc">500 متر (7 دقائق). وجهات متعددة.</p>
-        </div>
-        <div class="border border-gray-200 p-4 rounded-xl bg-gray-50">
-          <h4 class="font-bold text-indigo-700" data-i18n="trans_stop_d">📍 محطة  (مقابل ENS)</h4>
-          <p class="text-xs text-gray-600 mt-1" data-i18n="trans_stop_d_desc">950 متر (14 دقيقة). توقيتات 7:30 و 16:00.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. دليل المترو والترامواي (مع قائمة المحطات) -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
-      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-        <i class="fa-solid fa-train-subway text-blue-500"></i> <span data-i18n="trans_metro">المترو والترامواي</span>
-      </h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-          <h4 class="font-bold text-blue-900 mb-2" data-i18n="trans_metro_how">كيفية الوصول للمترو (حي البدر)</h4>
-          <p class="text-sm text-blue-800" data-i18n="trans_metro_how_desc">حافلة إلى بشدجرح، ثم النزول في محطة المترو.</p>
-        </div>
-        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
-          <h4 class="font-bold text-emerald-900 mb-2" data-i18n="trans_tram_how">كيفية الوصول للترامواي</h4>
-          <p class="text-sm text-emerald-800" data-i18n="trans_tram_how_desc">مترو إلى "Les Fusillés"، ثم الترامواي.</p>
-        </div>
-      </div>
-
-      <div class="flex flex-wrap gap-4 mb-4">
-        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-bold text-gray-700"><i class="fa-solid fa-ticket text-indigo-500 mr-1"></i> <span data-i18n="trans_ticket_metro">مترو: 50 دج</span></span>
-        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm font-bold text-gray-700"><i class="fa-solid fa-ticket text-indigo-500 mr-1"></i> <span data-i18n="trans_ticket_tram">ترامواي: 40 دج</span></span>
-        <span class="bg-emerald-100 px-3 py-1 rounded-lg text-sm font-bold text-emerald-800"><i class="fa-solid fa-graduation-cap mr-1"></i> <span data-i18n="trans_etwassel">بطاقة الطالب eTWASSEL: 150 دج/سنة</span></span>
-      </div>
-
-      <!-- قائمة محطات المترو -->
-      <div>
-        <h4 class="font-bold text-gray-800 mb-2" data-i18n="trans_metro_stations">محطات المترو (ساحة الشهداء - عين النعجة):</h4>
-        <div class="flex flex-wrap gap-2 text-xs">
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">ساحة الشهداء</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">علي بومنجل</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">تافورة</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">خليفة بوخالفة</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">1 ماي</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">عيسات إيدير</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">الحامة</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">حديقة التجارب</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">المشوشين</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">أميروش</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">بحر وشمس</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100 font-bold">حي البدر (تحويل)</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">وادي كنيس</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">عين النعجة</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">باش جراح</span>
-          <span class="bg-blue-50 px-2 py-1 rounded border border-blue-100">الحراش</span>
-        </div>
-      </div>
-
-      <!-- قائمة محطات الترامواي -->
-      <div>
-        <h4 class="font-bold text-gray-800 mb-2" data-i18n="trans_tram_stations">محطات الترامواي (العناصر - درقانة):</h4>
-        <div class="flex flex-wrap gap-2 text-xs">
-          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">العناصر</span>
-          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">المشوشين</span>
-          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">الخروبة</span>
-          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">الغلاسيار</span>
-          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">جسر الحراش</span>
-          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">باب الزوار</span>
-          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">برج الكيفان</span>
-          <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">درقانة</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. سيارات الأجرة -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
-      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-        <i class="fa-solid fa-taxi text-amber-500"></i> <span data-i18n="trans_taxi">سيارات الأجرة (تاكسي)</span>
-      </h2>
-      <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
-        <li data-i18n="trans_taxi_benomar"><strong>بن عمر:</strong> بئر خادم، بئر مراد رايس، براقي.</li>
-        <li data-i18n="trans_taxi_vieux"><strong>القبة القديمة:</strong> الرويسو، حسين داي، وسط العاصمة.</li>
-        <li data-i18n="trans_taxi_kharouba"><strong>خروبة:</strong> خطوط بين الولايات.</li>
-      </ul>
-    </div>
-
-    <!-- 5. الخريطة التفاعلية -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
-      <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-        <i class="fa-solid fa-map text-teal-500"></i> <span data-i18n="trans_map">الخريطة التفاعلية</span>
-      </h2>
-      <div class="map-container bg-gray-200">
-        <iframe src="https://www.google.com/maps/d/embed?mid=1jNWEeyOC9kYXRnYmFzZXMvKGRlZm1HbQpL2NvbGxY3Rpb25Hcm91c9zdHMvaW5kZXhleC9fEABaDQoJY3J1Z2V0X2VtYWlsEAo&ehbc=2E312F" allowfullscreen="" loading="lazy"></iframe>
-      </div>
-      <p class="text-xs text-gray-500 text-center" data-i18n="trans_map_desc">خريطة توضح محطات الحافلات، المترو، والترامواي القريبة من ENSTP.</p>
-    </div>
+      <p class="text-xs text-gray-500 text-center">خريطة توضح محطات النقل الرئيسية القريبة من المدرسة.</p>
+    </section>
 
   </main>
 
-  <footer class="border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 bg-white">
-    <p>© 2026 ENSTP القبة.</p>
+  <footer class="border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 bg-white mt-8">
+    <p>© 2026 ENSTP القبة — دليل النقل العمومي.</p>
   </footer>
 
 </body>
