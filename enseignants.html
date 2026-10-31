@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="warm">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>هيئة التدريس - ENSTP</title>
-  
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -13,14 +12,12 @@
     body { font-family: 'Cairo', sans-serif; background-color: #ffffff; color: #1e293b; }
     .ambient-bg { position: fixed; inset: 0; z-index: -1; background-color: #ffffff; background-image: radial-gradient(#fde68a 1px, transparent 1px); background-size: 40px 40px; opacity: 0.3; }
     .glass-card { background: #ffffff; border: 1px solid #fef3c7; box-shadow: 0 4px 20px rgba(146, 64, 14, 0.05); }
-    .btn-year { background: white; border: 2px solid #fde68a; color: #92400e; font-weight: 700; }
+    .btn-year { background: white; border: 2px solid #fde68a; color: #92400e; font-weight: 700; cursor: pointer; transition: 0.3s; }
     .btn-year:hover { border-color: #f59e0b; background: #fffbeb; }
     .btn-year.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; border-color: transparent; box-shadow: 0 8px 20px -5px rgba(217, 119, 6, 0.4); }
-    .badge-subject { transition: all 0.3s ease; }
+    .badge-subject { transition: all 0.3s ease; cursor: pointer; }
     .badge-subject.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3); }
-    .lang-btn { background: transparent; border: none; padding: 5px 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #92400e; }
-    .lang-btn:hover { background: #fef3c7; color: #78350f; }
-    .lang-btn.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; }
+    
     .teacher-card { background: white; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(146, 64, 14, 0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; border: 1px solid #fef3c7; }
     .teacher-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px -10px rgba(217, 119, 6, 0.2); }
     .card-header-bg { height: 90px; background: linear-gradient(135deg, #b45309 0%, #d97706 100%); position: relative; }
@@ -36,10 +33,8 @@
     .teacher-title { font-size: 0.8rem; color: #b45309; font-weight: 800; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 6px; background: #fffbeb; padding: 4px 12px; border-radius: 12px; align-self: center; border: 1px solid #fde68a; }
     .divider { height: 2px; background: linear-gradient(90deg, transparent, #fde68a, transparent); margin-bottom: 16px; width: 80%; align-self: center; }
     .teacher-desc { font-size: 0.85rem; color: #64748b; line-height: 1.7; margin-bottom: 24px; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .btn-card-primary { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; font-weight: 800; padding: 13px; border-radius: 14px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s ease; cursor: pointer; border: none; width: 100%; }
-    .btn-card-primary:hover { background: linear-gradient(135deg, #b45309, #d97706); }
+    .btn-card-primary { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; font-weight: 800; padding: 13px; border-radius: 14px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none; width: 100%; }
     .btn-card-secondary { background: #ffffff; color: #92400e; font-weight: 700; padding: 12px; border-radius: 14px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px solid #fde68a; cursor: pointer; width: 100%; margin-top: 10px; text-decoration: none; font-size: 0.85rem; }
-    .btn-card-secondary:hover { background: #fffbeb; }
     .modal-overlay { background: rgba(120, 53, 15, 0.6); backdrop-filter: blur(5px); }
   </style>
 </head>
@@ -47,24 +42,19 @@
   <div class="ambient-bg"></div>
 
   <div class="max-w-7xl mx-auto w-full space-y-8">
-    <div class="text-center space-y-3 relative pt-14 md:pt-0">
-      <div class="absolute top-0 left-0 flex items-center gap-1 bg-white p-1.5 rounded-2xl border border-amber-200 shadow-sm">
-        <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-        <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-        <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
-      </div>
+    <div class="text-center space-y-3">
       <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-50 text-amber-800 font-bold text-xs border border-amber-200"><i class="fa-solid fa-graduation-cap"></i> ENSTP Kouba</div>
-      <h1 class="text-4xl lg:text-5xl font-black text-amber-900"><span data-i18n="ens_title">هيئة التدريس</span></h1>
-      <p class="text-sm lg:text-base text-amber-800 max-w-2xl mx-auto" data-i18n="ens_subtitle">اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.</p>
+      <h1 class="text-4xl lg:text-5xl font-black text-amber-900">هيئة التدريس</h1>
+      <p class="text-sm lg:text-base text-amber-800 max-w-2xl mx-auto">اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.</p>
     </div>
 
     <div class="flex flex-wrap items-center justify-center gap-4">
-      <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-8 py-4 rounded-2xl text-base transition-all flex items-center gap-3"><i class="fa-solid fa-1"></i><span data-i18n="ens_year1">السنة الأولى (1CP)</span></button>
-      <button onclick="selectYear('2cp')" id="btn-2cp" class="btn-year px-8 py-4 rounded-2xl text-base transition-all flex items-center gap-3"><i class="fa-solid fa-2"></i><span data-i18n="ens_year2">السنة الثانية (2CP)</span></button>
+      <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-8 py-4 rounded-2xl text-base flex items-center gap-3"><i class="fa-solid fa-1"></i> السنة الأولى (1CP)</button>
+      <button onclick="selectYear('2cp')" id="btn-2cp" class="btn-year px-8 py-4 rounded-2xl text-base flex items-center gap-3"><i class="fa-solid fa-2"></i> السنة الثانية (2CP)</button>
     </div>
 
     <div class="glass-card p-6 rounded-3xl space-y-4">
-      <span class="text-xs font-black text-amber-800 block uppercase flex items-center gap-2"><i class="fa-solid fa-filter text-amber-600"></i><span data-i18n="ens_select_subject">اختر المادة:</span></span>
+      <span class="text-xs font-black text-amber-800 block flex items-center gap-2"><i class="fa-solid fa-filter text-amber-600"></i> اختر المادة:</span>
       <div id="subjects-container" class="flex flex-wrap gap-2"></div>
     </div>
 
@@ -73,9 +63,9 @@
 
   <div id="teacher-modal" class="fixed inset-0 z-50 modal-overlay hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center z-10"><i class="fa-solid fa-xmark"></i></button>
+      <button onclick="document.getElementById('teacher-modal').classList.add('hidden')" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center z-10"><i class="fa-solid fa-xmark"></i></button>
       <div class="flex flex-col sm:flex-row items-center gap-5 border-b border-amber-100 pb-6">
-        <div id="modal-img-box" class="w-28 h-28 rounded-full bg-gray-50 text-amber-600 flex items-center justify-center text-3xl font-black overflow-hidden flex-shrink-0 border-4 border-white"></div>
+        <div id="modal-img-box" class="w-28 h-28 rounded-full bg-gray-50 text-amber-600 flex items-center justify-center text-3xl font-black overflow-hidden border-4 border-white"></div>
         <div class="space-y-1 text-center sm:text-right">
           <h2 id="modal-name" class="text-2xl font-black text-amber-900"></h2>
           <p id="modal-grade" class="text-xs font-bold text-amber-700 bg-amber-50 inline-block px-3 py-1 rounded-lg"></p>
@@ -83,80 +73,23 @@
         </div>
       </div>
       <div class="space-y-4 text-sm text-gray-700 text-right" dir="rtl">
-        <div><h4 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-book-bookmark text-amber-500"></i> <span data-i18n="ens_module">المواد المدرّسة:</span></h4><p id="modal-modules" class="bg-amber-50 p-3 rounded-xl border border-amber-100 font-semibold text-amber-900"></p></div>
-        <div id="modal-advice-box"><h4 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-comment-dots text-orange-500"></i> <span data-i18n="ens_advice">نصيحة للطلبة:</span></h4><p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border border-orange-100 italic text-orange-900"></p></div>
-        <div id="modal-research-box"><h4 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-microscope text-emerald-600"></i> <span data-i18n="ens_research">البحث العلمي:</span></h4><p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p></div>
-        <div id="modal-links-box"><h4 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-link text-amber-600"></i> <span data-i18n="ens_links">روابط مفيدة:</span></h4><div id="modal-links" class="flex flex-wrap gap-2 pt-1"></div></div>
+        <div><h4 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-book-bookmark text-amber-500"></i> المواد المدرّسة:</h4><p id="modal-modules" class="bg-amber-50 p-3 rounded-xl border border-amber-100 font-semibold text-amber-900"></p></div>
+        <div id="modal-advice-box"><h4 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-comment-dots text-orange-500"></i> نصيحة للطلبة:</h4><p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border border-orange-100 italic text-orange-900"></p></div>
+        <div id="modal-research-box"><h4 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-microscope text-emerald-600"></i> البحث العلمي:</h4><p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p></div>
       </div>
     </div>
   </div>
 
   <script src="data.js"></script>
   <script>
-    const translations = {
-      ar: { ens_title: "هيئة التدريس", ens_subtitle: "اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.", ens_year1: "السنة الأولى (1CP)", ens_year2: "السنة الثانية (2CP)", ens_select_subject: "اختر المادة:", ens_all: "الكل", ens_show_card: "عرض الملف الشخصي", ens_contact: "تواصل عبر البريد", ens_module: "المواد المدرّسة:", ens_advice: "نصيحة للطلبة:", ens_research: "البحث العلمي:", ens_links: "روابط مفيدة:", ens_grade_prof: "أستاذ دائم", ens_grade_temp: "أستاذ مؤقت" },
-      fr: { ens_title: "Corps Enseignant", ens_subtitle: "Choisissez l'année, puis la matière.", ens_year1: "1ère Année (1CP)", ens_year2: "2ème Année (2CP)", ens_select_subject: "Matière :", ens_all: "Toutes", ens_show_card: "Voir le profil", ens_contact: "Contacter", ens_module: "Module :", ens_advice: "Conseil :", ens_research: "Recherche :", ens_links: "Liens :", ens_grade_prof: "Professeur", ens_grade_temp: "Vacataire" },
-      en: { ens_title: "Faculty Members", ens_subtitle: "Select the year, then the subject.", ens_year1: "1st Year (1CP)", ens_year2: "2nd Year (2CP)", ens_select_subject: "Subject:", ens_all: "All", ens_show_card: "View Profile", ens_contact: "Contact", ens_module: "Module:", ens_advice: "Advice:", ens_research: "Research:", ens_links: "Links:", ens_grade_prof: "Professor", ens_grade_temp: "Temporary" }
-    };
-
-    const subjectTranslations = {
-      'Physique 1': { ar: 'الفيزياء 1', fr: 'Physique 1', en: 'Physics 1' },
-      'Analyse 1': { ar: 'التحليل 1', fr: 'Analyse 1', en: 'Analysis 1' },
-      'Algèbre 1': { ar: 'الجبر 1', fr: 'Algèbre 1', en: 'Algebra 1' },
-      'Proba Stat': { ar: 'الإحصاء', fr: 'Proba Stat', en: 'Statistics' },
-      'Chimie 1': { ar: 'الكيمياء 1', fr: 'Chimie 1', en: 'Chemistry 1' },
-      'Info 1': { ar: 'الإعلام الآلي 1', fr: 'Info 1', en: 'Computer Science 1' },
-      'Ingénierie Humaine 1': { ar: 'الهندسة الإنسانية', fr: 'Ingénierie Humaine 1', en: 'Human Engineering 1' },
-      'Economie Gle': { ar: 'الاقتصاد', fr: 'Economie Gle', en: 'Economics' },
-      'Anglais 1': { ar: 'الإنجليزية 1', fr: 'Anglais 1', en: 'English 1' },
-      'Français 1': { ar: 'الفرنسية 1', fr: 'Français 1', en: 'French 1' },
-      'Dessin Technique': { ar: 'الرسم التقني', fr: 'Dessin Technique', en: 'Technical Drawing' },
-      'Physique 3': { ar: 'الفيزياء 3', fr: 'Physique 3', en: 'Physics 3' },
-      'Physique 3 / MDF': { ar: 'الفيزياء 3 / MDF', fr: 'Physique 3 / MDF', en: 'Physics 3 / MDF' },
-      'Analyse 3': { ar: 'التحليل 3', fr: 'Analyse 3', en: 'Analysis 3' },
-      'Analyse Numérique 2': { ar: 'التحليل العددي 2', fr: 'Analyse Numérique 2', en: 'Numerical Analysis 2' },
-      'Chimie 3': { ar: 'الكيمياء 3', fr: 'Chimie 3', en: 'Chemistry 3' },
-       'Electricité Gle', en: 'General Electricity' },
-      'Info 3': { ar: 'الإعلام الآلي 3', fr: 'Info 3', en: 'Computer Science 3' },
-      'Meca Rationnelle 1': { ar: 'الميكانيكا 1', fr: 'Meca Rationnelle 1', en: 'Rational Mechanics 1' },
-      'Ingénierie 1': { ar: 'الهندسة 1', fr: 'Ingénierie 1', en: 'Engineering 1' },
-      'Anglais 3': { ar: 'الإنجليزية 3', fr: 'Anglais 3', en: 'English 3' },
-      "Technique d'expression": { ar: 'تقنيات التعبير', fr: "Technique d'expression", en: 'Expression Techniques' }
-    };
-
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+    let currentLang = 'ar';
     let selectedYear = '1cp';
     let selectedSubject = 'all';
 
-    function setLanguage(lang) {
-      currentLang = lang;
-      localStorage.setItem('enstp_lang', lang);
-      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-      
-      ['ar', 'fr', 'en'].forEach(l => {
-        const btn = document.getElementById(`btn-${l}`);
-        if (btn) {
-          if (l === lang) btn.classList.add('active');
-          else btn.classList.remove('active');
-        }
-      });
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-          el.innerText = translations[lang][key];
-        }
-      });
-
-      renderSubjects();
-      renderTeachers();
-    }
-
     function selectYear(year) {
       selectedYear = year;
-      document.getElementById('btn-1cp').className = `btn-year px-8 py-4 rounded-2xl text-base transition-all flex items-center gap-3 ${year === '1cp' ? 'active' : ''}`;
-      document.getElementById('btn-2cp').className = `btn-year px-8 py-4 rounded-2xl text-base transition-all flex items-center gap-3 ${year === '2cp' ? 'active' : ''}`;
-      
+      document.getElementById('btn-1cp').className = `btn-year px-8 py-4 rounded-2xl text-base flex items-center gap-3 ${year === '1cp' ? 'active' : ''}`;
+      document.getElementById('btn-2cp').className = `btn-year px-8 py-4 rounded-2xl text-base flex items-center gap-3 ${year === '2cp' ? 'active' : ''}`;
       selectedSubject = 'all';
       renderSubjects();
       renderTeachers();
@@ -171,19 +104,15 @@
       
       const allBtn = document.createElement('button');
       allBtn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
-      allBtn.innerText = translations[currentLang].ens_all;
+      allBtn.innerText = 'الكل';
       allBtn.onclick = () => { selectedSubject = 'all'; renderSubjects(); renderTeachers(); };
       subjectsBox.appendChild(allBtn);
 
       uniqueSubjects.forEach(sub => {
         const btn = document.createElement('button');
         btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
-        btn.innerText = subjectTranslations[sub] ? subjectTranslations[sub][currentLang] : sub;
-        btn.onclick = () => {
-          selectedSubject = sub;
-          renderSubjects();
-          renderTeachers();
-        };
+        btn.innerText = sub;
+        btn.onclick = () => { selectedSubject = sub; renderSubjects(); renderTeachers(); };
         subjectsBox.appendChild(btn);
       });
     }
@@ -193,121 +122,58 @@
       grid.innerHTML = '';
 
       let list = teachersData[selectedYear];
-      if (selectedSubject !== 'all') {
-        list = list.filter(t => t.subject === selectedSubject);
-      }
+      if (selectedSubject !== 'all') list = list.filter(t => t.subject === selectedSubject);
 
       list.forEach(t => {
         const card = document.createElement('div');
         card.className = "teacher-card";
         
-        const subjectName = subjectTranslations[t.subject] ? subjectTranslations[t.subject][currentLang] : t.subject;
-        const deptName = t.dept || subjectName;
-
-        let imgHtml = '';
-        if (t.photo) {
-          imgHtml = `<img src="${t.photo}" alt="${t.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'teacher-photo-initials\\'>${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}</div>';">`;
-        } else {
-          imgHtml = `<div class="teacher-photo-initials">${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}</div>`;
-        }
-
-        const gradeText = t.grade === 'prof' ? translations[currentLang].ens_grade_prof : translations[currentLang].ens_grade_temp;
-        let descText = t.advice || t.research || subjectName;
-        if (descText.length > 100) descText = descText.substring(0, 100) + '...';
+        let imgHtml = t.photo 
+          ? `<img src="${t.photo}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'teacher-photo-initials\\'>${t.name.substring(0,2)}</div>';">` 
+          : `<div class="teacher-photo-initials">${t.name.substring(0,2)}</div>`;
 
         card.innerHTML = `
           <div class="card-header-bg">
             <div class="check-badge"><i class="fa-solid fa-check"></i></div>
-            <div class="dept-badge">${deptName}</div>
+            <div class="dept-badge">${t.dept || t.subject}</div>
           </div>
-          
-          <div class="photo-section">
-            <div class="teacher-photo-wrap">
-              ${imgHtml}
-            </div>
-          </div>
-
+          <div class="photo-section"><div class="teacher-photo-wrap">${imgHtml}</div></div>
           <div class="card-content">
             <h3 class="teacher-name" dir="ltr">${t.name}</h3>
-            <p class="teacher-title">${gradeText}</p>
+            <p class="teacher-title">${t.grade === 'prof' ? 'أستاذ دائم' : 'أستاذ مؤقت'}</p>
             <div class="divider"></div>
-            <p class="teacher-desc">${descText}</p>
-            
-            <button class="btn-card-primary" onclick="openModal('${t.id}')">
-              <span>${translations[currentLang].ens_show_card}</span>
-              <i class="fa-solid fa-arrow-left"></i>
-            </button>
-            
-            <a href="mailto:${t.email}" class="btn-card-secondary" onclick="event.stopPropagation()">
-              <i class="fa-solid fa-envelope"></i>
-              <span>${translations[currentLang].ens_contact}</span>
-            </a>
+            <p class="teacher-desc">${t.advice || t.research || t.subject}</p>
+            <button class="btn-card-primary" onclick="openModal('${t.id}')">عرض الملف الشخصي <i class="fa-solid fa-arrow-left"></i></button>
+            <a href="mailto:${t.email}" class="btn-card-secondary"><i class="fa-solid fa-envelope"></i> تواصل عبر البريد</a>
           </div>
         `;
-        
         grid.appendChild(card);
       });
     }
 
-    function openModal(teacherId) {
-      let t = teachersData['1cp'].find(x => x.id === teacherId);
-      if (!t) t = teachersData['2cp'].find(x => x.id === teacherId);
+    function openModal(id) {
+      let t = teachersData['1cp'].find(x => x.id === id) || teachersData['2cp'].find(x => x.id === id);
       if (!t) return;
 
       document.getElementById('modal-name').innerText = t.name;
-      
-      let gradeText = t.grade === 'prof' ? translations[currentLang].ens_grade_prof : translations[currentLang].ens_grade_temp;
-      document.getElementById('modal-grade').innerText = gradeText;
+      document.getElementById('modal-grade').innerText = t.grade === 'prof' ? 'أستاذ دائم' : 'أستاذ مؤقت';
       document.getElementById('modal-email').querySelector('span').innerText = t.email;
-      
-      let modulesText = t.modules || (subjectTranslations[t.subject] ? subjectTranslations[t.subject][currentLang] : t.subject);
-      document.getElementById('modal-modules').innerText = modulesText;
+      document.getElementById('modal-modules').innerText = t.modules || t.subject;
 
-      const advBox = document.getElementById('modal-advice-box');
-      if (t.advice) {
-        advBox.classList.remove('hidden');
-        document.getElementById('modal-advice').innerText = t.advice;
-      } else {
-        advBox.classList.add('hidden');
-      }
+      if (t.advice) { document.getElementById('modal-advice-box').classList.remove('hidden'); document.getElementById('modal-advice').innerText = t.advice; } 
+      else document.getElementById('modal-advice-box').classList.add('hidden');
 
-      const resBox = document.getElementById('modal-research-box');
-      if (t.research) {
-        resBox.classList.remove('hidden');
-        document.getElementById('modal-research').innerText = t.research;
-      } else {
-        resBox.classList.add('hidden');
-      }
-
-      const linksBox = document.getElementById('modal-links-box');
-      const linksContainer = document.getElementById('modal-links');
-      if (t.links && t.links.length > 0) {
-        linksBox.classList.remove('hidden');
-        linksContainer.innerHTML = '';
-        t.links.forEach(l => {
-          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold hover:bg-amber-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
-        });
-      } else {
-        linksBox.classList.add('hidden');
-      }
+      if (t.research) { document.getElementById('modal-research-box').classList.remove('hidden'); document.getElementById('modal-research').innerText = t.research; } 
+      else document.getElementById('modal-research-box').classList.add('hidden');
 
       const imgBox = document.getElementById('modal-img-box');
-      if (t.photo) {
-        imgBox.innerHTML = `<img src="${t.photo}" alt="${t.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}';">`;
-      } else {
-        imgBox.innerHTML = t.name.split(' ').map(n => n[0]).join('').substring(0, 2);
-      }
+      imgBox.innerHTML = t.photo ? `<img src="${t.photo}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='${t.name.substring(0,2)}';">` : t.name.substring(0,2);
 
       document.getElementById('teacher-modal').classList.remove('hidden');
     }
 
-    function closeModal() {
-      document.getElementById('teacher-modal').classList.add('hidden');
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
       selectYear('1cp');
-      setTimeout(() => setLanguage(currentLang), 100);
     });
   </script>
 </body>
