@@ -12,7 +12,7 @@ window.ENSTP_DATA.groups = {
   'dms_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }]
 };
 
-window.ENSTP_DATA.schedule = {=
+window.ENSTP_DATA.schedule = {
       'prep_1': {
         'g1': {
           'Saturday': [
