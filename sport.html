@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="indigo">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الرياضة والأنشطة - ENSTP</title>
-  
+  <title>صحتي ورياضتي - ENSTP</title>
+
   <!-- كود الترجمة -->
   <script src="translate.js"></script>
   <style>
@@ -15,7 +15,7 @@
     #google_translate_element { display: none; } 
     .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
     .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
+    .lang-btn.active { background: #f97316; color: white; }
   </style>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,80 +24,298 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
+              400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c',
+              800: '#9a3412', 900: '#7c2d12',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
-    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
-    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+    body { font-family: 'Cairo', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; background-color: #ffffff; }
+    .dark body { background-color: #0f172a; }
+    
+    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.3s ease; }
+    .dark .glass-card { background: #1e293b; border-color: #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
+    
+    .glass-nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; transition: all 0.3s ease; }
+    .dark .glass-nav { background: #0f172a; border-bottom-color: #334155; }
+
+    /* Animation: الظهور واحدة تلو الأخرى */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Video Container */
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* Doctor Card Design */
+    .doctor-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #f1f5f9;
+    }
+    .dark .doctor-card { background: #1e293b; border-color: #334155; }
+    .doctor-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px -10px rgba(249, 115, 22, 0.25); border-color: #fb923c; }
+
+    .doctor-header { height: 70px; position: relative; }
+    .doctor-avatar {
+      position: absolute; bottom: -30px; right: 20px;
+      width: 70px; height: 70px; border-radius: 50%;
+      background: #ffffff; border: 4px solid #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1.5rem; color: #ea580c; z-index: 2;
+    }
+    .dark .doctor-avatar { border-color: #1e293b; background: #0f172a; }
+
+    .doctor-body { padding: 40px 20px 20px 20px; text-align: right; display: flex; flex-direction: column; flex-grow: 1; }
+    .doctor-name { font-size: 1.1rem; font-weight: 900; color: #1e293b; margin-bottom: 4px; }
+    .dark .doctor-name { color: #f8fafc; }
+    
+    .doctor-specialty {
+      display: inline-block; font-size: 0.75rem; font-weight: 800;
+      background: #fff7ed; color: #c2410c;
+      padding: 2px 10px; border-radius: 10px; margin-bottom: 10px;
+      align-self: flex-start; border: 1px solid #fed7aa;
+    }
+    .dark .doctor-specialty { background: rgba(194, 65, 12, 0.2); color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
+
+    .doctor-info { font-size: 0.85rem; color: #64748b; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
+    .dark .doctor-info { color: #94a3b8; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
-
-  <div class="ambient-bg"></div>
 
   <!-- الهيدر -->
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-orange-500 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-500 to-amber-500 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
         <div>
-          <h1 class="font-bold text-gray-900 text-base leading-tight">ENSTP <span class="text-orange-500">Sports</span></h1>
-          <p class="text-[11px] text-gray-500" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
+          <h1 class="font-bold text-gray-900 dark:text-white text-base leading-tight">ENSTP <span class="text-brand-500">Santé & Sport</span></h1>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
         </div>
       </div>
       
       <div class="flex items-center gap-3">
-        <!-- أزرار الترجمة -->
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
+        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm">
           <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
           <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
           <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+        
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center shadow-sm hover:bg-orange-50 dark:hover:bg-slate-700 transition">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-brand-400"></i>
+        </button>
+
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
       </div>
     </div>
   </header>
 
   <!-- المحتوى الرئيسي -->
-  <main class="max-w-5xl mx-auto px-4 py-10 flex-grow w-full space-y-8">
+  <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full space-y-10">
 
-    <!-- قسم الترحيب -->
-    <div class="glass-card rounded-3xl p-8 border border-white space-y-4 text-center">
-      <div class="w-20 h-20 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center text-4xl mx-auto shadow-sm">
-        <i class="fa-solid fa-dumbbell"></i>
-      </div>
-      <h2 class="text-3xl font-black text-gray-900" data-i18n="sport_title">الرياضة في ENSTP</h2>
-      <p class="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed" data-i18n="sport_desc">
-        شاهد الفيديوهات أدناه لاستكشاف المرافق الرياضية في المدرسة والمحيط.
-      </p>
+    <div class="text-center mb-8 reveal">
+      <h2 class="text-3xl font-black text-gray-900 dark:text-white" data-i18n="sport_title">صحتي ورياضتي</h2>
+      <p class="text-gray-600 dark:text-gray-400 mt-2" data-i18n="sport_desc">دليل الأطباء، المستشفيات، والأنشطة الرياضية في محيط المدرسة.</p>
     </div>
 
-    <!-- حاوية الفيديوهات (شبكة) -->
-    <div id="sportContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    <!-- ========================================== -->
+    <!-- 1. قسم الأطباء والمستشفيات -->
+    <!-- ========================================== -->
+    <section class="reveal">
+      <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
+        <div class="w-12 h-12 rounded-2xl bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-stethoscope"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-black text-gray-900 dark:text-white">الأطباء والمستشفيات</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">قائمة الأطباء والمؤسسات الصحية القريبة من المدرسة.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Doctor 1 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+            <div class="doctor-avatar">FA</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Farid Aissani</h4>
+            <span class="doctor-specialty">أمراض القلب</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Coopemad Sud, Bt 71/4, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 70 54 57</span></div>
+          </div>
+        </div>
+
+        <!-- Doctor 2 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
+            <div class="doctor-avatar">AB</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Amina Bendali</h4>
+            <span class="doctor-specialty">أمراض النساء والتوليد</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Route des Annassers, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0553 24 07 60</span></div>
+          </div>
+        </div>
+
+        <!-- Doctor 3 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
+            <div class="doctor-avatar">HO</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Houria Ouabdesselam</h4>
+            <span class="doctor-specialty">طب الأطفال</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Jolie Vue 2, 1216 logements, Bt 12, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0697 28 58 17</span></div>
+          </div>
+        </div>
+
+        <!-- Doctor 4 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
+            <div class="doctor-avatar">MB</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Mokhtar Bengherbi</h4>
+            <span class="doctor-specialty">طب العيون</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 70 avenue des Frères Abdeslami, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 60 16 78</span></div>
+          </div>
+        </div>
+
+        <!-- Doctor 5 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+            <div class="doctor-avatar">AD</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Abdelghani Debba</h4>
+            <span class="doctor-specialty">طب العيون</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 75 avenue des Frères Abdeslami, Vieux Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0660 39 29 22</span></div>
+          </div>
+        </div>
+
+        <!-- Doctor 6 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
+            <div class="doctor-avatar">FA</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Farid Ait Allaoua</h4>
+            <span class="doctor-specialty">طب العيون</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 43 rue des Frères Abdeslami, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0696 57 94 94</span></div>
+          </div>
+        </div>
+
+        <!-- Doctor 7 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #14b8a6, #2dd4bf);">
+            <div class="doctor-avatar">WB</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Widad Benantar</h4>
+            <span class="doctor-specialty">طب الأطفال</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Sastra / Jolie Vue 2, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 68 89 13</span></div>
+          </div>
+        </div>
+
+        <!-- Doctor 8 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #ef4444, #f87171);">
+            <div class="doctor-avatar">ZB</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Zineb Belhadj</h4>
+            <span class="doctor-specialty">أمراض النساء والتوليد</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 12 avenue des Frères Abdeslami, 1er étage, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0559 67 11 71</span></div>
+          </div>
+        </div>
+
+        <!-- Doctor 9 -->
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #6366f1, #818cf8);">
+            <div class="doctor-avatar">PB</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Pr Bouferrouk</h4>
+            <span class="doctor-specialty">أمراض القلب</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Garidi 1, Bt 8 n°1, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0551 26 84 36</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 2. قسم الرياضة (الفيديوهات) -->
+    <!-- ========================================== -->
+    <section class="reveal">
+      <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-dumbbell"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-black text-gray-900 dark:text-white">قيمة الرياضة</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">فيديوهات توعوية حول أهمية النشاط البدني.</p>
+        </div>
+      </div>
+
+      <div id="sportContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- سيتم إدراج الفيديوهات هنا عبر JavaScript -->
+      </div>
+    </section>
 
   </main>
 
-  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500">
+  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400 dark:border-slate-700">
     <p>© 2026 ENSTP Kouba.</p>
   </footer>
 
-  <!-- استدعاء ملف البيانات -->
-  <script src="data/sport.js"></script>
-
   <script>
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+    // Dark Mode
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+    function toggleDarkMode() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
 
-    // تحديث اللغة
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-      currentLang = lang;
-      originalSetLanguage(lang);
-      renderSport();
-    };
-
-    // دالة استخراج معرف الفيديو من روابط يوتيوب (بما فيها Shorts)
+    // دالة استخراج معرف الفيديو من روابط يوتيوب
     function getYoutubeId(url) {
       if (!url) return null;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
@@ -105,27 +323,25 @@
       return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // دالة عرض الفيديوهات فقط (بدون عناوين أو أوصاف)
+    // بيانات الفيديوهات
+    const sportVideos = [
+      { video: "aqPng7nyFZU" },
+      { video: "byDM5wQ3wcc" },
+      { videoUrl: "https://youtube.com/shorts/s4IcvPRD5dY" }
+    ];
+
+    // عرض الفيديوهات
     function renderSport() {
       const container = document.getElementById('sportContainer');
       container.innerHTML = '';
-
-      const sportSection = window.SECTIONS.find(s => s.id === 'sport');
-      if (!sportSection || !sportSection.items) return;
-
-      sportSection.items.forEach(item => {
-        // استخراج معرف الفيديو
+      sportVideos.forEach(item => {
         let videoId = item.video;
-        if (!videoId && item.videoUrl) {
-          videoId = getYoutubeId(item.videoUrl);
-        }
-
-        const card = document.createElement('div');
-        card.className = "glass-card p-2 rounded-2xl border border-gray-100 shadow-sm";
+        if (!videoId && item.videoUrl) videoId = getYoutubeId(item.videoUrl);
         
-        // عرض الفيديو فقط
+        const card = document.createElement('div');
+        card.className = "glass-card p-2 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm";
         card.innerHTML = `
-          <div class="video-container bg-gray-200">
+          <div class="video-container bg-gray-200 dark:bg-slate-900">
             ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>` : '<div class="flex items-center justify-center h-full text-gray-400">Video unavailable</div>'}
           </div>
         `;
@@ -133,9 +349,31 @@
       });
     }
 
+    // Animation: الظهور واحدة تلو الأخرى
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 150); // تأخير 150ms لكل عنصر
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    
+    // مراقبة البطاقات أيضاً لتظهر واحدة تلو الأخرى
+    document.querySelectorAll('.doctor-card').forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
+
+    // التشغيل الأولي
     window.addEventListener('DOMContentLoaded', () => {
       renderSport();
-      setTimeout(() => setLanguage(currentLang), 100);
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      setTimeout(() => setLanguage(savedLang), 100);
     });
   </script>
 </body>
