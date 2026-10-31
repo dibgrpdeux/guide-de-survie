@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="indigo">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,1465 +11,146 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
+              400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c',
+              800: '#9a3412', 900: '#7c2d12',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
-    body {
-      font-family: 'Cairo', sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
-    }
-    .ambient-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 1);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
-    }
-    .btn-day {
-      transition: all 0.3s;
-    }
-    .btn-day.active {
-      background-color: #4f46e5;
-      color: white;
-      border-color: #4f46e5;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-    }
+    body { font-family: 'Cairo', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; }
+    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 1); box-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.1); transition: all 0.3s ease; }
+    .dark .glass-card { background: rgba(30, 41, 59, 0.85); border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4); }
+    .btn-day { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .btn-day:hover { transform: translateY(-2px); border-color: #f97316; }
+    .btn-day.active { background: linear-gradient(135deg, #ea580c, #f97316); color: white; border-color: transparent; box-shadow: 0 6px 20px rgba(234, 88, 12, 0.4); transform: translateY(-2px); }
+    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ea580c'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 1rem center; background-size: 1rem; }
+    .dark select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fb923c'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .schedule-item { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+    .note-section { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .note-section.open { max-height: 500px; }
+    .note-textarea { width: 100%; min-height: 80px; resize: vertical; transition: all 0.3s ease; }
+    .note-textarea:focus { outline: none; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2); border-color: #f97316; }
+    .note-indicator { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    .note-badge { position: absolute; top: -6px; left: -6px; width: 18px; height: 18px; background: #f97316; border: 2px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; color: white; font-weight: 900; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #fb923c, #ea580c); border-radius: 10px; }
+    .bg-mesh { background-color: #f8fafc; background-image: radial-gradient(at 10% 10%, rgba(249, 115, 22, 0.08) 0px, transparent 50%), radial-gradient(at 90% 90%, rgba(234, 88, 12, 0.08) 0px, transparent 50%); }
+    .dark .bg-mesh { background-color: #0f172a; background-image: radial-gradient(at 10% 10%, rgba(249, 115, 22, 0.1) 0px, transparent 50%), radial-gradient(at 90% 90%, rgba(234, 88, 12, 0.1) 0px, transparent 50%); }
+    @media print { .no-print { display: none !important; } body { background: white !important; } .glass-card { box-shadow: none !important; border: 1px solid #ccc !important; } }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
+<body class="min-h-screen flex flex-col justify-between p-4 lg:p-8 bg-mesh text-slate-800 dark:text-slate-200">
 
-  <div class="ambient-bg"></div>
+  <main class="max-w-6xl mx-auto w-full space-y-6">
 
-  <main class="max-w-5xl mx-auto w-full space-y-6">
+    <div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+      <div class="absolute -top-10 -left-10 w-40 h-40 bg-brand-400/20 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-400/20 rounded-full blur-3xl"></div>
 
-    <!-- الترويسة -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
-      <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-3xl shrink-0">
-        <i class="fa-solid fa-calendar-days"></i>
+      <div class="flex items-center gap-5 relative">
+        <div class="w-20 h-20 bg-gradient-to-br from-brand-500 to-amber-500 text-white rounded-2xl flex items-center justify-center text-3xl shrink-0 shadow-lg shadow-brand-500/30">
+          <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <div>
+          <h1 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-2">استعمال الزمن الدقيق</h1>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">حدد قسمك، سنتك الدراسية، وفوجك للحصول على توقيتك الخاص مع إمكانية إضافة ملاحظات.</p>
+        </div>
       </div>
-      <div>
-        <h1 class="text-2xl md:text-3xl font-black text-gray-900 mb-2">استعمال الزمن الدقيق (حسب الفوج)</h1>
-        <p class="text-gray-600 text-sm">حدد قسمك، سنتك الدراسية، وفوجك للحصول على توقيتك الخاص (المحاضرات والأعمال التطبيقية/الموجهة).</p>
+
+      <div class="flex gap-2 relative z-10 no-print">
+        <button onclick="window.print()" class="w-12 h-12 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center shadow-sm hover:border-brand-400 hover:text-brand-600 transition" title="طباعة">
+          <i class="fa-solid fa-print"></i>
+        </button>
+        <button onclick="toggleDarkMode()" class="w-12 h-12 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center shadow-sm hover:border-brand-400 transition">
+          <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-brand-400 text-lg"></i>
+        </button>
       </div>
     </div>
 
-    <!-- الفلاتر -->
-    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
+    <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 no-print">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">القسم / التخصص:</label>
-          <select id="select-dept" onchange="updateYears()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition">
+          <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2"><i class="fa-solid fa-building-columns text-brand-500"></i> القسم / التخصص:</label>
+          <select id="select-dept" onchange="updateYears()" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-brand-500 outline-none font-semibold text-slate-800 dark:text-slate-200 transition">
             <option value="prep">الطبقة التحضيرية (CP)</option>
             <option value="dib">المنشآت القاعدية (DIB)</option>
             <option value="dms">المواد والهياكل (DMS)</option>
           </select>
         </div>
-
         <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">السنة الدراسية:</label>
-          <select id="select-year" onchange="updateGroups()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition"></select>
+          <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2"><i class="fa-solid fa-layer-group text-brand-500"></i> السنة الدراسية:</label>
+          <select id="select-year" onchange="updateGroups()" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-brand-500 outline-none font-semibold text-slate-800 dark:text-slate-200 transition"></select>
         </div>
-
         <div>
-          <label class="block text-sm font-bold text-gray-700 mb-2">الفوج (Groupe):</label>
-          <select id="select-group" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-gray-800 transition"></select>
+          <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2"><i class="fa-solid fa-users text-brand-500"></i> الفوج (Groupe):</label>
+          <select id="select-group" onchange="renderSchedule()" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-brand-500 outline-none font-semibold text-slate-800 dark:text-slate-200 transition"></select>
         </div>
-
       </div>
 
-      <hr class="border-gray-100">
+      <hr class="border-slate-100 dark:border-slate-700">
 
       <div class="flex flex-wrap gap-2 justify-center">
-        <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600">السبت</button>
-        <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600">الأحد</button>
-        <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600">الإثنين</button>
-        <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600">الثلاثاء</button>
-        <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600">الأربعاء</button>
-        <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-5 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-600">الخميس</button>
+        <button onclick="changeDay('Saturday')" id="day-Saturday" class="btn-day px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">السبت</button>
+        <button onclick="changeDay('Sunday')" id="day-Sunday" class="btn-day px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">الأحد</button>
+        <button onclick="changeDay('Monday')" id="day-Monday" class="btn-day px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">الإثنين</button>
+        <button onclick="changeDay('Tuesday')" id="day-Tuesday" class="btn-day px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">الثلاثاء</button>
+        <button onclick="changeDay('Wednesday')" id="day-Wednesday" class="btn-day px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">الأربعاء</button>
+        <button onclick="changeDay('Thursday')" id="day-Thursday" class="btn-day px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">الخميس</button>
       </div>
+    </div>
 
-      <div class="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-100">
-        <h3 id="schedule-title" class="font-bold text-lg text-indigo-900 mb-4 border-r-4 border-indigo-500 pr-3">برنامج الحصص</h3>
-
-        <div id="schedule-list" class="space-y-3"></div>
-      </div>
-
+    <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4 md:p-6 border border-slate-100 dark:border-slate-700 glass-card">
+      <h3 id="schedule-title" class="font-bold text-lg text-brand-900 dark:text-brand-400 mb-4 border-r-4 border-brand-500 pr-3 flex items-center gap-2">
+        <i class="fa-solid fa-list-check"></i> برنامج الحصص
+      </h3>
+      <div id="schedule-list" class="space-y-3"></div>
     </div>
   </main>
 
+  <script src="enstp.js"></script>
+  
   <script>
-    // 1. تعريف الأفواج لكل سنة
-    const groupsDatabase = {
-      'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'prep_2': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'dib_1': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'dib_2': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'dib_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }],
-      'dms_1': Array.from({length: 4}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
-      'dms_2': Array.from({length: 2}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
-      'dms_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }]
-    };
+    const groupsDatabase = ENSTP_DATA.groups;
+    const scheduleDatabase = ENSTP_DATA.schedule;
 
-    // 2. قاعدة بيانات استعمال الزمن
-    const scheduleDatabase = {
-      // ==========================================
-      // 1CP - Groupes 1 à 12
-      // ==========================================
-      'prep_1': {
-        'g1': {
-          'Saturday': [
-            { time: '08:00 - 09:30', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'labo', type: 'TP' },
-            { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhl...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08:00 - 09:30', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Calculus 1', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '13:30 - 15:00', subject: 'Chemistry 1', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 1', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 1', type: 'TP' },
-            { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 1 & 3', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mr Yalla', room: 'Auditorium B', type: 'TD' }
-          ]
-        },
-        'g2': {
-          'Saturday': [
-            { time: '08:00 - 09:30', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhl...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08:00 - 09:30', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 11', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Calculus 1 (TD)', prof: '---', room: 'Room 9', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Chemistry 1', prof: '---', room: 'Room 9', type: 'TD' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mlle Yalla', room: 'Auditorium B', type: 'TD' }
-          ]
-        },
-        'g3': {
-          'Saturday': [
-            { time: '08:00 - 09:30', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 5', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 5', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 5', type: 'TD' },
-            { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhl...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08:00 - 09:30', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Chemistry 1 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '13:30 - 15:00', subject: 'Calculus 1', prof: '---', room: 'Room 11', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mr Yalla', room: 'Auditorium B', type: 'TD' }
-          ]
-        },
-        'g4': {
-          'Saturday': [
-            { time: '08:00 - 09:30', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhfi...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '09:35 - 11:05', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Chemistry 1', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '13:30 - 15:00', subject: 'Calculus 1', prof: '---', room: 'Room 4', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mlle Khalfi', room: 'Room 22', type: 'TD' }
-          ]
-        },
-        'g5': {
-          'Saturday': [
-            { time: '08:00 - 09:30', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 7', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 7', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 7', type: 'TD' },
-            { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhfi...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08:00 - 09:30', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '09:35 - 11:05', subject: 'Chemistry 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Calculus 1', prof: '---', room: 'Room 10', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mlle Khalfi', room: 'Room 22', type: 'TD' }
-          ]
-        },
-        'g6': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 8', type: 'TD' },
-            { time: '09h35 - 11h05', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 8', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 8', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Algebra 1 (Cours)', prof: 'Mrs Hebbache', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Bali', room: 'Auditorium B', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 6', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 11h05', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 6', type: 'TP' },
-            { time: '11h10 - 12h40', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Proba stat (Cours)', prof: 'Mme Chouchaoui', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'تاريخ الجزائر (Cours)', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 6', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Physics 1 (Cours)', prof: 'Mme Kias', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 6', type: 'TP' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 6', type: 'TP' },
-            { time: '17h00 - 18h30', subject: 'Gle Economy (EAD)', prof: 'Mme Chouchaoui', room: 'En ligne', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'English 1 (TD)', prof: 'Mr Yala', room: 'Auditorium B', type: 'TD' },
-            { time: '09h35 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 6', type: 'TP' }
-          ]
-        },
-        'g7': {
-          'Saturday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 7', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Algebra 1 (Cours)', prof: 'Mrs Hebbache', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Bali', room: 'Auditorium B', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 2', type: 'TD' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 7', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 11h05', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 7', type: 'TP' },
-            { time: '11h10 - 12h40', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 11', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Proba stat (Cours)', prof: 'Mme Chouchaoui', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'تاريخ الجزائر (Cours)', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 7', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Physics 1 (Cours)', prof: 'Mme Kias', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 7', type: 'TP' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 7', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'English 1 (TD)', prof: 'Mr Yala', room: 'Auditorium B', type: 'TD' },
-            { time: '09h35 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 7', type: 'TP' }
-          ]
-        },
-        'g8': {
-          'Saturday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 8', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Algebra 1 (Cours)', prof: 'Mrs Hebbache', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Bali', room: 'Auditorium B', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 8', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 11h05', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 8', type: 'TP' },
-            { time: '11h10 - 12h40', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 11', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Proba stat (Cours)', prof: 'Mme Chouchaoui', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'تاريخ الجزائر (Cours)', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 8', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Physics 1 (Cours)', prof: 'Mme Kias', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 8', type: 'TP' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 8', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'English 1 (TD)', prof: 'Mr Yala', room: 'Auditorium B', type: 'TD' },
-            { time: '09h35 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 8', type: 'TP' }
-          ]
-        },
-        'g9': {
-          'Saturday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 9', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Algebra 1 (Cours)', prof: 'Mrs Hebbache', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Bali', room: 'Auditorium B', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Calculus 1 (TD)', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 9', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 11h05', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 9', type: 'TP' },
-            { time: '11h10 - 12h40', subject: 'Chemistry 1 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Proba stat (Cours)', prof: 'Mme Chouchaoui', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'تاريخ الجزائر (Cours)', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 9', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Physics 1 (Cours)', prof: 'Mme Kias', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 9', type: 'TP' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 9', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'English 1 (TD)', prof: 'Mr Yala', room: 'Auditorium B', type: 'TD' },
-            { time: '09h35 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 9', type: 'TP' }
-          ]
-        },
-        'g10': {
-          'Saturday': [
-            { time: '08h00 - 11h05', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 10', type: 'TP' },
-            { time: '11h10 - 12h40', subject: 'Proba 1 (TD)', prof: '---', room: 'Lab', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Algebra 1 (Cours)', prof: 'Mrs Hebbache', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Bali', room: 'Auditorium B', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 10', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 11h05', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 10', type: 'TP' },
-            { time: '11h10 - 12h40', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Proba stat (Cours)', prof: 'Mme Chouchaoui', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'تاريخ الجزائر (Cours)', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 10', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Physics 1 (Cours)', prof: 'Mme Kias', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 10', type: 'TP' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 10', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'English 1 (TD)', prof: 'Mr Hassaine', room: 'Auditorium B', type: 'TD' },
-            { time: '09h35 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 10', type: 'TP' }
-          ]
-        },
-        'g11': {
-          'Saturday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 11', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Algebra 1 (Cours)', prof: 'Mrs Hebbache', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Bali', room: 'Auditorium B', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 13', type: 'TD' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 11', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 11h05', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 11', type: 'TP' },
-            { time: '11h10 - 12h40', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 14', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Proba stat (Cours)', prof: 'Mme Chouchaoui', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'تاريخ الجزائر (Cours)', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 11', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Physics 1 (Cours)', prof: 'Mme Kias', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 11', type: 'TP' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 11', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'English 1 (TD)', prof: 'Mr Hassaine', room: 'Auditorium B', type: 'TD' },
-            { time: '09h35 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 11', type: 'TP' }
-          ]
-        },
-        'g12': {
-          'Saturday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 12', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Algebra 1 (Cours)', prof: 'Mrs Hebbache', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Bali', room: 'Auditorium B', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Calculus 1 (TD)', prof: '---', room: 'Room 13', type: 'TD' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 12', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 11h05', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 12', type: 'TP' },
-            { time: '11h10 - 12h40', subject: 'Chemistry 1 (TD)', prof: '---', room: 'Room 14', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Proba stat (Cours)', prof: 'Mme Chouchaoui', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'تاريخ الجزائر (Cours)', prof: '---', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 12', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Physics 1 (Cours)', prof: 'Mme Kias', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 12', type: 'TP' },
-            { time: '13h30 - 16h35', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 12', type: 'TP' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'English 1 (TD)', prof: 'Mr Hassaine', room: 'Auditorium B', type: 'TD' },
-            { time: '09h35 - 12h40', subject: 'Lab (Chemistry / Physics / Tech Draw)', prof: 'Équipe Labo', room: 'Laboratories 12', type: 'TP' }
-          ]
-        }
-      },
-
-      // ==========================================
-      // 2CP - Groupes 1 à 12
-      // ==========================================
-      'prep_2': {
-        'g1': {
-          'Saturday': [
-            { time: '08:00 - 09:30', subject: 'Calculus 3 (Cours)', prof: 'Mr. Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Computer Science 3 (Cours)', prof: 'Mr. Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'Exp Tech (Cours)', prof: 'Mr. Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'General Electricity (TD)', prof: '---', room: 'Room 1', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 1', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08:00 - 11:05', subject: 'Physics 3 (Cours)', prof: 'Mr. Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr. Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 1', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 1', type: 'TD' }
-          ],
-          'Monday': [
-            { time: '08:00 - 11:05', subject: 'Physics 3 (Cours)', prof: 'Mr. Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr. Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13:30 - 16:35', subject: 'Calculus 3 (Cours)', prof: 'Mr. Brahmi', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08:00 - 09:30', subject: 'General Electricity (Cours)', prof: 'Mr. Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 12', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08:00 - 09:30', subject: 'Rational Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09:35 - 11:05', subject: 'English 3', prof: 'Mr. Yala', room: 'Auditorium B', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'Chemistry 3 (Cours)', prof: 'Mme Dib', room: 'Auditorium B', type: 'Cours' },
-            { time: '13:30 - 15:00', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 12', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08:00 - 12:40', subject: 'Lab(Chemistry/Physics/General Electronic/Fl-Mech)', prof: '---', room: 'Laboratories', type: 'TP' },
-            { time: '13:30 - 15:00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 12', type: 'TD' }
-          ]
-        },
-        'g2': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 2', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 2', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 2', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 2', type: 'TD' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 2', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 2', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 2', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 2', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 2', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3 (Cours)', prof: 'Mr Yala', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 2', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 2', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 2', type: 'TD' }
-          ]
-        },
-        'g3': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 3', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 3', type: 'TD' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 3', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'General Electricity (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 3', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3 (Cours)', prof: 'Mr Yala', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 3', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 3', type: 'TD' }
-          ]
-        },
-        'g4': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 4', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'General Electricity (TD)', prof: '---', room: 'Room 4', type: 'TD' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 4', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 4', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3 (Cours)', prof: 'Mr Yala', room: 'Auditorium B', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 4', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 4', type: 'TD' }
-          ]
-        },
-        'g5': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 6', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3', prof: 'Mr Azzi', room: 'Room 22', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 5', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' }
-          ]
-        },
-        'g6': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 7', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 7', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 7', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 7', type: 'TD' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'General Electricity (TD)', prof: '---', room: 'Room 13', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Physics 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 6', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3', prof: 'Mr Azzi', room: 'Room 22', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 6', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 6', type: 'TD' }
-          ]
-        },
-        'g7': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'General Electricity (TD)', prof: '---', room: 'Room 9', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 9', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Physics 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Calculus 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 12', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 7', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 7', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3', prof: 'Mr Yala', room: 'Auditorium A', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 7', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'General Electricity (TD)', prof: '---', room: 'Room 7', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 7', type: 'TD' }
-          ]
-        },
-        'g8': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 10', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Calculus 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Physics 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 2', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'General Electricity (TD)', prof: '---', room: 'Room 8', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 8', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3', prof: 'Mr Yala', room: 'Auditorium A', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 8', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 8', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 8', type: 'TD' }
-          ]
-        },
-        'g9': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'General Electricity (TD)', prof: '---', room: 'Room 11', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 11', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Calculus 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 3', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 9', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 9', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3', prof: 'Mr Yala', room: 'Auditorium A', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 9', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 9', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 9', type: 'TD' }
-          ]
-        },
-        'g10': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 12', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Physics 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 4', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 10', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3', prof: 'Mr Yala', room: 'Auditorium B', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 10', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 10', type: 'TD' }
-          ]
-        },
-        'g11': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 13', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 13', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Rational Mech 1 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Physics 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 1', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'General Electricity (TD)', prof: '---', room: 'Room 11', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 11', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3', prof: 'Mr Omar', room: 'Room 5', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 11', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (TD)', prof: '---', room: 'Room 11', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Numerical Analysis 1 (TD)', prof: '---', room: 'Room 11', type: 'TD' }
-          ]
-        },
-        'g12': {
-          'Saturday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Computer Science 3 (Cours)', prof: 'Mr Ould Kaddour', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Exp Tech (Cours)', prof: 'Mr Benyettou', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 13', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'Fluid Mechanics (TD)', prof: '---', room: 'Room 13', type: 'TD' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 11h05', subject: 'Physics 3 (Cours)', prof: 'Mr Rezouidji', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Numerical Analysis 1 (Cours)', prof: 'Mr Hamadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Engineering (Cours)', prof: 'Mrs Chiali', room: 'Auditorium A', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Physics 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'Calculus 3 (TD)', prof: '---', room: 'Auditorium A', type: 'TD' },
-            { time: '13h30 - 15h00', subject: 'Calculus 3 (Cours)', prof: 'Mr Brahmi', room: 'Auditorium A', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 1', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Fluid Mechanics (Cours)', prof: 'Mr Kellou', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'General Electricity (Cours)', prof: 'Mr Rahoui', room: 'Auditorium A', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'Chemistry 3 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 12', type: 'TD' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Rational-Mech 01 (Cours)', prof: 'Mrs Zouadi', room: 'Auditorium A', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Chemistry 3 (Cours)', prof: 'Mme Bouhara', room: 'Auditorium A', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'English 3', prof: 'Mr Omar', room: 'Room 5', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 12h40', subject: 'Lab (Chemistry / Physics / General Electronic / Fl-Mech)', prof: 'Équipe Labo', room: 'Laboratories 12', type: 'TP' },
-            { time: '13h30 - 15h00', subject: 'Computer Science 3 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
-            { time: '15h05 - 16h35', subject: 'General Electricity (TD)', prof: '---', room: 'Room 12', type: 'TD' }
-          ]
-        }
-      },
-
-      // ==========================================
-      // DIB
-      // ==========================================
-      'dib_1': {
-        'g1': {
-          'Saturday': [{ time: '09h35 - 11h05', subject: 'Constr Mat', prof: 'BADAOUI', room: 'En ligne', type: 'Cours' }],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'SOM', prof: 'LAIB', room: '7', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Appl Hydr', prof: 'BOUSSADI', room: '8', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'PRACTICAL (Topo/SOM/Appl Geo)', prof: 'ALEM / LAIB / OMRACI', room: 'Labo', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Appl Geology', prof: 'OMRACI', room: '7', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'BENOUMECHIARA', room: '7', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'Techn English', prof: 'AMALOU', room: '7', type: 'TD' },
-            { time: '14h35 - 16h05', subject: 'Topo', prof: 'ALEM', room: '7', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 10h00', subject: 'SOM', prof: 'LAIB', room: '7', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'MMC', prof: 'MERDOUD', room: '6', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Ter Plan Env Sust', prof: 'SAADI', room: '7', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'BENOUMECHIARA', room: '7', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'Num Prog', prof: 'CHAMI', room: 'CC', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'Entrepreneurship', prof: 'MOBARKI', room: 'CC', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 11h00', subject: 'PRACTICAL (Topo/SM/Appl Geo)', prof: 'ALEM / ALLALOU / GUETTACHE', room: 'Labo', type: 'TP' },
-            { time: '11h05 - 12h35', subject: 'IA', prof: 'CHAMI', room: 'CLASSROOM 8', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'Specialized Lectures', prof: 'CHIALI', room: 'Amphi A', type: 'Cours' }
-          ]
-        },
-        'g2': {
-          'Saturday': [{ time: '09h35 - 11h05', subject: 'Constr Mat', prof: 'BADAOUI', room: 'En ligne', type: 'Cours' }],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Appl Hydr', prof: 'BOUSSADI', room: '8', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'SOM', prof: 'LAIB', room: '8', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'PRACTICAL (Topo/SOM/Appl Geo)', prof: 'ALEM / LAIB / OMRACI', room: 'Labo', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Soil Mech 1', prof: 'BENOUMECHIARA', room: '8', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Appl Geology', prof: 'OMRACI', room: '8', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'Topo', prof: 'ALEM', room: '8', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'Techn English', prof: 'AMALOU', room: '8', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 10h00', subject: 'SOM', prof: 'LAIB', room: '7', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'MMC', prof: 'MERDOUD', room: '7', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Soil Mech 1', prof: 'BENOUMECHIARA', room: '8', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Ter Plan Env Sust', prof: 'SAADI', room: '8', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'Entrepreneurship', prof: 'MOBARKI', room: '7', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'Num Prog', prof: 'CHAMI', room: '7', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 11h00', subject: 'PRACTICAL (Topo/SM/Appl Geo)', prof: 'ALEM / ALLALOU / GUETTACHE', room: 'Labo', type: 'TP' },
-            { time: '11h05 - 12h35', subject: 'IA', prof: 'CHAMI', room: 'CLASSROOM 7', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'Specialized Lectures', prof: 'CHIALI', room: 'Amphi A', type: 'Cours' }
-          ]
-        },
-        'g3': {
-          'Saturday': [{ time: '09h35 - 11h05', subject: 'Constr Mat', prof: 'BADAOUI', room: 'En ligne', type: 'Cours' }],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'MMC', prof: 'MERDOUD', room: '9', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'SOM', prof: 'GASSIS', room: '9', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'PRACTICAL (Topo/SOM/Appl Geo)', prof: 'ALEM / LAIB / OMRACI', room: 'Labo', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Topo', prof: 'ALEM', room: '9', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'BERRICHE', room: '9', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'Appl Geology', prof: 'OMRACI', room: '9', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'Num Prog', prof: 'DALI', room: '9', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 10h00', subject: 'SOM', prof: 'LAIB', room: '8', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'Appl Hydr', prof: 'RAHMANI', room: '8', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Entrepreneurship', prof: 'MOBARKI', room: '9', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Soil Mech 1', prof: 'BERRICHE', room: '9', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'Ter Plan Env Sust', prof: 'SAADI', room: '8', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'Techn English', prof: 'AMALOU', room: '8', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 11h00', subject: 'PRACTICAL (Topo/SM/Appl Geo)', prof: 'ALEM / ALLALOU / GUETTACHE', room: 'Labo', type: 'TP' },
-            { time: '13h00 - 16h05', subject: 'Specialized Lectures', prof: 'CHIALI', room: 'Amphi A', type: 'Cours' }
-          ]
-        },
-        'g4': {
-          'Saturday': [{ time: '09h35 - 11h05', subject: 'Constr Mat', prof: 'BADAOUI', room: 'En ligne', type: 'Cours' }],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'SOM', prof: 'GASSIS', room: '25', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'MMC', prof: 'MERDOUD', room: '25', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'PRACTICAL (Topo/SOM/Appl Geo)', prof: 'ALEM / LAIB / OMRACI', room: 'Labo', type: 'TP' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'Soil Mech 1', prof: 'BERRICHE', room: '25', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Topo', prof: 'ALEM', room: '25', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'Num Prog', prof: 'DALI', room: 'CC', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'Appl Geology', prof: 'OMRACI', room: 'CC', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 10h00', subject: 'Appl Hydr', prof: 'RAHMANI', room: '9', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'SOM', prof: 'GASSIS', room: '9', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Soil Mech 1', prof: 'BERRICHE', room: '2', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Entrepreneurship', prof: 'MOBARKI', room: '2', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'Techn English', prof: 'AMALOU', room: '9', type: 'TD' },
-            { time: '14h35 - 16h05', subject: 'Ter Plan Env Sust', prof: 'SAADI', room: '9', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 11h00', subject: 'PRACTICAL (Topo/SM/Appl Geo)', prof: 'ALEM / ALLALOU / GUETTACHE', room: 'Labo', type: 'TP' },
-            { time: '13h00 - 16h05', subject: 'Specialized Lectures', prof: 'CHIALI', room: 'Amphi A', type: 'Cours' }
-          ]
-        }
-      },
-      'dib_2': {
-        'g1': {
-          'Sunday': [
-            { time: '08h00 - 10h00', subject: 'ROAD GEOT', prof: 'DERRICHE', room: '5', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'RC', prof: 'TAFRAOUT', room: '5', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'CM', prof: 'OUAKLI', room: '5', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 10h00', subject: 'STRUCT DYN', prof: 'LARBI', room: '5', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'FEM', prof: 'MEHIAOUI', room: '5', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'PRACTICAL (RG/SM4/ROADS)', prof: 'MAHIEDDINE / DALI / KHOUAS - DEKALI', room: 'LABO', type: 'TP' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'ROAD SKETCH / GOUMETTRE', prof: 'HATRI-ASSAS', room: '25', type: 'TD' },
-            { time: '09h35 - 11h05', subject: 'ROCK MECH', prof: 'BENAMGHAR', room: '5', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'BIM', prof: 'KERMICHE & TAFRAOUT', room: 'CLASSROOM 25', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'ADV STRUCT MECH', prof: 'ASSAS', room: '5', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'RC', prof: 'BENREDOUANE', room: '5', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'ROADS', prof: 'ASSAS', room: 'Amphi A', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'PRES CONCR', prof: 'AMIEUR', room: '5', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'RAILWAY', prof: 'REMDANE', room: '5', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'ASS-URB', prof: 'BOUSSADI', room: 'CLASSROOM 5', type: 'Cours' },
-            { time: '13h00 - 16h00', subject: 'IN SITU VISIT', prof: '---', room: 'Mape', type: 'TP' }
-          ]
-        },
-        'g2': {
-          'Sunday': [
-            { time: '08h00 - 10h00', subject: 'SOIL MECH 4', prof: 'HAMADI', room: '22', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'FEM', prof: 'MEHIAOUI', room: '22', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'CM', prof: 'OUMOUSSA', room: '22', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 10h00', subject: 'ROAD GEOT', prof: 'DERRICHE', room: '22', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'SOIL MECH 4', prof: 'HAMADI', room: '22', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'PRACTICAL (RG/SM4/ROADS)', prof: 'MAHIEDDINE / DALI / KHOUAS - DEKALI', room: 'LABO', type: 'TP' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'ROCK MECH', prof: 'BENAMGHAR', room: '5', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'ROAD SKETCH / GOUMETTRE', prof: 'HATRI-ASSAS', room: '5', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'BIM', prof: 'KERMICHE & TAFRAOUT', room: 'CLASSROOM 25', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'STRUCT DYN', prof: 'LARBI', room: '22', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'ADV STRUCT MECH', prof: 'ASSAS', room: '22', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'BRIDGE', prof: 'AMIEUR', room: 'Amphi A', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'ROADS', prof: 'ASSAS', room: 'Amphi A', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'RAILWAY', prof: 'GHEFFAR', room: '22', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'PRES CONCR', prof: 'AMIEUR', room: '22', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'ASS-URB', prof: 'RAHMANI', room: 'CLASSROOM 24', type: 'Cours' },
-            { time: '13h00 - 16h00', subject: 'IN SITU VISIT', prof: '---', room: 'Mape', type: 'TP' }
-          ]
-        },
-        'g3': {
-          'Sunday': [
-            { time: '08h00 - 10h00', subject: 'ROAD GEOT', prof: 'DERRICHE', room: '5', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'RC', prof: 'TAFRAOUT', room: '5', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 10h00', subject: 'STRUCT DYN', prof: 'LARBI', room: '5', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'PRACTICAL (RG/SM4/ROADS)', prof: 'MAHIEDDINE / DALI', room: 'LABO', type: 'TP' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'ROAD SKETCH', prof: 'HATRI-ASSAS', room: '25', type: 'TD' },
-            { time: '09h35 - 11h05', subject: 'ROCK MECH', prof: 'BENAMGHAR', room: '5', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'ADV STRUCT MECH', prof: 'ASSAS', room: '5', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'ROADS', prof: 'ASSAS', room: 'Amphi A', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'PRES CONCR', prof: 'AMIEUR', room: '5', type: 'Cours' },
-            { time: '13h00 - 16h00', subject: 'IN SITU VISIT', prof: '---', room: 'Mape', type: 'TP' }
-          ]
-        },
-        'g4': {
-          'Sunday': [
-            { time: '08h00 - 10h00', subject: 'SOIL MECH 4', prof: 'HAMADI', room: '22', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'FEM', prof: 'MEHIAOUI', room: '22', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 10h00', subject: 'ROAD GEOT', prof: 'DERRICHE', room: '22', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'PRACTICAL (RG/SM4/ROADS)', prof: 'MAHIEDDINE / DALI', room: 'LABO', type: 'TP' }
-          ],
-          'Tuesday': [
-            { time: '09h35 - 11h05', subject: 'ROAD SKETCH', prof: 'HATRI-ASSAS', room: '5', type: 'TD' },
-            { time: '11h10 - 12h40', subject: 'BIM', prof: 'KERMICHE & TAFRAOUT', room: 'CLASSROOM 25', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'STRUCT DYN', prof: 'LARBI', room: '22', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'ADV STRUCT MECH', prof: 'ASSAS', room: '22', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'RAILWAY', prof: 'GHEFFAR', room: '22', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'PRES CONCR', prof: 'AMIEUR', room: '22', type: 'Cours' }
-          ]
-        }
-      },
-      'dib_3': {
-        'promo': {
-          'Saturday': [{ time: '08h00 - 12h40', subject: 'ADDITIONAL TRAINING ON SOFTWARE', prof: 'BOUDJEMA / TOUHAMI / HENNA', room: '20', type: 'TP' }],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'SOIL DYN', prof: 'MEHIAOUI', room: '20', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'ROAD PATHO', prof: 'BERRICHE', room: '20', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'DTP', prof: 'HAMADI', room: '20', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'CO', prof: 'TAFRAOUT', room: '20', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'MDP', prof: 'CHOHRA', room: '20', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'SOIL DYN', prof: 'MEHIAOUI', room: '20', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'BP 2', prof: 'AMIEUR', room: '20', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'PATHO.OA', prof: 'FEDGHOUCHE', room: '20', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'OS', prof: 'BENAMGHAR', room: '20', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'OS', prof: 'BENAMGHAR', room: '5', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'ODC/PGC', prof: 'KHOUAS', room: '22', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'CO', prof: 'TAFRAOUT', room: '20', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'EDT', prof: 'CHIALI', room: 'CLASSROOM 20', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'LENSTARTUP', prof: 'MOBARKI', room: '5', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'AUTOM-C', prof: 'BELHADJ', room: 'CC', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'RHEOL', prof: 'TAKI', room: '20', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'ODC/PGC', prof: 'KHOUAS', room: '25', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'ESQ PR', prof: 'AMIEUR', room: 'CLASSROOM 20', type: 'Cours' },
-            { time: '12h00 - 13h30', subject: 'ESQ BA', prof: 'BENBOUZID', room: 'CLASSROOM 25', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: 'DDAT', prof: 'CHIALI', room: 'SALLE 20', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'ESQ APD', prof: 'BAYASLI', room: '20', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'ESQ VF', prof: 'MORSLI', room: '20', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'LENSTARTUP', prof: 'MOBARKI', room: '20', type: 'Cours' },
-            { time: '13h30 - 16h35', subject: 'IN SITU VISITS', prof: '---', room: 'Mape', type: 'TP' }
-          ]
-        }
-      },
-
-      // ==========================================
-      // DMS
-      // ==========================================
-      'dms_1': {
-        'sec1': {
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'SM 1', prof: 'Mrs MSILI', room: '16', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'APP GO', prof: 'Mr HEBIB', room: '16', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'BM', prof: 'Mr GUEHLOUZ', room: '16', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'AI', prof: 'Mr BAKHOCHE', room: '16', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'SOM 1', prof: 'Mr GASSIS', room: '24', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'AH', prof: 'Mr LEFKIR', room: '24', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'TP APP GEO', prof: 'Mr HEBIB', room: 'Labo', type: 'TP' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'SM 1', prof: 'Mrs MSILI', room: '24', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'T. ENGLISH 1', prof: 'Miss KHALFI', room: '24', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'SOM 1', prof: 'Mr GASSIS', room: '01', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'CM 1', prof: 'Mrs ZAHAFI', room: '16', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'NPL', prof: 'Mr BAKHTI', room: '18', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'ENTR', prof: 'Mr ZEMOUR', room: '18', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'TPES', prof: 'Mrs SAADI', room: '09', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'TOPO', prof: 'Mr BENOUNAS', room: '16', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'SPECIALIZED SEMINARS 1', prof: 'Mr GASSIS', room: 'Amphi B', type: 'Cours' }
-          ]
-        },
-        'sec2': {
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'APP GO', prof: 'Mr HEBIB', room: '17', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'SM 1', prof: 'Mrs MSILI', room: '17', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'AI', prof: 'Mr BAKHOCHE', room: '17', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'BM', prof: 'Mr GUEHLOUZ', room: '17', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'AH', prof: 'Mr LEFKIR', room: '16', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'SOM 1', prof: 'Mr BENOUCHFOUN', room: '16', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'T. ENGLISH 1', prof: 'Miss KHALFI', room: '16', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'SM 1', prof: 'Mrs MSILI', room: '16', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'CM 1', prof: 'Mrs ZAHAFI', room: '16', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'SOM 1', prof: 'Mr BENOUCHFOUN', room: '16', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'ENTR', prof: 'Mr ZEMOUR', room: '14', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'NPL', prof: 'Mr BAKHTI', room: '14', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'TOPO', prof: 'Mr BENOUNAS', room: '16', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'TPES', prof: 'Mrs SAADI', room: '16', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'SPECIALIZED SEMINARS 1', prof: 'Mr GASSIS', room: 'Amphi B', type: 'Cours' }
-          ]
-        },
-        'sec3': {
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'BM', prof: 'Mr BENOUNAS', room: '08', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'TPES', prof: 'Mrs SAADI', room: '08', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'SM 1', prof: 'Mr BERRICHE', room: '08', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'AI', prof: 'Mr DALI', room: '08', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'SOM 1', prof: 'Mr ANNAD', room: '17', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'CM 1', prof: 'Mr KEHILA', room: '17', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'NPL', prof: 'Mr BAKHTI', room: '17', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'APP GO', prof: 'Mr HEBIB', room: '17', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'SOM 1', prof: 'Mr ANNAD', room: '17', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'AH', prof: 'Mrs CHENITI', room: '17', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'SM 1', prof: 'Mr BERRICHE', room: '16', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'ENTR', prof: 'Mr ZEMOUR', room: '16', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'T. ENGLISH 1', prof: 'Mr AZZI', room: '17', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'TOPO', prof: 'Mrs OULD RAMOUL', room: '17', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'SPECIALIZED SEMINARS 1', prof: 'Mr GASSIS', room: 'Amphi B', type: 'Cours' }
-          ]
-        },
-        'sec4': {
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'TPES', prof: 'Mrs SAADI', room: '18', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'BM', prof: 'Mr BENOUNAS', room: '18', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'AI', prof: 'Mr DALI', room: '18', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'SM 1', prof: 'Mr BERRICHE', room: '18', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: 'CM 1', prof: 'Mr KEHILA', room: '18', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'SOM 1', prof: 'Mr ANNAD', room: '18', type: 'Cours' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'APP GO', prof: 'Mr HEBIB', room: '18', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'NPL', prof: 'Mr BAKHTI', room: '18', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'AH', prof: 'Mrs CHENITI', room: '18', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'SOM 1', prof: 'Mr ANNAD', room: '18', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'ENTR', prof: 'Mr ZEMOUR', room: '14', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'SM 1', prof: 'Mr BERRICHE', room: '14', type: 'Cours' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'TOPO', prof: 'Mrs OULD RAMOUL', room: '18', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'T. ENGLISH 1', prof: 'Mr AZZI', room: '18', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'SPECIALIZED SEMINARS 1', prof: 'Mr GASSIS', room: 'Amphi B', type: 'Cours' }
-          ]
-        }
-      },
-      'dms_2': {
-        'sec1': {
-          'Sunday': [
-            { time: '08h00 - 10h00', subject: 'STRUCTURAL DYNAMICS 1', prof: 'M. HADID', room: '14', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'REINFORCED CONCRETE 2', prof: 'M. BELAOURA', room: '14', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'TUNNELS', prof: 'M. HEBIB', room: '14', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'HYDROLIC STRUCTURES', prof: 'M. LEFKIR', room: '14', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 10h00', subject: 'STEEL STRUCTURES 1', prof: 'Ms BOUKEZZI', room: '14', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'STRUCTURAL MECHANICS 1', prof: 'Ms MESSAOUDI', room: '14', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'SITE VISITS', prof: '---', room: 'Mape', type: 'TP' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 10h00', subject: 'BRIDGES 1', prof: 'M. ZOURGUI', room: '14', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'FINITE ELEMENTS METHOD 1', prof: 'M. CHIKH', room: '14', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'INTRODUCTION TO BIM', prof: 'Mr TAFRAOUT', room: 'Salle 25', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'ROADS 2', prof: 'M. BAKHTI', room: '14', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'PRESTRESSED CONCRETE 1', prof: 'M. BELAOURA', room: '14', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'TP ROADS', prof: 'Ms M\'SILI', room: '14', type: 'TP' },
-            { time: '13h00 - 16h05', subject: 'ROADS SKETCH', prof: 'M. GUENAIZI', room: '24', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 10h00', subject: 'BUILDINGS 1', prof: 'M. LADJEL', room: '14', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'SOIL MECHANICS 4', prof: 'M. GUEHLOUZ', room: '14', type: 'Cours' }
-          ]
-        },
-        'sec2': {
-          'Sunday': [
-            { time: '08h00 - 10h00', subject: 'REINFORCED CONCRETE 2', prof: 'M. BELAOURA', room: '15', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'STRUCTURAL DYNAMICS 1', prof: 'M. HADID', room: '15', type: 'Cours' },
-            { time: '13h00 - 14h30', subject: 'HYDROLIC STRUCTURES', prof: 'M. LEFKIR', room: '15', type: 'Cours' },
-            { time: '14h35 - 16h05', subject: 'TUNNELS', prof: 'M. HEBIB', room: '15', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 10h00', subject: 'STRUCTURAL MECHANICS 1', prof: 'Ms MESSAOUDI', room: '15', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'FINITE ELEMENTS METHOD 1', prof: 'M. CHIKH', room: '15', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'SITE VISITS', prof: '---', room: 'Mape', type: 'TP' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 10h00', subject: 'STEEL STRUCTURES 1', prof: 'Ms BOUKEZZI', room: '15', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'BRIDGES 1', prof: 'M. ZOURGUI', room: '15', type: 'Cours' },
-            { time: '13h00 - 16h05', subject: 'INTRODUCTION TO BIM', prof: 'Mr TAFRAOUT', room: 'Salle 25', type: 'Cours' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'PRESTRESSED CONCRETE 1', prof: 'M. BELAOURA', room: '15', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'ROADS 2', prof: 'M. BAKHTI', room: '15', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'TP SOIL MECH.', prof: 'Ms MEBAREK', room: '15', type: 'TP' },
-            { time: '13h00 - 16h05', subject: 'ROADS SKETCH', prof: 'M. BENBOUZID', room: '25', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h30 - 10h00', subject: 'SOIL MECHANICS 4', prof: 'M. GUEHLOUZ', room: '15', type: 'Cours' },
-            { time: '10h05 - 12h05', subject: 'BUILDINGS 1', prof: 'M. LADJEL', room: '15', type: 'Cours' }
-          ]
-        }
-      },
-      'dms_3': {
-        'promo': {
-          'Saturday': [
-            { time: '08h00 - 11h05', subject: 'MIDAS', prof: 'Mr. GUERFI', room: '19', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'GROUPE TUN', prof: '---', room: '19', type: 'TD' },
-            { time: '11h30 - 14h30', subject: 'Méthodes de Réalisation des OS', prof: 'Mr HEBIB', room: '19', type: 'Cours' }
-          ],
-          'Sunday': [
-            { time: '08h00 - 09h30', subject: 'Calcul Automatique des Structures', prof: 'Mr BENOUCHFOUN', room: '19', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'MANAG de Projets', prof: 'Mme CHIALI', room: '19', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Calcul Economique des Projets', prof: 'Mme CHIALI', room: '19', type: 'Cours' },
-            { time: '13h30 - 15h00', subject: "Calcul d'Ouvrages", prof: 'Mr. LADJEL', room: '19', type: 'Cours' },
-            { time: '15h05 - 16h40', subject: 'Dév. Dur. Amen. Territ.', prof: 'Mme SAADI', room: '24', type: 'Cours' }
-          ],
-          'Monday': [
-            { time: '08h00 - 09h30', subject: "Pathologie et Réhabilitation des Ouvrages d'Art", prof: 'Mr. FEDGHOUCHE', room: '19', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Optimisation dans le Génie Civil', prof: 'Mr FEDGHOUCHE', room: '19', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Organisation de chantier', prof: 'Mr MOKHTAR', room: '19', type: 'Cours' },
-            { time: '13h30 - 16h40', subject: 'Thermique Bâtiment (GROUPE BAT)', prof: 'M. ANNAD', room: '19', type: 'TD' }
-          ],
-          'Tuesday': [
-            { time: '08h00 - 09h30', subject: 'MMC Approfondie', prof: 'Mme ZAHAFI', room: '19', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Dynamique des Sols 2', prof: 'Mr HADID', room: '19', type: 'Cours' },
-            { time: '09h35 - 12h40', subject: 'TD DOSOLS', prof: 'Mr. TOUNSI / Mme ZAHAFI', room: '10 / 11', type: 'TD' },
-            { time: '13h30 - 16h40', subject: 'Visites de Chantiers', prof: '---', room: 'Mape', type: 'TP' }
-          ],
-          'Wednesday': [
-            { time: '08h00 - 09h30', subject: 'Droit des TP', prof: 'Mr HAMADI', room: '19', type: 'Cours' },
-            { time: '09h35 - 11h05', subject: 'Matériaux Innovants', prof: 'Mme MSILI', room: '19', type: 'Cours' },
-            { time: '11h10 - 12h40', subject: 'Analyse Expérimentale', prof: 'Mr MAHREZ', room: '19', type: 'Cours' },
-            { time: '13h30 - 16h40', subject: 'Esquisse Bâtiments / Tunnels', prof: 'Mr AKNOUCHE / Mr CHERCHALI', room: '19 / 17', type: 'TD' }
-          ],
-          'Thursday': [
-            { time: '08h00 - 09h30', subject: 'Lean Entreprenariat', prof: '---', room: '19', type: 'Cours' },
-            { time: '09h35 - 12h40', subject: 'Esquisse Ponts', prof: 'Mr ZOURGUI / Mr KHELFI', room: '19 / 10', type: 'TD' }
-          ]
-        }
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+    function toggleDarkMode() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
       }
-    };
+    }
 
     let selectedDay = 'Sunday';
     const dayNames = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
+
+    function getNotesKey(year, group, day, index) { return `note_${year}_${group}_${day}_${index}`; }
+    function getNote(year, group, day, index) { return localStorage.getItem(getNotesKey(year, group, day, index)) || ''; }
+    function saveNote(year, group, day, index, value) {
+      if (value.trim()) localStorage.setItem(getNotesKey(year, group, day, index), value);
+      else localStorage.removeItem(getNotesKey(year, group, day, index));
+    }
 
     function updateYears() {
       const dept = document.getElementById('select-dept').value;
@@ -1477,22 +158,11 @@
       yearSelect.innerHTML = '';
 
       if (dept === 'prep') {
-        yearSelect.innerHTML = `
-          <option value="prep_1">السنة الأولى تحضيري (1CP)</option>
-          <option value="prep_2">السنة الثانية تحضيري (2CP)</option>
-        `;
+        yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
       } else if (dept === 'dib') {
-        yearSelect.innerHTML = `
-          <option value="dib_1">السنة الأولى مهندس (DIB)</option>
-          <option value="dib_2">السنة الثانية مهندس (DIB)</option>
-          <option value="dib_3">السنة الثالثة مهندس (DIB)</option>
-        `;
+        yearSelect.innerHTML = `<option value="dib_1">السنة الأولى مهندس (DIB)</option><option value="dib_2">السنة الثانية مهندس (DIB)</option><option value="dib_3">السنة الثالثة مهندس (DIB)</option>`;
       } else if (dept === 'dms') {
-        yearSelect.innerHTML = `
-          <option value="dms_1">السنة الأولى مهندس (DMS)</option>
-          <option value="dms_2">السنة الثانية مهندس (DMS)</option>
-          <option value="dms_3">السنة الثالثة مهندس (DMS)</option>
-        `;
+        yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مهندس (DMS)</option><option value="dms_2">السنة الثانية مهندس (DMS)</option><option value="dms_3">السنة الثالثة مهندس (DMS)</option>`;
       }
       updateGroups();
     }
@@ -1501,7 +171,6 @@
       const year = document.getElementById('select-year').value;
       const groupSelect = document.getElementById('select-group');
       groupSelect.innerHTML = '';
-
       const groups = groupsDatabase[year] || [];
       groups.forEach(g => {
         const option = document.createElement('option');
@@ -1509,7 +178,6 @@
         option.textContent = g.label;
         groupSelect.appendChild(option);
       });
-
       renderSchedule();
     }
 
@@ -1518,16 +186,19 @@
       document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById(`day-${day}`);
       if (activeBtn) activeBtn.classList.add('active');
-
-      document.getElementById('schedule-title').innerText = `برنامج الحصص ليوم ${dayNames[day]}`;
+      document.getElementById('schedule-title').innerHTML = `<i class="fa-solid fa-list-check"></i> برنامج الحصص ليوم ${dayNames[day]}`;
       renderSchedule();
+    }
+
+    function toggleNote(index) {
+      const section = document.getElementById(`note-section-${index}`);
+      if (section) section.classList.toggle('open');
     }
 
     function renderSchedule() {
       const year = document.getElementById('select-year').value;
       const group = document.getElementById('select-group').value;
       const container = document.getElementById('schedule-list');
-
       container.innerHTML = '';
 
       let items = [];
@@ -1537,48 +208,107 @@
 
       if (items.length === 0) {
         container.innerHTML = `
-          <div class="text-center p-6 text-gray-500 font-bold bg-white rounded-xl border border-gray-200">
-            <i class="fa-regular fa-face-smile-wink text-2xl mb-2 text-indigo-300 block"></i>
+          <div class="text-center p-8 text-slate-500 dark:text-slate-400 font-bold bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+            <i class="fa-regular fa-face-smile-wink text-4xl mb-3 text-brand-300 dark:text-brand-500 block"></i>
             لا توجد حصص مبرمجة في هذا اليوم لهذا الفوج.
           </div>
         `;
         return;
       }
 
-      items.forEach(item => {
+      items.forEach((item, index) => {
         let typeBadge = '';
-        if (item.type === 'Cours') typeBadge = '<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[10px] font-black">محاضرة</span>';
-        if (item.type === 'TD') typeBadge = '<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-black">أعمال موجهة (TD)</span>';
-        if (item.type === 'TP') typeBadge = '<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-black">أعمال تطبيقية (TP)</span>';
+        let typeColor = '';
+        if (item.type === 'Cours') { typeBadge = 'محاضرة'; typeColor = 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'; }
+        if (item.type === 'TD') { typeBadge = 'أعمال موجهة (TD)'; typeColor = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'; }
+        if (item.type === 'TP') { typeBadge = 'أعمال تطبيقية (TP)'; typeColor = 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'; }
+
+        const note = getNote(year, group, selectedDay, index);
+        const hasNote = note.trim() !== '';
 
         const row = document.createElement('div');
-        row.className = "p-4 bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 hover:shadow-md transition";
+        row.className = "schedule-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-lg hover:border-brand-300 dark:hover:border-brand-600 transition-all overflow-hidden";
+        row.style.animationDelay = `${index * 0.05}s`;
+
         row.innerHTML = `
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold shrink-0">
-              <i class="fa-solid fa-clock"></i>
-            </div>
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <h5 class="font-bold text-gray-900 text-base">${item.subject}</h5>
-                ${typeBadge}
+          <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-start gap-4">
+              <div class="relative">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-100 to-amber-100 dark:from-brand-900/30 dark:to-amber-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold shrink-0">
+                  <i class="fa-solid fa-clock text-lg"></i>
+                </div>
+                ${hasNote ? '<div class="note-badge"><i class="fa-solid fa-pen" style="font-size:7px"></i></div>' : ''}
               </div>
-              <p class="text-sm text-gray-500 font-semibold"><i class="fa-solid fa-user-tie text-gray-400 ml-1"></i> الأستاذ: ${item.prof}</p>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                  <h5 class="font-bold text-slate-900 dark:text-white text-base">${item.subject}</h5>
+                  <span class="${typeColor} px-2 py-0.5 rounded text-[10px] font-black">${typeBadge}</span>
+                  ${hasNote ? '<span class="note-indicator"><i class="fa-solid fa-pen" style="font-size:8px"></i> ملاحظة</span>' : ''}
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400 font-semibold flex items-center gap-1">
+                  <i class="fa-solid fa-user-tie text-slate-400"></i> الأستاذ: ${item.prof}
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
+              <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 p-2.5 rounded-xl border border-slate-100 dark:border-slate-700">
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 px-2 flex items-center gap-1">
+                  <i class="fa-solid fa-hourglass-start text-brand-400"></i> ${item.time}
+                </span>
+                <span class="w-px h-4 bg-slate-300 dark:bg-slate-600"></span>
+                <span class="text-xs font-bold text-brand-700 dark:text-brand-400 px-2 flex items-center gap-1">
+                  <i class="fa-solid fa-location-dot"></i> ${item.room}
+                </span>
+              </div>
+              <button onclick="toggleNote(${index})" class="no-print w-10 h-10 rounded-xl ${hasNote ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'} hover:scale-105 transition flex items-center justify-center" title="إضافة ملاحظة">
+                <i class="fa-solid fa-pen text-sm"></i>
+              </button>
             </div>
           </div>
-          <div class="flex items-center gap-2 bg-gray-50 p-2 rounded-xl border border-gray-100 w-fit shrink-0">
-            <span class="text-xs font-bold text-gray-700 px-2"><i class="fa-solid fa-hourglass-start text-indigo-400 ml-1"></i> ${item.time}</span>
-            <span class="w-px h-4 bg-gray-300"></span>
-            <span class="text-xs font-bold text-indigo-700 px-2"><i class="fa-solid fa-location-dot text-indigo-400 ml-1"></i> ${item.room}</span>
+
+          <div id="note-section-${index}" class="note-section ${hasNote ? 'open' : ''}">
+            <div class="px-4 pb-4">
+              <textarea 
+                id="note-text-${index}"
+                placeholder="✏️ اكتب ملاحظاتك هنا..."
+                class="note-textarea w-full p-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-200 font-semibold"
+                oninput="handleNoteChange(${index}, this.value)"
+              >${note}</textarea>
+              <div class="flex justify-between items-center mt-2">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+                  <i class="fa-solid fa-info-circle"></i> يتم الحفظ تلقائياً
+                </span>
+                <button onclick="clearNote(${index})" class="no-print text-[11px] text-red-500 hover:text-red-700 font-bold">
+                  <i class="fa-solid fa-trash"></i> حذف
+                </button>
+              </div>
+            </div>
           </div>
         `;
         container.appendChild(row);
       });
     }
 
+    let saveTimeout;
+    function handleNoteChange(index, value) {
+      const year = document.getElementById('select-year').value;
+      const group = document.getElementById('select-group').value;
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        saveNote(year, group, selectedDay, index, value);
+        renderSchedule();
+      }, 800);
+    }
+
+    function clearNote(index) {
+      const year = document.getElementById('select-year').value;
+      const group = document.getElementById('select-group').value;
+      localStorage.removeItem(getNotesKey(year, group, selectedDay, index));
+      renderSchedule();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       updateYears();
-
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let today = days[new Date().getDay()];
       if (today === 'Friday') today = 'Saturday';
