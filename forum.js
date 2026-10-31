@@ -1,9 +1,9 @@
 // ==========================================
-// 1. استيراد المكتبات (Firebase + Supabase)
+// 1. الاستيراد
 // ==========================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
 // ==========================================
@@ -25,13 +25,12 @@ const db = getFirestore(app);
 // ==========================================
 // 3. إعدادات Supabase (لرفع الملفات)
 // ==========================================
-// ⚠️ استبدل YOUR_PROJECT_REF بالرابط الخاص بك
-const supabaseUrl = 'https://zvvnkpujqewgpxwfsrvw.supabase.co'; 
+const supabaseUrl = 'https://zvvnkpujqewgpxwfsrvw.supabase.co';
 const supabaseKey = 'sb_publishable_eWjkMgImX1Czpm6qEOwuqQ__wLYpTUm';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // ==========================================
-// 4. المتغيرات العامة
+// 4. المتغيرات
 // ==========================================
 let isLoginMode = true;
 let currentUserData = null;
@@ -41,19 +40,10 @@ let unsubscribeMessages = null;
 let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 let attachedFile = null;
 
-// ==========================================
-// 5. قائمة الولايات
-// ==========================================
-const wilayas = [
-  "01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة",
-  "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة",
-  "21 - سكيكدة", "22 - سيدي بلعباس", "23 - عنابة", "24 - قالمة", "25 - قسنطينة", "26 - المدية", "27 - مستغانم", "28 - المسيلة", "29 - معسكر", "30 - ورقلة",
-  "31 - وهران", "32 - البيض", "33 - إليزي", "34 - برج بوعريريج", "35 - بومرداس", "36 - الطارف", "37 - تندوف", "38 - تيسمسيلت", "39 - الوادي", "40 - خنشلة",
-  "41 - سوق أهراس", "42 - تيبازة", "43 - ميلة", "44 - عين الدفلى", "45 - النعامة", "46 - عين تموشنت", "47 - غرداية", "48 - غليزان"
-];
+const wilayas = ["01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة", "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة", "21 - سكيكدة", "22 - سيدي بلعباس", "23 - عنابة", "24 - قالمة", "25 - قسنطينة", "26 - المدية", "27 - مستغانم", "28 - المسيلة", "29 - معسكر", "30 - ورقلة", "31 - وهران", "32 - البيض", "33 - إليزي", "34 - برج بوعريريج", "35 - بومرداس", "36 - الطارف", "37 - تندوف", "38 - تيسمسيلت", "39 - الوادي", "40 - خنشلة", "41 - سوق أهراس", "42 - تيبازة", "43 - ميلة", "44 - عين الدفلى", "45 - النعامة", "46 - عين تموشنت", "47 - غرداية", "48 - غليزان"];
 
 // ==========================================
-// 6. عناصر DOM
+// 5. عناصر DOM
 // ==========================================
 const loadingScreen = document.getElementById('loadingScreen');
 const authScreen = document.getElementById('authScreen');
@@ -71,7 +61,7 @@ const wilayaSelect = document.getElementById('wilayaInput');
 wilayas.forEach(w => { wilayaSelect.innerHTML += `<option value="${w}">${w}</option>`; });
 
 // ==========================================
-// 7. Dark Mode
+// 6. Dark Mode
 // ==========================================
 if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
   document.documentElement.classList.add('dark');
@@ -86,16 +76,12 @@ window.toggleDarkMode = function() {
   }
 };
 
-// ==========================================
-// 8. Sidebar Toggle (Mobile)
-// ==========================================
 window.toggleSidebar = function() {
-  const sidebar = document.getElementById('sidebar');
-  sidebar.classList.toggle('translate-x-full');
+  document.getElementById('sidebar').classList.toggle('translate-x-full');
 };
 
 // ==========================================
-// 9. Auth Toggle (Login/Register)
+// 7. Auth
 // ==========================================
 toggleBtn.addEventListener('click', () => {
   isLoginMode = !isLoginMode;
@@ -113,13 +99,9 @@ toggleBtn.addEventListener('click', () => {
   }
 });
 
-// ==========================================
-// 10. Submit Auth (Login/Register)
-// ==========================================
 submitBtn.addEventListener('click', async () => {
   const email = document.getElementById('emailInput').value.trim();
   const pass = document.getElementById('passInput').value;
-  
   if (!email.endsWith('@enstp.edu.dz')) return showError('يجب استخدام البريد المهني @enstp.edu.dz');
   if (pass.length < 6) return showError('كلمة السر يجب أن تكون 6 أحرف على الأقل');
 
@@ -135,7 +117,6 @@ submitBtn.addEventListener('click', async () => {
       const year = document.getElementById('yearInput').value;
       const wilaya = document.getElementById('wilayaInput').value;
       if (!name) throw new Error('يرجى إدخال الاسم');
-
       const userCred = await createUserWithEmailAndPassword(auth, email, pass);
       await updateProfile(userCred.user, { displayName: name });
       await setDoc(doc(db, "users", userCred.user.uid), { name, email, year, wilaya });
@@ -152,24 +133,17 @@ submitBtn.addEventListener('click', async () => {
 
 function showError(msg) { errorMsg.innerText = msg; errorMsg.classList.remove('hidden'); }
 
-// ==========================================
-// 11. Auth State Change
-// ==========================================
 onAuthStateChanged(auth, async (user) => {
   loadingScreen.classList.add('hidden');
   if (user) {
     const userDoc = await getDoc(doc(db, "users", user.uid));
     const userData = userDoc.exists() ? userDoc.data() : { name: user.displayName, year: 'طالب', wilaya: '16 - الجزائر' };
-
     currentUserData = { uid: user.uid, name: userData.name, email: user.email, year: userData.year, wilaya: userData.wilaya };
-
     authScreen.classList.add('hidden');
     forumScreen.classList.remove('hidden');
-    
     document.getElementById('userAvatar').innerText = currentUserData.name.charAt(0);
     document.getElementById('userName').innerText = currentUserData.name;
     document.getElementById('userInfo').innerText = `${currentUserData.year} | ${currentUserData.wilaya}`;
-
     renderChannels();
     selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', document.querySelector('.active-room'));
   } else {
@@ -183,7 +157,7 @@ onAuthStateChanged(auth, async (user) => {
 document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
 
 // ==========================================
-// 12. Render Channels
+// 8. Channels
 // ==========================================
 function renderChannels() {
   const customContainer = document.getElementById('customChannels');
@@ -204,17 +178,12 @@ function renderChannels() {
   });
 }
 
-// ==========================================
-// 13. Select Channel
-// ==========================================
 window.selectChannel = (id, title, subtitle, type, btnElement) => {
   currentChannelId = id;
   currentChannelType = type;
-  
   document.getElementById('channelTitle').innerHTML = `<i class="fa-solid ${type === 'chat' ? 'fa-comments text-green-500' : 'fa-globe text-blue-500'}"></i> ${title}`;
   document.getElementById('channelSubtitle').innerText = subtitle;
   document.getElementById('mobileTitle').innerText = title;
-  
   const badge = document.getElementById('channelTypeBadge');
   if (type === 'chat') {
     badge.innerText = 'دردشة';
@@ -225,21 +194,12 @@ window.selectChannel = (id, title, subtitle, type, btnElement) => {
     badge.className = "text-[10px] bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 px-3 py-1 rounded-full font-bold";
     postText.placeholder = 'اكتب منشوراً...';
   }
-
   document.querySelectorAll('aside button').forEach(btn => btn.classList.remove('active-room'));
   if(btnElement) btnElement.classList.add('active-room');
-
   loadMessages(id, type);
-  
-  const sidebar = document.getElementById('sidebar');
-  if (window.innerWidth < 768) {
-    sidebar.classList.add('translate-x-full');
-  }
+  if (window.innerWidth < 768) document.getElementById('sidebar').classList.add('translate-x-full');
 };
 
-// ==========================================
-// 14. Create Room
-// ==========================================
 window.createRoom = async () => {
   const name = document.getElementById('newRoomName').value.trim();
   const type = document.getElementById('newRoomType').value;
@@ -252,25 +212,18 @@ window.createRoom = async () => {
 };
 
 // ==========================================
-// 15. File Upload (Supabase)
+// 9. File Upload (Supabase)
 // ==========================================
 window.handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (!file) return;
-
-  if (file.size > 50 * 1024 * 1024) {
-    alert("حجم الملف كبير جداً (الحد الأقصى 50 ميجابايت)");
-    return;
-  }
-
+  if (file.size > 50 * 1024 * 1024) { alert("حجم الملف كبير جداً (الحد الأقصى 50 ميجابايت)"); return; }
   attachedFile = file;
   const previewContainer = document.getElementById('filePreview');
   previewContainer.innerHTML = '';
   previewContainer.classList.remove('hidden');
-
   const fileUrl = URL.createObjectURL(file);
   let previewHtml = '';
-
   if (file.type.startsWith('image/')) {
     previewHtml = `<img src="${fileUrl}" class="h-16 w-16 object-cover rounded-lg border border-gray-300">`;
   } else if (file.type.startsWith('video/')) {
@@ -278,7 +231,6 @@ window.handleFileUpload = (event) => {
   } else {
     previewHtml = `<div class="flex items-center gap-2 bg-gray-200 dark:bg-slate-700 p-2 rounded-lg"><i class="fa-solid fa-file text-gray-600 dark:text-gray-300"></i></div>`;
   }
-
   previewContainer.innerHTML = `
     <div class="flex items-center justify-between bg-gray-50 dark:bg-slate-800 p-2 rounded-lg border border-gray-200 dark:border-slate-700">
       <div class="flex items-center gap-2">
@@ -297,43 +249,29 @@ window.clearFile = () => {
   document.getElementById('filePreview').innerHTML = '';
 };
 
-// رفع الملف إلى Supabase
 async function uploadFileToSupabase(file) {
   const fileName = `${Date.now()}_${file.name}`;
-  const { data, error } = await supabase.storage
-    .from('forum-files')
-    .upload(fileName, file);
-
+  const { data, error } = await supabase.storage.from('forum-files').upload(fileName, file);
   if (error) throw error;
-
-  const { data: urlData } = supabase.storage
-    .from('forum-files')
-    .getPublicUrl(fileName);
-
+  const { data: urlData } = supabase.storage.from('forum-files').getPublicUrl(fileName);
   return urlData.publicUrl;
 }
 
 // ==========================================
-// 16. Send Post/Message
+// 10. Send Post
 // ==========================================
 postBtn.addEventListener('click', async () => {
   const text = postText.value.trim();
   if (!text && !attachedFile) return;
-
   postBtn.disabled = true;
   postBtn.innerText = '...';
-  
   let fileUrl = null;
   let fileType = null;
-
   try {
-    // رفع الملف إلى Supabase
     if (attachedFile) {
       fileUrl = await uploadFileToSupabase(attachedFile);
       fileType = attachedFile.type;
     }
-
-    // حفظ في Firestore
     await addDoc(collection(db, "posts"), {
       channelId: currentChannelId,
       channelType: currentChannelType,
@@ -344,49 +282,44 @@ postBtn.addEventListener('click', async () => {
       authorYear: currentUserData.year,
       authorEmail: currentUserData.email,
       comments: [],
+      reactions: { like: [], love: [], laugh: [] },
       createdAt: serverTimestamp()
     });
-
     postText.value = '';
     postText.style.height = 'auto';
     clearFile();
-    
-  } catch (e) { 
+  } catch (e) {
     console.error(e);
-    alert("حدث خطأ أثناء الإرسال: " + e.message); 
-  } finally { 
-    postBtn.disabled = false; 
-    postBtn.innerHTML = `إرسال <i class="fa-solid fa-paper-plane text-xs"></i>`; 
+    alert("حدث خطأ أثناء الإرسال: " + e.message);
+  } finally {
+    postBtn.disabled = false;
+    postBtn.innerHTML = `إرسال <i class="fa-solid fa-paper-plane text-xs"></i>`;
   }
 });
 
 // ==========================================
-// 17. Load Messages
+// 11. Load Messages
 // ==========================================
 function loadMessages(channelId, type) {
   if (unsubscribeMessages) unsubscribeMessages();
   postsContainer.innerHTML = '<div class="text-center mt-10 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl"></i></div>';
-
   const q = query(collection(db, "posts"), where("channelId", "==", channelId), orderBy("createdAt", "desc"));
-
   unsubscribeMessages = onSnapshot(q, (snapshot) => {
     postsContainer.innerHTML = '';
     if (snapshot.empty) {
       postsContainer.innerHTML = `<div class="text-center text-gray-400 mt-10">${type === 'chat' ? 'لا توجد رسائل' : 'لا توجد منشورات'}</div>`;
       return;
     }
-
     let docs = [];
     snapshot.forEach(doc => docs.push(doc));
-    if (type === 'chat') docs.reverse(); 
+    if (type === 'chat') docs.reverse();
 
     docs.forEach((docSnap) => {
       const post = docSnap.data();
       const postId = docSnap.id;
       const isMe = post.authorEmail === currentUserData.email;
-      const date = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR', { hour: '2-digit', minute:'2-digit' }) : '...';
-      
-      // بناء HTML للملف
+      const date = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR', { hour: '2-digit', minute: '2-digit' }) : '...';
+
       let mediaHtml = '';
       if (post.fileUrl) {
         if (post.fileType && post.fileType.startsWith('image/')) {
@@ -398,28 +331,59 @@ function loadMessages(channelId, type) {
         }
       }
 
+      // ========== التفاعلات ==========
+      let reactionsHtml = '';
+      if (type === 'posts') {
+        const reactions = post.reactions || { like: [], love: [], laugh: [] };
+        const likeCount = reactions.like ? reactions.like.length : 0;
+        const loveCount = reactions.love ? reactions.love.length : 0;
+        const laughCount = reactions.laugh ? reactions.laugh.length : 0;
+        const myEmail = currentUserData.email;
+        const hasLiked = reactions.like && reactions.like.includes(myEmail);
+        const hasLoved = reactions.love && reactions.love.includes(myEmail);
+        const hasLaughed = reactions.laugh && reactions.laugh.includes(myEmail);
+
+        reactionsHtml = `
+          <div class="flex gap-2 mt-3 pt-3 border-t border-gray-100 dark:border-slate-700">
+            <button onclick="reactToPost('${postId}', 'like')" class="flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold transition ${hasLiked ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-400' : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-brand-50'}">
+              👍 ${likeCount}
+            </button>
+            <button onclick="reactToPost('${postId}', 'love')" class="flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold transition ${hasLoved ? 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-red-50'}">
+              ❤️ ${loveCount}
+            </button>
+            <button onclick="reactToPost('${postId}', 'laugh')" class="flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold transition ${hasLaughed ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400' : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-yellow-50'}">
+              😂 ${laughCount}
+            </button>
+            ${isMe ? `<button onclick="deletePost('${postId}')" class="ml-auto text-red-500 hover:text-red-700 text-sm font-bold"><i class="fa-solid fa-trash"></i> حذف</button>` : ''}
+          </div>
+        `;
+      }
+
       if (type === 'chat') {
         postsContainer.innerHTML += `
-          <div class="flex ${isMe ? 'justify-end' : 'justify-start'} mb-3 w-full max-w-3xl mx-auto animate-fade-in">
+          <div class="flex ${isMe ? 'justify-end' : 'justify-start'} mb-3 w-full max-w-3xl mx-auto animate-fade-in group">
             <div class="${isMe ? 'chat-bubble-me' : 'chat-bubble-other'} px-4 py-2 max-w-[80%] relative">
               ${!isMe ? `<p class="text-[10px] font-bold text-brand-500 mb-1">${post.authorName}</p>` : ''}
               <p class="text-sm whitespace-pre-line">${post.content}</p>
               ${mediaHtml}
               <span class="text-[9px] ${isMe ? 'text-white/70' : 'text-gray-400'} block text-left mt-1">${date}</span>
+              ${isMe ? `<button onclick="deletePost('${postId}')" class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500 text-white text-xs opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-xmark"></i></button>` : ''}
             </div>
           </div>
         `;
       } else {
         let commentsHTML = '';
         if (post.comments && post.comments.length > 0) {
-          post.comments.forEach(c => {
+          post.comments.forEach((c, idx) => {
+            const isMyComment = c.author === currentUserData.name;
             commentsHTML += `
-              <div class="bg-gray-50 dark:bg-slate-700 p-2 rounded-lg mt-2 text-sm flex gap-2 items-start">
+              <div class="bg-gray-50 dark:bg-slate-700 p-2 rounded-lg mt-2 text-sm flex gap-2 items-start group">
                 <div class="w-6 h-6 rounded-full bg-gray-300 dark:bg-slate-600 text-gray-700 dark:text-gray-200 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">${c.author.charAt(0)}</div>
-                <div>
+                <div class="flex-1">
                   <p class="font-bold text-gray-800 dark:text-gray-200 text-xs">${c.author}</p>
                   <p class="text-gray-600 dark:text-gray-400 text-xs">${c.text}</p>
                 </div>
+                ${isMyComment ? `<button onclick="deleteComment('${postId}', ${idx})" class="text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition text-xs"><i class="fa-solid fa-trash"></i></button>` : ''}
               </div>
             `;
           });
@@ -440,7 +404,8 @@ function loadMessages(channelId, type) {
             <p class="text-gray-800 dark:text-gray-200 text-[15px] mb-3 whitespace-pre-line">${post.content}</p>
             ${mediaHtml}
             <div class="mt-2 mb-3 space-y-1">${commentsHTML}</div>
-            <div class="pt-3 border-t border-gray-100 dark:border-slate-700 flex gap-2">
+            ${reactionsHtml}
+            <div class="pt-3 border-t border-gray-100 dark:border-slate-700 flex gap-2 mt-3">
               <input type="text" id="comment-input-${postId}" placeholder="أضف تعليقاً..." class="flex-1 bg-gray-100 dark:bg-slate-900 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-1 focus:ring-brand-400 text-gray-800 dark:text-gray-200">
               <button onclick="addComment('${postId}')" class="bg-gray-200 dark:bg-slate-700 hover:bg-brand-600 hover:text-white px-3 py-1.5 rounded-lg text-sm font-bold transition">إرسال</button>
             </div>
@@ -448,16 +413,14 @@ function loadMessages(channelId, type) {
         `;
       }
     });
-    
     if (type === 'chat') postsContainer.scrollTop = postsContainer.scrollHeight;
-    
   }, (error) => {
     postsContainer.innerHTML = `<div class="text-red-500 text-center mt-10 font-bold">Error: ${error.message}</div>`;
   });
 }
 
 // ==========================================
-// 18. Add Comment
+// 12. Add Comment
 // ==========================================
 window.addComment = async (postId) => {
   const input = document.getElementById(`comment-input-${postId}`);
@@ -472,7 +435,68 @@ window.addComment = async (postId) => {
 };
 
 // ==========================================
-// 19. Auto-resize Textarea
+// 13. Delete Comment
+// ==========================================
+window.deleteComment = async (postId, commentIndex) => {
+  if (!confirm('هل تريد حذف هذا التعليق؟')) return;
+  try {
+    const postRef = doc(db, "posts", postId);
+    const postSnap = await getDoc(postRef);
+    if (postSnap.exists()) {
+      const comments = postSnap.data().comments || [];
+      const commentToDelete = comments[commentIndex];
+      await updateDoc(postRef, {
+        comments: arrayRemove(commentToDelete)
+      });
+    }
+  } catch (e) { alert('حدث خطأ أثناء حذف التعليق'); }
+};
+
+// ==========================================
+// 14. Delete Post
+// ==========================================
+window.deletePost = async (postId) => {
+  if (!confirm('هل تريد حذف هذا المنشور نهائياً؟')) return;
+  try {
+    await deleteDoc(doc(db, "posts", postId));
+  } catch (e) { alert('حدث خطأ أثناء حذف المنشور'); }
+};
+
+// ==========================================
+// 15. React to Post
+// ==========================================
+window.reactToPost = async (postId, reactionType) => {
+  try {
+    const postRef = doc(db, "posts", postId);
+    const postSnap = await getDoc(postRef);
+    if (!postSnap.exists()) return;
+
+    const reactions = postSnap.data().reactions || { like: [], love: [], laugh: [] };
+    if (!reactions.like) reactions.like = [];
+    if (!reactions.love) reactions.love = [];
+    if (!reactions.laugh) reactions.laugh = [];
+
+    const myEmail = currentUserData.email;
+    const list = reactions[reactionType] || [];
+    const hasReacted = list.includes(myEmail);
+
+    if (hasReacted) {
+      await updateDoc(postRef, {
+        [`reactions.${reactionType}`]: arrayRemove(myEmail)
+      });
+    } else {
+      await updateDoc(postRef, {
+        [`reactions.${reactionType}`]: arrayUnion(myEmail)
+      });
+    }
+  } catch (e) { 
+    console.error(e);
+    alert('حدث خطأ أثناء التفاعل'); 
+  }
+};
+
+// ==========================================
+// 16. Auto-resize Textarea
 // ==========================================
 postText.addEventListener('input', function() {
   this.style.height = 'auto';
