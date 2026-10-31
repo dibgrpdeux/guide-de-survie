@@ -40,20 +40,27 @@
   </script>
 
   <style>
-    body { font-family: 'Cairo', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; }
-    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); transition: background 0.4s ease; }
-    .dark .ambient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); transition: all 0.3s ease; }
-    .dark .glass-card { background: rgba(30, 41, 59, 0.85); border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4); }
-    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); transition: all 0.3s ease; }
-    .dark .glass-nav { background: rgba(15, 23, 42, 0.92); border-bottom-color: rgba(51, 65, 85, 0.8); }
+    body { font-family: 'Cairo', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; background-color: #ffffff; }
+    .dark body { background-color: #0f172a; }
+    
+    /* خلفية بيضاء نقية */
+    .bg-main { background-color: #ffffff; transition: background-color 0.4s ease; }
+    .dark .bg-main { background-color: #0f172a; }
+
+    /* البطاقات */
+    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); transition: all 0.3s ease; }
+    .dark .glass-card { background: #1e293b; border-color: #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
+    
+    .glass-nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; transition: all 0.3s ease; }
+    .dark .glass-nav { background: #0f172a; border-bottom-color: #334155; }
+    
     .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
     .accordion-content.active { max-height: 3000px; transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
     .rotate-180 { transform: rotate(180deg); }
     
-    /* Scroll Reveal Animation */
-    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* الأنيميشن: الظهور واحدة تلو الأخرى */
+    .reveal { opacity: 0; transform: translateY(50px) scale(0.95); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
 
     /* CDE Hero */
     .cde-hero {
@@ -98,9 +105,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
-
-  <div class="ambient-bg"></div>
+<body class="min-h-screen flex flex-col justify-between bg-main">
 
   <!-- الهيدر -->
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
@@ -114,15 +119,13 @@
       </div>
       
       <div class="flex items-center gap-3">
-        <!-- أزرار الترجمة -->
-        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm">
+        <div class="flex items-center gap-1 bg-gray-100 dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700">
           <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
           <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
           <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
         </div>
         
-        <!-- زر الوضع الليلي -->
-        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center shadow-sm hover:bg-orange-50 dark:hover:bg-slate-700 transition">
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-xl bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center shadow-sm hover:bg-orange-50 dark:hover:bg-slate-700 transition">
           <i class="fa-solid fa-moon dark:hidden"></i>
           <i class="fa-solid fa-sun hidden dark:block text-brand-400"></i>
         </button>
@@ -141,7 +144,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- ✅ قسم التواصل مع الإدارة -->
+    <!-- قسم التواصل مع الإدارة -->
     <!-- ========================================== -->
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-orange-100 dark:border-slate-700 overflow-hidden reveal">
       <button onclick="toggleAccordion('contact')" class="w-full flex items-center justify-between p-5 bg-orange-50 dark:bg-slate-700 hover:bg-orange-100 dark:hover:bg-slate-600 transition text-right">
@@ -238,7 +241,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- ✅ قسم مركز تطوير المقاولاتية CDE -->
+    <!-- قسم مركز تطوير المقاولاتية CDE -->
     <!-- ========================================== -->
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden reveal">
       <button onclick="toggleAccordion('cde')" class="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 transition text-right">
@@ -251,7 +254,6 @@
       <div id="content-cde" class="accordion-content">
         <div class="p-5 space-y-6 text-sm text-gray-700 dark:text-gray-300">
           
-          <!-- Hero Image with Title -->
           <div class="cde-hero">
             <div class="cde-hero-overlay"></div>
             <div class="cde-hero-content w-full">
@@ -260,7 +262,6 @@
             </div>
           </div>
 
-          <!-- تعريف CDE -->
           <div>
             <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2">التعريف العام</h5>
             <p class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl leading-relaxed">
@@ -268,7 +269,6 @@
             </p>
           </div>
 
-          <!-- إحصائيات -->
           <div class="grid grid-cols-3 gap-3 text-center">
             <div class="bg-brand-50 dark:bg-slate-900/50 p-3 rounded-xl border border-brand-100 dark:border-slate-700">
               <div class="text-2xl font-black text-brand-600 dark:text-brand-400">700+</div>
@@ -284,7 +284,6 @@
             </div>
           </div>
 
-          <!-- الخدمات -->
           <div>
             <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3">الركائز والخدمات الأساسية</h5>
             <ul class="space-y-2">
@@ -303,7 +302,6 @@
             </ul>
           </div>
 
-          <!-- مركز CDE في ENSTP -->
           <div>
             <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2">مركز CDE بالمدرسة (ENSTP)</h5>
             <div class="bg-brand-50 dark:bg-slate-900/50 p-4 rounded-xl border border-brand-100 dark:border-slate-700 space-y-2">
@@ -316,7 +314,6 @@
             </div>
           </div>
 
-          <!-- معرض الصور -->
           <div>
             <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3">معرض الصور</h5>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -330,7 +327,6 @@
             </div>
           </div>
 
-          <!-- معلومات الاتصال -->
           <div>
             <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2">معلومات الاتصال</h5>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -364,13 +360,12 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- ✅ قسم حاضنة المدرسة (مع الفيديو) -->
+    <!-- قسم حاضنة المدرسة (مع الفيديو) -->
     <!-- ========================================== -->
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden reveal">
       <button onclick="toggleAccordion('incubator')" class="w-full flex items-center justify-between p-5 bg-emerald-50 dark:bg-slate-700 hover:bg-emerald-100 dark:hover:bg-slate-600 transition text-right">
@@ -397,7 +392,6 @@
             </li>
           </ul>
 
-          <!-- ✅ الفيديو داخل حاضنة المدرسة -->
           <div class="pt-4">
             <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3"><i class="fa-solid fa-video text-red-500 mr-2"></i> فيديو تعريفي</h5>
             <div class="video-container">
@@ -409,7 +403,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- ✅ قسم مركز NESDA -->
+    <!-- قسم NESDA -->
     <!-- ========================================== -->
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden reveal">
       <button onclick="toggleAccordion('nesda')" class="w-full flex items-center justify-between p-5 bg-purple-50 dark:bg-slate-700 hover:bg-purple-100 dark:hover:bg-slate-600 transition text-right">
@@ -424,27 +418,225 @@
           <p class="bg-purple-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 leading-relaxed">
             الوكالة الوطنية لدعم وتنمية المقاولاتية (NESDA) هي وكالة حكومية جزائرية تهدف إلى دعم إنشاء وتطوير المؤسسات المصغرة. يعمل مركز NESDA في ENSTP على مرافقة الطلبة والمهندسين الشباب في تجسيد مشاريعهم من خلال آليات التمويل والدعم المتاحة.
           </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 text-center">
               <i class="fa-solid fa-coins text-purple-500 text-2xl mb-2"></i>
               <h5 class="font-bold text-gray-900 dark:text-white text-sm mb-1">التمويل</h5>
-              <p class="text-xs text-gray-600 dark:text-gray-400">دعم مالي للمشاريع الشبابية</p>
+              -xs text-gray-600 dark:text-gray-400">دعم مالي للمشاريع الشبابية</p>
             </div>
             <div class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 text-center">
-              <i class="fa-solid fa-user-tie text-purple-500 text-2xl mb-2"></i>
+              <i class="fa-solid fa-chart-line text-purple-500 text-2xl mb-2"></i>
               <h5 class="font-bold text-gray-900 dark:text-white text-sm mb-1">المرافقة</h5>
-              <p class="text-xs text-gray-600 dark:text-gray-400">توجيه ودعم تقني للمشاريع</p>
+              <p class="text-xs text-gray-600 dark:text-gray-400">متابعة المشاريع خطوة بخطوة</p>
             </div>
-            <div class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 text-center">
-              <i class="fa-solid fa-graduation-cap text-purple-500 text-2xl mb-2"></i>
-              <h5 class="font-bold text-gray-900 dark:text-white text-sm mb-1">التكوين</h5>
-              <p class="text-xs text-gray-600 dark:text-gray-400">دورات تدريبية متخصصة</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. المسؤولين ورؤساء الأقسام -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden reveal">
+      <button onclick="toggleAccordion('direction')" class="w-full flex items-center justify-between p-5 bg-indigo-50 dark:bg-slate-700 hover:bg-indigo-100 dark:hover:bg-slate-600 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-indigo-200 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 flex items-center justify-center font-bold"><i class="fa-solid fa-user-tie"></i></div>
+          <h3 class="font-bold text-lg text-indigo-900 dark:text-indigo-400" data-i18n="admin_direction">الإدارة العامة والمسؤولين</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-indigo-500 transition-transform" id="icon-direction"></i>
+      </button>
+      <div id="content-direction" class="accordion-content">
+        <div class="p-5 space-y-6 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+          
+          <div class="border-b dark:border-slate-700 pb-4">
+            <h4 class="font-bold text-lg text-gray-900 dark:text-white">Meriem Tebani (مريم تيباني)</h4>
+            <p class="text-xs text-indigo-600 dark:text-indigo-400 font-bold mb-2" data-i18n="admin_location">الموقع: قسم الأقسام التحضيرية - المكتب الأول</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-2" data-i18n="admin_hours">أوقات العمل: الأحد إلى الخميس 8:00 - 16:00</p>
+            <p class="text-xs font-mono text-indigo-500 mb-2" dir="ltr">m.tebani@enstp.edu.dz</p>
+            <div class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+              <strong class="block mb-1" data-i18n="admin_missions">المهام الموجهة للطلبة:</strong>
+              <ul class="list-disc list-inside text-xs space-y-1">
+                <li>ضمان المتابعة الإدارية للطلبة.</li>
+                <li>الإعلام والتوجيه بخصوص إجراءات التمدرس.</li>
+                <li>تسليم الشهادات والوثائق الإدارية.</li>
+                <li>متابعة التسجيلات والنتائج.</li>
+              </ul>
             </div>
-            <div class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 text-center">
-              <i class="fa-solid fa-handshake text-purple-500 text-2xl mb-2"></i>
-              <h5 class="font-bold text-gray-900 dark:text-white text-sm mb-1">الشراكات</h5>
-              <p class="text-xs text-gray-600 dark:text-gray-400">ربط المشاريع بالمنظومة الاقتصادية</p>
+          </div>
+
+          <div class="border-b dark:border-slate-700 pb-4">
+            <h4 class="font-bold text-lg text-gray-900 dark:text-white">M. Mobarki Ahmed (أ. مباركي أحمد)</h4>
+            <p class="text-xs text-indigo-600 dark:text-indigo-400 font-bold mb-2" data-i18n="admin_location">الموقع: قسم الأقسام التحضيرية - المكتب الثاني</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-2" data-i18n="admin_hours">أوقات العمل: الأحد إلى الخميس 8:00 - 16:00</p>
+            <div class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+              <strong class="block mb-1" data-i18n="admin_missions">المهام الموجهة للطلبة:</strong>
+              <ul class="list-disc list-inside text-xs space-y-1">
+                <li>الإشراف العام على سير الدراسة.</li>
+                <li>المصادقة على البرامج والتوقيتات.</li>
+                <li>اتخاذ القرارات المتعلقة بالحالات الأكاديمية.</li>
+              </ul>
             </div>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-lg text-gray-900 dark:text-white">M. Fedghouch Ferhat (أ. فدغوش فرحات)</h4>
+            <p class="text-xs text-indigo-600 dark:text-indigo-400 font-bold mb-2" data-i18n="admin_location">الموقع: المبنى الإداري</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-2" data-i18n="admin_hours">أوقات العمل: الأحد إلى الخميس 8:00 - 16:00</p>
+            <div class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+              <strong class="block mb-1" data-i18n="admin_missions">المهام الموجهة للطلبة:</strong>
+              <ul class="list-disc list-inside text-xs space-y-1">
+                <li>متابعة المواظبة والانتظام.</li>
+                <li>إدارة الغيابات والمبررات.</li>
+                <li>معالجة الملفات التأديبية.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. الضمان الاجتماعي (CNAS) -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden reveal">
+      <button onclick="toggleAccordion('cnas')" class="w-full flex items-center justify-between p-5 bg-blue-50 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-slate-600 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-blue-200 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 flex items-center justify-center font-bold"><i class="fa-solid fa-shield-heart"></i></div>
+          <h3 class="font-bold text-lg text-blue-900 dark:text-blue-400" data-i18n="admin_social">الضمان الاجتماعي (CNAS)</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-blue-500 transition-transform" id="icon-cnas"></i>
+      </button>
+      <div id="content-cnas" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
+          <div class="bg-blue-50 dark:bg-slate-900/50 p-4 rounded-xl border border-blue-100 dark:border-slate-700">
+            <p class="font-bold text-blue-900 dark:text-blue-400 mb-2"><i class="fa-solid fa-location-dot"></i> أين يقع مكتب الضمان الاجتماعي؟</p>
+            <p>يقع المكتب داخل المدرسة (ENSTP)، مقابل الحاضنة (Incubateur) وبيت الطالب، بجانب مكتب الطبيب مباشرة.</p>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-folder-open text-amber-500"></i> ما هي الوثائق المطلوبة؟</p>
+            <ul class="list-disc list-inside bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg space-y-1">
+              <li>شهادة الميلاد.</li>
+              <li>شهادة الإقامة.</li>
+              <li>نسخة من بطاقة التعريف الوطنية البيومترية.</li>
+              <li>نسخة من شهادة التسجيل المدرسي.</li>
+              <li>صك بريدي (Chèque postal barré).</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-regular fa-calendar-days text-emerald-500"></i> ما هي أيام استقبال الملفات؟</p>
+            <p class="bg-emerald-50 dark:bg-emerald-900/30 p-2 rounded-lg inline-block text-emerald-800 dark:text-emerald-400 font-bold">الاثنين، الثلاثاء، والخميس.</p>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-laptop-medical text-purple-500"></i> كيف أسجل في منصة الهناء (EL HANAA)؟</p>
+            <a href="https://elhanaa.cnas.dz/inscription.xhtml" target="_blank" class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold transition mt-2">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> الدخول إلى منصة الهناء
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. مكتبة المدرسة -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden reveal">
+      <button onclick="toggleAccordion('biblio')" class="w-full flex items-center justify-between p-5 bg-amber-50 dark:bg-slate-700 hover:bg-amber-100 dark:hover:bg-slate-600 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-amber-200 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold"><i class="fa-solid fa-book-open"></i></div>
+          <h3 class="font-bold text-lg text-amber-900 dark:text-amber-400" data-i18n="admin_library">مكتبة المدرسة</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-amber-500 transition-transform" id="icon-biblio"></i>
+      </button>
+      <div id="content-biblio" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <img src="library1.png" alt="إعلان التسجيل" class="rounded-lg w-full object-cover shadow-sm" onerror="this.style.display='none'">
+            <img src="library2.png" alt="مدخل المكتبة" class="rounded-lg w-full object-cover shadow-sm" onerror="this.style.display='none'">
+            <img src="library3.png" alt="قاعة المطالعة" class="rounded-lg w-full object-cover shadow-sm" onerror="this.style.display='none'">
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-regular fa-clock text-amber-600"></i> ما هي أوقات عمل المكتبة؟</p>
+            <p class="bg-amber-50 dark:bg-amber-900/30 p-2 rounded-lg text-amber-900 dark:text-amber-400">الفترة الصباحية: 09:00 إلى 11:45 | الفترة المسائية: 13:00 إلى 15:00.</p>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-list-check text-emerald-600"></i> ما هي شروط ووثائق التسجيل؟</p>
+            <ul class="list-disc list-inside bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg space-y-1">
+              <li>شهادة مدرسية تثبت الانتماء للمدرسة.</li>
+              <li>صورة شخصية حديثة.</li>
+              <li>ملء استمارة التسجيل الإلكترونية.</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> ما هي القواعد الداخلية للمكتبة؟</p>
+            <ul class="list-disc list-inside text-red-800 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg space-y-1">
+              <li>منع الصوت العالي لضمان تركيز الطلبة.</li>
+              <li>يُمنع منعاً باتاً تناول الأكل أو المشروبات.</li>
+              <li>الحفاظ على نظافة المكان.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. الخدمات الجامعية -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden reveal">
+      <button onclick="toggleAccordion('univ')" class="w-full flex items-center justify-between p-5 bg-emerald-50 dark:bg-slate-700 hover:bg-emerald-100 dark:hover:bg-slate-600 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-emerald-200 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold"><i class="fa-solid fa-building"></i></div>
+          <h3 class="font-bold text-lg text-emerald-900 dark:text-emerald-400" data-i18n="admin_university">الخدمات الجامعية</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-emerald-500 transition-transform" id="icon-univ"></i>
+      </button>
+      <div id="content-univ" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف يتم التسجيل في الإقامة الجامعية؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">التسجيل يتم رقمياً عبر منصة PROGRES...</p>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف أتقدم بطلب للحصول على المنحة الجامعية؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">يتم إيداع ملف المنحة رقمياً عبر المنصة...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. مصلحة التمدرس -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden reveal">
+      <button onclick="toggleAccordion('scolarite')" class="w-full flex items-center justify-between p-5 bg-blue-50 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-slate-600 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-blue-200 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 flex items-center justify-center font-bold"><i class="fa-solid fa-file-signature"></i></div>
+          <h3 class="font-bold text-lg text-blue-900 dark:text-blue-400" data-i18n="admin_scolarite">مصلحة التمدرس والوثائق</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-blue-500 transition-transform" id="icon-scolarite"></i>
+      </button>
+      <div id="content-scolarite" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">ضاع مني بطاقة الطالب أو شهادة التسجيل؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">يجب التوجه فوراً إلى مصلحة التمدرس...</p>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف أحصل على كشف النقاط؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">كشوف النقاط تُسلم رسمياً من مصلحة التمدرس...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. الامتحانات -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden reveal">
+      <button onclick="toggleAccordion('examens')" class="w-full flex items-center justify-between p-5 bg-purple-50 dark:bg-slate-700 hover:bg-purple-100 dark:hover:bg-slate-600 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-purple-200 dark:bg-purple-900/40 text-purple-700 dark:text-purple-400 flex items-center justify-center font-bold"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h3 class="font-bold text-lg text-purple-900 dark:text-purple-400" data-i18n="admin_exams">الامتحانات والغيابات</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-purple-500 transition-transform" id="icon-examens"></i>
+      </button>
+      <div id="content-examens" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف أبرر الغيابات؟</p>
+            <p class="bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-400 p-3 rounded-lg">يجب تقديم تبرير في غضون 48 ساعة...</p>
+          </div>
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف يتم التعامل مع الاستدراك؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">إذا كان معدلك أقل من 10/20...</p>
           </div>
         </div>
       </div>
@@ -457,12 +649,23 @@
   </footer>
 
   <script>
-    // --- التحكم في فتح وإغلاق الأقسام (Accordion) ---
+    // --- الوضع الليلي (Dark Mode) ---
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // --- أكورديون ---
     function toggleAccordion(id) {
       const content = document.getElementById('content-' + id);
       const icon = document.getElementById('icon-' + id);
       
-      // إغلاق الباقي
       document.querySelectorAll('.accordion-content').forEach(el => {
         if (el.id !== 'content-' + id) {
           el.classList.remove('active');
@@ -475,7 +678,6 @@
         }
       });
 
-      // فتح/إغلاق
       if (content.classList.contains('active')) {
         content.classList.remove('active');
         content.style.maxHeight = null;
@@ -487,32 +689,19 @@
       }
     }
 
-    // --- نموذج التواصل مع الإدارة ---
+    // --- نموذج التواصل ---
     function updateYears() {
       const dept = document.getElementById('dept').value;
       const yearSelect = document.getElementById('year');
-      
       yearSelect.innerHTML = '<option value="" disabled selected>اختر السنة...</option>';
       
       if (dept === 'prep') {
-        yearSelect.innerHTML += `
-          <option value="السنة الأولى تحضيري (1CP)">السنة الأولى تحضيري (1CP)</option>
-          <option value="السنة الثانية تحضيري (2CP)">السنة الثانية تحضيري (2CP)</option>
-        `;
+        yearSelect.innerHTML += `<option value="السنة الأولى تحضيري (1CP)">السنة الأولى تحضيري (1CP)</option><option value="السنة الثانية تحضيري (2CP)">السنة الثانية تحضيري (2CP)</option>`;
       } else if (dept === 'dib') {
-        yearSelect.innerHTML += `
-          <option value="السنة الأولى مهندس (DIB)">السنة الأولى مهندس (DIB)</option>
-          <option value="السنة الثانية مهندس (DIB)">السنة الثانية مهندس (DIB)</option>
-          <option value="السنة الثالثة مهندس (DIB)">السنة الثالثة مهندس (DIB)</option>
-        `;
+        yearSelect.innerHTML += `<option value="السنة الأولى مهندس (DIB)">السنة الأولى مهندس (DIB)</option><option value="السنة الثانية مهندس (DIB)">السنة الثانية مهندس (DIB)</option><option value="السنة الثالثة مهندس (DIB)">السنة الثالثة مهندس (DIB)</option>`;
       } else if (dept === 'dms') {
-        yearSelect.innerHTML += `
-          <option value="السنة الأولى مهندس (DMS)">السنة الأولى مهندس (DMS)</option>
-          <option value="السنة الثانية مهندس (DMS)">السنة الثانية مهندس (DMS)</option>
-          <option value="السنة الثالثة مهندس (DMS)">السنة الثالثة مهندس (DMS)</option>
-        `;
+        yearSelect.innerHTML += `<option value="السنة الأولى مهندس (DMS)">السنة الأولى مهندس (DMS)</option><option value="السنة الثانية مهندس (DMS)">السنة الثانية مهندس (DMS)</option><option value="السنة الثالثة مهندس (DMS)">السنة الثالثة مهندس (DMS)</option>`;
       }
-      
       yearSelect.disabled = false;
     }
 
@@ -529,16 +718,11 @@
       const message = document.getElementById('message').value;
 
       let targetEmail = '';
-      if (dept === 'prep') {
-        targetEmail = 'm.tebani@enstp.edu.dz';
-      } else if (dept === 'dib') {
-        targetEmail = 'i.makoudi@enstp.edu.dz';
-      } else if (dept === 'dms') {
-        targetEmail = 'YOUR_DMS_EMAIL@enstp.edu.dz';
-      }
+      if (dept === 'prep') targetEmail = 'm.tebani@enstp.edu.dz';
+      else if (dept === 'dib') targetEmail = 'i.makoudi@enstp.edu.dz';
+      else if (dept === 'dms') targetEmail = 'YOUR_DMS_EMAIL@enstp.edu.dz';
 
       const subject = encodeURIComponent("طلب جديد - " + nom + " " + prenom + " - " + year);
-      
       const body = encodeURIComponent(
         "اللقب: " + nom + "\n" +
         "الإسم: " + prenom + "\n" +
@@ -562,41 +746,32 @@
       }, 5000);
     });
 
-    // --- الوضع الليلي ---
-    function toggleDarkMode() {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      } else {
+    // --- تحميل الوضع الليلي عند البدء ---
+    window.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
       }
-    }
+      
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      setTimeout(() => {
+        if (typeof setLanguage === 'function') setLanguage(savedLang);
+      }, 100);
+    });
 
-    // --- ظهور الأقسام عند التمرير (Scroll Reveal) ---
+    // --- أنيميشن الظهور واحدة تلو الأخرى (Scroll Reveal) ---
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 150); // تأخير 150ms بين كل عنصر
           revealObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
-    
+
     revealElements.forEach(el => revealObserver.observe(el));
-
-    // --- التشغيل الأولي ---
-    window.addEventListener('DOMContentLoaded', () => {
-      // تحميل الوضع الليلي المحفوظ
-      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-      }
-
-      // تحميل اللغة المحفوظة
-      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      setTimeout(() => setLanguage(savedLang), 100);
-    });
   </script>
 </body>
 </html>
