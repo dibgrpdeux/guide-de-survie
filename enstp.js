@@ -2,7 +2,10 @@ javascript
 window.ENSTP_DATA = window.ENSTP_DATA || {};
 
 window.ENSTP_DATA.groups = {
-const groupsDatabase = {
+window.ENSTP_DATA = window.ENSTP_DATA || {};
+
+window.ENSTP_DATA.groups = {
+  'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
       'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
       'prep_2': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
       'dib_1': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
@@ -14,7 +17,7 @@ const groupsDatabase = {
     };
 
     // 2. قاعدة بيانات استعمال الزمن
-    const scheduleDatabase = {
+   window.ENSTP_DATA.schedule = {
       // ==========================================
       // 1CP - Groupes 1 à 12
       // ==========================================
