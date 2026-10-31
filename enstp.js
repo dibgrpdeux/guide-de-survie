@@ -1355,7 +1355,9 @@ window.ENSTP_DATA.schedule = {
           'Thursday': [
             { time: '08h00 - 09h30', subject: 'Lean Entreprenariat', prof: '---', room: '19', type: 'Cours' },
             { time: '09h35 - 12h40', subject: 'Esquisse Ponts', prof: 'Mr ZOURGUI / Mr KHELFI', room: '19 / 10', type: 'TD' }
+        
           ]
         }
       }
-    };
+    }
+};
