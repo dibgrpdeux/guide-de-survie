@@ -123,13 +123,15 @@
     </div>
   </main>
 
-  <!-- ✅ استدعاء ملف البيانات -->
+  <!-- 1. استدعاء ملف البيانات الأصلي -->
+  <script src="data.js"></script>
+  <!-- 2. استدعاء ملف التحويل -->
   <script src="enstp.js"></script>
   
+  <!-- 3. كود التطبيق -->
   <script>
-    // اختصارات للوصول إلى البيانات
-    const groupsDatabase = ENSTP_DATA.groups;
-    const scheduleDatabase = ENSTP_DATA.schedule;
+    let selectedDay = 'Sunday';
+    const dayNames = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
 
     // DARK MODE
     if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -144,9 +146,6 @@
         localStorage.setItem('theme', 'dark');
       }
     }
-
-    let selectedDay = 'Sunday';
-    const dayNames = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
 
     // NOTES STORAGE
     function getNotesKey(year, group, day, index) { return `note_${year}_${group}_${day}_${index}`; }
@@ -176,7 +175,10 @@
       const year = document.getElementById('select-year').value;
       const groupSelect = document.getElementById('select-group');
       groupSelect.innerHTML = '';
-      const groups = groupsDatabase[year] || [];
+      
+      if (!window.ENSTP_DATA || !ENSTP_DATA.groups) return; // sécurité
+      
+      const groups = ENSTP_DATA.groups[year] || [];
       groups.forEach(g => {
         const option = document.createElement('option');
         option.value = g.value;
@@ -206,9 +208,11 @@
       const container = document.getElementById('schedule-list');
       container.innerHTML = '';
 
+      if (!window.ENSTP_DATA || !ENSTP_DATA.schedule) return; // sécurité
+
       let items = [];
-      if (scheduleDatabase[year] && scheduleDatabase[year][group] && scheduleDatabase[year][group][selectedDay]) {
-        items = scheduleDatabase[year][group][selectedDay];
+      if (ENSTP_DATA.schedule[year] && ENSTP_DATA.schedule[year][group] && ENSTP_DATA.schedule[year][group][selectedDay]) {
+        items = ENSTP_DATA.schedule[year][group][selectedDay];
       }
 
       if (items.length === 0) {
@@ -313,6 +317,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      // initialize UI now that data is ready
       updateYears();
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let today = days[new Date().getDay()];
