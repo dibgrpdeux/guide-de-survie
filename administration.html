@@ -32,6 +32,10 @@
     .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
     .accordion-content.active { max-height: 2000px; transition: max-height 0.5s ease-in; }
     .rotate-180 { transform: rotate(180deg); }
+    
+    /* تنسيقات إضافية للنموذج */
+    .form-input { width: 100%; padding: 0.75rem 1rem; border-radius: 0.75rem; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600; transition: all 0.3s ease; }
+    .form-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); border-color: #4f46e5; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -67,6 +71,103 @@
     <div class="text-center mb-8">
       <h2 class="text-3xl font-black text-gray-900" data-i18n="admin_page_title">دليل الإدارة والخدمات</h2>
       <p class="text-gray-600 mt-2" data-i18n="admin_page_subtitle">كل ما تحتاجه من وثائق وإجراءات إدارية في مكان واحد.</p>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ✅ قسم التواصل مع الإدارة (جديد) -->
+    <!-- ========================================== -->
+    <div class="bg-white rounded-2xl shadow-sm border border-orange-100 overflow-hidden">
+      <button onclick="toggleAccordion('contact')" class="w-full flex items-center justify-between p-5 bg-orange-50 hover:bg-orange-100 transition text-right">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-orange-200 text-orange-700 flex items-center justify-center font-bold"><i class="fa-solid fa-envelope"></i></div>
+          <h3 class="font-bold text-lg text-orange-900">التواصل مع الإدارة</h3>
+        </div>
+        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" id="icon-contact"></i>
+      </button>
+      <div id="content-contact" class="accordion-content">
+        <div class="p-5 space-y-4 text-sm text-gray-700">
+          <p class="text-xs text-gray-500 mb-4 bg-orange-50 p-3 rounded-lg border border-orange-100">
+            <i class="fa-solid fa-info-circle text-orange-500"></i>
+            يرجى تعبئة النموذج أدناه. عند الإرسال، سيفتح تطبيق البريد الإلكتروني الخاص بك وستكون الرسالة جاهزة للإنشاء. فقط اضغط "إرسال".
+          </p>
+
+          <form id="contactForm" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">اللقب (Nom):</label>
+                <input type="text" id="nom" required placeholder="أدخل لقبك" class="form-input" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">الإسم (Prénom):</label>
+                <input type="text" id="prenom" required placeholder="أدخل اسمك" class="form-input" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني (Email):</label>
+                <input type="email" id="email" required placeholder="example@enstp.edu.dz" dir="ltr" class="form-input text-left" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">رقم التسجيل (N° Inscription):</label>
+                <input type="text" id="num_inscription" required placeholder="أدخل رقم التسجيل" class="form-input" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">التخصص (Département):</label>
+                <select id="dept" required onchange="updateYears()" class="form-input cursor-pointer">
+                  <option value="" disabled selected>اختر التخصص...</option>
+                  <option value="prep">قسم تحضيري (CP)</option>
+                  <option value="dib">قسم منشآت قاعدية (DIB)</option>
+                  <option value="dms">قسم مواد وهياكل (DMS)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">السنة الدراسية:</label>
+                <select id="year" required class="form-input cursor-pointer" disabled>
+                  <option value="" disabled selected>اختر السنة...</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-1">الفوج (Groupe):</label>
+              <select id="group" required class="form-input cursor-pointer">
+                <option value="" disabled selected>اختر الفوج...</option>
+                <option value="الفوج 1">الفوج 1</option>
+                <option value="الفوج 2">الفوج 2</option>
+                <option value="الفوج 3">الفوج 3</option>
+                <option value="الفوج 4">الفوج 4</option>
+                <option value="الفوج 5">الفوج 5</option>
+                <option value="الفوج 6">الفوج 6</option>
+                <option value="الفوج 7">الفوج 7</option>
+                <option value="الفوج 8">الفوج 8</option>
+                <option value="الفوج 9">الفوج 9</option>
+                <option value="الفوج 10">الفوج 10</option>
+                <option value="الفوج 11">الفوج 11</option>
+                <option value="الفوج 12">الفوج 12</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-1">الطلب / الرسالة:</label>
+              <textarea id="message" required rows="4" placeholder="اكتب طلبك أو استفسارك هنا بالتفصيل..." class="form-input resize-none"></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg py-3 rounded-xl shadow-lg hover:shadow-orange-500/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-3">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>إرسال الطلب</span>
+            </button>
+            
+            <p class="text-center text-xs font-bold text-gray-500 mt-2">
+              <i class="fa-solid fa-envelope-open-text text-orange-500"></i>
+              يرجى تفقد بريدك الإلكتروني بعد الإرسال للتأكد من استلام الطلب.
+            </p>
+          </form>
+        </div>
+      </div>
     </div>
 
     <!-- 1. المسؤولين ورؤساء الأقسام -->
@@ -316,6 +417,82 @@
       }
     }
 
+    // --- كود نموذج التواصل ---
+    function updateYears() {
+      const dept = document.getElementById('dept').value;
+      const yearSelect = document.getElementById('year');
+      
+      yearSelect.innerHTML = '<option value="" disabled selected>اختر السنة...</option>';
+      
+      if (dept === 'prep') {
+        yearSelect.innerHTML += `
+          <option value="السنة الأولى تحضيري (1CP)">السنة الأولى تحضيري (1CP)</option>
+          <option value="السنة الثانية تحضيري (2CP)">السنة الثانية تحضيري (2CP)</option>
+        `;
+      } else if (dept === 'dib') {
+        yearSelect.innerHTML += `
+          <option value="السنة الأولى مهندس (DIB)">السنة الأولى مهندس (DIB)</option>
+          <option value="السنة الثانية مهندس (DIB)">السنة الثانية مهندس (DIB)</option>
+          <option value="السنة الثالثة مهندس (DIB)">السنة الثالثة مهندس (DIB)</option>
+        `;
+      } else if (dept === 'dms') {
+        yearSelect.innerHTML += `
+          <option value="السنة الأولى مهندس (DMS)">السنة الأولى مهندس (DMS)</option>
+          <option value="السنة الثانية مهندس (DMS)">السنة الثانية مهندس (DMS)</option>
+          <option value="السنة الثالثة مهندس (DMS)">السنة الثالثة مهندس (DMS)</option>
+        `;
+      }
+      
+      yearSelect.disabled = false;
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nom = document.getElementById('nom').value;
+      const prenom = document.getElementById('prenom').value;
+      const email = document.getElementById('email').value;
+      const num = document.getElementById('num_inscription').value;
+      const dept = document.getElementById('dept').value;
+      const year = document.getElementById('year').value;
+      const group = document.getElementById('group').value;
+      const message = document.getElementById('message').value;
+
+      let targetEmail = '';
+      if (dept === 'prep') {
+        targetEmail = 'm.tebani@enstp.edu.dz';
+      } else if (dept === 'dib') {
+        targetEmail = 'i.makoudi@enstp.edu.dz';
+      } else if (dept === 'dms') {
+        targetEmail = 'YOUR_DMS_EMAIL@enstp.edu.dz';
+      }
+
+      const subject = encodeURIComponent("طلب جديد - " + nom + " " + prenom + " - " + year);
+      
+      const body = encodeURIComponent(
+        "اللقب: " + nom + "\n" +
+        "الإسم: " + prenom + "\n" +
+        "البريد الإلكتروني: " + email + "\n" +
+        "رقم التسجيل: " + num + "\n" +
+        "التخصص: " + (dept === 'prep' ? 'تحضيري' : (dept === 'dib' ? 'منشآت قاعدية' : 'مواد وهياكل')) + "\n" +
+        "السنة الدراسية: " + year + "\n" +
+        "الفوج: " + group + "\n\n" +
+        "الطلب:\n" + message
+      );
+
+      window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> تم فتح تطبيق البريد الخاص بك!';
+      submitBtn.className = "w-full bg-emerald-500 text-white font-black text-lg py-3 rounded-xl shadow-lg flex items-center justify-center gap-3";
+      
+      setTimeout(() => {
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span>إرسال الطلب</span>';
+        submitBtn.className = "w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg py-3 rounded-xl shadow-lg hover:shadow-orange-500/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-3";
+      }, 5000);
+    });
+
+    // --- كود الترجمة ---
     window.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
       setTimeout(() => setLanguage(savedLang), 100);
