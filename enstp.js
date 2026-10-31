@@ -2,25 +2,17 @@ javascript
 window.ENSTP_DATA = window.ENSTP_DATA || {};
 
 window.ENSTP_DATA.groups = {
-window.ENSTP_DATA = window.ENSTP_DATA || {};
-
-window.ENSTP_DATA.groups = {
   'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'prep_2': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'dib_1': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'dib_2': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
-      'dib_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }],
-      'dms_1': Array.from({length: 4}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
-      'dms_2': Array.from({length: 2}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
-      'dms_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }]
-    };
+  'prep_2': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+  'dib_1': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+  'dib_2': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+  'dib_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }],
+  'dms_1': Array.from({length: 4}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
+  'dms_2': Array.from({length: 2}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
+  'dms_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }]
+};
 
-    // 2. قاعدة بيانات استعمال الزمن
-   window.ENSTP_DATA.schedule = {
-      // ==========================================
-      // 1CP - Groupes 1 à 12
-      // ==========================================
+window.ENSTP_DATA.schedule = {=
       'prep_1': {
         'g1': {
           'Saturday': [
