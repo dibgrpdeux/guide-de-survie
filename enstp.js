@@ -1,5 +1,4 @@
-javascript
-window.ENSTP_DATA = window.ENSTP_DATA || {
+window.ENSTP_DATA = { groups: {}, schedule: {} };
 
 window.ENSTP_DATA.groups = {
   'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
