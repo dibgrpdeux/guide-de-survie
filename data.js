@@ -42,7 +42,7 @@ const teachersData = {
     { id: 'brahmi', name: 'BRAHMI', grade: 'temp', email: 'brahmi@enstp.edu.dz', subject: 'Analyse 3', dept: 'الرياضيات' },
     { id: 'dehimi', name: 'DEHIMI', grade: 'temp', email: 'dehimi@enstp.edu.dz', subject: 'Analyse 3', dept: 'الرياضيات' },
     { id: 'boulatiour', name: 'BOULATIOUR', grade: 'temp', email: 'boulatiour@enstp.edu.dz', subject: 'Analyse 3', dept: 'الرياضيات' },
-    { id: 'hamadi', name: 'HAMADI Ahmed', grade: 'prof', email: 'a.hamadi@enstp.edu.dz', subject: 'Analyse Numérique 2', advice: 'Il faut suivre tous vos cours et TD sans aucune absence pour assurer vos succès.', research: 'Structure Algorithmique de graphes parfaits.', dept: 'الرياضيات' },
+    { id: 'hamadi', name: 'HAMADI Ahmed', grade: 'prof', email: 'a.hamadi@enstp.edu.dz', subject: 'Analyse Numérique 2', advice: 'Il faut suivre tous vos cours et TD sans aucune absence.', research: 'Structure Algorithmique de graphes parfaits.', dept: 'الرياضيات' },
     { id: 'kiouche', name: 'KIOUCHE', grade: 'temp', email: 's.khouche@enstp.edu.dz', subject: 'Analyse Numérique 2', dept: 'الرياضيات' },
     { id: 'dib', name: 'DIB K.', grade: 'temp', email: 'k.dib@enstp.edu.dz', subject: 'Chimie 3', photo: 'dib.jpg', dept: 'الكيمياء' },
     { id: 'bendada', name: 'BENDADA Kheiredine', grade: 'prof', email: 'k.bendada@enstp.edu.dz', subject: 'Chimie 3', modules: 'Chimie des solutions et Chimie organique', advice: 'Je conseille aux étudiants de développer leur curiosité scientifique...', photo: 'bendada.jpg', dept: 'الكيمياء' },
