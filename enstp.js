@@ -1,4 +1,5 @@
-window.ENSTP_DATA = { groups: {}, schedule: {} };
+javascript
+window.ENSTP_DATA = window.ENSTP_DATA || {};
 
 window.ENSTP_DATA.groups = {
   'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
@@ -19,35 +20,35 @@ window.ENSTP_DATA.schedule = {
             { time: '09:35 - 11:05', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 3', type: 'TD' },
             { time: '11:10 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'labo', type: 'TP' },
             { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhl...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' },
           ],
           'Sunday': [
             { time: '08:00 - 09:30', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 10', type: 'TD' },
             { time: '09:35 - 11:05', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 10', type: 'TD' },
             { time: '11:10 - 12:40', subject: 'Calculus 1', prof: '---', room: 'Room 10', type: 'TD' },
             { time: '13:30 - 15:00', subject: 'Chemistry 1', prof: '---', room: 'Room 10', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 1', type: 'TP' }
+            { time: '15:05 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 1', type: 'TP' },
           ],
           'Monday': [
             { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
             { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' },
           ],
           'Tuesday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 1', type: 'TP' },
             { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
           ],
           'Wednesday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 1 & 3', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
+            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' },
           ],
           'Thursday': [
             { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mr Yalla', room: 'Auditorium B', type: 'TD' }
-          ]
+            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mr Yalla', room: 'Auditorium B', type: 'TD' },
+          ],
         },
         'g2': {
           'Saturday': [
@@ -55,34 +56,34 @@ window.ENSTP_DATA.schedule = {
             { time: '09:35 - 11:05', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
             { time: '11:10 - 12:40', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
             { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhl...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' },
           ],
           'Sunday': [
             { time: '08:00 - 09:30', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 11', type: 'TD' },
             { time: '09:35 - 11:05', subject: 'Calculus 1 (TD)', prof: '---', room: 'Room 9', type: 'TD' },
             { time: '11:10 - 12:40', subject: 'Chemistry 1', prof: '---', room: 'Room 9', type: 'TD' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' }
+            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
           ],
           'Monday': [
             { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
             { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' },
           ],
           'Tuesday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
             { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
           ],
           'Wednesday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
+            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' },
           ],
           'Thursday': [
             { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mlle Yalla', room: 'Auditorium B', type: 'TD' }
-          ]
+            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mlle Yalla', room: 'Auditorium B', type: 'TD' },
+          ],
         },
         'g3': {
           'Saturday': [
@@ -90,34 +91,34 @@ window.ENSTP_DATA.schedule = {
             { time: '09:35 - 11:05', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 5', type: 'TD' },
             { time: '11:10 - 12:40', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 5', type: 'TD' },
             { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhl...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' },
           ],
           'Sunday': [
             { time: '08:00 - 09:30', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
             { time: '09:35 - 11:05', subject: 'Chemistry 1 (TD)', prof: '---', room: 'Room 12', type: 'TD' },
             { time: '13:30 - 15:00', subject: 'Calculus 1', prof: '---', room: 'Room 11', type: 'TD' },
-            { time: '15:05 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' }
+            { time: '15:05 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
           ],
           'Monday': [
             { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
             { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' },
           ],
           'Tuesday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
             { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
           ],
           'Wednesday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
+            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' },
           ],
           'Thursday': [
             { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mr Yalla', room: 'Auditorium B', type: 'TD' }
-          ]
+            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mr Yalla', room: 'Auditorium B', type: 'TD' },
+          ],
         },
         'g4': {
           'Saturday': [
@@ -125,27 +126,27 @@ window.ENSTP_DATA.schedule = {
             { time: '09:35 - 11:05', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
             { time: '11:10 - 12:40', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 6', type: 'TD' },
             { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhfi...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' },
           ],
           'Sunday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
+            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' },
           ],
           'Monday': [
             { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
             { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' },
           ],
           'Tuesday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
             { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
           ],
           'Wednesday': [
             { time: '09:35 - 11:05', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 3', type: 'TD' },
             { time: '11:10 - 12:40', subject: 'Chemistry 1', prof: '---', room: 'Room 3', type: 'TD' },
-            { time: '13:30 - 15:00', subject: 'Calculus 1', prof: '---', room: 'Room 4', type: 'TD' }
+            { time: '13:30 - 15:00', subject: 'Calculus 1', prof: '---', room: 'Room 4', type: 'TD' },
           ],
           'Thursday': [
             { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
@@ -159,33 +160,33 @@ window.ENSTP_DATA.schedule = {
             { time: '09:35 - 11:05', subject: 'Proba 1 (TD)', prof: '---', room: 'Room 7', type: 'TD' },
             { time: '11:10 - 12:40', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 7', type: 'TD' },
             { time: '13:30 - 15:00', subject: 'Algebra 1 (Cours)', prof: 'Mr Makhfi...', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'French 1', prof: 'Mme Belhadj', room: 'Auditorium A', type: 'Cours' },
           ],
           'Sunday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
-            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' }
+            { time: '13:30 - 16:35', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 11', type: 'TP' },
           ],
           'Monday': [
             { time: '08:00 - 09:30', subject: 'Proba stat (Cours)', prof: 'Mme Masrour', room: 'Auditorium B', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Benaissa', room: 'Auditorium B', type: 'Cours' },
             { time: '13:30 - 15:00', subject: 'Computer Science 1 (Cours)', prof: 'Mme Bader', room: 'Auditorium B', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'تاريخ الجزائر', prof: '---', room: 'Auditorium B', type: 'Cours' },
           ],
           'Tuesday': [
             { time: '08:00 - 12:40', subject: 'Lab(Chem/Phys/Tech Draw)', prof: '---', room: 'Laboratories 2', type: 'TP' },
             { time: '13:30 - 15:00', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' }
+            { time: '15:05 - 16:35', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
           ],
           'Wednesday': [
             { time: '08:00 - 09:30', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
             { time: '09:35 - 11:05', subject: 'Chemistry 1 (TD)', prof: '---', room: 'Room 4', type: 'TD' },
-            { time: '11:10 - 12:40', subject: 'Calculus 1', prof: '---', room: 'Room 10', type: 'TD' }
+            { time: '11:10 - 12:40', subject: 'Calculus 1', prof: '---', room: 'Room 10', type: 'TD' },
           ],
           'Thursday': [
             { time: '08:00 - 09:30', subject: 'Physics 1 (Cours)', prof: 'Mr Haddouche', room: 'Auditorium A', type: 'Cours' },
             { time: '09:35 - 11:05', subject: 'Calculus 1 (Cours)', prof: 'Mrs Kechiche', room: 'Auditorium A', type: 'Cours' },
-            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mlle Khalfi', room: 'Room 22', type: 'TD' }
-          ]
+            { time: '11:10 - 12:40', subject: 'English 1', prof: 'Mlle Khalfi', room: 'Room 22', type: 'TD' },
+          ],
         },
         'g6': {
           'Saturday': [
@@ -193,7 +194,7 @@ window.ENSTP_DATA.schedule = {
             { time: '09h35 - 11h05', subject: 'Algebra 1 (TD)', prof: '---', room: 'Room 8', type: 'TD' },
             { time: '11h10 - 12h40', subject: 'Physics 1 (TD)', prof: '---', room: 'Room 8', type: 'TD' },
             { time: '13h30 - 15h00', subject: 'Algebra 1 (Cours)', prof: 'Mrs Hebbache', room: 'Auditorium B', type: 'Cours' },
-            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' }
+            { time: '15h05 - 16h35', subject: 'French 1 (Cours)', prof: 'Mme Ouslimane', room: 'Auditorium B', type: 'Cours' },
           ],
           'Sunday': [
             { time: '08h00 - 09h30', subject: 'Chemistry 1 (Cours)', prof: 'Mrs Bali', room: 'Auditorium B', type: 'Cours' },
@@ -1354,9 +1355,7 @@ window.ENSTP_DATA.schedule = {
           'Thursday': [
             { time: '08h00 - 09h30', subject: 'Lean Entreprenariat', prof: '---', room: '19', type: 'Cours' },
             { time: '09h35 - 12h40', subject: 'Esquisse Ponts', prof: 'Mr ZOURGUI / Mr KHELFI', room: '19 / 10', type: 'TD' }
-        
-          ]
-        }
-      }
+         ]
     }
+  }
 };
