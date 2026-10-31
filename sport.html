@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>صحتي ورياضتي - ENSTP</title>
 
+  <!-- كود الترجمة -->
   <script src="translate.js"></script>
   <style>
     body { top: 0 !important; }
@@ -50,7 +51,7 @@
     .glass-nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; transition: all 0.3s ease; }
     .dark .glass-nav { background: #0f172a; border-bottom-color: #334155; }
 
-    /* Animation */
+    /* Animation: الظهور واحدة تلو الأخرى */
     .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -58,8 +59,8 @@
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* Doctor/Clinic/Lab Card Design */
-    .item-card {
+    /* Doctor Card Design */
+    .doctor-card {
       background: white;
       border-radius: 20px;
       overflow: hidden;
@@ -70,11 +71,11 @@
       flex-direction: column;
       border: 1px solid #f1f5f9;
     }
-    .dark .item-card { background: #1e293b; border-color: #334155; }
-    .item-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px -10px rgba(249, 115, 22, 0.25); border-color: #fb923c; }
+    .dark .doctor-card { background: #1e293b; border-color: #334155; }
+    .doctor-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px -10px rgba(249, 115, 22, 0.25); border-color: #fb923c; }
 
-    .item-header { height: 70px; position: relative; }
-    .item-avatar {
+    .doctor-header { height: 70px; position: relative; }
+    .doctor-avatar {
       position: absolute; bottom: -30px; right: 20px;
       width: 70px; height: 70px; border-radius: 50%;
       background: #ffffff; border: 4px solid #ffffff;
@@ -82,27 +83,22 @@
       display: flex; align-items: center; justify-content: center;
       font-weight: 900; font-size: 1.5rem; color: #ea580c; z-index: 2;
     }
-    .dark .item-avatar { border-color: #1e293b; background: #0f172a; }
+    .dark .doctor-avatar { border-color: #1e293b; background: #0f172a; }
 
-    .item-body { padding: 40px 20px 20px 20px; text-align: right; display: flex; flex-direction: column; flex-grow: 1; }
-    .item-name { font-size: 1.05rem; font-weight: 900; color: #1e293b; margin-bottom: 4px; }
-    .dark .item-name { color: #f8fafc; }
+    .doctor-body { padding: 40px 20px 20px 20px; text-align: right; display: flex; flex-direction: column; flex-grow: 1; }
+    .doctor-name { font-size: 1.1rem; font-weight: 900; color: #1e293b; margin-bottom: 4px; }
+    .dark .doctor-name { color: #f8fafc; }
     
-    .item-specialty {
+    .doctor-specialty {
       display: inline-block; font-size: 0.75rem; font-weight: 800;
       background: #fff7ed; color: #c2410c;
       padding: 2px 10px; border-radius: 10px; margin-bottom: 10px;
       align-self: flex-start; border: 1px solid #fed7aa;
     }
-    .dark .item-specialty { background: rgba(194, 65, 12, 0.2); color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
+    .dark .doctor-specialty { background: rgba(194, 65, 12, 0.2); color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
 
-    .item-info { font-size: 0.85rem; color: #64748b; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
-    .dark .item-info { color: #94a3b8; }
-    
-    .section-divider { margin: 3rem 0 2rem 0; border-bottom: 2px dashed #e2e8f0; padding-bottom: 0.5rem; }
-    .dark .section-divider { border-bottom-color: #334155; }
-    .section-title { font-size: 1.5rem; font-weight: 900; color: #1e293b; display: flex; align-items: center; gap: 10px; }
-    .dark .section-title { color: #f8fafc; }
+    .doctor-info { font-size: 0.85rem; color: #64748b; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
+    .dark .doctor-info { color: #94a3b8; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -136,15 +132,15 @@
   </header>
 
   <!-- المحتوى الرئيسي -->
-  <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full space-y-8">
+  <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full space-y-10">
 
     <div class="text-center mb-8 reveal">
       <h2 class="text-3xl font-black text-gray-900 dark:text-white" data-i18n="sport_title">صحتي ورياضتي</h2>
-      <p class="text-gray-600 dark:text-gray-400 mt-2" data-i18n="sport_desc">دليل شامل للأطباء، العيادات، المختبرات، والأنشطة الرياضية.</p>
+      <p class="text-gray-600 dark:text-gray-400 mt-2" data-i18n="sport_desc">دليل الأطباء، المستشفيات، والأنشطة الرياضية في محيط المدرسة.</p>
     </div>
 
     <!-- ========================================== -->
-    <!-- 1. قسم الأطباء -->
+    <!-- 1. قسم الأطباء والمستشفيات -->
     <!-- ========================================== -->
     <section class="reveal">
       <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
@@ -152,764 +148,127 @@
           <i class="fa-solid fa-stethoscope"></i>
         </div>
         <div>
-          <h3 class="text-2xl font-black text-gray-900 dark:text-white">الأطباء</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">قائمة الأطباء في مختلف التخصصات.</p>
+          <h3 class="text-2xl font-black text-gray-900 dark:text-white">الأطباء والمستشفيات</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">قائمة الأطباء والمؤسسات الصحية القريبة من المدرسة.</p>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
         <!-- Doctor 1 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
-            <div class="item-avatar">FA</div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+            <div class="doctor-avatar">FA</div>
           </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Farid Aissani</h4>
-            <span class="item-specialty">أمراض القلب</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Coopemad Sud, Bt 71/4, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 70 54 57</span></div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Farid Aissani</h4>
+            <span class="doctor-specialty">أمراض القلب</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Coopemad Sud, Bt 71/4, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 70 54 57</span></div>
           </div>
         </div>
 
         <!-- Doctor 2 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
-            <div class="item-avatar">AR</div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
+            <div class="doctor-avatar">AB</div>
           </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Amina Raouraoua</h4>
-            <span class="item-specialty">أمراض القلب</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Garidi 2, immeuble 96, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 56 30 80</span></div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Amina Bendali</h4>
+            <span class="doctor-specialty">أمراض النساء والتوليد</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Route des Annassers, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0553 24 07 60</span></div>
           </div>
         </div>
 
         <!-- Doctor 3 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
-            <div class="item-avatar">AL</div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
+            <div class="doctor-avatar">HO</div>
           </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Ali Louaïfi</h4>
-            <span class="item-specialty">أمراض القلب</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Jolie Vue 2, immeuble 63, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 28 55 77</span></div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Houria Ouabdesselam</h4>
+            <span class="doctor-specialty">طب الأطفال</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Jolie Vue 2, 1216 logements, Bt 12, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0697 28 58 17</span></div>
           </div>
         </div>
 
         <!-- Doctor 4 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
-            <div class="item-avatar">KL</div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
+            <div class="doctor-avatar">MB</div>
           </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Kechi Lyes</h4>
-            <span class="item-specialty">أمراض القلب</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 720 logements, immeuble 23, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0698 23 15 34</span></div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Mokhtar Bengherbi</h4>
+            <span class="doctor-specialty">طب العيون</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 70 avenue des Frères Abdeslami, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 60 16 78</span></div>
           </div>
         </div>
 
         <!-- Doctor 5 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
-            <div class="item-avatar">AB</div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+            <div class="doctor-avatar">AD</div>
           </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Assia Benmaiza</h4>
-            <span class="item-specialty">أمراض القلب</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité El-Ansar 1, immeuble 60, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0553 24 01 24</span></div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Abdelghani Debba</h4>
+            <span class="doctor-specialty">طب العيون</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 75 avenue des Frères Abdeslami, Vieux Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0660 39 29 22</span></div>
           </div>
         </div>
 
         <!-- Doctor 6 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
-            <div class="item-avatar">PB</div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
+            <div class="doctor-avatar">FA</div>
           </div>
-          <div class="item-body">
-            <h4 class="item-name">Pr Bouferrouk</h4>
-            <span class="item-specialty">أمراض القلب</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Garidi 1, Bt 8 n°1, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0551 26 84 36</span></div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Farid Ait Allaoua</h4>
+            <span class="doctor-specialty">طب العيون</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 43 rue des Frères Abdeslami, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0696 57 94 94</span></div>
           </div>
         </div>
 
         <!-- Doctor 7 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
-            <div class="item-avatar">SL</div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #14b8a6, #2dd4bf);">
+            <div class="doctor-avatar">WB</div>
           </div>
-          <div class="item-body">
-            <h4 class="item-name">Pr Samia Latreche</h4>
-            <span class="item-specialty">أمراض القلب</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 27, rue Mahmoud Boughetit, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0797 46 99 40</span></div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Widad Benantar</h4>
+            <span class="doctor-specialty">طب الأطفال</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Sastra / Jolie Vue 2, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 68 89 13</span></div>
           </div>
         </div>
 
         <!-- Doctor 8 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">AB</div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #ef4444, #f87171);">
+            <div class="doctor-avatar">ZB</div>
           </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Amina Bendali</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Route d'El-Ansar, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0553 24 07 60</span></div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Dr Zineb Belhadj</h4>
+            <span class="doctor-specialty">أمراض النساء والتوليد</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 12 avenue des Frères Abdeslami, 1er étage, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0559 67 11 71</span></div>
           </div>
         </div>
 
         <!-- Doctor 9 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">ZB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Zineb Belhadj</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 12, rue des Frères Abdessalami, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0559 67 11 71</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 10 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">FA</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Faiza Aissat</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 29 71 14</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 11 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">MA</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Malika Abdelhak</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> El-Ansar 2, immeuble C20, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 29 44 79</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 12 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">LH</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr L. Hammouda</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> El-Ansar 1, immeuble 314, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0551 35 31 33</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 13 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">WL</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Wahiba Lamara</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Garidi 1, immeuble 7, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0559 81 86 41</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 14 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">KB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Khadidja Bouziani</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité CNEP, 1010 logements, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 28 47 47</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 15 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">YB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Yasma Bennefissa</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0781 56 36 90</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 16 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">CL</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Cherouk Latifa</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Garidi 2, immeuble 84, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 44 94 54</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 17 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
-            <div class="item-avatar">NS</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr N. Sadat</h4>
-            <span class="item-specialty">أمراض النساء والتوليد</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0662 97 23 25</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 18 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
-            <div class="item-avatar">WB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Widad Benantar</h4>
-            <span class="item-specialty">طب الأطفال</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Sastra / El-Ansar 2, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0558 95 76 14</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 19 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
-            <div class="item-avatar">HO</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Houria Ouabdesselam</h4>
-            <span class="item-specialty">طب الأطفال</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Jolie Vue 2, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0697 28 58 17</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 20 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
-            <div class="item-avatar">HH</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Hamida Hasnaoui</h4>
-            <span class="item-specialty">طب الأطفال</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Ben Omar, immeuble A4, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 28 86 88</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 21 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
-            <div class="item-avatar">AW</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Aouabed Wolly</h4>
-            <span class="item-specialty">جراحة الأطفال</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Garidi 1, immeuble 25, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0557 46 45 87</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 22 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
-            <div class="item-avatar">KM</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Khalfouni M.A</h4>
-            <span class="item-specialty">طب الأطفال</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0664 79 13 32</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 23 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
-            <div class="item-avatar">BO</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Bouzid</h4>
-            <span class="item-specialty">طب الأطفال</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 12, rue des Frères Abdessalami, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0555 58 52 39</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 24 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
-            <div class="item-avatar">MB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Mokhtar Bengherbi</h4>
-            <span class="item-specialty">طب العيون</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 70 avenue des Frères Abdeslami, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 68 80 34</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 25 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
-            <div class="item-avatar">SA</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Salima Azouaou Tebatbia</h4>
-            <span class="item-specialty">طب العيون</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Garidi 1, immeuble 19, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 28 34 22</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 26 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
-            <div class="item-avatar">FA</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Farid Ait Allaoua</h4>
-            <span class="item-specialty">طب العيون</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 43, rue des Frères Abdessalami, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0696 57 94 94</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 27 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
-            <div class="item-avatar">AD</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Abdelghani Debba</h4>
-            <span class="item-specialty">طب العيون</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 75, rue des Frères Abdessalami, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0660 39 29 22</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 28 -->
-        <div class="item-card">
-                    background: linear-gradient(135deg, #3b82f6, #6366f1);">
-            <div class="item-avatar">AT</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Afaf Tamerini</h4>
-            <span class="item-specialty">طب العيون</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Bag Mohamed, Bt 4, rue n°2, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0558 43 47 21</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 29 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-            <div class="item-avatar">ZO</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Zahia Oumoussa</h4>
-            <span class="item-specialty">الأمراض الجلدية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 1, rue Omar Bouras, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0557 63 61 16</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 30 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-            <div class="item-avatar">NA</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Nachida Ait Mokhtar</h4>
-            <span class="item-specialty">الأمراض الجلدية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 2, impasse Touizi, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0555 71 01 62</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 31 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
-            <div class="item-avatar">LB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Louiza Boukercha</h4>
-            <span class="item-specialty">الجهاز الهضمي</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Garidi 1, immeuble 27, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 68 08 95</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 32 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
-            <div class="item-avatar">AI</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Ahmed Imouloudene</h4>
-            <span class="item-specialty">الجراحة العامة</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 1, rue Omar Bouras, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 68 77 10</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 33 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #14b8a6, #2dd4bf);">
-            <div class="item-avatar">AD</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Abdelkrim Djellouli</h4>
-            <span class="item-specialty">الغدد الصماء والسكري</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 48, rue Victor Débi, cité El-Badr, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0552 59 43 49</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 34 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #14b8a6, #2dd4bf);">
-            <div class="item-avatar">SO</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Souakhri</h4>
-            <span class="item-specialty">الغدد الصماء والسكري</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> El-Ansar 2, immeuble D1, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0552 84 60 40</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 35 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #14b8a6, #2dd4bf);">
-            <div class="item-avatar">FA</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Fekar Abdelaziz</h4>
-            <span class="item-specialty">الغدد الصماء والسكري</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Garidi 1, immeuble 38, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 68 75 63</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 36 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ef4444, #f87171);">
-            <div class="item-avatar">BM</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Benselama Mohamed Rachid</h4>
-            <span class="item-specialty">جراحة العظام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> El-Ansar 2, immeuble E4, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0550 93 10 74</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 37 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ef4444, #f87171);">
-            <div class="item-avatar">GY</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Goutal Yamina</h4>
-            <span class="item-specialty">الجراحة العامة</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 32, boulevard Ahmed Cherifi, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0770 98 46 89</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 38 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ef4444, #f87171);">
-            <div class="item-avatar">AM</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Ait Mokhtar Mahmoud</h4>
-            <span class="item-specialty">الجراحة العامة</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Coopemad Nord, El-Ansar 4, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 29 11 55</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 39 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #6366f1, #818cf8);">
-            <div class="item-avatar">AB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Ammour Bachir</h4>
-            <span class="item-specialty">الطب النفسي</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité BAG, immeuble 4, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 28 72 69</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 40 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #6366f1, #818cf8);">
-            <div class="item-avatar">HB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Hamada Brahim</h4>
-            <span class="item-specialty">المسالك البولية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité HCA, immeuble 01, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 54 52 27</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 41 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #0ea5e9, #38bdf8);">
-            <div class="item-avatar">YY</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Yazid Yazibene</h4>
-            <span class="item-specialty">أنف وأذن وحنجرة (ORL)</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Place Ben Omar, n° 5, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0770 42 29 50</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 42 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #0ea5e9, #38bdf8);">
-            <div class="item-avatar">DK</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Doria Kanoun</h4>
-            <span class="item-specialty">أنف وأذن وحنجرة (ORL)</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Parc Ben Omar, villa 35, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 43 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">LE</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Lehamine</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 100, rue des Frères Abdessalami, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 60 20 07</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 44 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">KB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Karima Benhagouga</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité El-Ansar 2, immeuble G4, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0775 22 13 13</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 45 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">FC</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Fatima Chabane</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité El-Ansar 2, immeuble 24, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 46 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">HZ</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Hamida Zouatine</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 76, rue des Frères Abdessalami, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 47 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">MH</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Mustapha Hamadas</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Rue Benkahla Mohamed, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 48 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">KH</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Khaznadji</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Rue Hanefi Hadjres, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 49 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">LK</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Linda Khamchane</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 5e rue, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 50 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">CD</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Chaouche Djamal</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Rue Abdelmoumen Mechik, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 51 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">SA</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Safia Akkouche</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Jolie Vue 1, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 52 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">SF</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Senouci Fekhar</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Rue Anssat, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 53 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #84cc16, #a3e635);">
-            <div class="item-avatar">HR</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Hebili Rabah</h4>
-            <span class="item-specialty">طب عام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Diar El-Afia, immeuble 6, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 54 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f472b6, #fb7185);">
-            <div class="item-avatar">MB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Myriam Behloul</h4>
-            <span class="item-specialty">الجراحة التجميلية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 156, cité Saidouni Ben Omar, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 55 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #f472b6, #fb7185);">
-            <div class="item-avatar">AM</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Ait Daoud Mokhtekh</h4>
-            <span class="item-specialty">علم الأورام</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Parc Ben Omar, n° 26, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 56 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #fb923c, #fdba74);">
-            <div class="item-avatar">AM</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Antar Mustapha</h4>
-            <span class="item-specialty">الطب الداخلي</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Coopemad Sud, immeuble 71, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0791 89 19 23</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 57 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #fb923c, #fdba74);">
-            <div class="item-avatar">AZ</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr Azib Zenati</h4>
-            <span class="item-specialty">أمراض الصدر والحساسية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Garidi 2, immeuble 95, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0554 17 51 53</span></div>
-          </div>
-        </div>
-
-        <!-- Doctor 58 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #fb923c, #fdba74);">
-            <div class="item-avatar">SM</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Dr S. Meziane</h4>
-            <span class="item-specialty">أمراض الصدر</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> El-Ansar 2, immeuble 15B, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">غير محدد</span></div>
+        <div class="doctor-card">
+          <div class="doctor-header" style="background: linear-gradient(135deg, #6366f1, #818cf8);">
+            <div class="doctor-avatar">PB</div>
+          </div>
+          <div class="doctor-body">
+            <h4 class="doctor-name">Pr Bouferrouk</h4>
+            <span class="doctor-specialty">أمراض القلب</span>
+            <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Garidi 1, Bt 8 n°1, Kouba</div>
+            <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0551 26 84 36</span></div>
           </div>
         </div>
 
@@ -917,163 +276,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 2. قسم العيادات -->
-    <!-- ========================================== -->
-    <section class="reveal">
-      <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
-        <div class="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-2xl">
-          <i class="fa-solid fa-hospital"></i>
-        </div>
-        <div>
-          <h3 class="text-2xl font-black text-gray-900 dark:text-white">العيادات والمراكز الصحية</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">مؤسسات صحية متعددة التخصصات.</p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        
-        <!-- Clinique 1 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
-            <div class="item-avatar">CK</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Clinique CMC Kouba</h4>
-            <span class="item-specialty">عيادة متعددة التخصصات</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 6, rue Mohamed Rabia, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 71 88 00</span></div>
-          </div>
-        </div>
-
-        <!-- Clinique 2 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
-            <div class="item-avatar">CD</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Clinique Djazia</h4>
-            <span class="item-specialty">عيادة</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Rue Benkahla Mohamed, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0773 85 70 85</span></div>
-          </div>
-        </div>
-
-        <!-- Clinique 3 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
-            <div class="item-avatar">CE</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Clinique El Feth</h4>
-            <span class="item-specialty">عيادة</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité El-Ansar, immeuble 104, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 29 33 00</span></div>
-          </div>
-        </div>
-
-        <!-- Clinique 4 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
-            <div class="item-avatar">EN</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Cabinet ENNOUR</h4>
-            <span class="item-specialty">عيادة طبية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Kouba (العنوان قيد التأكيد)</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0549 09 08 33</span></div>
-          </div>
-        </div>
-
-        <!-- Clinique 5 (Hôpital) -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">
-            <div class="item-avatar">HP</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Hôpital Spécialisé en Psychiatrie</h4>
-            <span class="item-specialty">مستشفى الأمراض النفسية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Rue Djamaa Meghni, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0772 17 85 73</span></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 3. قسم المختبرات -->
-    <!-- ========================================== -->
-    <section class="reveal">
-      <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
-        <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 flex items-center justify-center text-2xl">
-          <i class="fa-solid fa-flask"></i>
-        </div>
-        <div>
-          <h3 class="text-2xl font-black text-gray-900 dark:text-white">المختبرات</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">مختبرات التحاليل الطبية في محيط المدرسة.</p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        
-        <!-- Laboratoire 1 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #a855f7, #8b5cf6);">
-            <div class="item-avatar">LB</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Laboratoire Bio Kouba</h4>
-            <span class="item-specialty">تحاليل طبية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Garidi, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 28 XX XX</span></div>
-          </div>
-        </div>
-
-        <!-- Laboratoire 2 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #a855f7, #8b5cf6);">
-            <div class="item-avatar">LC</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Laboratoire Central d'Analyses</h4>
-            <span class="item-specialty">تحاليل طبية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Avenue des Frères Abdeslami, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 60 XX XX</span></div>
-          </div>
-                    </div>
-        </div>
-        
-        <!-- Laboratoire 3 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #a855f7, #8b5cf6);">
-            <div class="item-avatar">LM</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Labo El Ansar</h4>
-            <span class="item-specialty">تحاليل طبية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité El-Ansar, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 29 XX XX</span></div>
-          </div>
-        </div>
-
-        <!-- Laboratoire 4 -->
-        <div class="item-card">
-          <div class="item-header" style="background: linear-gradient(135deg, #a855f7, #8b5cf6);">
-            <div class="item-avatar">LY</div>
-          </div>
-          <div class="item-body">
-            <h4 class="item-name">Laboratoire Yasmine</h4>
-            <span class="item-specialty">تحاليل طبية</span>
-            <div class="item-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Jolie Vue, Kouba</div>
-            <div class="item-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0550 XX XX XX</span></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 4. قسم الرياضة (الفيديوهات) -->
+    <!-- 2. قسم الرياضة (الفيديوهات) -->
     <!-- ========================================== -->
     <section class="reveal">
       <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
@@ -1081,7 +284,7 @@
           <i class="fa-solid fa-dumbbell"></i>
         </div>
         <div>
-          <h3 class="text-2xl font-black text-gray-900 dark:text-white">الرياضة</h3>
+          <h3 class="text-2xl font-black text-gray-900 dark:text-white">قيمة الرياضة</h3>
           <p class="text-sm text-gray-500 dark:text-gray-400">فيديوهات توعوية حول أهمية النشاط البدني.</p>
         </div>
       </div>
@@ -1130,8 +333,6 @@
     // عرض الفيديوهات
     function renderSport() {
       const container = document.getElementById('sportContainer');
-      if (!container) return;
-      
       container.innerHTML = '';
       sportVideos.forEach(item => {
         let videoId = item.video;
@@ -1150,11 +351,11 @@
 
     // Animation: الظهور واحدة تلو الأخرى
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+      entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.classList.add('visible');
-          }, 150); // تأخير بسيط لكل عنصر يظهر
+          }, index * 150); // تأخير 150ms لكل عنصر
           observer.unobserve(entry.target);
         }
       });
@@ -1162,22 +363,17 @@
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     
-    // مراقبة البطاقات الداخلية أيضاً
-    document.querySelectorAll('.item-card').forEach((el, index) => {
+    // مراقبة البطاقات أيضاً لتظهر واحدة تلو الأخرى
+    document.querySelectorAll('.doctor-card').forEach(el => {
       el.classList.add('reveal');
-      // إضافة تأخير متزايد لكل بطاقة
-      el.style.transitionDelay = `${(index % 6) * 100}ms`;
       observer.observe(el);
     });
 
     // التشغيل الأولي
     window.addEventListener('DOMContentLoaded', () => {
       renderSport();
-      // محاولة استدعاء دالة الترجمة إذا كانت موجودة
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      if (typeof setLanguage === 'function') {
-        setTimeout(() => setLanguage(savedLang), 100);
-      }
+      setTimeout(() => setLanguage(savedLang), 100);
     });
   </script>
 </body>
