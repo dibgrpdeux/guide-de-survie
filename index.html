@@ -1359,11 +1359,25 @@
         setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
       }
     });
-    <!-- تحميل سكريبت sift -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/sift-search@latest/dist/sift-search.js"></script>
+      // ... (باقي كود السكريبت القديم الخاص بك) ...
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        mascotKangaroo.classList.add('jump');
+        playSound('kangaroo');
+        setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
+      }
+    });
+  </script> <!-- هنا يتم إغلاق السكريبت القديم -->
 
-<!-- وسم البحث المخصص -->
-<sift-search db="/sift-index.db"></sift-search>
+  <!-- ✅ ضع كود sift هنا، خارج السكريبت القديم -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/sift-search@latest/dist/sift-search.js"></script>
+  
+  <!-- ✅ وسم البحث (يمكنك وضعه حيث تريده أن يظهر في الصفحة) -->
+  <div style="max-width: 600px; margin: 20px auto;">
+      <sift-search db="/sift-index.db"></sift-search>
+  </div>
+
+</body>
   </script>
 </body>
 </html>
