@@ -123,200 +123,205 @@
     </div>
   </main>
 
-
-  <!-- 2. استدعاء ملف التحويل -->
+  <!-- 1. تحميل ملف البيانات (enstp.js) -->
   <script src="enstp.js"></script>
   
-  <!-- 3. كود التطبيق -->
+  <!-- 2. كود التطبيق (يبدأ فقط بعد تحميل كل شيء) -->
   <script>
-    let selectedDay = 'Sunday';
-    const dayNames = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
-
-    // DARK MODE
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    }
-    function toggleDarkMode() {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-
-    // NOTES STORAGE
-    function getNotesKey(year, group, day, index) { return `note_${year}_${group}_${day}_${index}`; }
-    function getNote(year, group, day, index) { return localStorage.getItem(getNotesKey(year, group, day, index)) || ''; }
-    function saveNote(year, group, day, index, value) {
-      if (value.trim()) localStorage.setItem(getNotesKey(year, group, day, index), value);
-      else localStorage.removeItem(getNotesKey(year, group, day, index));
-    }
-
-    // UPDATE FUNCTIONS
-    function updateYears() {
-      const dept = document.getElementById('select-dept').value;
-      const yearSelect = document.getElementById('select-year');
-      yearSelect.innerHTML = '';
-
-      if (dept === 'prep') {
-        yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
-      } else if (dept === 'dib') {
-        yearSelect.innerHTML = `<option value="dib_1">السنة الأولى مهندس (DIB)</option><option value="dib_2">السنة الثانية مهندس (DIB)</option><option value="dib_3">السنة الثالثة مهندس (DIB)</option>`;
-      } else if (dept === 'dms') {
-        yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مهندس (DMS)</option><option value="dms_2">السنة الثانية مهندس (DMS)</option><option value="dms_3">السنة الثالثة مهندس (DMS)</option>`;
-      }
-      updateGroups();
-    }
-
-    function updateGroups() {
-      const year = document.getElementById('select-year').value;
-      const groupSelect = document.getElementById('select-group');
-      groupSelect.innerHTML = '';
+    window.addEventListener('load', function() {
       
-      if (!window.ENSTP_DATA || !ENSTP_DATA.groups) return; // sécurité
-      
-      const groups = ENSTP_DATA.groups[year] || [];
-      groups.forEach(g => {
-        const option = document.createElement('option');
-        option.value = g.value;
-        option.textContent = g.label;
-        groupSelect.appendChild(option);
-      });
-      renderSchedule();
-    }
+      let selectedDay = 'Sunday';
+      const dayNames = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
 
-    function changeDay(day) {
-      selectedDay = day;
-      document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById(`day-${day}`);
-      if (activeBtn) activeBtn.classList.add('active');
-      document.getElementById('schedule-title').innerHTML = `<i class="fa-solid fa-list-check"></i> برنامج الحصص ليوم ${dayNames[day]}`;
-      renderSchedule();
-    }
-
-    function toggleNote(index) {
-      const section = document.getElementById(`note-section-${index}`);
-      if (section) section.classList.toggle('open');
-    }
-
-    function renderSchedule() {
-      const year = document.getElementById('select-year').value;
-      const group = document.getElementById('select-group').value;
-      const container = document.getElementById('schedule-list');
-      container.innerHTML = '';
-
-      if (!window.ENSTP_DATA || !ENSTP_DATA.schedule) return; // sécurité
-
-      let items = [];
-      if (ENSTP_DATA.schedule[year] && ENSTP_DATA.schedule[year][group] && ENSTP_DATA.schedule[year][group][selectedDay]) {
-        items = ENSTP_DATA.schedule[year][group][selectedDay];
-      }
-
-      if (items.length === 0) {
-        container.innerHTML = `
-          <div class="text-center p-8 text-slate-500 dark:text-slate-400 font-bold bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
-            <i class="fa-regular fa-face-smile-wink text-4xl mb-3 text-brand-300 dark:text-brand-500 block"></i>
-            لا توجد حصص مبرمجة في هذا اليوم لهذا الفوج.
-          </div>
-        `;
+      // التأكد من أن البيانات تم تحميلها
+      if (typeof window.ENSTP_DATA === 'undefined') {
+        console.error("خطأ: لم يتم العثور على ملف enstp.js أو أنه لا يحتوي على البيانات.");
+        document.getElementById('schedule-list').innerHTML = '<div class="text-center text-red-500 font-bold p-4">خطأ: تأكد من وجود ملف enstp.js في نفس المجلد.</div>';
         return;
       }
 
-      items.forEach((item, index) => {
-        let typeBadge = '';
-        let typeColor = '';
-        if (item.type === 'Cours') { typeBadge = 'محاضرة'; typeColor = 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'; }
-        if (item.type === 'TD') { typeBadge = 'أعمال موجهة (TD)'; typeColor = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'; }
-        if (item.type === 'TP') { typeBadge = 'أعمال تطبيقية (TP)'; typeColor = 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'; }
+      // Dark Mode
+      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
 
-        const note = getNote(year, group, selectedDay, index);
-        const hasNote = note.trim() !== '';
+      window.toggleDarkMode = function() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      };
 
-        const row = document.createElement('div');
-        row.className = "schedule-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-lg hover:border-brand-300 dark:hover:border-brand-600 transition-all overflow-hidden";
-        row.style.animationDelay = `${index * 0.05}s`;
+      // Notes Storage
+      function getNotesKey(year, group, day, index) { return `note_${year}_${group}_${day}_${index}`; }
+      function getNote(year, group, day, index) { return localStorage.getItem(getNotesKey(year, group, day, index)) || ''; }
+      function saveNote(year, group, day, index, value) {
+        if (value.trim()) localStorage.setItem(getNotesKey(year, group, day, index), value);
+        else localStorage.removeItem(getNotesKey(year, group, day, index));
+      }
 
-        row.innerHTML = `
-          <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex items-start gap-4">
-              <div class="relative">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-100 to-amber-100 dark:from-brand-900/30 dark:to-amber-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold shrink-0">
-                  <i class="fa-solid fa-clock text-lg"></i>
-                </div>
-                ${hasNote ? '<div class="note-badge"><i class="fa-solid fa-pen" style="font-size:7px"></i></div>' : ''}
-              </div>
-              <div class="flex-1">
-                <div class="flex flex-wrap items-center gap-2 mb-1.5">
-                  <h5 class="font-bold text-slate-900 dark:text-white text-base">${item.subject}</h5>
-                  <span class="${typeColor} px-2 py-0.5 rounded text-[10px] font-black">${typeBadge}</span>
-                  ${hasNote ? '<span class="note-indicator"><i class="fa-solid fa-pen" style="font-size:8px"></i> ملاحظة</span>' : ''}
-                </div>
-                <p class="text-sm text-slate-600 dark:text-slate-400 font-semibold flex items-center gap-1">
-                  <i class="fa-solid fa-user-tie text-slate-400"></i> الأستاذ: ${item.prof}
-                </p>
-              </div>
+      // Update Functions
+      window.updateYears = function() {
+        const dept = document.getElementById('select-dept').value;
+        const yearSelect = document.getElementById('select-year');
+        yearSelect.innerHTML = '';
+
+        if (dept === 'prep') {
+          yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
+        } else if (dept === 'dib') {
+          yearSelect.innerHTML = `<option value="dib_1">السنة الأولى مهندس (DIB)</option><option value="dib_2">السنة الثانية مهندس (DIB)</option><option value="dib_3">السنة الثالثة مهندس (DIB)</option>`;
+        } else if (dept === 'dms') {
+          yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مهندس (DMS)</option><option value="dms_2">السنة الثانية مهندس (DMS)</option><option value="dms_3">السنة الثالثة مهندس (DMS)</option>`;
+        }
+        updateGroups();
+      };
+
+      window.updateGroups = function() {
+        const year = document.getElementById('select-year').value;
+        const groupSelect = document.getElementById('select-group');
+        groupSelect.innerHTML = '';
+        
+        // قراءة البيانات من enstp.js
+        const groups = ENSTP_DATA.groups[year] || [];
+        
+        groups.forEach(g => {
+          const option = document.createElement('option');
+          option.value = g.value;
+          option.textContent = g.label;
+          groupSelect.appendChild(option);
+        });
+        renderSchedule();
+      };
+
+      window.changeDay = function(day) {
+        selectedDay = day;
+        document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById(`day-${day}`);
+        if (activeBtn) activeBtn.classList.add('active');
+        document.getElementById('schedule-title').innerHTML = `<i class="fa-solid fa-list-check"></i> برنامج الحصص ليوم ${dayNames[day]}`;
+        renderSchedule();
+      };
+
+      window.toggleNote = function(index) {
+        const section = document.getElementById(`note-section-${index}`);
+        if (section) section.classList.toggle('open');
+      };
+
+      window.renderSchedule = function() {
+        const year = document.getElementById('select-year').value;
+        const group = document.getElementById('select-group').value;
+        const container = document.getElementById('schedule-list');
+        container.innerHTML = '';
+
+        let items = [];
+        if (ENSTP_DATA.schedule[year] && ENSTP_DATA.schedule[year][group] && ENSTP_DATA.schedule[year][group][selectedDay]) {
+          items = ENSTP_DATA.schedule[year][group][selectedDay];
+        }
+
+        if (items.length === 0) {
+          container.innerHTML = `
+            <div class="text-center p-8 text-slate-500 dark:text-slate-400 font-bold bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <i class="fa-regular fa-face-smile-wink text-4xl mb-3 text-brand-300 dark:text-brand-500 block"></i>
+              لا توجد حصص مبرمجة في هذا اليوم لهذا الفوج.
             </div>
-            <div class="flex flex-wrap items-center gap-2 shrink-0">
-              <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 p-2.5 rounded-xl border border-slate-100 dark:border-slate-700">
-                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 px-2 flex items-center gap-1">
-                  <i class="fa-solid fa-hourglass-start text-brand-400"></i> ${item.time}
-                </span>
-                <span class="w-px h-4 bg-slate-300 dark:bg-slate-600"></span>
-                <span class="text-xs font-bold text-brand-700 dark:text-brand-400 px-2 flex items-center gap-1">
-                  <i class="fa-solid fa-location-dot"></i> ${item.room}
-                </span>
-              </div>
-              <button onclick="toggleNote(${index})" class="no-print w-10 h-10 rounded-xl ${hasNote ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'} hover:scale-105 transition flex items-center justify-center" title="إضافة ملاحظة">
-                <i class="fa-solid fa-pen text-sm"></i>
-              </button>
-            </div>
-          </div>
+          `;
+          return;
+        }
 
-          <div id="note-section-${index}" class="note-section ${hasNote ? 'open' : ''}">
-            <div class="px-4 pb-4">
-              <textarea 
-                id="note-text-${index}"
-                placeholder="✏️ اكتب ملاحظاتك هنا (مثل: إحضار الآلة الحاسبة، مراجعة الفصل 3، إلخ...)"
-                class="note-textarea w-full p-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-200 font-semibold"
-                oninput="handleNoteChange(${index}, this.value)"
-              >${note}</textarea>
-              <div class="flex justify-between items-center mt-2">
-                <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
-                  <i class="fa-solid fa-info-circle"></i> يتم الحفظ تلقائياً
-                </span>
-                <button onclick="clearNote(${index})" class="no-print text-[11px] text-red-500 hover:text-red-700 font-bold">
-                  <i class="fa-solid fa-trash"></i> حذف الملاحظة
+        items.forEach((item, index) => {
+          let typeBadge = '';
+          let typeColor = '';
+          if (item.type === 'Cours') { typeBadge = 'محاضرة'; typeColor = 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'; }
+          if (item.type === 'TD') { typeBadge = 'أعمال موجهة (TD)'; typeColor = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'; }
+          if (item.type === 'TP') { typeBadge = 'أعمال تطبيقية (TP)'; typeColor = 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'; }
+
+          const note = getNote(year, group, selectedDay, index);
+          const hasNote = note.trim() !== '';
+
+          const row = document.createElement('div');
+          row.className = "schedule-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-lg hover:border-brand-300 dark:hover:border-brand-600 transition-all overflow-hidden";
+          row.style.animationDelay = `${index * 0.05}s`;
+
+          row.innerHTML = `
+            <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div class="flex items-start gap-4">
+                <div class="relative">
+                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-100 to-amber-100 dark:from-brand-900/30 dark:to-amber-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold shrink-0">
+                    <i class="fa-solid fa-clock text-lg"></i>
+                  </div>
+                  ${hasNote ? '<div class="note-badge"><i class="fa-solid fa-pen" style="font-size:7px"></i></div>' : ''}
+                </div>
+                <div class="flex-1">
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <h5 class="font-bold text-slate-900 dark:text-white text-base">${item.subject}</h5>
+                    <span class="${typeColor} px-2 py-0.5 rounded text-[10px] font-black">${typeBadge}</span>
+                    ${hasNote ? '<span class="note-indicator"><i class="fa-solid fa-pen" style="font-size:8px"></i> ملاحظة</span>' : ''}
+                  </div>
+                  <p class="text-sm text-slate-600 dark:text-slate-400 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-user-tie text-slate-400"></i> الأستاذ: ${item.prof}
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 shrink-0">
+                <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 p-2.5 rounded-xl border border-slate-100 dark:border-slate-700">
+                  <span class="text-xs font-bold text-slate-700 dark:text-slate-300 px-2 flex items-center gap-1">
+                    <i class="fa-solid fa-hourglass-start text-brand-400"></i> ${item.time}
+                  </span>
+                  <span class="w-px h-4 bg-slate-300 dark:bg-slate-600"></span>
+                  <span class="text-xs font-bold text-brand-700 dark:text-brand-400 px-2 flex items-center gap-1">
+                    <i class="fa-solid fa-location-dot"></i> ${item.room}
+                  </span>
+                </div>
+                <button onclick="toggleNote(${index})" class="no-print w-10 h-10 rounded-xl ${hasNote ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'} hover:scale-105 transition flex items-center justify-center" title="إضافة ملاحظة">
+                  <i class="fa-solid fa-pen text-sm"></i>
                 </button>
               </div>
             </div>
-          </div>
-        `;
-        container.appendChild(row);
-      });
-    }
+            <div id="note-section-${index}" class="note-section ${hasNote ? 'open' : ''}">
+              <div class="px-4 pb-4">
+                <textarea 
+                  id="note-text-${index}"
+                  placeholder="✏️ اكتب ملاحظاتك هنا (مثل: إحضار الآلة الحاسبة، مراجعة الفصل 3، إلخ...)"
+                  class="note-textarea w-full p-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-200 font-semibold"
+                  oninput="handleNoteChange(${index}, this.value)"
+                >${note}</textarea>
+                <div class="flex justify-between items-center mt-2">
+                  <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+                    <i class="fa-solid fa-info-circle"></i> يتم الحفظ تلقائياً
+                  </span>
+                  <button onclick="clearNote(${index})" class="no-print text-[11px] text-red-500 hover:text-red-700 font-bold">
+                    <i class="fa-solid fa-trash"></i> حذف
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          container.appendChild(row);
+        });
+      };
 
-    let saveTimeout;
-    function handleNoteChange(index, value) {
-      const year = document.getElementById('select-year').value;
-      const group = document.getElementById('select-group').value;
-      clearTimeout(saveTimeout);
-      saveTimeout = setTimeout(() => {
-        saveNote(year, group, selectedDay, index, value);
+      let saveTimeout;
+      window.handleNoteChange = function(index, value) {
+        const year = document.getElementById('select-year').value;
+        const group = document.getElementById('select-group').value;
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+          saveNote(year, group, selectedDay, index, value);
+          renderSchedule();
+        }, 800);
+      };
+
+      window.clearNote = function(index) {
+        const year = document.getElementById('select-year').value;
+        const group = document.getElementById('select-group').value;
+        localStorage.removeItem(getNotesKey(year, group, selectedDay, index));
         renderSchedule();
-      }, 800);
-    }
+      };
 
-    function clearNote(index) {
-      const year = document.getElementById('select-year').value;
-      const group = document.getElementById('select-group').value;
-      localStorage.removeItem(getNotesKey(year, group, selectedDay, index));
-      renderSchedule();
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      // initialize UI now that data is ready
+      // التشغيل الأولي
       updateYears();
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let today = days[new Date().getDay()];
