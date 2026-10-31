@@ -2,7 +2,12 @@ javascript
 window.ENSTP_DATA = window.ENSTP_DATA || {};
 
 window.ENSTP_DATA.groups = {
-'dib_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }],
+const groupsDatabase = {
+      'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'prep_2': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_1': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_2': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }],
       'dms_1': Array.from({length: 4}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
       'dms_2': Array.from({length: 2}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
       'dms_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }]
