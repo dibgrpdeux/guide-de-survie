@@ -3,7 +3,7 @@
 // ==========================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDoc, getDocs, updateDoc, arrayUnion, arrayRemove, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
 // ==========================================
@@ -39,6 +39,7 @@ let currentChannelType = 'posts';
 let unsubscribeMessages = null;
 let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 let attachedFile = null;
+let pendingPrivateRoom = null; // الغرفة الخاصة التي تنتظر كلمة المرور
 
 const wilayas = ["01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة", "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة", "21 - سكيكدة", "22 - سيدي بلعباس", "23 - عنابة", "24 - قالمة", "25 - قسنطينة", "26 - المدية", "27 - مستغانم", "28 - المسيلة", "29 - معسكر", "30 - ورقلة", "31 - وهران", "32 - البيض", "33 - إليزي", "34 - برج بوعريريج", "35 - بومرداس", "36 - الطارف", "37 - تندوف", "38 - تيسمسيلت", "39 - الوادي", "40 - خنشلة", "41 - سوق أهراس", "42 - تيبازة", "43 - ميلة", "44 - عين الدفلى", "45 - النعامة", "46 - عين تموشنت", "47 - غرداية", "48 - غليزان"];
 
@@ -167,23 +168,48 @@ function renderChannels() {
     snapshot.forEach((docSnap) => {
       const room = docSnap.data();
       const icon = room.type === 'chat' ? 'fa-comments text-green-400' : 'fa-newspaper text-blue-400';
-      customContainer.innerHTML += `
-        <button onclick="selectChannel('room_${docSnap.id}', '${room.name}', 'غرفة طلابية', '${room.type}', this)" 
-          class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 transition-colors">
-          <div class="w-9 h-9 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center"><i class="fa-solid ${icon}"></i></div>
-          ${room.name}
-        </button>
+      const lockIcon = room.password ? ' <i class="fa-solid fa-lock text-red-400 text-[10px]"></i>' : '';
+      const isOwner = room.createdBy === currentUserData.name;
+      const deleteBtn = isOwner ? `<button onclick="event.stopPropagation(); deleteRoom('${docSnap.id}', '${room.name.replace(/'/g, "\\'")}')" class="ml-auto text-red-400 hover:text-red-600 text-xs p-1" title="حذف"><i class="fa-solid fa-trash"></i></button>` : '';
+      
+      const btn = document.createElement('button');
+      btn.className = `w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 transition-colors`;
+      btn.setAttribute('data-room-id', `room_${docSnap.id}`);
+      btn.innerHTML = `
+        <div class="w-9 h-9 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center"><i class="fa-solid ${icon}"></i></div>
+        <span class="font-bold flex-1 truncate">${room.name}${lockIcon}</span>
+        ${deleteBtn}
       `;
+      btn.onclick = (e) => {
+        if (e.target.closest('button[title="حذف"]')) return;
+        selectChannel(`room_${docSnap.id}`, room.name, 'غرفة طلابية', room.type, btn, room.password);
+      };
+      customContainer.appendChild(btn);
     });
   });
 }
 
-window.selectChannel = (id, title, subtitle, type, btnElement) => {
+window.selectChannel = async (id, title, subtitle, type, btnElement, password = null) => {
+  // إذا كانت الغرفة خاصة وتحتاج كلمة مرور
+  if (id.startsWith('room_') && password) {
+    pendingPrivateRoom = { id, title, subtitle, type, btnElement, password };
+    document.getElementById('roomPasswordInput').value = '';
+    document.getElementById('roomPasswordError').classList.add('hidden');
+    document.getElementById('roomPasswordModal').classList.remove('hidden');
+    setTimeout(() => document.getElementById('roomPasswordInput').focus(), 100);
+    return;
+  }
+  
+  await loadChannelContent(id, title, subtitle, type, btnElement);
+};
+
+async function loadChannelContent(id, title, subtitle, type, btnElement) {
   currentChannelId = id;
   currentChannelType = type;
   document.getElementById('channelTitle').innerHTML = `<i class="fa-solid ${type === 'chat' ? 'fa-comments text-green-500' : 'fa-globe text-blue-500'}"></i> ${title}`;
   document.getElementById('channelSubtitle').innerText = subtitle;
   document.getElementById('mobileTitle').innerText = title;
+  
   const badge = document.getElementById('channelTypeBadge');
   if (type === 'chat') {
     badge.innerText = 'دردشة';
@@ -194,25 +220,164 @@ window.selectChannel = (id, title, subtitle, type, btnElement) => {
     badge.className = "text-[10px] bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 px-3 py-1 rounded-full font-bold";
     postText.placeholder = 'اكتب منشوراً...';
   }
+  
+  // إظهار زر إغلاق الغرفة فقط للغرف المخصصة (room_*)
+  const closeBtn = document.getElementById('closeRoomBtn');
+  if (closeBtn) {
+    if (id.startsWith('room_')) {
+      closeBtn.classList.remove('hidden');
+    } else {
+      closeBtn.classList.add('hidden');
+    }
+  }
+  
   document.querySelectorAll('aside button').forEach(btn => btn.classList.remove('active-room'));
-  if(btnElement) btnElement.classList.add('active-room');
+  if (btnElement) btnElement.classList.add('active-room');
   loadMessages(id, type);
   if (window.innerWidth < 768) document.getElementById('sidebar').classList.add('translate-x-full');
+}
+
+// ==========================================
+// 8.b. الغرف الخاصة - التحقق من كلمة المرور
+// ==========================================
+window.submitRoomPassword = async () => {
+  if (!pendingPrivateRoom) return;
+  const input = document.getElementById('roomPasswordInput').value;
+  const errorEl = document.getElementById('roomPasswordError');
+  
+  if (input !== pendingPrivateRoom.password) {
+    errorEl.classList.remove('hidden');
+    document.getElementById('roomPasswordInput').value = '';
+    return;
+  }
+  
+  errorEl.classList.add('hidden');
+  document.getElementById('roomPasswordModal').classList.add('hidden');
+  
+  const { id, title, subtitle, type, btnElement } = pendingPrivateRoom;
+  pendingPrivateRoom = null;
+  await loadChannelContent(id, title, subtitle, type, btnElement);
 };
 
-window.createRoom = async () => {
-  const name = document.getElementById('newRoomName').value.trim();
-  const type = document.getElementById('newRoomType').value;
-  if (!name) return alert('يرجى إدخال اسم الغرفة');
+window.cancelRoomPassword = () => {
+  pendingPrivateRoom = null;
+  document.getElementById('roomPasswordModal').classList.add('hidden');
+  document.getElementById('roomPasswordError').classList.add('hidden');
+};
+
+// السماح بالضغط على Enter في نافذة كلمة المرور
+document.getElementById('roomPasswordInput').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') submitRoomPassword();
+});
+
+// ==========================================
+// 8.c. إغلاق / حذف الغرفة
+// ==========================================
+window.closeCurrentRoom = async () => {
+  if (!currentChannelId.startsWith('room_')) {
+    alert('لا يمكن إغلاق القاعات الافتراضية');
+    return;
+  }
+  
+  const roomId = currentChannelId.replace('room_', '');
+  
+  // جلب بيانات الغرفة للتحقق من الملكية
   try {
-    await addDoc(collection(db, "rooms"), { name, type, createdBy: currentUserData.name, createdAt: serverTimestamp() });
-    document.getElementById('createRoomModal').classList.add('hidden');
-    document.getElementById('newRoomName').value = '';
-  } catch (e) { alert('حدث خطأ أثناء إنشاء الغرفة'); }
+    const roomSnap = await getDoc(doc(db, "rooms", roomId));
+    if (!roomSnap.exists()) {
+      alert('الغرفة غير موجودة');
+      return;
+    }
+    const room = roomSnap.data();
+    
+    if (room.createdBy !== currentUserData.name) {
+      alert('فقط من أنشأ الغرفة يمكنه إغلاقها');
+      return;
+    }
+    
+    if (!confirm(`هل أنت متأكد من إغلاق وحذف غرفة "${room.name}"؟\nسيتم حذف جميع الرسائل والمنشورات المرتبطة بها.`)) return;
+    
+    // حذف كل الرسائل/المنشورات المرتبطة بالغرفة
+    const q = query(collection(db, "posts"), where("channelId", "==", currentChannelId));
+    const snap = await getDocs(q);
+    const deletePromises = [];
+    snap.forEach((d) => {
+      deletePromises.push(deleteDoc(doc(db, "posts", d.id)));
+    });
+    await Promise.all(deletePromises);
+    
+    // حذف الغرفة نفسها
+    await deleteDoc(doc(db, "rooms", roomId));
+    
+    alert('تم إغلاق الغرفة بنجاح');
+    
+    // العودة إلى القاعة العامة
+    const generalBtn = document.querySelector('.active-room') || null;
+    selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', generalBtn);
+    document.querySelectorAll('aside button').forEach(b => b.classList.remove('active-room'));
+    const firstGeneral = document.querySelector('aside button');
+    if (firstGeneral) firstGeneral.classList.add('active-room');
+    
+  } catch (e) {
+    console.error(e);
+    alert('حدث خطأ أثناء إغلاق الغرفة: ' + e.message);
+  }
+};
+
+// حذف غرفة من القائمة الجانبية (للمالك)
+window.deleteRoom = async (roomId, roomName) => {
+  if (!confirm(`حذف غرفة "${roomName}"؟ سيتم حذف جميع محتوياتها.`)) return;
+  try {
+    // حذف الرسائل المرتبطة
+    const channelId = `room_${roomId}`;
+    const q = query(collection(db, "posts"), where("channelId", "==", channelId));
+    const snap = await getDocs(q);
+    const deletePromises = [];
+    snap.forEach((d) => deletePromises.push(deleteDoc(doc(db, "posts", d.id))));
+    await Promise.all(deletePromises);
+    
+    // حذف الغرفة
+    await deleteDoc(doc(db, "rooms", roomId));
+    
+    // إذا كانت الغرفة الحالية هي المحذوفة، عد للقاعة العامة
+    if (currentChannelId === channelId) {
+      document.querySelectorAll('aside button').forEach(b => b.classList.remove('active-room'));
+      const firstGeneral = document.querySelector('aside button');
+      if (firstGeneral) firstGeneral.classList.add('active-room');
+      selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', firstGeneral);
+    }
+  } catch (e) {
+    alert('حدث خطأ أثناء الحذف: ' + e.message);
+  }
 };
 
 // ==========================================
-// 9. File Upload (Supabase)
+// 9. Create Room
+// ==========================================
+window.createRoom = async () => {
+  const name = document.getElementById('newRoomName').value.trim();
+  const type = document.getElementById('newRoomType').value;
+  const password = document.getElementById('newRoomPassword').value.trim();
+  if (!name) return alert('يرجى إدخال اسم الغرفة');
+  try {
+    await addDoc(collection(db, "rooms"), {
+      name,
+      type,
+      password: password || null,
+      createdBy: currentUserData.name,
+      createdAt: serverTimestamp()
+    });
+    document.getElementById('createRoomModal').classList.add('hidden');
+    document.getElementById('newRoomName').value = '';
+    document.getElementById('newRoomPassword').value = '';
+  } catch (e) {
+    console.error(e);
+    alert('حدث خطأ أثناء إنشاء الغرفة: ' + e.message);
+  }
+};
+
+// ==========================================
+// 10. File Upload (Supabase) - مع إصلاح RLS
 // ==========================================
 window.handleFileUpload = (event) => {
   const file = event.target.files[0];
@@ -250,15 +415,29 @@ window.clearFile = () => {
 };
 
 async function uploadFileToSupabase(file) {
-  const fileName = `${Date.now()}_${file.name}`;
-  const { data, error } = await supabase.storage.from('forum-files').upload(fileName, file);
+  // تنظيف اسم الملف من الأحرف غير المسموحة
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const fileName = `${Date.now()}_${currentUserData.uid}_${safeName}`;
+  
+  // ✅ الحل: upsert: false لتجنب طلب RETURNING الذي يفشل بسبب سياسة SELECT
+  const { data, error } = await supabase.storage
+    .from('forum-files')
+    .upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: file.type
+    });
+  
   if (error) throw error;
-  const { data: urlData } = supabase.storage.from('forum-files').getPublicUrl(fileName);
+  
+  const { data: urlData } = supabase.storage
+    .from('forum-files')
+    .getPublicUrl(fileName);
   return urlData.publicUrl;
 }
 
 // ==========================================
-// 10. Send Post
+// 11. Send Post
 // ==========================================
 postBtn.addEventListener('click', async () => {
   const text = postText.value.trim();
@@ -298,7 +477,7 @@ postBtn.addEventListener('click', async () => {
 });
 
 // ==========================================
-// 11. Load Messages
+// 12. Load Messages
 // ==========================================
 function loadMessages(channelId, type) {
   if (unsubscribeMessages) unsubscribeMessages();
@@ -331,7 +510,6 @@ function loadMessages(channelId, type) {
         }
       }
 
-      // ========== التفاعلات ==========
       let reactionsHtml = '';
       if (type === 'posts') {
         const reactions = post.reactions || { like: [], love: [], laugh: [] };
@@ -420,7 +598,7 @@ function loadMessages(channelId, type) {
 }
 
 // ==========================================
-// 12. Add Comment
+// 13. Add Comment
 // ==========================================
 window.addComment = async (postId) => {
   const input = document.getElementById(`comment-input-${postId}`);
@@ -435,7 +613,7 @@ window.addComment = async (postId) => {
 };
 
 // ==========================================
-// 13. Delete Comment
+// 14. Delete Comment
 // ==========================================
 window.deleteComment = async (postId, commentIndex) => {
   if (!confirm('هل تريد حذف هذا التعليق؟')) return;
@@ -453,7 +631,7 @@ window.deleteComment = async (postId, commentIndex) => {
 };
 
 // ==========================================
-// 14. Delete Post
+// 15. Delete Post
 // ==========================================
 window.deletePost = async (postId) => {
   if (!confirm('هل تريد حذف هذا المنشور نهائياً؟')) return;
@@ -463,7 +641,7 @@ window.deletePost = async (postId) => {
 };
 
 // ==========================================
-// 15. React to Post
+// 16. React to Post
 // ==========================================
 window.reactToPost = async (postId, reactionType) => {
   try {
@@ -471,7 +649,7 @@ window.reactToPost = async (postId, reactionType) => {
     const postSnap = await getDoc(postRef);
     if (!postSnap.exists()) return;
 
-    const reactions = postSnap.data().reactions || { like: [], love: [], laugh: [] };
+        const reactions = postSnap.data().reactions || { like: [], love: [], laugh: [] };
     if (!reactions.like) reactions.like = [];
     if (!reactions.love) reactions.love = [];
     if (!reactions.laugh) reactions.laugh = [];
@@ -489,16 +667,56 @@ window.reactToPost = async (postId, reactionType) => {
         [`reactions.${reactionType}`]: arrayUnion(myEmail)
       });
     }
-  } catch (e) { 
+  } catch (e) {
     console.error(e);
-    alert('حدث خطأ أثناء التفاعل'); 
+    alert('حدث خطأ أثناء التفاعل');
   }
 };
 
 // ==========================================
-// 16. Auto-resize Textarea
+// 17. Auto-resize Textarea
 // ==========================================
 postText.addEventListener('input', function() {
   this.style.height = 'auto';
   this.style.height = (this.scrollHeight) + 'px';
 });
+
+// ==========================================
+// 18. إغلاق النوافذ عند النقر خارجها
+// ==========================================
+document.getElementById('createRoomModal').addEventListener('click', (e) => {
+  if (e.target.id === 'createRoomModal') {
+    document.getElementById('createRoomModal').classList.add('hidden');
+  }
+});
+
+document.getElementById('roomPasswordModal').addEventListener('click', (e) => {
+  if (e.target.id === 'roomPasswordModal') {
+    cancelRoomPassword();
+  }
+});
+
+// إغلاق نافذة إنشاء الغرفة بمفتاح Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('createRoomModal').classList.add('hidden');
+    if (!document.getElementById('roomPasswordModal').classList.contains('hidden')) {
+      cancelRoomPassword();
+    }
+  }
+});
+
+// ==========================================
+// 19. Language override (لتحديث الواجهة عند تغيير اللغة)
+// ==========================================
+if (typeof window.setLanguage === 'function') {
+  const originalSetLanguage = window.setLanguage;
+  window.setLanguage = function(lang) {
+    currentLang = lang;
+    originalSetLanguage(lang);
+    // إعادة رسم القنوات لتحديث النصوص إن لزم
+    if (currentUserData) {
+      renderChannels();
+    }
+  };
+}
