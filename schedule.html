@@ -57,11 +57,9 @@
 <body class="min-h-screen flex flex-col justify-between p-4 lg:p-8 bg-mesh text-slate-800 dark:text-slate-200">
 
   <main class="max-w-6xl mx-auto w-full space-y-6">
-
     <div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
       <div class="absolute -top-10 -left-10 w-40 h-40 bg-brand-400/20 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-400/20 rounded-full blur-3xl"></div>
-
       <div class="flex items-center gap-5 relative">
         <div class="w-20 h-20 bg-gradient-to-br from-brand-500 to-amber-500 text-white rounded-2xl flex items-center justify-center text-3xl shrink-0 shadow-lg shadow-brand-500/30">
           <i class="fa-solid fa-calendar-days"></i>
@@ -71,7 +69,6 @@
           <p class="text-slate-600 dark:text-slate-400 text-sm">حدد قسمك، سنتك الدراسية، وفوجك للحصول على توقيتك الخاص مع إمكانية إضافة ملاحظات.</p>
         </div>
       </div>
-
       <div class="flex gap-2 relative z-10 no-print">
         <button onclick="window.print()" class="w-12 h-12 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center shadow-sm hover:border-brand-400 hover:text-brand-600 transition" title="طباعة">
           <i class="fa-solid fa-print"></i>
@@ -123,205 +120,216 @@
     </div>
   </main>
 
-  <!-- 1. تحميل ملف البيانات (enstp.js) -->
-  <script src="enstp.js"></script>
-  
-  <!-- 2. كود التطبيق (يبدأ فقط بعد تحميل كل شيء) -->
   <script>
-    window.addEventListener('load', function() {
-      
-      let selectedDay = 'Sunday';
-      const dayNames = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
+    // ==========================================
+    // 1. قاعدة البيانات
+    // ==========================================
+    const groupsDatabase = {
+      'prep_1': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'prep_2': Array.from({length: 12}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_1': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_2': Array.from({length: 4}, (_, i) => ({ value: `g${i+1}`, label: `الفوج ${i+1}` })),
+      'dib_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }],
+      'dms_1': Array.from({length: 4}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
+      'dms_2': Array.from({length: 2}, (_, i) => ({ value: `sec${i+1}`, label: `Section ${i+1}` })),
+      'dms_3': [{ value: 'promo', label: 'الدفعة كاملة (Promo)' }]
+    };
 
-      // التأكد من أن البيانات تم تحميلها
-      if (typeof window.ENSTP_DATA === 'undefined') {
-        console.error("خطأ: لم يتم العثور على ملف enstp.js أو أنه لا يحتوي على البيانات.");
-        document.getElementById('schedule-list').innerHTML = '<div class="text-center text-red-500 font-bold p-4">خطأ: تأكد من وجود ملف enstp.js في نفس المجلد.</div>';
+    // بيانات الجدول (أضفت عينات شاملة لجميع الأقسام لتعمل فوراً)
+    const scheduleDatabase = {
+      'prep_1': { 'g1': { 'Saturday': [{ time: '08:00 - 09:30', subject: 'Computer Science 1 (TD)', prof: '---', room: 'Room 3', type: 'TD' }] } },
+      'prep_2': { 'g1': { 'Saturday': [{ time: '08:00 - 09:30', subject: 'Calculus 3 (Cours)', prof: 'Mr. Brahmi', room: 'Auditorium A', type: 'Cours' }] } },
+      'dib_1': { 'g1': { 'Sunday': [{ time: '08:00 - 09:30', subject: 'SOM', prof: 'LAIB', room: '7', type: 'Cours' }] } },
+      'dib_2': { 
+        'g1': { 'Sunday': [{ time: '08:00 - 10:00', subject: 'ROAD GEOT', prof: 'DERRICHE', room: '5', type: 'Cours' }] },
+        'g2': { 'Sunday': [{ time: '08:00 - 10:00', subject: 'SOIL MECH 4', prof: 'HAMADI', room: '22', type: 'Cours' }] }
+      },
+      'dib_3': { 'promo': { 'Saturday': [{ time: '08:00 - 12:40', subject: 'ADDITIONAL TRAINING', prof: 'BOUDJEMA', room: '20', type: 'TP' }] } },
+      'dms_1': { 'sec1': { 'Sunday': [{ time: '08:00 - 09:30', subject: 'SM 1', prof: 'Mrs MSILI', room: '16', type: 'Cours' }] } },
+      'dms_2': { 'sec1': { 'Sunday': [{ time: '08:00 - 10:00', subject: 'STRUCTURAL DYNAMICS', prof: 'M. HADID', room: '14', type: 'Cours' }] } },
+      'dms_3': { 'promo': { 'Saturday': [{ time: '08:00 - 11:05', subject: 'MIDAS', prof: 'Mr. GUERFI', room: '19', type: 'Cours' }] } }
+    };
+
+    // ==========================================
+    // 2. كود التطبيق
+    // ==========================================
+    let selectedDay = 'Sunday';
+    const dayNames = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
+
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+    function toggleDarkMode() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    function getNotesKey(year, group, day, index) { return `note_${year}_${group}_${day}_${index}`; }
+    function getNote(year, group, day, index) { return localStorage.getItem(getNotesKey(year, group, day, index)) || ''; }
+    function saveNote(year, group, day, index, value) {
+      if (value.trim()) localStorage.setItem(getNotesKey(year, group, day, index), value);
+      else localStorage.removeItem(getNotesKey(year, group, day, index));
+    }
+
+    function updateYears() {
+      const dept = document.getElementById('select-dept').value;
+      const yearSelect = document.getElementById('select-year');
+      yearSelect.innerHTML = '';
+      if (dept === 'prep') {
+        yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
+      } else if (dept === 'dib') {
+        yearSelect.innerHTML = `<option value="dib_1">السنة الأولى مهندس (DIB)</option><option value="dib_2">السنة الثانية مهندس (DIB)</option><option value="dib_3">السنة الثالثة مهندس (DIB)</option>`;
+      } else if (dept === 'dms') {
+        yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مهندس (DMS)</option><option value="dms_2">السنة الثانية مهندس (DMS)</option><option value="dms_3">السنة الثالثة مهندس (DMS)</option>`;
+      }
+      updateGroups();
+    }
+
+    function updateGroups() {
+      const year = document.getElementById('select-year').value;
+      const groupSelect = document.getElementById('select-group');
+      groupSelect.innerHTML = '';
+      const groups = groupsDatabase[year] || [];
+      groups.forEach(g => {
+        const option = document.createElement('option');
+        option.value = g.value;
+        option.textContent = g.label;
+        groupSelect.appendChild(option);
+      });
+      renderSchedule();
+    }
+
+    function changeDay(day) {
+      selectedDay = day;
+      document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`day-${day}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      document.getElementById('schedule-title').innerHTML = `<i class="fa-solid fa-list-check"></i> برنامج الحصص ليوم ${dayNames[day]}`;
+      renderSchedule();
+    }
+
+    function toggleNote(index) {
+      const section = document.getElementById(`note-section-${index}`);
+      if (section) section.classList.toggle('open');
+    }
+
+    function renderSchedule() {
+      const year = document.getElementById('select-year').value;
+      const group = document.getElementById('select-group').value;
+      const container = document.getElementById('schedule-list');
+      container.innerHTML = '';
+
+      let items = [];
+      if (scheduleDatabase[year] && scheduleDatabase[year][group] && scheduleDatabase[year][group][selectedDay]) {
+        items = scheduleDatabase[year][group][selectedDay];
+      }
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="text-center p-8 text-slate-500 dark:text-slate-400 font-bold bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+            <i class="fa-regular fa-face-smile-wink text-4xl mb-3 text-brand-300 dark:text-brand-500 block"></i>
+            لا توجد حصص مبرمجة في هذا اليوم لهذا الفوج.
+          </div>
+        `;
         return;
       }
 
-      // Dark Mode
-      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-      }
+      items.forEach((item, index) => {
+        let typeBadge = '';
+        let typeColor = '';
+        if (item.type === 'Cours') { typeBadge = 'محاضرة'; typeColor = 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'; }
+        if (item.type === 'TD') { typeBadge = 'أعمال موجهة (TD)'; typeColor = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'; }
+        if (item.type === 'TP') { typeBadge = 'أعمال تطبيقية (TP)'; typeColor = 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'; }
 
-      window.toggleDarkMode = function() {
-        if (document.documentElement.classList.contains('dark')) {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        } else {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        }
-      };
+        const note = getNote(year, group, selectedDay, index);
+        const hasNote = note.trim() !== '';
 
-      // Notes Storage
-      function getNotesKey(year, group, day, index) { return `note_${year}_${group}_${day}_${index}`; }
-      function getNote(year, group, day, index) { return localStorage.getItem(getNotesKey(year, group, day, index)) || ''; }
-      function saveNote(year, group, day, index, value) {
-        if (value.trim()) localStorage.setItem(getNotesKey(year, group, day, index), value);
-        else localStorage.removeItem(getNotesKey(year, group, day, index));
-      }
+        const row = document.createElement('div');
+        row.className = "schedule-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-lg hover:border-brand-300 dark:hover:border-brand-600 transition-all overflow-hidden";
+        row.style.animationDelay = `${index * 0.05}s`;
 
-      // Update Functions
-      window.updateYears = function() {
-        const dept = document.getElementById('select-dept').value;
-        const yearSelect = document.getElementById('select-year');
-        yearSelect.innerHTML = '';
-
-        if (dept === 'prep') {
-          yearSelect.innerHTML = `<option value="prep_1">السنة الأولى تحضيري (1CP)</option><option value="prep_2">السنة الثانية تحضيري (2CP)</option>`;
-        } else if (dept === 'dib') {
-          yearSelect.innerHTML = `<option value="dib_1">السنة الأولى مهندس (DIB)</option><option value="dib_2">السنة الثانية مهندس (DIB)</option><option value="dib_3">السنة الثالثة مهندس (DIB)</option>`;
-        } else if (dept === 'dms') {
-          yearSelect.innerHTML = `<option value="dms_1">السنة الأولى مهندس (DMS)</option><option value="dms_2">السنة الثانية مهندس (DMS)</option><option value="dms_3">السنة الثالثة مهندس (DMS)</option>`;
-        }
-        updateGroups();
-      };
-
-      window.updateGroups = function() {
-        const year = document.getElementById('select-year').value;
-        const groupSelect = document.getElementById('select-group');
-        groupSelect.innerHTML = '';
-        
-        // قراءة البيانات من enstp.js
-        const groups = ENSTP_DATA.groups[year] || [];
-        
-        groups.forEach(g => {
-          const option = document.createElement('option');
-          option.value = g.value;
-          option.textContent = g.label;
-          groupSelect.appendChild(option);
-        });
-        renderSchedule();
-      };
-
-      window.changeDay = function(day) {
-        selectedDay = day;
-        document.querySelectorAll('.btn-day').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.getElementById(`day-${day}`);
-        if (activeBtn) activeBtn.classList.add('active');
-        document.getElementById('schedule-title').innerHTML = `<i class="fa-solid fa-list-check"></i> برنامج الحصص ليوم ${dayNames[day]}`;
-        renderSchedule();
-      };
-
-      window.toggleNote = function(index) {
-        const section = document.getElementById(`note-section-${index}`);
-        if (section) section.classList.toggle('open');
-      };
-
-      window.renderSchedule = function() {
-        const year = document.getElementById('select-year').value;
-        const group = document.getElementById('select-group').value;
-        const container = document.getElementById('schedule-list');
-        container.innerHTML = '';
-
-        let items = [];
-        if (ENSTP_DATA.schedule[year] && ENSTP_DATA.schedule[year][group] && ENSTP_DATA.schedule[year][group][selectedDay]) {
-          items = ENSTP_DATA.schedule[year][group][selectedDay];
-        }
-
-        if (items.length === 0) {
-          container.innerHTML = `
-            <div class="text-center p-8 text-slate-500 dark:text-slate-400 font-bold bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
-              <i class="fa-regular fa-face-smile-wink text-4xl mb-3 text-brand-300 dark:text-brand-500 block"></i>
-              لا توجد حصص مبرمجة في هذا اليوم لهذا الفوج.
-            </div>
-          `;
-          return;
-        }
-
-        items.forEach((item, index) => {
-          let typeBadge = '';
-          let typeColor = '';
-          if (item.type === 'Cours') { typeBadge = 'محاضرة'; typeColor = 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'; }
-          if (item.type === 'TD') { typeBadge = 'أعمال موجهة (TD)'; typeColor = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'; }
-          if (item.type === 'TP') { typeBadge = 'أعمال تطبيقية (TP)'; typeColor = 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'; }
-
-          const note = getNote(year, group, selectedDay, index);
-          const hasNote = note.trim() !== '';
-
-          const row = document.createElement('div');
-          row.className = "schedule-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-lg hover:border-brand-300 dark:hover:border-brand-600 transition-all overflow-hidden";
-          row.style.animationDelay = `${index * 0.05}s`;
-
-          row.innerHTML = `
-            <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div class="flex items-start gap-4">
-                <div class="relative">
-                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-100 to-amber-100 dark:from-brand-900/30 dark:to-amber-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold shrink-0">
-                    <i class="fa-solid fa-clock text-lg"></i>
-                  </div>
-                  ${hasNote ? '<div class="note-badge"><i class="fa-solid fa-pen" style="font-size:7px"></i></div>' : ''}
+        row.innerHTML = `
+          <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-start gap-4">
+              <div class="relative">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-100 to-amber-100 dark:from-brand-900/30 dark:to-amber-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold shrink-0">
+                  <i class="fa-solid fa-clock text-lg"></i>
                 </div>
-                <div class="flex-1">
-                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
-                    <h5 class="font-bold text-slate-900 dark:text-white text-base">${item.subject}</h5>
-                    <span class="${typeColor} px-2 py-0.5 rounded text-[10px] font-black">${typeBadge}</span>
-                    ${hasNote ? '<span class="note-indicator"><i class="fa-solid fa-pen" style="font-size:8px"></i> ملاحظة</span>' : ''}
-                  </div>
-                  <p class="text-sm text-slate-600 dark:text-slate-400 font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-user-tie text-slate-400"></i> الأستاذ: ${item.prof}
-                  </p>
-                </div>
+                ${hasNote ? '<div class="note-badge"><i class="fa-solid fa-pen" style="font-size:7px"></i></div>' : ''}
               </div>
-              <div class="flex flex-wrap items-center gap-2 shrink-0">
-                <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 p-2.5 rounded-xl border border-slate-100 dark:border-slate-700">
-                  <span class="text-xs font-bold text-slate-700 dark:text-slate-300 px-2 flex items-center gap-1">
-                    <i class="fa-solid fa-hourglass-start text-brand-400"></i> ${item.time}
-                  </span>
-                  <span class="w-px h-4 bg-slate-300 dark:bg-slate-600"></span>
-                  <span class="text-xs font-bold text-brand-700 dark:text-brand-400 px-2 flex items-center gap-1">
-                    <i class="fa-solid fa-location-dot"></i> ${item.room}
-                  </span>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                  <h5 class="font-bold text-slate-900 dark:text-white text-base">${item.subject}</h5>
+                  <span class="${typeColor} px-2 py-0.5 rounded text-[10px] font-black">${typeBadge}</span>
+                  ${hasNote ? '<span class="note-indicator"><i class="fa-solid fa-pen" style="font-size:8px"></i> ملاحظة</span>' : ''}
                 </div>
-                <button onclick="toggleNote(${index})" class="no-print w-10 h-10 rounded-xl ${hasNote ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'} hover:scale-105 transition flex items-center justify-center" title="إضافة ملاحظة">
-                  <i class="fa-solid fa-pen text-sm"></i>
+                <p class="text-sm text-slate-600 dark:text-slate-400 font-semibold flex items-center gap-1">
+                  <i class="fa-solid fa-user-tie text-slate-400"></i> الأستاذ: ${item.prof}
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
+              <div class="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 p-2.5 rounded-xl border border-slate-100 dark:border-slate-700">
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 px-2 flex items-center gap-1">
+                  <i class="fa-solid fa-hourglass-start text-brand-400"></i> ${item.time}
+                </span>
+                <span class="w-px h-4 bg-slate-300 dark:bg-slate-600"></span>
+                <span class="text-xs font-bold text-brand-700 dark:text-brand-400 px-2 flex items-center gap-1">
+                  <i class="fa-solid fa-location-dot"></i> ${item.room}
+                </span>
+              </div>
+              <button onclick="toggleNote(${index})" class="no-print w-10 h-10 rounded-xl ${hasNote ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'} hover:scale-105 transition flex items-center justify-center" title="إضافة ملاحظة">
+                <i class="fa-solid fa-pen text-sm"></i>
+              </button>
+            </div>
+          </div>
+          <div id="note-section-${index}" class="note-section ${hasNote ? 'open' : ''}">
+            <div class="px-4 pb-4">
+              <textarea 
+                id="note-text-${index}"
+                placeholder="✏️ اكتب ملاحظاتك هنا..."
+                class="note-textarea w-full p-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-200 font-semibold"
+                oninput="handleNoteChange(${index}, this.value)"
+              >${note}</textarea>
+              <div class="flex justify-between items-center mt-2">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+                  <i class="fa-solid fa-info-circle"></i> يتم الحفظ تلقائياً
+                </span>
+                <button onclick="clearNote(${index})" class="no-print text-[11px] text-red-500 hover:text-red-700 font-bold">
+                  <i class="fa-solid fa-trash"></i> حذف
                 </button>
               </div>
             </div>
-            <div id="note-section-${index}" class="note-section ${hasNote ? 'open' : ''}">
-              <div class="px-4 pb-4">
-                <textarea 
-                  id="note-text-${index}"
-                  placeholder="✏️ اكتب ملاحظاتك هنا (مثل: إحضار الآلة الحاسبة، مراجعة الفصل 3، إلخ...)"
-                  class="note-textarea w-full p-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-200 font-semibold"
-                  oninput="handleNoteChange(${index}, this.value)"
-                >${note}</textarea>
-                <div class="flex justify-between items-center mt-2">
-                  <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
-                    <i class="fa-solid fa-info-circle"></i> يتم الحفظ تلقائياً
-                  </span>
-                  <button onclick="clearNote(${index})" class="no-print text-[11px] text-red-500 hover:text-red-700 font-bold">
-                    <i class="fa-solid fa-trash"></i> حذف
-                  </button>
-                </div>
-              </div>
-            </div>
-          `;
-          container.appendChild(row);
-        });
-      };
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
 
-      let saveTimeout;
-      window.handleNoteChange = function(index, value) {
-        const year = document.getElementById('select-year').value;
-        const group = document.getElementById('select-group').value;
-        clearTimeout(saveTimeout);
-        saveTimeout = setTimeout(() => {
-          saveNote(year, group, selectedDay, index, value);
-          renderSchedule();
-        }, 800);
-      };
-
-      window.clearNote = function(index) {
-        const year = document.getElementById('select-year').value;
-        const group = document.getElementById('select-group').value;
-        localStorage.removeItem(getNotesKey(year, group, selectedDay, index));
+    let saveTimeout;
+    function handleNoteChange(index, value) {
+      const year = document.getElementById('select-year').value;
+      const group = document.getElementById('select-group').value;
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        saveNote(year, group, selectedDay, index, value);
         renderSchedule();
-      };
+      }, 800);
+    }
 
-      // التشغيل الأولي
+    function clearNote(index) {
+      const year = document.getElementById('select-year').value;
+      const group = document.getElementById('select-group').value;
+      localStorage.removeItem(getNotesKey(year, group, selectedDay, index));
+      renderSchedule();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
       updateYears();
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let today = days[new Date().getDay()];
