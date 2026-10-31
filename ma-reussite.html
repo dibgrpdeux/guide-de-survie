@@ -1,113 +1,315 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="indigo">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guide ENSTP - Ma Réussite</title>
+  
   <script src="translate.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            orange: {
+              50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
+              400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c',
+              800: '#9a3412', 900: '#7c2d12',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
-    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
-    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
-    .link-card { transition: all 0.3s ease; }
-    .link-card:hover { transform: translateY(-3px); border-color: #4f46e5; box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.2); }
+    body { 
+      font-family: 'Cairo', sans-serif; 
+      transition: background-color 0.4s ease, color 0.4s ease; 
+    }
+    
+    /* Animations personnalisées */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+
+    /* Cartes en verre */
+    .glass-card { 
+      background: rgba(255, 255, 255, 0.9); 
+      backdrop-filter: blur(20px); 
+      border: 1px solid rgba(255, 255, 255, 0.95); 
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05); 
+      transition: all 0.3s ease;
+    }
+    .dark .glass-card {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-nav { 
+      background: rgba(255, 255, 255, 0.95); 
+      backdrop-filter: blur(20px); 
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8); 
+      transition: all 0.3s ease;
+    }
+    .dark .glass-nav {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom-color: rgba(51, 65, 85, 0.8);
+    }
+
+    .link-card:hover { 
+      transform: translateY(-4px) scale(1.01); 
+      border-color: #f97316; 
+      box-shadow: 0 15px 30px -5px rgba(249, 115, 22, 0.25); 
+    }
+    .dark .link-card:hover {
+      box-shadow: 0 15px 30px -5px rgba(249, 115, 22, 0.15);
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between bg-orange-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200">
 
+  <!-- Header -->
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-black text-lg shadow-lg">E</div>
         <div>
-          <h1 class="font-bold text-gray-900 text-base leading-tight">ENSTP <span class="text-indigo-600">Ma Réussite</span></h1>
-          <p class="text-[11px] text-gray-500" data-i18n="nav_app_sub">المدرسة الوطنية العليا</p>
+          <h1 class="font-bold text-slate-900 dark:text-white text-base leading-tight">ENSTP <span class="text-orange-600 dark:text-orange-400">Ma Réussite</span></h1>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">المدرسة الوطنية العليا</p>
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="text-xs font-bold px-2 py-1 rounded bg-indigo-600 text-white">عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="text-xs font-bold px-2 py-1 rounded text-gray-600">FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="text-xs font-bold px-2 py-1 rounded text-gray-600">EN</button>
+        <!-- Langues -->
+        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="text-xs font-bold px-2 py-1 rounded bg-orange-600 text-white">عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="text-xs font-bold px-2 py-1 rounded text-slate-600 dark:text-slate-300">FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="text-xs font-bold px-2 py-1 rounded text-slate-600 dark:text-slate-300">EN</button>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+        
+        <!-- Mode Sombre -->
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center shadow-sm hover:bg-orange-50 transition">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-orange-400"></i>
+        </button>
+
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-800 dark:text-orange-400 hover:bg-orange-200 dark:hover:bg-slate-700 text-xs font-bold transition">الرئيسية</a>
       </div>
     </div>
   </header>
 
   <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-12">
     
-    <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="space-y-3 text-center md:text-left">
-        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600" data-i18n="reussite_subtitle">قسم التفوق والنجاح</span>
-        <h2 class="text-3xl font-black text-gray-900" data-i18n="reussite_title">مساحتك الأكاديمية</h2>
-        <p class="text-xs lg:text-sm text-gray-600 leading-relaxed max-w-2xl" data-i18n="reussite_desc">كل ما تحتاجه للنجاح...</p>
+    <!-- Hero Section -->
+    <div class="glass-card rounded-3xl p-8 lg:p-10 border border-white dark:border-slate-700 flex flex-col md:flex-row items-center justify-between gap-6 animate-fade-in-up">
+      <div class="space-y-3 text-center md:text-right">
+        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-orange-100 text-orange-700 dark:bg-slate-800 dark:text-orange-400">قسم التفوق والنجاح</span>
+        <h2 class="text-3xl font-black text-slate-900 dark:text-white">مساحتك الأكاديمية</h2>
+        <p class="text-xs lg:text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
+          كل ما تحتاجه للنجاح: جداول التوقيت، الملخصات، الامتحانات السابقة، وأفضل قنوات اليوتيوب لأفضل الأساتذة.
+        </p>
       </div>
-      <div class="w-24 h-24 rounded-3xl bg-amber-50 text-amber-500 flex items-center justify-center text-4xl shadow-md flex-shrink-0"><i class="fa-solid fa-award"></i></div>
+      <div class="w-24 h-24 rounded-3xl bg-orange-100 dark:bg-slate-800 text-orange-500 flex items-center justify-center text-4xl shadow-md flex-shrink-0 animate-pulse">
+        <i class="fa-solid fa-award"></i>
+      </div>
     </div>
 
     <!-- استعمال الزمن -->
-    <div class="space-y-4">
-      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-calendar-days text-indigo-600"></i> <span data-i18n="reussite_schedule_title">استعمال الزمن</span></h3>
-      <a href="schedule.html" class="glass-card link-card flex items-center justify-between p-6 rounded-2xl border border-gray-100 group">
+    <div class="space-y-4 animate-fade-in-up delay-1">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-calendar-days text-orange-500"></i> استعمال الزمن</h3>
+      <a href="schedule.html" class="glass-card link-card flex items-center justify-between p-6 rounded-2xl group">
         <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock"></i></div>
+          <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-slate-800 text-orange-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock"></i></div>
           <div>
-            <h4 class="font-bold text-gray-900 text-lg" data-i18n="reussite_schedule_desc">جدول التوقيت الخاص بفوجك</h4>
-            <p class="text-xs text-gray-500" data-i18n="reussite_schedule_sub">اطلع على أوقات المحاضرات...</p>
+            <h4 class="font-bold text-slate-900 dark:text-white text-lg">جدول التوقيت الخاص بفوجك</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">اطلع على أوقات المحاضرات والأعمال الموجهة.</p>
           </div>
         </div>
-        <i class="fa-solid fa-arrow-left text-indigo-500 group-hover:-translate-x-1 transition"></i>
+        <i class="fa-solid fa-arrow-left text-orange-500 group-hover:-translate-x-1 transition"></i>
       </a>
     </div>
 
-    <!-- روابط Drive الـ 11 -->
-    <div class="space-y-4">
-      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-file-signature text-emerald-600"></i> <span data-i18n="reussite_drives_title">الواجبات والامتحانات</span></h3>
+    <!-- روابط Drive -->
+    <div class="space-y-4 animate-fade-in-up delay-2">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-file-signature text-orange-500"></i> الواجبات والامتحانات (Drive)</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <a href="https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 1 (2CP)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 2 (Cours)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/0BzXU8qpz3MR4VXFZTlV4dEFpRjg" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 3 (Examens)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/1SZmGuMJM3-9C8VfAudUlaXVVJJ-bs1ik" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 4 (Résumés)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/1ObXGyxubN5d7MgtTyts1H7vUfTPSs3Z7" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 5 (Analyses)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/15N8LPatF0r-1AimmRPbpLa9aNUmV0cod" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 6 (Chimie/Physique)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/0B0pugt6XdltcQ09UR2h6UTdwWkU" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 7 (Maths)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 8 (Info)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 9 (Génie Civil)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 10 (Sujets divers)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
-        <a href="https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J" target="_blank" class="glass-card link-card p-5 rounded-2xl border border-gray-100 flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 11 (Concours)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-gray-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 1 (2CP)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 2 (Cours)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/0BzXU8qpz3MR4VXFZTlV4dEFpRjg" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 3 (Examens)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1SZmGuMJM3-9C8VfAudUlaXVVJJ-bs1ik" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 4 (Résumés)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1ObXGyxubN5d7MgtTyts1H7vUfTPSs3Z7" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 5 (Analyses)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/15N8LPatF0r-1AimmRPbpLa9aNUmV0cod" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 6 (Chimie/Physique)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/0B0pugt6XdltcQ09UR2h6UTdwWkU" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 7 (Maths)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 8 (Info)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 9 (Génie Civil)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 10 (Sujets divers)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
+        <a href="https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J" target="_blank" class="glass-card link-card p-5 rounded-2xl flex items-center justify-between"><div class="flex items-center gap-3"><i class="fa-brands fa-google-drive text-2xl text-emerald-500"></i><span class="font-bold text-sm">Drive 11 (Concours)</span></div><i class="fa-solid fa-arrow-up-right-from-square text-slate-400"></i></a>
       </div>
     </div>
 
     <!-- أساتذة ويوتيوب -->
-    <div class="space-y-4">
-      <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-600"></i> <span data-i18n="reussite_youtube_title">أساتذة وقنوات يوتيوب</span></h3>
+    <div class="space-y-6 animate-fade-in-up delay-3">
+      <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-brands fa-youtube text-red-600"></i> أفضل الأساتذة وقنوات يوتيوب</h3>
+      
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="glass-card p-6 rounded-2xl border border-gray-100">
-          <h4 class="font-black text-emerald-900 mb-4 border-b pb-2" data-i18n="reussite_2cp">السنة الثانية (2CP)</h4>
-          <ul class="space-y-3 text-sm">
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">MDF:</span> <span data-i18n="advice_mdf">أستاذ سليمان جلال...</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">RDM:</span> <span data-i18n="advice_rdm">أستاذ سليمان جلال...</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Physique 3/4:</span> <span data-i18n="advice_phys">أستاذ مغلاوي...</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Chimie 3:</span> <span data-i18n="advice_chimie3">قناة Prepa Chimie</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Chimie 4:</span> <span data-i18n="advice_chimie4">دروس</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Électricité:</span> <span data-i18n="advice_elec">أستاذ مكحلة وكتاب المسكي...</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Électronique:</span> <span data-i18n="advice_electro">Elmostafa Elkacem / FA Learning</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Mécanique 3/4:</span> <span data-i18n="advice_meca">أستاذ S / Symphony of Study...</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Ingénierie Humaine:</span> <span data-i18n="advice_inge">ابحث عنها بالتفصيل على يوتيوب...</span></li>
-            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i> <span class="font-bold">Analyse 3/4:</span> <span data-i18n="advice_analyse">اقرأ من الكورس... أستاذ العزيري هواري...</span></li>
+        
+        <!-- 2ème Année -->
+        <div class="glass-card p-6 rounded-3xl relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-20 h-20 bg-orange-100 dark:bg-orange-900/20 rounded-bl-full -z-10"></div>
+          <h4 class="font-black text-xl text-orange-700 dark:text-orange-400 mb-5 flex items-center gap-2"><i class="fa-solid fa-2"></i> السنة الثانية (2CP)</h4>
+          
+          <ul class="space-y-4 text-sm">
+            <!-- MDF -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-orange-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">MDF</span>
+                <span class="text-slate-600 dark:text-slate-400">Dr. Noureddine Azzam</span>
+                <a href="https://youtube.com/channel/UC0a8xy1l7eDQ9bVrsl2KmJg" target="_blank" class="block text-orange-500 hover:underline mt-1 text-xs truncate">youtube.com/channel/UC0a8...</a>
+              </div>
+            </li>
+            <!-- Analyse 3 -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-orange-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">Analyse 3</span>
+                <span class="text-slate-600 dark:text-slate-400">Mohammed-Ealmin BOUATOUCHE</span>
+                <a href="http://www.youtube.com/@mathinfo0199" target="_blank" class="block text-orange-500 hover:underline mt-1 text-xs truncate">youtube.com/@mathinfo0199</a>
+              </div>
+            </li>
+            <!-- Physique 3/4 -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-orange-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">Physique 3/4</span>
+                <span class="text-slate-600 dark:text-slate-400">E-Learning Physique with N. MAGHLAOUI</span>
+                <a href="https://www.youtube.com/@e-learningphysiquewithn.ma570" target="_blank" class="block text-orange-500 hover:underline mt-1 text-xs truncate">youtube.com/@e-learningphysique...</a>
+              </div>
+            </li>
+            <!-- Chimie 3 -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-orange-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">Chimie 3</span>
+                <span class="text-slate-600 dark:text-slate-400">PRÉPA CHIMIE</span>
+                <a href="https://www.youtube.com/@prepachimie2020" target="_blank" class="block text-orange-500 hover:underline mt-1 text-xs truncate">youtube.com/@prepachimie2020</a>
+              </div>
+            </li>
+            <!-- Électronique -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-orange-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">Électronique</span>
+                <span class="text-slate-600 dark:text-slate-400">Elmostafa Elkacem</span>
+                <a href="https://www.youtube.com/@ElmostafaElkacem" target="_blank" class="block text-orange-500 hover:underline mt-1 text-xs truncate">youtube.com/@ElmostafaElkacem</a>
+              </div>
+            </li>
           </ul>
         </div>
+
+        <!-- 1ère Année -->
+        <div class="glass-card p-6 rounded-3xl relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-20 h-20 bg-emerald-100 dark:bg-emerald-900/20 rounded-bl-full -z-10"></div>
+          <h4 class="font-black text-xl text-emerald-700 dark:text-emerald-400 mb-5 flex items-center gap-2"><i class="fa-solid fa-1"></i> السنة الأولى (1CP)</h4>
+          
+          <ul class="space-y-4 text-sm">
+            <!-- Analyses/Algèbres -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-emerald-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">Analyses / Algèbres</span>
+                <span class="text-slate-600 dark:text-slate-400">15 Min Math Lr 💡</span>
+                <a href="https://www.youtube.com/@15MinMathLr" target="_blank" class="block text-emerald-500 hover:underline mt-1 text-xs truncate">youtube.com/@15MinMathLr</a>
+              </div>
+            </li>
+            <!-- Physique -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-emerald-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">Physique</span>
+                <span class="text-slate-600 dark:text-slate-400">Prof_Ourihane Physique</span>
+                <a href="http://www.youtube.com/@Profourihane" target="_blank" class="block text-emerald-500 hover:underline mt-1 text-xs truncate">youtube.com/@Profourihane</a>
+              </div>
+            </li>
+            <!-- Chimie -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-emerald-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">Chimie</span>
+                <span class="text-slate-600 dark:text-slate-400">الأستاذ سامي براسي</span>
+                <a href="https://www.youtube.com/@الأستاذساميبراسي" target="_blank" class="block text-emerald-500 hover:underline mt-1 text-xs truncate">youtube.com/@الأستاذساميبراسي</a>
+              </div>
+            </li>
+            <!-- Informatique -->
+            <li class="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+              <i class="fa-solid fa-play text-emerald-500 mt-1"></i> 
+              <div>
+                <span class="font-black text-slate-900 dark:text-white block">Informatique</span>
+                <span class="text-slate-600 dark:text-slate-400">Hassan EL BAHI</span>
+                <a href="https://www.youtube.com/@hassanbahi" target="_blank" class="block text-emerald-500 hover:underline mt-1 text-xs truncate">youtube.com/@hassanbahi</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
 
   </main>
 
-  <footer class="glass-nav border-t border-gray-200 py-6 text-center text-xs text-gray-500">
-    <p>© 2026 ENSTP Kouba.</p>
+  <footer class="glass-nav border-t py-6 text-center text-xs text-slate-500 dark:text-slate-400 mt-10">
+    <p>© 2026 ENSTP Kouba. Tous droits réservés.</p>
   </footer>
+
+  <!-- Scripts -->
+  <script>
+    // 1. إعدادات الوضع الليلي (Dark Mode)
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    function toggleDarkMode() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // 2. دالة تغيير اللغة (موجودة مسبقاً في translate.js، لكننا نضمن عمل الأزرار)
+    function setLanguage(lang) {
+      // تغيير شكل الأزرار
+      ['ar', 'fr', 'en'].forEach(l => {
+        const btn = document.getElementById(`btn-${l}`);
+        if (btn) {
+          if (l === lang) btn.className = 'text-xs font-bold px-2 py-1 rounded bg-orange-600 text-white';
+          else btn.className = 'text-xs font-bold px-2 py-1 rounded text-slate-600 dark:text-slate-300';
+        }
+      });
+
+      // إذا كانت لديك دالة الترجمة في ملف آخر، سيتم استدعاؤها
+      if (typeof window.setLanguageOriginal === 'function') {
+        window.setLanguageOriginal(lang);
+      }
+    }
+  </script>
 </body>
 </html>
