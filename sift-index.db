@@ -1,0 +1,5 @@
+# تثبيت المكتبة
+pip install sift-search
+
+# إنشاء الفهرس من مجلد الموقع أو الوثائق
+sift index ./المسار_إلى_ملفات_موقعك -o public/sift-index.db
