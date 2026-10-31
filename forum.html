@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>المنتدى الطلابي - ENSTP</title>
   
-  <!-- كود الترجمة -->
   <script src="translate.js"></script>
   <style>
     body { top: 0 !important; }
@@ -28,8 +27,7 @@
       theme: {
         extend: {
           colors: {
-            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' },
-            tg: { bg: '#ffffff', dark: '#0f172a', side: '#f8fafc', sideDark: '#1e293b', bubble: '#e0f2fe', bubbleDark: '#334155' }
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
           }
         }
       }
@@ -44,7 +42,6 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb { background: #475569; }
 
-    /* Animations */
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
     
@@ -55,17 +52,18 @@
     .chat-bubble-me { background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-radius: 18px 18px 4px 18px; }
     .chat-bubble-other { background: #ffffff; color: #1e293b; border-radius: 18px 18px 18px 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
     .dark .chat-bubble-other { background: #1e293b; color: #f8fafc; border: 1px solid #334155; }
+
+    .active-room { background: #f3f4f6; }
+    .dark .active-room { background: #334155; }
   </style>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 h-screen overflow-hidden">
 
-  <!-- شاشة التحميل -->
   <div id="loadingScreen" class="fixed inset-0 bg-white dark:bg-slate-900 flex flex-col items-center justify-center z-50">
     <div class="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mb-4"></div>
     <p class="font-bold text-gray-600 dark:text-gray-400">جاري الاتصال بالمنتدى...</p>
   </div>
 
-  <!-- شاشة تسجيل الدخول -->
   <div id="authScreen" class="fixed inset-0 bg-slate-900/95 flex items-center justify-center z-40 p-4 backdrop-blur-md hidden">
     <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-8 w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-pop">
       
@@ -125,13 +123,10 @@
     </div>
   </div>
 
-  <!-- واجهة المنتدى الرئيسية -->
   <div id="forumScreen" class="hidden h-full flex flex-row relative">
     
-    <!-- القائمة الجانبية (مثل تليجرام) -->
-    <aside id="sidebar" class="w-80 bg-white dark:bg-slate-800 border-l border-gray-200 dark:border-slate-700 flex flex-col h-full shrink-0 transition-all duration-300 z-20 absolute md:relative right-0">
+    <aside id="sidebar" class="w-80 bg-white dark:bg-slate-800 border-l border-gray-200 dark:border-slate-700 flex flex-col h-full shrink-0 transition-all duration-300 z-20 absolute md:relative right-0 translate-x-full md:translate-x-0">
       
-      <!-- هيدر القائمة -->
       <div class="p-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-between bg-white dark:bg-slate-800">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
@@ -151,10 +146,7 @@
         </div>
       </div>
 
-      <!-- قائمة الغرف -->
       <div class="flex-1 overflow-y-auto p-3 space-y-6">
-        
-        <!-- قسم المنشورات -->
         <div>
           <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">ساحة المنشورات</p>
           <button onclick="selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300 active-room">
@@ -163,7 +155,6 @@
           </button>
         </div>
 
-        <!-- قسم الدردشة -->
         <div>
           <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">غرف الدردشة</p>
           <div class="space-y-1">
@@ -186,7 +177,6 @@
           </div>
         </div>
 
-        <!-- غرف الطلبة -->
         <div>
           <div class="flex justify-between items-center px-2 mb-2">
             <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">غرف الطلبة</p>
@@ -195,7 +185,6 @@
         </div>
       </div>
 
-      <!-- بروفايل المستخدم -->
       <div class="p-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 flex items-center justify-between">
         <div class="flex items-center gap-3 overflow-hidden">
           <div id="userAvatar" class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
@@ -208,18 +197,15 @@
       </div>
     </aside>
 
-    <!-- المحتوى الرئيسي (الدردشة/المنشورات) -->
-    <main class="flex-1 flex flex-col bg-gray-50 dark:bg-slate-900 h-full relative transition-all duration-300">
+    <main class="flex-1 flex flex-col bg-gray-50 dark:bg-slate-900 h-full relative transition-all duration-300 w-full">
       
-      <!-- شريط علوي للموبايل -->
       <div class="md:hidden bg-white dark:bg-slate-800 p-3 flex items-center justify-between border-b border-gray-200 dark:border-slate-700">
-        <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="text-gray-600 dark:text-gray-300 text-xl"><i class="fa-solid fa-bars"></i></button>
+        <button onclick="toggleSidebar()" class="text-gray-600 dark:text-gray-300 text-xl"><i class="fa-solid fa-bars"></i></button>
         <h2 id="mobileTitle" class="font-bold text-gray-800 dark:text-white">القاعة العامة</h2>
         <div class="w-8"></div>
       </div>
 
-      <!-- هيدر القناة -->
-      <header class="bg-white dark:bg-slate-800 p-4 shadow-sm border-b border-gray-200 dark:border-slate-700 flex justify-between items-center z-10 hidden md:flex">
+      <header class="bg-white dark:bg-slate-800 p-4 shadow-sm border-b border-gray-200 dark:border-slate-700 justify-between items-center z-10 hidden md:flex">
         <div>
           <h2 id="channelTitle" class="text-lg font-black text-gray-900 dark:text-white flex items-center gap-2">
             <i class="fa-solid fa-globe text-blue-500"></i> القاعة العامة
@@ -229,27 +215,18 @@
         <span id="channelTypeBadge" class="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full font-bold">منشورات</span>
       </header>
 
-      <!-- منطقة الرسائل -->
-      <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24 scroll-smooth">
-        <!-- سيتم تحميل الرسائل هنا -->
-      </div>
+      <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24 scroll-smooth"></div>
 
-      <!-- منطقة الإرسال -->
       <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 p-3 shadow-lg">
         <div class="max-w-3xl mx-auto flex gap-2 items-end">
-          
-          <!-- زر إرفاق ملفات -->
           <button onclick="document.getElementById('fileInput').click()" class="w-11 h-11 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-300 flex items-center justify-center hover:bg-brand-100 dark:hover:bg-brand-900/40 hover:text-brand-600 transition shrink-0 mb-0.5">
             <i class="fa-solid fa-paperclip text-lg"></i>
           </button>
           <input type="file" id="fileInput" class="hidden" accept="image/*,video/*,application/pdf" onchange="handleFileUpload(event)">
 
           <div class="flex-1 bg-gray-100 dark:bg-slate-900 rounded-2xl border border-transparent focus-within:border-brand-300 dark:focus-within:border-brand-600 transition-all p-2">
-            <!-- معاينة الملف المرفق -->
             <div id="filePreview" class="hidden px-2 pb-2"></div>
-            
-            <textarea id="postText" rows="1" placeholder="اكتب رسالة..." class="w-full bg-transparent border-none outline-none resize-none px-2 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-500" ></textarea>
-            
+            <textarea id="postText" rows="1" placeholder="اكتب رسالة..." class="w-full bg-transparent border-none outline-none resize-none px-2 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-500"></textarea>
             <div class="flex justify-end items-center px-2 pt-1">
               <button id="postBtn" class="bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md flex items-center gap-2">
                 <span>إرسال</span> <i class="fa-solid fa-paper-plane text-xs"></i>
@@ -261,7 +238,6 @@
     </main>
   </div>
 
-  <!-- نافذة إنشاء غرفة -->
   <div id="createRoomModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-pop border border-gray-200 dark:border-slate-700">
       <h3 class="text-xl font-black text-gray-900 dark:text-white mb-4">إنشاء غرفة جديدة</h3>
@@ -285,7 +261,6 @@
     </div>
   </div>
 
-  <!-- استدعاء سكريبت Firebase -->
   <script type="module" src="forum.js"></script>
 </body>
 </html>
