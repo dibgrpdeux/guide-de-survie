@@ -13,39 +13,42 @@
   
   <style>
     :root { 
-      --primary: #d97706;       /* برتقالي ذهبي */
-      --primary-dark: #b45309;  /* برتقالي غامق */
-      --primary-light: #fef3c7; /* كريمي */
-      --deep: #78350f;          /* بني داكن للهيدر */
-      --deep-light: #92400e;    /* بني متوسط */
+      --primary: #d97706;       
+      --primary-dark: #b45309;  
+      --primary-light: #fef3c7; 
+      --deep: #78350f;          
     }
     
-    body { font-family: 'Cairo', sans-serif; background: #fffbeb; color: #1e293b; }
+    /* 🟢 خلفية بيضاء نقية ومريحة للعين */
+    body { 
+      font-family: 'Cairo', sans-serif; 
+      background-color: #ffffff; 
+      color: #1e293b; 
+    }
     
-    /* خلفية متدرجة دافئة */
+    /* 🎨 زخرفة خفيفة جداً في خلفية الصفحة (لا تؤذي العين) */
     .ambient-bg { 
       position: fixed; inset: 0; z-index: -1; 
-      background: 
-        radial-gradient(circle at 20% 10%, rgba(251, 191, 36, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 90%, rgba(217, 119, 6, 0.12) 0%, transparent 40%),
-        linear-gradient(135deg, #fffbeb 0%, #fef3c7 60%, #fde68a 100%);
+      background-color: #ffffff;
+      background-image: radial-gradient(#fde68a 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.3; /* خفيفة جداً */
     }
 
     .glass-card { 
-      background: rgba(255, 255, 255, 0.96); 
-      backdrop-filter: blur(16px); 
-      border: 1px solid rgba(251, 191, 36, 0.3); 
-      box-shadow: 0 10px 30px -10px rgba(146, 64, 14, 0.15); 
+      background: #ffffff; 
+      border: 1px solid #fef3c7; 
+      box-shadow: 0 4px 20px rgba(146, 64, 14, 0.05); 
     }
 
     /* أزرار اختيار السنة */
-    .btn-year { background: white; border: 2px solid #fed7aa; color: #92400e; font-weight: 700; }
-    .btn-year:hover { border-color: #f59e0b; }
+    .btn-year { background: white; border: 2px solid #fde68a; color: #92400e; font-weight: 700; }
+    .btn-year:hover { border-color: #f59e0b; background: #fffbeb; }
     .btn-year.active { 
       background: linear-gradient(135deg, #d97706, #f59e0b); 
       color: white; 
       border-color: transparent;
-      box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.5); 
+      box-shadow: 0 8px 20px -5px rgba(217, 119, 6, 0.4); 
     }
 
     /* أزرار المواد */
@@ -54,7 +57,7 @@
       background: linear-gradient(135deg, #d97706, #f59e0b); 
       color: white; 
       border-color: transparent; 
-      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35); 
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3); 
       transform: translateY(-1px);
     }
     
@@ -64,108 +67,80 @@
     .lang-btn.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; box-shadow: 0 4px 10px rgba(217,119,6,0.3); }
 
     /* ============================================
-       🎨 تصميم بطاقة الأستاذ المطوّر
+       🎨 تصميم بطاقة الأستاذ (محسّن وإبراز الصورة)
        ============================================ */
     .teacher-card {
       background: white;
-      border-radius: 28px;
+      border-radius: 24px;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 10px 30px -10px rgba(146, 64, 14, 0.12);
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      box-shadow: 0 4px 15px rgba(146, 64, 14, 0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: flex;
       flex-direction: column;
-      border: 1px solid rgba(251, 191, 36, 0.2);
+      border: 1px solid #fef3c7;
     }
     
     .teacher-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 25px 50px -15px rgba(217, 119, 6, 0.35);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px -10px rgba(217, 119, 6, 0.2);
     }
 
-    /* الهيدر العلوي - بني/برتقالي دافئ (بدلاً من الأزرق) */
+    /* الهيدر العلوي */
     .card-header-bg {
-      height: 110px;
-      background: 
-        radial-gradient(circle at 30% 20%, rgba(251, 191, 36, 0.4) 0%, transparent 50%),
-        linear-gradient(135deg, #78350f 0%, #b45309 50%, #d97706 100%);
+      height: 90px;
+      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
       position: relative;
-      overflow: hidden;
-    }
-    
-    /* نقشة زخرفية في الهيدر */
-    .card-header-bg::before {
-      content: '';
-      position: absolute;
-      top: -20px;
-      left: -20px;
-      width: 100px;
-      height: 100px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-    }
-    .card-header-bg::after {
-      content: '';
-      position: absolute;
-      bottom: -30px;
-      right: 40%;
-      width: 120px;
-      height: 120px;
-      border: 2px solid rgba(255, 255, 255, 0.08);
-      border-radius: 50%;
+      /* زخرفة هندسية دقيقة داخل الهيدر */
+      background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 10px);
     }
 
-    /* زر صح في الزاوية */
+    /* زر صح */
     .check-badge {
       position: absolute;
-      top: 14px;
-      left: 14px;
-      width: 30px;
-      height: 30px;
+      top: 14px; left: 14px;
+      width: 30px; height: 30px;
       background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(5px);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 12px;
-      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
       z-index: 2;
     }
 
-    /* شارة القسم (يمين) */
+    /* شارة القسم */
     .dept-badge {
       position: absolute;
-      top: 14px;
-      right: 14px;
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
-      color: #78350f;
+      top: 14px; right: 14px;
+      background: white;
+      color: #92400e;
       padding: 5px 14px;
       border-radius: 20px;
       font-size: 11px;
       font-weight: 800;
-      box-shadow: 0 4px 12px rgba(120, 53, 15, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       z-index: 2;
-      border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
-    /* صورة الأستاذ الدائرية */
-    .teacher-photo-wrap {
-      position: absolute;
-      bottom: -50px;
-      right: 24px;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 5px solid white;
-      background: #fef3c7;
-      box-shadow: 0 10px 25px rgba(120, 53, 15, 0.25);
-      overflow: hidden;
+    /* 🚀 حاوية الصورة - تظهر بوضوح تام */
+    .photo-section {
+      position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
-      z-index: 3;
+      margin-top: -50px; 
+      z-index: 10;
+    }
+
+    .teacher-photo-wrap {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: #ffffff;
+      /* حدود بيضاء ناعمة تبرز الصورة */
+      border: 5px solid #ffffff; 
+      box-shadow: 0 8px 20px rgba(146, 64, 14, 0.15);
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
       transition: transform 0.3s ease;
     }
     
@@ -173,29 +148,26 @@
       transform: scale(1.05);
     }
     
+    /* الصورة تملأ الحاوية 100% بدون أي خطوط بيضاء تقطعها */
     .teacher-photo-wrap img {
-      width: 100%;
-      height: 100%;
+      width: 100%; 
+      height: 100%; 
       object-fit: cover;
+      object-position: center top; /* التركيز على الوجه */
     }
 
     .teacher-photo-initials {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       background: linear-gradient(135deg, #d97706, #f59e0b);
       color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 2rem;
-      letter-spacing: 1px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 2.5rem; letter-spacing: 1px;
     }
 
     /* محتوى البطاقة */
     .card-content {
-      padding: 60px 24px 24px 24px;
-      text-align: right;
+      padding: 20px 24px 24px 24px;
+      text-align: center;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
@@ -205,29 +177,38 @@
       font-size: 1.3rem;
       font-weight: 900;
       color: #78350f;
-      margin-bottom: 4px;
-      line-height: 1.2;
+      margin-bottom: 6px;
     }
 
     .teacher-title {
       font-size: 0.8rem;
       color: #b45309;
       font-weight: 800;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #fef3c7;
-      padding: 3px 10px;
-      border-radius: 8px;
-      align-self: flex-start;
+      background: #fffbeb;
+      padding: 4px 12px;
+      border-radius: 12px;
+      align-self: center;
+      border: 1px solid #fde68a;
+    }
+
+    /* خط فاصل مزخرف خفيف */
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #fde68a, transparent);
+      margin-bottom: 16px;
+      width: 80%;
+      align-self: center;
     }
 
     .teacher-desc {
       font-size: 0.85rem;
       color: #64748b;
       line-height: 1.7;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       flex-grow: 1;
       display: -webkit-box;
       -webkit-line-clamp: 3;
@@ -243,54 +224,42 @@
       padding: 13px;
       border-radius: 14px;
       text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 15px rgba(217, 119, 6, 0.35);
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
       cursor: pointer;
-      border: none;
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.9rem;
+      border: none; width: 100%;
+      font-family: inherit; font-size: 0.9rem;
     }
     
     .btn-card-primary:hover { 
       background: linear-gradient(135deg, #b45309, #d97706); 
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(217, 119, 6, 0.5);
+      box-shadow: 0 8px 20px rgba(217, 119, 6, 0.4);
     }
 
     .btn-card-secondary {
-      background: #fffbeb;
+      background: #ffffff;
       color: #92400e;
       font-weight: 700;
       padding: 12px;
       border-radius: 14px;
       text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: all 0.3s ease;
-      border: 1.5px solid #fed7aa;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 8px;
-      text-decoration: none;
-      font-size: 0.85rem;
+      border: 1.5px solid #fde68a;
+      cursor: pointer; width: 100%; margin-top: 10px;
+      text-decoration: none; font-size: 0.85rem;
     }
     
     .btn-card-secondary:hover { 
-      background: #fef3c7; 
-      border-color: #f59e0b;
+      background: #fffbeb; border-color: #f59e0b;
     }
 
     /* Modal */
     .modal-overlay {
-      background: rgba(120, 53, 15, 0.7);
-      backdrop-filter: blur(8px);
+      background: rgba(120, 53, 15, 0.6);
+      backdrop-filter: blur(5px);
     }
   </style>
 </head>
@@ -302,16 +271,16 @@
     <!-- Header -->
     <div class="text-center space-y-3 relative pt-14 md:pt-0">
       <!-- أزرار الترجمة -->
-      <div class="absolute top-0 left-0 flex items-center gap-1 bg-white/90 backdrop-blur p-1.5 rounded-2xl border-2 border-amber-200 shadow-lg">
+      <div class="absolute top-0 left-0 flex items-center gap-1 bg-white p-1.5 rounded-2xl border border-amber-200 shadow-sm">
         <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
         <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
         <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
       </div>
 
-      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 font-bold text-xs uppercase tracking-wider border-2 border-amber-300 shadow-sm">
+      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-50 text-amber-800 font-bold text-xs uppercase tracking-wider border border-amber-200">
         <i class="fa-solid fa-graduation-cap"></i> ENSTP Kouba
       </div>
-      <h1 class="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-800 via-orange-700 to-amber-600">
+      <h1 class="text-4xl lg:text-5xl font-black text-amber-900">
         <span data-i18n="ens_title">هيئة التدريس</span>
       </h1>
       <p class="text-sm lg:text-base text-amber-800 max-w-2xl mx-auto" data-i18n="ens_subtitle">اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.</p>
@@ -337,44 +306,44 @@
     </div>
 
     <!-- 3. شبكة الأساتذة -->
-    <div id="teachers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    <div id="teachers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-8"></div>
 
   </div>
 
   <!-- Modal -->
   <div id="teacher-modal" class="fixed inset-0 z-50 modal-overlay hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 border-2 border-amber-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 border border-amber-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
       
-      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center justify-center transition z-10 shadow-sm">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center justify-center transition z-10">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <div class="flex flex-col sm:flex-row items-center gap-5 border-b-2 border-amber-100 pb-6">
-        <div id="modal-img-box" class="w-28 h-28 rounded-2xl bg-gradient-to-tr from-amber-600 to-orange-400 text-white flex items-center justify-center text-3xl font-black shadow-xl overflow-hidden flex-shrink-0 border-4 border-white"></div>
+      <div class="flex flex-col sm:flex-row items-center gap-5 border-b border-amber-100 pb-6">
+        <div id="modal-img-box" class="w-28 h-28 rounded-full bg-gray-50 text-amber-600 flex items-center justify-center text-3xl font-black shadow-md overflow-hidden flex-shrink-0 border-4 border-white"></div>
         <div class="space-y-1 text-center sm:text-right">
           <h2 id="modal-name" class="text-2xl font-black text-amber-900"></h2>
-          <p id="modal-grade" class="text-xs font-bold text-amber-700 uppercase tracking-wide bg-amber-50 inline-block px-3 py-1 rounded-lg"></p>
-          <p id="modal-email" class="text-xs font-semibold text-slate-500 flex items-center justify-center sm:justify-start gap-1.5 pt-2" dir="ltr">
+          <p id="modal-grade" class="text-xs font-bold text-amber-700 bg-amber-50 inline-block px-3 py-1 rounded-lg"></p>
+          <p id="modal-email" class="text-xs font-semibold text-gray-500 flex items-center justify-center sm:justify-start gap-1.5 pt-2" dir="ltr">
             <i class="fa-solid fa-envelope text-amber-500"></i>
             <span></span>
           </p>
         </div>
       </div>
 
-      <div class="space-y-4 text-sm text-slate-700 leading-relaxed text-right" dir="rtl">
+      <div class="space-y-4 text-sm text-gray-700 leading-relaxed text-right" dir="rtl">
         <div>
           <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-book-bookmark text-amber-500"></i> <span data-i18n="ens_module">المواد المدرّسة:</span></h4>
-          <p id="modal-modules" class="bg-amber-50 p-3 rounded-xl border-2 border-amber-100 font-semibold text-amber-900"></p>
+          <p id="modal-modules" class="bg-amber-50 p-3 rounded-xl border border-amber-100 font-semibold text-amber-900"></p>
         </div>
 
         <div id="modal-advice-box">
           <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-comment-dots text-orange-500"></i> <span data-i18n="ens_advice">نصيحة للطلبة:</span></h4>
-          <p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border-2 border-orange-100 italic text-orange-900"></p>
+          <p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border border-orange-100 italic text-orange-900"></p>
         </div>
 
         <div id="modal-research-box">
           <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-microscope text-emerald-600"></i> <span data-i18n="ens_research">البحث العلمي:</span></h4>
-          <p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border-2 border-emerald-100 text-emerald-900"></p>
+          <p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p>
         </div>
 
         <div id="modal-links-box">
@@ -479,10 +448,9 @@
         { id: 'boubidi', name: 'BOUBIDI', grade: 'temp', email: 'boubidi@enstp.edu.dz', subject: 'Dessin Technique', dept: 'الرسم التقني' }
       ],
       '2cp': [
-        { id: 'berroudji', name: 'BERROUDJI Sid-Ahmed', grade: 'prof', email: 's.berroudji@enstp.edu.dz', subject: 'Physique 3 / MDF', modules: 'Physics 3, Physics 4, Fluids mechanics', advice: 'Travaillez régulièrement et ne baissez pas les bras.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/sid-ahmed-berroudji/' }], photo: 'beroudji.jpg', dept: 'الفيزياء' },
+        { id: 'berroudji', name: 'BERROUDJI Sid-Ahmed', grade: 'prof', email: 's.berroudji@enstp.edu.dz', subject: 'Physique 3 / MDF', modules: 'Physics 3, Physics 4, Fluids mechanics', advice: 'Travaillez régulièrement et ne baissez pas les bras.', links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/sid-ahmed-berroudji/' }], photo: 'berroudji.jpg', dept: 'الفيزياء' },
         { id: 'toumi', name: 'TOUMI', grade: 'temp', email: 'toumi@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
-        { id: 'kellou', name: 'KELLOU H.', grade: 'temp', email: 'h.kellou@enstp.edu.dz', subject: 'Physique 3 / MDF', dept: 'الفيزياء' },
-        { id: 'kias_2', name: 'KIAS', grade: 'temp', email: 'm.kias@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
+        { id: 'kellou', name: 'KELLOU H.', grade: 'temp', email: 'h.kellou@enstp.edu.dz', subject: 'Physique 3 / MDF', dept: 'الفيزي        { id: 'kias_2', name: 'KIAS', grade: 'temp', email: 'm.kias@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
         { id: 'meddah', name: 'MEDDAH', grade: 'temp', email: 'meddah@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
         { id: 'taibi', name: 'TAIBI', grade: 'temp', email: 'taibi@enstp.edu.dz', subject: 'Physique 3', dept: 'الفيزياء' },
         { id: 'brahmi', name: 'BRAHMI', grade: 'temp', email: 'brahmi@enstp.edu.dz', subject: 'Analyse 3', dept: 'الرياضيات' },
@@ -533,14 +501,14 @@
       subjectsBox.innerHTML = '';
       
       const allBtn = document.createElement('button');
-      allBtn.className = `badge-subject px-4 py-2 rounded-xl border-2 text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
+      allBtn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
       allBtn.innerText = translations[currentLang].ens_all;
       allBtn.onclick = () => { selectedSubject = 'all'; renderSubjects(); renderTeachers(); };
       subjectsBox.appendChild(allBtn);
 
       uniqueSubjects.forEach(sub => {
         const btn = document.createElement('button');
-        btn.className = `badge-subject px-4 py-2 rounded-xl border-2 text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
+        btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
         btn.innerText = subjectTranslations[sub] ? subjectTranslations[sub][currentLang] : sub;
         btn.onclick = () => {
           selectedSubject = sub;
@@ -567,21 +535,15 @@
         const subjectName = subjectTranslations[t.subject] ? subjectTranslations[t.subject][currentLang] : t.subject;
         const deptName = t.dept || subjectName;
 
-        // الصورة أو الحروف الأولى
+        // إظهار الصورة أو الحروف الأولى
         let imgHtml = '';
         if (t.photo) {
-          imgHtml = `
-            <img src="${t.photo}" alt="${t.name}" 
-                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'teacher-photo-initials\\'>${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}</div>';">
-          `;
+          imgHtml = `<img src="${t.photo}" alt="${t.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'teacher-photo-initials\\'>${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}</div>';">`;
         } else {
           imgHtml = `<div class="teacher-photo-initials">${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}</div>`;
         }
 
-        // العنوان (أستاذ دائم/مؤقت)
         const gradeText = t.grade === 'prof' ? translations[currentLang].ens_grade_prof : translations[currentLang].ens_grade_temp;
-
-        // وصف قصير (نصيحة أو بحث)
         let descText = t.advice || t.research || subjectName;
         if (descText.length > 100) descText = descText.substring(0, 100) + '...';
 
@@ -589,14 +551,18 @@
           <div class="card-header-bg">
             <div class="check-badge"><i class="fa-solid fa-check"></i></div>
             <div class="dept-badge">${deptName}</div>
+          </div>
+          
+          <div class="photo-section">
             <div class="teacher-photo-wrap">
               ${imgHtml}
             </div>
           </div>
-          
+
           <div class="card-content">
             <h3 class="teacher-name" dir="ltr">${t.name}</h3>
             <p class="teacher-title">${gradeText}</p>
+            <div class="divider"></div>
             <p class="teacher-desc">${descText}</p>
             
             <button class="btn-card-primary" onclick="openModal('${t.id}')">
@@ -622,11 +588,7 @@
 
       document.getElementById('modal-name').innerText = t.name;
       
-      let gradeText = '';
-      if (t.grade === 'prof') gradeText = translations[currentLang].ens_grade_prof;
-      else if (t.grade === 'temp') gradeText = translations[currentLang].ens_grade_temp;
-      else gradeText = t.grade || 'Enseignant';
-      
+      let gradeText = t.grade === 'prof' ? translations[currentLang].ens_grade_prof : translations[currentLang].ens_grade_temp;
       document.getElementById('modal-grade').innerText = gradeText;
       document.getElementById('modal-email').querySelector('span').innerText = t.email;
       
@@ -655,7 +617,7 @@
         linksBox.classList.remove('hidden');
         linksContainer.innerHTML = '';
         t.links.forEach(l => {
-          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border-2 border-amber-200 text-xs font-bold hover:bg-amber-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
+          linksContainer.innerHTML += `<a href="${l.url}" target="_blank" class="px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold hover:bg-amber-100 transition">${l.label} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>`;
         });
       } else {
         linksBox.classList.add('hidden');
@@ -665,8 +627,7 @@
       if (t.photo) {
         imgBox.innerHTML = `<img src="${t.photo}" alt="${t.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='${t.name.split(' ').map(n=>n[0]).join('').substring(0,2)}';">`;
       } else {
-        const initials = t.name.split(' ').map(n => n[0]).join('').substring(0, 2);
-        imgBox.innerHTML = initials;
+        imgBox.innerHTML = t.name.split(' ').map(n => n[0]).join('').substring(0, 2);
       }
 
       document.getElementById('teacher-modal').classList.remove('hidden');
