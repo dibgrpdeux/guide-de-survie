@@ -123,12 +123,15 @@
     </div>
   </main>
 
+  <!-- ✅ استدعاء ملف البيانات -->
   <script src="enstp.js"></script>
   
   <script>
+    // اختصارات للوصول إلى البيانات
     const groupsDatabase = ENSTP_DATA.groups;
     const scheduleDatabase = ENSTP_DATA.schedule;
 
+    // DARK MODE
     if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
     }
@@ -145,6 +148,7 @@
     let selectedDay = 'Sunday';
     const dayNames = { 'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الإثنين', 'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء', 'Thursday': 'الخميس' };
 
+    // NOTES STORAGE
     function getNotesKey(year, group, day, index) { return `note_${year}_${group}_${day}_${index}`; }
     function getNote(year, group, day, index) { return localStorage.getItem(getNotesKey(year, group, day, index)) || ''; }
     function saveNote(year, group, day, index, value) {
@@ -152,6 +156,7 @@
       else localStorage.removeItem(getNotesKey(year, group, day, index));
     }
 
+    // UPDATE FUNCTIONS
     function updateYears() {
       const dept = document.getElementById('select-dept').value;
       const yearSelect = document.getElementById('select-year');
@@ -270,7 +275,7 @@
             <div class="px-4 pb-4">
               <textarea 
                 id="note-text-${index}"
-                placeholder="✏️ اكتب ملاحظاتك هنا..."
+                placeholder="✏️ اكتب ملاحظاتك هنا (مثل: إحضار الآلة الحاسبة، مراجعة الفصل 3، إلخ...)"
                 class="note-textarea w-full p-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-200 font-semibold"
                 oninput="handleNoteChange(${index}, this.value)"
               >${note}</textarea>
@@ -279,7 +284,7 @@
                   <i class="fa-solid fa-info-circle"></i> يتم الحفظ تلقائياً
                 </span>
                 <button onclick="clearNote(${index})" class="no-print text-[11px] text-red-500 hover:text-red-700 font-bold">
-                  <i class="fa-solid fa-trash"></i> حذف
+                  <i class="fa-solid fa-trash"></i> حذف الملاحظة
                 </button>
               </div>
             </div>
