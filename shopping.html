@@ -3,39 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>التسوق والمطاعم - ENSTP</title>
+  <title>التسوق والخدمات - ENSTP</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- استدعاء ملف الترجمة -->
   <script src="translate.js"></script>
 
   <style> 
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; } 
+    body { font-family: 'Cairo', sans-serif; background: #fff7ed; }
+    .dark body { background: #1a1410; }
+    
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.15); }
+    .dark .glass-card { background: rgba(30, 20, 15, 0.95); border-color: rgba(249, 115, 22, 0.2); }
+    
     .gallery-scroll::-webkit-scrollbar { height: 6px; }
     .gallery-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-    .gallery-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    /* تنسيق أزرار اللغة */
+    .gallery-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
+    
     .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: #64748b; transition: 0.2s; }
-    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #4f46e5; color: white; }
+    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
+    .lang-btn.active { background: #f97316; color: white; }
+
+    .filter-btn { transition: all 0.3s ease; }
+    .filter-btn.active { background: #f97316; color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
+
+    /* تنسيق صورة الغلاف */
+    .card-cover {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 1rem 1rem 0 0;
+      transition: transform 0.4s ease;
+    }
+    .glass-card:hover .card-cover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body class="min-h-screen">
 
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b px-4 py-3">
+  <header class="sticky top-0 z-50 glass-card backdrop-blur-md border-b px-4 py-3">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <h1 class="font-bold text-gray-900 text-lg" data-i18n="shopping_title"><i class="fa-solid fa-store text-indigo-600"></i> المطاعم والتسوق</h1>
-      
+      <h1 class="font-bold text-gray-900 dark:text-white text-lg flex items-center gap-2">
+        <i class="fa-solid fa-cart-shopping text-orange-500"></i> التسوق والخدمات اليومية
+      </h1>
       <div class="flex items-center gap-3">
-        <!-- أزرار الترجمة -->
-        <div class="flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200 shadow-sm">
+        <div class="flex items-center gap-1 bg-gray-50 dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm">
           <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
           <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
           <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold" data-i18n="nav_home">الرئيسية</a>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 hover:bg-orange-200 text-xs font-bold transition">الرئيسية</a>
       </div>
     </div>
   </header>
@@ -43,52 +61,57 @@
   <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
     
     <!-- شريط التصنيفات -->
-    <div id="categoriesBar" class="flex flex-wrap gap-2"></div>
+    <div id="categoriesBar" class="flex flex-wrap gap-2 justify-center"></div>
 
     <!-- شريط الفرز -->
-    <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between flex-wrap gap-2">
-      <span class="text-sm font-bold text-gray-700"><i class="fa-solid fa-sort text-indigo-500"></i> <span data-i18n="sort_by">فرز حسب:</span></span>
+    <div class="glass-card p-3 rounded-2xl shadow-sm flex items-center justify-between flex-wrap gap-2 border border-orange-100 dark:border-slate-700">
+      <span class="text-sm font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-sort text-orange-500"></i> فرز حسب:</span>
       <div class="flex flex-wrap gap-2">
-        <button onclick="setSort('default')" id="sort-default" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white" data-i18n="sort_default">الافتراضي</button>
-        <button onclick="setSort('dist')" id="sort-dist" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200" data-i18n="sort_dist">المسافة (الأقرب)</button>
-        <button onclick="setSort('price')" id="sort-price" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200" data-i18n="sort_price">السعر (الأرخص)</button>
-        <button onclick="setSort('rating')" id="sort-rating" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200" data-i18n="sort_rating">التقييم (الأعلى)</button>
+        <button onclick="setSort('default')" id="sort-default" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white">الافتراضي</button>
+        <button onclick="setSort('dist')" id="sort-dist" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">المسافة (الأقرب)</button>
+        <button onclick="setSort('price')" id="sort-price" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">السعر (الأرخص)</button>
+        <button onclick="setSort('rating')" id="sort-rating" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">التقييم (الأعلى)</button>
       </div>
     </div>
 
     <!-- عرض البطاقات -->
-    <div id="itemsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    <div id="itemsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
 
   <!-- نافذة التفاصيل -->
   <div id="itemModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
-      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
       
-      <div class="border-b pb-4 pr-10">
-        <h2 id="modalTitle" class="text-2xl font-black text-gray-900"></h2>
-        <p id="modalSubtitle" class="text-sm text-indigo-600 font-bold mt-1"></p>
+      <div class="border-b border-orange-100 dark:border-slate-700 pb-4 pr-10">
+        <h2 id="modalTitle" class="text-2xl font-black text-gray-900 dark:text-white"></h2>
+        <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
       </div>
 
       <div id="modalMenuContainer" class="space-y-2 hidden">
-        <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-images text-indigo-500 mr-1.5"></i> <span data-i18n="label_menu_photos">صور قائمة الطعام:</span></h4>
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> معرض الصور:</h4>
         <div id="modalMenuGallery" class="flex overflow-x-auto gap-3 pb-2 gallery-scroll snap-x"></div>
       </div>
 
-      <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
+      <div class="space-y-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
         <div>
-          <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-regular fa-clock text-gray-500 mr-1.5"></i> <span data-i18n="label_hours">أوقات العمل:</span></h4>
-          <p id="modalHours" class="bg-gray-50 p-3 rounded-xl border border-gray-100"></p>
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-regular fa-clock text-gray-500 mr-1.5"></i> أوقات العمل:</h4>
+          <p id="modalHours" class="bg-orange-50 dark:bg-slate-900 p-3 rounded-xl border border-orange-100 dark:border-slate-700"></p>
         </div>
         <div id="modalTextMenuContainer">
-          <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-book-open text-emerald-500 mr-1.5"></i> <span data-i18n="label_menu">القائمة:</span></h4>
-          <p id="modalTextMenu" class="bg-emerald-50/60 p-3 rounded-xl border border-emerald-100"></p>
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-circle-info text-emerald-500 mr-1.5"></i> تفاصيل إضافية:</h4>
+          <p id="modalTextMenu" class="bg-emerald-50/60 dark:bg-emerald-900/20 p-3 rounded-xl border border-emerald-100 dark:border-emerald-800"></p>
         </div>
       </div>
 
-      <div class="flex gap-2 pt-4 border-t border-gray-100">
-        <a id="modalPhoneBtn" href="#" class="hidden flex-1 bg-gray-100 hover:bg-gray-200 text-center py-3 rounded-xl font-bold text-gray-700" data-i18n="btn_call"><i class="fa-solid fa-phone"></i> اتصل</a>
-        <a id="modalMapBtn" href="#" target="_blank" class="hidden flex-1 bg-indigo-50 hover:bg-indigo-100 text-center py-3 rounded-xl font-bold text-indigo-700" data-i18n="btn_map"><i class="fa-solid fa-map-location-dot"></i> الخريطة</a>
+      <div id="modalMapContainer" class="space-y-2 hidden">
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> الموقع على الخريطة:</h4>
+        <div id="modalMap" class="w-full h-64 rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
+      </div>
+
+      <div class="flex gap-2 pt-4 border-t border-gray-100 dark:border-slate-700">
+        <a id="modalPhoneBtn" href="#" class="hidden flex-1 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-center py-3 rounded-xl font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-phone"></i> اتصل</a>
+        <a id="modalMapBtn" href="#" target="_blank" class="hidden flex-1 bg-orange-50 dark:bg-slate-700 hover:bg-orange-100 text-center py-3 rounded-xl font-bold text-orange-700 dark:text-orange-400"><i class="fa-solid fa-map-location-dot"></i> فتح الخريطة</a>
       </div>
     </div>
   </div>
@@ -97,17 +120,16 @@
   
   <script>
     const data = window.SHOP_DATA;
-    let currentCat = 'manger';
+    let currentCat = 'pharma'; // البداية بقسم الصيدليات (لأنه الأكثر طلباً)
     let currentSort = 'default';
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
-    // تحديث اللغة الحالية عند الضغط على الأزرار
     const originalSetLanguage = window.setLanguage;
     window.setLanguage = function(lang) {
       currentLang = lang;
-      originalSetLanguage(lang);
-      renderItems(); // إعادة رسم البطاقات لتحديث النصوص
+      if(originalSetLanguage) originalSetLanguage(lang);
       renderCategories();
+      renderItems();
     };
 
     function renderCategories() {
@@ -117,8 +139,8 @@
         if (data.items.some(i => i.c === key)) {
           const cat = data.cats[key];
           const btn = document.createElement('button');
-          btn.className = `px-4 py-2 rounded-xl font-bold text-sm transition ${key === currentCat ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-gray-600 border hover:bg-gray-50'}`;
-          btn.innerText = cat.icon + ' ' + cat.title[currentLang];
+          btn.className = `filter-btn px-4 py-2 rounded-xl font-bold text-sm border border-orange-200 dark:border-slate-700 ${key === currentCat ? 'active' : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300'}`;
+          btn.innerHTML = `${cat.icon} ${cat.title[currentLang]}`;
           btn.onclick = () => { currentCat = key; renderCategories(); renderItems(); };
           bar.appendChild(btn);
         }
@@ -129,8 +151,8 @@
       currentSort = type;
       ['default', 'dist', 'price', 'rating'].forEach(t => {
         const btn = document.getElementById(`sort-${t}`);
-        if (t === type) btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white";
-        else btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200";
+        if (t === type) btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white";
+        else btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200";
       });
       renderItems();
     }
@@ -141,43 +163,49 @@
       
       let items = data.items.filter(i => i.c === currentCat);
       
-      if (currentSort === 'dist') {
-        items.sort((a, b) => (a.dist || 999) - (b.dist || 999));
-      } else if (currentSort === 'price') {
-        items.sort((a, b) => a.p - b.p);
-      } else if (currentSort === 'rating') {
-        items.sort((a, b) => b.r - a.r);
-      }
+      if (currentSort === 'dist') items.sort((a, b) => (a.dist || 999) - (b.dist || 999));
+      else if (currentSort === 'price') items.sort((a, b) => a.p - b.p);
+      else if (currentSort === 'rating') items.sort((a, b) => b.r - a.r);
 
       if (items.length === 0) {
-        grid.innerHTML = `<p class="text-center text-gray-500 col-span-full py-10" data-i18n="no_items">لا توجد عناصر.</p>`;
+        grid.innerHTML = `<p class="text-center text-gray-500 col-span-full py-10">لا توجد عناصر في هذا القسم.</p>`;
         return;
       }
 
       items.forEach(item => {
         let priceStr = item.p === 1 ? '($)' : item.p === 2 ? '($$)' : item.p === 3 ? '($$$)' : '';
         const distStr = item.dist !== null ? `${item.dist} km` : '';
-        
-        // ترجمة القائمة النصية إذا وجدت
         const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
 
+        // اختيار صورة الغلاف (أول صورة في القائمة)
+        const coverImage = item.menuImages && item.menuImages.length > 0 ? item.menuImages[0] : null;
+        let imageHTML = '';
+        if (coverImage) {
+          imageHTML = `<div class="overflow-hidden rounded-t-2xl"><img src="${coverImage}" alt="${item.n}" class="card-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-44 flex items-center justify-center bg-orange-50 dark:bg-slate-800 text-orange-300 text-3xl\\'><i class=\\'fa-solid fa-image\\'></i></div>'"></div>`;
+        } else {
+          imageHTML = `<div class="w-full h-44 flex items-center justify-center bg-orange-50 dark:bg-slate-800 text-orange-300 text-3xl rounded-t-2xl"><i class="fa-solid fa-image"></i></div>`;
+        }
+
         const card = document.createElement('div');
-        card.className = "bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition cursor-pointer";
+        card.className = "glass-card rounded-2xl flex flex-col justify-between hover:shadow-lg hover:border-orange-300 transition cursor-pointer border border-orange-100 dark:border-slate-700 overflow-hidden";
         card.onclick = () => openModal(item);
         card.innerHTML = `
-          <div>
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="font-bold text-lg text-gray-900">${item.n}</h3>
-              <div class="flex gap-1 text-xs font-bold text-amber-500 bg-amber-50 px-2 py-1 rounded"><i class="fa-solid fa-star"></i> ${item.r}</div>
+          ${imageHTML}
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg text-gray-900 dark:text-white">${item.n}</h3>
+                <div class="flex gap-1 text-xs font-bold text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded"><i class="fa-solid fa-star"></i> ${item.r}</div>
+              </div>
+              <div class="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-400 mb-3">
+                ${distStr ? `<span class="bg-orange-50 dark:bg-slate-800 px-2 py-1 rounded"><i class="fa-solid fa-location-dot text-orange-500 mr-1"></i> ${distStr}</span>` : ''}
+                ${priceStr ? `<span class="bg-orange-50 dark:bg-slate-800 px-2 py-1 rounded"><i class="fa-solid fa-money-bill text-emerald-500 mr-1"></i> ${priceStr}</span>` : ''}
+              </div>
+              ${menuText ? `<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">${menuText}</p>` : ''}
             </div>
-            <div class="flex flex-wrap gap-2 text-xs text-gray-600 mb-3">
-              ${distStr ? `<span class="bg-gray-100 px-2 py-1 rounded"><i class="fa-solid fa-location-dot text-indigo-500 mr-1"></i> ${distStr}</span>` : ''}
-              ${priceStr ? `<span class="bg-gray-100 px-2 py-1 rounded"><i class="fa-solid fa-money-bill text-emerald-500 mr-1"></i> ${priceStr}</span>` : ''}
+            <div class="mt-4 pt-3 border-t border-orange-100 dark:border-slate-700 text-center text-xs font-bold text-orange-600 dark:text-orange-400">
+              <i class="fa-solid fa-eye"></i> عرض التفاصيل
             </div>
-            ${menuText ? `<p class="text-sm text-gray-600 line-clamp-2">${menuText}</p>` : ''}
-          </div>
-          <div class="mt-4 pt-3 border-t border-gray-100 text-center text-xs font-bold text-indigo-600">
-            <i class="fa-solid fa-eye"></i> <span data-i18n="btn_details">عرض التفاصيل</span>
           </div>
         `;
         grid.appendChild(card);
@@ -190,9 +218,7 @@
       document.getElementById('modalSubtitle').innerText = `${data.cats[item.c].title[currentLang]} | ${item.r} ⭐`;
       
       let hoursStr = 'غير محدد';
-      if (item.h && item.h.length > 0) {
-        hoursStr = item.h.map(h => `${h[0]} - ${h[1]}`).join(' | ');
-      }
+      if (item.h && item.h.length > 0) hoursStr = item.h.map(h => `${h[0]} - ${h[1]}`).join(' | ');
       document.getElementById('modalHours').innerText = hoursStr;
 
       const textMenuContainer = document.getElementById('modalTextMenuContainer');
@@ -200,9 +226,7 @@
       if (menuText) {
         textMenuContainer.classList.remove('hidden');
         document.getElementById('modalTextMenu').innerText = menuText;
-      } else {
-        textMenuContainer.classList.add('hidden');
-      }
+      } else textMenuContainer.classList.add('hidden');
 
       const menuContainer = document.getElementById('modalMenuContainer');
       const menuGallery = document.getElementById('modalMenuGallery');
@@ -210,41 +234,38 @@
       if (item.menuImages && item.menuImages.length > 0) {
         menuContainer.classList.remove('hidden');
         item.menuImages.forEach(img => {
-          menuGallery.innerHTML += `<div class="flex-shrink-0 w-64 h-80 snap-center rounded-xl overflow-hidden border border-gray-200 bg-gray-50"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs p-2 text-center\\'>Image non disponible</div>'"></div>`;
+          menuGallery.innerHTML += `<div class="flex-shrink-0 w-64 h-80 snap-center rounded-xl overflow-hidden border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 cursor-pointer" onclick="window.open('${img}', '_blank')"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs p-2 text-center\\'>صورة غير متوفرة</div>'"></div>`;
         });
+      } else menuContainer.classList.add('hidden');
+
+      const mapContainer = document.getElementById('modalMapContainer');
+      const mapDiv = document.getElementById('modalMap');
+      if (item.g) {
+        mapContainer.classList.remove('hidden');
+        mapDiv.innerHTML = `<iframe src="https://www.google.com/maps?q=${item.g[0]},${item.g[1]}&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
       } else {
-        menuContainer.classList.add('hidden');
+        mapContainer.classList.add('hidden');
       }
 
       const phoneBtn = document.getElementById('modalPhoneBtn');
-      if (item.t) {
-        phoneBtn.href = `tel:${item.t}`;
-        phoneBtn.classList.remove('hidden');
-      } else { phoneBtn.classList.add('hidden'); }
+      if (item.t) { phoneBtn.href = `tel:${item.t}`; phoneBtn.classList.remove('hidden'); } else phoneBtn.classList.add('hidden');
 
       const mapBtn = document.getElementById('modalMapBtn');
-      if (item.g) {
-        mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${item.g[0]},${item.g[1]}`;
-        mapBtn.classList.remove('hidden');
-      } else { mapBtn.classList.add('hidden'); }
+      if (item.g) { mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${item.g[0]},${item.g[1]}`; mapBtn.classList.remove('hidden'); } else mapBtn.classList.add('hidden');
 
       document.querySelector('#itemModal > div').scrollTop = 0;
     }
 
-    function closeModal() {
-      document.getElementById('itemModal').classList.add('hidden');
-    }
+    function closeModal() { document.getElementById('itemModal').classList.add('hidden'); }
 
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof window.SHOP_DATA === 'undefined') {
-        document.getElementById('itemsGrid').innerHTML = '<p class="text-red-500 font-bold text-center col-span-full">Erreur de chargement des données.</p>';
+        document.getElementById('itemsGrid').innerHTML = '<p class="text-red-500 font-bold text-center col-span-full">خطأ في تحميل البيانات.</p>';
         return;
       }
       renderCategories();
       renderItems();
-      
-      // تحديث النصوص الثابتة عند تحميل الصفحة
-      setTimeout(() => setLanguage(currentLang), 100);
+      setTimeout(() => { if(window.setLanguage) window.setLanguage(currentLang); }, 100);
     });
   </script>
 </body>
