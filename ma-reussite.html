@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- استدعاء مكتبة Mermaid للخرائط الذهنية -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -16,11 +18,7 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
-              400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c',
-              800: '#9a3412', 900: '#7c2d12',
-            }
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
           },
           animation: {
             'shimmer': 'shimmer 2.5s infinite linear',
@@ -49,8 +47,8 @@
     .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(249, 115, 22, 0.15); }
     .dark .glass-nav { background: rgba(15, 23, 42, 0.85); border-bottom-color: rgba(249, 115, 22, 0.2); }
 
-    .link-card { transition: all 0.4s ease; }
-    .link-card:hover { transform: translateY(-4px); border-color: #f97316; box-shadow: 0 20px 40px -12px rgba(249, 115, 22, 0.2); }
+    .tab-btn { transition: all 0.3s ease; }
+    .tab-btn.active { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.5); border-color: transparent; }
 
     .shimmer-text { background: linear-gradient(90deg, #c2410c, #f97316, #ea580c, #c2410c); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; }
     
@@ -75,6 +73,9 @@
     .dark .timeline-line { background: #334155; }
     .timeline-dot { position: absolute; right: 10px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; z-index: 1; }
     .dark .timeline-dot { border-color: #1e293b; }
+    
+    /* تنسيقات الخريطة الذهنية */
+    #mindmap-container svg { width: 100% !important; max-width: 100%; height: auto; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 bg-mesh">
@@ -91,11 +92,6 @@
       </div>
       
       <div class="flex items-center gap-2 md:gap-3">
-        <div class="hidden sm:flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-brand-600 text-white transition-all">عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 transition-all">FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 transition-all">EN</button>
-        </div>
         <button onclick="toggleDarkMode()" class="dark-toggle w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center shadow-sm hover:border-brand-400 transition">
           <i class="fa-solid fa-moon dark:hidden"></i>
           <i class="fa-solid fa-sun hidden dark:block text-brand-400"></i>
@@ -107,87 +103,58 @@
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-12">
-    
-    <!-- HERO SECTION -->
-    <section class="reveal relative overflow-hidden glass-card rounded-[2rem] p-8 lg:p-12 border-2 border-white dark:border-slate-700">
-      <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand-400/20 rounded-full blur-3xl"></div>
-      <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl"></div>
-      
-      <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
-        <div class="space-y-4 text-center md:text-right flex-1">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-brand-100 to-amber-100 dark:from-brand-900/30 border border-brand-200">
-            <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-            <span class="text-xs font-bold text-brand-700 dark:text-brand-300">قسم التفوق والنجاح</span>
-          </div>
-          <h2 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white leading-tight">
-            مساحتك <span class="shimmer-text">الأكاديمية</span>
-          </h2>
-          <p class="text-sm lg:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-            كل ما تحتاجه للنجاح: جداول التوقيت، الملخصات، الامتحانات السابقة، وأدوات ذكية لمساعدتك.
-          </p>
-          <div class="grid grid-cols-3 gap-3 pt-4">
-            <div class="stat-card bg-white/70 dark:bg-slate-800/70 backdrop-blur rounded-xl p-3 border border-brand-200 dark:border-slate-700">
-              <div class="text-2xl font-black text-brand-600 dark:text-brand-400">11</div>
-              <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400">مجلد Drive</div>
-            </div>
-            <div class="stat-card bg-white/70 dark:bg-slate-800/70 backdrop-blur rounded-xl p-3 border border-emerald-200 dark:border-slate-700">
-              <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400">9</div>
-              <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400">قناة يوتيوب</div>
-            </div>
-            <div class="stat-card bg-white/70 dark:bg-slate-800/70 backdrop-blur rounded-xl p-3 border border-blue-200 dark:border-slate-700">
-              <div class="text-2xl font-black text-blue-600 dark:text-blue-400">2</div>
-              <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400">سنتان دراسيتان</div>
-            </div>
-          </div>
-        </div>
-        <div class="relative flex-shrink-0">
-          <div class="absolute inset-0 bg-gradient-to-br from-brand-400 to-amber-500 rounded-[2rem] blur-2xl opacity-40 animate-pulse-glow"></div>
-          <div class="relative w-32 h-32 lg:w-40 lg:h-40 rounded-[2rem] bg-gradient-to-br from-brand-500 via-brand-600 to-amber-600 text-white flex items-center justify-center text-6xl shadow-2xl animate-float">
-            <i class="fa-solid fa-award"></i>
-          </div>
-        </div>
-      </div>
-    </section>
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex-grow w-full space-y-8">
 
-    <!-- SCHEDULE -->
-    <section class="reveal space-y-4">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white flex items-center justify-center shadow-lg">
-          <i class="fa-solid fa-calendar-days"></i>
-        </div>
-        <div>
-          <h3 class="text-xl font-black text-slate-900 dark:text-white">استعمال الزمن</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">جدول التوقيت الخاص بفوجك</p>
-        </div>
-      </div>
-      <a href="schedule.html" class="link-card glass-card flex items-center justify-between p-6 rounded-2xl group">
-        <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-50 to-amber-50 dark:from-slate-700 dark:to-slate-800 text-brand-600 flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+    <!-- أزرار الأقسام (Tabs) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <button onclick="switchTab('schedule')" id="tab-schedule" class="tab-btn active glass-card p-5 rounded-3xl flex items-center justify-center gap-3 border-2 border-brand-100">
+        <i class="fa-solid fa-calendar-days text-2xl"></i>
+        <span class="text-lg font-black">استعمال الزمن</span>
+      </button>
+      <button onclick="switchTab('exams')" id="tab-exams" class="tab-btn glass-card p-5 rounded-3xl flex items-center justify-center gap-3 border-2 border-transparent hover:border-emerald-200">
+        <i class="fa-solid fa-file-signature text-2xl"></i>
+        <span class="text-lg font-black">الواجبات والامتحانات</span>
+      </button>
+      <button onclick="switchTab('tools')" id="tab-tools" class="tab-btn glass-card p-5 rounded-3xl flex items-center justify-center gap-3 border-2 border-transparent hover:border-indigo-200">
+        <i class="fa-solid fa-toolbox text-2xl"></i>
+        <span class="text-lg font-black">صندوق أدوات الطالب</span>
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 1. قسم استعمال الزمن -->
+    <!-- ========================================== -->
+    <div id="content-schedule" class="space-y-6">
+      <div class="glass-card p-6 md:p-8 rounded-3xl border border-brand-100">
+        <div class="flex items-center gap-3 mb-6 border-b pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-2xl">
             <i class="fa-solid fa-clock"></i>
           </div>
           <div>
-            <h4 class="font-bold text-slate-900 dark:text-white text-lg">جدول التوقيت</h4>
-            <p class="text-xs text-slate-500 dark:text-slate-400">اطلع على أوقات المحاضرات والأعمال الموجهة</p>
+            <h2 class="text-xl font-black text-gray-900 dark:text-white">جدول التوقيت</h2>
+            <p class="text-sm text-gray-500">اطلع على أوقات المحاضرات والأعمال الموجهة</p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span class="hidden md:block text-xs font-bold text-brand-600 bg-brand-50 dark:bg-slate-700 px-3 py-1.5 rounded-lg">مباشر</span>
-          <i class="fa-solid fa-arrow-left text-brand-500 group-hover:-translate-x-2 transition-transform text-lg"></i>
-        </div>
-      </a>
-    </section>
+        <a href="schedule.html" class="block bg-brand-50 dark:bg-slate-800 p-6 rounded-2xl text-center hover:bg-brand-100 transition border border-brand-200 dark:border-slate-700">
+          <i class="fa-solid fa-arrow-left text-3xl text-brand-500 mb-3"></i>
+          <h3 class="font-bold text-lg text-brand-900 dark:text-brand-400">الانتقال إلى صفحة الجدول الكامل</h3>
+          <p class="text-xs text-gray-500 mt-1">حدد قسمك، سنتك، وفوجك للحصول على توقيتك الدقيق مع إمكانية إضافة ملاحظات.</p>
+        </a>
+      </div>
+    </div>
 
-    <!-- DRIVES -->
-    <section class="reveal space-y-5">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <!-- ========================================== -->
+    <!-- 2. قسم الواجبات والامتحانات -->
+    <!-- ========================================== -->
+    <div id="content-exams" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white flex items-center justify-center shadow-lg">
-            <i class="fa-solid fa-file-signature"></i>
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-folder-open"></i>
           </div>
           <div>
-            <h3 class="text-xl font-black text-slate-900 dark:text-white">الواجبات والامتحانات</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">11 مجلد Google Drive</p>
+            <h2 class="text-xl font-black text-slate-900 dark:text-white">مكتبة الملفات</h2>
+            <p class="text-xs text-slate-500">روابط Google Drive للدروس والملخصات</p>
           </div>
         </div>
         <div class="relative w-full md:w-72">
@@ -195,88 +162,30 @@
           <input type="text" id="driveSearch" placeholder="ابحث في المجلدات..." class="search-input w-full pr-11 pl-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none">
         </div>
       </div>
+      
       <div id="drivesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       <div id="noResults" class="hidden text-center py-10">
         <i class="fa-solid fa-search text-5xl text-slate-300 dark:text-slate-600 mb-4"></i>
         <p class="text-slate-500 dark:text-slate-400">لا توجد نتائج مطابقة</p>
       </div>
-    </section>
+    </div>
 
-    <!-- TEACHERS -->
-    <section class="reveal space-y-6">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-600 text-white flex items-center justify-center shadow-lg">
-          <i class="fa-brands fa-youtube"></i>
-        </div>
-        <div>
-          <h3 class="text-xl font-black text-slate-900 dark:text-white">أفضل الأساتذة وقنوات يوتيوب</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">مصادر تعليمية موثوقة ومنتقاة بعناية</p>
-        </div>
-      </div>
+    <!-- ========================================== -->
+    <!-- 3. قسم صندوق أدوات الطالب -->
+    <!-- ========================================== -->
+    <div id="content-tools" class="hidden space-y-6">
       
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="glass-card rounded-3xl p-6 lg:p-8 relative overflow-hidden">
-          <div class="relative flex items-center justify-between mb-6 pb-4 border-b border-brand-100 dark:border-slate-700">
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-amber-500 text-white flex items-center justify-center font-black text-xl shadow-lg">2</div>
-              <div>
-                <h4 class="font-black text-lg text-slate-900 dark:text-white">السنة الثانية</h4>
-                <p class="text-xs text-slate-500 dark:text-slate-400">2CP - Classes Préparatoires</p>
-              </div>
-            </div>
-            <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-brand-100 text-brand-700">5 أساتذة</span>
-          </div>
-          <div class="space-y-3" id="teachers2cp"></div>
-        </div>
-
-        <div class="glass-card rounded-3xl p-6 lg:p-8 relative overflow-hidden">
-          <div class="relative flex items-center justify-between mb-6 pb-4 border-b border-emerald-100 dark:border-slate-700">
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center font-black text-xl shadow-lg">1</div>
-              <div>
-                <h4 class="font-black text-lg text-slate-900 dark:text-white">السنة الأولى</h4>
-                <p class="text-xs text-slate-500 dark:text-slate-400">1CP - Classes Préparatoires</p>
-              </div>
-            </div>
-            <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-700">4 أساتذة</span>
-          </div>
-          <div class="space-y-3" id="teachers1cp"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- ✅ صندوق أدوات الطالب -->
-    <!-- ========================================== -->
-    <section class="reveal space-y-6">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
-          <i class="fa-solid fa-toolbox"></i>
-        </div>
-        <div>
-          <h3 class="text-xl font-black text-slate-900 dark:text-white">صندوق أدوات الطالب</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">أدوات ذكية لتنظيم وقتك وحساب معدلاتك</p>
-        </div>
-      </div>
-
+      <!-- أدوات الأكاديمية (حاسبة، عجلة، مهام) -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        <!-- 1. حاسبة المعدل -->
+        <!-- حاسبة المعدل -->
         <div class="glass-card rounded-3xl p-6 border border-brand-100 dark:border-slate-700 space-y-4">
           <h4 class="font-bold text-lg text-brand-900 dark:text-brand-400 flex items-center gap-2"><i class="fa-solid fa-calculator"></i> حاسبة المعدل الفصلي</h4>
-          
           <div class="flex items-center gap-2 px-1 text-[10px] font-bold text-gray-500 mb-1">
-            <div class="w-8 text-center">معامل</div>
-            <div class="w-14 text-center">امتحان</div>
-            <div class="w-14 text-center">TD/TP</div>
-            <div class="w-16 text-center">النوع</div>
-            <div class="w-4"></div>
+            <div class="w-8 text-center">معامل</div><div class="w-14 text-center">امتحان</div><div class="w-14 text-center">TD/TP</div><div class="w-16 text-center">النوع</div><div class="w-4"></div>
           </div>
-
           <div id="calc-subjects" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
-          
           <button onclick="addSubjectRow()" class="text-xs font-bold text-brand-600 hover:text-brand-800 dark:text-brand-400 flex items-center gap-1"><i class="fa-solid fa-plus"></i> إضافة مادة</button>
-
           <div class="bg-brand-50 dark:bg-slate-800 p-4 rounded-xl text-center">
             <p class="text-xs text-brand-800 dark:text-brand-300 font-bold mb-1">المعدل النهائي المرجح</p>
             <div id="calc-result" class="text-3xl font-black text-brand-600">0.00</div>
@@ -284,25 +193,19 @@
           </div>
         </div>
 
-        <!-- 2. عجلة المواد وقائمة المهام -->
+        <!-- العجلة والمهام -->
         <div class="space-y-6">
-          <!-- عجلة المواد -->
           <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700">
             <h4 class="font-bold text-lg text-orange-900 dark:text-orange-400 mb-4 flex items-center justify-center gap-2"><i class="fa-solid fa-dice"></i> عجلة المواد</h4>
-            
             <div class="flex gap-2 mb-4">
-              <input type="text" id="module-input" placeholder="أضف مادة (مثلاً: رياضيات)..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
+              <input type="text" id="module-input" placeholder="أضف مادة..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
               <button onclick="addModule()" class="bg-orange-500 text-white px-3 rounded-lg font-bold text-sm"><i class="fa-solid fa-plus"></i></button>
             </div>
-
             <div id="modules-list" class="flex flex-wrap gap-1 mb-4 max-h-24 overflow-y-auto justify-center"></div>
-
             <div id="wheel-result" class="h-12 flex items-center justify-center text-xl font-black text-orange-600 mb-4 bg-orange-50 dark:bg-slate-800 rounded-xl">?</div>
-            
             <button onclick="spinWheel()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition">ماذا أراجع الآن؟</button>
           </div>
 
-          <!-- قائمة المهام -->
           <div class="glass-card rounded-3xl p-6 border border-emerald-100 dark:border-slate-700">
             <h4 class="font-bold text-lg text-emerald-900 dark:text-emerald-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> مهامي الدراسية</h4>
             <div class="flex gap-2 mb-3">
@@ -314,67 +217,86 @@
         </div>
       </div>
 
-      <!-- 3. الكرونو ونظام التذكير بالمهام -->
-      <div class="glass-card p-6 rounded-3xl border border-indigo-100 dark:border-slate-700 mt-6">
+      <!-- الكرونو -->
+      <div class="glass-card p-6 rounded-3xl border border-indigo-100 dark:border-slate-700">
         <div class="flex items-center gap-3 mb-6">
           <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
-          <div>
-            <h4 class="font-black text-lg text-slate-900 dark:text-white">الكرونو والتذكير بالمهام</h4>
-            <p class="text-xs text-slate-500">خطط ليومك ورتب مهامك حسب الوقت</p>
-          </div>
+          <div><h4 class="font-black text-lg text-slate-900 dark:text-white">الكرونو والتذكير بالمهام</h4><p class="text-xs text-slate-500">خطط ليومك ورتب مهامك حسب الوقت</p></div>
         </div>
-
-        <!-- إضافة مهمة للكرونو -->
         <div class="flex flex-col md:flex-row gap-3 mb-8 bg-gray-50 dark:bg-slate-800 p-4 rounded-2xl border border-gray-100 dark:border-slate-700">
-          <input type="text" id="crono-name" placeholder="اسم المهمة (مثلاً: مراجعة الرياضيات)..." class="flex-1 p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
+          <input type="text" id="crono-name" placeholder="اسم المهمة..." class="flex-1 p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
           <input type="time" id="crono-time" class="p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
           <button onclick="addCronoTask()" class="bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-indigo-700 transition">إضافة للكرونو</button>
         </div>
-
-        <!-- الخط الزمني -->
         <div class="relative pl-8 pr-4">
           <div class="timeline-line"></div>
-          <div id="crono-container" class="space-y-6">
-            <!-- المهام ستظهر هنا -->
-          </div>
+          <div id="crono-container" class="space-y-6"></div>
         </div>
       </div>
 
-      <!-- 4. المساعد الأكاديمي (AI) -->
+      <!-- ========================================== -->
+      <!-- ✅ الإضافات الجديدة: القاموس + الخريطة الذهنية + المساعد -->
+      <!-- ========================================== -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- 1. قاموس المصطلحات الهندسية -->
+        <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 flex flex-col">
+          <div class="flex items-center gap-3 mb-4 border-b pb-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-book"></i></div>
+            <div>
+              <h4 class="font-black text-lg text-slate-900 dark:text-white">قاموس المصطلحات</h4>
+              <p class="text-xs text-slate-500">فرنسي - عربي - إنجليزي</p>
+            </div>
+          </div>
+          <input type="text" id="dict-search" placeholder="ابحث عن مصطلح (مثلاً: Béton)..." class="w-full p-3 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 outline-none mb-4 text-sm focus:ring-2 focus:ring-blue-400">
+          <div id="dict-results" class="space-y-2 max-h-64 overflow-y-auto pr-2 flex-grow">
+            <!-- ستظهر النتائج هنا -->
+          </div>
+        </div>
+
+        <!-- 2. الخريطة الذهنية -->
+        <div class="glass-card p-6 rounded-3xl border border-purple-100 dark:border-slate-700">
+          <div class="flex items-center gap-3 mb-4 border-b pb-3">
+            <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl"><i class="fa-solid fa-project-diagram"></i></div>
+            <div>
+              <h4 class="font-black text-lg text-slate-900 dark:text-white">مولد الخرائط الذهنية</h4>
+              <p class="text-xs text-slate-500">أدخل النص لإنشاء خريطة ذهنية</p>
+            </div>
+          </div>
+          <textarea id="mindmap-input" rows="3" placeholder="مثال: الميكانيك&#10;- السكون&#10;- الحركة&#10;- القوى" class="w-full p-3 rounded-xl border border-purple-200 dark:border-slate-600 bg-purple-50 dark:bg-slate-900 outline-none mb-3 text-sm focus:ring-2 focus:ring-purple-400"></textarea>
+          <button onclick="generateMindMap()" class="w-full bg-purple-600 text-white font-bold py-3 rounded-xl hover:bg-purple-700 transition mb-4">توليد الخريطة</button>
+          <div id="mindmap-container" class="bg-white dark:bg-slate-800 rounded-xl p-2 overflow-x-auto min-h-[200px] border border-gray-200 dark:border-slate-700 flex items-center justify-center">
+            <p class="text-gray-400 text-sm text-center">اكتب النص واضغط "توليد" لعرض الخريطة.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3. المساعد الأكاديمي (AI) -->
       <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 mt-6">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-robot"></i></div>
-          <div>
-            <h4 class="font-black text-lg text-slate-900 dark:text-white">المساعد الأكاديمي</h4>
-            <p class="text-xs text-slate-500">توليد أوامر ذكية لـ ChatGPT وتلخيص المحاضرات</p>
-          </div>
+          <div><h4 class="font-black text-lg text-slate-900 dark:text-white">المساعد الأكاديمي (AI)</h4><p class="text-xs text-slate-500">توليد أوامر ذكية لـ ChatGPT</p></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">الموضوع أو النص:</label>
-            <input type="text" id="ai-topic" placeholder="مثال: الخرسانة المسلحة..." class="w-full p-3 rounded-xl border dark:bg-slate-800 dark:border-slate-600 outline-none">
-          </div>
-          <div>
-            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">نوع المساعدة:</label>
-            <select id="ai-type" class="w-full p-3 rounded-xl border dark:bg-slate-800 dark:border-slate-600 outline-none">
-              <option value="summary">تلخيص المحاضرة</option>
-              <option value="quiz">توليد أسئلة مراجعة</option>
-            </select>
-          </div>
+          <input type="text" id="ai-topic" placeholder="الموضوع (مثال: الخرسانة المسلحة)..." class="w-full p-3 rounded-xl border dark:bg-slate-800 dark:border-slate-600 outline-none">
+          <select id="ai-type" class="w-full p-3 rounded-xl border dark:bg-slate-800 dark:border-slate-600 outline-none">
+            <option value="summary">تلخيص المحاضرة</option>
+            <option value="quiz">توليد أسئلة مراجعة</option>
+          </select>
         </div>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
           <button onclick="generateAIPrompt()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-copy"></i> نسخ الأمر وفتح ChatGPT
           </button>
-          
           <a id="fallback-link" href="#" target="_blank" class="w-full bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 opacity-50 pointer-events-none">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح ChatGPT مباشرة
           </a>
         </div>
         <p id="ai-status" class="text-xs text-center mt-2 text-gray-500"></p>
       </div>
-    </section>
+
+    </div>
 
   </main>
 
@@ -387,21 +309,27 @@
   </footer>
 
   <script>
-    // 1. DARK MODE
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    }
+    // 1. DARK MODE & TABS
+    if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
     function toggleDarkMode() {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      }
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     }
 
-    // 2. DRIVES
+    function switchTab(tabId) {
+      ['schedule', 'exams', 'tools'].forEach(t => {
+        document.getElementById('content-' + t).classList.add('hidden');
+        const btn = document.getElementById('tab-' + t);
+        btn.classList.remove('active');
+        btn.classList.add('border-transparent');
+      });
+      document.getElementById('content-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.classList.add('active');
+      activeBtn.classList.remove('border-transparent');
+    }
+
+    // 2. DRIVES (Google Drive Data)
     const drives = [
       { name: 'Drive 1', desc: '2CP - السنة الثانية', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-folder', color: 'emerald' },
       { name: 'Drive 2', desc: 'Cours - الدروس', url: 'https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg', icon: 'fa-book', color: 'blue' },
@@ -413,7 +341,6 @@
       { name: 'Drive 8', desc: 'Info - الإعلام الآلي', url: 'https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9', icon: 'fa-laptop-code', color: 'rose' },
       { name: 'Drive 9', desc: 'Génie Civil - الهندسة', url: 'https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9', icon: 'fa-building', color: 'orange' },
       { name: 'Drive 10', desc: 'Sujets divers', url: 'https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs', icon: 'fa-layer-group', color: 'violet' },
-           { name: 'Drive 10', desc: 'Sujets divers', url: 'https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs', icon: 'fa-layer-group', color: 'violet' },
       { name: 'Drive 11', desc: 'Concours - المسابقات', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-trophy', color: 'yellow' }
     ];
 
@@ -422,15 +349,11 @@
       const noResults = document.getElementById('noResults');
       const filtered = drives.filter(d => d.name.toLowerCase().includes(filter.toLowerCase()) || d.desc.toLowerCase().includes(filter.toLowerCase()));
       
-      if (filtered.length === 0) {
-        grid.innerHTML = '';
-        noResults.classList.remove('hidden');
-        return;
-      }
+      if (filtered.length === 0) { grid.innerHTML = ''; noResults.classList.remove('hidden'); return; }
       noResults.classList.add('hidden');
       
-      grid.innerHTML = filtered.map((d, i) => `
-        <a href="${d.url}" target="_blank" class="link-card glass-card p-5 rounded-2xl flex items-center justify-between group">
+      grid.innerHTML = filtered.map(d => `
+        <a href="${d.url}" target="_blank" class="glass-card p-5 rounded-2xl flex items-center justify-between group border border-slate-100 dark:border-slate-700 hover:border-brand-300 transition-all">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-xl bg-${d.color}-100 text-${d.color}-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               <i class="fa-solid ${d.icon}"></i>
@@ -446,120 +369,44 @@
     }
     document.getElementById('driveSearch').addEventListener('input', (e) => renderDrives(e.target.value));
 
-    // 3. TEACHERS
-    const teachers2cp = [
-      { subject: 'MDF', name: 'Dr. Noureddine Azzam', url: 'https://youtube.com/channel/UC0a8xy1l7eDQ9bVrsl2KmJg', color: 'blue', icon: 'fa-water' },
-      { subject: 'Analyse 3', name: 'Mohammed-Ealmin BOUATOUCHE', url: 'http://www.youtube.com/@mathinfo0199', color: 'purple', icon: 'fa-calculator' },
-      { subject: 'Physique 3/4', name: 'N. MAGHLAOUI', url: 'https://www.youtube.com/@e-learningphysiquewithn.ma570', color: 'cyan', icon: 'fa-atom' },
-      { subject: 'Chimie 3', name: 'PRÉPA CHIMIE', url: 'https://www.youtube.com/@prepachimie2020', color: 'pink', icon: 'fa-flask' },
-      { subject: 'Électronique', name: 'Elmostafa Elkacem', url: 'https://www.youtube.com/@ElmostafaElkacem', color: 'indigo', icon: 'fa-bolt' }
-    ];
-
-    const teachers1cp = [
-      { subject: 'Analyses / Algèbres', name: '15 Min Math Lr 💡', url: 'https://www.youtube.com/@15MinMathLr', color: 'orange', icon: 'fa-square-root-variable' },
-      { subject: 'Physique', name: 'Prof_Ourihane Physique', url: 'http://www.youtube.com/@profourihane', color: 'blue', icon: 'fa-atom' },
-      { subject: 'Chimie', name: 'الأستاذ سامي براسي', url: 'https://www.youtube.com/@الأستاذساميبراسي', color: 'pink', icon: 'fa-flask' },
-      { subject: 'Informatique', name: 'Hassan EL BAHI', url: 'https://www.youtube.com/@hassanbahi', color: 'emerald', icon: 'fa-laptop-code' }
-    ];
-
-    function renderTeachers() {
-      document.getElementById('teachers2cp').innerHTML = teachers2cp.map(t => `
-        <a href="${t.url}" target="_blank" class="prof-item group block bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-md transition-all">
-          <div class="flex items-center gap-3">
-            <div class="prof-avatar bg-${t.color}-500"><i class="fa-solid ${t.icon}"></i></div>
-            <div class="flex-1 min-w-0">
-              <span class="font-black text-xs text-brand-600 dark:text-brand-400 uppercase block">${t.subject}</span>
-              <span class="text-sm text-slate-700 dark:text-slate-300 truncate block" dir="ltr">${t.name}</span>
-            </div>
-            <i class="fa-solid fa-play text-slate-300 dark:text-slate-600 group-hover:text-brand-500 transition-colors"></i>
-          </div>
-        </a>
-      `).join('');
-
-      document.getElementById('teachers1cp').innerHTML = teachers1cp.map(t => `
-        <a href="${t.url}" target="_blank" class="prof-item group block bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-md transition-all">
-          <div class="flex items-center gap-3">
-            <div class="prof-avatar bg-${t.color}-500"><i class="fa-solid ${t.icon}"></i></div>
-            <div class="flex-1 min-w-0">
-              <span class="font-black text-xs text-emerald-600 dark:text-emerald-400 uppercase block">${t.subject}</span>
-              <span class="text-sm text-slate-700 dark:text-slate-300 truncate block" dir="ltr">${t.name}</span>
-            </div>
-            <i class="fa-solid fa-play text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors"></i>
-          </div>
-        </a>
-      `).join('');
-    }
-
-    // 4. SCROLL REVEAL
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // ==========================================
-    // 5. صندوق أدوات الطالب
-    // ==========================================
-    
-    // --- 5.1 حاسبة المعدل ---
-    let subjectCount = 0;
+    // 3. TOOLS (Calculator, Wheel, Tasks, Crono)
+    // حاسبة المعدل
     function addSubjectRow() {
-      subjectCount++;
       const container = document.getElementById('calc-subjects');
       const div = document.createElement('div');
       div.className = "flex gap-2 items-center bg-white dark:bg-slate-900 p-2 rounded-lg border border-gray-200 dark:border-slate-700 calc-row";
-      
       div.innerHTML = `
-        <input type="number" step="1" min="1" placeholder="معامل" value="1" class="w-8 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 text-center coeff-in" oninput="calcGPA()" title="المعامل">
-        <input type="number" step="0.01" min="0" max="20" placeholder="امتحان" class="w-14 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 text-center exam-in" oninput="calcGPA()">
-        <input type="number" step="0.01" min="0" max="20" placeholder="TD/TP" class="w-14 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 text-center td-in" oninput="calcGPA()">
-        <select class="w-16 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 type-in" onchange="calcGPA()">
-          <option value="both">الكل</option>
-          <option value="exam">امتحان</option>
-          <option value="td">TD فقط</option>
+        <input type="number" step="1" min="1" value="1" class="w-8 p-1 text-xs border rounded text-center coeff-in" oninput="calcGPA()">
+        <input type="number" step="0.01" max="20" placeholder="امتحان" class="w-14 p-1 text-xs border rounded text-center exam-in" oninput="calcGPA()">
+        <input type="number" step="0.01" max="20" placeholder="TD/TP" class="w-14 p-1 text-xs border rounded text-center td-in" oninput="calcGPA()">
+        <select class="w-16 p-1 text-xs border rounded type-in" onchange="calcGPA()">
+          <option value="both">الكل</option><option value="exam">امتحان</option><option value="td">TD فقط</option>
         </select>
-        <button onclick="this.parentElement.remove(); calcGPA();" class="text-red-500 text-xs px-1 hover:scale-110 transition"><i class="fa-solid fa-xmark"></i></button>
+        <button onclick="this.parentElement.remove(); calcGPA();" class="text-red-500 px-1"><i class="fa-solid fa-xmark"></i></button>
       `;
       container.appendChild(div);
     }
-
     function calcGPA() {
       const rows = document.querySelectorAll('.calc-row');
-      let totalWeightedPoints = 0;
-      let totalCoefficients = 0;
-
+      let total = 0, coeffs = 0;
       rows.forEach(r => {
         const coeff = parseFloat(r.querySelector('.coeff-in').value) || 1;
         const exam = parseFloat(r.querySelector('.exam-in').value);
         const td = parseFloat(r.querySelector('.td-in').value);
-        const type = r.querySelector('.type-in').value;
-
-        let subjectAvg = 0;
-        let hasScore = false;
-
-        if (type === 'exam') {
-          if (!isNaN(exam)) { subjectAvg = exam; hasScore = true; }
-        } else if (type === 'td') {
-          if (!isNaN(td)) { subjectAvg = td; hasScore = true; }
-        } else {
-          if (!isNaN(exam) && !isNaN(td)) { subjectAvg = (exam * 0.6) + (td * 0.4); hasScore = true; }
-          else if (!isNaN(exam)) { subjectAvg = exam; hasScore = true; }
-          else if (!isNaN(td)) { subjectAvg = td; hasScore = true; }
+               const type = r.querySelector('.type-in').value;
+        let avg = 0, valid = false;
+        
+        if (type === 'exam' && !isNaN(exam)) { avg = exam; valid = true; }
+        else if (type === 'td' && !isNaN(td)) { avg = td; valid = true; }
+        else if (type === 'both') {
+          if (!isNaN(exam) && !isNaN(td)) { avg = (exam * 0.6) + (td * 0.4); valid = true; }
+          else if (!isNaN(exam)) { avg = exam; valid = true; }
+          else if (!isNaN(td)) { avg = td; valid = true; }
         }
-
-        if (hasScore) {
-          totalWeightedPoints += (subjectAvg * coeff);
-          totalCoefficients += coeff;
-        }
+        if (valid) { total += (avg * coeff); coeffs += coeff; }
       });
-
-      const gpa = totalCoefficients > 0 ? (totalWeightedPoints / totalCoefficients) : 0;
+      const gpa = coeffs > 0 ? (total / coeffs) : 0;
       document.getElementById('calc-result').innerText = gpa.toFixed(2);
-      
       const status = document.getElementById('calc-status');
       if (gpa >= 10) { status.innerText = "🎉 ناجح"; status.className = "text-xs font-bold text-emerald-500"; }
       else if (gpa >= 7) { status.innerText = "⚠️ استدراك"; status.className = "text-xs font-bold text-amber-500"; }
@@ -567,44 +414,32 @@
       else { status.innerText = ""; }
     }
 
-    // --- 5.2 عجلة المواد ---
+    // عجلة المواد
     let myModules = JSON.parse(localStorage.getItem('enstp_modules')) || ['رياضيات', 'فيزياء'];
-
     function renderModules() {
       const list = document.getElementById('modules-list');
-      if (myModules.length === 0) {
-        list.innerHTML = '<span class="text-xs text-gray-400">أضف مواد للبدء</span>';
-        return;
-      }
+      if (myModules.length === 0) { list.innerHTML = '<span class="text-xs text-gray-400">أضف مواد للبدء</span>'; return; }
       list.innerHTML = myModules.map((m, index) => `
         <span class="bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-300 text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1">
-          ${m}
-          <button onclick="removeModule(${index})" class="text-orange-500 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
+          ${m} <button onclick="removeModule(${index})" class="text-orange-500 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
         </span>
       `).join('');
     }
-
     function addModule() {
       const input = document.getElementById('module-input');
       const val = input.value.trim();
-      if (!val) return;
-      if (myModules.includes(val)) return alert("هذه المادة مضافة بالفعل!");
-      
+      if (!val || myModules.includes(val)) return;
       myModules.push(val);
       localStorage.setItem('enstp_modules', JSON.stringify(myModules));
-      input.value = '';
-      renderModules();
+      input.value = ''; renderModules();
     }
-
     function removeModule(index) {
       myModules.splice(index, 1);
       localStorage.setItem('enstp_modules', JSON.stringify(myModules));
       renderModules();
     }
-
     function spinWheel() {
-      if (myModules.length === 0) return alert("الرجاء إضافة مادة واحدة على الأقل أولاً!");
-      
+      if (myModules.length === 0) return alert("أضف مادة أولاً!");
       const resultEl = document.getElementById('wheel-result');
       let counter = 0;
       const interval = setInterval(() => {
@@ -618,14 +453,11 @@
       }, 100);
     }
 
-    // --- 5.3 قائمة المهام (To-Do List) ---
+    // قائمة المهام
     let tasks = JSON.parse(localStorage.getItem('enstp_tasks')) || [];
     function renderTasks() {
       const list = document.getElementById('task-list');
-      if(tasks.length === 0) {
-          list.innerHTML = '<li class="text-xs text-gray-400 text-center py-2">لا توجد مهام حالياً</li>';
-          return;
-      }
+      if (tasks.length === 0) { list.innerHTML = '<li class="text-xs text-gray-400 text-center py-2">لا توجد مهام حالياً</li>'; return; }
       list.innerHTML = tasks.map((t, i) => `
         <li class="flex items-center justify-between text-sm p-2 bg-gray-50 dark:bg-slate-800 rounded border ${t.done ? 'opacity-50 line-through' : ''}">
           <label class="flex items-center gap-2 cursor-pointer">
@@ -641,24 +473,17 @@
       if (!val) return;
       tasks.push({ text: val, done: false });
       localStorage.setItem('enstp_tasks', JSON.stringify(tasks));
-      document.getElementById('task-input').value = '';
-      renderTasks();
+      document.getElementById('task-input').value = ''; renderTasks();
     }
     function toggleTask(i) { tasks[i].done = !tasks[i].done; localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
     function delTask(i) { tasks.splice(i, 1); localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
 
-    // --- 5.4 الكرونو والتذكير بالمهام ---
+    // الكرونو
     let cronoTasks = JSON.parse(localStorage.getItem('enstp_timeline')) || [];
-
     function renderCrono() {
       const container = document.getElementById('crono-container');
-      if (cronoTasks.length === 0) {
-        container.innerHTML = '<p class="text-gray-400 text-sm text-center py-4">لا توجد مهام مضافة في الكرونو.</p>';
-        return;
-      }
-      // ترتيب المهام حسب الوقت
+      if (cronoTasks.length === 0) { container.innerHTML = '<p class="text-gray-400 text-sm text-center py-4">لا توجد مهام مضافة في الكرونو.</p>'; return; }
       cronoTasks.sort((a, b) => a.time.localeCompare(b.time));
-      
       container.innerHTML = cronoTasks.map((t, i) => `
         <div class="relative ${t.done ? 'opacity-60' : ''}">
           <div class="timeline-dot ${t.done ? 'bg-emerald-500' : 'bg-brand-500'}" style="top: 1rem;"></div>
@@ -675,70 +500,139 @@
         </div>
       `).join('');
     }
-
     function addCronoTask() {
       const name = document.getElementById('crono-name').value;
       const time = document.getElementById('crono-time').value;
       if (!name || !time) return alert("الرجاء إدخال اسم المهمة والوقت");
       cronoTasks.push({ name, time, done: false });
       localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks));
-      document.getElementById('crono-name').value = '';
-      document.getElementById('crono-time').value = '';
-      renderCrono();
+      document.getElementById('crono-name').value = ''; document.getElementById('crono-time').value = ''; renderCrono();
     }
-
     function toggleCronoTask(i) { cronoTasks[i].done = !cronoTasks[i].done; localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
     function deleteCronoTask(i) { cronoTasks.splice(i, 1); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
 
-    // --- 5.5 المساعد الأكاديمي (AI) ---
+    // ==========================================
+    // ✅ الإضافات الجديدة
+    // ==========================================
+
+    // 1. قاموس المصطلحات
+    const dictionary = [
+      { fr: 'Béton armé', ar: 'خرسانة مسلحة', en: 'Reinforced concrete', desc: 'مادة بناء تتكون من الخرسانة والفولاذ المقاوم للشد.' },
+      { fr: 'Fondation', ar: 'أساس', en: 'Foundation', desc: 'الجزء السفلي من المبنى الذي ينقل الأحمال إلى الأرض.' },
+      { fr: 'Poutre', ar: 'عارضة / جسر', en: 'Beam', desc: 'عنصر إنشائي أفقي يحمل الأحمال الجانبية.' },
+      { fr: 'Poteau', ar: 'عمود', en: 'Column', desc: 'عنصر إنشائي رأسي ينقل الأحمال إلى الأساس.' },
+      { fr: 'Dalle', ar: 'بلاطة', en: 'Slab', desc: 'سطح أفقي مسطح يستخدم كأرضية أو سقف.' },
+      { fr: 'Semelle', ar: 'قاعدة (أساس)', en: 'Footing', desc: 'الجزء العريض من الأساس الذي يوزع الحمل.' },
+      { fr: 'Ciment', ar: 'أسمنت', en: 'Cement', desc: 'مسحوق ناعم يربط المواد معاً عند إضافة الماء.' },
+      { fr: 'Sable', ar: 'رمل', en: 'Sand', desc: 'مادة حبيبية ناعمة تستخدم في الخرسانة.' },
+      { fr: 'Gravier', ar: 'حصى', en: 'Gravel', desc: 'مادة حبيبية خشنة تستخدم في الخرسانة.' },
+      { fr: 'Topographie', ar: 'طبوغرافيا', en: 'Surveying', desc: 'علم قياس الأرض وتحديد المعالم.' },
+      { fr: 'Mécanique des sols', ar: 'ميكانيكا التربة', en: 'Soil mechanics', desc: 'دراسة سلوك التربة تحت الأحمال.' },
+      { fr: 'Résistance des matériaux', ar: 'مقاومة المواد', en: 'Strength of materials', desc: 'دراسة سلوك المواد تحت التأثيرات الخارجية.' }
+    ];
+
+    function renderDictionary(query = '') {
+      const resultsContainer = document.getElementById('dict-results');
+      const filtered = dictionary.filter(d => 
+        d.fr.toLowerCase().includes(query.toLowerCase()) || 
+        d.ar.includes(query) || 
+        d.en.toLowerCase().includes(query.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">لا توجد نتائج.</p>';
+        return;
+      }
+
+      resultsContainer.innerHTML = filtered.map(d => `
+        <div class="bg-blue-50 dark:bg-slate-800 p-3 rounded-xl border border-blue-100 dark:border-slate-700">
+          <div class="flex justify-between items-center mb-1">
+            <span class="font-bold text-blue-800 dark:text-blue-400 text-sm" dir="ltr">${d.fr}</span>
+            <span class="text-xs font-bold text-gray-500" dir="ltr">${d.en}</span>
+          </div>
+          <div class="font-black text-gray-800 dark:text-white text-md">${d.ar}</div>
+          <p class="text-[11px] text-gray-600 dark:text-gray-400 mt-1">${d.desc}</p>
+        </div>
+      `).join('');
+    }
+    document.getElementById('dict-search').addEventListener('input', (e) => renderDictionary(e.target.value));
+
+    // 2. مولد الخريطة الذهنية
+    function generateMindMap() {
+      const input = document.getElementById('mindmap-input').value.trim();
+      const container = document.getElementById('mindmap-container');
+      
+      if (!input) {
+        container.innerHTML = '<p class="text-gray-400 text-sm">الرجاء إدخال النص أولاً.</p>';
+        return;
+      }
+
+      // تحويل النص إلى صيغة Mermaid
+      // نفترض أن السطر الأول هو العنوان الرئيسي، والأسطر التي تبدأ بـ "-" هي فروع
+      const lines = input.split('\n').filter(line => line.trim() !== '');
+      let mermaidCode = 'graph TD\n';
+      
+      const root = lines[0].replace(/[^a-zA-Z0-9\u0600-\u06FF\s]/g, '');
+      mermaidCode += `  Root["${lines[0]}"]\n`;
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line.startsWith('-')) {
+          const child = line.substring(1).trim();
+          const childId = 'N' + i;
+          mermaidCode += `  ${childId}["${child}"]\n`;
+          mermaidCode += `  Root --> ${childId}\n`;
+        }
+      }
+
+      container.innerHTML = `<div class="mermaid">${mermaidCode}</div>`;
+      
+      // إعادة تهيئة Mermaid لرسم الخريطة
+      mermaid.init(undefined, container.querySelectorAll('.mermaid'));
+    }
+
+    // 3. المساعد الأكاديمي
     function generateAIPrompt() {
       const topic = document.getElementById('ai-topic').value.trim();
       const type = document.getElementById('ai-type').value;
       const statusEl = document.getElementById('ai-status');
       const fallbackBtn = document.getElementById('fallback-link');
 
-      if (!topic) {
-        alert("الرجاء إدخال الموضوع أولاً");
-        return;
-      }
+      if (!topic) return alert("الرجاء إدخال الموضوع أولاً");
 
-      let prompt = "";
-      if (type === 'summary') {
-        prompt = `أنت أستاذ في المدرسة الوطنية العليا للأشغال العمومية. قم بتلخيص النص التالي في نقاط واضحة ومختصرة مع التركيز على المعادلات والمفاهيم الأساسية للامتحان: "${topic}"`;
-      } else {
-        prompt = `أنت مصمم امتحانات. قم بإنشاء 5 أسئلة اختيار من متعدد (QCM) صعبة قليلاً حول الموضوع التالي: "${topic}". أرفق الإجابات الصحيحة في النهاية.`;
-      }
+      let prompt = type === 'summary' 
+        ? `أنت أستاذ في المدرسة الوطنية العليا. قم بتلخيص النص التالي في نقاط واضحة ومختصرة: "${topic}"`
+        : `أنت مصمم امتحانات. قم بإنشاء 5 أسئلة اختيار من متعدد (QCM) حول: "${topic}". أرفق الإجابات.`;
 
-      const chatGptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
-      
-      fallbackBtn.href = chatGptUrl;
+      const url = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
+      fallbackBtn.href = url;
       fallbackBtn.classList.remove('opacity-50', 'pointer-events-none');
 
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(prompt).then(() => {
-          statusEl.innerText = "✅ تم نسخ الأمر بنجاح! فتح ChatGPT...";
-          statusEl.className = "text-xs text-center mt-2 text-emerald-500 font-bold";
-          window.open(chatGptUrl, '_blank');
-        }).catch(err => {
-          statusEl.innerText = "تم تجهيز الرابط، اضغط على الزر الاحتياطي.";
-          statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold";
+          statusEl.innerText = "✅ تم النسخ! فتح ChatGPT...";
+          statusEl.className = "text-xs text-center text-emerald-500 font-bold mt-2";
+          window.open(url, '_blank');
         });
       } else {
-        statusEl.innerText = "اضغط على الزر الاحتياطي لفتح ChatGPT مباشرة.";
-        statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold";
+        statusEl.innerText = "اضغط على الزر الاحتياطي لفتح ChatGPT.";
+        statusEl.className = "text-xs text-center text-amber-500 font-bold mt-2";
       }
     }
 
     // ==========================================
-    // 6. INIT
+    // التهيئة عند تحميل الصفحة
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       renderDrives();
-      renderTeachers();
-      addSubjectRow(); // للحاسبة
-      renderTasks();   // لقائمة المهام
-      renderModules(); // لعجلة المواد
-      renderCrono();   // للكرونو
+      addSubjectRow(); // أول سطر للحاسبة
+      renderTasks();
+      renderModules();
+      renderCrono();
+      renderDictionary(); // عرض كل القاموس مبدئياً
+      
+      // تهيئة Mermaid
+      mermaid.initialize({ startOnLoad: false, theme: 'default' });
     });
   </script>
 </body>
