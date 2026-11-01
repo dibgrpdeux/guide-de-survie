@@ -56,6 +56,7 @@
   <div id="placeModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
       <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
+      
       <div class="border-b border-orange-100 dark:border-slate-700 pb-4 pr-10">
         <h2 id="modalTitle" class="text-2xl font-black text-gray-900 dark:text-white"></h2>
         <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
@@ -77,9 +78,8 @@
             <p id="modalTransport" class="bg-amber-50/60 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-100 dark:border-amber-800"></p>
           </div>
         </div>
-        <div id="modalVideoContainer" class="space-y-2 hidden">
-          <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
-          <div id="modalVideo" class="video-container bg-gray-200 dark:bg-slate-700"></div>
+        <div id="modalVideosContainer" class="space-y-4 hidden">
+          <!-- سيتم إدراج الفيديوهات هنا -->
         </div>
       </div>
 
@@ -99,14 +99,15 @@
       { id: 'zeralda', category: 'شواطئ', title: 'زرالدة (Zeralda)', icon: '🏖️', history: 'يبعد 35 كم. الخيار الآمن للعائلات، به منتجعات ومرافق. مواقف السيارات مدفوعة (~200 دج).', transport: 'الطريق السيار A1. يفضل الوصول قبل الساعة 10 صباحاً في الصيف.', map: 'Zeralda plage Alger', images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], videos: [] },
       { id: 'ain_taya', category: 'شواطئ', title: 'عين طاية (Ain Taya)', icon: '🏖️', history: 'يبعد 22 كم فقط. شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع. الدخول مجاني لكن المواقف محدودة.', transport: 'الاتجاه شرقاً. يفضل الذهاب في أيام الأسبوع لتجنب الازدحام.', map: 'Ain Taya plage Alger', images: ['images (22).jpeg','images (23).jpeg', 'images (24).jpeg','images (25).jpeg' ], videos: [] },
       { id: 'club_pins', category: 'شواطئ', title: 'نادي الصنوبر (Club des Pins)', icon: '🏖️', history: 'يبعد 28 كم. أقل ازدحاماً، مثالي للأطفال الصغار نظراً لهدوء المياه.', transport: 'الطريق السيار A1 باتجاه الغرب.', map: 'Club des Pins Alger', images: [ 'images (26).jpeg', 'images (27).jpeg','images (28).jpeg' ], videos: [] },
-      
+      { id: 'tipaza', category: 'شواطئ', title: 'تيبازة / شنوة (Tipaza)', icon: '🏖️', history: 'تبعد 70 كم. من أجمل الشواطئ، يمكن الجمع بين السباحة وزيارة الآثار الرومانية.', transport: 'الطريق الوطني RN11.', map: 'Chenoua Tipaza', images: [], videos: [] },
+
       // ==========================================
       // الحدائق (Parks)
       // ==========================================
       { id: 'jardin_essai', category: 'حدائق', title: 'حديقة التجارب بالحامة', icon: '🌳', history: 'تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم، تضم آلاف الأنواع النباتية النادرة.', transport: 'مترو الأنفاق (محطة الحامة) أو الحافلات.', map: 'Jardin d\'Essai El Hamma Alger', images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], videos: [{ id: 'peHUzgnaTOI', title: 'زيارة حديقة التجارب' }] },
       { id: 'parc_ben_aknoun', category: 'حدائق', title: 'حديقة بن عكنون', icon: '🌳', history: 'حديقة ترفيهية شهيرة تضم حديقة حيوانات كبيرة ومساحات خضراء واسعة.', transport: 'حافلات أو طاكسي.', map: 'Parc Ben Aknoun Alger', images: ['images (11).jpeg', 'images (12).jpeg'], videos: [] },
       { id: 'bois_arcades', category: 'حدائق', title: 'غابة الأركاد (حيدرة)', icon: '🌳', history: 'غابة حضرية هادئة في قلب حيدرة، تحتوي على مسارات للمشي والجري.', transport: 'سيارة أو حافلة إلى حيدرة.', map: 'Bois des Arcades Hydra Alger', images: ['images (13).jpeg', 'images (14).jpeg', 'images (15).jpeg'], videos: [] },
-      { id: 'dream_park', category: 'حدائق', title: 'دريم بارك (Dream Park)', icon: '🎢', history: 'مدينة ألعاب ترفيهية كبيرة في الجزائر العاصمة، مناسبة للعائلات والأصدقاء.', transport: 'سيارة أو حافلة (حي باب الزوار).', map: 'Dream Park Alger', images: [], videos: [{ id: 'tiDBo1RUS0o', title: 'جولة في Dream Park' }] },
+      { id: 'dream_park', category: 'حدائق', title: 'دريم بارك (Dream Park)', icon: '🎢', history: 'مدينة ألعاب ترفيهية كبيرة في الجزائر العاصمة، مناسبة للعائلات والأصدقاء.', transport: 'سيارة أو حافلة (حي باب الزوار).', map: 'Dream Park Alger', images: [], videos: [{ id: 'tiDBo1RUS0o', title: 'جولة في Dream Park' }, { id: 'm06w-6eQJfY', title: 'Dream Park' }] },
       { id: 'marsy_splash', category: 'حدائق', title: 'مارسي سبلاش (Marsy Splash)', icon: '🌊', history: 'مدينة ألعاب مائية شهيرة، مثالية لفصل الصيف.', transport: 'سيارة أو حافلة (منطقة زرالدة).', map: 'Marsy Splash Alger', images: ['marsy 1.PNG', 'marsy 2.PNG', 'marsy 3.PNG', 'marsy 4.PNG'], videos: [] },
       { id: 'jump_ouled_fayet', category: 'حدائق', title: 'جامب أولاد فايت (Jump Ouled Fayet)', icon: '🤸', history: 'فضاء ترفيهي رياضي (Trampoline Park) للأطفال والكبار.', transport: 'سيارة أو حافلة إلى أولاد فايت.', map: 'Jump Ouled Fayet Alger', images: ['teri 1.JPEG', 'teri 2.JPEG', 'teri 3.JPEG', 'teri 4.JPEG', 'teri 5.JPEG', 'teri 6.JPEG'], videos: [] },
       { id: 'rageroom', category: 'حدائق', title: 'راج روم باب الزوار (Rage Room)', icon: '💥', history: 'غرفة تفريغ نفسي (تكسير الأشياء) في باب الزوار، تجربة فريدة لتفريغ الطاقة.', transport: 'سيارة أو حافلة إلى باب الزوار.', map: 'Rage Room Bab Ezzouar Alger', images: ['rage 1.PNG', 'rage 2.PNG', 'rage 3.PNG', 'rage 4.PNG', 'rage 5.PNG', 'rage 6.PNG', 'rage 7.PNG'], videos: [] },
@@ -129,7 +130,12 @@
       { id: 'djamaa_djazair', category: 'مساجد', title: 'جامع الجزائر الأعظم', icon: '🕌', history: 'ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً).', transport: 'مترو الأنفاق أو الحافلات، يقع في المحمدية.', map: 'Djamaa El Djazair Alger', images: ['images (60).jpeg','images (61).jpeg','images (62).jpeg','images (63).jpeg'], videos: [{ id: 'jLedHzZuxE4', title: 'جامع الجزائر الأعظم' }, { id: 'CZ7_3PCqDok', title: 'المسجد الأعظم' }] },
       { id: 'ketchaoua', category: 'مساجد', title: 'مسجد كتشاوة', icon: '🕌', history: 'من أقدم مساجد الجزائر (يعود للعهد العثماني).', transport: 'محطة مترو ساحة الشهداء، ثم مشياً إلى القصبة.', map: 'Ketchaoua Mosque Alger', images: ['images (68).jpeg','images (69).jpeg','images (70).jpeg','images (71).jpeg','images (72).jpeg'], videos: [] },
 
-      ];
+      // ==========================================
+      // وكالات السفر (Travel Agencies)
+      // ==========================================
+      { id: 'agence_sofiane', category: 'وكالات سفر', title: 'وكالة صفيان (Sofiane)', icon: '✈️', history: 'وكالة محلية مقرها الجزائر العاصمة. تنظم رحلات إلى الصحراء والشمال. أسعار الرحلات تبدأ من حوالي 1,560 يورو.', transport: 'الاتصال عبر منصة Evaneos.', map: 'Alger', images: [], videos: [], links: { web: 'https://www.evaneos.fr/algerie/voyage/agences/69793-sofiane/' } },
+      { id: 'kenzia_travel', category: 'وكالات سفر', title: 'كنزيا ترافل', icon: '✈️', history: 'عروض خاصة لرحلات 4 أيام إلى القالة وعنابة. السعر يبدأ من 19,999 دج للشخص.', transport: 'الاتصال: 0553176311.', map: 'Alger', images: [], videos: [], links: { phone: '0553176311' } }
+    ];
 
     let currentCategory = 'الكل';
 
@@ -188,6 +194,7 @@
       const mapQuery = encodeURIComponent(place.map);
       document.getElementById('modalMap').innerHTML = `<iframe src="https://www.google.com/maps?q=${mapQuery}&output=embed" allowfullscreen="" loading="lazy"></iframe>`;
       
+      // معرض الصور
       const galleryContainer = document.getElementById('modalGalleryContainer');
       const gallery = document.getElementById('modalGallery');
       gallery.innerHTML = '';
@@ -200,13 +207,23 @@
         galleryContainer.classList.add('hidden');
       }
 
-      const videoContainer = document.getElementById('modalVideoContainer');
+      // عرض جميع الفيديوهات
+      const videosContainer = document.getElementById('modalVideosContainer');
+      videosContainer.innerHTML = '';
       if (place.videos && place.videos.length > 0) {
-        videoContainer.classList.remove('hidden');
-        document.getElementById('modalVideo').innerHTML = `<iframe src="https://www.youtube.com/embed/${place.videos[0].id}" allowfullscreen></iframe>`;
+        videosContainer.classList.remove('hidden');
+        place.videos.forEach((video, idx) => {
+          videosContainer.innerHTML += `
+            <div class="space-y-2">
+              <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> ${video.title || 'فيديو ' + (idx + 1)}</h4>
+              <div class="video-container bg-gray-200 dark:bg-slate-700">
+                <iframe src="https://www.youtube.com/embed/${video.id}" allowfullscreen></iframe>
+              </div>
+            </div>
+          `;
+        });
       } else {
-        videoContainer.classList.add('hidden');
-        document.getElementById('modalVideo').innerHTML = '';
+        videosContainer.classList.add('hidden');
       }
       
       document.querySelector('#placeModal > div').scrollTop = 0;
@@ -215,7 +232,7 @@
     function closeModal() {
       document.getElementById('placeModal').classList.add('hidden');
       document.getElementById('modalMap').innerHTML = '';
-      document.getElementById('modalVideo').innerHTML = '';
+      document.getElementById('modalVideosContainer').innerHTML = '';
     }
 
     window.addEventListener('DOMContentLoaded', () => {
