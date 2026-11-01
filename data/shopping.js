@@ -4,8 +4,7 @@ window.SHOP_DATA = {
     pharma:   { icon: "💊", title: { ar: "الصيدليات", fr: "Pharmacies", en: "Pharmacies" } },
     tel:      { icon: "📱", title: { ar: "محلات الهواتف", fr: "Téléphonie", en: "Phone Stores" } },
     copie:    { icon: "🖨️", title: { ar: "النسخ والطبع", fr: "Copie & Print", en: "Print & Copy" } },
-    beaute:   { icon: "💈", title: { ar: "الحلاقة", fr: "Beauté", en: "Beauty" } },
-   
+    beaute:   { icon: "💈", title: { ar: "الحلاقة", fr: "Beauté", en: "Beauty" } }
   },
   items: [
     // ==========================================
@@ -88,7 +87,7 @@ window.SHOP_DATA = {
     { 
       c: "tel", n: "Brothers Phone Kouba", r: 4.2, p: 2, dist: 1.0, 
       h: [["09:00", "20:30"]], t: "", g: [36.7270, 3.0755], 
-      video: "", 
+      video: "1-eKHcz31Oc", // فيديو Brothers Phone Kouba
       menu: { ar: "إصلاح هواتف، بيع مستعمل", fr: "Réparation de téléphones, vente d'occasion", en: "Phone repair, used sales" }, 
       menuImages: ["brother 2.jpg", "brother 3.jpg", "brother 4.jpg", "brothers 1.jpg"] 
     },
@@ -158,6 +157,6 @@ window.SHOP_DATA = {
       video: "", 
       menu: { ar: "حلاقة رجالية", fr: "Coiffure homme", en: "Men's haircut" }, 
       menuImages: [] 
-    },
+    }
   ]
 };
