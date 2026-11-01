@@ -23,28 +23,14 @@
             }
           },
           animation: {
-            'fade-in-up': 'fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             'shimmer': 'shimmer 2.5s infinite linear',
             'float': 'float 4s ease-in-out infinite',
             'pulse-glow': 'pulseGlow 2.5s ease-in-out infinite',
           },
           keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(30px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-            shimmer: {
-              '0%': { backgroundPosition: '-1000px 0' },
-              '100%': { backgroundPosition: '1000px 0' },
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            },
-            pulseGlow: {
-              '0%, 100%': { boxShadow: '0 0 20px rgba(249, 115, 22, 0.3)' },
-              '50%': { boxShadow: '0 0 40px rgba(249, 115, 22, 0.6)' },
-            }
+            shimmer: { '0%': { backgroundPosition: '-1000px 0' }, '100%': { backgroundPosition: '1000px 0' } },
+            float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+            pulseGlow: { '0%, 100%': { boxShadow: '0 0 20px rgba(249, 115, 22, 0.3)' }, '50%': { boxShadow: '0 0 40px rgba(249, 115, 22, 0.6)' } }
           }
         }
       }
@@ -53,118 +39,36 @@
 
   <style>
     body { font-family: 'Cairo', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; }
-    
-    /* Custom scrollbar */
-    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #f97316, #ea580c);
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover { background: #c2410c; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #f97316, #ea580c); border-radius: 10px; }
+    
+    .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 30px -5px rgba(0, 0, 0, 0.05); transition: all 0.4s ease; }
+    .dark .glass-card { background: rgba(30, 41, 59, 0.75); border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    
+    .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(249, 115, 22, 0.15); }
+    .dark .glass-nav { background: rgba(15, 23, 42, 0.85); border-bottom-color: rgba(249, 115, 22, 0.2); }
 
-    /* Glassmorphism */
-    .glass-card { 
-      background: rgba(255, 255, 255, 0.85); 
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.9); 
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 20px 50px -15px rgba(249, 115, 22, 0.1);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .dark .glass-card {
-      background: rgba(30, 41, 59, 0.75);
-      border-color: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 20px 50px -15px rgba(249, 115, 22, 0.15);
-    }
+    .link-card { transition: all 0.4s ease; }
+    .link-card:hover { transform: translateY(-4px); border-color: #f97316; box-shadow: 0 20px 40px -12px rgba(249, 115, 22, 0.2); }
 
-    .glass-nav { 
-      background: rgba(255, 255, 255, 0.85); 
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border-bottom: 1px solid rgba(249, 115, 22, 0.15);
-    }
-    .dark .glass-nav {
-      background: rgba(15, 23, 42, 0.85);
-      border-bottom-color: rgba(249, 115, 22, 0.2);
-    }
-
-    /* Hover 3D sur les cartes */
-    .link-card {
-      position: relative;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      overflow: hidden;
-    }
-    .link-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(234, 88, 12, 0.02));
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 0;
-    }
-    .link-card:hover::before { opacity: 1; }
-    .link-card:hover { 
-      transform: translateY(-6px) scale(1.02); 
-      border-color: #f97316; 
-      box-shadow: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
-    }
-    .link-card > * { position: relative; z-index: 1; }
-
-    /* Effet shimmer */
-    .shimmer-text {
-      background: linear-gradient(90deg, #c2410c, #f97316, #ea580c, #c2410c);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 4s linear infinite;
-    }
-
+    .shimmer-text { background: linear-gradient(90deg, #c2410c, #f97316, #ea580c, #c2410c); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; }
+    
     .dark-toggle { transition: all 0.4s ease; }
     .dark-toggle:hover { transform: rotate(180deg) scale(1.1); }
 
-    /* Search bar */
-    .search-input {
-      background: rgba(255, 255, 255, 0.9);
-      transition: all 0.3s ease;
-    }
+    .search-input { background: rgba(255, 255, 255, 0.9); transition: all 0.3s ease; }
     .dark .search-input { background: rgba(30, 41, 59, 0.9); }
-    .search-input:focus {
-      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
-      border-color: #f97316;
-    }
+    .search-input:focus { box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2); border-color: #f97316; }
 
-    /* Avatar prof */
-    .prof-avatar {
-      width: 48px; height: 48px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 1.1rem;
-      color: white;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: transform 0.3s ease;
-    }
+    .prof-avatar { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; color: white; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.3s ease; }
     .prof-item:hover .prof-avatar { transform: scale(1.1) rotate(5deg); }
 
-    /* Reveal animation */
-    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* Background mesh */
-    .bg-mesh {
-      background-image: 
-        radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.08) 0px, transparent 50%),
-        radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.06) 0px, transparent 50%),
-        radial-gradient(at 0% 50%, rgba(251, 191, 36, 0.05) 0px, transparent 50%);
-    }
-    .dark .bg-mesh {
-      background-image: 
-        radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.1) 0px, transparent 50%),
-        radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.08) 0px, transparent 50%);
-    }
+    .bg-mesh { background-image: radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.08) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.06) 0px, transparent 50%); }
+    .dark .bg-mesh { background-image: radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.1) 0px, transparent 50%); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 bg-mesh">
@@ -173,7 +77,7 @@
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-500/30">E</div>
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 flex items-center justify-center text-white font-black text-xl shadow-lg">E</div>
         <div>
           <h1 class="font-bold text-slate-900 dark:text-white text-base leading-tight">ENSTP <span class="shimmer-text">Ma Réussite</span></h1>
           <p class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1"><i class="fa-solid fa-graduation-cap text-brand-500"></i> المدرسة الوطنية العليا</p>
@@ -183,16 +87,15 @@
       <div class="flex items-center gap-2 md:gap-3">
         <div class="hidden sm:flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
           <button onclick="setLanguage('ar')" id="btn-ar" class="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-brand-600 text-white transition-all">عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-700 transition-all">FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-700 transition-all">EN</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 transition-all">FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 transition-all">EN</button>
         </div>
         <button onclick="toggleDarkMode()" class="dark-toggle w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center shadow-sm hover:border-brand-400 transition">
           <i class="fa-solid fa-moon dark:hidden"></i>
           <i class="fa-solid fa-sun hidden dark:block text-brand-400"></i>
         </button>
-        <a href="index.html" class="px-4 py-2.5 rounded-xl bg-brand-100 dark:bg-slate-800 text-brand-800 dark:text-brand-400 hover:bg-brand-200 dark:hover:bg-slate-700 text-xs font-bold transition flex items-center gap-2">
-          <i class="fa-solid fa-house"></i>
-          <span class="hidden md:inline">الرئيسية</span>
+        <a href="index.html" class="px-4 py-2.5 rounded-xl bg-brand-100 dark:bg-slate-800 text-brand-800 dark:text-brand-400 hover:bg-brand-200 text-xs font-bold transition flex items-center gap-2">
+          <i class="fa-solid fa-house"></i><span class="hidden md:inline">الرئيسية</span>
         </a>
       </div>
     </div>
@@ -207,7 +110,7 @@
       
       <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
         <div class="space-y-4 text-center md:text-right flex-1">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-brand-100 to-amber-100 dark:from-brand-900/30 dark:to-amber-900/30 border border-brand-200 dark:border-brand-700">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-brand-100 to-amber-100 dark:from-brand-900/30 border border-brand-200">
             <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
             <span class="text-xs font-bold text-brand-700 dark:text-brand-300">قسم التفوق والنجاح</span>
           </div>
@@ -215,7 +118,7 @@
             مساحتك <span class="shimmer-text">الأكاديمية</span>
           </h2>
           <p class="text-sm lg:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-            كل ما تحتاجه للنجاح: جداول التوقيت، الملخصات، الامتحانات السابقة، وأفضل قنوات اليوتيوب لأفضل الأساتذة.
+            كل ما تحتاجه للنجاح: جداول التوقيت، الملخصات، الامتحانات السابقة، وأدوات ذكية لمساعدتك.
           </p>
           <div class="grid grid-cols-3 gap-3 pt-4">
             <div class="stat-card bg-white/70 dark:bg-slate-800/70 backdrop-blur rounded-xl p-3 border border-brand-200 dark:border-slate-700">
@@ -244,7 +147,7 @@
     <!-- SCHEDULE -->
     <section class="reveal space-y-4">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white flex items-center justify-center shadow-lg shadow-brand-500/30">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white flex items-center justify-center shadow-lg">
           <i class="fa-solid fa-calendar-days"></i>
         </div>
         <div>
@@ -254,7 +157,7 @@
       </div>
       <a href="schedule.html" class="link-card glass-card flex items-center justify-between p-6 rounded-2xl group">
         <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-50 to-amber-50 dark:from-slate-700 dark:to-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-50 to-amber-50 dark:from-slate-700 dark:to-slate-800 text-brand-600 flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
             <i class="fa-solid fa-clock"></i>
           </div>
           <div>
@@ -263,7 +166,7 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <span class="hidden md:block text-xs font-bold text-brand-600 dark:text-brand-400 px-3 py-1.5 rounded-lg bg-brand-50 dark:bg-slate-700">مباشر</span>
+          <span class="hidden md:block text-xs font-bold text-brand-600 bg-brand-50 dark:bg-slate-700 px-3 py-1.5 rounded-lg">مباشر</span>
           <i class="fa-solid fa-arrow-left text-brand-500 group-hover:-translate-x-2 transition-transform text-lg"></i>
         </div>
       </a>
@@ -273,7 +176,7 @@
     <section class="reveal space-y-5">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/30">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white flex items-center justify-center shadow-lg">
             <i class="fa-solid fa-file-signature"></i>
           </div>
           <div>
@@ -286,9 +189,7 @@
           <input type="text" id="driveSearch" placeholder="ابحث في المجلدات..." class="search-input w-full pr-11 pl-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none">
         </div>
       </div>
-      
       <div id="drivesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-      
       <div id="noResults" class="hidden text-center py-10">
         <i class="fa-solid fa-search text-5xl text-slate-300 dark:text-slate-600 mb-4"></i>
         <p class="text-slate-500 dark:text-slate-400">لا توجد نتائج مطابقة</p>
@@ -298,7 +199,7 @@
     <!-- TEACHERS -->
     <section class="reveal space-y-6">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-600 text-white flex items-center justify-center shadow-lg shadow-red-500/30">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-600 text-white flex items-center justify-center shadow-lg">
           <i class="fa-brands fa-youtube"></i>
         </div>
         <div>
@@ -308,9 +209,7 @@
       </div>
       
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- 2CP -->
         <div class="glass-card rounded-3xl p-6 lg:p-8 relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-400/20 to-transparent rounded-bl-full"></div>
           <div class="relative flex items-center justify-between mb-6 pb-4 border-b border-brand-100 dark:border-slate-700">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-amber-500 text-white flex items-center justify-center font-black text-xl shadow-lg">2</div>
@@ -319,14 +218,12 @@
                 <p class="text-xs text-slate-500 dark:text-slate-400">2CP - Classes Préparatoires</p>
               </div>
             </div>
-            <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300">5 أساتذة</span>
+            <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-brand-100 text-brand-700">5 أساتذة</span>
           </div>
           <div class="space-y-3" id="teachers2cp"></div>
         </div>
 
-        <!-- 1CP -->
         <div class="glass-card rounded-3xl p-6 lg:p-8 relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-400/20 to-transparent rounded-bl-full"></div>
           <div class="relative flex items-center justify-between mb-6 pb-4 border-b border-emerald-100 dark:border-slate-700">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center font-black text-xl shadow-lg">1</div>
@@ -335,7 +232,7 @@
                 <p class="text-xs text-slate-500 dark:text-slate-400">1CP - Classes Préparatoires</p>
               </div>
             </div>
-            <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">4 أساتذة</span>
+            <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-700">4 أساتذة</span>
           </div>
           <div class="space-y-3" id="teachers1cp"></div>
         </div>
@@ -343,11 +240,11 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- ✅ صندوق أدوات الطالب (جديد) -->
+    <!-- ✅ صندوق أدوات الطالب -->
     <!-- ========================================== -->
     <section class="reveal space-y-6">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
           <i class="fa-solid fa-toolbox"></i>
         </div>
         <div>
@@ -362,14 +259,20 @@
         <div class="glass-card rounded-3xl p-6 border border-brand-100 dark:border-slate-700 space-y-4">
           <h4 class="font-bold text-lg text-brand-900 dark:text-brand-400 flex items-center gap-2"><i class="fa-solid fa-calculator"></i> حاسبة المعدل الفصلي</h4>
           
-          <div id="calc-subjects" class="space-y-2 max-h-60 overflow-y-auto pr-2">
-            <!-- أسطر المواد ستضاف هنا -->
+          <div class="flex items-center gap-2 px-1 text-[10px] font-bold text-gray-500 mb-1">
+            <div class="w-8 text-center">معامل</div>
+            <div class="w-14 text-center">امتحان</div>
+            <div class="w-14 text-center">TD/TP</div>
+            <div class="w-16 text-center">النوع</div>
+            <div class="w-4"></div>
           </div>
+
+          <div id="calc-subjects" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
           
           <button onclick="addSubjectRow()" class="text-xs font-bold text-brand-600 hover:text-brand-800 dark:text-brand-400 flex items-center gap-1"><i class="fa-solid fa-plus"></i> إضافة مادة</button>
 
           <div class="bg-brand-50 dark:bg-slate-800 p-4 rounded-xl text-center">
-            <p class="text-xs text-brand-800 dark:text-brand-300 font-bold mb-1">المعدل النهائي (60% امتحان + 40% TD)</p>
+            <p class="text-xs text-brand-800 dark:text-brand-300 font-bold mb-1">المعدل النهائي المرجح</p>
             <div id="calc-result" class="text-3xl font-black text-brand-600">0.00</div>
             <p id="calc-status" class="text-xs font-bold mt-1"></p>
           </div>
@@ -377,23 +280,22 @@
 
         <!-- 2. عجلة المواد وقائمة المهام -->
         <div class="space-y-6">
-                    <!-- عجلة المواد -->
+          <!-- عجلة المواد -->
           <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700">
             <h4 class="font-bold text-lg text-orange-900 dark:text-orange-400 mb-4 flex items-center justify-center gap-2"><i class="fa-solid fa-dice"></i> عجلة المواد</h4>
             
-            <!-- إضافة المواد -->
             <div class="flex gap-2 mb-4">
               <input type="text" id="module-input" placeholder="أضف مادة (مثلاً: رياضيات)..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
               <button onclick="addModule()" class="bg-orange-500 text-white px-3 rounded-lg font-bold text-sm"><i class="fa-solid fa-plus"></i></button>
             </div>
 
-            <!-- عرض المواد المضافة -->
             <div id="modules-list" class="flex flex-wrap gap-1 mb-4 max-h-24 overflow-y-auto justify-center"></div>
 
             <div id="wheel-result" class="h-12 flex items-center justify-center text-xl font-black text-orange-600 mb-4 bg-orange-50 dark:bg-slate-800 rounded-xl">?</div>
             
             <button onclick="spinWheel()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition">ماذا أراجع الآن؟</button>
           </div>
+
           <!-- قائمة المهام -->
           <div class="glass-card rounded-3xl p-6 border border-emerald-100 dark:border-slate-700">
             <h4 class="font-bold text-lg text-emerald-900 dark:text-emerald-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> مهامي الدراسية</h4>
@@ -404,10 +306,9 @@
             <ul id="task-list" class="space-y-2 max-h-32 overflow-y-auto pr-1"></ul>
           </div>
         </div>
-
       </div>
 
-            <!-- 3. المساعد الأكاديمي (AI) -->
+      <!-- 3. المساعد الأكاديمي (AI) -->
       <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 mt-6">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-robot"></i></div>
@@ -430,22 +331,31 @@
           </div>
         </div>
         
-        <!-- الأزرار -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
           <button onclick="generateAIPrompt()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-copy"></i> نسخ الأمر وفتح ChatGPT
           </button>
           
-          <!-- زر احتياطي في حال لم يفتح التطبيق -->
           <a id="fallback-link" href="#" target="_blank" class="w-full bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 opacity-50 pointer-events-none">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح ChatGPT مباشرة
           </a>
         </div>
         <p id="ai-status" class="text-xs text-center mt-2 text-gray-500"></p>
       </div>
-    // ============================================
+    </section>
+
+  </main>
+
+  <footer class="glass-nav border-t border-brand-100 dark:border-slate-800 py-6 mt-10">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-xs text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2">
+        <span>© 2026 ENSTP Kouba</span><span class="w-1 h-1 rounded-full bg-brand-400"></span><span>جميع الحقوق محفوظة</span>
+      </p>
+    </div>
+  </footer>
+
+  <script>
     // 1. DARK MODE
-    // ============================================
     if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
     }
@@ -459,9 +369,7 @@
       }
     }
 
-    // ============================================
-    // 2. DRIVES DATA & RENDER
-    // ============================================
+    // 2. DRIVES
     const drives = [
       { name: 'Drive 1', desc: '2CP - السنة الثانية', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-folder', color: 'emerald' },
       { name: 'Drive 2', desc: 'Cours - الدروس', url: 'https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg', icon: 'fa-book', color: 'blue' },
@@ -483,40 +391,34 @@
       
       if (filtered.length === 0) {
         grid.innerHTML = '';
-                noResults.classList.remove('hidden');
+        noResults.classList.remove('hidden');
         return;
       }
       noResults.classList.add('hidden');
       
       grid.innerHTML = filtered.map((d, i) => `
-        <a href="${d.url}" target="_blank" class="link-card glass-card p-5 rounded-2xl flex items-center justify-between group" style="animation-delay: ${i * 0.05}s">
+        <a href="${d.url}" target="_blank" class="link-card glass-card p-5 rounded-2xl flex items-center justify-between group">
           <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-xl bg-${d.color}-100 dark:bg-${d.color}-900/30 text-${d.color}-600 dark:text-${d.color}-400 flex items-center justify-center text-lg shadow-sm group-hover:scale-110 transition-transform">
+            <div class="w-11 h-11 rounded-xl bg-${d.color}-100 text-${d.color}-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               <i class="fa-solid ${d.icon}"></i>
             </div>
             <div>
               <span class="font-black text-sm text-slate-900 dark:text-white block">${d.name}</span>
-              <span class="text-xs text-slate-500 dark:text-slate-400">${d.desc}</span>
+              <span class="text-xs text-slate-500">${d.desc}</span>
             </div>
           </div>
-          <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-brand-500 group-hover:scale-110 transition-all"></i>
+          <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-brand-500"></i>
         </a>
       `).join('');
     }
+    document.getElementById('driveSearch').addEventListener('input', (e) => renderDrives(e.target.value));
 
-    // Search
-    document.getElementById('driveSearch').addEventListener('input', (e) => {
-      renderDrives(e.target.value);
-    });
-
-    // ============================================
-    // 3. TEACHERS DATA & RENDER
-    // ============================================
+    // 3. TEACHERS
     const teachers2cp = [
       { subject: 'MDF', name: 'Dr. Noureddine Azzam', url: 'https://youtube.com/channel/UC0a8xy1l7eDQ9bVrsl2KmJg', color: 'blue', icon: 'fa-water' },
       { subject: 'Analyse 3', name: 'Mohammed-Ealmin BOUATOUCHE', url: 'http://www.youtube.com/@mathinfo0199', color: 'purple', icon: 'fa-calculator' },
       { subject: 'Physique 3/4', name: 'N. MAGHLAOUI', url: 'https://www.youtube.com/@e-learningphysiquewithn.ma570', color: 'cyan', icon: 'fa-atom' },
-      { subject: 'Chimie 3', name: 'PRÉPA CHIMIE', url: 'https://www.youtube.com/@prepachimie2020', color: 'pink', icon: 'fa-flask' },
+            { subject: 'Chimie 3', name: 'PRÉPA CHIMIE', url: 'https://www.youtube.com/@prepachimie2020', color: 'pink', icon: 'fa-flask' },
       { subject: 'Électronique', name: 'Elmostafa Elkacem', url: 'https://www.youtube.com/@ElmostafaElkacem', color: 'indigo', icon: 'fa-bolt' }
     ];
 
@@ -555,9 +457,7 @@
       `).join('');
     }
 
-    // ============================================
     // 4. SCROLL REVEAL
-    // ============================================
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -566,12 +466,11 @@
         }
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ============================================
-    // 5. صندوق أدوات الطالب (حاسبة، عجلة، مهام)
-    // ============================================
+    // ==========================================
+    // 5. صندوق أدوات الطالب
+    // ==========================================
     
     // --- 5.1 حاسبة المعدل ---
     let subjectCount = 0;
@@ -579,41 +478,104 @@
       subjectCount++;
       const container = document.getElementById('calc-subjects');
       const div = document.createElement('div');
-      div.className = "flex gap-2 items-center bg-white dark:bg-slate-900 p-2 rounded-lg border border-gray-200 dark:border-slate-700";
-      div.id = `sub-${subjectCount}`;
+      div.className = "flex gap-2 items-center bg-white dark:bg-slate-900 p-2 rounded-lg border border-gray-200 dark:border-slate-700 calc-row";
+      
       div.innerHTML = `
-        <input type="number" step="0.01" max="20" placeholder="امتحان" class="w-16 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 exam-in" oninput="calcGPA()">
-        <input type="number" step="0.01" max="20" placeholder="TD/TP" class="w-16 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 td-in" oninput="calcGPA()">
-        <button onclick="this.parentElement.remove(); calcGPA();" class="text-red-500 text-xs px-1"><i class="fa-solid fa-xmark"></i></button>
+        <input type="number" step="1" min="1" placeholder="معامل" value="1" class="w-8 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 text-center coeff-in" oninput="calcGPA()" title="المعامل">
+        <input type="number" step="0.01" min="0" max="20" placeholder="امتحان" class="w-14 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 text-center exam-in" oninput="calcGPA()">
+        <input type="number" step="0.01" min="0" max="20" placeholder="TD/TP" class="w-14 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 text-center td-in" oninput="calcGPA()">
+        <select class="w-16 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 type-in" onchange="calcGPA()">
+          <option value="both">الكل</option>
+          <option value="exam">امتحان</option>
+          <option value="td">TD فقط</option>
+        </select>
+        <button onclick="this.parentElement.remove(); calcGPA();" class="text-red-500 text-xs px-1 hover:scale-110 transition"><i class="fa-solid fa-xmark"></i></button>
       `;
       container.appendChild(div);
     }
 
     function calcGPA() {
-      const rows = document.querySelectorAll('#calc-subjects > div');
-      let total = 0, count = 0;
+      const rows = document.querySelectorAll('.calc-row');
+      let totalWeightedPoints = 0;
+      let totalCoefficients = 0;
+
       rows.forEach(r => {
-        const exam = parseFloat(r.querySelector('.exam-in').value) || 0;
-        const td = parseFloat(r.querySelector('.td-in').value) || 0;
-        total += (exam * 0.6) + (td * 0.4);
-        count++;
+        const coeff = parseFloat(r.querySelector('.coeff-in').value) || 1;
+        const exam = parseFloat(r.querySelector('.exam-in').value);
+        const td = parseFloat(r.querySelector('.td-in').value);
+        const type = r.querySelector('.type-in').value;
+
+        let subjectAvg = 0;
+        let hasScore = false;
+
+        if (type === 'exam') {
+          if (!isNaN(exam)) { subjectAvg = exam; hasScore = true; }
+        } else if (type === 'td') {
+          if (!isNaN(td)) { subjectAvg = td; hasScore = true; }
+        } else {
+          if (!isNaN(exam) && !isNaN(td)) { subjectAvg = (exam * 0.6) + (td * 0.4); hasScore = true; }
+          else if (!isNaN(exam)) { subjectAvg = exam; hasScore = true; }
+          else if (!isNaN(td)) { subjectAvg = td; hasScore = true; }
+        }
+
+        if (hasScore) {
+          totalWeightedPoints += (subjectAvg * coeff);
+          totalCoefficients += coeff;
+        }
       });
-      const gpa = count > 0 ? (total / count) : 0;
+
+      const gpa = totalCoefficients > 0 ? (totalWeightedPoints / totalCoefficients) : 0;
       document.getElementById('calc-result').innerText = gpa.toFixed(2);
       
       const status = document.getElementById('calc-status');
       if (gpa >= 10) { status.innerText = "🎉 ناجح"; status.className = "text-xs font-bold text-emerald-500"; }
       else if (gpa >= 7) { status.innerText = "⚠️ استدراك"; status.className = "text-xs font-bold text-amber-500"; }
       else if (gpa > 0) { status.innerText = "❌ راسب"; status.className = "text-xs font-bold text-red-500"; }
+      else { status.innerText = ""; }
     }
 
-    // --- 5.2 عجلة المواد ---
-    const subjects = ['رياضيات', 'فيزياء', 'إعلام آلي', 'لغة إنجليزية', 'هندسة'];
+    // --- 5.2 عجلة المواد (ديناميكية) ---
+    let myModules = JSON.parse(localStorage.getItem('enstp_modules')) || ['رياضيات', 'فيزياء'];
+
+    function renderModules() {
+      const list = document.getElementById('modules-list');
+      if (myModules.length === 0) {
+        list.innerHTML = '<span class="text-xs text-gray-400">أضف مواد للبدء</span>';
+        return;
+      }
+      list.innerHTML = myModules.map((m, index) => `
+        <span class="bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-300 text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1">
+          ${m}
+          <button onclick="removeModule(${index})" class="text-orange-500 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
+        </span>
+      `).join('');
+    }
+
+    function addModule() {
+      const input = document.getElementById('module-input');
+      const val = input.value.trim();
+      if (!val) return;
+      if (myModules.includes(val)) return alert("هذه المادة مضافة بالفعل!");
+      
+      myModules.push(val);
+      localStorage.setItem('enstp_modules', JSON.stringify(myModules));
+      input.value = '';
+      renderModules();
+    }
+
+    function removeModule(index) {
+      myModules.splice(index, 1);
+      localStorage.setItem('enstp_modules', JSON.stringify(myModules));
+      renderModules();
+    }
+
     function spinWheel() {
+      if (myModules.length === 0) return alert("الرجاء إضافة مادة واحدة على الأقل أولاً!");
+      
       const resultEl = document.getElementById('wheel-result');
       let counter = 0;
       const interval = setInterval(() => {
-        resultEl.innerText = subjects[Math.floor(Math.random() * subjects.length)];
+        resultEl.innerText = myModules[Math.floor(Math.random() * myModules.length)];
         counter++;
         if (counter > 10) {
           clearInterval(interval);
@@ -627,13 +589,17 @@
     let tasks = JSON.parse(localStorage.getItem('enstp_tasks')) || [];
     function renderTasks() {
       const list = document.getElementById('task-list');
+      if(tasks.length === 0) {
+          list.innerHTML = '<li class="text-xs text-gray-400 text-center py-2">لا توجد مهام حالياً</li>';
+          return;
+      }
       list.innerHTML = tasks.map((t, i) => `
         <li class="flex items-center justify-between text-sm p-2 bg-gray-50 dark:bg-slate-800 rounded border ${t.done ? 'opacity-50 line-through' : ''}">
           <label class="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask(${i})" class="accent-emerald-500">
             <span>${t.text}</span>
           </label>
-          <button onclick="delTask(${i})" class="text-red-400"><i class="fa-solid fa-trash text-xs"></i></button>
+          <button onclick="delTask(${i})" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash text-xs"></i></button>
         </li>
       `).join('');
     }
@@ -650,9 +616,15 @@
 
     // --- 5.4 المساعد الأكاديمي (AI) ---
     function generateAIPrompt() {
-      const topic = document.getElementById('ai-topic').value;
+      const topic = document.getElementById('ai-topic').value.trim();
       const type = document.getElementById('ai-type').value;
-      if (!topic) return alert("الرجاء إدخال الموضوع أولاً");
+      const statusEl = document.getElementById('ai-status');
+      const fallbackBtn = document.getElementById('fallback-link');
+
+      if (!topic) {
+        alert("الرجاء إدخال الموضوع أولاً");
+        return;
+      }
 
       let prompt = "";
       if (type === 'summary') {
@@ -661,20 +633,35 @@
         prompt = `أنت مصمم امتحانات. قم بإنشاء 5 أسئلة اختيار من متعدد (QCM) صعبة قليلاً حول الموضوع التالي: "${topic}". أرفق الإجابات الصحيحة في النهاية.`;
       }
 
-      navigator.clipboard.writeText(prompt).then(() => {
-        alert("✅ تم نسخ الأمر! سيتم فتح ChatGPT الآن. فقط الصقه في المحادثة.");
-        window.open('https://chatgpt.com', '_blank');
-      });
+      const chatGptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
+      
+      fallbackBtn.href = chatGptUrl;
+      fallbackBtn.classList.remove('opacity-50', 'pointer-events-none');
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(prompt).then(() => {
+          statusEl.innerText = "✅ تم نسخ الأمر بنجاح! فتح ChatGPT...";
+          statusEl.className = "text-xs text-center mt-2 text-emerald-500 font-bold";
+          window.open(chatGptUrl, '_blank');
+        }).catch(err => {
+          statusEl.innerText = "تم تجهيز الرابط، اضغط على الزر الاحتياطي.";
+          statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold";
+        });
+      } else {
+        statusEl.innerText = "اضغط على الزر الاحتياطي لفتح ChatGPT مباشرة.";
+        statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold";
+      }
     }
 
-    // ============================================
+    // ==========================================
     // 6. INIT
-    // ============================================
+    // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       renderDrives();
       renderTeachers();
-      addSubjectRow(); // إضافة أول سطر للحاسبة
-      renderTasks();   // عرض المهام المحفوظة
+      addSubjectRow();
+      renderTasks();
+      renderModules();
     });
   </script>
 </body>
