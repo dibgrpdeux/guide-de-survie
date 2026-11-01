@@ -26,12 +26,14 @@
     
     .map-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; background: #0f172a; }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .table-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
     .table-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
     
-    /* بوصلة القبلة (نجمة) */
+    /* ==========================================
+       بوصلة القبلة على شكل نجمة (Star Compass)
+       ========================================== */
     .compass-container { position: relative; width: 260px; height: 260px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
     .star-outer { position: absolute; width: 100%; height: 100%; background: linear-gradient(135deg, #f97316, #ea580c); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: rotateStar 20s linear infinite; opacity: 0.9; box-shadow: 0 0 30px rgba(249, 115, 22, 0.4); }
     .star-inner { position: absolute; width: 70%; height: 70%; background: linear-gradient(135deg, #fff7ed, #ffedd5); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); display: flex; align-items: center; justify-content: center; z-index: 5; }
@@ -43,11 +45,15 @@
     .kaaba-icon { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 25; font-size: 28px; color: #10b981; filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.6)); animation: floatKaaba 2s infinite ease-in-out; }
     @keyframes floatKaaba { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
 
-    /* بطاقات */
+    /* بطاقات الطوارئ */
     .emergency-card { transition: all 0.3s ease; }
     .emergency-card:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2); }
+
+    /* بطاقات الإقامات */
     .residence-card { transition: all 0.3s ease; }
     .residence-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(249, 115, 22, 0.3); border-color: #f97316; }
+
+    /* الوضع الليلي */
     .dark-toggle { transition: all 0.4s ease; }
     .dark-toggle:hover { transform: rotate(180deg) scale(1.1); }
   </style>
@@ -88,26 +94,31 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- الإقامة 1: سعيد حمدين (حسين داي) -->
         <button onclick="showDetails('hamdine')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
           <div class="w-20 h-20 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-3xl group-hover:bg-orange-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
           <div><h3 class="font-bold text-gray-900 dark:text-white text-xl">الإقامة الجامعية سعيد حمدين</h3><p class="text-xs text-gray-500 mt-1">حسين داي، الجزائر العاصمة</p></div>
           <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-bold">600 سرير</span>
         </button>
 
+        <!-- الإقامة 2: امحمد يوسفي (حسين داي) -->
         <button onclick="showDetails('youssefi')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
           <div class="w-20 h-20 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-3xl group-hover:bg-amber-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
           <div><h3 class="font-bold text-gray-900 dark:text-white text-xl">الإقامة الجامعية امحمد يوسفي</h3><p class="text-xs text-gray-500 mt-1">حسين داي، الجزائر العاصمة</p></div>
           <span class="text-xs bg-amber-50 text-amber-600 px-3 py-1 rounded-full font-bold">500 سرير</span>
         </button>
 
+        <!-- الإقامة 3: قاريدي (بن عكنون) -->
         <button onclick="showDetails('gueridi')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
           <div class="w-20 h-20 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-3xl group-hover:bg-red-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
-          <div><h3 class="font-bold text-gray-900 dark:text-white text-xl">الإقامة الجامعية قاريدي</h3><p class="text-xs text-gray-500 mt-1">قاريدي، الجزائر العاصمة</p></div>
+          <div><h3 class="font-bold text-gray-900 dark:text-white text-xl">الإقامة الجامعية قاريدي</h3><p class="text-xs text-gray-500 mt-1">بن عكنون، الجزائر العاصمة</p></div>
           <span class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full font-bold">1200 سرير</span>
         </button>
       </div>
 
-      <!-- بوصلة القبلة -->
+      <!-- ========================================== -->
+      <!-- بوصلة القبلة (نجمة) -->
+      <!-- ========================================== -->
       <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-orange-100 dark:border-orange-900/30 relative overflow-hidden">
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-orange-400/10 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl"></div>
@@ -149,7 +160,9 @@
         </div>
       </div>
 
+      <!-- ========================================== -->
       <!-- حالة الطوارئ -->
+      <!-- ========================================== -->
       <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-red-100 dark:border-red-900/30 relative overflow-hidden">
         <div class="flex items-center gap-3 border-b border-red-100 dark:border-slate-700 pb-4">
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-400 to-red-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-red-500/30">
@@ -167,16 +180,19 @@
             <div class="text-2xl font-black text-red-700 dark:text-red-400">14</div>
             <div class="text-xs font-bold text-red-800 dark:text-red-300">الحماية المدنية</div>
           </a>
+          
           <a href="tel:17" class="emergency-card bg-blue-50 dark:bg-blue-900/20 p-5 rounded-2xl text-center border border-blue-200 dark:border-blue-800 flex flex-col items-center justify-center gap-2 group">
             <div class="w-12 h-12 rounded-full bg-blue-200 text-blue-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-shield-halved"></i></div>
             <div class="text-2xl font-black text-blue-700 dark:text-blue-400">17</div>
             <div class="text-xs font-bold text-blue-800 dark:text-blue-300">الشرطة</div>
           </a>
+
           <a href="tel:1548" class="emergency-card bg-amber-50 dark:bg-amber-900/20 p-5 rounded-2xl text-center border border-amber-200 dark:border-amber-800 flex flex-col items-center justify-center gap-2 group">
             <div class="w-12 h-12 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-building-shield"></i></div>
             <div class="text-2xl font-black text-amber-700 dark:text-amber-400">1548</div>
             <div class="text-xs font-bold text-amber-800 dark:text-amber-300">أمن المدرسة</div>
           </a>
+
           <a href="tel:021710000" class="emergency-card bg-emerald-50 dark:bg-emerald-900/20 p-5 rounded-2xl text-center border border-emerald-200 dark:border-emerald-800 flex flex-col items-center justify-center gap-2 group">
             <div class="w-12 h-12 rounded-full bg-emerald-200 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-hospital"></i></div>
             <div class="text-sm font-black text-emerald-700 dark:text-emerald-400 pt-1">021 71 00 00</div>
@@ -185,18 +201,46 @@
         </div>
       </div>
 
-      <!-- نصائح للطلبة الجدد -->
-      <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700 mt-8">
-        <h3 class="font-black text-lg text-orange-900 dark:text-orange-400 flex items-center gap-2 mb-4">
-          <i class="fa-solid fa-lightbulb"></i> نصائح للطلبة الجدد
-        </h3>
-        <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-          <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> أحضر معك أغطية سرير إضافية (خاصة في الشتاء).</li>
-          <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> احتفظ ببطاقة الطالب في مكان آمن، فبدونها لا يمكنك الدخول.</li>
-          <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> تعرف على أوقات فتح المطعم لتجنب الازدحام.</li>
-          <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> قم بتحميل تطبيق Yassir أو Heetch للتنقل عند الحاجة.</li>
-        </ul>
+      <!-- ========================================== -->
+      <!-- معلومات إضافية -->
+      <!-- ========================================== -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <!-- نصائح للطلبة الجدد -->
+        <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700">
+          <h3 class="font-black text-lg text-orange-900 dark:text-orange-400 flex items-center gap-2 mb-4">
+            <i class="fa-solid fa-lightbulb"></i> نصائح للطلبة الجدد
+          </h3>
+          <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+            <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> أحضر معك أغطية سرير إضافية (خاصة في الشتاء).</li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> احتفظ ببطاقة الطالب في مكان آمن، فبدونها لا يمكنك الدخول.</li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> تعرف على أوقات فتح المطعم لتجنب الازدحام.</li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> قم بتحميل تطبيق Yassir أو Heetch للتنقل عند الحاجة.</li>
+          </ul>
+        </div>
+
+        <!-- أوقات الحافلات -->
+        <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700">
+          <h3 class="font-black text-lg text-orange-900 dark:text-orange-400 flex items-center gap-2 mb-4">
+            <i class="fa-solid fa-bus"></i> أوقات الحافلات (الإقامة ↔ المدرسة)
+          </h3>
+          <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+            <div class="flex justify-between items-center bg-orange-50 dark:bg-slate-800 p-2 rounded-lg">
+              <span>الحافلة الصباحية</span>
+              <span class="font-mono font-bold text-orange-700 dark:text-orange-400">07:00 صباحاً</span>
+            </div>
+            <div class="flex justify-between items-center bg-orange-50 dark:bg-slate-800 p-2 rounded-lg">
+              <span>الحافلة الثانية (اختياري)</span>
+              <span class="font-mono font-bold text-orange-700 dark:text-orange-400">07:30 صباحاً</span>
+            </div>
+            <div class="flex justify-between items-center bg-orange-50 dark:bg-slate-800 p-2 rounded-lg">
+              <span>العودة</span>
+              <span class="font-mono font-bold text-orange-700 dark:text-orange-400">17:30 مساءً</span>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mt-3"><i class="fa-solid fa-info-circle text-orange-500"></i> هذه الأوقات تقريبية وقد تتغير حسب جدول النقل الجامعي.</p>
+        </div>
       </div>
+
     </div>
 
     <!-- صفحة التفاصيل -->
@@ -278,33 +322,12 @@
             <p class="text-sm text-purple-800 dark:text-purple-300">صباحاً: الأحد إلى الخميس. مساءً: الأحد والثلاثاء.</p>
           </div>
           <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800">
-            <h4 class="font-bold text-blue-900 dark:text-blue-400 mb-2"><i class="fa-solid fa-table-tennis-paddle-ball mr-1"></i> قاعة الألعاب الثانية</h4>
+                        <h4 class="font-bold text-blue-900 dark:text-blue-400 mb-2"><i class="fa-solid fa-table-tennis-paddle-ball mr-1"></i> قاعة الألعاب الثانية</h4>
             <p class="text-sm text-blue-800 dark:text-blue-300">صباحاً: الأحد إلى الخميس. مساءً: الإثنين والأربعاء.</p>
           </div>
           <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-200 dark:border-slate-700 md:col-span-2">
             <h4 class="font-bold text-gray-900 dark:text-white mb-2"><i class="fa-solid fa-chalkboard-user mr-1"></i> قاعة النشاطات</h4>
             <p class="text-sm text-gray-800 dark:text-gray-300">يوم الخميس: 13:30 (بعد وجبة الغداء) و 20:00 (بعد وجبة العشاء).</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- فيديوهات معلوماتية إضافية (جديد) -->
-      <div class="glass-card p-6 rounded-3xl space-y-4 border border-orange-100 dark:border-slate-700">
-        <h3 class="font-bold text-xl text-gray-900 dark:text-white flex items-center gap-2">
-          <i class="fa-solid fa-film text-orange-500"></i> فيديوهات معلوماتية إضافية
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="rounded-2xl overflow-hidden border border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2">
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/1P4h4b0w0zM" title="فيديو تعريفي 1" allowfullscreen></iframe>
-            </div>
-            <p class="text-center text-sm font-bold text-gray-800 dark:text-white mt-2">جولة داخل الإقامة (عام)</p>
-          </div>
-          <div class="rounded-2xl overflow-hidden border border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2">
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/Fh4j
-                            </div>
-            <p class="text-center text-sm font-bold text-gray-800 dark:text-white mt-2">مرافق الإقامة (غرف، مطعم، مكتبة)</p>
           </div>
         </div>
       </div>
@@ -359,10 +382,10 @@
         ]
       },
       'gueridi': {
-        title: 'الإقامة الجامعية قاريدي ()',
+        title: 'الإقامة الجامعية قاريدي ',
         mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.375506523222!2d3.0174753152907654!3d36.76112497995362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128faffa7b3dae89%3A0x6b3b6b3b6b3b6b3b!2sCit%C3%A9%20Universitaire%20Gueridi%20Ben%20Aknoun!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
         videoSrc: 'https://www.youtube.com/embed/cxKbbBfWCCw',
-        distance: 'تبعد حوالي 5 min عن المدرسة الوطنية العليا للأشغال العمومية (القبة).',
+        distance: 'تبعد حوالي min5 عن المدرسة الوطنية العليا للأشغال العمومية (القبة).',
         facilities: [
           { name: 'مطعم الإقامة الجامعية', icon: 'fa-utensils', type: 'مرفق', time: '12:00 - 14:00 / 19:00 - 21:00', distance: 'داخل الإقامة' },
           { name: 'سوبرماركت (Ardis / UNO)', icon: 'fa-cart-shopping', type: 'محل تجاري', time: '09:00 - 22:00', distance: '500 متر (5 دقائق سيراً)' },
@@ -462,6 +485,7 @@
       }
     }
 
+    // مراقبة الموقع
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(
         (position) => {
@@ -481,6 +505,7 @@
       if(statusEl) statusEl.innerText = "متصفحك لا يدعم تحديد الموقع.";
     }
 
+    // مراقبة اتجاه الهاتف
     if (window.DeviceOrientationEvent) {
       if (typeof DeviceOrientationEvent.requestPermission === 'function') {
         document.body.addEventListener('click', function requestAccess() {
