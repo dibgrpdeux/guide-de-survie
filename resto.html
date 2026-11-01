@@ -27,17 +27,8 @@
     .filter-btn { transition: all 0.3s ease; }
     .filter-btn.active { background: #f97316; color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
 
-    /* تنسيق صورة الغلاف */
-    .card-cover {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 1rem 1rem 0 0;
-      transition: transform 0.4s ease;
-    }
-    .glass-card:hover .card-cover {
-      transform: scale(1.05);
-    }
+    .card-cover { width: 100%; height: 180px; object-fit: cover; border-radius: 1rem 1rem 0 0; transition: transform 0.4s ease; }
+    .glass-card:hover .card-cover { transform: scale(1.05); }
   </style>
 </head>
 <body class="min-h-screen">
@@ -60,7 +51,6 @@
 
   <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
     
-    <!-- شريط التصنيفات -->
     <div class="flex flex-wrap gap-2 justify-center">
       <button onclick="setFilter('all')" id="filter-all" class="filter-btn active px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
         <i class="fa-solid fa-list"></i> الكل
@@ -73,7 +63,6 @@
       </button>
     </div>
 
-    <!-- شريط الفرز -->
     <div class="glass-card p-3 rounded-2xl shadow-sm flex items-center justify-between flex-wrap gap-2 border border-orange-100 dark:border-slate-700">
       <span class="text-sm font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-sort text-orange-500"></i> فرز حسب:</span>
       <div class="flex flex-wrap gap-2">
@@ -84,7 +73,6 @@
       </div>
     </div>
 
-    <!-- عرض البطاقات -->
     <div id="itemsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
 
@@ -98,7 +86,12 @@
         <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
       </div>
 
-      <!-- معرض الصور -->
+      <!-- الفيديو -->
+      <div id="modalVideoContainer" class="space-y-2 hidden">
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
+        <div id="modalVideo" class="w-full aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
+      </div>
+
       <div id="modalMenuContainer" class="space-y-2 hidden">
         <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> معرض الصور:</h4>
         <div id="modalMenuGallery" class="flex overflow-x-auto gap-3 pb-2 gallery-scroll snap-x"></div>
@@ -119,7 +112,6 @@
         </div>
       </div>
 
-      <!-- الخريطة -->
       <div id="modalMapContainer" class="space-y-2 hidden">
         <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> الموقع على الخريطة:</h4>
         <div id="modalMap" class="w-full h-64 rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
@@ -132,28 +124,30 @@
     </div>
   </div>
 
-  <!-- بيانات المطاعم والمقاهي -->
   <script>
     window.RESTO_DATA = {
       items: [
         // ==========================================
         // المطاعم (Restaurants)
         // ==========================================
-        { category: 'resto', n: "Mega Pizza Kouba", r: 4.5, p: 2, dist: 0.8, h: [["11:00", "23:00"]], t: "", g: [36.7294389, 3.0743456], delivery: true, deliveryInfo: "توصيل عبر Yassir / Heetch", menu: { ar: "بيتزا، باستا، مشروبات", fr: "Pizza, Pâtes, Boissons", en: "Pizza, Pasta, Drinks" }, menuImages: ["MEGA 1.jpg", "MEGA 2.jpg"] },
-        { category: 'resto', n: "On Est La", r: 4.8, p: 2, dist: 1.1, h: [["11:00", "01:00"]], t: "", g: [36.7220684, 3.076564], delivery: true, deliveryInfo: "توصيل مجاني للطلبة (الحد الأدنى 1500 دج)", menu: { ar: "أطباق متنوعة، مشاوي، سلطات", fr: "Plats variés, Grillades, Salades", en: "Various dishes, Grills, Salads" }, menuImages: ["ON EST LA 1.jpg", "ON EST LA 2.jpg"] },
-        { category: 'resto', n: "American Berger", r: 4.1, p: 1, dist: 0.9, h: [["11:00", "23:00"]], t: "", g: [36.7274727, 3.0651558], delivery: false, deliveryInfo: "", menu: { ar: "برغر، بطاطا مقلية", fr: "Burgers, Frites", en: "Burgers, Fries" }, menuImages: ["american1.jpg", "american2.jpg", "american3.jpg"] },
-        { category: 'resto', n: "KGB (Kouba Gourmet Burger)", r: 3.8, p: 1, dist: 1.3, h: [["10:30", "02:00"]], t: "+213541041085", g: [36.7296152, 3.0765289], delivery: true, deliveryInfo: "توصيل عبر تطبيق Yassir", menu: { ar: "برغر KGB: 700 دج", fr: "KGB Burger: 700 DA", en: "KGB Burger: 700 DA" }, menuImages: ["kgb.png", "kgb1.jpeg", "kgb2.jpeg"] },
-        { category: 'resto', n: "Cheese Kou", r: 4.2, p: 1, dist: 1.0, h: [["10:30", "01:00"]], t: "+213562656809", g: [36.7226875, 3.0739069], delivery: true, deliveryInfo: "توصيل عبر Heetch Food", menu: { ar: "تاكتوز، بيتزا، برغر", fr: "Tacos, Pizza, Burgers", en: "Tacos, Pizza, Burgers" }, menuImages: ["cheese.jpg", "cheese3.jpg", "cheese4.jpg"] },
+        { category: 'resto', n: "Mega Pizza Kouba", r: 4.5, p: 2, dist: 0.8, h: [["11:00", "23:00"]], t: "", g: [36.7294389, 3.0743456], video: "", delivery: true, deliveryInfo: "توصيل عبر Yassir / Heetch", menu: { ar: "بيتزا، باستا، مشروبات", fr: "Pizza, Pâtes, Boissons", en: "Pizza, Pasta, Drinks" }, menuImages: ["MEGA 1.jpg", "MEGA 2.jpg"] },
+        { category: 'resto', n: "On Est La", r: 4.8, p: 2, dist: 1.1, h: [["11:00", "01:00"]], t: "", g: [36.7220684, 3.076564], video: "", delivery: true, deliveryInfo: "توصيل مجاني للطلبة (الحد الأدنى 1500 دج)", menu: { ar: "أطباق متنوعة، مشاوي، سلطات", fr: "Plats variés, Grillades, Salades", en: "Various dishes, Grills, Salads" }, menuImages: ["ON EST LA 1.jpg", "ON EST LA 2.jpg"] },
+        { category: 'resto', n: "American Berger", r: 4.1, p: 1, dist: 0.9, h: [["11:00", "23:00"]], t: "", g: [36.7274727, 3.0651558], video: "", delivery: false, deliveryInfo: "", menu: { ar: "برغر، بطاطا مقلية", fr: "Burgers, Frites", en: "Burgers, Fries" }, menuImages: ["american1.jpg", "american2.jpg", "american3.jpg"] },
+        { category: 'resto', n: "KGB (Kouba Gourmet Burger)", r: 3.8, p: 1, dist: 1.3, h: [["10:30", "02:00"]], t: "+213541041085", g: [36.7296152, 3.0765289], video: "tTcA4WxMmYU", delivery: true, deliveryInfo: "توصيل عبر تطبيق Yassir", menu: { ar: "برغر KGB: 700 دج", fr: "KGB Burger: 700 DA", en: "KGB Burger: 700 DA" }, menuImages: ["kgb.png", "kgb1.jpeg", "kgb2.jpeg"] },
+        { category: 'resto', n: "Cheese Kou", r: 4.2, p: 1, dist: 1.0, h: [["10:30", "01:00"]], t: "+213562656809", g: [36.7226875, 3.0739069], video: "", delivery: true, deliveryInfo: "توصيل عبر Heetch Food", menu: { ar: "تاكتوز، بيتزا، برغر", fr: "Tacos, Pizza, Burgers", en: "Tacos, Pizza, Burgers" }, menuImages: ["cheese.jpg", "cheese3.jpg", "cheese4.jpg"] },
+        { category: 'resto', n: "So Pizza", r: 4.4, p: 2, dist: 0.9, h: [["11:00", "23:30"]], t: "", g: [36.7285, 3.0750], video: "Fd-Xfzggt4A", delivery: true, deliveryInfo: "توصيل عبر Yassir", menu: { ar: "بيتزا إيطالية، مشروبات", fr: "Pizza italienne, Boissons", en: "Italian pizza, Drinks" }, menuImages: ["SO PIZZA 1.jpg", "SO PIZZA 2.jpg"] },
 
         // ==========================================
         // المقاهي (Cafés)
         // ==========================================
-        { category: 'cafe', n: "Nafess Café", r: 4.6, p: 2, dist: 0.8, h: [["07:30", "23:30"]], t: "", g: [36.7280, 3.0780], delivery: true, deliveryInfo: "توصيل عبر Yassir / Heetch", menu: { ar: "قهوة، مشروبات ساخنة وباردة، حلويات، ساندويتشات", fr: "Café, boissons chaudes et froides, pâtisseries, sandwichs", en: "Coffee, hot & cold drinks, pastries, sandwiches" }, menuImages: ["nafess 1.jpg", "nafess 2.jpg", "nafess 3.jpg", "nafess 4.jpg", "nafess 5.jpg", "nafess5.jpg", "nafess6.jpg", "nafess7.jpg", "nafess8.jpg"] },
-        { category: 'cafe', n: "Brioch Cafétéria", r: 4.4, p: 1, dist: 1.2, h: [["06:00", "22:00"]], t: "", g: [36.7250, 3.0750], delivery: true, deliveryInfo: "توصيل مجاني للطلبة (خلال أوقات العمل)", menu: { ar: "بريوش، كرواسون، قهوة، عصائر طازجة", fr: "Brioches, Croissants, Café, Jus frais", en: "Brioches, Croissants, Coffee, Fresh juices" }, menuImages: ["brioch 1.jpg", "brioch 3.jpg", "brioch 5.jpg", "brioch 6.jpg", "brioch4.jpg", "brioch7.jpg", "brioche 2.jpg"] },
-        { category: 'cafe', n: "Cafétéria Provence", r: 4.3, p: 2, dist: 1.8, h: [["08:00", "23:00"]], t: "", g: [36.7300, 3.0850], delivery: false, deliveryInfo: "", menu: { ar: "قهوة فرنسية، حلويات فرنسية، كريب", fr: "Café français, Pâtisseries françaises, Crêpes", en: "French coffee, French pastries, Crepes" }, menuImages: ["provence 1.jpg", "provence 2.jpg", "provence 3.jpg", "provence 4.jpg", "provence 5.jpg", "provence 6.jpg"] },
-        { category: 'cafe', n: "The Brunch Terrasse", r: 4.7, p: 3, dist: 2.5, h: [["09:00", "01:00"]], t: "", g: [36.7350, 3.0700], delivery: true, deliveryInfo: "توصيل عبر تطبيقات التوصيل (Glovo/Yassir)", menu: { ar: "برانش، أطباق رئيسية، عصائر، حلويات", fr: "Brunch, Plats principaux, Jus, Desserts", en: "Brunch, Main dishes, Juices, Desserts" }, menuImages: ["brunch 1.jpg", "brunch 2.jpg", "brunch 3.jpg", "brunch 4.jpg", "brunch 6.jpg", "brunch 7.jpg", "brunch 8.jpg", "brunch 9.jpg"] },
-        { category: 'cafe', n: "Green Caffee", r: 4.5, p: 2, dist: 0.6, h: [["07:30", "22:00"]], t: "+213770203542", g: [36.7297067, 3.0745479], delivery: true, deliveryInfo: "توصيل عبر Yassir", menu: { ar: "قهوة، مشروبات باردة", fr: "Café, Boissons froides", en: "Coffee, Cold drinks" }, menuImages: ["green1.jpg", "green2.jpg", "green3.jpg"] },
-        { category: 'cafe', n: "César Patisserie", r: 4.2, p: 2, dist: 1.5, h: [["08:00", "23:00"]], t: "+213669846909", g: [36.7303142, 3.0840737], delivery: false, deliveryInfo: "", menu: { ar: "حلويات، قهوة", fr: "Gâteaux, Café", en: "Cakes, Coffee" }, menuImages: ["cesar1.jpg", "cesar2.jpg", "cesar3.jpg"] }
+        { category: 'cafe', n: "Nafess Café", r: 4.6, p: 2, dist: 0.8, h: [["07:30", "23:30"]], t: "", g: [36.7280, 3.0780], video: "", delivery: true, deliveryInfo: "توصيل عبر Yassir / Heetch", menu: { ar: "قهوة، مشروبات ساخنة وباردة، حلويات، ساندويتشات", fr: "Café, boissons chaudes et froides, pâtisseries, sandwichs", en: "Coffee, hot & cold drinks, pastries, sandwiches" }, menuImages: ["nafess 1.jpg", "nafess 2.jpg", "nafess 3.jpg", "nafess 4.jpg", "nafess 5.jpg", "nafess5.jpg", "nafess6.jpg", "nafess7.jpg", "nafess8.jpg"] },
+        { category: 'cafe', n: "Brioch Cafétéria", r: 4.4, p: 1, dist: 1.2, h: [["06:00", "22:00"]], t: "", g: [36.7250, 3.0750], video: "", delivery: true, deliveryInfo: "توصيل مجاني للطلبة (خلال أوقات العمل)", menu: { ar: "بريوش، كرواسون، قهوة، عصائر طازجة", fr: "Brioches, Croissants, Café, Jus frais", en: "Brioches, Croissants, Coffee, Fresh juices" }, menuImages: ["brioch 1.jpg", "brioch 3.jpg", "brioch 5.jpg", "brioch 6.jpg", "brioch4.jpg", "brioch7.jpg", "brioche 2.jpg"] },
+        { category: 'cafe', n: "Cafétéria Provence", r: 4.3, p: 2, dist: 1.8, h: [["08:00", "23:00"]], t: "", g: [36.7300, 3.0850], video: "", delivery: false, deliveryInfo: "", menu: { ar: "قهوة فرنسية، حلويات فرنسية، كريب", fr: "Café français, Pâtisseries françaises, Crêpes", en: "French coffee, French pastries, Crepes" }, menuImages: ["provence 1.jpg", "provence 2.jpg", "provence 3.jpg", "provence 4.jpg", "provence 5.jpg", "provence 6.jpg"] },
+        { category: 'cafe', n: "The Brunch Terrasse", r: 4.7, p: 3, dist: 2.5, h: [["09:00", "01:00"]], t: "", g: [36.7350, 3.0700], video: "", delivery: true, deliveryInfo: "توصيل عبر تطبيقات التوصيل (Glovo/Yassir)", menu: { ar: "برانش، أطباق رئيسية، عصائر، حلويات", fr: "Brunch, Plats principaux, Jus, Desserts", en: "Brunch, Main dishes, Juices, Desserts" }, menuImages: ["brunch 1.jpg", "brunch 2.jpg", "brunch 3.jpg", "brunch 4.jpg", "brunch 6.jpg", "brunch 7.jpg", "brunch 8.jpg", "brunch 9.jpg"] },
+        { category: 'cafe', n: "Green Caffee", r: 4.5, p: 2, dist: 0.6, h: [["07:30", "22:00"]], t: "+213770203542", g: [36.7297067, 3.0745479], video: "", delivery: true, deliveryInfo: "توصيل عبر Yassir", menu: { ar: "قهوة، مشروبات باردة", fr: "Café, Boissons froides", en: "Coffee, Cold drinks" }, menuImages: ["green1.jpg", "green2.jpg", "green3.jpg"] },
+        { category: 'cafe', n: "César Patisserie", r: 4.2, p: 2, dist: 1.5, h: [["08:00", "23:00"]], t: "+213669846909", g: [36.7303142, 3.0840737], video: "", delivery: false, deliveryInfo: "", menu: { ar: "حلويات، قهوة", fr: "Gâteaux, Café", en: "Cakes, Coffee" }, menuImages: ["cesar1.jpg", "cesar2.jpg", "cesar3.jpg"] },
+        { category: 'cafe', n: "Boulangerie et pâtisserie soumma", r: 4.5, p: 1, dist: 1.0, h: [["06:00", "21:00"]], t: "", g: [36.7275, 3.0730], video: "kPLMeh9niw4", delivery: true, deliveryInfo: "توصيل عبر Yassir", menu: { ar: "خبز طازج، حلويات تقليدية، قهوة", fr: "Pain frais, Pâtisseries traditionnelles, Café", en: "Fresh bread, Traditional pastries, Coffee" }, menuImages: ["soumma 1.jpg", "soumma 2.jpg"] },
+        { category: 'cafe', n: "Celtic Coffee", r: 4.6, p: 2, dist: 1.4, h: [["08:00", "23:00"]], t: "", g: [36.7310, 3.0800], video: "8VGVnonAnIg", delivery: true, deliveryInfo: "توصيل عبر Heetch", menu: { ar: "قهوة إيرلندية، حلويات", fr: "Café irlandais, Pâtisseries", en: "Irish coffee, Pastries" }, menuImages: ["celtic 1.jpg", "celtic 2.jpg"] }
       ]
     };
   </script>
@@ -216,10 +210,7 @@
           ? `<span class="bg-orange-500 text-white px-2 py-1 rounded text-[10px] font-bold"><i class="fa-solid fa-utensils mr-1"></i> مطعم</span>`
           : `<span class="bg-amber-500 text-white px-2 py-1 rounded text-[10px] font-bold"><i class="fa-solid fa-mug-hot mr-1"></i> مقهى</span>`;
 
-        // اختيار صورة الغلاف (أول صورة في القائمة)
         const coverImage = item.menuImages && item.menuImages.length > 0 ? item.menuImages[0] : null;
-        
-        // بناء بطاقة الصورة
         let imageHTML = '';
         if (coverImage) {
           imageHTML = `<div class="overflow-hidden rounded-t-2xl"><img src="${coverImage}" alt="${item.n}" class="card-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-44 flex items-center justify-center bg-orange-50 dark:bg-slate-800 text-orange-300 text-3xl\\'><i class=\\'fa-solid fa-image\\'></i></div>'"></div>`;
@@ -280,6 +271,16 @@
         textMenuContainer.classList.remove('hidden');
         document.getElementById('modalTextMenu').innerText = menuText;
       } else textMenuContainer.classList.add('hidden');
+
+      // عرض الفيديو
+      const videoContainer = document.getElementById('modalVideoContainer');
+      const videoDiv = document.getElementById('modalVideo');
+      if (item.video) {
+        videoContainer.classList.remove('hidden');
+        videoDiv.innerHTML = `<iframe src="https://www.youtube.com/embed/${item.video}" width="100%" height="100%" style="border:0;" allowfullscreen></iframe>`;
+      } else {
+        videoContainer.classList.add('hidden');
+      }
 
       const menuContainer = document.getElementById('modalMenuContainer');
       const menuGallery = document.getElementById('modalMenuGallery');
