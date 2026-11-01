@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تمثيلات كرام، فيشر، ولويس - ENSTP</title>
+  <title>تمثيلات 3D: كرام، فيشر، لويس - ENSTP</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <style>
     body { font-family: 'Cairo', sans-serif; background: #fff7ed; color: #1e293b; margin: 0; }
@@ -19,8 +23,7 @@
     .tab-btn { transition: all 0.3s ease; }
     .tab-btn.active { background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-color: transparent; box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.6); }
     
-    .canvas-container { background: #ffffff; border-radius: 1rem; padding: 1rem; display: flex; align-items: center; justify-content: center; min-height: 350px; position: relative; }
-    .dark .canvas-container { background: #0f172a; }
+    #canvas-3d { width: 100%; height: 500px; position: relative; border-radius: 1rem; overflow: hidden; background: radial-gradient(circle at center, #1a1410, #0f172a); }
     
     .molecule-select { background: #fff; border: 2px solid #fed7aa; color: #9a3412; font-weight: 700; }
     .dark .molecule-select { background: #1e293b; border-color: #ea580c; color: #fb923c; }
@@ -34,11 +37,11 @@
     <div class="glass-panel rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-4">
         <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-600 rounded-2xl flex items-center justify-center text-3xl text-white shadow-lg shadow-orange-500/30">
-          <i class="fa-solid fa-shapes"></i>
+          <i class="fa-solid fa-cubes"></i>
         </div>
         <div>
-          <h1 class="text-2xl md:text-3xl font-black text-orange-900 dark:text-orange-400">تمثيلات كرام، فيشر، ولويس</h1>
-          <p class="text-sm text-gray-600 dark:text-gray-400">تمثيلات هندسية وإلكترونية للمركبات ذات المدارات d.</p>
+          <h1 class="text-2xl md:text-3xl font-black text-orange-900 dark:text-orange-400">تمثيلات 3D: كرام، فيشر، لويس</h1>
+          <p class="text-sm text-gray-600 dark:text-gray-400">تفاعل مع المجسمات ثلاثية الأبعاد للمركبات ذات المدارات d.</p>
         </div>
       </div>
       <div class="flex gap-2">
@@ -52,11 +55,11 @@
       </div>
     </div>
 
-    <!-- اختيار الجزيء/المركب -->
+    <!-- اختيار المركب -->
     <div class="glass-panel rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
-      <label class="font-bold text-orange-900 dark:text-orange-400 text-lg">اختر المركب (يحتوي على مدار d):</label>
+      <label class="font-bold text-orange-900 dark:text-orange-400 text-lg">اختر المركب:</label>
       <select id="compound-select" onchange="updateAll()" class="molecule-select p-3 rounded-xl outline-none w-full md:w-96 cursor-pointer">
-        <option value="FeCl3">كلوريد الحديد الثلاثي (FeCl₃)</option>
+        <option value="FeCl3">كلوريد الحديد (FeCl₃)</option>
         <option value="CuSO4">كبريتات النحاس (CuSO₄)</option>
         <option value="CrCl3">كلوريد الكروم (CrCl₃)</option>
         <option value="CoCl2">كلوريد الكوبالت (CoCl₂)</option>
@@ -69,33 +72,29 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <button onclick="switchTab('cram')" id="tab-cram" class="tab-btn active glass-panel p-5 rounded-2xl flex items-center justify-center gap-3 border-2 border-transparent">
         <i class="fa-solid fa-cube text-2xl"></i>
-        <span class="text-lg font-black">تمثيل كرام (Cram)</span>
+        <span class="text-lg font-black">كرام (Cram)</span>
       </button>
       <button onclick="switchTab('fischer')" id="tab-fischer" class="tab-btn glass-panel p-5 rounded-2xl flex items-center justify-center gap-3 border-2 border-transparent">
         <i class="fa-solid fa-bars-staggered text-2xl"></i>
-        <span class="text-lg font-black">تمثيل فيشر (Fischer)</span>
+        <span class="text-lg font-black">فيشر (Fischer)</span>
       </button>
       <button onclick="switchTab('lewis')" id="tab-lewis" class="tab-btn glass-panel p-5 rounded-2xl flex items-center justify-center gap-3 border-2 border-transparent">
         <i class="fa-solid fa-circle-nodes text-2xl"></i>
-        <span class="text-lg font-black">تمثيل لويس (Lewis)</span>
+        <span class="text-lg font-black">لويس (Lewis)</span>
       </button>
     </div>
 
-    <!-- العرض -->
-    <div class="glass-panel rounded-3xl p-6 space-y-4">
-      <!-- معلومات المركب -->
-      <div id="compound-info" class="bg-orange-50 dark:bg-slate-800/50 p-4 rounded-xl border border-orange-100 dark:border-slate-700 text-center">
-        <h3 class="text-xl font-black text-orange-900 dark:text-orange-300" id="compound-name">كلوريد الحديد الثلاثي (FeCl₃)</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" id="compound-desc">مركب تساهمي يحتوي على الحديد (Fe) في حالة التأكسد +3، مع مدارات d فارغة.</p>
-      </div>
+    <!-- معلومات المركب -->
+    <div class="glass-panel rounded-2xl p-4 bg-orange-50 dark:bg-slate-800/50 text-center">
+      <h3 class="text-lg font-black text-orange-900 dark:text-orange-300" id="compound-name">كلوريد الحديد (FeCl₃)</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" id="compound-desc"></p>
+    </div>
 
-      <!-- حاوية الرسم -->
-      <div class="canvas-container" id="canvas-container">
-        <canvas id="drawingCanvas" width="500" height="400" class="max-w-full h-auto"></canvas>
-      </div>
-
-      <p class="text-center text-xs text-gray-500 dark:text-gray-400" id="representation-note">
-        <i class="fa-solid fa-info-circle text-orange-500"></i> تمثيل كرام يوضح التوزيع ثلاثي الأبعاد للذرات حول المركز.
+    <!-- حاوية الرسم -->
+    <div class="glass-panel rounded-3xl p-4">
+      <div id="canvas-3d"></div>
+      <p class="text-center text-xs text-gray-500 mt-2" id="representation-note">
+        <i class="fa-solid fa-info-circle text-orange-500"></i> استخدم الماوس للتدوير.
       </p>
     </div>
 
@@ -109,64 +108,22 @@
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-      drawCurrentTab(); // إعادة رسم الرسم البياني ليتوافق مع الثيم
     }
 
     // ==========================================
     // 2. بيانات المركبات
     // ==========================================
     const compoundsData = {
-      'FeCl3': {
-        name: 'كلوريد الحديد الثلاثي (FeCl₃)',
-        desc: 'مركب يحتوي على الحديد (Fe³⁺) مع 3 ذرات كلور (Cl⁻). التوزيع الإلكتروني لـ Fe³⁺: [Ar] 3d⁵. يحتوي على 5 إلكترونات غير مزدوجة في مدارات d.',
-        center: 'Fe',
-        ligands: ['Cl', 'Cl', 'Cl'],
-        geometry: 'trigonal_planar', // أو هرمي ثلاثي
-        dElectrons: 5
-      },
-      'CuSO4': {
-        name: 'كبريتات النحاس (CuSO₄)',
-        desc: 'مركب يحتوي على النحاس (Cu²⁺) مع 4 ذرات أكسجين (في أيون الكبريتات). التوزيع الإلكتروني لـ Cu²⁺: [Ar] 3d⁹. يحتوي على إلكترون غير مزدوج واحد.',
-        center: 'Cu',
-        ligands: ['O', 'O', 'O', 'O'],
-        geometry: 'square_planar',
-        dElectrons: 9
-      },
-      'CrCl3': {
-        name: 'كلوريد الكروم (CrCl₃)',
-        desc: 'مركب يحتوي على الكروم (Cr³⁺) مع 3 ذرات كلور. التوزيع الإلكتروني لـ Cr³⁺: [Ar] 3d³. يحتوي على 3 إلكترونات غير مزدوجة.',
-        center: 'Cr',
-        ligands: ['Cl', 'Cl', 'Cl'],
-        geometry: 'trigonal_planar',
-        dElectrons: 3
-      },
-      'CoCl2': {
-        name: 'كلوريد الكوبالت (CoCl₂)',
-        desc: 'مركب يحتوي على الكوبالت (Co²⁺) مع 2 ذرات كلور. التوزيع الإلكتروني لـ Co²⁺: [Ar] 3d⁷. يحتوي على 3 إلكترونات غير مزدوجة.',
-        center: 'Co',
-        ligands: ['Cl', 'Cl'],
-        geometry: 'linear', // أو رباعي سطحي
-        dElectrons: 7
-      },
-      'NiCl2': {
-        name: 'كلوريد النيكل (NiCl₂)',
-        desc: 'مركب يحتوي على النيكل (Ni²⁺) مع 2 ذرات كلور. التوزيع الإلكتروني لـ Ni²⁺: [Ar] 3d⁸. يحتوي على 2 إلكترون غير مزدوج.',
-        center: 'Ni',
-        ligands: ['Cl', 'Cl'],
-        geometry: 'linear',
-        dElectrons: 8
-      },
-      'MnCl2': {
-        name: 'كلوريد المنغنيز (MnCl₂)',
-        desc: 'مركب يحتوي على المنغنيز (Mn²⁺) مع 2 ذرات كلور. التوزيع الإلكتروني لـ Mn²⁺: [Ar] 3d⁵. يحتوي على 5 إلكترونات غير مزدوجة.',
-        center: 'Mn',
-        ligands: ['Cl', 'Cl'],
-        geometry: 'linear',
-        dElectrons: 5
-      }
+      'FeCl3': { name: 'كلوريد الحديد (FeCl₃)', desc: 'الحديد Fe³⁺ ([Ar] 3d⁵), 3 ليكندات Cl. هندسة مثلثية مستوية.', center: 'Fe', ligands: ['Cl', 'Cl', 'Cl'], geometry: 'trigonal_planar', dElectrons: 5 },
+      'CuSO4': { name: 'كبريتات النحاس (CuSO₄)', desc: 'النحاس Cu²⁺ ([Ar] 3d⁹), 4 ليكندات O. هندسة مربعية مستوية.', center: 'Cu', ligands: ['O', 'O', 'O', 'O'], geometry: 'square_planar', dElectrons: 9 },
+      'CrCl3': { name: 'كلوريد الكروم (CrCl₃)', desc: 'الكروم Cr³⁺ ([Ar] 3d³), 3 ليكندات Cl. هندسة مثلثية.', center: 'Cr', ligands: ['Cl', 'Cl', 'Cl'], geometry: 'trigonal_planar', dElectrons: 3 },
+      'CoCl2': { name: 'كلوريد الكوبالت (CoCl₂)', desc: 'الكوبالت Co²⁺ ([Ar] 3d⁷), 2 ليكندات Cl. هندسة خطية.', center: 'Co', ligands: ['Cl', 'Cl'], geometry: 'linear', dElectrons: 7 },
+      'NiCl2': { name: 'كلوريد النيكل (NiCl₂)', desc: 'النيكل Ni²⁺ ([Ar] 3d⁸), 2 ليكندات Cl. هندسة خطية.', center: 'Ni', ligands: ['Cl', 'Cl'], geometry: 'linear', dElectrons: 8 },
+      'MnCl2': { name: 'كلوريد المنغنيز (MnCl₂)', desc: 'المنغنيز Mn²⁺ ([Ar] 3d⁵), 2 ليكندات Cl. هندسة خطية.', center: 'Mn', ligands: ['Cl', 'Cl'], geometry: 'linear', dElectrons: 5 }
     };
 
     let currentTab = 'cram';
+    let scene, camera, renderer, controls, group;
 
     // ==========================================
     // 3. التبديل بين التبويبات
@@ -179,338 +136,279 @@
       });
       document.getElementById('tab-' + tabId).classList.add('active');
       document.getElementById('tab-' + tabId).classList.remove('border-transparent');
-      
       drawCurrentTab();
     }
 
     // ==========================================
-    // 4. تحديث الرسم
+    // 4. تحديث الكل
     // ==========================================
     function updateAll() {
       const key = document.getElementById('compound-select').value;
       const data = compoundsData[key];
-      
       document.getElementById('compound-name').innerText = data.name;
       document.getElementById('compound-desc').innerText = data.desc;
-      
       drawCurrentTab();
     }
 
+    // ==========================================
+    // 5. تهيئة Three.js
+    // ==========================================
+    function init3D() {
+      const container = document.getElementById('canvas-3d');
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0f172a);
+
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(0, 0, 8);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.innerHTML = '';
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 1.5;
+
+      // إضاءة
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      dirLight.position.set(5, 5, 5);
+      scene.add(dirLight);
+      const pointLight = new THREE.PointLight(0xf97316, 1);
+      pointLight.position.set(-5, 0, 5);
+      scene.add(pointLight);
+
+      group = new THREE.Group();
+      scene.add(group);
+
+      animate();
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    // ==========================================
+    // 6. رسم الروابط والليكندات (دوال مساعدة)
+    // ==========================================
+    function clearGroup() {
+      while(group.children.length > 0) {
+        const child = group.children[0];
+        if (child.geometry) child.geometry.dispose();
+        if (child.material) child.material.dispose();
+        group.remove(child);
+      }
+    }
+
+    function createAtom(x, y, z, radius, color, text) {
+      const geo = new THREE.SphereGeometry(radius, 32, 32);
+      const mat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.2, metalness: 0.1 });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(x, y, z);
+      
+      // إضافة النص فوق الذرة باستخدام Canvas Texture
+      if (text) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 128; canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 64px Cairo';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, 64, 64);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+        const sprite = new THREE.Sprite(spriteMat);
+        sprite.position.set(x, y, z);
+        sprite.scale.set(radius * 2, radius * 2, 1);
+        group.add(sprite);
+      }
+      
+      return mesh;
+    }
+
+    function createBond(start, end, radius, color) {
+      const dir = new THREE.Vector3().subVectors(end, start);
+      const length = dir.length();
+      const geo = new THREE.CylinderGeometry(radius, radius, length, 8);
+      const mat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.4 });
+      const bond = new THREE.Mesh(geo, mat);
+      bond.position.copy(start.clone().add(end).multiplyScalar(0.5));
+      bond.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+      return bond;
+    }
+
+    // ==========================================
+    // 7. رسم كرام 3D
+    // ==========================================
+    function drawCram() {
+      document.getElementById('representation-note').innerHTML = '<i class="fa-solid fa-info-circle text-orange-500"></i> تمثيل كرام: يوضح التوزيع الفراغي الحقيقي للروابط.';
+      clearGroup();
+      
+      const key = document.getElementById('compound-select').value;
+      const data = compoundsData[key];
+      
+      // رسم الذرة المركزية
+      group.add(createAtom(0, 0, 0, 0.6, 0xf97316, data.center));
+      
+      const numLigands = data.ligands.length;
+      const bondLength = 2;
+      
+      if (data.geometry === 'linear') {
+        // روابط على المحور X
+        const pos1 = new THREE.Vector3(-bondLength, 0, 0);
+        const pos2 = new THREE.Vector3(bondLength, 0, 0);
+        group.add(createBond(new THREE.Vector3(0,0,0), pos1, 0.1, 0xfed7aa));
+        group.add(createBond(new THREE.Vector3(0,0,0), pos2, 0.1, 0xfed7aa));
+        group.add(createAtom(pos1.x, pos1.y, pos1.z, 0.4, 0xfbbf24, data.ligands[0]));
+        group.add(createAtom(pos2.x, pos2.y, pos2.z, 0.4, 0xfbbf24, data.ligands[1]));
+        
+      } else if (data.geometry === 'trigonal_planar') {
+        // 3 روابط بزوايا 120 درجة
+        for (let i = 0; i < numLigands; i++) {
+          const angle = (i * 120 - 90) * Math.PI / 180;
+          const pos = new THREE.Vector3(Math.cos(angle) * bondLength, Math.sin(angle) * bondLength, 0);
+          group.add(createBond(new THREE.Vector3(0,0,0), pos, 0.1, 0xfed7aa));
+          group.add(createAtom(pos.x, pos.y, pos.z, 0.4, 0xfbbf24, data.ligands[i]));
+        }
+        
+      } else if (data.geometry === 'square_planar') {
+        // 4 روابط في مستوى XY
+        const angles = [-90, 0, 90, 180];
+        for (let i = 0; i < numLigands; i++) {
+          const angle = angles[i] * Math.PI / 180;
+          const pos = new THREE.Vector3(Math.cos(angle) * bondLength, Math.sin(angle) * bondLength, 0);
+          group.add(createBond(new THREE.Vector3(0,0,0), pos, 0.1, 0xfed7aa));
+          group.add(createAtom(pos.x, pos.y, pos.z, 0.4, 0xfbbf24, data.ligands[i]));
+        }
+      }
+    }
+
+    // ==========================================
+    // 8. رسم فيشر 3D
+    // ==========================================
+    function drawFischer() {
+      document.getElementById('representation-note').innerHTML = '<i class="fa-solid fa-info-circle text-orange-500"></i> تمثيل فيشر: إسقاط مسطح. الروابط الأفقية (X) للأمام، والعمودية (Y) للخلف.';
+      clearGroup();
+      
+      const key = document.getElementById('compound-select').value;
+      const data = compoundsData[key];
+      
+      // رسم الذرة المركزية
+      group.add(createAtom(0, 0, 0, 0.6, 0xf97316, data.center));
+      
+      const numLigands = data.ligands.length;
+      const bondLength = 2;
+      
+      if (numLigands === 2) {
+        // عمودي
+        const pos1 = new THREE.Vector3(0, bondLength, 0);
+        const pos2 = new THREE.Vector3(0, -bondLength, 0);
+        group.add(createBond(new THREE.Vector3(0,0,0), pos1, 0.1, 0xfed7aa));
+        group.add(createBond(new THREE.Vector3(0,0,0), pos2, 0.1, 0xfed7aa));
+        group.add(createAtom(pos1.x, pos1.y, pos1.z, 0.4, 0xfbbf24, data.ligands[0]));
+        group.add(createAtom(pos2.x, pos2.y, pos2.z, 0.4, 0xfbbf24, data.ligands[1]));
+        
+      } else if (numLigands === 3) {
+        // أعلى (عمودي)، يمين، يسار
+        const posTop = new THREE.Vector3(0, bondLength, 0);
+        const posLeft = new THREE.Vector3(-bondLength, 0, 0);
+        const posRight = new THREE.Vector3(bondLength, 0, 0);
+        group.add(createBond(new THREE.Vector3(0,0,0), posTop, 0.1, 0xfed7aa));
+        group.add(createBond(new THREE.Vector3(0,0,0), posLeft, 0.1, 0xfed7aa));
+        group.add(createBond(new THREE.Vector3(0,0,0), posRight, 0.1, 0xfed7aa));
+        group.add(createAtom(posTop.x, posTop.y, posTop.z, 0.4, 0xfbbf24, data.ligands[0]));
+        group.add(createAtom(posLeft.x, posLeft.y, posLeft.z, 0.4, 0xfbbf24, data.ligands[1]));
+        group.add(createAtom(posRight.x, posRight.y, posRight.z, 0.4, 0xfbbf24, data.ligands[2]));
+        
+      } else if (numLigands === 4) {
+        // 4 روابط (شكل صليب)
+        const positions = [
+          new THREE.Vector3(0, bondLength, 0),      // أعلى (خلف)
+          new THREE.Vector3(0, -bondLength, 0),     // أسفل (خلف)
+          new THREE.Vector3(-bondLength, 0, 0),     // يسار (أمام)
+          new THREE.Vector3(bondLength, 0, 0)       // يمين (أمام)
+        ];
+        positions.forEach((pos, i) => {
+          group.add(createBond(new THREE.Vector3(0,0,0), pos, 0.1, 0xfed7aa));
+          group.add(createAtom(pos.x, pos.y, pos.z, 0.4, 0xfbbf24, data.ligands[i]));
+        });
+      }
+    }
+
+    // ==========================================
+    // 9. رسم لويس 3D
+    // ==========================================
+    function drawLewis() {
+      document.getElementById('representation-note').innerHTML = '<i class="fa-solid fa-info-circle text-orange-500"></i> تمثيل لويس: إلكترونات التكافؤ (نقاط زرقاء) موزعة حول الذرة المركزية.';
+      clearGroup();
+      
+      const key = document.getElementById('compound-select').value;
+      const data = compoundsData[key];
+      
+      // رسم الذرة المركزية
+      group.add(createAtom(0, 0, 0, 0.6, 0xf97316, data.center));
+      
+      const numLigands = data.ligands.length;
+      const bondLength = 2.2;
+      
+      // رسم الروابط
+      for (let i = 0; i < numLigands; i++) {
+        const angle = (i / numLigands) * Math.PI * 2;
+        const pos = new THREE.Vector3(Math.cos(angle) * bondLength, Math.sin(angle) * bondLength, 0);
+        group.add(createBond(new THREE.Vector3(0,0,0), pos, 0.1, 0xfed7aa));
+        group.add(createAtom(pos.x, pos.y, pos.z, 0.4, 0xfbbf24, data.ligands[i]));
+      }
+      
+      // رسم إلكترونات التكافؤ (نقاط زرقاء) في الفضاء
+      const numElectrons = data.dElectrons;
+      const electronRadius = 1.2;
+      const electronGeo = new THREE.SphereGeometry(0.08, 8, 8);
+      const electronMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, emissive: 0x1d4ed8, emissiveIntensity: 0.5 });
+      
+      for (let i = 0; i < numElectrons; i++) {
+        // توزيع إلكترونات d في فضاء ثلاثي (زوايا عشوائية)
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        const x = electronRadius * Math.sin(phi) * Math.cos(theta);
+        const y = electronRadius * Math.sin(phi) * Math.sin(theta);
+        const z = electronRadius * Math.cos(phi);
+        
+        const electron = new THREE.Mesh(electronGeo, electronMat);
+        electron.position.set(x, y, z);
+        group.add(electron);
+      }
+    }
+
+    // ==========================================
+    // 10. الرسم الحالي
+    // ==========================================
     function drawCurrentTab() {
       if (currentTab === 'cram') drawCram();
       if (currentTab === 'fischer') drawFischer();
       if (currentTab === 'lewis') drawLewis();
     }
 
-    // دالة مساعدة للحصول على لون النص حسب الثيم
-    function getTextColor() {
-      return document.documentElement.classList.contains('dark') ? '#f8fafc' : '#1e293b';
-    }
-
-    function getBgColor() {
-      return document.documentElement.classList.contains('dark') ? '#0f172a' : '#ffffff';
-    }
-
     // ==========================================
-    // 5. تمثيل كرام (Cram) - 3D Perspective
+    // 11. التهيئة عند التحميل
     // ==========================================
-    function drawCram() {
-      const canvas = document.getElementById('drawingCanvas');
-      const ctx = canvas.getContext('2d');
-      const data = compoundsData[document.getElementById('compound-select').value];
-      
-      document.getElementById('representation-note').innerHTML = '<i class="fa-solid fa-info-circle text-orange-500"></i> تمثيل كرام: يوضح التوزيع ثلاثي الأبعاد للذرات. الروابط المستقيمة في المستوى، والمثلثات للأمام، والخطوط المتقطعة للخلف.';
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
-      const textColor = getTextColor();
-      
-      // رسم الذرة المركزية
-      ctx.beginPath();
-      ctx.arc(cx, cy, 35, 0, Math.PI * 2);
-      ctx.fillStyle = '#f97316';
-      ctx.fill();
-      ctx.strokeStyle = '#ea580c';
-      ctx.lineWidth = 3;
-      ctx.stroke();
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 18px Cairo';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(data.center, cx, cy);
-      
-      // رسم الليكندات (الروابط) بناءً على الهندسة
-      const numLigands = data.ligands.length;
-      
-      if (data.geometry === 'linear') {
-        // خطي: ليكندان على المحور الأفقي
-        const dist = 100;
-        // اليسار
-        drawBond(ctx, cx - 35, cy, cx - dist, cy, 'flat', textColor);
-        drawLigand(ctx, cx - dist, cy, data.ligands[0], textColor);
-        // اليمين
-        drawBond(ctx, cx + 35, cy, cx + dist, cy, 'flat', textColor);
-        drawLigand(ctx, cx + dist, cy, data.ligands[1], textColor);
-        
-      } else if (data.geometry === 'trigonal_planar') {
-        // مثلثي: 3 ليكندات بزوايا 120 درجة
-        const dist = 100;
-        for (let i = 0; i < numLigands; i++) {
-          const angle = (i * 120 - 90) * Math.PI / 180; // البدء من الأعلى
-          const lx = cx + Math.cos(angle) * dist;
-          const ly = cy + Math.sin(angle) * dist;
-          
-          // الروابط في تمثيل كرام: واحدة للأمام (مثلث)، واثنتان في المستوى (خط)
-          if (i === 0) {
-            drawBond(ctx, cx, cy - 35, lx, ly, 'front', textColor);
-          } else {
-            drawBond(ctx, cx, cy, lx, ly, 'flat', textColor);
-          }
-          drawLigand(ctx, lx, ly, data.ligands[i], textColor);
-        }
-        
-      } else if (data.geometry === 'square_planar') {
-        // مربعي: 4 ليكندات
-        const dist = 100;
-        const angles = [-90, 0, 90, 180]; // أعلى، يمين، أسفل، يسار
-        for (let i = 0; i < numLigands; i++) {
-          const angle = angles[i] * Math.PI / 180;
-          const lx = cx + Math.cos(angle) * dist;
-          const ly = cy + Math.sin(angle) * dist;
-          
-          if (i === 0) drawBond(ctx, cx, cy, lx, ly, 'front', textColor); // للأمام
-          else if (i === 2) drawBond(ctx, cx, cy, lx, ly, 'back', textColor); // للخلف
-          else drawBond(ctx, cx, cy, lx, ly, 'flat', textColor);
-          
-          drawLigand(ctx, lx, ly, data.ligands[i], textColor);
-        }
-      }
-    }
-
-    // دالة رسم رابطة
-    function drawBond(ctx, x1, y1, x2, y2, type, textColor) {
-      ctx.beginPath();
-      if (type === 'flat') {
-        ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
-        ctx.strokeStyle = textColor; ctx.lineWidth = 2; ctx.stroke();
-      } else if (type === 'front') {
-        // مثلث (للأمام)
-        const angle = Math.atan2(y2 - y1, x2 - x1);
-        const perpAngle = angle + Math.PI / 2;
-        const width = 10;
-        const p1x = x1 + Math.cos(perpAngle) * width / 2;
-        const p1y = y1 + Math.sin(perpAngle) * width / 2;
-        const p2x = x1 - Math.cos(perpAngle) * width / 2;
-        const p2y = y1 - Math.sin(perpAngle) * width / 2;
-        ctx.moveTo(p1x, p1y); ctx.lineTo(p2x, p2y); ctx.lineTo(x2, y2);
-        ctx.closePath();
-        ctx.fillStyle = textColor; ctx.fill();
-      } else if (type === 'back') {
-        // خطوط متقطعة (للخلف)
-        ctx.setLineDash([5, 5]);
-        ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
-        ctx.strokeStyle = textColor; ctx.lineWidth = 2; ctx.stroke();
-        ctx.setLineDash([]);
-      }
-    }
-
-    // دالة رسم ليكند
-    function drawLigand(ctx, x, y, text, textColor) {
-      ctx.beginPath();
-      ctx.arc(x, y, 20, 0, Math.PI * 2);
-      ctx.fillStyle = '#fef3c7';
-      ctx.fill();
-      ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      ctx.fillStyle = '#92400e';
-      ctx.font = 'bold 14px Cairo';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(text, x, y);
-    }
-
-    // ==========================================
-    // 6. تمثيل فيشر (Fischer) - 2D Projection
-    // ==========================================
-    function drawFischer() {
-      const canvas = document.getElementById('drawingCanvas');
-      const ctx = canvas.getContext('2d');
-      const data = compoundsData[document.getElementById('compound-select').value];
-      
-      document.getElementById('representation-note').innerHTML = '<i class="fa-solid fa-info-circle text-orange-500"></i> تمثيل فيشر: إسقاط ثنائي الأبعاد. الخطوط الأفقية تشير إلى الروابط الخارجة من المستوى (نحوك)، والخطوط العمودية تشير إلى الروابط الداخلة.';
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
-      const textColor = getTextColor();
-      
-      // رسم الهيكل الرئيسي (عمودي)
-      const verticalLength = 80;
-      ctx.strokeStyle = textColor;
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(cx, cy - verticalLength); ctx.lineTo(cx, cy + verticalLength); ctx.stroke();
-      
-      // رسم الذرة المركزية
-      ctx.beginPath();
-      ctx.arc(cx, cy, 15, 0, Math.PI * 2);
-      ctx.fillStyle = '#f97316';
-      ctx.fill();
-      ctx.strokeStyle = '#ea580c';
-      ctx.stroke();
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 12px Cairo';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(data.center, cx, cy);
-      
-      // رسم الليكندات
-      const numLigands = data.ligands.length;
-      
-      if (numLigands === 2) {
-        // أعلى، أسفل
-        drawFischerLigand(ctx, cx, cy - verticalLength, data.ligands[0], textColor);
-        drawFischerLigand(ctx, cx, cy + verticalLength, data.ligands[1], textColor);
-      } else if (numLigands === 3) {
-        // أعلى، يمين، يسار
-        drawFischerLigand(ctx, cx, cy - verticalLength, data.ligands[0], textColor);
-        drawFischerLigand(ctx, cx - 80, cy, data.ligands[1], textColor);
-        drawFischerLigand(ctx, cx + 80, cy, data.ligands[2], textColor);
-      } else if (numLigands === 4) {
-        // أعلى، أسفل، يمين، يسار
-        drawFischerLigand(ctx, cx, cy - verticalLength, data.ligands[0], textColor);
-        drawFischerLigand(ctx, cx, cy + verticalLength, data.ligands[1], textColor);
-        drawFischerLigand(ctx, cx - 80, cy, data.ligands[2], textColor);
-        drawFischerLigand(ctx, cx + 80, cy, data.ligands[3], textColor);
-      }
-      
-      // رسم خطوط أفقية للروابط (للتوضيح)
-      // ...
-    }
-
-    function drawFischerLigand(ctx, x, y, text, textColor) {
-      // رسم خط الرابطة
-      ctx.strokeStyle = textColor;
-      ctx.lineWidth = 2;
-      ctx.beginPath(); 
-      ctx.moveTo(x - 10, y); ctx.lineTo(x + 10, y); // خط أفقي (نحوي)
-      ctx.stroke();
-      
-      // رسم الليكند
-      ctx.beginPath();
-      ctx.arc(x, y, 20, 0, Math.PI * 2);
-      ctx.fillStyle = '#fef3c7';
-      ctx.fill();
-      ctx.strokeStyle = '#f59e0b';
-      ctx.stroke();
-      ctx.fillStyle = '#92400e';
-      ctx.font = 'bold 14px Cairo';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(text, x, y);
-    }
-
-    // ==========================================
-    // 7. تمثيل لويس (Lewis) - Electron Dots
-    // ==========================================
-    function drawLewis() {
-      const canvas = document.getElementById('drawingCanvas');
-      const ctx = canvas.getContext('2d');
-      const data = compoundsData[document.getElementById('compound-select').value];
-      
-      document.getElementById('representation-note').innerHTML = '<i class="fa-solid fa-info-circle text-orange-500"></i> تمثيل لويس: يوضح إلكترونات التكافؤ (النقاط) والروابط (الخطوط) بين الذرات.';
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
-      const textColor = getTextColor();
-      
-      // رسم الذرة المركزية
-      ctx.beginPath();
-      ctx.arc(cx, cy, 35, 0, Math.PI * 2);
-      ctx.fillStyle = '#f97316';
-      ctx.fill();
-      ctx.strokeStyle = '#ea580c';
-      ctx.lineWidth = 3;
-      ctx.stroke();
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 18px Cairo';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(data.center, cx, cy);
-      
-      // رسم إلكترونات التكافؤ حول الذرة المركزية (بشكل عشوائي)
-      // في الواقع، يجب أن نرسم الإلكترونات المتبقية فقط بعد الروابط
-      // لتبسيط العرض، سنرسم 5 إلكترونات لـ Fe، 3 لـ Cr، إلخ.
-      const numDots = data.dElectrons;
-      for (let i = 0; i < numDots; i++) {
-        const angle = (i / numDots) * Math.PI * 2;
-        const radius = 45;
-        const dx = cx + Math.cos(angle) * radius;
-        const dy = cy + Math.sin(angle) * radius;
-        ctx.beginPath();
-        ctx.arc(dx, dy, 4, 0, Math.PI * 2);
-        ctx.fillStyle = '#3b82f6'; // أزرق للإلكترونات
-        ctx.fill();
-      }
-      
-      // رسم الليكندات
-      const numLigands = data.ligands.length;
-      if (data.geometry === 'linear') {
-        const dist = 100;
-        drawLewisBond(ctx, cx - 35, cy, cx - dist, cy, textColor);
-        drawLewisLigand(ctx, cx - dist, cy, data.ligands[0], textColor);
-        drawLewisBond(ctx, cx + 35, cy, cx + dist, cy, textColor);
-        drawLewisLigand(ctx, cx + dist, cy, data.ligands[1], textColor);
-      } else if (data.geometry === 'trigonal_planar') {
-        const dist = 100;
-        for (let i = 0; i < numLigands; i++) {
-          const angle = (i * 120 - 90) * Math.PI / 180;
-          const lx = cx + Math.cos(angle) * dist;
-          const ly = cy + Math.sin(angle) * dist;
-          drawLewisBond(ctx, cx, cy, lx, ly, textColor);
-          drawLewisLigand(ctx, lx, ly, data.ligands[i], textColor);
-        }
-      } else if (data.geometry === 'square_planar') {
-        const dist = 100;
-        const angles = [-90, 0, 90, 180];
-        for (let i = 0; i < numLigands; i++) {
-          const angle = angles[i] * Math.PI / 180;
-          const lx = cx + Math.cos(angle) * dist;
-          const ly = cy + Math.sin(angle) * dist;
-          drawLewisBond(ctx, cx, cy, lx, ly, textColor);
-          drawLewisLigand(ctx, lx, ly, data.ligands[i], textColor);
-        }
-      }
-    }
-
-    function drawLewisBond(ctx, x1, y1, x2, y2, textColor) {
-      ctx.beginPath();
-      ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
-      ctx.strokeStyle = textColor; ctx.lineWidth = 2; ctx.stroke();
-    }
-
-    function drawLewisLigand(ctx, x, y, text, textColor) {
-      ctx.beginPath();
-      ctx.arc(x, y, 20, 0, Math.PI * 2);
-      ctx.fillStyle = '#fef3c7';
-      ctx.fill();
-      ctx.strokeStyle = '#f59e0b';
-      ctx.stroke();
-      ctx.fillStyle = '#92400e';
-      ctx.font = 'bold 14px Cairo';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(text, x, y);
-    }
-
-    // التهيئة
     document.addEventListener('DOMContentLoaded', () => {
+      init3D();
       updateAll();
+    });
+
+    // التعامل مع تغيير الحجم
+    window.addEventListener('resize', () => {
+      const container = document.getElementById('canvas-3d');
+      if (!container) return;
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
     });
   </script>
 </body>
