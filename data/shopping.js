@@ -5,8 +5,7 @@ window.SHOP_DATA = {
     tel:      { icon: "📱", title: { ar: "محلات الهواتف", fr: "Téléphonie", en: "Phone Stores" } },
     copie:    { icon: "🖨️", title: { ar: "النسخ والطبع", fr: "Copie & Print", en: "Print & Copy" } },
     beaute:   { icon: "💈", title: { ar: "الحلاقة", fr: "Beauté", en: "Beauty" } },
-    sport:    { icon: "🏋️", title: { ar: "الرياضة", fr: "Sport", en: "Sports" } },
-    mosquee:  { icon: "🕌", title: { ar: "المساجد", fr: "Mosquées", en: "Mosques" } }
+   
   },
   items: [
     // ==========================================
@@ -160,19 +159,5 @@ window.SHOP_DATA = {
       menu: { ar: "حلاقة رجالية", fr: "Coiffure homme", en: "Men's haircut" }, 
       menuImages: [] 
     },
-    { 
-      c: "sport", n: "Salle Fit-Kouba", r: 4.4, p: 3, dist: 2.0, 
-      h: [["06:00", "22:00"]], t: "", g: [36.7310, 3.0850], 
-      video: "", 
-      menu: { ar: "قاعة رياضة", fr: "Salle de sport", en: "Gym" }, 
-      menuImages: [] 
-    },
-    { 
-      c: "mosquee", n: "مسجد عبد اللطيف سلطاني", r: 4.9, p: 0, dist: 0.4, 
-      h: [], t: "", g: [36.7280, 3.0740], 
-      video: "", 
-      menu: { ar: "مسجد قريب من المدرسة", fr: "Mosquée proche de l'école", en: "Mosque near the school" }, 
-      menuImages: [] 
-    }
   ]
 };
