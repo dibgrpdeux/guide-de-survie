@@ -15,7 +15,7 @@ window.SHOP_DATA = {
     { 
       c: "pharma", n: "Pharmacie Attoui", r: 4.5, p: 2, dist: 0.6, 
       h: [["08:00", "20:00"]], t: "", g: [36.7260, 3.0750], 
-      video: "", // فيديو تعريفي (رابط YouTube ID)
+      video: "", 
       menu: { ar: "صيدلية عامة، أدوية ومستلزمات طبية", fr: "Pharmacie générale, médicaments et matériel médical", en: "General pharmacy, medicines and medical supplies" }, 
       menuImages: ["attoui 1.jpg", "attoui 2.jpg", "attoui 3.jpg", "attoui 4.jpg", "attoui 5.jpg"] 
     },
@@ -130,12 +130,49 @@ window.SHOP_DATA = {
     },
 
     // ==========================================
-    // 3. التسوق اليومي والخدمات الأخرى
+    // 3. التسوق اليومي والخدمات
     // ==========================================
-    { c: "courses", n: "Supérette El-Benna", r: 3.8, p: 1, dist: 0.5, h: [["07:00", "22:30"]], t: "", g: [36.7246946, 3.0744576], video: "", menu: { ar: "مواد غذائية، تنظيف", fr: "Alimentation, Nettoyage", en: "Food, Cleaning" }, menuImages: [] },
-    { c: "copie", n: "Maktabet El-Nour", r: 4.2, p: 1, dist: 0.3, h: [["08:00", "19:00"]], t: "", g: [36.7255, 3.0710], video: "", menu: { ar: "طباعة، نسخ، تجليد", fr: "Impression, Photocopie, Reliure", en: "Printing, Copy, Binding" }, menuImages: [] },
-    { c: "beaute", n: "Salon El-Wafa", r: 4.6, p: 2, dist: 0.9, h: [["09:00", "21:00"]], t: "", g: [36.7260, 3.0720], video: "", menu: { ar: "حلاقة رجالية", fr: "Coiffure homme", en: "Men's haircut" }, menuImages: [] },
-    { c: "sport", n: "Salle Fit-Kouba", r: 4.4, p: 3, dist: 2.0, h: [["06:00", "22:00"]], t: "", g: [36.7310, 3.0850], video: "", menu: { ar: "قاعة رياضة", fr: "Salle de sport", en: "Gym" }, menuImages: [] },
-    { c: "mosquee", n: "مسجد عبد اللطيف سلطاني", r: 4.9, p: 0, dist: 0.4, h: [], t: "", g: [36.7280, 3.0740], video: "", menu: { ar: "مسجد قريب من المدرسة", fr: "Mosquée proche de l'école", en: "Mosque near the school" }, menuImages: [] }
+    { 
+      c: "courses", n: "Supérette El-Benna", r: 3.8, p: 1, dist: 0.5, 
+      h: [["07:00", "22:30"]], t: "", g: [36.7246946, 3.0744576], 
+      video: "_bspquujzqg", // فيديو سوبيريت البنا
+      menu: { ar: "مواد غذائية، تنظيف", fr: "Alimentation, Nettoyage", en: "Food, Cleaning" }, 
+      menuImages: [] 
+    },
+    { 
+      c: "copie", n: "مكتبة عمي داوود", r: 4.2, p: 1, dist: 0.3, 
+      h: [["08:00", "19:00"]], t: "", g: [36.7255, 3.0710], 
+      video: "0TiwKh8Bc2g", // فيديو مكتبة عمي داوود
+      menu: { ar: "طباعة، نسخ، تجليد", fr: "Impression, Photocopie, Reliure", en: "Printing, Copy, Binding" }, 
+      menuImages: [] 
+    },
+    { 
+      c: "copie", n: "Maktabet El-Nour", r: 4.2, p: 1, dist: 0.4, 
+      h: [["08:00", "19:00"]], t: "", g: [36.7255, 3.0710], 
+      video: "", 
+      menu: { ar: "طباعة، نسخ، تجليد", fr: "Impression, Photocopie, Reliure", en: "Printing, Copy, Binding" }, 
+      menuImages: [] 
+    },
+    { 
+      c: "beaute", n: "Salon El-Wafa", r: 4.6, p: 2, dist: 0.9, 
+      h: [["09:00", "21:00"]], t: "", g: [36.7260, 3.0720], 
+      video: "", 
+      menu: { ar: "حلاقة رجالية", fr: "Coiffure homme", en: "Men's haircut" }, 
+      menuImages: [] 
+    },
+    { 
+      c: "sport", n: "Salle Fit-Kouba", r: 4.4, p: 3, dist: 2.0, 
+      h: [["06:00", "22:00"]], t: "", g: [36.7310, 3.0850], 
+      video: "", 
+      menu: { ar: "قاعة رياضة", fr: "Salle de sport", en: "Gym" }, 
+      menuImages: [] 
+    },
+    { 
+      c: "mosquee", n: "مسجد عبد اللطيف سلطاني", r: 4.9, p: 0, dist: 0.4, 
+      h: [], t: "", g: [36.7280, 3.0740], 
+      video: "", 
+      menu: { ar: "مسجد قريب من المدرسة", fr: "Mosquée proche de l'école", en: "Mosque near the school" }, 
+      menuImages: [] 
+    }
   ]
 };
