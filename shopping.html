@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<div class="relative w-full h-64 md:h-80 rounded-3xl overflow-hidden shadow-xl mb-6">
+  <div id="carousel" class="w-full h-full relative">
+    <img src="MEGA 1.jpg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" id="slide-0">
+    <img src="ON EST LA 1.jpg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" id="slide-1">
+    <img src="nafess 1.jpg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" id="slide-2">
+    <img src="brunch 1.jpg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" id="slide-3">
+  </div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+    <h2 class="text-white text-2xl font-black">اكتشف أفضل المطاعم والمقاهي</h2>
+  </div>
+</div>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -288,3 +299,17 @@
   </script>
 </body>
 </html>
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('[id^="slide-"]');
+function showSlide(index) {
+  slides.forEach((img, i) => {
+    img.classList.toggle('opacity-100', i === index);
+    img.classList.toggle('opacity-0', i !== index);
+  });
+}
+setInterval(() => {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}, 4000);
+</script>
