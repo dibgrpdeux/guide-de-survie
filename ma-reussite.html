@@ -69,9 +69,10 @@
     .dark .timeline-dot { border-color: #1e293b; }
 
     .lab-tab { transition: all 0.3s ease; cursor: pointer; }
-    .lab-tab.active { background: #0ea5e9; color: white; border-color: #0ea5e9; }
-    .slider-custom { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #cbd5e1; outline: none; }
-    .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #0ea5e9; cursor: pointer; }
+    .lab-tab.active { background: #ea580c; color: white; border-color: #ea580c; }
+    .slider-custom { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #fed7aa; outline: none; }
+    .dark .slider-custom { background: #334155; }
+    .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #ea580c; cursor: pointer; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 bg-mesh">
@@ -359,7 +360,7 @@
             </div>
             <div>
               <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>المقاومة القصوى (fc)</span><span id="strength-val" class="text-red-600">25</span> MPa</label>
-              <input type="range" id="strength-slider" min="10" max="50" value="25" " class="slider-custom">
+              <input type="range" id="strength-slider" min="10" max="50" value="25" class="slider-custom">
             </div>
             <div class="bg-red-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-red-100 dark:border-slate-700">
               <p class="text-xs text-gray-500 mb-1">حالة المكعب</p>
@@ -560,6 +561,20 @@
             <i class="fa-solid fa-flask"></i> ابدأ التجربة
           </a>
         </div>
+
+        <!-- ✅ بطاقة تمثيلات كرام، فيشر، ولويس -->
+        <a href="stereochemistry.html" class="col-span-1 md:col-span-2 glass-card p-6 rounded-2xl border border-purple-100 dark:border-slate-700 hover:scale-[1.02] transition-all group flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-3xl group-hover:scale-110 transition">
+              <i class="fa-solid fa-shapes"></i>
+            </div>
+            <div>
+              <h4 class="font-black text-xl text-slate-900 dark:text-white">تمثيلات كرام، فيشر، ولويس</h4>
+              <p class="text-sm text-slate-500 dark:text-slate-400">تمثيل هندسي وإلكتروني للمركبات ذات المدارات d (Fe, Cu, Cr...).</p>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-left text-purple-500 group-hover:-translate-x-2 transition-transform text-2xl"></i>
+        </a>
 
       </div>
       <!-- نهاية المختبر الافتراضي -->
@@ -764,9 +779,12 @@
       cronoTasks.sort((a, b) => a.time.localeCompare(b.time));
       container.innerHTML = cronoTasks.map((t, i) => `
         <div class="relative ${t.done ? 'opacity-60' : ''}">
-          <div class="timeline-dot ${t.done ? 'bg-emerald-500' : 'bg-brand-500'}" style="top: 1rem;"></div>
+          <div class="timeline-dot ${t.done ? 'bg-emerald-500' : 'bg-brand-500'}" " style="top: 1rem;"></div>
           <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-slate-700 ml-8 shadow-sm flex justify-between items-center">
-            <div><span class="text-xs font-black text-brand-600 bg-brand-50 px-2 py-0.5 rounded">${t.time}</span><p class="font-bold text-gray-800 dark:text-gray-200 mt-1 ${t.done ? 'line-through' : ''}">${t.name}</p></div>
+            <div>
+              <span class="text-xs font-black text-brand-600 bg-brand-50 px-2 py-0.5 rounded">${t.time}</span>
+              <p class="font-bold text-gray-800 dark:text-gray-200 mt-1 ${t.done ? 'line-through' : ''}">${t.name}</p>
+            </div>
             <div class="flex gap-2">
               <button onclick="toggleCronoTask(${i})" class="w-8 h-8 rounded-full ${t.done ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-500'} flex items-center justify-center transition"><i class="fa-solid fa-check"></i></button>
               <button onclick="deleteCronoTask(${i})" class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center transition"><i class="fa-solid fa-trash"></i></button>
@@ -774,7 +792,8 @@
           </div>
         </div>`).join('');
     }
-        function addCronoTask() {
+
+    function addCronoTask() {
       const name = document.getElementById('crono-name').value;
       const time = document.getElementById('crono-time').value;
       if (!name || !time) return alert("الرجاء إدخال اسم المهمة والوقت");
@@ -787,6 +806,9 @@
     function toggleCronoTask(i) { cronoTasks[i].done = !cronoTasks[i].done; localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
     function deleteCronoTask(i) { cronoTasks.splice(i, 1); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
 
+    // ==========================================
+    // 4. المترجم الفوري
+    // ==========================================
     async function translateText() {
       const text = document.getElementById('translate-input').value.trim();
       const from = document.getElementById('lang-from').value;
@@ -806,6 +828,9 @@
       } catch (e) { errorBox.innerText = "حدث خطأ في الاتصال."; errorBox.classList.remove('hidden'); }
     }
 
+    // ==========================================
+    // 5. المساعد الأكاديمي (AI)
+    // ==========================================
     function generateAIPrompt() {
       const topic = document.getElementById('ai-topic').value.trim();
       const type = document.getElementById('ai-type').value;
@@ -824,7 +849,7 @@
     }
 
     // ==========================================
-    // 4. المختبر الافتراضي (Virtual Lab)
+    // 6. المختبر الافتراضي (Virtual Lab)
     // ==========================================
     function switchLab(labId) {
       ['pendulum', 'circuit', 'projectile', 'concrete', 'spring', 'waves', 'chimie', 'rdm', 'mdf', 'optics', 'thermo', 'magnet', 'momentum'].forEach(l => {
@@ -869,7 +894,7 @@
         const x = originX + pendLength * Math.sin(pendAngle), y = originY + pendLength * Math.cos(pendAngle);
         ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(x, y); ctx.strokeStyle = '#64748b'; ctx.lineWidth = 2; ctx.stroke();
         ctx.beginPath(); ctx.arc(originX, originY, 4, 0, Math.PI * 2); ctx.fillStyle = '#1e293b'; ctx.fill();
-        ctx.beginPath(); ctx.arc(x, y, 15, 0, Math.PI * 2); ctx.fillStyle = '#f97316'; ctx.fill(); ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3; ctx.stroke();
+        ctx.beginPath(); ctx.arc(x, y, 15, 0, Math.PI * 2); ctx.fillStyle = '#ea580c'; ctx.fill(); ctx.strokeStyle = '#c2410c'; ctx.lineWidth = 3; ctx.stroke();
         pendulumAnim = requestAnimationFrame(draw);
       }
       draw();
@@ -914,7 +939,7 @@
         ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
         const v0 = parseInt(vS.value), angle = parseInt(aS.value), rad = angle * Math.PI / 180, g = 9.81;
         const x = 30 + (v0 * Math.cos(rad) * t * 2), y = canvas.height - 30 - (v0 * Math.sin(rad) * t - 0.5 * g * t * t) * 2;
-        ctx.fillStyle = '#3b82f6'; ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.fill();
         if (y < canvas.height + 50 && x < canvas.width) { t += 0.05; projAnim = requestAnimationFrame(draw); }
         else setTimeout(reset, 1000);
       }
@@ -951,10 +976,10 @@
         document.getElementById('spring-result').innerText = (k * x).toFixed(2) + ' N';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#64748b'; ctx.fillRect(0, 50, canvas.width, 10);
-        ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(175, 60);
+        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(175, 60);
         for (let i = 0; i <= x * 300; i += 10) ctx.lineTo(175 + (i%20===0 ? 15 : -15), 60 + i);
         ctx.stroke();
-        ctx.fillStyle = '#0ea5e9'; ctx.fillRect(150, 60 + x*300, 50, 50);
+        ctx.fillStyle = '#ea580c'; ctx.fillRect(150, 60 + x*300, 50, 50);
       }
       kS.oninput = update; xS.oninput = update; update();
     }
@@ -973,7 +998,7 @@
         document.getElementById('wave-result').innerText = (340 / freq).toFixed(1) + ' m';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, canvas.height/2); ctx.lineTo(canvas.width, canvas.height/2); ctx.stroke();
-        ctx.strokeStyle = '#14b8a6'; ctx.lineWidth = 3; ctx.beginPath();
+        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3; ctx.beginPath();
         for (let x = 0; x < canvas.width; x++) {
           const y = canvas.height/2 + Math.sin(x * (freq/50) + time) * amp;
           if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
@@ -1018,10 +1043,10 @@
         ctx.fillStyle = '#94a3b8'; ctx.fillRect(50, 150, 250, 20);
         ctx.fillStyle = '#475569'; ctx.beginPath(); ctx.moveTo(50, 170); ctx.lineTo(30, 200); ctx.lineTo(70, 200); ctx.fill();
         ctx.beginPath(); ctx.moveTo(300, 170); ctx.lineTo(280, 200); ctx.lineTo(320, 200); ctx.fill();
-        ctx.strokeStyle = '#f97316'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(175, 50); ctx.lineTo(175, 140); ctx.stroke();
+        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(175, 50); ctx.lineTo(175, 140); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(165, 130); ctx.lineTo(175, 145); ctx.lineTo(185, 130); ctx.fill();
-        ctx.fillStyle = '#f97316'; ctx.font = 'bold 14px Cairo'; ctx.textAlign = 'center'; ctx.fillText(P + ' kN', 175, 35);
-        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 2; ctx.beginPath();
+        ctx.fillStyle = '#ea580c'; ctx.font = 'bold 14px Cairo'; ctx.textAlign = 'center'; ctx.fillText(P + ' kN', 175, 35);
+        ctx.strokeStyle = '#c2410c'; ctx.lineWidth = 2; ctx.beginPath();
         for (let x = 50; x <= 300; x += 5) {
           const normX = (x - 175) / 125;
           const y = 200 - (M_max * 2) * (1 - normX * normX);
@@ -1044,7 +1069,7 @@
         const f = (P * Math.pow(L, 3)) / (48 * E * I) * 1000;
         document.getElementById('deflection-result').innerText = f.toFixed(2) + ' mm';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = '#65a30d'; ctx.lineWidth = 6; ctx.beginPath();
+        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 6; ctx.beginPath();
         for (let x = 50; x <= 300; x++) {
           const normX = (x - 175) / 125;
           const y = 150 + (f * 2) * (1 - normX * normX);
@@ -1061,8 +1086,7 @@
     function drawOptics() {
       const canvas = document.getElementById('opticsCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
-      const a1S = document.getElementById('angle1-slider');
-      const n2S = document.getElementById('n2-slider');
+      const a1S = document.getElementById('angle1-slider'), n2S = document.getElementById('n2-slider');
       function update() {
         const a1 = parseInt(a1S.value), n2 = parseFloat(n2S.value), n1 = 1;
         const rad1 = a1 * Math.PI / 180;
@@ -1098,7 +1122,7 @@
         ctx.strokeStyle = '#64748b'; ctx.lineWidth = 4; ctx.strokeRect(100, 50, 150, 200);
         const num = Math.floor(n * 20);
         for (let i = 0; i < num; i++) {
-          ctx.fillStyle = '#f43f5e'; ctx.beginPath(); ctx.arc(110 + Math.random() * 130, 60 + Math.random() * 180, 3, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(110 + Math.random() * 130, 60 + Math.random() * 180, 3, 0, Math.PI * 2); ctx.fill();
         }
         ctx.fillStyle = '#475569'; ctx.fillRect(90, 40, 170, 15);
       }
@@ -1110,6 +1134,7 @@
       const canvas = document.getElementById('magnetCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
       const iS = document.getElementById('current-slider');
+      let time = 0;
       function update() {
         const I = parseInt(iS.value), mu0 = 4 * Math.PI * 10**-7, r = 0.1;
         const B = (mu0 * I) / (2 * Math.PI * r) * 10**6;
@@ -1117,14 +1142,16 @@
         document.getElementById('b-result').innerText = B.toFixed(2) + ' μT';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const cx = canvas.width/2, cy = canvas.height/2;
-        ctx.fillStyle = '#0ea5e9'; ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = '#fff'; ctx.font = 'bold 12px Arial'; ctx.textAlign = 'center'; ctx.fillText('I', cx, cy + 4);
         for (let i = 1; i <= 4; i++) {
-          ctx.strokeStyle = `rgba(14, 165, 233, ${0.6 - i*0.1})`; ctx.lineWidth = 2;
+          ctx.strokeStyle = `rgba(234, 88, 12, ${0.6 - i*0.1})`; ctx.lineWidth = 2;
           ctx.beginPath(); ctx.arc(cx, cy, i * 40, 0, Math.PI * 2); ctx.stroke();
         }
+        time += 0.02;
+        requestAnimationFrame(update);
       }
-      iS.oninput = update; update();
+      update();
     }
 
     // 13. الزخم
@@ -1147,7 +1174,7 @@
     }
 
     // ==========================================
-    // 5. INIT
+    // 7. INIT
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       renderDrives();
