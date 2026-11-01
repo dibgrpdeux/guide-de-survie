@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مختبر الذرات والجزيئات 3D - ENSTP</title>
+  <title>الجدول الدوري 3D - ENSTP</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -14,38 +14,26 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <style>
-    /* استخدام اللون البرتقالي كخلفية وثيم أساسي */
     body { font-family: 'Cairo', sans-serif; background: #fff7ed; color: #1e293b; margin: 0; overflow-x: hidden; }
     .dark body { background: #1a1410; color: #f8fafc; }
     
-    /* بطاقات التصميم الزجاجي باللون البرتقالي */
     .glass-panel { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 2px solid rgba(249, 115, 22, 0.2); box-shadow: 0 10px 30px rgba(249, 115, 22, 0.15); }
     .dark .glass-panel { background: rgba(30, 20, 15, 0.9); border-color: rgba(249, 115, 22, 0.3); }
     
-    /* أزرار التبويب */
-    .tab-btn { transition: all 0.3s ease; }
-    .tab-btn.active { background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-color: transparent; box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.6); transform: translateY(-2px); }
+    #canvas-3d-container { width: 100%; height: 500px; position: relative; border-radius: 1rem; overflow: hidden; background: radial-gradient(circle at center, #1a1410, #0f172a); }
     
-    /* حاوية الرسم */
-    #canvas-3d-container { width: 100%; height: 450px; position: relative; border-radius: 1rem; overflow: hidden; background: #0f172a; }
-    
-    /* أشرطة التحكم */
-    .slider-custom { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #fed7aa; outline: none; }
-    .dark .slider-custom { background: #334155; }
-    .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #f97316; cursor: pointer; box-shadow: 0 2px 10px rgba(249, 115, 22, 0.5); }
-    
-    /* قائمة اختيار العنصر */
     .element-select { background: #fff; border: 2px solid #fed7aa; color: #9a3412; font-weight: 700; }
     .dark .element-select { background: #1e293b; border-color: #ea580c; color: #fb923c; }
     
-    /* بطاقة معلومات العنصر */
-    .element-card { background: linear-gradient(135deg, #fff7ed, #ffedd5); border: 2px solid #fdba74; }
-    .dark .element-card { background: linear-gradient(135deg, #1e293b, #2d1b0e); border-color: #ea580c; }
+    /* تنسيق خانات الجدول الدوري المصغر */
+    .pt-cell { transition: all 0.2s; cursor: pointer; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 4px; font-size: 10px; }
+    .pt-cell:hover { transform: scale(1.15); z-index: 10; box-shadow: 0 0 10px rgba(249,115,22,0.5); }
+    .pt-cell.active { border: 2px solid #f97316; box-shadow: 0 0 15px rgba(249,115,22,0.8); }
   </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
 
-  <div class="max-w-6xl mx-auto space-y-6">
+  <div class="max-w-7xl mx-auto space-y-6">
     
     <!-- الترويسة -->
     <div class="glass-panel rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -54,8 +42,8 @@
           <i class="fa-solid fa-atom"></i>
         </div>
         <div>
-          <h1 class="text-2xl md:text-3xl font-black text-orange-900 dark:text-orange-400">مختبر الذرات والجزيئات 3D</h1>
-          <p class="text-sm text-gray-600 dark:text-gray-400">استكشف الذرات والجزيئات في بُعد ثلاثي بألوان برتقالية زاهية.</p>
+          <h1 class="text-2xl md:text-3xl font-black text-orange-900 dark:text-orange-400">الجدول الدوري 3D التفاعلي</h1>
+          <p class="text-sm text-gray-600 dark:text-gray-400">اختر أي عنصر من الجدول لرؤية ذرته في بُعد ثلاثي (نموذج بور).</p>
         </div>
       </div>
       <div class="flex gap-2">
@@ -69,134 +57,60 @@
       </div>
     </div>
 
-    <!-- أزرار التبويب -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <button onclick="switchSim('atom')" id="btn-atom" class="tab-btn glass-panel p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-transparent">
-        <i class="fa-solid fa-circle-nodes text-2xl text-orange-500"></i>
-        <span class="font-bold text-sm">ذرة (نموذج بور)</span>
-      </button>
-      <button onclick="switchSim('molecule')" id="btn-molecule" class="tab-btn active glass-panel p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-transparent">
-        <i class="fa-solid fa-cubes text-2xl text-orange-500"></i>
-        <span class="font-bold text-sm">جزيء 3D</span>
-      </button>
-      <button onclick="switchSim('wave')" id="btn-wave" class="tab-btn glass-panel p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-transparent">
-        <i class="fa-solid fa-wave-square text-2xl text-orange-500"></i>
-        <span class="font-bold text-sm">تمثيل الموجة</span>
-      </button>
-      <button onclick="switchSim('field')" id="btn-field" class="tab-btn glass-panel p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-transparent">
-        <i class="fa-solid fa-magnet text-2xl text-orange-500"></i>
-        <span class="font-bold text-sm">الحقل المغناطيسي</span>
-      </button>
-    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- عمود الجدول الدوري (المصغر) -->
+      <div class="lg:col-span-1 glass-panel rounded-3xl p-4 flex flex-col">
+        <h2 class="font-bold text-orange-900 dark:text-orange-400 mb-3 text-center">اختر العنصر</h2>
+        <!-- هنا سيتم رسم شبكة الجدول الدوري -->
+        <div id="periodic-table-grid" class="grid grid-cols-9 gap-1"></div>
+      </div>
 
-    <!-- ========================================== -->
-    <!-- 1. قسم الذرة (نموذج بور 3D مع كل الجدول الدوري) -->
-    <!-- ========================================== -->
-    <div id="sim-atom" class="hidden glass-panel rounded-3xl p-6 space-y-4">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-orange-100 dark:border-slate-700 pb-4">
-        <h2 class="text-xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
-          <i class="fa-solid fa-atom"></i> استكشاف الذرات (1 إلى 118)
-        </h2>
+      <!-- عمود العرض 3D والمعلومات -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- بطاقة المعلومات -->
+        <div id="element-info" class="glass-panel rounded-3xl p-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div>
+            <p class="text-xs text-orange-600 dark:text-orange-400 font-bold">الرمز</p>
+            <p class="text-3xl font-black text-orange-900 dark:text-white" id="el-symbol">H</p>
+          </div>
+          <div>
+            <p class="text-xs text-orange-600 dark:text-orange-400 font-bold">العدد الذري (Z)</p>
+            <p class="text-3xl font-black text-orange-900 dark:text-white" id="el-z">1</p>
+          </div>
+          <div>
+            <p class="text-xs text-orange-600 dark:text-orange-400 font-bold">الكتلة الذرية</p>
+            <p class="text-3xl font-black text-orange-900 dark:text-white" id="el-mass">1.008</p>
+          </div>
+          <div>
+            <p class="text-xs text-orange-600 dark:text-orange-400 font-bold">التوزيع الإلكتروني</p>
+            <p class="text-lg font-black text-orange-900 dark:text-white" id="el-config">1s¹</p>
+          </div>
+        </div>
+
+        <!-- حاوية الرسم 3D -->
+        <div class="glass-panel rounded-3xl p-2">
+          <div id="canvas-3d-container">
+            <!-- سيتم إدراج الرسم هنا -->
+            <div class="absolute inset-0 flex items-center justify-center text-white" id="loading-3d">
+              <i class="fa-solid fa-spinner fa-spin text-4xl text-orange-500"></i>
+            </div>
+          </div>
+        </div>
         
-        <!-- اختيار العنصر -->
-        <select id="element-select" onchange="loadAtom()" class="element-select p-2.5 rounded-xl outline-none text-sm w-full md:w-64 cursor-pointer">
-          <!-- سيتم ملؤها عبر JavaScript -->
-        </select>
+        <!-- ملاحظة -->
+        <p class="text-center text-xs text-gray-500 dark:text-gray-400">
+          <i class="fa-solid fa-info-circle text-orange-500"></i> يمكنك استخدام الماوس (أو إصبعك) لتدوير الذرة وتكبيرها.
+        </p>
       </div>
 
-      <div id="canvas-3d-container" class="relative"></div>
-
-      <!-- بطاقة معلومات العنصر -->
-      <div id="element-info" class="element-card rounded-2xl p-5 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="text-center">
-          <p class="text-xs text-orange-600 dark:text-orange-400 font-bold">الرمز</p>
-          <p class="text-2xl font-black text-orange-900 dark:text-white" id="el-symbol">H</p>
-        </div>
-        <div class="text-center">
-          <p class="text-xs text-orange-600 dark:text-orange-400 font-bold">العدد الذري (Z)</p>
-          <p class="text-2xl font-black text-orange-900 dark:text-white" id="el-z">1</p>
-        </div>
-        <div class="text-center">
-          <p class="text-xs text-orange-600 dark:text-orange-400 font-bold">الكتلة الذرية</p>
-          <p class="text-2xl font-black text-orange-900 dark:text-white" id="el-mass">1.008</p>
-        </div>
-        <div class="text-center">
-          <p class="text-xs text-orange-600 dark:text-orange-400 font-bold">التوزيع الإلكتروني</p>
-          <p class="text-lg font-black text-orange-900 dark:text-white" id="el-config">1s¹</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 2. قسم الجزيء 3D -->
-    <!-- ========================================== -->
-    <div id="sim-molecule" class="glass-panel rounded-3xl p-6 space-y-4">
-      <div class="flex items-center justify-between border-b border-orange-100 dark:border-slate-700 pb-4">
-        <h2 class="text-xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
-          <i class="fa-solid fa-cubes"></i> الجزيئات ثلاثية الأبعاد
-        </h2>
-        <span class="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-3 py-1 rounded-full font-bold">استخدم الماوس للتدوير</span>
-      </div>
-      <div id="molecule-3d-container" class="w-full h-[400px] relative rounded-2xl overflow-hidden bg-slate-900"></div>
-      <div class="flex flex-wrap gap-2 justify-center">
-        <button onclick="changeMolecule('h2o')" class="px-5 py-2.5 bg-orange-100 dark:bg-slate-800 text-orange-800 dark:text-orange-300 font-bold rounded-xl hover:bg-orange-200 transition">H₂O (ماء)</button>
-        <button onclick="changeMolecule('co2')" class="px-5 py-2.5 bg-orange-100 dark:bg-slate-800 text-orange-800 dark:text-orange-300 font-bold rounded-xl hover:bg-orange-200 transition">CO₂ (ثاني أكسيد الكربون)</button>
-        <button onclick="changeMolecule('ch4')" class="px-5 py-2.5 bg-orange-100 dark:bg-slate-800 text-orange-800 dark:text-orange-300 font-bold rounded-xl hover:bg-orange-200 transition">CH₄ (ميثان)</button>
-        <button onclick="changeMolecule('nh3')" class="px-5 py-2.5 bg-orange-100 dark:bg-slate-800 text-orange-800 dark:text-orange-300 font-bold rounded-xl hover:bg-orange-200 transition">NH₃ (أمونيا)</button>
-      </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 3. تمثيل الموجة -->
-    <!-- ========================================== -->
-    <div id="sim-wave" class="hidden glass-panel rounded-3xl p-6 space-y-4">
-      <h2 class="text-xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2 border-b border-orange-100 dark:border-slate-700 pb-4">
-        <i class="fa-solid fa-wave-square"></i> تمثيل الموجة الجيبية
-      </h2>
-      <div class="bg-slate-900 rounded-2xl flex items-center justify-center p-4">
-        <canvas id="waveCanvas" width="500" height="300" class="max-w-full"></canvas>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>التردد (f)</span><span id="w-freq" class="text-orange-600 font-black">1 Hz</span></label>
-          <input type="range" id="w-freq-slider" min="0.5" max="3" step="0.1" value="1" class="slider-custom">
-        </div>
-        <div>
-          <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>السعة (A)</span><span id="w-amp" class="text-orange-600 font-black">80</span></label>
-          <input type="range" id="w-amp-slider" min="20" max="120" value="80" class="slider-custom">
-        </div>
-      </div>
-      <div class="bg-orange-50 dark:bg-slate-800 p-4 rounded-xl border border-orange-200 dark:border-slate-700 text-center">
-        <p class="text-xs text-gray-500 mb-1">الطول الموجي (λ = v / f) بافتراض v = 340 m/s</p>
-        <p class="font-black text-xl text-orange-600" id="w-result">340 m</p>
-      </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 4. الحقل المغناطيسي -->
-    <!-- ========================================== -->
-    <div id="sim-field" class="hidden glass-panel rounded-3xl p-6 space-y-4">
-      <h2 class="text-xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2 border-b border-orange-100 dark:border-slate-700 pb-4">
-        <i class="fa-solid fa-magnet"></i> خطوط المجال المغناطيسي
-      </h2>
-      <div class="bg-slate-900 rounded-2xl flex items-center justify-center p-4">
-        <canvas id="fieldCanvas" width="400" height="400" class="max-w-full"></canvas>
-      </div>
-      <div>
-        <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>شدة التيار (I)</span><span id="field-current" class="text-orange-600 font-black">2 A</span></label>
-        <input type="range" id="field-slider" min="1" max="10" value="2" class="slider-custom">
-      </div>
-      <div class="bg-orange-50 dark:bg-slate-800 p-4 rounded-xl border border-orange-200 dark:border-slate-700 text-center">
-        <p class="text-xs text-gray-500 mb-1">شدة المجال (B = μ₀I / 2πr) على بعد 10cm</p>
-        <p class="font-black text-xl text-orange-600" id="field-result">4.00 μT</p>
-      </div>
     </div>
 
   </div>
 
   <script>
     // ==========================================
-    // 1. الوضع الليلي (Dark Mode)
+    // 1. الوضع الليلي
     // ==========================================
     if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
     function toggleDarkMode() {
@@ -205,210 +119,274 @@
     }
 
     // ==========================================
-    // 2. التنقل بين التبويبات
-    // ==========================================
-    function switchSim(simId) {
-      ['atom', 'molecule', 'wave', 'field'].forEach(s => {
-        document.getElementById('sim-' + s).classList.add('hidden');
-        document.getElementById('btn-' + s).classList.remove('active');
-      });
-      document.getElementById('sim-' + simId).classList.remove('hidden');
-      document.getElementById('btn-' + simId).classList.add('active');
-
-      if (simId === 'atom') setTimeout(initAtom3D, 100);
-      if (simId === 'molecule') setTimeout(initMolecule3D, 100);
-      if (simId === 'wave') drawWave();
-      if (simId === 'field') drawField();
-    }
-
-    // ==========================================
-    // 3. قاعدة بيانات الجدول الدوري (118 عنصر)
+    // 2. بيانات الجدول الدوري (1-118)
     // ==========================================
     const elementsData = [
-      { z: 1, symbol: 'H', name: 'هيدروجين', mass: '1.008', config: '1s¹', color: 0xffffff },
-      { z: 2, symbol: 'He', name: 'هيليوم', mass: '4.0026', config: '1s²', color: 0xd1d5db },
-      { z: 3, symbol: 'Li', name: 'ليثيوم', mass: '6.94', config: '2s¹', color: 0xef4444 },
-      { z: 4, symbol: 'Be', name: 'بيريليوم', mass: '9.0122', config: '2s²', color: 0x22c55e },
-      { z: 5, symbol: 'B', name: 'بورون', mass: '10.81', config: '2s² 2p¹', color: 0xf59e0b },
-      { z: 6, symbol: 'C', name: 'كربون', mass: '12.011', config: '2s² 2p²', color: 0x334155 },
-      { z: 7, symbol: 'N', name: 'نيتروجين', mass: '14.007', config: '2s² 2p³', color: 0x3b82f6 },
-      { z: 8, symbol: 'O', name: 'أكسجين', mass: '15.999', config: '2s² 2p⁴', color: 0xef4444 },
-      { z: 9, symbol: 'F', name: 'فلور', mass: '18.998', config: '2s² 2p⁵', color: 0x22c55e },
-      { z: 10, symbol: 'Ne', name: 'نيون', mass: '20.180', config: '2s² 2p⁶', color: 0xd1d5db },
-      { z: 11, symbol: 'Na', name: 'صوديوم', mass: '22.990', config: '3s¹', color: 0xef4444 },
-      { z: 12, symbol: 'Mg', name: 'مغنيسيوم', mass: '24.305', config: '3s²', color: 0x22c55e },
-      { z: 13, symbol: 'Al', name: 'ألومنيوم', mass: '26.982', config: '3s² 3p¹', color: 0x94a3b8 },
-      { z: 14, symbol: 'Si', name: 'سيليكون', mass: '28.085', config: '3s² 3p²', color: 0xf59e0b },
-      { z: 15, symbol: 'P', name: 'فوسفور', mass: '30.974', config: '3s² 3p³', color: 0xf97316 },
-      { z: 16, symbol: 'S', name: 'كبريت', mass: '32.06', config: '3s² 3p⁴', color: 0xfacc15 },
-      { z: 17, symbol: 'Cl', name: 'كلور', mass: '35.45', config: '3s² 3p⁵', color: 0x22c55e },
-      { z: 18, symbol: 'Ar', name: 'أرجون', mass: '39.948', config: '3s² 3p⁶', color: 0xd1d5db },
-      { z: 19, symbol: 'K', name: 'بوتاسيوم', mass: '39.098', config: '4s¹', color: 0xef4444 },
-      { z: 20, symbol: 'Ca', name: 'كالسيوم', mass: '40.078', config: '4s²', color: 0x22c55e },
-      { z: 21, symbol: 'Sc', name: 'سكانديوم', mass: '44.956', config: '3d¹ 4s²', color: 0x60a5fa },
-      { z: 22, symbol: 'Ti', name: 'تيتانيوم', mass: '47.867', config: '3d² 4s²', color: 0x60a5fa },
-      { z: 23, symbol: 'V', name: 'فاناديوم', mass: '50.942', config: '3d³ 4s²', color: 0x60a5fa },
-      { z: 24, symbol: 'Cr', name: 'كروم', mass: '51.996', config: '3d⁵ 4s¹', color: 0x60a5fa },
-      { z: 25, symbol: 'Mn', name: 'منغنيز', mass: '54.938', config: '3d⁵ 4s²', color: 0x60a5fa },
-      { z: 26, symbol: 'Fe', name: 'حديد', mass: '55.845', config: '3d⁶ 4s²', color: 0x60a5fa },
-      { z: 27, symbol: 'Co', name: 'كوبالت', mass: '58.933', config: '3d⁷ 4s²', color: 0x60a5fa },
-      { z: 28, symbol: 'Ni', name: 'نيكل', mass: '58.693', config: '3d⁸ 4s²', color: 0x60a5fa },
-      { z: 29, symbol: 'Cu', name: 'نحاس', mass: '63.546', config: '3d¹⁰ 4s¹', color: 0xf97316 },
-      { z: 30, symbol: 'Zn', name: 'زنك', mass: '65.38', config: '3d¹⁰ 4s²', color: 0x60a5fa },
-      { z: 31, symbol: 'Ga', name: 'غاليوم', mass: '69.723', config: '4s² 4p¹', color: 0x94a3b8 },
-      { z: 32, symbol: 'Ge', name: 'جرمانيوم', mass: '72.630', config: '4s² 4p²', color: 0x94a3b8 },
-      { z: 33, symbol: 'As', name: 'زرنيخ', mass: '74.922', config: '4s² 4p³', color: 0x94a3b8 },
-      { z: 34, symbol: 'Se', name: 'سيلينيوم', mass: '78.971', config: '4s² 4p⁴', color: 0x22c55e },
-      { z: 35, symbol: 'Br', name: 'بروم', mass: '79.904', config: '4s² 4p⁵', color: 0xef4444 },
-      { z: 36, symbol: 'Kr', name: 'كريبتون', mass: '83.798', config: '4s² 4p⁶', color: 0xd1d5db },
-      { z: 37, symbol: 'Rb', name: 'روبيديوم', mass: '85.468', config: '5s¹', color: 0xef4444 },
-      { z: 38, symbol: 'Sr', name: 'سترونشيوم', mass: '87.62', config: '5s²', color: 0x22c55e },
-      { z: 39, symbol: 'Y', name: 'إيتريوم', mass: '88.906', config: '4d¹ 5s²', color: 0x60a5fa },
-      { z: 40, symbol: 'Zr', name: 'زركونيوم', mass: '91.224', config: '4d² 5s²', color: 0x60a5fa },
-      { z: 41, symbol: 'Nb', name: 'نيوبيوم', mass: '92.906', config: '4d⁴ 5s¹', color: 0x60a5fa },
-      { z: 42, symbol: 'Mo', name: 'موليبدينوم', mass: '95.95', config: '4d⁵ 5s¹', color: 0x60a5fa },
-      { z: 43, symbol: 'Tc', name: 'تكنيشيوم', mass: '98', config: '4d⁵ 5s²', color: 0x60a5fa },
-      { z: 44, symbol: 'Ru', name: 'روثينيوم', mass: '101.07', config: '4d⁷ 5s¹', color: 0x60a5fa },
-      { z: 45, symbol: 'Rh', name: 'روديوم', mass: '102.91', config: '4d⁸ 5s¹', color: 0x60a5fa },
-      { z: 46, symbol: 'Pd', name: 'بلاديوم', mass: '106.42', config: '4d¹⁰', color: 0x60a5fa },
-      { z: 47, symbol: 'Ag', name: 'فضة', mass: '107.87', config: '4d¹⁰ 5s¹', color: 0x94a3b8 },
-      { z: 48, symbol: 'Cd', name: 'كادميوم', mass: '112.41', config: '4d¹⁰ 5s²', color: 0x60a5fa },
-      { z: 49, symbol: 'In', name: 'إنديوم', mass: '114.82', config: '5s² 5p¹', color: 0x94a3b8 },
-      { z: 50, symbol: 'Sn', name: 'قصدير', mass: '118.71', config: '5s² 5p²', color: 0x94a3b8 },
-      { z: 51, symbol: 'Sb', name: 'أنتيمون', mass: '121.76', config: '5s² 5p³', color: 0x94a3b8 },
-      { z: 52, symbol: 'Te', name: 'تيلوريوم', mass: '127.60', config: '5s² 5p⁴', color: 0x94a3b8 },
-      { z: 53, symbol: 'I', name: 'يود', mass: '126.90', config: '5s² 5p⁵', color: 0x8b5cf6 },
-      { z: 54, symbol: 'Xe', name: 'زينون', mass: '131.29', config: '5s² 5p⁶', color: 0xd1d5db },
-      { z: 55, symbol: 'Cs', name: 'سيزيوم', mass: '132.91', config: '6s¹', color: 0xef4444 },
-      { z: 56, symbol: 'Ba', name: 'باريوم', mass: '137.33', config: '6s²', color: 0x22c55e },
-      { z: 57, symbol: 'La', name: 'لانثانوم', mass: '138.91', config: '5d¹ 6s²', color: 0x60a5fa },
-      { z: 58, symbol: 'Ce', name: 'سيريوم', mass: '140.12', config: '4f¹ 5d¹ 6s²', color: 0x60a5fa },
-      { z: 59, symbol: 'Pr', name: 'براسيوديميوم', mass: '140.91', config: '4f³ 6s²', color: 0x60a5fa },
-      { z: 60, symbol: 'Nd', name: 'نيوديميوم', mass: '144.24', config: '4f⁴ 6s²', color: 0x60a5fa },
-      { z: 61, symbol: 'Pm', name: 'بروميثيوم', mass: '145', config: '4f⁵ 6s²', color: 0x60a5fa },
-      { z: 62, symbol: 'Sm', name: 'ساماريوم', mass: '150.36', config: '4f⁶ 6s²', color: 0x60a5fa },
-      { z: 63, symbol: 'Eu', name: 'يوروبيوم', mass: '151.96', config: '4f⁷ 6s²', color: 0x60a5fa },
-      { z: 64, symbol: 'Gd', name: 'غادولينيوم', mass: '157.25', config: '4f⁷ 5d¹ 6s²', color: 0x60a5fa },
-      { z: 65, symbol: 'Tb', name: 'تيربيوم', mass: '158.93', config: '4f⁹ 6s²', color: 0x60a5fa },
-      { z: 66, symbol: 'Dy', name: 'ديسبروسيوم', mass: '162.50', config: '4f¹⁰ 6s²', color: 0x60a5fa },
-      { z: 67, symbol: 'Ho', name: 'هولميوم', mass: '164.93', config: '4f¹¹ 6s²', color: 0x60a5fa },
-      { z: 68, symbol: 'Er', name: 'إربيوم', mass: '167.26', config: '4f¹² 6s²', color: 0x60a5fa },
-      { z: 69, symbol: 'Tm', name: 'ثوليوم', mass: '168.93', config: '4f¹³ 6s²', color: 0x60a5fa },
-      { z: 70, symbol: 'Yb', name: 'إيتربيوم', mass: '173.05', config: '4f¹⁴ 6s²', color: 0x60a5fa },
-      { z: 71, symbol: 'Lu', name: 'لوتيشيوم', mass: '174.97', config: '4f¹⁴ 5d¹ 6s²', color: 0x60a5fa },
-      { z: 72, symbol: 'Hf', name: 'هافنيوم', mass: '178.49', config: '5d² 6s²', color: 0x60a5fa },
-      { z: 73, symbol: 'Ta', name: 'تانتالوم', mass: '180.95', config: '5d³ 6s²', color: 0x60a5fa },
-      { z: 74, symbol: 'W', name: 'تنجستن', mass: '183.84', config: '5d⁴ 6s²', color: 0x60a5fa },
-      { z: 75, symbol: 'Re', name: 'رينيوم', mass: '186.21', config: '5d⁵ 6s²', color: 0x60a5fa },
-      { z: 76, symbol: 'Os', name: 'أوزميوم', mass: '190.23', config: '5d⁶ 6s²', color: 0x60a5fa },
-      { z: 77, symbol: 'Ir', name: 'إيريديوم', mass: '192.22', config: '5d⁷ 6s²', color: 0x60a5fa },
-      { z: 78, symbol: 'Pt', name: 'بلاتين', mass: '195.08', config: '5d⁹ 6s¹', color: 0x60a5fa },
-      { z: 79, symbol: 'Au', name: 'ذهب', mass: '196.97', config: '5d¹⁰ 6s¹', color: 0xfacc15 },
-      { z: 80, symbol: 'Hg', name: 'زئبق', mass: '200.59', config: '5d¹⁰ 6s²', color: 0x94a3b8 },
-            { z: 81, symbol: 'Tl', name: 'ثاليوم', mass: '204.38', config: '6s² 6p¹', color: 0x94a3b8 },
-      { z: 82, symbol: 'Pb', name: 'رصاص', mass: '207.2', config: '6s² 6p²', color: 0x94a3b8 },
-      { z: 83, symbol: 'Bi', name: 'بزموت', mass: '208.98', config: '6s² 6p³', color: 0x94a3b8 },
-      { z: 84, symbol: 'Po', name: 'بولونيوم', mass: '209', config: '6s² 6p⁴', color: 0x94a3b8 },
-      { z: 85, symbol: 'At', name: 'أستاتين', mass: '210', config: '6s² 6p⁵', color: 0x8b5cf6 },
-      { z: 86, symbol: 'Rn', name: 'رادون', mass: '222', config: '6s² 6p⁶', color: 0xd1d5db },
-      { z: 87, symbol: 'Fr', name: 'فرانسيوم', mass: '223', config: '7s¹', color: 0xef4444 },
-      { z: 88, symbol: 'Ra', name: 'راديوم', mass: '226', config: '7s²', color: 0x22c55e },
-      { z: 89, symbol: 'Ac', name: 'أكتينيوم', mass: '227', config: '6d¹ 7s²', color: 0x60a5fa },
-      { z: 90, symbol: 'Th', name: 'ثوريوم', mass: '232.04', config: '6d² 7s²', color: 0x60a5fa },
-      { z: 91, symbol: 'Pa', name: 'بروتكتينيوم', mass: '231.04', config: '5f² 6d¹ 7s²', color: 0x60a5fa },
-      { z: 92, symbol: 'U', name: 'يورانيوم', mass: '238.03', config: '5f³ 6d¹ 7s²', color: 0x60a5fa },
-      { z: 93, symbol: 'Np', name: 'نبتونيوم', mass: '237', config: '5f⁴ 6d¹ 7s²', color: 0x60a5fa },
-      { z: 94, symbol: 'Pu', name: 'بلوتونيوم', mass: '244', config: '5f⁶ 7s²', color: 0x60a5fa },
-      { z: 95, symbol: 'Am', name: 'أمريسيوم', mass: '243', config: '5f⁷ 7s²', color: 0x60a5fa },
-      { z: 96, symbol: 'Cm', name: 'كوريوم', mass: '247', config: '5f⁷ 6d¹ 7s²', color: 0x60a5fa },
-      { z: 97, symbol: 'Bk', name: 'بركيليوم', mass: '247', config: '5f⁹ 7s²', color: 0x60a5fa },
-      { z: 98, symbol: 'Cf', name: 'كاليفورنيوم', mass: '251', config: '5f¹⁰ 7s²', color: 0x60a5fa },
-      { z: 99, symbol: 'Es', name: 'أينشتاينيوم', mass: '252', config: '5f¹¹ 7s²', color: 0x60a5fa },
-      { z: 100, symbol: 'Fm', name: 'فيرميوم', mass: '257', config: '5f¹² 7s²', color: 0x60a5fa },
-      { z: 101, symbol: 'Md', name: 'مندليفيوم', mass: '258', config: '5f¹³ 7s²', color: 0x60a5fa },
-      { z: 102, symbol: 'No', name: 'نوبليوم', mass: '259', config: '5f¹⁴ 7s²', color: 0x60a5fa },
-      { z: 103, symbol: 'Lr', name: 'لورنسيوم', mass: '266', config: '5f¹⁴ 7s² 7p¹', color: 0x60a5fa },
-      { z: 104, symbol: 'Rf', name: 'رذرفورديوم', mass: '267', config: '6d² 7s²', color: 0x60a5fa },
-      { z: 105, symbol: 'Db', name: 'دوبنيوم', mass: '268', config: '6d³ 7s²', color: 0x60a5fa },
-      { z: 106, symbol: 'Sg', name: 'سيبورغيوم', mass: '269', config: '6d⁴ 7s²', color: 0x60a5fa },
-      { z: 107, symbol: 'Bh', name: 'بوريوم', mass: '270', config: '6d⁵ 7s²', color: 0x60a5fa },
-      { z: 108, symbol: 'Hs', name: 'هاسيوم', mass: '269', config: '6d⁶ 7s²', color: 0x60a5fa },
-      { z: 109, symbol: 'Mt', name: 'مايتنريوم', mass: '278', config: '6d⁷ 7s²', color: 0x60a5fa },
-      { z: 110, symbol: 'Ds', name: 'دارمشتاتيوم', mass: '281', config: '6d⁸ 7s²', color: 0x60a5fa },
-      { z: 111, symbol: 'Rg', name: 'رونتجينيوم', mass: '282', config: '6d⁹ 7s²', color: 0x60a5fa },
-      { z: 112, symbol: 'Cn', name: 'كوبرنيسيوم', mass: '285', config: '6d¹⁰ 7s²', color: 0x60a5fa },
-      { z: 113, symbol: 'Nh', name: 'نيهونيوم', mass: '286', config: '7s² 7p¹', color: 0x94a3b8 },
-      { z: 114, symbol: 'Fl', name: 'فليروفيوم', mass: '289', config: '7s² 7p²', color: 0x94a3b8 },
-      { z: 115, symbol: 'Mc', name: 'موسكوفيوم', mass: '290', config: '7s² 7p³', color: 0x94a3b8 },
-      { z: 116, symbol: 'Lv', name: 'ليفرموريوم', mass: '293', config: '7s² 7p⁴', color: 0x94a3b8 },
-      { z: 117, symbol: 'Ts', name: 'تينيسين', mass: '294', config: '7s² 7p⁵', color: 0x8b5cf6 },
-      { z: 118, symbol: 'Og', name: 'أوغانيسون', mass: '294', config: '7s² 7p⁶', color: 0xd1d5db }
+      { z: 1, symbol: 'H', name: 'هيدروجين', mass: '1.008', config: '1s¹', shells: [1], group: 1, period: 1 },
+      { z: 2, symbol: 'He', name: 'هيليوم', mass: '4.0026', config: '1s²', shells: [2], group: 18, period: 1 },
+      { z: 3, symbol: 'Li', name: 'ليثيوم', mass: '6.94', config: '2s¹', shells: [2,1], group: 1, period: 2 },
+      { z: 4, symbol: 'Be', name: 'بيريليوم', mass: '9.0122', config: '2s²', shells: [2,2], group: 2, period: 2 },
+      { z: 5, symbol: 'B', name: 'بورون', mass: '10.81', config: '2s² 2p¹', shells: [2,3], group: 13, period: 2 },
+      { z: 6, symbol: 'C', name: 'كربون', mass: '12.011', config: '2s² 2p²', shells: [2,4], group: 14, period: 2 },
+      { z: 7, symbol: 'N', name: 'نيتروجين', mass: '14.007', config: '2s² 2p³', shells: [2,5], group: 15, period: 2 },
+      { z: 8, symbol: 'O', name: 'أكسجين', mass: '15.999', config: '2s² 2p⁴', shells: [2,6], group: 16, period: 2 },
+      { z: 9, symbol: 'F', name: 'فلور', mass: '18.998', config: '2s² 2p⁵', shells: [2,7], group: 17, period: 2 },
+      { z: 10, symbol: 'Ne', name: 'نيون', mass: '20.180', config: '2s² 2p⁶', shells: [2,8], group: 18, period: 2 },
+      { z: 11, symbol: 'Na', name: 'صوديوم', mass: '22.990', config: '3s¹', shells: [2,8,1], group: 1, period: 3 },
+      { z: 12, symbol: 'Mg', name: 'مغنيسيوم', mass: '24.305', config: '3s²', shells: [2,8,2], group: 2, period: 3 },
+      { z: 13, symbol: 'Al', name: 'ألومنيوم', mass: '26.982', config: '3s² 3p¹', shells: [2,8,3], group: 13, period: 3 },
+      { z: 14, symbol: 'Si', name: 'سيليكون', mass: '28.085', config: '3s² 3p²', shells: [2,8,4], group: 14, period: 3 },
+      { z: 15, symbol: 'P', name: 'فوسفور', mass: '30.974', config: '3s² 3p³', shells: [2,8,5], group: 15, period: 3 },
+      { z: 16, symbol: 'S', name: 'كبريت', mass: '32.06', config: '3s² 3p⁴', shells: [2,8,6], group: 16, period: 3 },
+      { z: 17, symbol: 'Cl', name: 'كلور', mass: '35.45', config: '3s² 3p⁵', shells: [2,8,7], group: 17, period: 3 },
+      { z: 18, symbol: 'Ar', name: 'أرجون', mass: '39.948', config: '3s² 3p⁶', shells: [2,8,8], group: 18, period: 3 },
+      { z: 19, symbol: 'K', name: 'بوتاسيوم', mass: '39.098', config: '4s¹', shells: [2,8,8,1], group: 1, period: 4 },
+      { z: 20, symbol: 'Ca', name: 'كالسيوم', mass: '40.078', config: '4s²', shells: [2,8,8,2], group: 2, period: 4 },
+      { z: 21, symbol: 'Sc', name: 'سكانديوم', mass: '44.956', config: '3d¹ 4s²', shells: [2,8,9,2], group: 3, period: 4 },
+      { z: 22, symbol: 'Ti', name: 'تيتانيوم', mass: '47.867', config: '3d² 4s²', shells: [2,8,10,2], group: 4, period: 4 },
+      { z: 23, symbol: 'V', name: 'فاناديوم', mass: '50.942', config: '3d³ 4s²', shells: [2,8,11,2], group: 5, period: 4 },
+      { z: 24, symbol: 'Cr', name: 'كروم', mass: '51.996', config: '3d⁵ 4s¹', shells: [2,8,13,1], group: 6, period: 4 },
+      { z: 25, symbol: 'Mn', name: 'منغنيز', mass: '54.938', config: '3d⁵ 4s²', shells: [2,8,13,2], group: 7, period: 4 },
+      { z: 26, symbol: 'Fe', name: 'حديد', mass: '55.845', config: '3d⁶ 4s²', shells: [2,8,14,2], group: 8, period: 4 },
+      { z: 27, symbol: 'Co', name: 'كوبالت', mass: '58.933', config: '3d⁷ 4s²', shells: [2,8,15,2], group: 9, period: 4 },
+      { z: 28, symbol: 'Ni', name: 'نيكل', mass: '58.693', config: '3d⁸ 4s²', shells: [2,8,16,2], group: 10, period: 4 },
+      { z: 29, symbol: 'Cu', name: 'نحاس', mass: '63.546', config: '3d¹⁰ 4s¹', shells: [2,8,18,1], group: 11, period: 4 },
+      { z: 30, symbol: 'Zn', name: 'زنك', mass: '65.38', config: '3d¹⁰ 4s²', shells: [2,8,18,2], group: 12, period: 4 },
+      { z: 31, symbol: 'Ga', name: 'غاليوم', mass: '69.723', config: '4s² 4p¹', shells: [2,8,18,3], group: 13, period: 4 },
+      { z: 32, symbol: 'Ge', name: 'جرمانيوم', mass: '72.630', config: '4s² 4p²', shells: [2,8,18,4], group: 14, period: 4 },
+      { z: 33, symbol: 'As', name: 'زرنيخ', mass: '74.922', config: '4s² 4p³', shells: [2,8,18,5], group: 15, period: 4 },
+      { z: 34, symbol: 'Se', name: 'سيلينيوم', mass: '78.971', config: '4s² 4p⁴', shells: [2,8,18,6], group: 16, period: 4 },
+      { z: 35, symbol: 'Br', name: 'بروم', mass: '79.904', config: '4s² 4p⁵', shells: [2,8,18,7], group: 17, period: 4 },
+      { z: 36, symbol: 'Kr', name: 'كريبتون', mass: '83.798', config: '4s² 4p⁶', shells: [2,8,18,8], group: 18, period: 4 },
+      { z: 37, symbol: 'Rb', name: 'روبيديوم', mass: '85.468', config: '5s¹', shells: [2,8,18,8,1], group: 1, period: 5 },
+      { z: 38, symbol: 'Sr', name: 'سترونشيوم', mass: '87.62', config: '5s²', shells: [2,8,18,8,2], group: 2, period: 5 },
+      { z: 39, symbol: 'Y', name: 'إيتريوم', mass: '88.906', config: '4d¹ 5s²', shells: [2,8,18,9,2], group: 3, period: 5 },
+      { z: 40, symbol: 'Zr', name: 'زركونيوم', mass: '91.224', config: '4d² 5s²', shells: [2,8,18,10,2], group: 4, period: 5 },
+      { z: 41, symbol: 'Nb', name: 'نيوبيوم', mass: '92.906', config: '4d⁴ 5s¹', shells: [2,8,18,12,1], group: 5, period: 5 },
+      { z: 42, symbol: 'Mo', name: 'موليبدينوم', mass: '95.95', config: '4d⁵ 5s¹', shells: [2,8,18,13,1], group: 6, period: 5 },
+      { z: 43, symbol: 'Tc', name: 'تكنيشيوم', mass: '98', config: '4d⁵ 5s²', shells: [2,8,18,13,2], group: 7, period: 5 },
+      { z: 44, symbol: 'Ru', name: 'روثينيوم', mass: '101.07', config: '4d⁷ 5s¹', shells: [2,8,18,15,1], group: 8, period: 5 },
+      { z: 45, symbol: 'Rh', name: 'روديوم', mass: '102.91', config: '4d⁸ 5s¹', shells: [2,8,18,16,1], group: 9, period: 5 },
+      { z: 46, symbol: 'Pd', name: 'بلاديوم', mass: '106.42', config: '4d¹⁰', shells: [2,8,18,18], group: 10, period: 5 },
+      { z: 47, symbol: 'Ag', name: 'فضة', mass: '107.87', config: '4d¹⁰ 5s¹', shells: [2,8,18,18,1], group: 11, period: 5 },
+      { z: 48, symbol: 'Cd', name: 'كادميوم', mass: '112.41', config: '4d¹⁰ 5s²', shells: [2,8,18,18,2], group: 12, period: 5 },
+      { z: 49, symbol: 'In', name: 'إنديوم', mass: '114.82', config: '5s² 5p¹', shells: [2,8,18,18,3], group: 13, period: 5 },
+      { z: 50, symbol: 'Sn', name: 'قصدير', mass: '118.71', config: '5s² 5p²', shells: [2,8,18,18,4], group: 14, period: 5 },
+      { z: 51, symbol: 'Sb', name: 'أنتيمون', mass: '121.76', config: '5s² 5p³', shells: [2,8,18,18,5], group: 15, period: 5 },
+      { z: 52, symbol: 'Te', name: 'تيلوريوم', mass: '127.60', config: '5s² 5p⁴', shells: [2,8,18,18,6], group: 16, period: 5 },
+      { z: 53, symbol: 'I', name: 'يود', mass: '126.90', config: '5s² 5p⁵', shells: [2,8,18,18,7], group: 17, period: 5 },
+      { z: 54, symbol: 'Xe', name: 'زينون', mass: '131.29', config: '5s² 5p⁶', shells: [2,8,18,18,8], group: 18, period: 5 },
+      { z: 55, symbol: 'Cs', name: 'سيزيوم', mass: '132.91', config: '6s¹', shells: [2,8,18,18,8,1], group: 1, period: 6 },
+      { z: 56, symbol: 'Ba', name: 'باريوم', mass: '137.33', config: '6s²', shells: [2,8,18,18,8,2], group: 2, period: 6 },
+      { z: 57, symbol: 'La', name: 'لانثانوم', mass: '138.91', config: '5d¹ 6s²', shells: [2,8,18,18,9,2], group: 3, period: 6 },
+      { z: 58, symbol: 'Ce', name: 'سيريوم', mass: '140.12', config: '4f¹ 5d¹ 6s²', shells: [2,8,18,19,9,2], group: 3, period: 6 },
+      { z: 59, symbol: 'Pr', name: 'براسيوديميوم', mass: '140.91', config: '4f³ 6s²', shells: [2,8,18,21,8,2], group: 3, period: 6 },
+      { z: 60, symbol: 'Nd', name: 'نيوديميوم', mass: '144.24', config: '4f⁴ 6s²', shells: [2,8,18,22,8,2], group: 3, period: 6 },
+      { z: 61, symbol: 'Pm', name: 'بروميثيوم', mass: '145', config: '4f⁵ 6s²', shells: [2,8,18,23,8,2], group: 3, period: 6 },
+      { z: 62, symbol: 'Sm', name: 'ساماريوم', mass: '150.36', config: '4f⁶ 6s²', shells: [2,8,18,24,8,2], group: 3, period: 6 },
+      { z: 63, symbol: 'Eu', name: 'يوروبيوم', mass: '151.96', config: '4f⁷ 6s²', shells: [2,8,18,25,8,2], group: 3, period: 6 },
+      { z: 64, symbol: 'Gd', name: 'غادولينيوم', mass: '157.25', config: '4f⁷ 5d¹ 6s²', shells: [2,8,18,25,9,2], group: 3, period: 6 },
+      { z: 65, symbol: 'Tb', name: 'تيربيوم', mass: '158.93', config: '4f⁹ 6s²', shells: [2,8,18,27,8,2], group: 3, period: 6 },
+      { z: 66, symbol: 'Dy', name: 'ديسبروسيوم', mass: '162.50', config: '4f¹⁰ 6s²', shells: [2,8,18,28,8,2], group: 3, period: 6 },
+      { z: 67, symbol: 'Ho', name: 'هولميوم', mass: '164.93', config: '4f¹¹ 6s²', shells: [2,8,18,29,8,2], group: 3, period: 6 },
+      { z: 68, symbol: 'Er', name: 'إربيوم', mass: '167.26', config: '4f¹² 6s²', shells: [2,8,18,30,8,2], group: 3, period: 6 },
+      { z: 69, symbol: 'Tm', name: 'ثوليوم', mass: '168.93', config: '4f¹³ 6s²', shells: [2,8,18,31,8,2], group: 3, period: 6 },
+      { z: 70, symbol: 'Yb', name: 'إيتربيوم', mass: '173.05', config: '4f¹⁴ 6s²', shells: [2,8,18,32,8,2], group: 3, period: 6 },
+      { z: 71, symbol: 'Lu', name: 'لوتيشيوم', mass: '174.97', config: '4f¹⁴ 5d¹ 6s²', shells: [2,8,18,32,9,2], group: 3, period: 6 },
+      { z: 72, symbol: 'Hf', name: 'هافنيوم', mass: '178.49', config: '5d² 6s²', shells: [2,8,18,32,10,2], group: 4, period: 6 },
+      { z: 73, symbol: 'Ta', name: 'تانتالوم', mass: '180.95', config: '5d³ 6s²', shells: [2,8,18,32,11,2], group: 5, period: 6 },
+      { z: 74, symbol: 'W', name: 'تنجستن', mass: '183.84', config: '5d⁴ 6s²', shells: [2,8,18,32,12,2], group: 6, period: 6 },
+      { z: 75, symbol: 'Re', name: 'رينيوم', mass: '186.21', config: '5d⁵ 6s²', shells: [2,8,18,32,13,2], group: 7, period: 6 },
+      { z: 76, symbol: 'Os', name: 'أوزميوم', mass: '190.23', config: '5d⁶ 6s²', shells: [2,8,18,32,14,2], group: 8, period: 6 },
+      { z: 77, symbol: 'Ir', name: 'إيريديوم', mass: '192.22', config: '5d⁷ 6s²', shells: [2,8,18,32,15,2], group: 9, period: 6 },
+      { z: 78, symbol: 'Pt', name: 'بلاتين', mass: '195.08', config: '5d⁹ 6s¹', shells: [2,8,18,32,17,1], group: 10, period: 6 },
+      { z: 79, symbol: 'Au', name: 'ذهب', mass: '196.97', config: '5d¹⁰ 6s¹', shells: [2,8,18,32,18,1], group: 11, period: 6 },
+      { z: 80, symbol: 'Hg', name: 'زئبق', mass: '200.59', config: '5d¹⁰ 6s²', shells: [2,8,18,32,18,2], group: 12, period: 6 },
+      { z: 81, symbol: 'Tl', name: 'ثاليوم', mass: '204.38', config: '6s² 6p¹', shells: [2,8,18,32,18,3], group: 13, period: 6 },
+      { z: 82, symbol: 'Pb', name: 'رصاص', mass: '207.2', config: '6s² 6p²', shells: [2,8,18,32,18,4], group: 14, period: 6 },
+      { z: 83, symbol: 'Bi', name: 'بزموت', mass: '208.98', config: '6s² 6p³', shells: [2,8,18,32,18,5], group: 15, period: 6 },
+      { z: 84, symbol: 'Po', name: 'بولونيوم', mass: '209', config: '6s² 6p⁴', shells: [2,8,18,32,18,6], group: 16, period: 6 },
+      { z: 85, symbol: 'At', name: 'أستاتين', mass: '210', config: '6s² 6p⁵', shells: [2,8,18,32,18,7], group: 17, period: 6 },
+      { z: 86, symbol: 'Rn', name: 'رادون', mass: '222', config: '6s² 6p⁶', shells: [2,8,18,32,18,8], group: 18, period: 6 },
+      { z: 87, symbol: 'Fr', name: 'فرانسيوم', mass: '223', config: '7s¹', shells: [2,8,18,32,18,8,1], group: 1, period: 7 },
+      { z: 88, symbol: 'Ra', name: 'راديوم', mass: '226', config: '7s²', shells: [2,8,18,32,18,8,2], group: 2, period: 7 },
+      { z: 89, symbol: 'Ac', name: 'أكتينيوم', mass: '227', config: '6d¹ 7s²', shells: [2,8,18,32,18,9,2], group: 3, period: 7 },
+      { z: 90, symbol: 'Th', name: 'ثوريوم', mass: '232.04', config: '6d² 7s²', shells: [2,8,18,32,18,10,2], group: 3, period: 7 },
+      { z: 91, symbol: 'Pa', name: 'بروتكتينيوم', mass: '231.04', config: '5f² 6d¹ 7s²', shells: [2,8,18,32,20,9,2], group: 3, period: 7 },
+      { z: 92, symbol: 'U', name: 'يورانيوم', mass: '238.03', config: '5f³ 6d¹ 7s²', shells: [2,8,18,32,21,9,2], group: 3, period: 7 },
+      { z: 93, symbol: 'Np', name: 'نبتونيوم', mass: '237', config: '5f⁴ 6d¹ 7s²', shells: [2,8,18,32,22,9,2], group: 3, period: 7 },
+      { z: 94, symbol: 'Pu', name: 'بلوتونيوم', mass: '244', config: '5f⁶ 7s²', shells: [2,8,18,32,24,8,2], group: 3, period: 7 },
+      { z: 95, symbol: 'Am', name: 'أمريسيوم', mass: '243', config: '5f⁷ 7s²', shells: [2,8,18,32,25,8,2], group: 3, period: 7 },
+      { z: 96, symbol: 'Cm', name: 'كوريوم', mass: '247', config: '5f⁷ 6d¹ 7s²', shells: [2,8,18,32,25,9,2], group: 3, period: 7 },
+      { z: 97, symbol: 'Bk', name: 'بركيليوم', mass: '247', config: '5f⁹ 7s²', shells: [2,8,18,32,27,8,2], group: 3, period: 7 },
+      { z: 98, symbol: 'Cf', name: 'كاليفورنيوم', mass: '251', config: '5f¹⁰ 7s²', shells: [2,8,18,32,28,8,2], group: 3, period: 7 },
+      { z: 99, symbol: 'Es', name: 'أينشتاينيوم', mass: '252', config: '5f¹¹ 7s²', shells: [2,8,18,32,28,9,2], group: 3, period: 7 },
+            { z: 100, symbol: 'Fm', name: 'فيرميوم', mass: '257', config: '5f¹² 7s²', shells: [2,8,18,32,28,8,2], group: 3, period: 7 },
+      { z: 101, symbol: 'Md', name: 'مندليفيوم', mass: '258', config: '5f¹³ 7s²', shells: [2,8,18,32,28,9,2], group: 3, period: 7 },
+      { z: 102, symbol: 'No', name: 'نوبليوم', mass: '259', config: '5f¹⁴ 7s²', shells: [2,8,18,32,32,8,2], group: 3, period: 7 },
+      { z: 103, symbol: 'Lr', name: 'لورنسيوم', mass: '266', config: '5f¹⁴ 7s² 7p¹', shells: [2,8,18,32,32,8,3], group: 3, period: 7 },
+      { z: 104, symbol: 'Rf', name: 'رذرفورديوم', mass: '267', config: '6d² 7s²', shells: [2,8,18,32,32,10,2], group: 4, period: 7 },
+      { z: 105, symbol: 'Db', name: 'دوبنيوم', mass: '268', config: '6d³ 7s²', shells: [2,8,18,32,32,11,2], group: 5, period: 7 },
+      { z: 106, symbol: 'Sg', name: 'سيبورغيوم', mass: '269', config: '6d⁴ 7s²', shells: [2,8,18,32,32,12,2], group: 6, period: 7 },
+      { z: 107, symbol: 'Bh', name: 'بوريوم', mass: '270', config: '6d⁵ 7s²', shells: [2,8,18,32,32,13,2], group: 7, period: 7 },
+      { z: 108, symbol: 'Hs', name: 'هاسيوم', mass: '269', config: '6d⁶ 7s²', shells: [2,8,18,32,32,14,2], group: 8, period: 7 },
+      { z: 109, symbol: 'Mt', name: 'مايتنريوم', mass: '278', config: '6d⁷ 7s²', shells: [2,8,18,32,32,15,2], group: 9, period: 7 },
+      { z: 110, symbol: 'Ds', name: 'دارمشتاتيوم', mass: '281', config: '6d⁸ 7s²', shells: [2,8,18,32,32,16,2], group: 10, period: 7 },
+      { z: 111, symbol: 'Rg', name: 'رونتجينيوم', mass: '282', config: '6d⁹ 7s²', shells: [2,8,18,32,32,17,2], group: 11, period: 7 },
+      { z: 112, symbol: 'Cn', name: 'كوبرنيسيوم', mass: '285', config: '6d¹⁰ 7s²', shells: [2,8,18,32,32,18,2], group: 12, period: 7 },
+      { z: 113, symbol: 'Nh', name: 'نيهونيوم', mass: '286', config: '7s² 7p¹', shells: [2,8,18,32,32,18,3], group: 13, period: 7 },
+      { z: 114, symbol: 'Fl', name: 'فليروفيوم', mass: '289', config: '7s² 7p²', shells: [2,8,18,32,32,18,4], group: 14, period: 7 },
+      { z: 115, symbol: 'Mc', name: 'موسكوفيوم', mass: '290', config: '7s² 7p³', shells: [2,8,18,32,32,18,5], group: 15, period: 7 },
+      { z: 116, symbol: 'Lv', name: 'ليفرموريوم', mass: '293', config: '7s² 7p⁴', shells: [2,8,18,32,32,18,6], group: 16, period: 7 },
+      { z: 117, symbol: 'Ts', name: 'تينيسين', mass: '294', config: '7s² 7p⁵', shells: [2,8,18,32,32,18,7], group: 17, period: 7 },
+      { z: 118, symbol: 'Og', name: 'أوغانيسون', mass: '294', config: '7s² 7p⁶', shells: [2,8,18,32,32,18,8], group: 18, period: 7 }
     ];
 
     // ==========================================
-    // 4. تهيئة Three.js للذرات والجزيئات
+    // 3. المتغيرات العامة لـ Three.js
     // ==========================================
-    let atomScene, atomCamera, atomRenderer, atomControls, atomGroup;
-    let molScene, molCamera, molRenderer, molControls, molGroup;
-    let isAtomInit = false, isMolInit = false;
+    let scene, camera, renderer, controls, atomGroup;
+    let isInitialized = false;
 
-    // --- 4.1 الذرة (نموذج بور) ---
-    function initAtom3D() {
+    // ==========================================
+    // 4. رسم شبكة الجدول الدوري المصغر
+    // ==========================================
+    function renderPeriodicTable() {
+      const grid = document.getElementById('periodic-table-grid');
+      
+      // تحديد عدد الأعمدة (18 مجموعة) وعدد الصفوف (7 دورات + اللانثانيدات والأكتينيدات)
+      // لتبسيط العرض، سنستخدم شبكة مقاس 18x9 (لأن هناك 18 عموداً و 7 صفوف + صفين للعناصر الانتقالية الداخلية)
+      grid.style.gridTemplateColumns = 'repeat(18, minmax(0, 1fr))';
+      
+      // إنشاء خريطة لتحديد موقع كل عنصر (الصف، العمود)
+      // الصفوف: 1-7 للعناصر العادية، 8 لللانثانيدات، 9 للأكتينيدات
+      const positions = {};
+      
+      elementsData.forEach(el => {
+        let row = el.period;
+        let col = el.group;
+        
+        // معالجة اللانثانيدات (58-71) والأكتينيدات (90-103)
+        if (el.z >= 58 && el.z <= 71) {
+          row = 8;
+          col = el.z - 57 + 2; // تبدأ من العمود 3
+        } else if (el.z >= 90 && el.z <= 103) {
+          row = 9;
+          col = el.z - 89 + 2;
+        }
+        
+        positions[el.z] = { row, col };
+      });
+
+      // إنشاء الخلايا
+      // نحتاج إلى 18 * 9 = 162 خانة
+      for (let r = 1; r <= 9; r++) {
+        for (let c = 1; c <= 18; c++) {
+          // البحث عن العنصر الذي ينتمي لهذا الموقع
+          let foundEl = null;
+          for (let key in positions) {
+            if (positions[key].row === r && positions[key].col === c) {
+              foundEl = elementsData.find(e => e.z == key);
+              break;
+            }
+          }
+
+          const cell = document.createElement('div');
+          cell.className = 'pt-cell';
+          
+          if (foundEl) {
+            // تلوين الخلية حسب فئة العنصر (تبسيط: فلزات، لافلزات، غازات نبيلة)
+            let bgColor = '#fef3c7'; // افتراضي
+            if ([1, 6, 7, 8, 15, 16, 34].includes(foundEl.z)) bgColor = '#bfdbfe'; // لافلزات
+            else if ([2, 10, 18, 36, 54, 86, 118].includes(foundEl.z)) bgColor = '#e9d5ff'; // غازات نبيلة
+            else if (foundEl.z >= 21 && foundEl.z <= 30) bgColor = '#fecaca'; // فلزات انتقالية (مبسط)
+            
+            cell.style.backgroundColor = bgColor;
+            cell.style.color = '#1e293b';
+            cell.style.border = '1px solid #f97316';
+            
+            cell.innerHTML = `
+              <span class="font-black text-[10px] leading-none">${foundEl.z}</span>
+              <span class="font-black text-[12px] leading-none">${foundEl.symbol}</span>
+            `;
+            
+            cell.onclick = () => {
+              document.querySelectorAll('.pt-cell').forEach(c => c.classList.remove('active'));
+              cell.classList.add('active');
+              loadAtom(foundEl.z);
+            };
+          } else {
+            cell.style.opacity = '0';
+            cell.style.pointerEvents = 'none';
+          }
+          
+          grid.appendChild(cell);
+        }
+      }
+      
+      // تحديد العنصر الافتراضي (الهيدروجين)
+      setTimeout(() => {
+        const firstCell = grid.querySelector('.pt-cell');
+        if (firstCell) firstCell.click();
+      }, 100);
+    }
+
+    // ==========================================
+    // 5. إعداد Three.js ورسم الذرة
+    // ==========================================
+    function init3D() {
+      if (isInitialized) return;
+      isInitialized = true;
+
       const container = document.getElementById('canvas-3d-container');
-      if (!container) return;
+      document.getElementById('loading-3d').style.display = 'none';
 
-      // ملء القائمة المنسدلة
-      const select = document.getElementById('element-select');
-      if (select.options.length === 0) {
-        elementsData.forEach(el => {
-          const opt = document.createElement('option');
-          opt.value = el.z;
-          opt.textContent = `${el.z} - ${el.name} (${el.symbol})`;
-          select.appendChild(opt);
-        });
-      }
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(0, 0, 20);
 
-      if (isAtomInit) {
-        loadAtom();
-        return;
-      }
-      isAtomInit = true;
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(renderer.domElement);
 
-      atomScene = new THREE.Scene();
-      atomCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-      atomCamera.position.set(0, 0, 18);
-
-      atomRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      atomRenderer.setSize(container.clientWidth, container.clientHeight);
-      container.innerHTML = '';
-      container.appendChild(atomRenderer.domElement);
-
-      atomControls = new THREE.OrbitControls(atomCamera, atomRenderer.domElement);
-      atomControls.enableDamping = true;
-      atomControls.autoRotate = true;
-      atomControls.autoRotateSpeed = 1;
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 1.5;
 
       // إضاءة
-      atomScene.add(new THREE.AmbientLight(0xffffff, 0.7));
-      const light = new THREE.PointLight(0xffffff, 0.8);
-      light.position.set(10, 10, 10);
-      atomScene.add(light);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      dirLight.position.set(10, 10, 10);
+      scene.add(dirLight);
+      const pointLight = new THREE.PointLight(0xf97316, 1.5);
+      pointLight.position.set(-10, -10, 5);
+      scene.add(pointLight);
 
       atomGroup = new THREE.Group();
-      atomScene.add(atomGroup);
-
-      loadAtom();
+      scene.add(atomGroup);
 
       function animate() {
         requestAnimationFrame(animate);
-        atomControls.update();
-        atomRenderer.render(atomScene, atomCamera);
+        controls.update();
+        renderer.render(scene, camera);
       }
       animate();
+
+      // التعامل مع تغيير الحجم
+      window.addEventListener('resize', () => {
+        if (!container) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
     }
 
-    function loadAtom() {
-      const z = parseInt(document.getElementById('element-select').value);
+    // ==========================================
+    // 6. تحميل وبناء الذرة 3D
+    // ==========================================
+    function loadAtom(z) {
       const el = elementsData.find(e => e.z === z);
       if (!el) return;
 
@@ -419,255 +397,79 @@
       document.getElementById('el-config').innerText = el.config;
 
       // مسح الذرة القديمة
-      while(atomGroup.children.length > 0) atomGroup.remove(atomGroup.children[0]);
+      while(atomGroup.children.length > 0) {
+        atomGroup.remove(atomGroup.children[0]);
+      }
 
-      // النواة
-      const nucleusGeo = new THREE.SphereGeometry(0.8, 32, 32);
-      const nucleusMat = new THREE.MeshStandardMaterial({ color: 0xf97316, emissive: 0xea580c, emissiveIntensity: 0.5 });
+      // 1. رسم النواة (كرة برتقالية)
+      // كلما زاد العدد الذري، كبرت النواة قليلاً
+      const nucleusRadius = 0.8 + (z / 118) * 0.8; 
+      const nucleusGeo = new THREE.SphereGeometry(nucleusRadius, 32, 32);
+      const nucleusMat = new THREE.MeshStandardMaterial({ 
+        color: 0xf97316, 
+        emissive: 0xea580c, 
+        emissiveIntensity: 0.4,
+        roughness: 0.2,
+        metalness: 0.1
+      });
       const nucleus = new THREE.Mesh(nucleusGeo, nucleusMat);
       atomGroup.add(nucleus);
 
-      // استخراج عدد الإلكترونات في كل مستوى من التوزيع (تقريبي)
-      // سنقوم بتوزيعها على 7 مستويات كحد أقصى
-      const numElectrons = z;
-      const shells = [];
-      let remaining = numElectrons;
-      const maxPerShell = [2, 8, 18, 32, 32, 18, 8]; // سعة تقريبية
-
-      for (let i = 0; i < maxPerShell.length; i++) {
-        if (remaining <= 0) break;
-        const count = Math.min(remaining, maxPerShell[i]);
-        shells.push(count);
-        remaining -= count;
-      }
-
-      // رسم المدارات والإلكترونات
+      // 2. رسم المدارات والإلكترونات
+      const shells = el.shells; // مصفوفة عدد الإلكترونات في كل مستوى
+      
       shells.forEach((count, i) => {
-        const radius = 2 + i * 1.5;
+        // نصف قطر المدار (يزداد مع رقم المستوى)
+        const radius = nucleusRadius + 2 + (i * 1.8);
         
-        // رسم المدار
-        const orbitGeo = new THREE.TorusGeometry(radius, 0.03, 16, 100);
-        const orbitMat = new THREE.MeshStandardMaterial({ color: 0xfed7aa, transparent: true, opacity: 0.4 });
+        // رسم المدار (حلقة)
+        const orbitGeo = new THREE.TorusGeometry(radius, 0.04, 16, 100);
+        const orbitMat = new THREE.MeshStandardMaterial({ 
+          color: 0xfed7aa, 
+          transparent: true, 
+          opacity: 0.3,
+          roughness: 0.5
+        });
         const orbit = new THREE.Mesh(orbitGeo, orbitMat);
-        orbit.rotation.x = Math.PI / 2;
+        orbit.rotation.x = Math.PI / 2; // جعله أفقياً
         atomGroup.add(orbit);
 
-        // رسم الإلكترونات
+        // رسم الإلكترونات (كرات زرقاء)
         const electronGeo = new THREE.SphereGeometry(0.2, 16, 16);
-        const electronMat = new THREE.MeshStandardMaterial({ color: 0x60a5fa, emissive: 0x3b82f6, emissiveIntensity: 0.5 });
+        const electronMat = new THREE.MeshStandardMaterial({ 
+          color: 0x3b82f6, 
+          emissive: 0x1d4ed8, 
+          emissiveIntensity: 0.5 
+        });
         
+        // توزيع الإلكترونات على المدار
         for (let j = 0; j < count; j++) {
           const angle = (j / count) * Math.PI * 2;
           const electron = new THREE.Mesh(electronGeo, electronMat);
-          electron.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+          
+          // إضافة بعض التمايل العشوائي للمدارات (لتبدو أكثر واقعية)
+          const tiltX = (Math.random() - 0.5) * 0.2;
+          const tiltZ = (Math.random() - 0.5) * 0.2;
+          
+          electron.position.set(
+            Math.cos(angle) * radius, 
+            Math.sin(angle) * radius * tiltZ, 
+            Math.sin(angle) * radius * tiltX
+          );
+          
+          // لجعل الإلكترونات تدور، يمكن إضافتها لمجموعة فرعية، لكننا سنتركها ثابتة هنا
+          // لتوضيح المبدأ، ولأن التحريك المستمر قد يشتت الانتباه.
           atomGroup.add(electron);
         }
       });
     }
 
-    // --- 4.2 الجزيئات ---
-    function initMolecule3D() {
-      const container = document.getElementById('molecule-3d-container');
-      if (!container) return;
-
-      if (isMolInit) {
-        changeMolecule('h2o'); // إعادة تحميل الجزيء الافتراضي
-        return;
-      }
-      isMolInit = true;
-
-      molScene = new THREE.Scene();
-      molScene.background = new THREE.Color(0x0f172a);
-
-      molCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-      molCamera.position.set(0, 0, 8);
-
-      molRenderer = new THREE.WebGLRenderer({ antialias: true });
-      molRenderer.setSize(container.clientWidth, container.clientHeight);
-      container.innerHTML = '';
-      container.appendChild(molRenderer.domElement);
-
-      molControls = new THREE.OrbitControls(molCamera, molRenderer.domElement);
-      molControls.enableDamping = true;
-      molControls.autoRotate = true;
-      molControls.autoRotateSpeed = 2;
-
-      // إضاءة
-      molScene.add(new THREE.AmbientLight(0xffffff, 0.6));
-      const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-      dirLight.position.set(5, 5, 5);
-      molScene.add(dirLight);
-      const pointLight = new THREE.PointLight(0xf97316, 1);
-      pointLight.position.set(-5, 0, 5);
-      molScene.add(pointLight);
-
-      molGroup = new THREE.Group();
-      molScene.add(molGroup);
-
-      changeMolecule('h2o');
-
-      function animate() {
-        requestAnimationFrame(animate);
-        molControls.update();
-        molRenderer.render(molScene, molCamera);
-      }
-      animate();
-    }
-
-    function changeMolecule(type) {
-      while(molGroup.children.length > 0) molGroup.remove(molGroup.children[0]);
-
-      const atomGeo = new THREE.SphereGeometry(0.6, 32, 32);
-      const hGeo = new THREE.SphereGeometry(0.35, 32, 32);
-      const hMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.2 });
-      const oMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.2 });
-      const cMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.2 });
-      const nMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.2 });
-
-      if (type === 'h2o') {
-        molGroup.add(new THREE.Mesh(atomGeo, oMat));
-        const h1 = new THREE.Mesh(hGeo, hMat); h1.position.set(-1.2, 0.8, 0); molGroup.add(h1);
-        const h2 = new THREE.Mesh(hGeo, hMat); h2.position.set(1.2, 0.8, 0); molGroup.add(h2);
-        createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(-1.2, 0.8, 0));
-        createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(1.2, 0.8, 0));
-      
-      } else if (type === 'co2') {
-        molGroup.add(new THREE.Mesh(atomGeo, cMat));
-        const o1 = new THREE.Mesh(atomGeo, oMat); o1.position.set(-2, 0, 0); molGroup.add(o1);
-        const o2 = new THREE.Mesh(atomGeo, oMat); o2.position.set(2, 0, 0); molGroup.add(o2);
-        createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(-2, 0, 0));
-        createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(2, 0, 0));
-      
-      } else if (type === 'ch4') {
-        molGroup.add(new THREE.Mesh(atomGeo, cMat));
-        const positions = [
-          new THREE.Vector3(1, 1, 1), new THREE.Vector3(-1, -1, 1),
-          new THREE.Vector3(-1, 1, -1), new THREE.Vector3(1, -1, -1)
-        ];
-        positions.forEach(pos => {
-          const h = new THREE.Mesh(hGeo, hMat); h.position.copy(pos.multiplyScalar(0.8)); molGroup.add(h);
-          createBond(new THREE.Vector3(0,0,0), pos);
-        });
-
-      } else if (type === 'nh3') {
-        molGroup.add(new THREE.Mesh(atomGeo, nMat));
-        const positions = [
-          new THREE.Vector3(1, 1, 1), new THREE.Vector3(-1, -1, 1), new THREE.Vector3(-1, 1, -1)
-        ];
-        positions.forEach(pos => {
-          const h = new THREE.Mesh(hGeo, hMat); h.position.copy(pos.multiplyScalar(0.8)); molGroup.add(h);
-          createBond(new THREE.Vector3(0,0,0), pos);
-        });
-      }
-    }
-
-    function createBond(start, end) {
-      const dir = new THREE.Vector3().subVectors(end, start);
-      const len = dir.length();
-      const geo = new THREE.CylinderGeometry(0.1, 0.1, len, 8);
-      const mat = new THREE.MeshStandardMaterial({ color: 0xf97316, roughness: 0.4 });
-      const bond = new THREE.Mesh(geo, mat);
-      bond.position.copy(start.clone().add(end).multiplyScalar(0.5));
-      bond.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.normalize());
-      molGroup.add(bond);
-    }
-
     // ==========================================
-    // 5. الموجة
+    // 7. التهيئة
     // ==========================================
-    function drawWave() {
-      const canvas = document.getElementById('waveCanvas'); if(!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const fS = document.getElementById('w-freq-slider');
-      const aS = document.getElementById('w-amp-slider');
-      let time = 0;
-
-      function update() {
-        const freq = parseFloat(fS.value);
-        const amp = parseInt(aS.value);
-        document.getElementById('w-freq').innerText = freq + ' Hz';
-        document.getElementById('w-amp').innerText = amp;
-        document.getElementById('w-result').innerText = (340 / freq).toFixed(1) + ' m';
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = '#475569'; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(0, canvas.height/2); ctx.lineTo(canvas.width, canvas.height/2); ctx.stroke();
-
-        ctx.strokeStyle = '#f97316'; ctx.lineWidth = 4;
-        ctx.beginPath();
-        for (let x = 0; x < canvas.width; x++) {
-          const y = canvas.height/2 + Math.sin((x / 50) * freq * 2 * Math.PI + time) * amp;
-          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        // الطول الموجي
-        const lambda = (canvas.width / 5) / freq;
-        const startX = 50, endX = startX + lambda;
-        if (endX < canvas.width) {
-          ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2; ctx.setLineDash([5,5]);
-          ctx.beginPath(); ctx.moveTo(startX, canvas.height/2 - amp - 20); ctx.lineTo(endX, canvas.height/2 - amp - 20); ctx.stroke();
-          ctx.setLineDash([]);
-          ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 14px Cairo'; ctx.textAlign = 'center';
-          ctx.fillText('λ = ' + Math.round(lambda), (startX + endX)/2, canvas.height/2 - amp - 28);
-        }
-
-        time += 0.1;
-        requestAnimationFrame(update);
-      }
-      update();
-    }
-
-    // ==========================================
-    // 6. الحقل المغناطيسي
-    // ==========================================
-    function drawField() {
-      const canvas = document.getElementById('fieldCanvas'); if(!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const iS = document.getElementById('field-slider');
-      let time = 0;
-
-      function update() {
-        const I = parseInt(iS.value);
-        const mu0 = 4 * Math.PI * 10**-7, r = 0.1;
-        const B = (mu0 * I) / (2 * Math.PI * r) * 10**6;
-        document.getElementById('field-current').innerText = I + ' A';
-        document.getElementById('field-result').innerText = B.toFixed(2) + ' μT';
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const cx = canvas.width/2, cy = canvas.height/2;
-
-        // السلك
-        ctx.beginPath(); ctx.arc(cx, cy, 12, 0, Math.PI*2); ctx.fillStyle = '#f97316'; ctx.fill();
-        ctx.strokeStyle = '#fff'; ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.moveTo(cx-5, cy-5); ctx.lineTo(cx+5, cy+5); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(cx+5, cy-5); ctx.lineTo(cx-5, cy+5); ctx.stroke();
-
-        // خطوط المجال
-        for (let i = 1; i <= 5; i++) {
-          const radius = i * 35;
-          ctx.strokeStyle = `rgba(249, 115, 22, ${0.7 - i*0.1})`; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2); ctx.stroke();
-
-          const numArrows = i * 4;
-          for (let j = 0; j < numArrows; j++) {
-            const angle = (j / numArrows) * Math.PI * 2 + time;
-            const ax = cx + Math.cos(angle) * radius, ay = cy + Math.sin(angle) * radius;
-            ctx.save(); ctx.translate(ax, ay); ctx.rotate(angle + Math.PI/2);
-            ctx.fillStyle = `rgba(249, 115, 22, ${0.8 - i*0.1})`;
-            ctx.beginPath(); ctx.moveTo(-4, -3); ctx.lineTo(4, 0); ctx.lineTo(-4, 3); ctx.fill();
-            ctx.restore();
-          }
-        }
-        time += 0.02;
-        requestAnimationFrame(update);
-      }
-      update();
-    }
-
-    // التهيئة عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', () => {
-      switchSim('atom');
+      renderPeriodicTable();
+      init3D();
     });
   </script>
 </body>
