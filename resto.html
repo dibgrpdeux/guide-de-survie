@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المطاعم والمقاهي - ENSTP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="translate.js"></script>
+
+  <style> 
+    body { font-family: 'Cairo', sans-serif; background: #fff7ed; }
+    .dark body { background: #1a1410; }
+    
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.15); }
+    .dark .glass-card { background: rgba(30, 20, 15, 0.95); border-color: rgba(249, 115, 22, 0.2); }
+    
+    .gallery-scroll::-webkit-scrollbar { height: 6px; }
+    .gallery-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    .gallery-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
+    
+    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: #64748b; transition: 0.2s; }
+    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
+    .lang-btn.active { background: #f97316; color: white; }
+
+    .filter-btn { transition: all 0.3s ease; }
+    .filter-btn.active { background: #f97316; color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <header class="sticky top-0 z-50 glass-card backdrop-blur-md border-b px-4 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <h1 class="font-bold text-gray-900 dark:text-white text-lg flex items-center gap-2">
+        <i class="fa-solid fa-utensils text-orange-500"></i> المطاعم والمقاهي
+      </h1>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1 bg-gray-50 dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+        </div>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 hover:bg-orange-200 text-xs font-bold transition">الرئيسية</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
+    
+    <!-- شريط التصنيفات (الكل، مطاعم، مقاهي) -->
+    <div class="flex flex-wrap gap-2 justify-center">
+      <button onclick="setFilter('all')" id="filter-all" class="filter-btn active px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
+        <i class="fa-solid fa-list"></i> الكل
+      </button>
+      <button onclick="setFilter('resto')" id="filter-resto" class="filter-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
+        <i class="fa-solid fa-utensils"></i> مطاعم
+      </button>
+      <button onclick="setFilter('cafe')" id="filter-cafe" class="filter-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
+        <i class="fa-solid fa-mug-hot"></i> مقاهي
+      </button>
+    </div>
+
+    <!-- شريط الفرز -->
+    <div class="glass-card p-3 rounded-2xl shadow-sm flex items-center justify-between flex-wrap gap-2 border border-orange-100 dark:border-slate-700">
+      <span class="text-sm font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-sort text-orange-500"></i> فرز حسب:</span>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="setSort('default')" id="sort-default" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white">الافتراضي</button>
+        <button onclick="setSort('dist')" id="sort-dist" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">المسافة (الأقرب)</button>
+        <button onclick="setSort('price')" id="sort-price" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">السعر (الأرخص)</button>
+        <button onclick="setSort('rating')" id="sort-rating" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">التقييم (الأعلى)</button>
+      </div>
+    </div>
+
+    <!-- عرض البطاقات -->
+    <div id="itemsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </main>
+
+  <!-- نافذة التفاصيل -->
+  <div id="itemModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
+      
+      <div class="border-b border-orange-100 dark:border-slate-700 pb-4 pr-10">
+        <h2 id="modalTitle" class="text-2xl font-black text-gray-900 dark:text-white"></h2>
+        <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
+      </div>
+
+      <div id="modalMenuContainer" class="space-y-2 hidden">
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> معرض الصور:</h4>
+        <div id="modalMenuGallery" class="flex overflow-x-auto gap-3 pb-2 gallery-scroll snap-x"></div>
+      </div>
+
+      <div class="space-y-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+        <div>
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-regular fa-clock text-gray-500 mr-1.5"></i> أوقات العمل:</h4>
+          <p id="modalHours" class="bg-orange-50 dark:bg-slate-900 p-3 rounded-xl border border-orange-100 dark:border-slate-700"></p>
+        </div>
+        <div id="modalDeliveryContainer">
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-truck-fast text-orange-500 mr-1.5"></i> خدمة التوصيل:</h4>
+          <p id="modalDelivery" class="bg-orange-50 dark:bg-slate-900 p-3 rounded-xl border border-orange-100 dark:border-slate-700"></p>
+        </div>
+        <div id="modalTextMenuContainer">
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-book-open text-emerald-500 mr-1.5"></i> القائمة:</h4>
+          <p id="modalTextMenu" class="bg-emerald-50/60 dark:bg-emerald-900/20 p-3 rounded-xl border border-emerald-100 dark:border-emerald-800"></p>
+        </div>
+      </div>
+
+      <!-- الخريطة -->
+      <div id="modalMapContainer" class="space-y-2 hidden">
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> الموقع على الخريطة:</h4>
+        <div id="modalMap" class="w-full h-64 rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
+      </div>
+
+      <div class="flex gap-2 pt-4 border-t border-gray-100 dark:border-slate-700">
+        <a id="modalPhoneBtn" href="#" class="hidden flex-1 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-center py-3 rounded-xl font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-phone"></i> اتصل</a>
+        <a id="modalMapBtn" href="#" target="_blank" class="hidden flex-1 bg-orange-50 dark:bg-slate-700 hover:bg-orange-100 text-center py-3 rounded-xl font-bold text-orange-700 dark:text-orange-400"><i class="fa-solid fa-map-location-dot"></i> فتح الخريطة</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- بيانات المطاعم والمقاهي -->
+  <script>
+    window.RESTO_DATA = {
+      items: [
+        // ==========================================
+        // المطاعم (Restaurants)
+        // ==========================================
+        { 
+          category: 'resto',
+          n: "Mega Pizza Kouba", 
+          r: 4.5, 
+          p: 2, 
+          dist: 0.8, 
+          h: [["11:00", "23:00"]], 
+          t: "", 
+          g: [36.7294389, 3.0743456], 
+          delivery: true,
+          deliveryInfo: "توصيل عبر Yassir / Heetch",
+          menu: { ar: "بيتزا، باستا، مشروبات", fr: "Pizza, Pâtes, Boissons", en: "Pizza, Pasta, Drinks" }, 
+          menuImages: ["MEGA 1.jpg", "MEGA 2.jpg"] 
+        },
+        { 
+          category: 'resto',
+          n: "On Est La", 
+          r: 4.8, 
+          p: 2, 
+          dist: 1.1, 
+          h: [["11:00", "01:00"]], 
+          t: "", 
+          g: [36.7220684, 3.076564], 
+          delivery: true,
+          deliveryInfo: "توصيل مجاني للطلبة (الحد الأدنى 1500 دج)",
+          menu: { ar: "أطباق متنوعة، مشاوي، سلطات", fr: "Plats variés, Grillades, Salades", en: "Various dishes, Grills, Salads" }, 
+          menuImages: ["ON EST LA 1.jpg", "ON EST LA 2.jpg"] 
+        },
+        { 
+          category: 'resto',
+          n: "American Berger", 
+          r: 4.1, 
+          p: 1, 
+          dist: 0.9, 
+          h: [["11:00", "23:00"]], 
+          t: "", 
+          g: [36.7274727, 3.0651558], 
+          delivery: false,
+          deliveryInfo: "",
+          menu: { ar: "برغر، بطاطا مقلية", fr: "Burgers, Frites", en: "Burgers, Fries" }, 
+          menuImages: ["american1.jpg", "american2.jpg", "american3.jpg"] 
+        },
+        { 
+          category: 'resto',
+          n: "KGB (Kouba Gourmet Burger)", 
+          r: 3.8, 
+          p: 1, 
+          dist: 1.3, 
+          h: [["10:30", "02:00"]], 
+          t: "+213541041085", 
+          g: [36.7296152, 3.0765289], 
+          delivery: true,
+          deliveryInfo: "توصيل عبر تطبيق Yassir",
+          menu: { ar: "برغر KGB: 700 دج", fr: "KGB Burger: 700 DA", en: "KGB Burger: 700 DA" }, 
+          menuImages: ["kgb.png", "kgb1.jpeg", "kgb2.jpeg"] 
+        },
+        { 
+          category: 'resto',
+          n: "Cheese Kou", 
+          r: 4.2, 
+          p: 1, 
+          dist: 1.0, 
+          h: [["10:30", "01:00"]], 
+          t: "+213562656809", 
+          g: [36.7226875, 3.0739069], 
+          delivery: true,
+          deliveryInfo: "توصيل عبر Heetch Food",
+          menu: { ar: "تاكتوز، بيتزا، برغر", fr: "Tacos, Pizza, Burgers", en: "Tacos, Pizza, Burgers" }, 
+          menuImages: ["cheese.jpg", "cheese3.jpg", "cheese4.jpg"] 
+        },
+
+        // ==========================================
+        // المقاهي (Cafés)
+        // ==========================================
+        { 
+          category: 'cafe',
+          n: "Nafess Café", 
+          r: 4.6, 
+          p: 2, 
+          dist: 0.8, 
+          h: [["07:30", "23:30"]], 
+          t: "", 
+          g: [36.7280, 3.0780], 
+          delivery: true,
+          deliveryInfo: "توصيل عبر Yassir / Heetch",
+          menu: { ar: "قهوة، مشروبات ساخنة وباردة، حلويات، ساندويتشات", fr: "Café, boissons chaudes et froides, pâtisseries, sandwichs", en: "Coffee, hot & cold drinks, pastries, sandwiches" }, 
+          menuImages: ["nafess 1.jpg", "nafess 2.jpg", "nafess 3.jpg", "nafess 4.jpg", "nafess 5.jpg", "nafess5.jpg", "nafess6.jpg", "nafess7.jpg", "nafess8.jpg"] 
+        },
+        { 
+          category: 'cafe',
+          n: "Brioch Cafétéria", 
+          r: 4.4, 
+          p: 1, 
+          dist: 1.2, 
+          h: [["06:00", "22:00"]], 
+          t: "", 
+          g: [36.7250, 3.0750], 
+          delivery: true,
+          deliveryInfo: "توصيل مجاني للطلبة (خلال أوقات العمل)",
+          menu: { ar: "بريوش، كرواسون، قهوة، عصائر طازجة", fr: "Brioches, Croissants, Café, Jus frais", en: "Brioches, Croissants, Coffee, Fresh juices" }, 
+          menuImages: ["brioch 1.jpg", "brioch 3.jpg", "brioch 5.jpg", "brioch 6.jpg", "brioch4.jpg", "brioch7.jpg", "brioche 2.jpg"] 
+        },
+        { 
+          category: 'cafe',
+          n: "Cafétéria Provence", 
+          r: 4.3, 
+          p: 2, 
+          dist: 1.8, 
+          h: [["08:00", "23:00"]], 
+          t: "", 
+          g: [36.7300, 3.0850], 
+          delivery: false,
+          deliveryInfo: "",
+          menu: { ar: "قهوة فرنسية، حلويات فرنسية، كريب", fr: "Café français, Pâtisseries françaises, Crêpes", en: "French coffee, French pastries, Crepes" }, 
+          menuImages: ["provence 1.jpg", "provence 2.jpg", "provence 3.jpg", "provence 4.jpg", "provence 5.jpg", "provence 6.jpg"] 
+        },
+        { 
+          category: 'cafe',
+          n: "The Brunch Terrasse", 
+          r: 4.7, 
+          p: 3, 
+          dist: 2.5, 
+          h: [["09:00", "01:00"]], 
+          t: "", 
+          g: [36.7350, 3.0700], 
+          delivery: true,
+          deliveryInfo: "توصيل عبر تطبيقات التوصيل (Glovo/Yassir)",
+          menu: { ar: "برانش، أطباق رئيسية، عصائر، حلويات", fr: "Brunch, Plats principaux, Jus, Desserts", en: "Brunch, Main dishes, Juices, Desserts" }, 
+          menuImages: ["brunch 1.jpg", "brunch 2.jpg", "brunch 3.jpg", "brunch 4.jpg", "brunch 6.jpg", "brunch 7.jpg", "brunch 8.jpg", "brunch 9.jpg"] 
+        },
+        { 
+          category: 'cafe',
+          n: "Green Caffee", 
+          r: 4.5, 
+          p: 2, 
+          dist: 0.6, 
+          h: [["07:30", "22:00"]], 
+          t: "+213770203542", 
+          g: [36.7297067, 3.0745479], 
+          delivery: true,
+          deliveryInfo: "توصيل عبر Yassir",
+          menu: { ar: "قهوة، مشروبات باردة", fr: "Café, Boissons froides", en: "Coffee, Cold drinks" }, 
+          menuImages: ["green1.jpg", "green2.jpg", "green3.jpg"] 
+        },
+        { 
+          category: 'cafe',
+          n: "César Patisserie", 
+          r: 4.2, 
+          p: 2, 
+          dist: 1.5, 
+          h: [["08:00", "23:00"]], 
+          t: "+213669846909", 
+          g: [36.7303142, 3.0840737], 
+          delivery: false,
+          deliveryInfo: "",
+          menu: { ar: "حلويات، قهوة", fr: "Gâteaux, Café", en: "Cakes, Coffee" }, 
+          menuImages: ["cesar1.jpg", "cesar2.jpg", "cesar3.jpg"] 
+        }
+      ]
+    };
+  </script>
+
+  <script>
+    const data = window.RESTO_DATA;
+    let currentFilter = 'all';
+    let currentSort = 'default';
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      if(originalSetLanguage) originalSetLanguage(lang);
+      renderItems();
+    };
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      ['all', 'resto', 'cafe'].forEach(f => {
+        const btn = document.getElementById(`filter-${f}`);
+        if (f === filter) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+      renderItems();
+    }
+
+    function setSort(type) {
+      currentSort = type;
+      ['default', 'dist', 'price', 'rating'].forEach(t => {
+        const btn = document.getElementById(`sort-${t}`);
+        if (t === type) btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white";
+        else btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200";
+      });
+      renderItems();
+    }
+
+    function renderItems() {
+      const grid = document.getElementById('itemsGrid');
+      grid.innerHTML = '';
+      
+      let items = [...data.items];
+      
+      // تصفية حسب النوع
+      if (currentFilter !== 'all') {
+        items = items.filter(i => i.category === currentFilter);
+      }
+      
+      // الفرز
+      if (currentSort === 'dist') items.sort((a, b) => (a.dist || 999) - (b.dist || 999));
+      else if (currentSort === 'price') items.sort((a, b) => a.p - b.p);
+      else if (currentSort === 'rating') items.sort((a, b) => b.r - a.r);
+
+      if (items.length === 0) {
+        grid.innerHTML = `<p class="text-center text-gray-500 col-span-full py-10">لا توجد عناصر في هذا القسم.</p>`;
+        return;
+      }
+
+      items.forEach(item => {
+        let priceStr = item.p === 1 ? '($)' : item.p === 2 ? '($$)' : item.p === 3 ? '($$$)' : '';
+        const distStr = item.dist !== null ? `${item.dist} km` : '';
+        const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
+        const deliveryBadge = item.delivery ? `<span class="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 px-2 py-1 rounded"><i class="fa-solid fa-truck-fast mr-1"></i> توصيل</span>` : '';
+        const typeBadge = item.category === 'resto' 
+          ? `<span class="bg-orange-500 text-white px-2 py-1 rounded text-[10px] font-bold"><i class="fa-solid fa-utensils mr-1"></i> مطعم</span>`
+          : `<span class="bg-amber-500 text-white px-2 py-1 rounded text-[10px] font-bold"><i class="fa-solid fa-mug-hot mr-1"></i> مقهى</span>`;
+
+        const card = document.createElement('div');
+        card.className = "glass-card p-5 rounded-2xl flex flex-col justify-between hover:shadow-lg hover:border-orange-300 transition cursor-pointer border border-orange-100 dark:border-slate-700";
+        card.onclick = () => openModal(item);
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                ${typeBadge}
+                <h3 class="font-bold text-lg text-gray-900 dark:text-white mt-1">${item.n}</h3>
+              </div>
+              <div class="flex gap-1 text-xs font-bold text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded"><i class="fa-solid fa-star"></i> ${item.r}</div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-400 mb-3">
+              ${distStr ? `<span class="bg-orange-50 dark:bg-slate-800 px-2 py-1 rounded"><i class="fa-solid fa-location-dot text-orange-500 mr-1"></i> ${distStr}</span>` : ''}
+              ${priceStr ? `<span class="bg-orange-50 dark:bg-slate-800 px-2 py-1 rounded"><i class="fa-solid fa-money-bill text-emerald-500 mr-1"></i> ${priceStr}</span>` : ''}
+              ${deliveryBadge}
+            </div>
+            ${menuText ? `<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">${menuText}</p>` : ''}
+          </div>
+          <div class="mt-4 pt-3 border-t border-orange-100 dark:border-slate-700 text-center text-xs font-bold text-orange-600 dark:text-orange-400">
+            <i class="fa-solid fa-eye"></i> عرض التفاصيل
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openModal(item) {
+      document.getElementById('itemModal').classList.remove('hidden');
+      document.getElementById('modalTitle').innerText = item.n;
+      document.getElementById('modalSubtitle').innerText = `${item.category === 'resto' ? 'مطعم' : 'مقهى'} | ${item.r} ⭐`;
+      
+      let hoursStr = 'غير محدد';
+      if (item.h && item.h.length > 0) hoursStr = item.h.map(h => `${h[0]} - ${h[1]}`).join(' | ');
+      document.getElementById('modalHours').innerText = hoursStr;
+
+      const deliveryContainer = document.getElementById('modalDeliveryContainer');
+      if (item.delivery) {
+        deliveryContainer.classList.remove('hidden');
+        document.getElementById('modalDelivery').innerHTML = `<span class="text-emerald-600 dark:text-emerald-400 font-bold"><i class="fa-solid fa-check-circle"></i> متوفرة</span> ${item.deliveryInfo ? '- ' + item.deliveryInfo : ''}`;
+      } else {
+        deliveryContainer.classList.add('hidden');
+      }
+
+      const textMenuContainer = document.getElementById('modalTextMenuContainer');
+      const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
+      if (menuText) {
+        textMenuContainer.classList.remove('hidden');
+        document.getElementById('modalTextMenu').innerText = menuText;
+      } else textMenuContainer.classList.add('hidden');
+
+      const menuContainer = document.getElementById('modalMenuContainer');
+      const menuGallery = document.getElementById('modalMenuGallery');
+      menuGallery.innerHTML = '';
+      if (item.menuImages && item.menuImages.length > 0) {
+        menuContainer.classList.remove('hidden');
+        item.menuImages.forEach(img => {
+          menuGallery.innerHTML += `<div class="flex-shrink-0 w-64 h-80 snap-center rounded-xl overflow-hidden border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs p-2 text-center\\'>صورة غير متوفرة</div>'"></div>`;
+        });
+      } else menuContainer.classList.add('hidden');
+
+      const mapContainer = document.getElementById('modalMapContainer');
+      const mapDiv = document.getElementById('modalMap');
+      if (item.g) {
+        mapContainer.classList.remove('hidden');
+        mapDiv.innerHTML = `<iframe src="https://www.google.com/maps?q=${item.g[0]},${item.g[1]}&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
+      } else {
+        mapContainer.classList.add('hidden');
+      }
+
+      const phoneBtn = document.getElementById('modalPhoneBtn');
+      if (item.t) { phoneBtn.href = `tel:${item.t}`; phoneBtn.classList.remove('hidden'); } else phoneBtn.classList.add('hidden');
+
+      const mapBtn = document.getElementById('modalMapBtn');
+      if (item.g) { mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${item.g[0]},${item.g[1]}`; mapBtn.classList.remove('hidden'); } else mapBtn.classList.add('hidden');
+
+      document.querySelector('#itemModal > div').scrollTop = 0;
+    }
+
+    function closeModal() { document.getElementById('itemModal').classList.add('hidden'); }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.RESTO_DATA === 'undefined') {
+        document.getElementById('itemsGrid').innerHTML = '<p class="text-red-500 font-bold text-center col-span-full">خطأ في تحميل البيانات.</p>';
+        return;
+      }
+      renderItems();
+      setTimeout(() => { if(window.setLanguage) window.setLanguage(currentLang); }, 100);
+    });
+  </script>
+</body>
+</html>
