@@ -88,6 +88,13 @@
         <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
       </div>
 
+      <!-- قسم الفيديو -->
+      <div id="modalVideoContainer" class="space-y-2 hidden">
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
+        <div id="modalVideo" class="w-full aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
+      </div>
+
+      <!-- معرض الصور -->
       <div id="modalMenuContainer" class="space-y-2 hidden">
         <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> معرض الصور:</h4>
         <div id="modalMenuGallery" class="flex overflow-x-auto gap-3 pb-2 gallery-scroll snap-x"></div>
@@ -104,6 +111,7 @@
         </div>
       </div>
 
+      <!-- الخريطة -->
       <div id="modalMapContainer" class="space-y-2 hidden">
         <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> الموقع على الخريطة:</h4>
         <div id="modalMap" class="w-full h-64 rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
@@ -111,10 +119,6 @@
 
       <div class="flex gap-2 pt-4 border-t border-gray-100 dark:border-slate-700">
         <a id="modalPhoneBtn" href="#" class="hidden flex-1 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-center py-3 rounded-xl font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-phone"></i> اتصل</a>
-      <div id="modalVideoContainer" class="space-y-2 hidden">
-  <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
-  <div id="modalVideo" class="w-full aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
-</div>
         <a id="modalMapBtn" href="#" target="_blank" class="hidden flex-1 bg-orange-50 dark:bg-slate-700 hover:bg-orange-100 text-center py-3 rounded-xl font-bold text-orange-700 dark:text-orange-400"><i class="fa-solid fa-map-location-dot"></i> فتح الخريطة</a>
       </div>
     </div>
@@ -124,7 +128,7 @@
   
   <script>
     const data = window.SHOP_DATA;
-    let currentCat = 'pharma'; // البداية بقسم الصيدليات (لأنه الأكثر طلباً)
+    let currentCat = 'pharma'; // البداية بقسم الصيدليات
     let currentSort = 'default';
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
@@ -224,6 +228,16 @@
       let hoursStr = 'غير محدد';
       if (item.h && item.h.length > 0) hoursStr = item.h.map(h => `${h[0]} - ${h[1]}`).join(' | ');
       document.getElementById('modalHours').innerText = hoursStr;
+
+      // عرض الفيديو
+      const videoContainer = document.getElementById('modalVideoContainer');
+      const videoDiv = document.getElementById('modalVideo');
+      if (item.video) {
+        videoContainer.classList.remove('hidden');
+        videoDiv.innerHTML = `<iframe src="https://www.youtube.com/embed/${item.video}" width="100%" height="100%" style="border:0;" allowfullscreen></iframe>`;
+      } else {
+        videoContainer.classList.add('hidden');
+      }
 
       const textMenuContainer = document.getElementById('modalTextMenuContainer');
       const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
