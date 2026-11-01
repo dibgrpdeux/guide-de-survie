@@ -68,7 +68,6 @@
     .timeline-dot { position: absolute; right: 10px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; z-index: 1; }
     .dark .timeline-dot { border-color: #1e293b; }
 
-    /* تنسيقات المختبر الافتراضي */
     .lab-tab { transition: all 0.3s ease; cursor: pointer; }
     .lab-tab.active { background: #0ea5e9; color: white; border-color: #0ea5e9; }
     .slider-custom { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #cbd5e1; outline: none; }
@@ -172,9 +171,8 @@
     <!-- ========================================== -->
     <div id="content-tools" class="hidden space-y-6">
       
-      <!-- أدوات الأكاديمية (حاسبة، عجلة، مهام) -->
+      <!-- أدوات الأكاديمية -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
         <!-- حاسبة المعدل -->
         <div class="glass-card rounded-3xl p-6 border border-brand-100 dark:border-slate-700 space-y-4">
           <h4 class="font-bold text-lg text-brand-900 dark:text-brand-400 flex items-center gap-2"><i class="fa-solid fa-calculator"></i> حاسبة المعدل الفصلي</h4>
@@ -240,26 +238,19 @@
             <p class="text-xs text-slate-500">ترجمة أي كلمة بين العربية، الفرنسية والإنجليزية</p>
           </div>
         </div>
-        
         <div class="flex gap-2 mb-4">
           <select id="lang-from" class="w-24 p-2 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 text-sm outline-none">
-            <option value="fr">فرنسي</option>
-            <option value="ar" selected>عربي</option>
-            <option value="en">إنجليزي</option>
+            <option value="fr">فرنسي</option><option value="ar" selected>عربي</option><option value="en">إنجليزي</option>
           </select>
           <i class="fa-solid fa-arrow-left text-gray-400 mt-3"></i>
           <select id="lang-to" class="w-24 p-2 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 text-sm outline-none">
-            <option value="ar">عربي</option>
-            <option value="fr" selected>فرنسي</option>
-            <option value="en">إنجليزي</option>
+            <option value="ar">عربي</option><option value="fr" selected>فرنسي</option><option value="en">إنجليزي</option>
           </select>
         </div>
-
         <div class="flex gap-2">
           <input type="text" id="translate-input" placeholder="اكتب الكلمة هنا..." class="flex-1 p-3 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 outline-none text-sm focus:ring-2 focus:ring-blue-400">
           <button onclick="translateText()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition">ترجمة</button>
         </div>
-        
         <div id="translate-result" class="mt-4 p-4 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-center hidden">
           <p class="text-sm text-gray-500 mb-1">الترجمة:</p>
           <p id="translated-text" class="text-2xl font-black text-blue-700 dark:text-blue-400"></p>
@@ -267,7 +258,7 @@
         <p id="translate-error" class="text-xs text-red-500 mt-2 hidden"></p>
       </div>
 
-      <!-- ✅ المختبر الافتراضي (Virtual Lab) -->
+      <!-- المختبر الافتراضي -->
       <div class="glass-card p-6 rounded-3xl border border-cyan-100 dark:border-slate-700 mt-6">
         <div class="flex items-center gap-3 mb-6 border-b pb-4">
           <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-xl"><i class="fa-solid fa-flask"></i></div>
@@ -277,17 +268,19 @@
           </div>
         </div>
 
-        <!-- تبويبات التجارب -->
         <div class="flex flex-wrap gap-2 mb-6">
-          <button onclick="switchLab('pendulum')" id="lab-tab-pendulum" class="lab-tab active px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">1. البندول البسيط</button>
-          <button onclick="switchLab('circuit')" id="lab-tab-circuit" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">2. الدارة الكهربائية</button>
-          <button onclick="switchLab('projectile')" id="lab-tab-projectile" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">3. حركة المقذوفات</button>
-          <button onclick="switchLab('concrete')" id="lab-tab-concrete" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">4. اختبار الخرسانة</button>
+          <button onclick="switchLab('pendulum')" id="lab-tab-pendulum" class="lab-tab active px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">1. البندول</button>
+          <button onclick="switchLab('circuit')" id="lab-tab-circuit" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">2. الدارة</button>
+          <button onclick="switchLab('projectile')" id="lab-tab-projectile" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">3. المقذوفات</button>
+          <button onclick="switchLab('concrete')" id="lab-tab-concrete" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">4. الخرسانة</button>
           <button onclick="switchLab('spring')" id="lab-tab-spring" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">5. الزنبرك</button>
-          <button onclick="switchLab('collision')" id="lab-tab-collision" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">6. تصادم الكرات</button>
+          <button onclick="switchLab('waves')" id="lab-tab-waves" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">6. الأمواج</button>
+          <button onclick="switchLab('chimie')" id="lab-tab-chimie" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">7. الكيمياء</button>
+          <button onclick="switchLab('rdm')" id="lab-tab-rdm" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">8. RDM</button>
+          <button onclick="switchLab('mdf')" id="lab-tab-mdf" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">9. MDF</button>
         </div>
 
-        <!-- 1. تجربة البندول -->
+        <!-- 1. البندول -->
         <div id="lab-content-pendulum" class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="pendulumCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
@@ -308,7 +301,7 @@
           </div>
         </div>
 
-        <!-- 2. تجربة الدارة الكهربائية -->
+        <!-- 2. الدارة -->
         <div id="lab-content-circuit" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="circuitCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
@@ -329,7 +322,7 @@
           </div>
         </div>
 
-        <!-- 3. تجربة حركة المقذوفات -->
+        <!-- 3. المقذوفات -->
         <div id="lab-content-projectile" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="projectileCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
@@ -350,7 +343,7 @@
           </div>
         </div>
 
-        <!-- 4. تجربة اختبار الخرسانة -->
+        <!-- 4. الخرسانة -->
         <div id="lab-content-concrete" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="concreteCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
@@ -371,18 +364,18 @@
           </div>
         </div>
 
-        <!-- 5. تجربة الزنبرك (قانون هوك) -->
+        <!-- 5. الزنبرك -->
         <div id="lab-content-spring" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="springCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
           </div>
           <div class="space-y-6 flex flex-col justify-center">
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>ثابت الزنبرك (k)</span><span id="k-val" class="text-pink-600">20</span> N/m</label>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300  mb-2"><span>ثابت الزنبرك (k)</span><span id="k-val" class="text-pink-600">20</span> N/m</label>
               <input type="range" id="k-slider" min="5" max="100" value="20" class="slider-custom">
             </div>
             <div>
-                           <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>الاستطالة (x)</span><span id="x-val" class="text-pink-600">10</span> cm</label>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>الاستطالة (x)</span><span id="x-val" class="text-pink-600">10</span> cm</label>
               <input type="range" id="x-slider" min="1" max="30" value="10" class="slider-custom">
             </div>
             <div class="bg-pink-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-pink-100 dark:border-slate-700">
@@ -392,29 +385,79 @@
           </div>
         </div>
 
-        <!-- 6. تجربة تصادم الكرات -->
-        <div id="lab-content-collision" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 6. الأمواج (Waves) -->
+        <div id="lab-content-waves" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="collisionCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
+            <canvas id="wavesCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
           </div>
           <div class="space-y-6 flex flex-col justify-center">
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>كتلة الكرة 1 (m1)</span><span id="m1-val" class="text-teal-600">2</span> kg</label>
-              <input type="range" id="m1-slider" min="1" max="10" value="2" class="slider-custom">
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>التردد (f)</span><span id="freq-val" class="text-teal-600">2</span> Hz</label>
+              <input type="range" id="freq-slider" min="1" max="10" value="2" class="slider-custom">
             </div>
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>سرعة الكرة 1 (v1)</span><span id="v1-val" class="text-teal-600">5</span> m/s</label>
-              <input type="range" id="v1-slider" min="1" max="10" value="5" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>كتلة الكرة 2 (m2)</span><span id="m2-val" class="text-teal-600">3</span> kg</label>
-              <input type="range" id="m2-slider" min="1" max="10" value="3" class="slider-custom">
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>السعة (A)</span><span id="amp-val" class="text-teal-600">50</span></label>
+              <input type="range" id="amp-slider" min="10" max="100" value="50" class="slider-custom">
             </div>
             <div class="bg-teal-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-teal-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">النتيجة (بعد التصادم)</p>
-              <p class="text-sm font-black text-teal-700 dark:text-teal-400" id="collision-result">في انتظار التصادم...</p>
+              <p class="text-xs text-gray-500 mb-1">الطول الموجي (λ = v / f)</p>
+              <p class="text-2xl font-black text-teal-700 dark:text-teal-400" id="wave-result">170 m</p>
             </div>
-            <button onclick="startCollision()" class="w-full bg-teal-600 text-white font-bold py-2 rounded-xl hover:bg-teal-700 transition">إعادة التجربة</button>
+          </div>
+        </div>
+
+        <!-- 7. الكيمياء (تفاعل حمض-قاعدة) -->
+        <div id="lab-content-chimie" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
+            <canvas id="chimieCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
+          </div>
+          <div class="space-y-6 flex flex-col justify-center">
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>حجم الحمض (HCl)</span><span id="acid-val" class="text-purple-600">10</span> mL</label>
+              <input type="range" id="acid-slider" min="1" max="50" value="10" class="slider-custom">
+            </div>
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>حجم القاعدة (NaOH)</span><span id="base-val" class="text-purple-600">10</span> mL</label>
+              <input type="range" id="base-slider" min="1" max="50" value="10" class="slider-custom">
+            </div>
+            <div class="bg-purple-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-purple-100 dark:border-slate-700">
+              <p class="text-xs text-gray-500 mb-1">حالة الوسط (pH)</p>
+              <p class="text-2xl font-black text-purple-700 dark:text-purple-400" id="ph-result">متعادل (pH=7)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. RDM (الجسر) -->
+        <div id="lab-content-rdm" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
+            <canvas id="rdmCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
+          </div>
+          <div class="space-y-6 flex flex-col justify-center">
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>الحمل المطبق (P)</span><span id="load-val" class="text-orange-600">50</span> kN</label>
+              <input type="range" id="load-slider" min="10" max="200" value="50" class="slider-custom">
+            </div>
+            <div class="bg-orange-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-orange-100 dark:border-slate-700">
+              <p class="text-xs text-gray-500 mb-1">أقصى عزم انحناء (M_max)</p>
+              <p class="text-2xl font-black text-orange-700 dark:text-orange-400" id="moment-result">0 kN.m</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. MDF (الانحناء) -->
+        <div id="lab-content-mdf" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
+            <canvas id="mdfCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
+          </div>
+          <div class="space-y-6 flex flex-col justify-center">
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>طول العارضة (L)</span><span id="len-val" class="text-lime-600">10</span> m</label>
+              <input type="range" id="len-slider" min="2" max="20" value="10" class="slider-custom">
+            </div>
+            <div class="bg-lime-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-lime-100 dark:border-slate-700">
+              <p class="text-xs text-gray-500 mb-1">الانحراف الأقصى (f)</p>
+              <p class="text-2xl font-black text-lime-700 dark:text-lime-400" id="deflection-result">0 mm</p>
+            </div>
           </div>
         </div>
 
@@ -458,7 +501,9 @@
   </footer>
 
   <script>
+    // ==========================================
     // 1. DARK MODE & TABS
+    // ==========================================
     if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
@@ -478,7 +523,9 @@
       activeBtn.classList.remove('border-transparent');
     }
 
-    // 2. DRIVES
+    // ==========================================
+    // 2. DRIVES (Google Drive Data)
+    // ==========================================
     const drives = [
       { name: 'Drive 1', desc: '2CP - السنة الثانية', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-folder', color: 'emerald' },
       { name: 'Drive 2', desc: 'Cours - الدروس', url: 'https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg', icon: 'fa-book', color: 'blue' },
@@ -518,7 +565,9 @@
     }
     document.getElementById('driveSearch').addEventListener('input', (e) => renderDrives(e.target.value));
 
-    // 3. TOOLS
+    // ==========================================
+    // 3. TOOLS (Calculator, Wheel, Tasks, Crono)
+    // ==========================================
     function addSubjectRow() {
       const container = document.getElementById('calc-subjects');
       const div = document.createElement('div');
@@ -672,21 +721,26 @@
     }
 
     // ==========================================
-    // 6. المختبر الافتراضي (Virtual Lab)
+    // 4. المختبر الافتراضي (Virtual Lab)
     // ==========================================
     function switchLab(labId) {
-      ['pendulum', 'circuit', 'projectile', 'concrete', 'spring', 'collision'].forEach(l => {
+      ['pendulum', 'circuit', 'projectile', 'concrete', 'spring', 'waves', 'chimie', 'rdm', 'mdf'].forEach(l => {
         const content = document.getElementById('lab-content-' + l);
         const tab = document.getElementById('lab-tab-' + l);
-        if (l === labId) { content.classList.remove('hidden'); content.classList.add('grid'); tab.classList.add('active'); }
-        else { content.classList.add('hidden'); content.classList.remove('grid'); tab.classList.remove('active'); }
+        if (content && tab) {
+          if (l === labId) { content.classList.remove('hidden'); content.classList.add('grid'); tab.classList.add('active'); }
+          else { content.classList.add('hidden'); content.classList.remove('grid'); tab.classList.remove('active'); }
+        }
       });
       if (labId === 'pendulum') startPendulum();
       if (labId === 'circuit') drawCircuit();
       if (labId === 'projectile') startProjectile();
       if (labId === 'concrete') drawConcrete();
       if (labId === 'spring') drawSpring();
-      if (labId === 'collision') startCollision();
+      if (labId === 'waves') drawWaves();
+      if (labId === 'chimie') drawChimie();
+      if (labId === 'rdm') drawRDM();
+      if (labId === 'mdf') drawMDF();
     }
 
     // 1. البندول
@@ -750,7 +804,7 @@
       }
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
+                ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
         const v0 = parseInt(vS.value), angle = parseInt(aS.value), rad = angle * Math.PI / 180, g = 9.81;
         const x = 30 + (v0 * Math.cos(rad) * t * 2), y = canvas.height - 30 - (v0 * Math.sin(rad) * t - 0.5 * g * t * t) * 2;
         ctx.fillStyle = '#3b82f6'; ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.fill();
@@ -798,51 +852,106 @@
       kS.oninput = update; xS.oninput = update; update();
     }
 
-    // 6. تصادم الكرات
-    let collAnim;
-    function startCollision() {
-      cancelAnimationFrame(collAnim);
-      const canvas = document.getElementById('collisionCanvas'); if(!canvas) return;
+    // 6. الأمواج (Waves)
+    let waveAnim;
+    function drawWaves() {
+      cancelAnimationFrame(waveAnim);
+      const canvas = document.getElementById('wavesCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
-      const m1S = document.getElementById('m1-slider'), v1S = document.getElementById('v1-slider'), m2S = document.getElementById('m2-slider');
-      let x1 = 50, x2 = 300, v1 = parseInt(v1S.value), v2 = 0;
-      let hasCollided = false;
-      const m1 = parseInt(m1S.value), m2 = parseInt(m2S.value);
-
-      document.getElementById('m1-val').innerText = m1; document.getElementById('v1-val').innerText = v1; document.getElementById('m2-val').innerText = m2;
-      document.getElementById('collision-result').innerText = "في انتظار التصادم...";
-
-      function draw() {
+      const fS = document.getElementById('freq-slider'), aS = document.getElementById('amp-slider');
+      let time = 0;
+      function update() {
+        const freq = parseInt(fS.value), amp = parseInt(aS.value);
+        document.getElementById('freq-val').innerText = freq; document.getElementById('amp-val').innerText = amp;
+        document.getElementById('wave-result').innerText = (340 / freq).toFixed(1) + ' m';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
-               ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(x1, canvas.height - 50, 20 + m1 * 2, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#3b82f6'; ctx.beginPath(); ctx.arc(x2, canvas.height - 50, 20 + m2 * 2, 0, Math.PI * 2); ctx.fill();
-
-        if (!hasCollided) {
-          x1 += v1;
-          if (x1 + (20 + m1 * 2) >= x2 - (20 + m2 * 2)) {
-            hasCollided = true;
-            // حساب السرعات بعد التصادم المرن (Elastic Collision)
-            const v1_final = ((m1 - m2) * v1 + 2 * m2 * v2) / (m1 + m2);
-            const v2_final = ((m2 - m1) * v2 + 2 * m1 * v1) / (m1 + m2);
-            v1 = v1_final;
-            v2 = v2_final;
-            document.getElementById('collision-result').innerHTML = `الكرة 1: ${v1.toFixed(2)} m/s<br>الكرة 2: ${v2.toFixed(2)} m/s`;
-          }
-        } else {
-          x1 += v1;
-          x2 += v2;
+        ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, canvas.height/2); ctx.lineTo(canvas.width, canvas.height/2); ctx.stroke();
+        ctx.strokeStyle = '#14b8a6'; ctx.lineWidth = 3; ctx.beginPath();
+        for (let x = 0; x < canvas.width; x++) {
+          const y = canvas.height/2 + Math.sin(x * (freq/50) + time) * amp;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-
-        if (x1 > 0 && x1 < canvas.width && x2 > 0 && x2 < canvas.width) {
-          collAnim = requestAnimationFrame(draw);
-        }
+        ctx.stroke(); time += 0.1; waveAnim = requestAnimationFrame(update);
       }
-      draw();
+      update();
+    }
+
+    // 7. الكيمياء (Chimie)
+    function drawChimie() {
+      const canvas = document.getElementById('chimieCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const acidS = document.getElementById('acid-slider'), baseS = document.getElementById('base-slider');
+      function update() {
+        const acid = parseInt(acidS.value), base = parseInt(baseS.value);
+        document.getElementById('acid-val').innerText = acid; document.getElementById('base-val').innerText = base;
+        let resultText = '', color = '';
+        if (acid > base) { resultText = "وسط حمضي (pH < 7)"; color = '#ef4444'; }
+        else if (base > acid) { resultText = "وسط قاعدي (pH > 7)"; color = '#3b82f6'; }
+        else { resultText = "متعادل (pH = 7)"; color = '#10b981'; }
+        document.getElementById('ph-result').innerText = resultText; document.getElementById('ph-result').style.color = color;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#64748b'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(100, 50); ctx.lineTo(100, 250); ctx.lineTo(250, 250); ctx.lineTo(250, 150); ctx.stroke();
+        const totalHeight = acid + base, fillHeight = Math.min(totalHeight * 4, 100);
+        ctx.fillStyle = color; ctx.globalAlpha = 0.5; ctx.fillRect(105, 245 - fillHeight, 140, fillHeight); ctx.globalAlpha = 1;
+      }
+      acidS.oninput = update; baseS.oninput = update; update();
+    }
+
+    // 8. RDM (الجسر - عزم الانحناء)
+    function drawRDM() {
+      const canvas = document.getElementById('rdmCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const loadS = document.getElementById('load-slider');
+      function update() {
+        const P = parseInt(loadS.value);
+        document.getElementById('load-val').innerText = P;
+        const M_max = (P * 10) / 4;
+        document.getElementById('moment-result').innerText = M_max.toFixed(2) + ' kN.m';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#94a3b8'; ctx.fillRect(50, 150, 250, 20);
+        ctx.fillStyle = '#475569'; ctx.beginPath(); ctx.moveTo(50, 170); ctx.lineTo(30, 200); ctx.lineTo(70, 200); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(300, 170); ctx.lineTo(280, 200); ctx.lineTo(320, 200); ctx.fill();
+        ctx.strokeStyle = '#f97316'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(175, 50); ctx.lineTo(175, 140); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(165, 130); ctx.lineTo(175, 145); ctx.lineTo(185, 130); ctx.fill();
+        ctx.fillStyle = '#f97316'; ctx.font = 'bold 14px Cairo'; ctx.textAlign = 'center'; ctx.fillText(P + ' kN', 175, 35);
+        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 2; ctx.beginPath();
+        for (let x = 50; x <= 300; x += 5) {
+          const normX = (x - 175) / 125;
+          const y = 200 - (M_max * 2) * (1 - normX * normX);
+          if (x === 50) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+      loadS.oninput = update; update();
+    }
+
+    // 9. MDF (الانحناء - Deflection)
+    function drawMDF() {
+      const canvas = document.getElementById('mdfCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const lenS = document.getElementById('len-slider');
+      function update() {
+        const L = parseInt(lenS.value);
+        document.getElementById('len-val').innerText = L;
+        const P = 50 * 1000, E = 200 * 10**9, I = 0.001;
+        const f = (P * Math.pow(L, 3)) / (48 * E * I) * 1000;
+        document.getElementById('deflection-result').innerText = f.toFixed(2) + ' mm';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#65a30d'; ctx.lineWidth = 6; ctx.beginPath();
+        for (let x = 50; x <= 300; x++) {
+          const normX = (x - 175) / 125;
+          const y = 150 + (f * 2) * (1 - normX * normX);
+          if (x === 50) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.fillStyle = '#475569'; ctx.beginPath(); ctx.moveTo(50, 150); ctx.lineTo(30, 180); ctx.lineTo(70, 180); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(300, 150); ctx.lineTo(280, 180); ctx.lineTo(320, 180); ctx.fill();
+      }
+      lenS.oninput = update; update();
     }
 
     // ==========================================
-    // التهيئة عند تحميل الصفحة
+    // 5. INIT (تهيئة الصفحة)
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       renderDrives();
