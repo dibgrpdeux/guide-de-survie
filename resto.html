@@ -126,164 +126,21 @@
         // ==========================================
         // المطاعم (Restaurants)
         // ==========================================
-        { 
-          category: 'resto',
-          n: "Mega Pizza Kouba", 
-          r: 4.5, 
-          p: 2, 
-          dist: 0.8, 
-          h: [["11:00", "23:00"]], 
-          t: "", 
-          g: [36.7294389, 3.0743456], 
-          delivery: true,
-          deliveryInfo: "توصيل عبر Yassir / Heetch",
-          menu: { ar: "بيتزا، باستا، مشروبات", fr: "Pizza, Pâtes, Boissons", en: "Pizza, Pasta, Drinks" }, 
-          menuImages: ["MEGA 1.jpg", "MEGA 2.jpg"] 
-        },
-        { 
-          category: 'resto',
-          n: "On Est La", 
-          r: 4.8, 
-          p: 2, 
-          dist: 1.1, 
-          h: [["11:00", "01:00"]], 
-          t: "", 
-          g: [36.7220684, 3.076564], 
-          delivery: true,
-          deliveryInfo: "توصيل مجاني للطلبة (الحد الأدنى 1500 دج)",
-          menu: { ar: "أطباق متنوعة، مشاوي، سلطات", fr: "Plats variés, Grillades, Salades", en: "Various dishes, Grills, Salads" }, 
-          menuImages: ["ON EST LA 1.jpg", "ON EST LA 2.jpg"] 
-        },
-        { 
-          category: 'resto',
-          n: "American Berger", 
-          r: 4.1, 
-          p: 1, 
-          dist: 0.9, 
-          h: [["11:00", "23:00"]], 
-          t: "", 
-          g: [36.7274727, 3.0651558], 
-          delivery: false,
-          deliveryInfo: "",
-          menu: { ar: "برغر، بطاطا مقلية", fr: "Burgers, Frites", en: "Burgers, Fries" }, 
-          menuImages: ["american1.jpg", "american2.jpg", "american3.jpg"] 
-        },
-        { 
-          category: 'resto',
-          n: "KGB (Kouba Gourmet Burger)", 
-          r: 3.8, 
-          p: 1, 
-          dist: 1.3, 
-          h: [["10:30", "02:00"]], 
-          t: "+213541041085", 
-          g: [36.7296152, 3.0765289], 
-          delivery: true,
-          deliveryInfo: "توصيل عبر تطبيق Yassir",
-          menu: { ar: "برغر KGB: 700 دج", fr: "KGB Burger: 700 DA", en: "KGB Burger: 700 DA" }, 
-          menuImages: ["kgb.png", "kgb1.jpeg", "kgb2.jpeg"] 
-        },
-        { 
-          category: 'resto',
-          n: "Cheese Kou", 
-          r: 4.2, 
-          p: 1, 
-          dist: 1.0, 
-          h: [["10:30", "01:00"]], 
-          t: "+213562656809", 
-          g: [36.7226875, 3.0739069], 
-          delivery: true,
-          deliveryInfo: "توصيل عبر Heetch Food",
-          menu: { ar: "تاكتوز، بيتزا، برغر", fr: "Tacos, Pizza, Burgers", en: "Tacos, Pizza, Burgers" }, 
-          menuImages: ["cheese.jpg", "cheese3.jpg", "cheese4.jpg"] 
-        },
+        { category: 'resto', n: "Mega Pizza Kouba", r: 4.5, p: 2, dist: 0.8, h: [["11:00", "23:00"]], t: "", g: [36.7294389, 3.0743456], delivery: true, deliveryInfo: "توصيل عبر Yassir / Heetch", menu: { ar: "بيتزا، باستا، مشروبات", fr: "Pizza, Pâtes, Boissons", en: "Pizza, Pasta, Drinks" }, menuImages: ["MEGA 1.jpg", "MEGA 2.jpg"] },
+        { category: 'resto', n: "On Est La", r: 4.8, p: 2, dist: 1.1, h: [["11:00", "01:00"]], t: "", g: [36.7220684, 3.076564], delivery: true, deliveryInfo: "توصيل مجاني للطلبة (الحد الأدنى 1500 دج)", menu: { ar: "أطباق متنوعة، مشاوي، سلطات", fr: "Plats variés, Grillades, Salades", en: "Various dishes, Grills, Salads" }, menuImages: ["ON EST LA 1.jpg", "ON EST LA 2.jpg"] },
+        { category: 'resto', n: "American Berger", r: 4.1, p: 1, dist: 0.9, h: [["11:00", "23:00"]], t: "", g: [36.7274727, 3.0651558], delivery: false, deliveryInfo: "", menu: { ar: "برغر، بطاطا مقلية", fr: "Burgers, Frites", en: "Burgers, Fries" }, menuImages: ["american1.jpg", "american2.jpg", "american3.jpg"] },
+        { category: 'resto', n: "KGB (Kouba Gourmet Burger)", r: 3.8, p: 1, dist: 1.3, h: [["10:30", "02:00"]], t: "+213541041085", g: [36.7296152, 3.0765289], delivery: true, deliveryInfo: "توصيل عبر تطبيق Yassir", menu: { ar: "برغر KGB: 700 دج", fr: "KGB Burger: 700 DA", en: "KGB Burger: 700 DA" }, menuImages: ["kgb.png", "kgb1.jpeg", "kgb2.jpeg"] },
+        { category: 'resto', n: "Cheese Kou", r: 4.2, p: 1, dist: 1.0, h: [["10:30", "01:00"]], t: "+213562656809", g: [36.7226875, 3.0739069], delivery: true, deliveryInfo: "توصيل عبر Heetch Food", menu: { ar: "تاكتوز، بيتزا، برغر", fr: "Tacos, Pizza, Burgers", en: "Tacos, Pizza, Burgers" }, menuImages: ["cheese.jpg", "cheese3.jpg", "cheese4.jpg"] },
 
         // ==========================================
         // المقاهي (Cafés)
         // ==========================================
-        { 
-          category: 'cafe',
-          n: "Nafess Café", 
-          r: 4.6, 
-          p: 2, 
-          dist: 0.8, 
-          h: [["07:30", "23:30"]], 
-          t: "", 
-          g: [36.7280, 3.0780], 
-          delivery: true,
-          deliveryInfo: "توصيل عبر Yassir / Heetch",
-          menu: { ar: "قهوة، مشروبات ساخنة وباردة، حلويات، ساندويتشات", fr: "Café, boissons chaudes et froides, pâtisseries, sandwichs", en: "Coffee, hot & cold drinks, pastries, sandwiches" }, 
-          menuImages: ["nafess 1.jpg", "nafess 2.jpg", "nafess 3.jpg", "nafess 4.jpg", "nafess 5.jpg", "nafess5.jpg", "nafess6.jpg", "nafess7.jpg", "nafess8.jpg"] 
-        },
-        { 
-          category: 'cafe',
-          n: "Brioch Cafétéria", 
-          r: 4.4, 
-          p: 1, 
-          dist: 1.2, 
-          h: [["06:00", "22:00"]], 
-          t: "", 
-          g: [36.7250, 3.0750], 
-          delivery: true,
-          deliveryInfo: "توصيل مجاني للطلبة (خلال أوقات العمل)",
-          menu: { ar: "بريوش، كرواسون، قهوة، عصائر طازجة", fr: "Brioches, Croissants, Café, Jus frais", en: "Brioches, Croissants, Coffee, Fresh juices" }, 
-          menuImages: ["brioch 1.jpg", "brioch 3.jpg", "brioch 5.jpg", "brioch 6.jpg", "brioch4.jpg", "brioch7.jpg", "brioche 2.jpg"] 
-        },
-        { 
-          category: 'cafe',
-          n: "Cafétéria Provence", 
-          r: 4.3, 
-          p: 2, 
-          dist: 1.8, 
-          h: [["08:00", "23:00"]], 
-          t: "", 
-          g: [36.7300, 3.0850], 
-          delivery: false,
-          deliveryInfo: "",
-          menu: { ar: "قهوة فرنسية، حلويات فرنسية، كريب", fr: "Café français, Pâtisseries françaises, Crêpes", en: "French coffee, French pastries, Crepes" }, 
-          menuImages: ["provence 1.jpg", "provence 2.jpg", "provence 3.jpg", "provence 4.jpg", "provence 5.jpg", "provence 6.jpg"] 
-        },
-        { 
-          category: 'cafe',
-          n: "The Brunch Terrasse", 
-          r: 4.7, 
-          p: 3, 
-          dist: 2.5, 
-          h: [["09:00", "01:00"]], 
-          t: "", 
-          g: [36.7350, 3.0700], 
-          delivery: true,
-          deliveryInfo: "توصيل عبر تطبيقات التوصيل (Glovo/Yassir)",
-          menu: { ar: "برانش، أطباق رئيسية، عصائر، حلويات", fr: "Brunch, Plats principaux, Jus, Desserts", en: "Brunch, Main dishes, Juices, Desserts" }, 
-          menuImages: ["brunch 1.jpg", "brunch 2.jpg", "brunch 3.jpg", "brunch 4.jpg", "brunch 6.jpg", "brunch 7.jpg", "brunch 8.jpg", "brunch 9.jpg"] 
-        },
-        { 
-          category: 'cafe',
-          n: "Green Caffee", 
-          r: 4.5, 
-          p: 2, 
-          dist: 0.6, 
-          h: [["07:30", "22:00"]], 
-          t: "+213770203542", 
-          g: [36.7297067, 3.0745479], 
-          delivery: true,
-          deliveryInfo: "توصيل عبر Yassir",
-          menu: { ar: "قهوة، مشروبات باردة", fr: "Café, Boissons froides", en: "Coffee, Cold drinks" }, 
-          menuImages: ["green1.jpg", "green2.jpg", "green3.jpg"] 
-        },
-        { 
-          category: 'cafe',
-          n: "César Patisserie", 
-          r: 4.2, 
-          p: 2, 
-          dist: 1.5, 
-          h: [["08:00", "23:00"]], 
-          t: "+213669846909", 
-          g: [36.7303142, 3.0840737], 
-          delivery: false,
-          deliveryInfo: "",
-          menu: { ar: "حلويات، قهوة", fr: "Gâteaux, Café", en: "Cakes, Coffee" }, 
-          menuImages: ["cesar1.jpg", "cesar2.jpg", "cesar3.jpg"] 
-        }
+        { category: 'cafe', n: "Nafess Café", r: 4.6, p: 2, dist: 0.8, h: [["07:30", "23:30"]], t: "", g: [36.7280, 3.0780], delivery: true, deliveryInfo: "توصيل عبر Yassir / Heetch", menu: { ar: "قهوة، مشروبات ساخنة وباردة، حلويات، ساندويتشات", fr: "Café, boissons chaudes et froides, pâtisseries, sandwichs", en: "Coffee, hot & cold drinks, pastries, sandwiches" }, menuImages: ["nafess 1.jpg", "nafess 2.jpg", "nafess 3.jpg", "nafess 4.jpg", "nafess 5.jpg", "nafess5.jpg", "nafess6.jpg", "nafess7.jpg", "nafess8.jpg"] },
+        { category: 'cafe', n: "Brioch Cafétéria", r: 4.4, p: 1, dist: 1.2, h: [["06:00", "22:00"]], t: "", g: [36.7250, 3.0750], delivery: true, deliveryInfo: "توصيل مجاني للطلبة (خلال أوقات العمل)", menu: { ar: "بريوش، كرواسون، قهوة، عصائر طازجة", fr: "Brioches, Croissants, Café, Jus frais", en: "Brioches, Croissants, Coffee, Fresh juices" }, menuImages: ["brioch 1.jpg", "brioch 3.jpg", "brioch 5.jpg", "brioch 6.jpg", "brioch4.jpg", "brioch7.jpg", "brioche 2.jpg"] },
+        { category: 'cafe', n: "Cafétéria Provence", r: 4.3, p: 2, dist: 1.8, h: [["08:00", "23:00"]], t: "", g: [36.7300, 3.0850], delivery: false, deliveryInfo: "", menu: { ar: "قهوة فرنسية، حلويات فرنسية، كريب", fr: "Café français, Pâtisseries françaises, Crêpes", en: "French coffee, French pastries, Crepes" }, menuImages: ["provence 1.jpg", "provence 2.jpg", "provence 3.jpg", "provence 4.jpg", "provence 5.jpg", "provence 6.jpg"] },
+        { category: 'cafe', n: "The Brunch Terrasse", r: 4.7, p: 3, dist: 2.5, h: [["09:00", "01:00"]], t: "", g: [36.7350, 3.0700], delivery: true, deliveryInfo: "توصيل عبر تطبيقات التوصيل (Glovo/Yassir)", menu: { ar: "برانش، أطباق رئيسية، عصائر، حلويات", fr: "Brunch, Plats principaux, Jus, Desserts", en: "Brunch, Main dishes, Juices, Desserts" }, menuImages: ["brunch 1.jpg", "brunch 2.jpg", "brunch 3.jpg", "brunch 4.jpg", "brunch 6.jpg", "brunch 7.jpg", "brunch 8.jpg", "brunch 9.jpg"] },
+        { category: 'cafe', n: "Green Caffee", r: 4.5, p: 2, dist: 0.6, h: [["07:30", "22:00"]], t: "+213770203542", g: [36.7297067, 3.0745479], delivery: true, deliveryInfo: "توصيل عبر Yassir", menu: { ar: "قهوة، مشروبات باردة", fr: "Café, Boissons froides", en: "Coffee, Cold drinks" }, menuImages: ["green1.jpg", "green2.jpg", "green3.jpg"] },
+        { category: 'cafe', n: "César Patisserie", r: 4.2, p: 2, dist: 1.5, h: [["08:00", "23:00"]], t: "+213669846909", g: [36.7303142, 3.0840737], delivery: false, deliveryInfo: "", menu: { ar: "حلويات، قهوة", fr: "Gâteaux, Café", en: "Cakes, Coffee" }, menuImages: ["cesar1.jpg", "cesar2.jpg", "cesar3.jpg"] }
       ]
     };
   </script>
@@ -326,13 +183,8 @@
       grid.innerHTML = '';
       
       let items = [...data.items];
+      if (currentFilter !== 'all') items = items.filter(i => i.category === currentFilter);
       
-      // تصفية حسب النوع
-      if (currentFilter !== 'all') {
-        items = items.filter(i => i.category === currentFilter);
-      }
-      
-      // الفرز
       if (currentSort === 'dist') items.sort((a, b) => (a.dist || 999) - (b.dist || 999));
       else if (currentSort === 'price') items.sort((a, b) => a.p - b.p);
       else if (currentSort === 'rating') items.sort((a, b) => b.r - a.r);
