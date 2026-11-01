@@ -3,254 +3,438 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مختبر الجزيئات 3D - ENSTP</title>
+  <title>مختبر التمثيلات العلمية - ENSTP</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- استدعاء مكتبة Three.js -->
+  
+  <!-- مكتبة Three.js للرسم ثلاثي الأبعاد -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- استدعاء OrbitControls للتحكم بالماوس -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #0f172a; color: #f8fafc; margin: 0; overflow: hidden; }
-    #canvas-container { position: absolute; inset: 0; z-index: 1; }
+    body { font-family: 'Cairo', sans-serif; background: #0f172a; color: #f8fafc; margin: 0; overflow-x: hidden; }
     .glass-panel { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .control-panel { position: absolute; top: 20px; right: 20px; z-index: 10; width: 300px; padding: 20px; border-radius: 20px; }
-    .info-panel { position: absolute; bottom: 20px; left: 20px; z-index: 10; padding: 15px; border-radius: 15px; max-width: 300px; }
-    .btn-mode { transition: all 0.3s ease; }
-    .btn-mode.active { background: #10b981; color: white; border-color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
+    .tab-btn { transition: all 0.3s ease; }
+    .tab-btn.active { background: #0ea5e9; color: white; border-color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.5); }
+    #canvas-3d-container { width: 100%; height: 400px; position: relative; border-radius: 1rem; overflow: hidden; }
+    .slider-custom { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #334155; outline: none; }
+    .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #0ea5e9; cursor: pointer; }
   </style>
 </head>
-<body>
+<body class="min-h-screen p-4 md:p-8">
 
-  <!-- حاوية الرسم 3D -->
-  <div id="canvas-container"></div>
+  <div class="max-w-6xl mx-auto space-y-6">
+    
+    <!-- الترويسة -->
+    <div class="glass-panel rounded-3xl p-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 bg-sky-500 rounded-2xl flex items-center justify-center text-2xl"><i class="fa-solid fa-atom"></i></div>
+        <div>
+          <h1 class="text-2xl font-black">مختبر التمثيلات العلمية</h1>
+          <p class="text-sm text-gray-400">تمثيلات حقيقية للجزيئات، الذرات، الموجات، والحقول.</p>
+        </div>
+      </div>
+      <a href="ma-reussite.html" class="px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-sm font-bold transition">العودة لنجاحي</a>
+    </div>
 
-  <!-- لوحة التحكم -->
-  <div class="glass-panel control-panel">
-    <div class="flex items-center gap-3 mb-6 border-b border-gray-600 pb-4">
-      <div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-xl"><i class="fa-solid fa-atom"></i></div>
-      <div>
-        <h1 class="font-black text-lg">مختبر الجزيئات 3D</h1>
-        <p class="text-xs text-gray-400">تفاعلات واهتزازات في الوقت الفعلي</p>
+    <!-- أزرار التبويب -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <button onclick="switchSim('molecule3d')" id="btn-molecule3d" class="tab-btn active glass-panel p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-transparent">
+        <i class="fa-solid fa-cubes text-2xl"></i>
+        <span class="font-bold">جزيء 3D</span>
+      </button>
+      <button onclick="switchSim('atom')" id="btn-atom" class="tab-btn glass-panel p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-transparent">
+        <i class="fa-solid fa-circle-nodes text-2xl"></i>
+        <span class="font-bold">نموذج الذرة</span>
+      </button>
+      <button onclick="switchSim('wave')" id="btn-wave" class="tab-btn glass-panel p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-transparent">
+        <i class="fa-solid fa-wave-square text-2xl"></i>
+        <span class="font-bold">تمثيل الموجة</span>
+      </button>
+      <button onclick="switchSim('field')" id="btn-field" class="tab-btn glass-panel p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-transparent">
+        <i class="fa-solid fa-magnet text-2xl"></i>
+        <span class="font-bold">الحقل المغناطيسي</span>
+      </button>
+    </div>
+
+    <!-- 1. جزيء 3D -->
+    <div id="sim-molecule3d" class="glass-panel rounded-3xl p-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold text-sky-400">تمثيل جزيء الماء (H₂O) ثلاثي الأبعاد</h2>
+        <span class="text-xs bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full">استخدم الماوس للتدوير</span>
+      </div>
+      <div id="canvas-3d-container"></div>
+      <div class="flex gap-4">
+        <button onclick="changeMolecule('h2o')" class="px-4 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 text-sm font-bold">H₂O (ماء)</button>
+        <button onclick="changeMolecule('co2')" class="px-4 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 text-sm font-bold">CO₂ (ثاني أكسيد الكربون)</button>
+        <button onclick="changeMolecule('ch4')" class="px-4 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 text-sm font-bold">CH₄ (ميثان)</button>
       </div>
     </div>
 
-    <!-- اختيار النمط -->
-    <label class="block text-sm font-bold text-gray-300 mb-2">نمط الحركة:</label>
-    <div class="space-y-2 mb-6">
-      <button onclick="changeMode('stretch')" id="mode-stretch" class="btn-mode active w-full text-right px-4 py-3 rounded-xl border border-gray-600 bg-slate-700/50 text-sm font-bold flex items-center gap-2">
-        <i class="fa-solid fa-arrows-left-right text-emerald-400"></i> اهتزاز شد (Stretching)
-      </button>
-      <button onclick="changeMode('bend')" id="mode-bend" class="btn-mode w-full text-right px-4 py-3 rounded-xl border border-gray-600 bg-slate-700/50 text-sm font-bold flex items-center gap-2">
-        <i class="fa-solid fa-angles-up text-emerald-400"></i> اهتزاز انحناء (Bending)
-      </button>
-      <button onclick="changeMode('rotate')" id="mode-rotate" class="btn-mode w-full text-right px-4 py-3 rounded-xl border border-gray-600 bg-slate-700/50 text-sm font-bold flex items-center gap-2">
-        <i class="fa-solid fa-rotate text-emerald-400"></i> دوران الجزيء (Rotation)
-      </button>
+    <!-- 2. نموذج الذرة -->
+    <div id="sim-atom" class="hidden glass-panel rounded-3xl p-6 space-y-4">
+      <h2 class="text-xl font-bold text-emerald-400">نموذج بور للذرة (Bohr Model)</h2>
+      <div class="bg-slate-900 rounded-2xl flex items-center justify-center p-4">
+        <canvas id="atomCanvas" width="400" height="400" class="max-w-full"></canvas>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="flex justify-between text-sm font-bold text-gray-300 mb-2"><span>العدد الذري (Z)</span><span id="z-val" class="text-emerald-400">1</span></label>
+          <input type="range" id="z-slider" min="1" max="20" value="1" class="slider-custom">
+        </div>
+        <div class="bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/20 text-center">
+          <p class="text-xs text-gray-400">التوزيع الإلكتروني</p>
+          <p class="font-bold text-emerald-300" id="config-result">1s¹</p>
+        </div>
+      </div>
     </div>
 
-    <!-- التحكم في السرعة -->
-    <label class="block text-sm font-bold text-gray-300 mb-2">سرعة الاهتزاز: <span id="speed-val" class="text-emerald-400">1.0x</span></label>
-    <input type="range" id="speed-slider" min="0" max="3" step="0.1" value="1" class="w-full accent-emerald-500">
-
-    <div class="mt-6 text-xs text-gray-400 bg-slate-800/50 p-3 rounded-lg">
-      <i class="fa-solid fa-info-circle text-emerald-400"></i> استخدم الماوس (أو إصبعك) لتدوير الجزيء وتكبير/تصغير المشهد.
+    <!-- 3. تمثيل الموجة -->
+    <div id="sim-wave" class="hidden glass-panel rounded-3xl p-6 space-y-4">
+      <h2 class="text-xl font-bold text-amber-400">تمثيل الموجة الجيبية (Sine Wave)</h2>
+      <div class="bg-slate-900 rounded-2xl flex items-center justify-center p-4">
+        <canvas id="waveCanvas" width="500" height="300" class="max-w-full"></canvas>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="flex justify-between text-sm font-bold text-gray-300 mb-2"><span>التردد (f)</span><span id="w-freq" class="text-amber-400">1 Hz</span></label>
+          <input type="range" id="w-freq-slider" min="0.5" max="3" step="0.1" value="1" class="slider-custom">
+        </div>
+        <div>
+          <label class="flex justify-between text-sm font-bold text-gray-300 mb-2"><span>السعة (A)</span><span id="w-amp" class="text-amber-400">80</span></label>
+          <input type="range" id="w-amp-slider" min="20" max="120" value="80" class="slider-custom">
+        </div>
+      </div>
+      <div class="bg-amber-500/10 p-3 rounded-xl border border-amber-500/20 text-center">
+        <p class="text-xs text-gray-400">الطول الموجي (λ = v / f) بافتراض v = 340 m/s</p>
+        <p class="font-bold text-amber-300" id="w-result">340 m</p>
+      </div>
     </div>
-  </div>
 
-  <!-- لوحة المعلومات -->
-  <div class="glass-panel info-panel">
-    <h3 class="font-bold text-emerald-400 mb-1" id="molecule-name">جزيء الماء (H₂O)</h3>
-    <p class="text-xs text-gray-300" id="mode-desc">حركة تمدد وانقباض متناظرة للروابط.</p>
+    <!-- 4. الحقل المغناطيسي -->
+    <div id="sim-field" class="hidden glass-panel rounded-3xl p-6 space-y-4">
+      <h2 class="text-xl font-bold text-cyan-400">خطوط المجال المغناطيسي (حول سلك)</h2>
+      <div class="bg-slate-900 rounded-2xl flex items-center justify-center p-4">
+        <canvas id="fieldCanvas" width="400" height="400" class="max-w-full"></canvas>
+      </div>
+      <div>
+        <label class="flex justify-between text-sm font-bold text-gray-300 mb-2"><span>شدة التيار (I)</span><span id="field-current" class="text-cyan-400">2 A</span></label>
+        <input type="range" id="field-slider" min="1" max="10" value="2" class="slider-custom">
+      </div>
+      <div class="bg-cyan-500/10 p-3 rounded-xl border border-cyan-500/20 text-center">
+        <p class="text-xs text-gray-400">شدة المجال (B = μ₀I / 2πr) على بعد 10cm</p>
+        <p class="font-bold text-cyan-300" id="field-result">4.00 μT</p>
+      </div>
+    </div>
+
   </div>
 
   <script>
     // ==========================================
-    // 1. إعداد المشهد 3D
+    // التنقل بين التمثيلات
     // ==========================================
-    const container = document.getElementById('canvas-container');
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0f172a); // لون الخلفية
-
-    // الكاميرا
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 6);
-
-    // المحرك (Renderer)
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
-
-    // التحكم بالماوس (دوران، تكبير)
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.autoRotate = false;
-
-    // ==========================================
-    // 2. إضافة الإضاءة
-    // ==========================================
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
-
-    const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
-    dirLight1.position.set(5, 5, 5);
-    scene.add(dirLight1);
-
-    const dirLight2 = new THREE.DirectionalLight(0x3b82f6, 0.5);
-    dirLight2.position.set(-5, -5, -5);
-    scene.add(dirLight2);
-
-    // ==========================================
-    // 3. بناء الجزيء (H2O)
-    // ==========================================
-    // ذرة الأكسجين (الأحمر)
-    const oxygenGeo = new THREE.SphereGeometry(0.6, 32, 32);
-    const oxygenMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.2, metalness: 0.1 });
-    const oxygen = new THREE.Mesh(oxygenGeo, oxygenMat);
-    scene.add(oxygen);
-
-    // ذرتي الهيدروجين (الأبيض)
-    const hydrogenGeo = new THREE.SphereGeometry(0.35, 32, 32);
-    const hydrogenMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.2, metalness: 0.1 });
-    
-    const h1 = new THREE.Mesh(hydrogenGeo, hydrogenMat);
-    scene.add(h1);
-    
-    const h2 = new THREE.Mesh(hydrogenGeo, hydrogenMat);
-    scene.add(h2);
-
-    // الروابط (Cylinders)
-    // دالة لإنشاء رابطة بين نقطتين
-    function createBond(pos1, pos2) {
-      const direction = new THREE.Vector3().subVectors(pos2, pos1);
-      const length = direction.length();
-      
-      const bondGeo = new THREE.CylinderGeometry(0.1, 0.1, length, 8);
-      const bondMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.5 });
-      const bond = new THREE.Mesh(bondGeo, bondMat);
-      
-      // وضع الرابطة في المنتصف بين الذرتين
-      bond.position.copy(pos1.clone().add(pos2).multiplyScalar(0.5));
-      
-      // توجيه الرابطة
-      bond.quaternion.setFromUnitVectors(
-        new THREE.Vector3(0, 1, 0),
-        direction.clone().normalize()
-      );
-      
-      return bond;
-    }
-
-    let bond1 = createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(-1,0.5,0));
-    let bond2 = createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(1,0.5,0));
-    scene.add(bond1);
-    scene.add(bond2);
-
-    // ==========================================
-    // 4. منطق الحركة والاهتزاز
-    // ==========================================
-    let currentMode = 'stretch';
-    let speed = 1;
-    let time = 0;
-
-    function changeMode(mode) {
-      currentMode = mode;
-      
-      // تحديث الأزرار
-      ['stretch', 'bend', 'rotate'].forEach(m => {
-        const btn = document.getElementById('mode-' + m);
-        if (m === mode) btn.classList.add('active');
-        else btn.classList.remove('active');
+    function switchSim(simId) {
+      ['molecule3d', 'atom', 'wave', 'field'].forEach(s => {
+        document.getElementById('sim-' + s).classList.add('hidden');
+        document.getElementById('btn-' + s).classList.remove('active');
       });
-      
-      // تحديث الوصف
-      const desc = document.getElementById('mode-desc');
-      if (mode === 'stretch') desc.innerText = "حركة تمدد وانقباض متناظرة للروابط.";
-      if (mode === 'bend') desc.innerText = "حركة تغيير زاوية الروابط (مثل المقص).";
-      if (mode === 'rotate') desc.innerText = "دوران الجزيء بالكامل حول محوره.";
+      document.getElementById('sim-' + simId).classList.remove('hidden');
+      document.getElementById('btn-' + simId).classList.add('active');
+
+      if (simId === 'molecule3d') init3D();
+      if (simId === 'atom') drawAtom();
+      if (simId === 'wave') drawWave();
+      if (simId === 'field') drawField();
     }
 
-    document.getElementById('speed-slider').addEventListener('input', (e) => {
-      speed = parseFloat(e.target.value);
-      document.getElementById('speed-val').innerText = speed.toFixed(1) + 'x';
-    });
+    // ==========================================
+    // 1. الجزيء 3D (Three.js)
+    // ==========================================
+    let scene, camera, renderer, controls, moleculeGroup;
+    let is3DInit = false;
 
-    // حلقة الرسم (Animation Loop)
-    function animate() {
-      requestAnimationFrame(animate);
-      time += 0.02 * speed;
+    function init3D() {
+      if (is3DInit) return;
+      is3DInit = true;
 
-      if (currentMode === 'stretch') {
-        // وضعية الهيدروجين الأساسية
-        const baseX = 1.0;
-        const baseY = 0.5;
-        
-        // تأثير الشد (كلما زادت القيمة، ابتعد الهيدروجين)
-        const stretch = Math.sin(time) * 0.3;
-        
-        const posH1 = new THREE.Vector3(-(baseX + stretch), baseY, 0);
-        const posH2 = new THREE.Vector3((baseX + stretch), baseY, 0);
-        
-        // تحديث مواضع الذرات
-        h1.position.copy(posH1);
-        h2.position.copy(posH2);
-        
-        // إعادة بناء الروابط
-        scene.remove(bond1);
-        scene.remove(bond2);
-        bond1 = createBond(new THREE.Vector3(0,0,0), posH1);
-        bond2 = createBond(new THREE.Vector3(0,0,0), posH2);
-        scene.add(bond1);
-        scene.add(bond2);
-        
-      } else if (currentMode === 'bend') {
-        // تأثير الانحناء (تغيير الزاوية)
-        const angleOffset = Math.sin(time) * 0.4;
-        
-        const baseAngle = Math.PI / 4; // 45 درجة
-        const angle1 = -baseAngle - angleOffset;
-        const angle2 = -baseAngle + angleOffset;
-        
-        const length = 1.2;
-        const posH1 = new THREE.Vector3(Math.cos(angle1) * length, Math.sin(angle1) * length, 0);
-        const posH2 = new THREE.Vector3(Math.cos(angle2) * length, Math.sin(angle2) * length, 0);
-        
-        h1.position.copy(posH1);
-        h2.position.copy(posH2);
-        
-        scene.remove(bond1);
-        scene.remove(bond2);
-        bond1 = createBond(new THREE.Vector3(0,0,0), posH1);
-        bond2 = createBond(new THREE.Vector3(0,0,0), posH2);
-        scene.add(bond1);
-        scene.add(bond2);
+      const container = document.getElementById('canvas-3d-container');
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0f172a);
 
-      } else if (currentMode === 'rotate') {
-        // دوران الجزيء بالكامل
-        const group = new THREE.Group();
-        // (في هذا المثال المبسط، سنقوم بتدوير المشهد كاملاً)
-        scene.rotation.y = time * 0.5;
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(0, 0, 8);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 2;
+
+      // الإضاءة
+      const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambient);
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      dirLight.position.set(5, 5, 5);
+      scene.add(dirLight);
+      const pointLight = new THREE.PointLight(0x3b82f6, 1);
+      pointLight.position.set(-5, 0, 5);
+      scene.add(pointLight);
+
+      moleculeGroup = new THREE.Group();
+      scene.add(moleculeGroup);
+
+      loadMolecule('h2o');
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+
+    function loadMolecule(type) {
+      // مسح الجزيء القديم
+      while(moleculeGroup.children.length > 0) {
+        moleculeGroup.remove(moleculeGroup.children[0]);
       }
 
-      controls.update();
-      renderer.render(scene, camera);
+      const atomGeo = new THREE.SphereGeometry(0.6, 32, 32);
+      
+      if (type === 'h2o') {
+        // O (أحمر)
+        const o = new THREE.Mesh(atomGeo, new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.2 }));
+        moleculeGroup.add(o);
+        
+        // H (أبيض)
+        const hGeo = new THREE.SphereGeometry(0.35, 32, 32);
+        const hMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.2 });
+        const h1 = new THREE.Mesh(hGeo, hMat); h1.position.set(-1.2, 0.8, 0); moleculeGroup.add(h1);
+        const h2 = new THREE.Mesh(hGeo, hMat); h2.position.set(1.2, 0.8, 0); moleculeGroup.add(h2);
+        
+        // الروابط
+        createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(-1.2, 0.8, 0));
+        createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(1.2, 0.8, 0));
+
+      } else if (type === 'co2') {
+        // C (رمادي)
+        const c = new THREE.Mesh(atomGeo, new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.2 }));
+        moleculeGroup.add(c);
+        
+        // O (أحمر)
+        const oGeo = new THREE.SphereGeometry(0.5, 32, 32);
+        const oMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.2 });
+        const o1 = new THREE.Mesh(oGeo, oMat); o1.position.set(-2, 0, 0); moleculeGroup.add(o1);
+        const o2 = new THREE.Mesh(oGeo, oMat); o2.position.set(2, 0, 0); moleculeGroup.add(o2);
+        
+        createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(-2, 0, 0));
+        createBond(new THREE.Vector3(0,0,0), new THREE.Vector3(2, 0, 0));
+
+      } else if (type === 'ch4') {
+        // C (رمادي)
+        const c = new THREE.Mesh(atomGeo, new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.2 }));
+        moleculeGroup.add(c);
+        
+        // 4 H (أبيض) في زوايا هرمية
+        const hGeo = new THREE.SphereGeometry(0.3, 32, 32);
+        const hMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.2 });
+        const positions = [
+          new THREE.Vector3(1, 1, 1),
+          new THREE.Vector3(-1, -1, 1),
+          new THREE.Vector3(-1, 1, -1),
+          new THREE.Vector3(1, -1, -1)
+        ];
+        positions.forEach(pos => {
+          const h = new THREE.Mesh(hGeo, hMat); h.position.copy(pos.multiplyScalar(0.8)); moleculeGroup.add(h);
+          createBond(new THREE.Vector3(0,0,0), pos);
+        });
+      }
     }
 
-    // بدء الحركة
-    animate();
+    function createBond(start, end) {
+      const dir = new THREE.Vector3().subVectors(end, start);
+      const len = dir.length();
+      const geo = new THREE.CylinderGeometry(0.1, 0.1, len, 8);
+      const mat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.5 });
+      const bond = new THREE.Mesh(geo, mat);
+      bond.position.copy(start.clone().add(end).multiplyScalar(0.5));
+      bond.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.normalize());
+      moleculeGroup.add(bond);
+    }
+
+    function changeMolecule(type) {
+      loadMolecule(type);
+    }
 
     // ==========================================
-    // 5. التعامل مع تغيير حجم النافذة
+    // 2. نموذج الذرة (Canvas)
     // ==========================================
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+    function drawAtom() {
+      const canvas = document.getElementById('atomCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const zS = document.getElementById('z-slider');
+      
+      function update() {
+        const Z = parseInt(zS.value);
+        document.getElementById('z-val').innerText = Z;
+        
+        // التوزيع الإلكتروني المبسط
+        const shells = [2, 8, 8, 18]; // سعة كل مستوى
+        let config = [];
+        let remaining = Z;
+        for (let cap of shells) {
+          if (remaining <= 0) break;
+          const n = Math.min(remaining, cap);
+          config.push(n);
+          remaining -= n;
+        }
+        document.getElementById('config-result').innerText = config.map((n, i) => `${i+1}:${n}`).join(' | ');
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width/2, cy = canvas.height/2;
+        
+        // النواة
+        ctx.beginPath(); ctx.arc(cx, cy, 20, 0, Math.PI*2); ctx.fillStyle = '#ef4444'; ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.font = 'bold 14px Cairo'; ctx.textAlign = 'center'; ctx.fillText(Z, cx, cy+5);
+        
+        // المدارات والإلكترونات
+        config.forEach((count, i) => {
+          const radius = 60 + i * 40;
+          // المدار
+          ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2); ctx.strokeStyle = 'rgba(16, 185, 129, 0.3)'; ctx.lineWidth = 1; ctx.stroke();
+          
+          // الإلكترونات
+          for (let j = 0; j < count; j++) {
+            const angle = (j / count) * Math.PI * 2 + (Date.now() / (1000 + i*500));
+            const ex = cx + Math.cos(angle) * radius;
+            const ey = cy + Math.sin(angle) * radius;
+            ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI*2); ctx.fillStyle = '#10b981'; ctx.fill();
+          }
+        });
+        
+        requestAnimationFrame(update);
+      }
+      update();
+    }
+
+    // ==========================================
+    // 3. تمثيل الموجة (Canvas)
+    // ==========================================
+    function drawWave() {
+      const canvas = document.getElementById('waveCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const fS = document.getElementById('w-freq-slider');
+      const aS = document.getElementById('w-amp-slider');
+      let time = 0;
+      
+      function update() {
+        const freq = parseFloat(fS.value);
+        const amp = parseInt(aS.value);
+        document.getElementById('w-freq').innerText = freq + ' Hz';
+        document.getElementById('w-amp').innerText = amp;
+        document.getElementById('w-result').innerText = (340 / freq).toFixed(1) + ' m';
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // المحور الأفقي
+        ctx.strokeStyle = '#334155'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, canvas.height/2); ctx.lineTo(canvas.width, canvas.height/2); ctx.stroke();
+        
+        // الموجة
+        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3;
+        ctx.beginPath();
+        for (let x = 0; x < canvas.width; x++) {
+          const y = canvas.height/2 + Math.sin((x / 50) * freq * 2 * Math.PI + time) * amp;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        
+        // رسم الطول الموجي
+        const lambda = (canvas.width / 5) / freq;
+        ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2; ctx.setLineDash([5,5]);
+        const startX = 50;
+        const endX = startX + lambda;
+        if (endX < canvas.width) {
+          ctx.beginPath(); ctx.moveTo(startX, canvas.height/2 - amp - 20); ctx.lineTo(endX, canvas.height/2 - amp - 20); ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = '#ef4444'; ctx.font = '12px Cairo'; ctx.textAlign = 'center';
+          ctx.fillText('λ', (startX + endX)/2, canvas.height/2 - amp - 25);
+        }
+        
+        time += 0.1;
+        requestAnimationFrame(update);
+      }
+      update();
+    }
+
+    // ==========================================
+    // 4. الحقل المغناطيسي (Canvas)
+    // ==========================================
+    function drawField() {
+      const canvas = document.getElementById('fieldCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const iS = document.getElementById('field-slider');
+      let time = 0;
+      
+      function update() {
+        const I = parseInt(iS.value);
+        const mu0 = 4 * Math.PI * 10**-7;
+        const r = 0.1; // 10 cm
+        const B = (mu0 * I) / (2 * Math.PI * r) * 10**6;
+        
+        document.getElementById('field-current').innerText = I + ' A';
+        document.getElementById('field-result').innerText = B.toFixed(2) + ' μT';
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width/2, cy = canvas.height/2;
+        
+        // السلك (نقطة في المنتصف مع علامة X لتيار داخل الصفحة)
+        ctx.beginPath(); ctx.arc(cx, cy, 15, 0, Math.PI*2); ctx.fillStyle = '#0ea5e9'; ctx.fill();
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 3;
+        // رسم X
+        ctx.beginPath(); ctx.moveTo(cx-6, cy-6); ctx.lineTo(cx+6, cy+6); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx+6, cy-6); ctx.lineTo(cx-6, cy+6); ctx.stroke();
+        
+        // خطوط المجال (دوائر متحدة المركز مع أسهم)
+        for (let i = 1; i <= 5; i++) {
+          const radius = i * 30;
+          ctx.strokeStyle = `rgba(14, 165, 233, ${0.7 - i*0.1})`; 
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI*2); ctx.stroke();
+          
+          // رسم أسهم على الدائرة (تدور مع الوقت)
+          const numArrows = i * 4;
+          for (let j = 0; j < numArrows; j++) {
+            const angle = (j / numArrows) * Math.PI * 2 + time;
+            const ax = cx + Math.cos(angle) * radius;
+            const ay = cy + Math.sin(angle) * radius;
+            const tangentX = -Math.sin(angle);
+            const tangentY = Math.cos(angle);
+            // رسم سهم صغير
+            ctx.save();
+            ctx.translate(ax, ay);
+            ctx.rotate(Math.atan2(tangentY, tangentX));
+            ctx.fillStyle = `rgba(14, 165, 233, ${0.7 - i*0.1})`;
+            ctx.beginPath();
+            ctx.moveTo(-4, -3); ctx.lineTo(4, 0); ctx.lineTo(-4, 3); ctx.fill();
+            ctx.restore();
+          }
+        }
+        
+        time += 0.02;
+        requestAnimationFrame(update);
+      }
+      update();
+    }
+
+    // التهيئة
+    document.addEventListener('DOMContentLoaded', () => {
+      switchSim('molecule3d');
     });
   </script>
 </body>
