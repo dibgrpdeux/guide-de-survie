@@ -278,6 +278,10 @@
           <button onclick="switchLab('chimie')" id="lab-tab-chimie" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">7. الكيمياء</button>
           <button onclick="switchLab('rdm')" id="lab-tab-rdm" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">8. RDM</button>
           <button onclick="switchLab('mdf')" id="lab-tab-mdf" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">9. MDF</button>
+          <button onclick="switchLab('optics')" id="lab-tab-optics" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">10. البصريات</button>
+          <button onclick="switchLab('thermo')" id="lab-tab-thermo" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">11. الديناميكا</button>
+          <button onclick="switchLab('magnet')" id="lab-tab-magnet" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">12. المغناطيسية</button>
+          <button onclick="switchLab('momentum')" id="lab-tab-momentum" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">13. الزخم</button>
         </div>
 
         <!-- 1. البندول -->
@@ -355,7 +359,7 @@
             </div>
             <div>
               <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>المقاومة القصوى (fc)</span><span id="strength-val" class="text-red-600">25</span> MPa</label>
-              <input type="range" id="strength-slider" min="10" max="50" value="25" class="slider-custom">
+              <input type="range" id="strength-slider" min="10" max="50" value="25" class" class="slider-custom">
             </div>
             <div class="bg-red-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-red-100 dark:border-slate-700">
               <p class="text-xs text-gray-500 mb-1">حالة المكعب</p>
@@ -371,7 +375,7 @@
           </div>
           <div class="space-y-6 flex flex-col justify-center">
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300  mb-2"><span>ثابت الزنبرك (k)</span><span id="k-val" class="text-pink-600">20</span> N/m</label>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>ثابت الزنبرك (k)</span><span id="k-val" class="text-pink-600">20</span> N/m</label>
               <input type="range" id="k-slider" min="5" max="100" value="20" class="slider-custom">
             </div>
             <div>
@@ -385,7 +389,7 @@
           </div>
         </div>
 
-        <!-- 6. الأمواج (Waves) -->
+        <!-- 6. الأمواج -->
         <div id="lab-content-waves" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="wavesCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
@@ -406,7 +410,7 @@
           </div>
         </div>
 
-        <!-- 7. الكيمياء (تفاعل حمض-قاعدة) -->
+        <!-- 7. الكيمياء -->
         <div id="lab-content-chimie" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="chimieCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
@@ -427,7 +431,7 @@
           </div>
         </div>
 
-        <!-- 8. RDM (الجسر) -->
+        <!-- 8. RDM -->
         <div id="lab-content-rdm" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="rdmCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
@@ -444,7 +448,7 @@
           </div>
         </div>
 
-        <!-- 9. MDF (الانحناء) -->
+        <!-- 9. MDF -->
         <div id="lab-content-mdf" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="mdfCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
@@ -459,6 +463,102 @@
               <p class="text-2xl font-black text-lime-700 dark:text-lime-400" id="deflection-result">0 mm</p>
             </div>
           </div>
+        </div>
+
+        <!-- 10. البصريات -->
+        <div id="lab-content-optics" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
+            <canvas id="opticsCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
+          </div>
+          <div class="space-y-6 flex flex-col justify-center">
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>زاوية السقوط (θ1)</span><span id="angle1-val" class="text-indigo-600">30</span>°</label>
+              <input type="range" id="angle1-slider" min="0" max="80" value="30" class="slider-custom">
+            </div>
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>معامل الانكسار (n2)</span><span id="n2-val" class="text-indigo-600">1.5</span></label>
+              <input type="range" id="n2-slider" min="1" max="2.5" step="0.1" value="1.5" class="slider-custom">
+            </div>
+            <div class="bg-indigo-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-indigo-100 dark:border-slate-700">
+              <p class="text-xs text-gray-500 mb-1">زاوية الانكسار (θ2)</p>
+              <p class="text-2xl font-black text-indigo-700 dark:text-indigo-400" id="angle2-result">0°</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. الديناميكا الحرارية -->
+        <div id="lab-content-thermo" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
+            <canvas id="thermoCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
+          </div>
+          <div class="space-y-6 flex flex-col justify-center">
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>الضغط (P)</span><span id="p-val" class="text-rose-600">1</span> atm</label>
+              <input type="range" id="p-slider" min="0.5" max="5" step="0.1" value="1" class="slider-custom">
+            </div>
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>عدد المولات (n)</span><span id="n-val" class="text-rose-600">1</span> mol</label>
+              <input type="range" id="n-slider" min="0.5" max="5" step="0.1" value="1" class="slider-custom">
+            </div>
+            <div class="bg-rose-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-rose-100 dark:border-slate-700">
+              <p class="text-xs text-gray-500 mb-1">درجة الحرارة (T = PV/nR)</p>
+              <p class="text-2xl font-black text-rose-700 dark:text-rose-400" id="temp-result">0 K</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. المغناطيسية -->
+        <div id="lab-content-magnet" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
+            <canvas id="magnetCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
+          </div>
+          <div class="space-y-6 flex flex-col justify-center">
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>شدة التيار (I)</span><span id="current-val" class="text-cyan-600">2</span> A</label>
+              <input type="range" id="current-slider" min="1" max="10" value="2" class="slider-custom">
+            </div>
+            <div class="bg-cyan-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-cyan-100 dark:border-slate-700">
+              <p class="text-xs text-gray-500 mb-1">المجال المغناطيسي (B)</p>
+              <p class="text-2xl font-black text-cyan-700 dark:text-cyan-400" id="b-result">0 μT</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13. الزخم -->
+        <div id="lab-content-momentum" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
+            <canvas id="momentumCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
+          </div>
+          <div class="space-y-6 flex flex-col justify-center">
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>كتلة الكرة 1 (m1)</span><span id="m1-val" class="text-amber-600">2</span> kg</label>
+              <input type="range" id="m1-slider" min="1" max="10" value="2" class="slider-custom">
+            </div>
+            <div>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>سرعة الكرة 1 (v1)</span><span id="v1-val" class="text-amber-600">5</span> m/s</label>
+              <input type="range" id="v1-slider" min="1" max="10" value="5" class="slider-custom">
+            </div>
+            <div class="bg-amber-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-amber-100 dark:border-slate-700">
+              <p class="text-xs text-gray-500 mb-1">الزخم الكلي (P = m*v)</p>
+              <p class="text-2xl font-black text-amber-700 dark:text-amber-400" id="momentum-result">0 kg.m/s</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- بطاقة مختبر الجزيئات 3D -->
+        <div class="col-span-1 md:col-span-2 bg-gradient-to-r from-emerald-500 to-teal-600 p-6 rounded-2xl shadow-lg mt-4 text-white flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl">
+              <i class="fa-solid fa-atom"></i>
+            </div>
+            <div>
+              <h4 class="font-black text-xl">مختبر الجزيئات 3D</h1>
+              <p class="text-emerald-100 text-sm mt-1">تجارب تفاعلية ثلاثية الأبعاد لاهتزازات الجزيئات (H2O, CO2).</p>
+            </div>
+          </div>
+          <a href="molecule-lab.html" class="px-6 py-3 bg-white text-emerald-700 font-black rounded-xl hover:bg-emerald-50 transition shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-flask"></i> ابدأ التجربة
+          </a>
         </div>
 
       </div>
@@ -675,11 +775,15 @@
         </div>`).join('');
     }
     function addCronoTask() {
+          function addCronoTask() {
       const name = document.getElementById('crono-name').value;
       const time = document.getElementById('crono-time').value;
       if (!name || !time) return alert("الرجاء إدخال اسم المهمة والوقت");
-      cronoTasks.push({ name, time, done: false }); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks));
-      document.getElementById('crono-name').value = ''; document.getElementById('crono-time').value = ''; renderCrono();
+      cronoTasks.push({ name, time, done: false }); 
+      localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks));
+      document.getElementById('crono-name').value = ''; 
+      document.getElementById('crono-time').value = ''; 
+      renderCrono();
     }
     function toggleCronoTask(i) { cronoTasks[i].done = !cronoTasks[i].done; localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
     function deleteCronoTask(i) { cronoTasks.splice(i, 1); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
@@ -724,7 +828,7 @@
     // 4. المختبر الافتراضي (Virtual Lab)
     // ==========================================
     function switchLab(labId) {
-      ['pendulum', 'circuit', 'projectile', 'concrete', 'spring', 'waves', 'chimie', 'rdm', 'mdf'].forEach(l => {
+      ['pendulum', 'circuit', 'projectile', 'concrete', 'spring', 'waves', 'chimie', 'rdm', 'mdf', 'optics', 'thermo', 'magnet', 'momentum'].forEach(l => {
         const content = document.getElementById('lab-content-' + l);
         const tab = document.getElementById('lab-tab-' + l);
         if (content && tab) {
@@ -741,6 +845,10 @@
       if (labId === 'chimie') drawChimie();
       if (labId === 'rdm') drawRDM();
       if (labId === 'mdf') drawMDF();
+      if (labId === 'optics') drawOptics();
+      if (labId === 'thermo') drawThermo();
+      if (labId === 'magnet') drawMagnet();
+      if (labId === 'momentum') drawMomentum();
     }
 
     // 1. البندول
@@ -804,7 +912,7 @@
       }
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
+        ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
         const v0 = parseInt(vS.value), angle = parseInt(aS.value), rad = angle * Math.PI / 180, g = 9.81;
         const x = 30 + (v0 * Math.cos(rad) * t * 2), y = canvas.height - 30 - (v0 * Math.sin(rad) * t - 0.5 * g * t * t) * 2;
         ctx.fillStyle = '#3b82f6'; ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.fill();
@@ -852,7 +960,7 @@
       kS.oninput = update; xS.oninput = update; update();
     }
 
-    // 6. الأمواج (Waves)
+    // 6. الأمواج
     let waveAnim;
     function drawWaves() {
       cancelAnimationFrame(waveAnim);
@@ -876,7 +984,7 @@
       update();
     }
 
-    // 7. الكيمياء (Chimie)
+    // 7. الكيمياء
     function drawChimie() {
       const canvas = document.getElementById('chimieCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -897,7 +1005,7 @@
       acidS.oninput = update; baseS.oninput = update; update();
     }
 
-    // 8. RDM (الجسر - عزم الانحناء)
+    // 8. RDM
     function drawRDM() {
       const canvas = document.getElementById('rdmCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -925,7 +1033,7 @@
       loadS.oninput = update; update();
     }
 
-    // 9. MDF (الانحناء - Deflection)
+    // 9. MDF
     function drawMDF() {
       const canvas = document.getElementById('mdfCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -950,8 +1058,97 @@
       lenS.oninput = update; update();
     }
 
+    // 10. البصريات
+    function drawOptics() {
+      const canvas = document.getElementById('opticsCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const a1S = document.getElementById('angle1-slider');
+      const n2S = document.getElementById('n2-slider');
+      function update() {
+        const a1 = parseInt(a1S.value), n2 = parseFloat(n2S.value), n1 = 1;
+        const rad1 = a1 * Math.PI / 180;
+        const rad2 = Math.asin((n1 / n2) * Math.sin(rad1));
+        const a2 = Math.round(rad2 * 180 / Math.PI);
+        document.getElementById('angle1-val').innerText = a1;
+        document.getElementById('n2-val').innerText = n2;
+        document.getElementById('angle2-result').innerText = a2 + '°';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height/2);
+        ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0, canvas.height/2); ctx.lineTo(canvas.width, canvas.height/2); ctx.stroke();
+        const startX = canvas.width/2 - Math.sin(rad1) * 150, startY = canvas.height/2 - Math.cos(rad1) * 150;
+        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(startX, startY); ctx.lineTo(canvas.width/2, canvas.height/2); ctx.stroke();
+        const endX = canvas.width/2 + Math.sin(rad2) * 150, endY = canvas.height/2 + Math.cos(rad2) * 150;
+        ctx.strokeStyle = '#ef4444'; ctx.beginPath(); ctx.moveTo(canvas.width/2, canvas.height/2); ctx.lineTo(endX, endY); ctx.stroke();
+        ctx.strokeStyle = '#94a3b8'; ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.moveTo(canvas.width/2, 0); ctx.lineTo(canvas.width/2, canvas.height); ctx.stroke(); ctx.setLineDash([]);
+      }
+      a1S.oninput = update; n2S.oninput = update; update();
+    }
+
+    // 11. الديناميكا
+    function drawThermo() {
+      const canvas = document.getElementById('thermoCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const pS = document.getElementById('p-slider'), nS = document.getElementById('n-slider');
+      function update() {
+        const P = parseFloat(pS.value), n = parseFloat(nS.value), V = 22.4, R = 0.0821;
+        const T = (P * V) / (n * R);
+        document.getElementById('p-val').innerText = P.toFixed(1);
+        document.getElementById('n-val').innerText = n.toFixed(1);
+        document.getElementById('temp-result').innerText = T.toFixed(1) + ' K';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#64748b'; ctx.lineWidth = 4; ctx.strokeRect(100, 50, 150, 200);
+        const num = Math.floor(n * 20);
+        for (let i = 0; i < num; i++) {
+          ctx.fillStyle = '#f43f5e'; ctx.beginPath(); ctx.arc(110 + Math.random() * 130, 60 + Math.random() * 180, 3, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.fillStyle = '#475569'; ctx.fillRect(90, 40, 170, 15);
+      }
+      pS.oninput = update; nS.oninput = update; update();
+    }
+
+    // 12. المغناطيسية
+    function drawMagnet() {
+      const canvas = document.getElementById('magnetCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const iS = document.getElementById('current-slider');
+      function update() {
+        const I = parseInt(iS.value), mu0 = 4 * Math.PI * 10**-7, r = 0.1;
+        const B = (mu0 * I) / (2 * Math.PI * r) * 10**6;
+        document.getElementById('current-val').innerText = I;
+        document.getElementById('b-result').innerText = B.toFixed(2) + ' μT';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width/2, cy = canvas.height/2;
+        ctx.fillStyle = '#0ea5e9'; ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.font = 'bold 12px Arial'; ctx.textAlign = 'center'; ctx.fillText('I', cx, cy + 4);
+        for (let i = 1; i <= 4; i++) {
+          ctx.strokeStyle = `rgba(14, 165, 233, ${0.6 - i*0.1})`; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(cx, cy, i * 40, 0, Math.PI * 2); ctx.stroke();
+        }
+      }
+      iS.oninput = update; update();
+    }
+
+    // 13. الزخم
+    function drawMomentum() {
+      const canvas = document.getElementById('momentumCanvas'); if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const m1S = document.getElementById('m1-slider'), v1S = document.getElementById('v1-slider');
+      function update() {
+        const m1 = parseInt(m1S.value), v1 = parseInt(v1S.value), P = m1 * v1;
+        document.getElementById('m1-val').innerText = m1;
+        document.getElementById('v1-val').innerText = v1;
+        document.getElementById('momentum-result').innerText = P + ' kg.m/s';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(100, canvas.height/2, 20 + m1 * 2, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(120 + m1*2, canvas.height/2); ctx.lineTo(160 + m1*2, canvas.height/2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(150 + m1*2, canvas.height/2 - 5); ctx.lineTo(160 + m1*2, canvas.height/2); ctx.lineTo(150 + m1*2, canvas.height/2 + 5); ctx.fill();
+        ctx.fillStyle = '#64748b'; ctx.font = 'bold 14px Cairo'; ctx.textAlign = 'right'; ctx.fillText(`v = ${v1} m/s`, 280, canvas.height/2 - 20);
+      }
+      m1S.oninput = update; v1S.oninput = update; update();
+    }
+
     // ==========================================
-    // 5. INIT (تهيئة الصفحة)
+    // 5. INIT
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       renderDrives();
@@ -959,7 +1156,6 @@
       renderTasks();   
       renderModules(); 
       renderCrono();   
-      // تشغيل تجربة البندول افتراضياً
       setTimeout(startPendulum, 100);
     });
   </script>
