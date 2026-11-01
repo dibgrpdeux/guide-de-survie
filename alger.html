@@ -8,96 +8,131 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; }
+    body { font-family: 'Cairo', sans-serif; background: #fff7ed; }
+    .dark body { background: #1a1410; }
+    
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.15); }
+    .dark .glass-card { background: rgba(30, 20, 15, 0.95); border-color: rgba(249, 115, 22, 0.2); }
+    
     .map-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .gallery-scroll::-webkit-scrollbar { height: 6px; }
-    .gallery-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .gallery-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
+
+    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: #64748b; transition: 0.2s; }
+    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
+    .lang-btn.active { background: #f97316; color: white; }
+
+    .filter-btn { transition: all 0.3s ease; }
+    .filter-btn.active { background: #f97316; color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b px-4 py-3">
+  <header class="sticky top-0 z-50 glass-card backdrop-blur-md border-b px-4 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <h1 class="font-bold text-gray-900 text-lg"><i class="fa-solid fa-map-location-dot text-teal-600"></i> الترفيه والرحلات في العاصمة</h1>
+      <h1 class="font-bold text-gray-900 dark:text-white text-lg flex items-center gap-2">
+        <i class="fa-solid fa-map-location-dot text-orange-500"></i> الترفيه والرحلات في العاصمة
+      </h1>
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200 shadow-sm">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active text-xs font-bold px-2 py-1 rounded bg-indigo-600 text-white">عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn text-xs font-bold px-2 py-1 rounded text-gray-600">FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn text-xs font-bold px-2 py-1 rounded text-gray-600">EN</button>
+        <div class="flex items-center gap-1 bg-gray-50 dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold">الرئيسية</a>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 hover:bg-orange-200 text-xs font-bold transition">الرئيسية</a>
       </div>
     </div>
   </header>
 
   <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
-    <div id="categoriesBar" class="flex flex-wrap gap-2 justify-center sticky top-[60px] z-40 bg-white/80 p-2 rounded-2xl backdrop-blur-md shadow-sm border border-gray-100"></div>
+    <div id="categoriesBar" class="flex flex-wrap gap-2 justify-center sticky top-[60px] z-40 glass-card p-2 rounded-2xl shadow-sm border border-orange-100 dark:border-slate-700"></div>
     <div id="placesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
   </main>
 
+  <!-- نافذة التفاصيل -->
   <div id="placeModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
-      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
-      <div class="border-b pb-4 pr-10">
-        <h2 id="modalTitle" class="text-2xl font-black text-gray-900"></h2>
-        <p id="modalSubtitle" class="text-sm text-indigo-600 font-bold mt-1"></p>
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div class="border-b border-orange-100 dark:border-slate-700 pb-4 pr-10">
+        <h2 id="modalTitle" class="text-2xl font-black text-gray-900 dark:text-white"></h2>
+        <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
       </div>
+
       <div id="modalGalleryContainer" class="space-y-2">
-        <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-images text-indigo-500 mr-1.5"></i> معرض الصور:</h4>
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> معرض الصور:</h4>
         <div id="modalGallery" class="flex overflow-x-auto gap-3 pb-2 snap-x gallery-scroll"></div>
       </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
+        <div class="space-y-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
           <div>
-            <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-circle-info text-blue-500 mr-1.5"></i> لمحة تاريخية:</h4>
-            <p id="modalHistory" class="bg-blue-50/60 p-3 rounded-xl border border-blue-100"></p>
+            <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-circle-info text-blue-500 mr-1.5"></i> لمحة تاريخية:</h4>
+            <p id="modalHistory" class="bg-blue-50/60 dark:bg-blue-900/20 p-3 rounded-xl border border-blue-100 dark:border-blue-800"></p>
           </div>
           <div>
-            <h4 class="font-bold text-gray-900 text-sm mb-1"><i class="fa-solid fa-bus text-amber-500 mr-1.5"></i> كيفية الوصول:</h4>
-            <p id="modalTransport" class="bg-amber-50/60 p-3 rounded-xl border border-amber-100"></p>
+            <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-bus text-amber-500 mr-1.5"></i> كيفية الوصول:</h4>
+            <p id="modalTransport" class="bg-amber-50/60 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-100 dark:border-amber-800"></p>
           </div>
         </div>
         <div id="modalVideoContainer" class="space-y-2 hidden">
-          <h4 class="font-bold text-gray-900 text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
-          <div id="modalVideo" class="video-container bg-gray-200"></div>
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
+          <div id="modalVideo" class="video-container bg-gray-200 dark:bg-slate-700"></div>
         </div>
       </div>
+
       <div class="space-y-2">
-        <h4 class="font-bold text-gray-900 text-sm"><i class="fa-solid fa-map-location-dot text-indigo-500 mr-1.5"></i> الموقع على الخريطة:</h4>
-        <div id="modalMap" class="map-container bg-gray-200"></div>
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> الموقع على الخريطة:</h4>
+        <div id="modalMap" class="map-container bg-gray-200 dark:bg-slate-700"></div>
       </div>
     </div>
   </div>
 
   <script>
     const placesData = [
-      // === الشواطئ ===
+      // ==========================================
+      // الشواطئ (Beaches)
+      // ==========================================
       { id: 'sidi_fredj', category: 'شواطئ', title: 'سيدي فرج (Sidi Fredj)', icon: '🏖️', history: 'يبعد 25 كم عن وسط العاصمة. يتميز بمرسى ترفيهي ومطاعم أسماك. الدخول مجاني، ومواقف السيارات متوفرة.', transport: 'الطريق السيار A1. يمكن الجمع بينه وبين زرالدة في نفس اليوم.', map: 'Sidi Fredj Alger', images: ['SIDI-FREDJ.png', 'images (9).jpeg', 'images (10).jpeg'], videos: [] },
       { id: 'zeralda', category: 'شواطئ', title: 'زرالدة (Zeralda)', icon: '🏖️', history: 'يبعد 35 كم. الخيار الآمن للعائلات، به منتجعات ومرافق. مواقف السيارات مدفوعة (~200 دج).', transport: 'الطريق السيار A1. يفضل الوصول قبل الساعة 10 صباحاً في الصيف.', map: 'Zeralda plage Alger', images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], videos: [] },
       { id: 'ain_taya', category: 'شواطئ', title: 'عين طاية (Ain Taya)', icon: '🏖️', history: 'يبعد 22 كم فقط. شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع. الدخول مجاني لكن المواقف محدودة.', transport: 'الاتجاه شرقاً. يفضل الذهاب في أيام الأسبوع لتجنب الازدحام.', map: 'Ain Taya plage Alger', images: ['images (22).jpeg','images (23).jpeg', 'images (24).jpeg','images (25).jpeg' ], videos: [] },
       { id: 'club_pins', category: 'شواطئ', title: 'نادي الصنوبر (Club des Pins)', icon: '🏖️', history: 'يبعد 28 كم. أقل ازدحاماً، مثالي للأطفال الصغار نظراً لهدوء المياه.', transport: 'الطريق السيار A1 باتجاه الغرب.', map: 'Club des Pins Alger', images: [ 'images (26).jpeg', 'images (27).jpeg','images (28).jpeg' ], videos: [] },
       { id: 'tipaza', category: 'شواطئ', title: 'تيبازة / شنوة (Tipaza)', icon: '🏖️', history: 'تبعد 70 كم. من أجمل الشواطئ، يمكن الجمع بين السباحة وزيارة الآثار الرومانية.', transport: 'الطريق الوطني RN11.', map: 'Chenoua Tipaza', images: [], videos: [] },
 
-      // === الحدائق ===
-      { id: 'jardin_essai', category: 'حدائق', title: 'حديقة التجارب بالحامة', icon: '🌳', history: 'تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم، تضم آلاف الأنواع النباتية النادرة.', transport: 'مترو الأنفاق (محطة الحامة) أو الحافلات.', map: 'Jardin d\'Essai El Hamma Alger', images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], videos: [{ id: 'DOHY1JVqmDU', title: 'زيارة حديقة التجارب' }] },
+      // ==========================================
+      // الحدائق (Parks)
+      // ==========================================
+      { id: 'jardin_essai', category: 'حدائق', title: 'حديقة التجارب بالحامة', icon: '🌳', history: 'تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم، تضم آلاف الأنواع النباتية النادرة.', transport: 'مترو الأنفاق (محطة الحامة) أو الحافلات.', map: 'Jardin d\'Essai El Hamma Alger', images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], videos: [{ id: 'peHUzgnaTOI', title: 'زيارة حديقة التجارب' }] },
       { id: 'parc_ben_aknoun', category: 'حدائق', title: 'حديقة بن عكنون', icon: '🌳', history: 'حديقة ترفيهية شهيرة تضم حديقة حيوانات كبيرة ومساحات خضراء واسعة.', transport: 'حافلات أو طاكسي.', map: 'Parc Ben Aknoun Alger', images: ['images (11).jpeg', 'images (12).jpeg'], videos: [] },
       { id: 'bois_arcades', category: 'حدائق', title: 'غابة الأركاد (حيدرة)', icon: '🌳', history: 'غابة حضرية هادئة في قلب حيدرة، تحتوي على مسارات للمشي والجري.', transport: 'سيارة أو حافلة إلى حيدرة.', map: 'Bois des Arcades Hydra Alger', images: ['images (13).jpeg', 'images (14).jpeg', 'images (15).jpeg'], videos: [] },
+      { id: 'dream_park', category: 'حدائق', title: 'دريم بارك (Dream Park)', icon: '🎢', history: 'مدينة ألعاب ترفيهية كبيرة في الجزائر العاصمة، مناسبة للعائلات والأصدقاء.', transport: 'سيارة أو حافلة (حي باب الزوار).', map: 'Dream Park Alger', images: [], videos: [{ id: 'tiDBo1RUS0o', title: 'جولة في Dream Park' }] },
+      { id: 'marsy_splash', category: 'حدائق', title: 'مارسي سبلاش (Marsy Splash)', icon: '🌊', history: 'مدينة ألعاب مائية شهيرة، مثالية لفصل الصيف.', transport: 'سيارة أو حافلة (منطقة زرالدة).', map: 'Marsy Splash Alger', images: ['marsy 1.PNG', 'marsy 2.PNG', 'marsy 3.PNG', 'marsy 4.PNG'], videos: [] },
+      { id: 'jump_ouled_fayet', category: 'حدائق', title: 'جامب أولاد فايت (Jump Ouled Fayet)', icon: '🤸', history: 'فضاء ترفيهي رياضي (Trampoline Park) للأطفال والكبار.', transport: 'سيارة أو حافلة إلى أولاد فايت.', map: 'Jump Ouled Fayet Alger', images: ['teri 1.JPEG', 'teri 2.JPEG', 'teri 3.JPEG', 'teri 4.JPEG', 'teri 5.JPEG', 'teri 6.JPEG'], videos: [] },
+      { id: 'rageroom', category: 'حدائق', title: 'راج روم باب الزوار (Rage Room)', icon: '💥', history: 'غرفة تفريغ نفسي (تكسير الأشياء) في باب الزوار، تجربة فريدة لتفريغ الطاقة.', transport: 'سيارة أو حافلة إلى باب الزوار.', map: 'Rage Room Bab Ezzouar Alger', images: ['rage 1.PNG', 'rage 2.PNG', 'rage 3.PNG', 'rage 4.PNG', 'rage 5.PNG', 'rage 6.PNG', 'rage 7.PNG'], videos: [] },
 
-      // === الثقافة والتاريخ ===
-      { id: 'casbah', category: 'ثقافة وتاريخ', title: 'قصبة الجزائر', icon: '🏛️', history: 'موقع تراثي عالمي منذ 1992. المدينة القديمة للجزائر، تأسست في القرن العاشر، وتضم قصوراً عثمانية ومساجد تاريخية.', transport: 'محطة مترو ساحة الشهداء، أو الحافلات.', map: 'Casbah Alger', images: ['images (29).jpeg', 'images (35).jpeg', 'images (36).jpeg', 'images (37).jpeg', 'images (38).jpeg', 'images (39).jpeg', 'images (40).jpeg', 'images (41).jpeg', 'images (42).jpeg' ], videos: [{ id: 'K7f2zx0UFsg', title: 'زيارة القصبة' }] },
-      { id: 'martyrs_memorial', category: 'ثقافة وتاريخ', title: 'مقام الشهيد', icon: '🗼', history: 'نصب تذكاري ضخم يخلد ذكرى شهداء حرب الاستقلال الجزائرية.', transport: 'سيارة أو حافلة إلى منطقة رياض الفتح.', map: 'Maqam Echahid Alger', images: ['images (45).jpeg', 'images (43).jpeg', 'images (44).jpeg' ], videos: [] },
-      { id: 'bardo_museum', category: 'ثقافة وتاريخ', title: 'المتحف الوطني باردو', icon: '🏛️', history: 'يقع في قصر يعود للقرن الثامن عشر. يضم مجموعات أثرية وفنوناً إفريقية وتقليدية.', transport: 'حافلات أو طاكسي (حي الحامة).', map: 'Musée du Bardo Alger', images: ['images (51).jpeg', 'images (52).jpeg', 'images (53).jpeg', 'images (54).jpeg'], videos: [{ id: 'Bx-EhrdmjbA', title: 'زيارة متحف الباردو' }] },
+      // ==========================================
+      // الثقافة والتاريخ (Culture & History)
+      // ==========================================
+      { id: 'casbah', category: 'ثقافة وتاريخ', title: 'قصبة الجزائر', icon: '🏛️', history: 'موقع تراثي عالمي منذ 1992. المدينة القديمة للجزائر، تأسست في القرن العاشر، وتضم قصوراً عثمانية ومساجد تاريخية.', transport: 'محطة مترو ساحة الشهداء، أو الحافلات.', map: 'Casbah Alger', images: ['images (29).jpeg', 'images (35).jpeg', 'images (36).jpeg', 'images (37).jpeg', 'images (38).jpeg', 'images (39).jpeg', 'images (40).jpeg', 'images (41).jpeg', 'images (42).jpeg' ], videos: [{ id: 'WmGY2OywWiE', title: 'زيارة القصبة' }, { id: 'tUq3e9LslTM', title: 'القصبة' }] },
+      { id: 'martyrs_memorial', category: 'ثقافة وتاريخ', title: 'مقام الشهيد', icon: '🗼', history: 'نصب تذكاري ضخم يخلد ذكرى شهداء حرب الاستقلال الجزائرية.', transport: 'سيارة أو حافلة إلى منطقة رياض الفتح.', map: 'Maqam Echahid Alger', images: ['images (45).jpeg', 'images (43).jpeg', 'images (44).jpeg' ], videos: [{ id: 'URc2i9CWkxk', title: 'مقام الشهيد' }] },
+      { id: 'bardo_museum', category: 'ثقافة وتاريخ', title: 'المتحف الوطني باردو', icon: '🏛️', history: 'يقع في قصر يعود للقرن الثامن عشر. يضم مجموعات أثرية وفنوناً إفريقية وتقليدية.', transport: 'حافلات أو طاكسي (حي الحامة).', map: 'Musée du Bardo Alger', images: ['images (51).jpeg', 'images (52).jpeg', 'images (53).jpeg', 'images (54).jpeg'], videos: [{ id: 'tEcX6KZpSiM', title: 'زيارة متحف الباردو' }] },
       { id: 'notre_dame', category: 'ثقافة وتاريخ', title: 'كنيسة سيدة إفريقيا', icon: '⛪', history: 'كنيسة كاثوليكية تقع على تلة تطل على خليج الجزائر، تتميز بمعمارها البيزنطي وقبتها الزرقاء.', transport: 'الترامواي أو الحافلات.', map: 'Notre-Dame d\'Afrique Alger', images: ['images (17).jpeg', 'images (18).jpeg', 'images (19).jpeg'], videos: [] },
       { id: 'grande_poste', category: 'ثقافة وتاريخ', title: 'البريد المركزي', icon: '🏛️', history: 'مبنى تاريخي في قلب العاصمة، يتميز بمعماره الموريسكي.', transport: 'مترو الأنفاق (محطة البريد المركزي).', map: 'Grande Poste Alger', images: [ 'images (58).jpeg', 'images (59).jpeg' ], videos: [{ id: 'QQbkX8MeCWI', title: 'زيارة البريد المركزي' }] },
+      { id: 'kasser_el_rayes', category: 'ثقافة وتاريخ', title: 'قصر الرياس', icon: '🏰', history: 'قصر عثماني تاريخي في القصبة، يعود للقرن السادس عشر، يضم متحفاً للفنون والتقاليد.', transport: 'محطة مترو ساحة الشهداء ثم مشياً.', map: 'Palais des Raïs Alger', images: ['kasser 1.jpg', 'kasser 2.jpg', 'kasser 3.jpg', 'kasser 4.jpg', 'kasser 5.jpg', 'kasser 6.jpg', 'kasser 7.jpg', 'kasser 8.jpg'], videos: [] },
+      { id: 'palais_arts', category: 'ثقافة وتاريخ', title: 'قصر الفنون الجميلة', icon: '🎨', history: 'متحف الفنون الجميلة في الجزائر العاصمة، يضم مجموعات فنية رائعة.', transport: 'حي الحامة، بالقرب من حديقة التجارب.', map: 'Musée des Beaux-Arts Alger', images: ['fonon 1.JPEG', 'fonon 2.JPEG', 'fonon 3.JPEG', 'fonon 4.JPEG', 'fonon 5.JPEG', 'fonon 6.JPEG', 'fonon 7.JPEG', 'fonon 8.JPEG'], videos: [] },
+      { id: 'dar_el_soltan', category: 'ثقافة وتاريخ', title: 'دار السلطان', icon: '🏛️', history: 'منزل عثماني تقليدي في القصبة، يعكس العمارة الجزائرية القديمة.', transport: 'القصبة، محطة مترو ساحة الشهداء.', map: 'Dar El Soltan Alger', images: [], videos: [{ id: 'RGcjn0WhOeI', title: 'دار السلطان' }] },
 
-      // === المساجد ===
-      { id: 'djamaa_djazair', category: 'مساجد', title: 'جامع الجزائر الأعظم', icon: '🕌', history: 'ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً).', transport: 'مترو الأنفاق أو الحافلات، يقع في المحمدية.', map: 'Djamaa El Djazair Alger', images: ['images (60).jpeg','images (61).jpeg','images (62).jpeg','images (63).jpeg'], videos: [] },
+      // ==========================================
+      // المساجد (Mosques)
+      // ==========================================
+      { id: 'djamaa_djazair', category: 'مساجد', title: 'جامع الجزائر الأعظم', icon: '🕌', history: 'ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً).', transport: 'مترو الأنفاق أو الحافلات، يقع في المحمدية.', map: 'Djamaa El Djazair Alger', images: ['images (60).jpeg','images (61).jpeg','images (62).jpeg','images (63).jpeg'], videos: [{ id: 'jLedHzZuxE4', title: 'جامع الجزائر الأعظم' }, { id: 'CZ7_3PCqDok', title: 'المسجد الأعظم' }] },
       { id: 'ketchaoua', category: 'مساجد', title: 'مسجد كتشاوة', icon: '🕌', history: 'من أقدم مساجد الجزائر (يعود للعهد العثماني).', transport: 'محطة مترو ساحة الشهداء، ثم مشياً إلى القصبة.', map: 'Ketchaoua Mosque Alger', images: ['images (68).jpeg','images (69).jpeg','images (70).jpeg','images (71).jpeg','images (72).jpeg'], videos: [] },
 
-      // === وكالات السفر ===
+      // ==========================================
+      // وكالات السفر (Travel Agencies)
+      // ==========================================
       { id: 'agence_sofiane', category: 'وكالات سفر', title: 'وكالة صفيان (Sofiane)', icon: '✈️', history: 'وكالة محلية مقرها الجزائر العاصمة. تنظم رحلات إلى الصحراء والشمال. أسعار الرحلات تبدأ من حوالي 1,560 يورو.', transport: 'الاتصال عبر منصة Evaneos.', map: 'Alger', images: [], videos: [], links: { web: 'https://www.evaneos.fr/algerie/voyage/agences/69793-sofiane/' } },
       { id: 'kenzia_travel', category: 'وكالات سفر', title: 'كنزيا ترافل', icon: '✈️', history: 'عروض خاصة لرحلات 4 أيام إلى القالة وعنابة. السعر يبدأ من 19,999 دج للشخص.', transport: 'الاتصال: 0553176311.', map: 'Alger', images: [], videos: [], links: { phone: '0553176311' } }
     ];
@@ -111,7 +146,7 @@
       
       cats.forEach(cat => {
         const btn = document.createElement('button');
-        btn.className = `px-4 py-2 rounded-xl font-bold text-sm transition ${cat === currentCategory ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-gray-600 border hover:bg-gray-50'}`;
+        btn.className = `filter-btn px-4 py-2 rounded-xl font-bold text-sm border border-orange-200 dark:border-slate-700 ${cat === currentCategory ? 'active' : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300'}`;
         btn.innerText = cat;
         btn.onclick = () => { currentCategory = cat; renderCategories(); renderCards(); };
         bar.appendChild(btn);
@@ -131,18 +166,18 @@
         }
         
         const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl overflow-hidden cursor-pointer group shadow-sm border border-gray-100 hover:shadow-md transition";
+        card.className = "glass-card rounded-2xl overflow-hidden cursor-pointer group shadow-sm border border-orange-100 dark:border-slate-700 hover:shadow-lg transition";
         card.onclick = () => openModal(place);
         
         const imageHTML = randomImage 
-          ? `<img src="${randomImage}" class="w-full h-40 object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'w-full h-40 flex items-center justify-center bg-indigo-50 text-4xl\\'>${place.icon}</div>'">`
-          : `<div class="w-full h-40 flex items-center justify-center bg-indigo-50 text-4xl group-hover:bg-indigo-100 transition">${place.icon}</div>`;
+          ? `<img src="${randomImage}" class="w-full h-40 object-cover group-hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'w-full h-40 flex items-center justify-center bg-orange-50 dark:bg-slate-800 text-4xl\\'>${place.icon}</div>'">`
+          : `<div class="w-full h-40 flex items-center justify-center bg-orange-50 dark:bg-slate-800 text-4xl group-hover:bg-orange-100 transition">${place.icon}</div>`;
           
         card.innerHTML = `
           ${imageHTML}
           <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">${place.category}</span>
-            <h3 class="font-bold text-gray-900 text-sm mt-1">${place.title}</h3>
+            <span class="text-[10px] font-bold text-orange-600 bg-orange-50 dark:bg-slate-800 px-2 py-0.5 rounded-md">${place.category}</span>
+            <h3 class="font-bold text-gray-900 dark:text-white text-sm mt-1">${place.title}</h3>
           </div>
         `;
         grid.appendChild(card);
@@ -165,7 +200,7 @@
       if (place.images && place.images.length > 0) {
         galleryContainer.classList.remove('hidden');
         place.images.forEach(img => {
-          gallery.innerHTML += `<div class="flex-shrink-0 w-48 h-32 snap-center rounded-xl overflow-hidden border border-gray-200 bg-gray-50"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs\\'>صورة غير متوفرة</div>'"></div>`;
+          gallery.innerHTML += `<div class="flex-shrink-0 w-48 h-32 snap-center rounded-xl overflow-hidden border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 cursor-pointer" onclick="window.open('${img}', '_blank')"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs\\'>صورة غير متوفرة</div>'"></div>`;
         });
       } else {
         galleryContainer.classList.add('hidden');
