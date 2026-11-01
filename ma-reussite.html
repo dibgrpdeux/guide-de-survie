@@ -9,8 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- استدعاء مكتبة Mermaid للخرائط الذهنية -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -59,23 +57,16 @@
     .dark .search-input { background: rgba(30, 41, 59, 0.9); }
     .search-input:focus { box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2); border-color: #f97316; }
 
-    .prof-avatar { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; color: white; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.3s ease; }
-    .prof-item:hover .prof-avatar { transform: scale(1.1) rotate(5deg); }
-
     .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     .bg-mesh { background-image: radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.08) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.06) 0px, transparent 50%); }
     .dark .bg-mesh { background-image: radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.1) 0px, transparent 50%); }
 
-    /* تنسيقات الكرونو */
     .timeline-line { position: absolute; right: 15px; top: 0; bottom: 0; width: 2px; background: #fed7aa; z-index: 0; }
     .dark .timeline-line { background: #334155; }
     .timeline-dot { position: absolute; right: 10px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; z-index: 1; }
     .dark .timeline-dot { border-color: #1e293b; }
-    
-    /* تنسيقات الخريطة الذهنية */
-    #mindmap-container svg { width: 100% !important; max-width: 100%; height: auto; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 bg-mesh">
@@ -234,45 +225,43 @@
         </div>
       </div>
 
-      <!-- ========================================== -->
-      <!-- ✅ الإضافات الجديدة: القاموس + الخريطة الذهنية + المساعد -->
-      <!-- ========================================== -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- المترجم الفوري (القاموس المطور) -->
+      <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 flex flex-col mt-6">
+        <div class="flex items-center gap-3 mb-4 border-b pb-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-language"></i></div>
+          <div>
+            <h4 class="font-black text-lg text-slate-900 dark:text-white">المترجم الفوري</h4>
+            <p class="text-xs text-slate-500">ترجمة أي كلمة بين العربية، الفرنسية والإنجليزية</p>
+          </div>
+        </div>
         
-        <!-- 1. قاموس المصطلحات الهندسية -->
-        <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 flex flex-col">
-          <div class="flex items-center gap-3 mb-4 border-b pb-3">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-book"></i></div>
-            <div>
-              <h4 class="font-black text-lg text-slate-900 dark:text-white">قاموس المصطلحات</h4>
-              <p class="text-xs text-slate-500">فرنسي - عربي - إنجليزي</p>
-            </div>
-          </div>
-          <input type="text" id="dict-search" placeholder="ابحث عن مصطلح (مثلاً: Béton)..." class="w-full p-3 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 outline-none mb-4 text-sm focus:ring-2 focus:ring-blue-400">
-          <div id="dict-results" class="space-y-2 max-h-64 overflow-y-auto pr-2 flex-grow">
-            <!-- ستظهر النتائج هنا -->
-          </div>
+        <div class="flex gap-2 mb-4">
+          <select id="lang-from" class="w-24 p-2 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 text-sm outline-none">
+            <option value="fr">فرنسي</option>
+            <option value="ar" selected>عربي</option>
+            <option value="en">إنجليزي</option>
+          </select>
+          <i class="fa-solid fa-arrow-left text-gray-400 mt-3"></i>
+          <select id="lang-to" class="w-24 p-2 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 text-sm outline-none">
+            <option value="ar">عربي</option>
+            <option value="fr" selected>فرنسي</option>
+            <option value="en">إنجليزي</option>
+          </select>
         </div>
 
-        <!-- 2. الخريطة الذهنية -->
-        <div class="glass-card p-6 rounded-3xl border border-purple-100 dark:border-slate-700">
-          <div class="flex items-center gap-3 mb-4 border-b pb-3">
-            <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl"><i class="fa-solid fa-project-diagram"></i></div>
-            <div>
-              <h4 class="font-black text-lg text-slate-900 dark:text-white">مولد الخرائط الذهنية</h4>
-              <p class="text-xs text-slate-500">أدخل النص لإنشاء خريطة ذهنية</p>
-            </div>
-          </div>
-          <textarea id="mindmap-input" rows="3" placeholder="مثال: الميكانيك&#10;- السكون&#10;- الحركة&#10;- القوى" class="w-full p-3 rounded-xl border border-purple-200 dark:border-slate-600 bg-purple-50 dark:bg-slate-900 outline-none mb-3 text-sm focus:ring-2 focus:ring-purple-400"></textarea>
-          <button onclick="generateMindMap()" class="w-full bg-purple-600 text-white font-bold py-3 rounded-xl hover:bg-purple-700 transition mb-4">توليد الخريطة</button>
-          <div id="mindmap-container" class="bg-white dark:bg-slate-800 rounded-xl p-2 overflow-x-auto min-h-[200px] border border-gray-200 dark:border-slate-700 flex items-center justify-center">
-            <p class="text-gray-400 text-sm text-center">اكتب النص واضغط "توليد" لعرض الخريطة.</p>
-          </div>
+        <div class="flex gap-2">
+          <input type="text" id="translate-input" placeholder="اكتب الكلمة هنا (مثلاً: خرسانة)..." class="flex-1 p-3 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 outline-none text-sm focus:ring-2 focus:ring-blue-400">
+          <button onclick="translateText()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition">ترجمة</button>
         </div>
-
+        
+        <div id="translate-result" class="mt-4 p-4 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-center hidden">
+          <p class="text-sm text-gray-500 mb-1">الترجمة:</p>
+          <p id="translated-text" class="text-2xl font-black text-blue-700 dark:text-blue-400"></p>
+        </div>
+        <p id="translate-error" class="text-xs text-red-500 mt-2 hidden"></p>
       </div>
 
-      <!-- 3. المساعد الأكاديمي (AI) -->
+      <!-- المساعد الأكاديمي (AI) -->
       <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 mt-6">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-robot"></i></div>
@@ -393,9 +382,8 @@
         const coeff = parseFloat(r.querySelector('.coeff-in').value) || 1;
         const exam = parseFloat(r.querySelector('.exam-in').value);
         const td = parseFloat(r.querySelector('.td-in').value);
-               const type = r.querySelector('.type-in').value;
+        const type = r.querySelector('.type-in').value;
         let avg = 0, valid = false;
-        
         if (type === 'exam' && !isNaN(exam)) { avg = exam; valid = true; }
         else if (type === 'td' && !isNaN(td)) { avg = td; valid = true; }
         else if (type === 'both') {
@@ -408,38 +396,50 @@
       const gpa = coeffs > 0 ? (total / coeffs) : 0;
       document.getElementById('calc-result').innerText = gpa.toFixed(2);
       const status = document.getElementById('calc-status');
-      if (gpa >= 10) { status.innerText = "🎉 ناجح"; status.className = "text-xs font-bold text-emerald-500"; }
-      else if (gpa >= 7) { status.innerText = "⚠️ استدراك"; status.className = "text-xs font-bold text-amber-500"; }
-      else if (gpa > 0) { status.innerText = "❌ راسب"; status.className = "text-xs font-bold text-red-500"; }
-      else { status.innerText = ""; }
+      if (gpa >= 10) status.innerHTML = '<span class="text-emerald-600">🎉 ناجح</span>';
+      else if (gpa >= 7) status.innerHTML = '<span class="text-amber-500">⚠️ استدراك</span>';
+      else if (gpa > 0) status.innerHTML = '<span class="text-red-500">❌ راسب</span>';
+      else status.innerHTML = '';
     }
 
-    // عجلة المواد
+       // عجلة المواد
     let myModules = JSON.parse(localStorage.getItem('enstp_modules')) || ['رياضيات', 'فيزياء'];
+
     function renderModules() {
       const list = document.getElementById('modules-list');
-      if (myModules.length === 0) { list.innerHTML = '<span class="text-xs text-gray-400">أضف مواد للبدء</span>'; return; }
+      if (myModules.length === 0) {
+        list.innerHTML = '<span class="text-xs text-gray-400">أضف مواد للبدء</span>';
+        return;
+      }
       list.innerHTML = myModules.map((m, index) => `
         <span class="bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-300 text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1">
-          ${m} <button onclick="removeModule(${index})" class="text-orange-500 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
+          ${m}
+          <button onclick="removeModule(${index})" class="text-orange-500 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
         </span>
       `).join('');
     }
+
     function addModule() {
       const input = document.getElementById('module-input');
       const val = input.value.trim();
-      if (!val || myModules.includes(val)) return;
+      if (!val) return;
+      if (myModules.includes(val)) return alert("هذه المادة مضافة بالفعل!");
+      
       myModules.push(val);
       localStorage.setItem('enstp_modules', JSON.stringify(myModules));
-      input.value = ''; renderModules();
+      input.value = '';
+      renderModules();
     }
+
     function removeModule(index) {
       myModules.splice(index, 1);
       localStorage.setItem('enstp_modules', JSON.stringify(myModules));
       renderModules();
     }
+
     function spinWheel() {
-      if (myModules.length === 0) return alert("أضف مادة أولاً!");
+      if (myModules.length === 0) return alert("الرجاء إضافة مادة واحدة على الأقل أولاً!");
+      
       const resultEl = document.getElementById('wheel-result');
       let counter = 0;
       const interval = setInterval(() => {
@@ -453,11 +453,14 @@
       }, 100);
     }
 
-    // قائمة المهام
+    // قائمة المهام (To-Do List)
     let tasks = JSON.parse(localStorage.getItem('enstp_tasks')) || [];
     function renderTasks() {
       const list = document.getElementById('task-list');
-      if (tasks.length === 0) { list.innerHTML = '<li class="text-xs text-gray-400 text-center py-2">لا توجد مهام حالياً</li>'; return; }
+      if(tasks.length === 0) {
+          list.innerHTML = '<li class="text-xs text-gray-400 text-center py-2">لا توجد مهام حالياً</li>';
+          return;
+      }
       list.innerHTML = tasks.map((t, i) => `
         <li class="flex items-center justify-between text-sm p-2 bg-gray-50 dark:bg-slate-800 rounded border ${t.done ? 'opacity-50 line-through' : ''}">
           <label class="flex items-center gap-2 cursor-pointer">
@@ -473,17 +476,23 @@
       if (!val) return;
       tasks.push({ text: val, done: false });
       localStorage.setItem('enstp_tasks', JSON.stringify(tasks));
-      document.getElementById('task-input').value = ''; renderTasks();
+      document.getElementById('task-input').value = '';
+      renderTasks();
     }
     function toggleTask(i) { tasks[i].done = !tasks[i].done; localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
     function delTask(i) { tasks.splice(i, 1); localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
 
-    // الكرونو
+    // الكرونو والتذكير بالمهام
     let cronoTasks = JSON.parse(localStorage.getItem('enstp_timeline')) || [];
+
     function renderCrono() {
       const container = document.getElementById('crono-container');
-      if (cronoTasks.length === 0) { container.innerHTML = '<p class="text-gray-400 text-sm text-center py-4">لا توجد مهام مضافة في الكرونو.</p>'; return; }
+      if (cronoTasks.length === 0) {
+        container.innerHTML = '<p class="text-gray-400 text-sm text-center py-4">لا توجد مهام مضافة في الكرونو.</p>';
+        return;
+      }
       cronoTasks.sort((a, b) => a.time.localeCompare(b.time));
+      
       container.innerHTML = cronoTasks.map((t, i) => `
         <div class="relative ${t.done ? 'opacity-60' : ''}">
           <div class="timeline-dot ${t.done ? 'bg-emerald-500' : 'bg-brand-500'}" style="top: 1rem;"></div>
@@ -500,139 +509,112 @@
         </div>
       `).join('');
     }
+
     function addCronoTask() {
       const name = document.getElementById('crono-name').value;
       const time = document.getElementById('crono-time').value;
       if (!name || !time) return alert("الرجاء إدخال اسم المهمة والوقت");
       cronoTasks.push({ name, time, done: false });
       localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks));
-      document.getElementById('crono-name').value = ''; document.getElementById('crono-time').value = ''; renderCrono();
+      document.getElementById('crono-name').value = '';
+      document.getElementById('crono-time').value = '';
+      renderCrono();
     }
+
     function toggleCronoTask(i) { cronoTasks[i].done = !cronoTasks[i].done; localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
     function deleteCronoTask(i) { cronoTasks.splice(i, 1); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
 
     // ==========================================
-    // ✅ الإضافات الجديدة
+    // 4. المترجم الفوري (API)
     // ==========================================
+    async function translateText() {
+      const text = document.getElementById('translate-input').value.trim();
+      const from = document.getElementById('lang-from').value;
+      const to = document.getElementById('lang-to').value;
+      const resultBox = document.getElementById('translate-result');
+      const resultText = document.getElementById('translated-text');
+      const errorBox = document.getElementById('translate-error');
 
-    // 1. قاموس المصطلحات
-    const dictionary = [
-      { fr: 'Béton armé', ar: 'خرسانة مسلحة', en: 'Reinforced concrete', desc: 'مادة بناء تتكون من الخرسانة والفولاذ المقاوم للشد.' },
-      { fr: 'Fondation', ar: 'أساس', en: 'Foundation', desc: 'الجزء السفلي من المبنى الذي ينقل الأحمال إلى الأرض.' },
-      { fr: 'Poutre', ar: 'عارضة / جسر', en: 'Beam', desc: 'عنصر إنشائي أفقي يحمل الأحمال الجانبية.' },
-      { fr: 'Poteau', ar: 'عمود', en: 'Column', desc: 'عنصر إنشائي رأسي ينقل الأحمال إلى الأساس.' },
-      { fr: 'Dalle', ar: 'بلاطة', en: 'Slab', desc: 'سطح أفقي مسطح يستخدم كأرضية أو سقف.' },
-      { fr: 'Semelle', ar: 'قاعدة (أساس)', en: 'Footing', desc: 'الجزء العريض من الأساس الذي يوزع الحمل.' },
-      { fr: 'Ciment', ar: 'أسمنت', en: 'Cement', desc: 'مسحوق ناعم يربط المواد معاً عند إضافة الماء.' },
-      { fr: 'Sable', ar: 'رمل', en: 'Sand', desc: 'مادة حبيبية ناعمة تستخدم في الخرسانة.' },
-      { fr: 'Gravier', ar: 'حصى', en: 'Gravel', desc: 'مادة حبيبية خشنة تستخدم في الخرسانة.' },
-      { fr: 'Topographie', ar: 'طبوغرافيا', en: 'Surveying', desc: 'علم قياس الأرض وتحديد المعالم.' },
-      { fr: 'Mécanique des sols', ar: 'ميكانيكا التربة', en: 'Soil mechanics', desc: 'دراسة سلوك التربة تحت الأحمال.' },
-      { fr: 'Résistance des matériaux', ar: 'مقاومة المواد', en: 'Strength of materials', desc: 'دراسة سلوك المواد تحت التأثيرات الخارجية.' }
-    ];
+      if (!text) return alert("الرجاء إدخال كلمة أو نص للترجمة.");
 
-    function renderDictionary(query = '') {
-      const resultsContainer = document.getElementById('dict-results');
-      const filtered = dictionary.filter(d => 
-        d.fr.toLowerCase().includes(query.toLowerCase()) || 
-        d.ar.includes(query) || 
-        d.en.toLowerCase().includes(query.toLowerCase())
-      );
+      // إخفاء النتائج السابقة
+      resultBox.classList.add('hidden');
+      errorBox.classList.add('hidden');
+      resultText.innerText = '...';
 
-      if (filtered.length === 0) {
-        resultsContainer.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">لا توجد نتائج.</p>';
+      if (from === to) {
+        resultText.innerText = text;
+        resultBox.classList.remove('hidden');
         return;
       }
 
-      resultsContainer.innerHTML = filtered.map(d => `
-        <div class="bg-blue-50 dark:bg-slate-800 p-3 rounded-xl border border-blue-100 dark:border-slate-700">
-          <div class="flex justify-between items-center mb-1">
-            <span class="font-bold text-blue-800 dark:text-blue-400 text-sm" dir="ltr">${d.fr}</span>
-            <span class="text-xs font-bold text-gray-500" dir="ltr">${d.en}</span>
-          </div>
-          <div class="font-black text-gray-800 dark:text-white text-md">${d.ar}</div>
-          <p class="text-[11px] text-gray-600 dark:text-gray-400 mt-1">${d.desc}</p>
-        </div>
-      `).join('');
-    }
-    document.getElementById('dict-search').addEventListener('input', (e) => renderDictionary(e.target.value));
+      try {
+        // استخدام واجهة MyMemory المجانية للترجمة
+        const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`);
+        const data = await response.json();
 
-    // 2. مولد الخريطة الذهنية
-    function generateMindMap() {
-      const input = document.getElementById('mindmap-input').value.trim();
-      const container = document.getElementById('mindmap-container');
-      
-      if (!input) {
-        container.innerHTML = '<p class="text-gray-400 text-sm">الرجاء إدخال النص أولاً.</p>';
-        return;
-      }
-
-      // تحويل النص إلى صيغة Mermaid
-      // نفترض أن السطر الأول هو العنوان الرئيسي، والأسطر التي تبدأ بـ "-" هي فروع
-      const lines = input.split('\n').filter(line => line.trim() !== '');
-      let mermaidCode = 'graph TD\n';
-      
-      const root = lines[0].replace(/[^a-zA-Z0-9\u0600-\u06FF\s]/g, '');
-      mermaidCode += `  Root["${lines[0]}"]\n`;
-
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line.startsWith('-')) {
-          const child = line.substring(1).trim();
-          const childId = 'N' + i;
-          mermaidCode += `  ${childId}["${child}"]\n`;
-          mermaidCode += `  Root --> ${childId}\n`;
+        if (data.responseData && data.responseData.translatedText) {
+          resultText.innerText = data.responseData.translatedText;
+          resultBox.classList.remove('hidden');
+        } else {
+          throw new Error("لم يتم العثور على ترجمة.");
         }
+      } catch (error) {
+        errorBox.innerText = "حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى.";
+        errorBox.classList.remove('hidden');
       }
-
-      container.innerHTML = `<div class="mermaid">${mermaidCode}</div>`;
-      
-      // إعادة تهيئة Mermaid لرسم الخريطة
-      mermaid.init(undefined, container.querySelectorAll('.mermaid'));
     }
 
-    // 3. المساعد الأكاديمي
+    // ==========================================
+    // 5. المساعد الأكاديمي (AI)
+    // ==========================================
     function generateAIPrompt() {
       const topic = document.getElementById('ai-topic').value.trim();
       const type = document.getElementById('ai-type').value;
       const statusEl = document.getElementById('ai-status');
       const fallbackBtn = document.getElementById('fallback-link');
 
-      if (!topic) return alert("الرجاء إدخال الموضوع أولاً");
+      if (!topic) {
+        alert("الرجاء إدخال الموضوع أولاً");
+        return;
+      }
 
-      let prompt = type === 'summary' 
-        ? `أنت أستاذ في المدرسة الوطنية العليا. قم بتلخيص النص التالي في نقاط واضحة ومختصرة: "${topic}"`
-        : `أنت مصمم امتحانات. قم بإنشاء 5 أسئلة اختيار من متعدد (QCM) حول: "${topic}". أرفق الإجابات.`;
+      let prompt = "";
+      if (type === 'summary') {
+        prompt = `أنت أستاذ في المدرسة الوطنية العليا للأشغال العمومية. قم بتلخيص النص التالي في نقاط واضحة ومختصرة مع التركيز على المعادلات والمفاهيم الأساسية للامتحان: "${topic}"`;
+      } else {
+        prompt = `أنت مصمم امتحانات. قم بإنشاء 5 أسئلة اختيار من متعدد (QCM) صعبة قليلاً حول الموضوع التالي: "${topic}". أرفق الإجابات الصحيحة في النهاية.`;
+      }
 
-      const url = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
-      fallbackBtn.href = url;
+      const chatGptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
+      
+      fallbackBtn.href = chatGptUrl;
       fallbackBtn.classList.remove('opacity-50', 'pointer-events-none');
 
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(prompt).then(() => {
-          statusEl.innerText = "✅ تم النسخ! فتح ChatGPT...";
-          statusEl.className = "text-xs text-center text-emerald-500 font-bold mt-2";
-          window.open(url, '_blank');
+          statusEl.innerText = "✅ تم نسخ الأمر بنجاح! فتح ChatGPT...";
+          statusEl.className = "text-xs text-center mt-2 text-emerald-500 font-bold";
+          window.open(chatGptUrl, '_blank');
+        }).catch(err => {
+          statusEl.innerText = "تم تجهيز الرابط، اضغط على الزر الاحتياطي.";
+          statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold";
         });
       } else {
-        statusEl.innerText = "اضغط على الزر الاحتياطي لفتح ChatGPT.";
-        statusEl.className = "text-xs text-center text-amber-500 font-bold mt-2";
+        statusEl.innerText = "اضغط على الزر الاحتياطي لفتح ChatGPT مباشرة.";
+        statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold";
       }
     }
 
     // ==========================================
-    // التهيئة عند تحميل الصفحة
+    // 6. INIT (تهيئة الصفحة)
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       renderDrives();
-      addSubjectRow(); // أول سطر للحاسبة
-      renderTasks();
-      renderModules();
-      renderCrono();
-      renderDictionary(); // عرض كل القاموس مبدئياً
-      
-      // تهيئة Mermaid
-      mermaid.initialize({ startOnLoad: false, theme: 'default' });
+      addSubjectRow(); 
+      renderTasks();   
+      renderModules(); 
+      renderCrono();   
     });
   </script>
 </body>
