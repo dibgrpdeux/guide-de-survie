@@ -33,6 +33,9 @@
     .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
     .accordion-content.active { max-height: 3000px; transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
     .rotate-180 { transform: rotate(180deg); }
+
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
@@ -68,7 +71,6 @@
         <i class="fa-solid fa-city text-2xl"></i>
         <span class="text-lg font-black">النقل العمومي</span>
       </button>
-      <!-- التبويب الجديد -->
       <button onclick="switchTab('carpool')" id="tab-carpool" class="tab-btn glass-card p-5 rounded-3xl flex items-center justify-center gap-3 border-2 border-transparent hover:border-amber-200">
         <i class="fa-solid fa-taxi text-2xl text-amber-500"></i>
         <span class="text-lg font-black">مشاركة التاكسي</span>
@@ -249,8 +251,8 @@
             </div>
             <div class="mt-4">
               <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> فيديو توضيحي للمترو:</h4>
-              <div class="video-container bg-gray-200 max-w-md mx-auto" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem;">
-                <iframe src="https://www.youtube.com/embed/VgahadPDf1I" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
+              <div class="video-container bg-gray-200 max-w-md mx-auto">
+                <iframe src="https://www.youtube.com/embed/VgahadPDf1I" allowfullscreen></iframe>
               </div>
             </div>
             <div class="pt-4 border-t border-gray-100">
@@ -396,7 +398,7 @@
                   <p class="text-xs text-emerald-800 mb-3">يتيح لك اقتراح السعر (المفاوضة) والموافقة مع السائق.</p>
                 </div>
                 <a href="https://indrive.com" target="_blank" class="inline-flex items-center justify-center gap-2 bg-emerald-500 text-white px-3 py-2 rounded-lg font-bold text-xs hover:bg-emerald-600 transition">
-                                    <i class="fa-solid fa-download"></i> تحميل التطبيق
+                  <i class="fa-solid fa-download"></i> تحميل التطبيق
                 </a>
               </div>
             </div>
@@ -407,13 +409,13 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- 3. قسم مشاركة سيارات الأجرة (Carpooling) - جديد -->
+    <!-- 3. قسم مشاركة سيارات الأجرة (Carpooling) -->
     <!-- ========================================== -->
     <div id="content-carpool" class="hidden space-y-6">
       
       <div class="glass-card rounded-3xl p-6 md:p-8 border-2 border-amber-100 relative overflow-hidden">
-        <!-- خلفية جمالية -->
-        <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl"></div>
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-orange-400/10 rounded-full blur-3xl"></div>
 
         <div class="flex items-center gap-3 border-b border-amber-100 pb-4 relative z-10 mb-6">
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-amber-500/30">
@@ -421,25 +423,29 @@
           </div>
           <div>
             <h3 class="text-2xl font-black text-gray-900">مشاركة سيارات الأجرة</h3>
-            <p class="text-sm text-gray-500">وفّر في التكاليف وشارك الرحلة مع زملائك في المدرسة.</p>
+            <p class="text-sm text-gray-500">وفّر في التكاليف وتواصل مع زملائك المشاركين في الرحلة.</p>
           </div>
         </div>
 
         <!-- إضافة رحلة -->
-        <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-100 mb-8">
+        <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-100 mb-8 relative z-10">
           <h4 class="font-bold text-amber-900 mb-3"><i class="fa-solid fa-plus-circle"></i> أضف رحلتك</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+            <input type="text" id="carpool-name" placeholder="اسمك (مثلاً: أحمد)" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
+            <input type="tel" id="carpool-phone" placeholder="رقم هاتفك (لتواصل واتساب)" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full text-left" dir="ltr">
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <input type="text" id="carpool-from" placeholder="الانطلاق (مثلاً: القبة)" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
-            <input type="text" id="carpool-to" placeholder="الوجهة (مثلاً: وهران)" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
+            <input type="text" id="carpool-from" placeholder="الانطلاق (القبة)" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
+            <input type="text" id="carpool-to" placeholder="الوجهة (وهران)" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
             <input type="time" id="carpool-time" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
             <button onclick="addCarpool()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl transition text-sm">نشر الرحلة</button>
           </div>
         </div>
 
         <!-- قائمة الرحلات -->
-        <div>
+        <div class="relative z-10">
           <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-list text-amber-500"></i> الرحلات المتاحة</h4>
-          <div id="carpool-list" class="space-y-3">
+          <div id="carpool-list" class="space-y-6">
             <!-- سيتم إدراج الرحلات هنا -->
           </div>
         </div>
@@ -505,8 +511,7 @@
       }
     }
 
-    // --- 3. نظام مشاركة سيارات الأجرة (Carpooling) ---
-    // جلب الرحلات من الذاكرة المحلية
+    // --- 3. نظام مشاركة سيارات الأجرة (Carpooling) مع التعليقات ---
     let carpools = JSON.parse(localStorage.getItem('enstp_carpools')) || [];
 
     function renderCarpools() {
@@ -516,41 +521,104 @@
         return;
       }
 
-      list.innerHTML = carpools.map((c, i) => `
-        <div class="flex flex-col md:flex-row items-center justify-between bg-white p-4 rounded-xl border border-amber-100 shadow-sm gap-3">
-          <div class="flex items-center gap-3 w-full">
-            <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-lg shrink-0">
-              <i class="fa-solid fa-route"></i>
+      list.innerHTML = carpools.map((c, i) => {
+        // بناء رقم الواتساب (إزالة الصفر الأول وإضافة رمز الدولة 213)
+        let waNumber = c.phone.replace(/^0/, '213');
+        
+        // عرض التعليقات
+        let commentsHTML = '';
+        if (c.comments && c.comments.length > 0) {
+          commentsHTML = c.comments.map(comment => `
+            <div class="bg-white p-2 rounded-lg border border-gray-100 mt-2 text-sm shadow-sm">
+              <span class="font-bold text-amber-700 text-xs">${comment.author}:</span>
+              <span class="text-gray-700 text-xs">${comment.text}</span>
             </div>
-            <div>
-              <div class="font-bold text-gray-800 flex items-center gap-2">
-                <span>${c.from}</span> 
-                <i class="fa-solid fa-arrow-left text-amber-500 text-xs"></i> 
-                <span>${c.to}</span>
+          `).join('');
+        }
+
+        return `
+        <div class="bg-white rounded-2xl border border-amber-100 shadow-sm overflow-hidden">
+          <!-- تفاصيل الرحلة -->
+          <div class="p-4 border-b border-gray-100 bg-amber-50/30">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-black text-lg shrink-0">
+                  ${c.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <div class="font-bold text-gray-800 flex items-center gap-2 text-lg">
+                    <span>${c.from}</span> 
+                    <i class="fa-solid fa-arrow-left text-amber-500 text-sm"></i> 
+                    <span>${c.to}</span>
+                  </div>
+                  <div class="text-xs text-gray-500 mt-1 flex gap-3">
+                    <span><i class="fa-solid fa-user"></i> ${c.name}</span>
+                    <span><i class="fa-regular fa-clock text-amber-500"></i> ${c.time}</span>
+                  </div>
+                </div>
               </div>
-              <div class="text-xs text-gray-500 mt-1"><i class="fa-regular fa-clock"></i> وقت الانطلاق: ${c.time}</div>
+              
+              <div class="flex gap-2 w-full md:w-auto">
+                <a href="https://wa.me/${waNumber}?text=مرحباً ${c.name}، رأيت رحلتك من ${c.from} إلى ${c.to} وأريد مشاركتك." target="_blank" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-green-600 transition">
+                  <i class="fa-brands fa-whatsapp text-lg"></i> تواصل
+                </a>
+                <button onclick="deleteCarpool(${i})" class="bg-red-50 text-red-500 px-3 py-2 rounded-lg hover:bg-red-100 transition">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
             </div>
           </div>
-          <button onclick="deleteCarpool(${i})" class="w-full md:w-auto px-4 py-2 bg-red-50 text-red-600 font-bold text-sm rounded-lg hover:bg-red-100 transition">
-            <i class="fa-solid fa-trash"></i> حذف
-          </button>
+
+          <!-- التعليقات -->
+          <div class="p-4 bg-gray-50">
+            <div class="space-y-2 mb-3">
+              ${commentsHTML || '<p class="text-xs text-gray-400">لا توجد تعليقات بعد.</p>'}
+            </div>
+            <div class="flex gap-2">
+              <input type="text" id="comment-name-${i}" placeholder="اسمك..." class="w-24 p-2 rounded-lg border text-xs outline-none">
+              <input type="text" id="comment-text-${i}" placeholder="أضف تعليقاً (مثلاً: أنا مهتم، لدي مكانان)..." class="flex-1 p-2 rounded-lg border text-xs outline-none">
+              <button onclick="addComment(${i})" class="bg-gray-800 text-white px-3 rounded-lg text-xs font-bold hover:bg-gray-900 transition">تعليق</button>
+            </div>
+          </div>
         </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function addCarpool() {
+      const name = document.getElementById('carpool-name').value.trim();
+      const phone = document.getElementById('carpool-phone').value.trim();
       const from = document.getElementById('carpool-from').value.trim();
       const to = document.getElementById('carpool-to').value.trim();
       const time = document.getElementById('carpool-time').value;
 
-      if (!from || !to || !time) return alert("الرجاء تعبئة جميع الحقول (الانطلاق، الوجهة، الوقت).");
+      if (!name || !phone || !from || !to || !time) {
+        return alert("الرجاء تعبئة جميع الحقول (الاسم، الهاتف، الانطلاق، الوجهة، الوقت).");
+      }
 
-      carpools.push({ from, to, time });
+      carpools.push({ name, phone, from, to, time, comments: [] });
       localStorage.setItem('enstp_carpools', JSON.stringify(carpools));
       
+      // تفريغ الحقول
+      document.getElementById('carpool-name').value = '';
+      document.getElementById('carpool-phone').value = '';
       document.getElementById('carpool-from').value = '';
       document.getElementById('carpool-to').value = '';
       document.getElementById('carpool-time').value = '';
+      
+      renderCarpools();
+    }
+
+    function addComment(index) {
+      const nameInput = document.getElementById('comment-name-' + index);
+      const textInput = document.getElementById('comment-text-' + index);
+      const author = nameInput.value.trim() || 'مجهول';
+      const text = textInput.value.trim();
+
+      if (!text) return alert("اكتب تعليقاً أولاً.");
+
+      carpools[index].comments.push({ author, text });
+      localStorage.setItem('enstp_carpools', JSON.stringify(carpools));
       
       renderCarpools();
     }
