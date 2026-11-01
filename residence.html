@@ -12,104 +12,136 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; }
-    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
-    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+    body { font-family: 'Cairo', sans-serif; background: #fff7ed; color: #1e293b; }
+    .dark body { background: #1a1410; color: #f8fafc; }
+    
+    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); }
+    .dark .ambient-bg { background: linear-gradient(135deg, #1a1410 0%, #2d1b0e 100%); }
+    
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(249, 115, 22, 0.15); box-shadow: 0 20px 40px -15px rgba(249, 115, 22, 0.1); }
+    .dark .glass-card { background: rgba(30, 20, 15, 0.95); border-color: rgba(249, 115, 22, 0.2); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3); }
+    
+    .glass-nav { background: rgba(255, 247, 237, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(249, 115, 22, 0.2); }
+    .dark .glass-nav { background: rgba(26, 20, 16, 0.92); border-bottom-color: rgba(249, 115, 22, 0.3); }
+    
     .map-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .table-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .table-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
     
     /* ==========================================
-       تنسيقات بوصلة القبلة (المحسنة)
+       بوصلة القبلة على شكل نجمة (Star Compass)
        ========================================== */
     .compass-container { 
       position: relative; 
-      width: 240px; 
-      height: 240px; 
+      width: 260px; 
+      height: 260px; 
       margin: 0 auto; 
-      border-radius: 50%; 
-      background: radial-gradient(circle, #ffffff 0%, #f0fdf4 100%); 
-      box-shadow: 
-        inset 0 0 20px rgba(16, 185, 129, 0.1), 
-        0 15px 35px rgba(16, 185, 129, 0.15),
-        0 0 0 8px rgba(255, 255, 255, 0.5); 
-      border: 4px solid #10b981; 
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      transition: transform 0.2s ease-out, box-shadow 0.3s ease;
-      animation: pulseCompass 3s infinite alternate;
     }
 
-    @keyframes pulseCompass {
-      0% { box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1), 0 15px 35px rgba(16, 185, 129, 0.15), 0 0 0 8px rgba(255, 255, 255, 0.5); }
-      100% { box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.2), 0 20px 45px rgba(16, 185, 129, 0.25), 0 0 0 12px rgba(255, 255, 255, 0.6); }
+    /* النجمة الخارجية (8 رؤوس) */
+    .star-outer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      clip-path: polygon(
+        50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 
+        50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+      );
+      animation: rotateStar 20s linear infinite;
+      opacity: 0.9;
+      box-shadow: 0 0 30px rgba(249, 115, 22, 0.4);
     }
 
-    .compass-dial { position: absolute; width: 100%; height: 100%; }
-    
+    /* النجمة الداخلية */
+    .star-inner {
+      position: absolute;
+      width: 70%;
+      height: 70%;
+      background: linear-gradient(135deg, #fff7ed, #ffedd5);
+      clip-path: polygon(
+        50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 
+        50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .dark .star-inner { background: linear-gradient(135deg, #1e293b, #0f172a); }
+
+    @keyframes rotateStar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* إبرة البوصلة (تشير للقبلة) */
     .compass-needle { 
       position: absolute; 
-      width: 8px; 
-      height: 110px; 
+      width: 6px; 
+      height: 100px; 
       background: linear-gradient(to bottom, #ef4444 50%, #cbd5e1 50%); 
-      top: 10px; 
-      border-radius: 8px; 
+      top: 20px; 
+      border-radius: 6px; 
       transform-origin: bottom center; 
-      transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1); 
-      z-index: 10;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
+      z-index: 15;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
-    
+
+    /* مركز البوصلة */
     .compass-center { 
       position: absolute; 
-      width: 24px; 
-      height: 24px; 
-      background: linear-gradient(135deg, #1e293b, #334155); 
+      width: 30px; 
+      height: 30px; 
+      background: radial-gradient(circle, #ea580c, #7c2d12); 
       border-radius: 50%; 
       border: 4px solid #fff; 
       z-index: 20;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    
-    .compass-label { 
-      position: absolute; 
-      font-weight: 900; 
-      color: #94a3b8; 
-      font-size: 16px; 
-      text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-    }
-    .label-n { top: 12px; left: 50%; transform: translateX(-50%); color: #ef4444; }
-    .label-s { bottom: 12px; left: 50%; transform: translateX(-50%); color: #3b82f6; }
-    .label-e { right: 12px; top: 50%; transform: translateY(-50%); }
-    .label-w { left: 12px; top: 50%; transform: translateY(-50%); }
-    
+
+    .compass-center i { color: #fff; font-size: 14px; }
+
+    /* أيقونة الكعبة */
     .kaaba-icon { 
       position: absolute; 
-      width: 32px; 
-      height: 32px; 
-      color: #10b981; 
-      top: 35px; 
+      top: -15px; 
       left: 50%; 
       transform: translateX(-50%); 
-      z-index: 15; 
-      font-size: 26px; 
-      filter: drop-shadow(0 4px 6px rgba(16, 185, 129, 0.4));
+      z-index: 25; 
+      font-size: 28px; 
+      color: #10b981; 
+      filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.6));
       animation: floatKaaba 2s infinite ease-in-out;
     }
 
     @keyframes floatKaaba {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(-5px); }
+      50% { transform: translateX(-50%) translateY(-8px); }
     }
 
-    /* ألوان قسم الطوارئ */
+    /* بطاقات الطوارئ */
     .emergency-card { transition: all 0.3s ease; }
     .emergency-card:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2); }
+
+    /* بطاقات الإقامات */
+    .residence-card { transition: all 0.3s ease; }
+    .residence-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(249, 115, 22, 0.3); border-color: #f97316; }
+
+    /* الوضع الليلي */
+    .dark-toggle { transition: all 0.4s ease; }
+    .dark-toggle:hover { transform: rotate(180deg) scale(1.1); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -120,15 +152,21 @@
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
         <div>
-          <h1 class="font-bold text-gray-900 text-base leading-tight">ENSTP <span class="text-indigo-600">Résidence</span></h1>
-          <p class="text-[11px] text-gray-500">دليل الإقامة الجامعية</p>
+          <h1 class="font-bold text-gray-900 dark:text-white text-base leading-tight">ENSTP <span class="text-orange-500">Résidence</span></h1>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">دليل الإقامة الجامعية</p>
         </div>
       </div>
-      <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold flex items-center gap-2 transition">
-        <i class="fa-solid fa-arrow-right"></i> <span>الرئيسية</span>
-      </a>
+      <div class="flex items-center gap-2">
+        <button onclick="toggleDarkMode()" class="dark-toggle w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-orange-600 dark:text-orange-400 flex items-center justify-center shadow-sm transition">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block"></i>
+        </button>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 hover:bg-orange-200 text-xs font-bold flex items-center gap-2 transition">
+          <i class="fa-solid fa-arrow-right"></i> <span>الرئيسية</span>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -137,42 +175,47 @@
     <!-- القائمة الرئيسية -->
     <div id="mainMenu" class="space-y-8">
       <div class="text-center space-y-3">
-        <h2 class="text-3xl md:text-4xl font-black text-gray-900">اختر إقامتك الجامعية</h2>
-        <p class="text-sm text-gray-600">تعرف على موقع إقامتك، المسافة، المرافق، وجدول الوجبات الأسبوعي.</p>
+        <h2 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white">اختر إقامتك الجامعية</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400">تعرف على موقع إقامتك، المسافة، المرافق، وجدول الوجبات الأسبوعي.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <button onclick="showDetails('gueridi')" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 hover:scale-105 transition group">
-          <div class="w-20 h-20 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-3xl group-hover:bg-indigo-600 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
-          <div><h3 class="font-bold text-gray-900 text-xl">الإقامة الجامعية قاريدي</h3><p class="text-xs text-gray-500 mt-1">بن عكنون، الجزائر العاصمة</p></div>
+        <!-- الإقامة 1: سعيد حمدين (حسين داي) -->
+        <button onclick="showDetails('hamdine')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
+          <div class="w-20 h-20 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-3xl group-hover:bg-orange-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
+          <div><h3 class="font-bold text-gray-900 dark:text-white text-xl">الإقامة الجامعية سعيد حمدين</h3><p class="text-xs text-gray-500 mt-1">حسين داي، الجزائر العاصمة</p></div>
+          <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-bold">600 سرير</span>
         </button>
 
-        <button onclick="showDetails('youssefi')" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 hover:scale-105 transition group">
-          <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-3xl group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
-          <div><h3 class="font-bold text-gray-900 text-xl">الإقامة الجامعية امحمد يوسفي</h3><p class="text-xs text-gray-500 mt-1">القبة، الجزائر العاصمة</p></div>
+        <!-- الإقامة 2: امحمد يوسفي (حسين داي) -->
+        <button onclick="showDetails('youssefi')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
+          <div class="w-20 h-20 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-3xl group-hover:bg-amber-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
+          <div><h3 class="font-bold text-gray-900 dark:text-white text-xl">الإقامة الجامعية امحمد يوسفي</h3><p class="text-xs text-gray-500 mt-1">حسين داي، الجزائر العاصمة</p></div>
+          <span class="text-xs bg-amber-50 text-amber-600 px-3 py-1 rounded-full font-bold">500 سرير</span>
         </button>
 
-        <button onclick="showDetails('hamdine')" class="glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 hover:scale-105 transition group">
-          <div class="w-20 h-20 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-3xl group-hover:bg-amber-600 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
-          <div><h3 class="font-bold text-gray-900 text-xl">الإقامة الجامعية سعيد حمدين</h3><p class="text-xs text-gray-500 mt-1">حسين داي، الجزائر العاصمة</p></div>
+        <!-- الإقامة 3: قاريدي ( قاريدي) -->
+        <button onclick="showDetails('gueridi')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
+          <div class="w-20 h-20 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-3xl group-hover:bg-red-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
+          <div><h3 class="font-bold text-gray-900 dark:text-white text-xl">الإقامة الجامعية قاريدي</h3><p class="text-xs text-gray-500 mt-1">، الجزائر العاصمة قاريدي</p></div>
+          <span class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full font-bold">1200 سرير</span>
         </button>
       </div>
 
       <!-- ========================================== -->
-      <!-- ✅ قسم بوصلة القبلة (المحسن) -->
+      <!-- بوصلة القبلة (نجمة) -->
       <!-- ========================================== -->
-      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-emerald-100 relative overflow-hidden">
-        <!-- خلفية جمالية -->
-        <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl"></div>
+      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-orange-100 dark:border-orange-900/30 relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-64 h-64 bg-orange-400/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl"></div>
 
-        <div class="flex items-center gap-3 border-b border-emerald-100 pb-4 relative z-10">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/30">
+        <div class="flex items-center gap-3 border-b border-orange-100 dark:border-slate-700 pb-4 relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400 to-amber-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-orange-500/30">
             <i class="fa-solid fa-compass"></i>
           </div>
           <div>
-            <h3 class="text-xl font-black text-gray-900">بوصلة القبلة</h3>
-            <p class="text-xs text-gray-500">حدد اتجاه القبلة بدقة من موقعك الحالي</p>
+            <h3 class="text-xl font-black text-gray-900 dark:text-white">بوصلة القبلة</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">حدد اتجاه القبلة بدقة من موقعك الحالي</p>
           </div>
         </div>
 
@@ -180,184 +223,231 @@
           <!-- البوصلة -->
           <div class="relative">
             <div class="compass-container" id="compass">
-              <div class="compass-dial">
-                <span class="compass-label label-n">N</span>
-                <span class="compass-label label-s">S</span>
-                <span class="compass-label label-e">E</span>
-                <span class="compass-label label-w">W</span>
+              <div class="star-outer"></div>
+              <div class="star-inner">
                 <i class="fa-solid fa-kaaba kaaba-icon" id="kaabaIcon" title="القبلة"></i>
+                <div class="compass-needle" id="needle"></div>
+                <div class="compass-center"><i class="fa-solid fa-location-dot"></i></div>
               </div>
-              <div class="compass-needle" id="needle"></div>
-              <div class="compass-center"></div>
             </div>
           </div>
 
           <!-- المعلومات -->
           <div class="text-center md:text-right space-y-4">
-            <div class="bg-emerald-50 px-6 py-4 rounded-2xl border border-emerald-100 shadow-sm inline-block">
-              <p class="text-xs text-emerald-600 font-bold mb-1">زاوية القبلة من الشمال</p>
-              <p class="text-4xl font-black text-emerald-900" id="qiblaAngle">--°</p>
+            <div class="bg-orange-50 dark:bg-slate-800 px-6 py-4 rounded-2xl border border-orange-200 dark:border-slate-700 shadow-sm inline-block">
+              <p class="text-xs text-orange-600 dark:text-orange-400 font-bold mb-1">زاوية القبلة من الشمال</p>
+              <p class="text-4xl font-black text-orange-900 dark:text-orange-300" id="qiblaAngle">--°</p>
             </div>
-            <p class="text-sm font-bold text-gray-700 flex items-center justify-center md:justify-start gap-2" id="qiblaStatus">
-              <i class="fa-solid fa-spinner fa-spin text-emerald-500"></i> جاري تحديد موقعك...
+            <p class="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center justify-center md:justify-start gap-2" id="qiblaStatus">
+              <i class="fa-solid fa-spinner fa-spin text-orange-500"></i> جاري تحديد موقعك...
             </p>
-            <p class="text-[11px] text-gray-500 max-w-xs mx-auto md:mx-0 bg-gray-50 p-3 rounded-xl border border-gray-200">
-              <i class="fa-solid fa-circle-info text-emerald-500"></i> يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة. قم بتحريك هاتفك على شكل رقم 8 لمعايرة البوصلة إذا لزم الأمر.
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 max-w-xs mx-auto md:mx-0 bg-orange-50 dark:bg-slate-800 p-3 rounded-xl border border-orange-100 dark:border-slate-700">
+              <i class="fa-solid fa-circle-info text-orange-500"></i> يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة. قم بتحريك هاتفك على شكل رقم 8 لمعايرة البوصلة إذا لزم الأمر.
             </p>
           </div>
         </div>
       </div>
 
       <!-- ========================================== -->
-      <!-- ✅ قسم حالة الطوارئ (جديد) -->
+      <!-- حالة الطوارئ -->
       <!-- ========================================== -->
-      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-red-100 relative overflow-hidden">
-        <div class="flex items-center gap-3 border-b border-red-100 pb-4">
+      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-red-100 dark:border-red-900/30 relative overflow-hidden">
+        <div class="flex items-center gap-3 border-b border-red-100 dark:border-slate-700 pb-4">
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-400 to-red-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-red-500/30">
             <i class="fa-solid fa-triangle-exclamation"></i>
           </div>
           <div>
-            <h3 class="text-xl font-black text-gray-900">حالة الطوارئ</h3>
-            <p class="text-xs text-gray-500">أرقام مهمة يجب أن تكون محفوظة في هاتفك</p>
+            <h3 class="text-xl font-black text-gray-900 dark:text-white">حالة الطوارئ</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">أرقام مهمة يجب أن تكون محفوظة في هاتفك</p>
           </div>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <a href="tel:14" class="emergency-card bg-red-50 p-5 rounded-2xl text-center border border-red-200 flex flex-col items-center justify-center gap-2 group">
+          <a href="tel:14" class="emergency-card bg-red-50 dark:bg-red-900/20 p-5 rounded-2xl text-center border border-red-200 dark:border-red-800 flex flex-col items-center justify-center gap-2 group">
             <div class="w-12 h-12 rounded-full bg-red-200 text-red-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-fire-extinguisher"></i></div>
-            <div class="text-2xl font-black text-red-700">14</div>
-            <div class="text-xs font-bold text-red-800">الحماية المدنية</div>
+            <div class="text-2xl font-black text-red-700 dark:text-red-400">14</div>
+            <div class="text-xs font-bold text-red-800 dark:text-red-300">الحماية المدنية</div>
           </a>
           
-          <a href="tel:17" class="emergency-card bg-blue-50 p-5 rounded-2xl text-center border border-blue-200 flex flex-col items-center justify-center gap-2 group">
+          <a href="tel:17" class="emergency-card bg-blue-50 dark:bg-blue-900/20 p-5 rounded-2xl text-center border border-blue-200 dark:border-blue-800 flex flex-col items-center justify-center gap-2 group">
             <div class="w-12 h-12 rounded-full bg-blue-200 text-blue-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-shield-halved"></i></div>
-            <div class="text-2xl font-black text-blue-700">17</div>
-            <div class="text-xs font-bold text-blue-800">الشرطة</div>
+            <div class="text-2xl font-black text-blue-700 dark:text-blue-400">17</div>
+            <div class="text-xs font-bold text-blue-800 dark:text-blue-300">الشرطة</div>
           </a>
 
-          <a href="tel:1548" class="emergency-card bg-amber-50 p-5 rounded-2xl text-center border border-amber-200 flex flex-col items-center justify-center gap-2 group">
+          <a href="tel:1548" class="emergency-card bg-amber-50 dark:bg-amber-900/20 p-5 rounded-2xl text-center border border-amber-200 dark:border-amber-800 flex flex-col items-center justify-center gap-2 group">
             <div class="w-12 h-12 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-building-shield"></i></div>
-            <div class="text-2xl font-black text-amber-700">1548</div>
-            <div class="text-xs font-bold text-amber-800">أمن المدرسة</div>
+            <div class="text-2xl font-black text-amber-700 dark:text-amber-400">1548</div>
+            <div class="text-xs font-bold text-amber-800 dark:text-amber-300">أمن </div>
           </a>
 
-          <a href="tel:021710000" class="emergency-card bg-emerald-50 p-5 rounded-2xl text-center border border-emerald-200 flex flex-col items-center justify-center gap-2 group">
+          <a href="tel:021710000" class="emergency-card bg-emerald-50 dark:bg-emerald-900/20 p-5 rounded-2xl text-center border border-emerald-200 dark:border-emerald-800 flex flex-col items-center justify-center gap-2 group">
             <div class="w-12 h-12 rounded-full bg-emerald-200 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-hospital"></i></div>
-            <div class="text-sm font-black text-emerald-700 pt-1">021 71 00 00</div>
-            <div class="text-xs font-bold text-emerald-800">مستشفى مصطفى</div>
+            <div class="text-sm font-black text-emerald-700 dark:text-emerald-400 pt-1">021 71 00 00</div>
+            <div class="text-xs font-bold text-emerald-800 dark:text-emerald-300">مستشفى مصطفى</div>
           </a>
         </div>
       </div>
 
-    </div>
+      <!-- ========================================== -->
+      <!-- معلومات إضافية -->
+      <!-- ========================================== -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <!-- نصائح للطلبة الجدد -->
+        <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700">
+          <h3 class="font-black text-lg text-orange-900 dark:text-orange-400 flex items-center gap-2 mb-4">
+            <i class="fa-solid fa-lightbulb"></i> نصائح للطلبة الجدد
+          </h3>
+          <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+            <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> أحضر معك أغطية سرير إضافية (خاصة في الشتاء).</li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> احتفظ ببطاقة الطالب في مكان آمن، فبدونها لا يمكنك الدخول.</li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> تعرف على أوقات فتح المطعم لتجنب الازدحام.</li>
+            <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i> قم بتحميل تطبيق Yassir أو Heetch للتنقل عند الحاجة.</li>
+          </ul>
+        </div>
 
-    <!-- صفحة التفاصيل (تظهر عند اختيار إقامة) -->
+        
+
+    <!-- صفحة التفاصيل -->
     <div id="detailsSection" class="hidden space-y-8">
       
-      <button onclick="hideDetails()" class="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 text-sm font-bold flex items-center gap-2 transition shadow-sm w-fit">
+      <button onclick="hideDetails()" class="px-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 hover:bg-orange-50 text-sm font-bold flex items-center gap-2 transition shadow-sm w-fit">
         <i class="fa-solid fa-arrow-right"></i> <span>العودة لقائمة الإقامات</span>
       </button>
 
-      <div class="border-b pb-4">
-        <h2 id="detailTitle" class="text-3xl font-black text-indigo-900"></h2>
+      <div class="border-b border-orange-100 dark:border-slate-700 pb-4">
+        <h2 id="detailTitle" class="text-3xl font-black text-orange-900 dark:text-orange-400"></h2>
       </div>
 
       <!-- الخريطة والمسافة -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 glass-card p-4 rounded-3xl space-y-3">
-          <h3 class="font-bold text-lg text-gray-800 px-2"><i class="fa-solid fa-map-location-dot text-indigo-500 mr-2"></i> الموقع على الخريطة</h3>
-          <div id="mapContainer" class="map-container bg-gray-200"></div>
+        <div class="lg:col-span-2 glass-card p-4 rounded-3xl space-y-3 border border-orange-100 dark:border-slate-700">
+          <h3 class="font-bold text-lg text-gray-800 dark:text-white px-2"><i class="fa-solid fa-map-location-dot text-orange-500 mr-2"></i> الموقع على الخريطة</h3>
+          <div id="mapContainer" class="map-container bg-gray-200 dark:bg-slate-700"></div>
         </div>
-        <div class="glass-card p-6 rounded-3xl space-y-4 flex flex-col justify-center">
-          <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-2"><i class="fa-solid fa-route"></i></div>
-          <h3 class="font-bold text-lg text-gray-800">المسافة إلى المدرسة</h3>
-          <p id="distanceText" class="text-sm text-gray-600 leading-relaxed"></p>
+        <div class="glass-card p-6 rounded-3xl space-y-4 flex flex-col justify-center border border-orange-100 dark:border-slate-700">
+          <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 flex items-center justify-center text-2xl mb-2"><i class="fa-solid fa-route"></i></div>
+          <h3 class="font-bold text-lg text-gray-800 dark:text-white">المسافة إلى المدرسة</h3>
+          <p id="distanceText" class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed"></p>
         </div>
       </div>
 
       <!-- الفيديو -->
-      <div class="glass-card p-4 rounded-3xl space-y-3">
-        <h3 class="font-bold text-lg text-gray-800 px-2"><i class="fa-brands fa-youtube text-red-500 mr-2"></i> فيديو تعريفي عن الإقامة</h3>
-        <div id="videoContainer" class="video-container bg-gray-200 max-w-2xl mx-auto"></div>
+      <div class="glass-card p-4 rounded-3xl space-y-3 border border-orange-100 dark:border-slate-700">
+        <h3 class="font-bold text-lg text-gray-800 dark:text-white px-2"><i class="fa-brands fa-youtube text-red-500 mr-2"></i> فيديو تعريفي عن الإقامة</h3>
+        <div id="videoContainer" class="video-container bg-gray-200 dark:bg-slate-700 max-w-2xl mx-auto"></div>
       </div>
 
-      <!-- جدول الوجبات الأسبوعي -->
-      <div class="glass-card p-6 rounded-3xl space-y-4">
-        <h3 class="font-bold text-xl text-gray-900 flex items-center gap-2">
+      <!-- جدول الوجبات -->
+      <div class="glass-card p-6 rounded-3xl space-y-4 border border-orange-100 dark:border-slate-700">
+        <h3 class="font-bold text-xl text-gray-900 dark:text-white flex items-center gap-2">
           <i class="fa-solid fa-utensils text-orange-500"></i> جدول الوجبات الأسبوعي (مشترك)
         </h3>
-        <div class="overflow-x-auto table-scroll rounded-xl border border-gray-200">
+        <div class="overflow-x-auto table-scroll rounded-xl border border-gray-200 dark:border-slate-700">
           <table class="w-full text-sm text-right">
-            <thead class="bg-orange-50 text-orange-900 font-bold">
+            <thead class="bg-orange-50 dark:bg-slate-800 text-orange-900 dark:text-orange-300 font-bold">
               <tr>
-                <th class="p-3 border-b">اليوم</th>
-                <th class="p-3 border-b">الفطور</th>
-                <th class="p-3 border-b">الغداء</th>
-                <th class="p-3 border-b">العشاء</th>
+                <th class="p-3 border-b dark:border-slate-700">اليوم</th>
+                <th class="p-3 border-b dark:border-slate-700">الفطور</th>
+                <th class="p-3 border-b dark:border-slate-700">الغداء</th>
+                <th class="p-3 border-b dark:border-slate-700">العشاء</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">الأحد</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، مربى، حلويات</td><td class="p-3 text-xs">سلطة، عدس، تونة، خبز، فاكهة</td><td class="p-3 text-xs">خبز، جبن، حلويات، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">الإثنين</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات، جبن</td><td class="p-3 text-xs">معكرونة، لحم، صلصة، فاكهة</td><td class="p-3 text-xs">خبز، تونة، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">الثلاثاء</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">أرز، دجاج، صلصة، فاكهة</td><td class="p-3 text-xs">خبز، كبدة، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">الأربعاء</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">كسكس، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، سردين، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">الخميس</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">شربة، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، جبن، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">الجمعة</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">كسكس، دجاج، خضر، فاكهة</td><td class="p-3 text-xs">خبز، مقروط، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50"><td class="p-3 font-bold">السبت</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">شربة، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، بيتزا، سلطة، فاكهة</td></tr>
+            <tbody class="divide-y divide-gray-100 dark:divide-slate-700">
+              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold">الأحد</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، مربى، حلويات</td><td class="p-3 text-xs">سلطة، عدس، تونة، خبز، فاكهة</td><td class="p-3 text-xs">خبز، جبن، تليتلي ، فاكهة</td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold">الإثنين</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات، جبن</td><td class="p-3 text-xs">معكرونة، لحم، صلصة، فاكهة</td><td class="p-3 text-xs">خبز، شطيطحة لحم، سلطة، فاكهة</td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold">الثلاثاء</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">أرز، دجاج، صلصة، فاكهة</td><td class="p-3 text-xs">خبز، ارز بالدجاج، سلطة، فاكهة</td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold">الأربعاء</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">كسكس، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، كباب باللحم، سلطة، فاكهة</td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold">الخميس</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">شربة، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، كسكس بالدجاج، سلطة، فاكهة</td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold">الجمعة</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">كسكس، دجاج، خضر، فاكهة</td><td class="p-3 text-xs">خبز، طاجين زيتون باللحم، سلطة، فاكهة</td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold">السبت</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">شربة، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، مثوم ا، سلطة، فاكهة</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- قسم خاص بإقامة امحمد يوسفي (الأنشطة والمرافق) -->
-      <div id="youssefiActivities" class="glass-card p-6 rounded-3xl space-y-4 hidden border-2 border-emerald-100">
-        <h3 class="font-bold text-xl text-emerald-900 flex items-center gap-2">
+      <!-- الأنشطة الخاصة بإقامة يوسفي -->
+      <div id="youssefiActivities" class="glass-card p-6 rounded-3xl space-y-4 hidden border-2 border-emerald-100 dark:border-emerald-900/30">
+        <h3 class="font-bold text-xl text-emerald-900 dark:text-emerald-400 flex items-center gap-2">
           <i class="fa-solid fa-calendar-check"></i> إعلان هام: أنشطة ومرافق إقامة امحمد يوسفي
         </h3>
-        <p class="text-sm text-gray-600">تعلن مصلحة النشاطات كافة الطالبات عن افتتاح مختلف المرافق حسب الجدول التالي:</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">تعلن مصلحة النشاطات كافة الطالبات عن افتتاح مختلف المرافق حسب الجدول التالي:</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div class="bg-pink-50 p-4 rounded-xl border border-pink-100">
-            <h4 class="font-bold text-pink-900 mb-2"><i class="fa-solid fa-dumbbell mr-1"></i> قاعة الرياضة</h4>
-            <p class="text-sm text-pink-800">من الأحد إلى الأربعاء (الفترتين الصباحية والمسائية).</p>
+          <div class="bg-pink-50 dark:bg-pink-900/20 p-4 rounded-xl border border-pink-100 dark border-pink-800">
+            <h4 class="font-bold text-pink-900 dark:text-pink-400 mb-2"><i class="fa-solid fa-dumbbell mr-1"></i> قاعة الرياضة</h4>
+            <p class="text-sm text-pink-800 dark:text-pink-300">من الأحد إلى الأربعاء (الفترتين الصباحية والمسائية).</p>
           </div>
-          <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
-            <h4 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-book mr-1"></i> المكتبة</h4>
-            <p class="text-sm text-amber-800">من الأحد إلى الخميس (الفترتين الصباحية والمسائية).</p>
+          <div class="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl border border-amber-100 dark:border-amber-800">
+            <h4 class="font-bold text-amber-900 dark:text-amber-400 mb-2"><i class="fa-solid fa-book mr-1"></i> المكتبة</h4>
+            <p class="text-sm text-amber-800 dark:text-amber-300">من الأحد إلى الخميس (الفترتين الصباحية والمسائية).</p>
           </div>
-          <div class="bg-purple-50 p-4 rounded-xl border border-purple-100">
-            <h4 class="font-bold text-purple-900 mb-2"><i class="fa-solid fa-gamepad mr-1"></i> قاعة الألعاب الأولى</h4>
-            <p class="text-sm text-purple-800">صباحاً: الأحد إلى الخميس. مساءً: الأحد والثلاثاء.</p>
+          <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-xl border border-purple-100 dark:border-purple-800">
+            <h4 class="font-bold text-purple-900 dark:text-purple-400 mb-2"><i class="fa-solid fa-gamepad mr-1"></i> قاعة الألعاب الأولى</h4>
+            <p class="text-sm text-purple-800 dark:text-purple-300">صباحاً: الأحد إلى الخميس. مساءً: الأحد والثلاثاء.</p>
           </div>
-          <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-            <h4 class="font-bold text-blue-900 mb-2"><i class="fa-solid fa-table-tennis-paddle-ball mr-1"></i> قاعة الألعاب الثانية</h4>
-            <p class="text-sm text-blue-800">صباحاً: الأحد إلى الخميس. مساءً: الإثنين والأربعاء.</p>
+          <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800">
+            <h4 class="font-bold text-blue-900 dark:text-blue-400 mb-2"><i class="fa-solid fa-table-tennis-paddle-ball mr-1"></i> قاعة الألعاب الثانية</h4>
+            <p class="text-sm text-blue-800 dark:text-blue-300">صباحاً: الأحد إلى الخميس. مساءً: الإثنين والأربعاء.</p>
           </div>
-          <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 md:col-span-2">
-            <h4 class="font-bold text-gray-900 mb-2"><i class="fa-solid fa-chalkboard-user mr-1"></i> قاعة النشاطات</h4>
-            <p class="text-sm text-gray-800">يوم الخميس: 13:30 (بعد وجبة الغداء) و 20:00 (بعد وجبة العشاء).</p>
+          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-200 dark:border-slate-700 md:col-span-2">
+            <h4 class="font-bold text-gray-900 dark:text-white mb-2"><i class="fa-solid fa-chalkboard-user mr-1"></i> قاعة النشاطات</h4>
+            <p class="text-sm text-gray-800 dark:text-gray-300">يوم الخميس: 13:30 (بعد وجبة الغداء) و 20:00 (بعد وجبة العشاء).</p>
           </div>
         </div>
       </div>
 
       <!-- المحلات والمرافق القريبة -->
       <div class="space-y-4">
-        <h3 class="font-bold text-xl text-gray-800 border-r-4 border-indigo-500 pr-3">المحلات والمرافق القريبة</h3>
+        <h3 class="font-bold text-xl text-gray-800 dark:text-white border-r-4 border-orange-500 pr-3">المحلات والمرافق القريبة</h3>
         <div id="facilitiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
 
     </div>
   </main>
 
-  <footer class="glass-nav border-t border-gray-200 py-6 px-4 text-center text-xs text-gray-500">
+  <footer class="glass-nav border-t border-orange-100 dark:border-slate-800 py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400">
     <p>© 2026 ENSTP القبة — تصميم فريق التطوير الطلابي.</p>
   </footer>
 
   <script>
-    // ... (نفس كود البيانات residencesData السابق) ...
+    // ==========================================
+    // 1. الوضع الليلي
+    // ==========================================
+    if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    // ==========================================
+    // 2. بيانات الإقامات
+    // ==========================================
     const residencesData = {
+      'hamdine': {
+        title: 'الإقامة الجامعية سعيد حمدين (حسين داي)',
+        mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.123456789!2d3.08949431529025!3d36.73356397995596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb20000000000%3A0x123456789abcdef!2sCit%C3%A9%20Universitaire%20Sa%C3%AFd%20Hamdine!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
+        videoSrc: 'https://www.youtube.com/embed/hZg4e6hpkns',
+        distance: 'تبعد حوالي 6 كم عن المدرسة (منطقة القبة)، وتحتاج لوسيلة نقل (حوالي 20 دقيقة بالحافلة).',
+        facilities: [
+          { name: 'مطعم الإقامة', icon: 'fa-utensils', type: 'مرفق', time: '12:00 - 14:30', distance: 'داخل الإقامة' },
+          { name: 'صيدلية ليلية', icon: 'fa-prescription-bottle-medical', type: 'مرفق صحي', time: '24 ساعة', distance: '800 متر' },
+          { name: 'سوبرماركت', icon: 'fa-cart-shopping', type: 'محل تجاري', time: '08:00 - 22:00', distance: '300 متر' }
+        ]
+      },
+      'youssefi': {
+        title: 'الإقامة الجامعية امحمد يوسفي (حسين داي)',
+        mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.88915412985!2d3.07949431529025!3d36.75256397995596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fadec61ab4433%3A0x7a1f7a1f7a1f7a1f!2sCit%C3%A9%20Universitaire%20Mohamed%20Youssefi%20Kouba!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
+        videoSrc: 'https://www.youtube.com/embed/agTlVSQ8760',
+        distance: 'تقع في حسين داي (بالقرب من محطة الترامواي)، وتبعد حوالي 5 كم عن المدرسة.',
+        facilities: [
+          { name: 'مطعم الجامعة', icon: 'fa-utensils', type: 'مرفق', time: '11:30 - 14:30 / 18:30 - 21:00', distance: 'داخل الإقامة' },
+          { name: 'محلات المواد الغذائية', icon: 'fa-store', type: 'محل تجاري', time: '08:00 - 23:00', distance: '200 متر' },
+          { name: 'مقهى طلابي', icon: 'fa-mug-hot', type: 'ترفيه', time: '07:00 - 23:00', distance: '150 متر' }
+        ]
+      },
       'gueridi': {
-        title: 'الإقامة الجامعية قاريدي (Ben Aknoun)',
+        title: 'الإقامة الجامعية قاريدي (بن عكنون)',
         mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.375506523222!2d3.0174753152907654!3d36.76112497995362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128faffa7b3dae89%3A0x6b3b6b3b6b3b6b3b!2sCit%C3%A9%20Universitaire%20Gueridi%20Ben%20Aknoun!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
         videoSrc: 'https://www.youtube.com/embed/cxKbbBfWCCw',
         distance: 'تبعد حوالي 4.5 كم عن المدرسة الوطنية العليا للأشغال العمومية (القبة).',
@@ -366,31 +456,12 @@
           { name: 'سوبرماركت (Ardis / UNO)', icon: 'fa-cart-shopping', type: 'محل تجاري', time: '09:00 - 22:00', distance: '500 متر (5 دقائق سيراً)' },
           { name: 'صيدلية', icon: 'fa-prescription-bottle-medical', type: 'مرفق صحي', time: '08:00 - 20:00', distance: '400 متر' }
         ]
-      },
-      'youssefi': {
-        title: 'الإقامة الجامعية امحمد يوسفي (Kouba)',
-        mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.88915412985!2d3.07949431529025!3d36.75256397995596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fadec61ab4433%3A0x7a1f7a1f7a1f7a1f!2sCit%C3%A9%20Universitaire%20Mohamed%20Youssefi%20Kouba!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
-        videoSrc: 'https://www.youtube.com/embed/agTlVSQ8760',
-        distance: 'قريبة جداً من المدرسة (حوالي 1.5 كم)، تقع في نفس منطقة القبة.',
-        facilities: [
-          { name: 'مطعم الجامعة', icon: 'fa-utensils', type: 'مرفق', time: '11:30 - 14:30 / 18:30 - 21:00', distance: 'داخل الإقامة' },
-          { name: 'محلات المواد الغذائية (قبة)', icon: 'fa-store', type: 'محل تجاري', time: '08:00 - 23:00', distance: '200 متر' },
-          { name: 'مقهى طلابي', icon: 'fa-mug-hot', type: 'ترفيه', time: '07:00 - 23:00', distance: '150 متر' }
-        ]
-      },
-      'hamdine': {
-        title: 'الإقامة الجامعية سعيد حمدين (Hussein Dey)',
-        mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.123456789!2d3.08949431529025!3d36.73356397995596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb20000000000%3A0x123456789abcdef!2sCit%C3%A9%20Universitaire%20Sa%C3%AFd%20Hamdine!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
-        videoSrc: 'https://www.youtube.com/embed/hZg4e6hpkns',
-        distance: 'تبعد حوالي 6 كم عن المدرسة (منطقة القبة)، وتحتاج لوسيلة نقل.',
-        facilities: [
-                  facilities: [
-          { name: 'مطعم الإقامة', icon: 'fa-utensils', type: 'مرفق', time: '12:00 - 14:30', distance: 'داخل الإقامة' },
-          { name: 'صيدلية ليلية', icon: 'fa-prescription-bottle-medical', type: 'مرفق صحي', time: '24 ساعة', distance: '800 متر' }
-        ]
       }
     };
 
+    // ==========================================
+    // 3. عرض تفاصيل الإقامة
+    // ==========================================
     function showDetails(id) {
       const data = residencesData[id];
       
@@ -413,18 +484,19 @@
       grid.innerHTML = '';
       
       data.facilities.forEach(fac => {
-        let colorClass = 'bg-blue-50 text-blue-600';
-        if(fac.type === 'مرفق صحي') colorClass = 'bg-red-50 text-red-600';
-        if(fac.type === 'محل تجاري') colorClass = 'bg-emerald-50 text-emerald-600';
-        if(fac.type === 'ترفيه') colorClass = 'bg-purple-50 text-purple-600';
+        let colorClass = 'bg-blue-100 text-blue-600';
+        let darkColorClass = 'dark:bg-blue-900/30 dark:text-blue-400';
+        if(fac.type === 'مرفق صحي') { colorClass = 'bg-red-100 text-red-600'; darkColorClass = 'dark:bg-red-900/30 dark:text-red-400'; }
+        if(fac.type === 'محل تجاري') { colorClass = 'bg-emerald-100 text-emerald-600'; darkColorClass = 'dark:bg-emerald-900/30 dark:text-emerald-400'; }
+        if(fac.type === 'ترفيه') { colorClass = 'bg-purple-100 text-purple-600'; darkColorClass = 'dark:bg-purple-900/30 dark:text-purple-400'; }
 
         grid.innerHTML += `
-          <div class="glass-card p-5 rounded-2xl border border-gray-100 flex flex-col gap-3">
-            <div class="flex items-center gap-3 border-b border-gray-50 pb-3">
-              <div class="w-10 h-10 rounded-xl ${colorClass} flex items-center justify-center text-lg"><i class="fa-solid ${fac.icon}"></i></div>
-              <div><h4 class="font-bold text-gray-800 text-sm">${fac.name}</h4><span class="text-[10px] font-bold text-gray-500">${fac.type}</span></div>
+          <div class="glass-card p-5 rounded-2xl border border-orange-100 dark:border-slate-700 flex flex-col gap-3">
+            <div class="flex items-center gap-3 border-b border-gray-100 dark:border-slate-700 pb-3">
+              <div class="w-10 h-10 rounded-xl ${colorClass} ${darkColorClass} flex items-center justify-center text-lg"><i class="fa-solid ${fac.icon}"></i></div>
+              <div><h4 class="font-bold text-gray-800 dark:text-white text-sm">${fac.name}</h4><span class="text-[10px] font-bold text-gray-500 dark:text-gray-400">${fac.type}</span></div>
             </div>
-            <div class="space-y-2 text-xs text-gray-600">
+            <div class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
               <p class="flex items-center gap-2"><i class="fa-regular fa-clock text-gray-400 w-4"></i> <span dir="ltr">${fac.time}</span></p>
               <p class="flex items-center gap-2"><i class="fa-solid fa-person-walking text-gray-400 w-4"></i> ${fac.distance}</p>
             </div>
@@ -444,13 +516,11 @@
     }
 
     // ==========================================
-    // ✅ كود عمل بوصلة القبلة (Qibla Compass)
+    // 4. بوصلة القبلة
     // ==========================================
     const KAABA_LAT = 21.4225;
     const KAABA_LNG = 39.8262;
-    let userLat = null;
-    let userLng = null;
-    let deviceHeading = null;
+    let userLat = null, userLng = null, deviceHeading = null;
 
     function calculateQiblaAngle(lat, lng) {
       const phiK = KAABA_LAT * Math.PI / 180;
@@ -475,7 +545,6 @@
       
       const needle = document.getElementById('needle');
       if(needle) {
-        // دوران الإبرة = زاوية القبلة - اتجاه الهاتف
         const rotation = qiblaAngle - deviceHeading;
         needle.style.transform = `rotate(${rotation}deg)`;
       }
@@ -488,7 +557,7 @@
           userLat = position.coords.latitude;
           userLng = position.coords.longitude;
           const statusEl = document.getElementById('qiblaStatus');
-          if(statusEl) statusEl.innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-check-circle"></i> تم تحديد موقعك</span>`;
+          if(statusEl) statusEl.innerHTML = `<span class="text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-check-circle"></i> تم تحديد موقعك</span>`;
           updateCompass();
         },
         (error) => {
@@ -501,9 +570,8 @@
       if(statusEl) statusEl.innerText = "متصفحك لا يدعم تحديد الموقع.";
     }
 
-    // مراقبة اتجاه الهاتف (البوصلة)
+    // مراقبة اتجاه الهاتف
     if (window.DeviceOrientationEvent) {
-      // iOS يتطلب إذن صريح
       if (typeof DeviceOrientationEvent.requestPermission === 'function') {
         document.body.addEventListener('click', function requestAccess() {
           DeviceOrientationEvent.requestPermission()
@@ -517,7 +585,6 @@
             .catch(console.error);
         });
       } else {
-        // Android والأجهزة الأخرى
         window.addEventListener('deviceorientationabsolute', handleOrientation);
         window.addEventListener('deviceorientation', handleOrientation);
       }
@@ -525,15 +592,11 @@
 
     function handleOrientation(event) {
       let heading = null;
-      
       if (event.webkitCompassHeading) {
-        // لأجهزة iOS (Safari)
         heading = event.webkitCompassHeading;
       } else if (event.alpha !== null) {
-        // لأجهزة Android والأجهزة الأخرى
         heading = 360 - event.alpha;
       }
-
       if (heading !== null) {
         deviceHeading = heading;
         updateCompass();
@@ -541,4 +604,4 @@
     }
   </script>
 </body>
-</html>
+</html> 
