@@ -23,18 +23,93 @@
     .table-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
     .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     
-    /* تنسيقات البوصلة */
-    .compass-container { position: relative; width: 220px; height: 220px; margin: 0 auto; border-radius: 50%; background: #fff; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 10px 30px rgba(0,0,0,0.1); border: 4px solid #e2e8f0; display: flex; align-items: center; justify-content: center; transition: transform 0.1s ease-out; }
+    /* ==========================================
+       تنسيقات بوصلة القبلة (المحسنة)
+       ========================================== */
+    .compass-container { 
+      position: relative; 
+      width: 240px; 
+      height: 240px; 
+      margin: 0 auto; 
+      border-radius: 50%; 
+      background: radial-gradient(circle, #ffffff 0%, #f0fdf4 100%); 
+      box-shadow: 
+        inset 0 0 20px rgba(16, 185, 129, 0.1), 
+        0 15px 35px rgba(16, 185, 129, 0.15),
+        0 0 0 8px rgba(255, 255, 255, 0.5); 
+      border: 4px solid #10b981; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+      animation: pulseCompass 3s infinite alternate;
+    }
+
+    @keyframes pulseCompass {
+      0% { box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1), 0 15px 35px rgba(16, 185, 129, 0.15), 0 0 0 8px rgba(255, 255, 255, 0.5); }
+      100% { box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.2), 0 20px 45px rgba(16, 185, 129, 0.25), 0 0 0 12px rgba(255, 255, 255, 0.6); }
+    }
+
     .compass-dial { position: absolute; width: 100%; height: 100%; }
-    .compass-needle { position: absolute; width: 6px; height: 100px; background: linear-gradient(to bottom, #ef4444 50%, #cbd5e1 50%); top: 10px; border-radius: 6px; transform-origin: bottom center; transition: transform 0.1s ease-out; z-index: 10; }
-    .compass-center { position: absolute; width: 20px; height: 20px; background: #1e293b; border-radius: 50%; border: 3px solid #fff; z-index: 20; }
-    .compass-label { position: absolute; font-weight: 900; color: #94a3b8; font-size: 14px; }
-    .label-n { top: 10px; left: 50%; transform: translateX(-50%); color: #ef4444; }
-    .label-s { bottom: 10px; left: 50%; transform: translateX(-50%); }
-    .label-e { right: 10px; top: 50%; transform: translateY(-50%); }
-    .label-w { left: 10px; top: 50%; transform: translateY(-50%); }
     
-    .kaaba-icon { position: absolute; width: 24px; height: 24px; color: #10b981; top: 30px; left: 50%; transform: translateX(-50%); z-index: 15; font-size: 20px; }
+    .compass-needle { 
+      position: absolute; 
+      width: 8px; 
+      height: 110px; 
+      background: linear-gradient(to bottom, #ef4444 50%, #cbd5e1 50%); 
+      top: 10px; 
+      border-radius: 8px; 
+      transform-origin: bottom center; 
+      transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1); 
+      z-index: 10;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .compass-center { 
+      position: absolute; 
+      width: 24px; 
+      height: 24px; 
+      background: linear-gradient(135deg, #1e293b, #334155); 
+      border-radius: 50%; 
+      border: 4px solid #fff; 
+      z-index: 20;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    .compass-label { 
+      position: absolute; 
+      font-weight: 900; 
+      color: #94a3b8; 
+      font-size: 16px; 
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    }
+    .label-n { top: 12px; left: 50%; transform: translateX(-50%); color: #ef4444; }
+    .label-s { bottom: 12px; left: 50%; transform: translateX(-50%); color: #3b82f6; }
+    .label-e { right: 12px; top: 50%; transform: translateY(-50%); }
+    .label-w { left: 12px; top: 50%; transform: translateY(-50%); }
+    
+    .kaaba-icon { 
+      position: absolute; 
+      width: 32px; 
+      height: 32px; 
+      color: #10b981; 
+      top: 35px; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      z-index: 15; 
+      font-size: 26px; 
+      filter: drop-shadow(0 4px 6px rgba(16, 185, 129, 0.4));
+      animation: floatKaaba 2s infinite ease-in-out;
+    }
+
+    @keyframes floatKaaba {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* ألوان قسم الطوارئ */
+    .emergency-card { transition: all 0.3s ease; }
+    .emergency-card:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -84,11 +159,15 @@
       </div>
 
       <!-- ========================================== -->
-      <!-- ✅ قسم بوصلة القبلة (Qibla Compass) -->
+      <!-- ✅ قسم بوصلة القبلة (المحسن) -->
       <!-- ========================================== -->
-      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-indigo-100">
-        <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
-          <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl">
+      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-emerald-100 relative overflow-hidden">
+        <!-- خلفية جمالية -->
+        <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl"></div>
+
+        <div class="flex items-center gap-3 border-b border-emerald-100 pb-4 relative z-10">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/30">
             <i class="fa-solid fa-compass"></i>
           </div>
           <div>
@@ -97,7 +176,7 @@
           </div>
         </div>
 
-        <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-12 relative z-10">
           <!-- البوصلة -->
           <div class="relative">
             <div class="compass-container" id="compass">
@@ -114,23 +193,65 @@
           </div>
 
           <!-- المعلومات -->
-          <div class="text-center md:text-right space-y-2">
-            <p class="text-sm font-bold text-gray-700" id="qiblaStatus">جاري تحديد موقعك...</p>
-            <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 inline-block">
-              <p class="text-xs text-indigo-600 font-bold mb-1">زاوية القبلة:</p>
-              <p class="text-2xl font-black text-indigo-900" id="qiblaAngle">--°</p>
+          <div class="text-center md:text-right space-y-4">
+            <div class="bg-emerald-50 px-6 py-4 rounded-2xl border border-emerald-100 shadow-sm inline-block">
+              <p class="text-xs text-emerald-600 font-bold mb-1">زاوية القبلة من الشمال</p>
+              <p class="text-4xl font-black text-emerald-900" id="qiblaAngle">--°</p>
             </div>
-            <p class="text-[10px] text-gray-400 max-w-xs mx-auto md:mx-0">
-              <i class="fa-solid fa-circle-info"></i> يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.
+            <p class="text-sm font-bold text-gray-700 flex items-center justify-center md:justify-start gap-2" id="qiblaStatus">
+              <i class="fa-solid fa-spinner fa-spin text-emerald-500"></i> جاري تحديد موقعك...
+            </p>
+            <p class="text-[11px] text-gray-500 max-w-xs mx-auto md:mx-0 bg-gray-50 p-3 rounded-xl border border-gray-200">
+              <i class="fa-solid fa-circle-info text-emerald-500"></i> يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة. قم بتحريك هاتفك على شكل رقم 8 لمعايرة البوصلة إذا لزم الأمر.
             </p>
           </div>
         </div>
       </div>
+
       <!-- ========================================== -->
+      <!-- ✅ قسم حالة الطوارئ (جديد) -->
+      <!-- ========================================== -->
+      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-red-100 relative overflow-hidden">
+        <div class="flex items-center gap-3 border-b border-red-100 pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-400 to-red-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-red-500/30">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-black text-gray-900">حالة الطوارئ</h3>
+            <p class="text-xs text-gray-500">أرقام مهمة يجب أن تكون محفوظة في هاتفك</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <a href="tel:14" class="emergency-card bg-red-50 p-5 rounded-2xl text-center border border-red-200 flex flex-col items-center justify-center gap-2 group">
+            <div class="w-12 h-12 rounded-full bg-red-200 text-red-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-fire-extinguisher"></i></div>
+            <div class="text-2xl font-black text-red-700">14</div>
+            <div class="text-xs font-bold text-red-800">الحماية المدنية</div>
+          </a>
+          
+          <a href="tel:17" class="emergency-card bg-blue-50 p-5 rounded-2xl text-center border border-blue-200 flex flex-col items-center justify-center gap-2 group">
+            <div class="w-12 h-12 rounded-full bg-blue-200 text-blue-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="text-2xl font-black text-blue-700">17</div>
+            <div class="text-xs font-bold text-blue-800">الشرطة</div>
+          </a>
+
+          <a href="tel:1548" class="emergency-card bg-amber-50 p-5 rounded-2xl text-center border border-amber-200 flex flex-col items-center justify-center gap-2 group">
+            <div class="w-12 h-12 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-building-shield"></i></div>
+            <div class="text-2xl font-black text-amber-700">1548</div>
+            <div class="text-xs font-bold text-amber-800">أمن المدرسة</div>
+          </a>
+
+          <a href="tel:021710000" class="emergency-card bg-emerald-50 p-5 rounded-2xl text-center border border-emerald-200 flex flex-col items-center justify-center gap-2 group">
+            <div class="w-12 h-12 rounded-full bg-emerald-200 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-hospital"></i></div>
+            <div class="text-sm font-black text-emerald-700 pt-1">021 71 00 00</div>
+            <div class="text-xs font-bold text-emerald-800">مستشفى مصطفى</div>
+          </a>
+        </div>
+      </div>
 
     </div>
 
-    <!-- صفحة التفاصيل -->
+    <!-- صفحة التفاصيل (تظهر عند اختيار إقامة) -->
     <div id="detailsSection" class="hidden space-y-8">
       
       <button onclick="hideDetails()" class="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 text-sm font-bold flex items-center gap-2 transition shadow-sm w-fit">
@@ -160,7 +281,7 @@
         <div id="videoContainer" class="video-container bg-gray-200 max-w-2xl mx-auto"></div>
       </div>
 
-      <!-- جدول الوجبات الأسبوعي (لكل الإقامات) -->
+      <!-- جدول الوجبات الأسبوعي -->
       <div class="glass-card p-6 rounded-3xl space-y-4">
         <h3 class="font-bold text-xl text-gray-900 flex items-center gap-2">
           <i class="fa-solid fa-utensils text-orange-500"></i> جدول الوجبات الأسبوعي (مشترك)
@@ -233,8 +354,8 @@
   </footer>
 
   <script>
+    // ... (نفس كود البيانات residencesData السابق) ...
     const residencesData = {
-      // ... (نفس البيانات السابقة، لم يتم تغييرها) ...
       'gueridi': {
         title: 'الإقامة الجامعية قاريدي (Ben Aknoun)',
         mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.375506523222!2d3.0174753152907654!3d36.76112497995362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128faffa7b3dae89%3A0x6b3b6b3b6b3b6b3b!2sCit%C3%A9%20Universitaire%20Gueridi%20Ben%20Aknoun!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
@@ -263,6 +384,7 @@
         videoSrc: 'https://www.youtube.com/embed/hZg4e6hpkns',
         distance: 'تبعد حوالي 6 كم عن المدرسة (منطقة القبة)، وتحتاج لوسيلة نقل.',
         facilities: [
+                  facilities: [
           { name: 'مطعم الإقامة', icon: 'fa-utensils', type: 'مرفق', time: '12:00 - 14:30', distance: 'داخل الإقامة' },
           { name: 'صيدلية ليلية', icon: 'fa-prescription-bottle-medical', type: 'مرفق صحي', time: '24 ساعة', distance: '800 متر' }
         ]
@@ -322,7 +444,7 @@
     }
 
     // ==========================================
-    // ✅ كود عمل بوصلة القبلة
+    // ✅ كود عمل بوصلة القبلة (Qibla Compass)
     // ==========================================
     const KAABA_LAT = 21.4225;
     const KAABA_LNG = 39.8262;
@@ -349,21 +471,14 @@
       
       const qiblaAngle = calculateQiblaAngle(userLat, userLng);
       const qiblaEl = document.getElementById('qiblaAngle');
-      qiblaEl.innerText = Math.round(qiblaAngle) + '°';
+      if(qiblaEl) qiblaEl.innerText = Math.round(qiblaAngle) + '°';
       
-      // تدوير الإبرة
       const needle = document.getElementById('needle');
-      // إبرة البوصلة تشير إلى الشمال المغناطيسي (0)، ونحن نريدها أن تشير إلى القبلة
-      // إذا كان الهاتف متجهاً نحو الشمال (0)، يجب أن تدور الإبرة بمقدار qiblaAngle
-      // إذا كان الهاتف متجهاً نحو الشرق (90)، يجب أن تدور الإبرة بمقدار qiblaAngle - 90
-      // المعادلة: دوران الإبرة = زاوية القبلة - اتجاه الهاتف
-      const rotation = qiblaAngle - deviceHeading;
-      
-      needle.style.transform = `rotate(${rotation}deg)`;
-      
-      // تدوير أيقونة الكعبة (التي تظهر على إطار البوصلة) لتشير دائماً إلى القبلة
-      // في الواقع، الأفضل أن تظل الكعبة ثابتة والإبرة تدور، لكن لتحسين المظهر:
-      // نترك الكعبة ثابتة في الأعلى (الشمال)، والإبرة تشير للقبلة.
+      if(needle) {
+        // دوران الإبرة = زاوية القبلة - اتجاه الهاتف
+        const rotation = qiblaAngle - deviceHeading;
+        needle.style.transform = `rotate(${rotation}deg)`;
+      }
     }
 
     // مراقبة الموقع
@@ -372,15 +487,18 @@
         (position) => {
           userLat = position.coords.latitude;
           userLng = position.coords.longitude;
-          document.getElementById('qiblaStatus').innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-check-circle"></i> تم تحديد موقعك</span>`;
+          const statusEl = document.getElementById('qiblaStatus');
+          if(statusEl) statusEl.innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-check-circle"></i> تم تحديد موقعك</span>`;
           updateCompass();
         },
         (error) => {
-          document.getElementById('qiblaStatus').innerHTML = `<span class="text-red-500"><i class="fa-solid fa-triangle-exclamation"></i> تعذر تحديد الموقع. تأكد من تفعيل GPS.</span>`;
+          const statusEl = document.getElementById('qiblaStatus');
+          if(statusEl) statusEl.innerHTML = `<span class="text-red-500"><i class="fa-solid fa-triangle-exclamation"></i> تعذر تحديد الموقع. تأكد من تفعيل GPS.</span>`;
         }
       );
     } else {
-      document.getElementById('qiblaStatus').innerText = "متصفحك لا يدعم تحديد الموقع.";
+      const statusEl = document.getElementById('qiblaStatus');
+      if(statusEl) statusEl.innerText = "متصفحك لا يدعم تحديد الموقع.";
     }
 
     // مراقبة اتجاه الهاتف (البوصلة)
@@ -405,8 +523,7 @@
       }
     }
 
-        function handleOrientation(event) {
-      // الحصول على زاوية اتجاه الجهاز (0 = الشمال)
+    function handleOrientation(event) {
       let heading = null;
       
       if (event.webkitCompassHeading) {
@@ -414,8 +531,6 @@
         heading = event.webkitCompassHeading;
       } else if (event.alpha !== null) {
         // لأجهزة Android والأجهزة الأخرى
-        // alpha = 0 عندما يكون الجهاز متجهاً نحو الشمال
-        // نحتاج إلى تحويلها لأن alpha تزيد عكس اتجاه عقارب الساعة
         heading = 360 - event.alpha;
       }
 
@@ -424,17 +539,6 @@
         updateCompass();
       }
     }
-
-    // إضافة زر لإعادة طلب إذن الموقع إذا لزم الأمر
-    document.addEventListener('DOMContentLoaded', () => {
-      // التحقق من دعم الجهاز
-      if (!window.DeviceOrientationEvent) {
-        const statusEl = document.getElementById('qiblaStatus');
-        if (statusEl) {
-          statusEl.innerHTML = `<span class="text-amber-500"><i class="fa-solid fa-triangle-exclamation"></i> جهازك لا يدعم البوصلة. يرجى استخدام هاتف ذكي.</span>`;
-        }
-      }
-    });
   </script>
 </body>
 </html>
