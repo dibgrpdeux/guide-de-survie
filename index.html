@@ -1397,5 +1397,48 @@
     "retina_detect": true
   });
 </script>
+  <!-- زر المساعد العائم -->
+<button onclick="toggleChat()" class="fixed bottom-6 left-6 z-50 w-14 h-14 bg-orange-500 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition">
+  <i class="fa-solid fa-comments text-xl"></i>
+</button>
+
+<!-- نافذة الدردشة -->
+<div id="chatWindow" class="fixed bottom-24 left-6 z-50 w-80 bg-white rounded-2xl shadow-2xl border border-orange-200 hidden flex-col" style="max-height: 400px;">
+  <div class="bg-orange-500 text-white p-3 rounded-t-2xl font-bold flex justify-between">
+    <span>المساعد الافتراضي</span>
+    <button onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div id="chatBody" class="p-3 overflow-y-auto text-sm space-y-2" style="height: 300px;">
+    <div class="bg-orange-50 p-2 rounded-lg">مرحباً! كيف يمكنني مساعدتك؟</div>
+  </div>
+  <div class="p-2 border-t flex gap-1">
+    <input type="text" id="chatInput" placeholder="اكتب سؤالك..." class="flex-1 p-2 border rounded-lg text-sm">
+    <button onclick="sendMessage()" class="bg-orange-500 text-white px-3 rounded-lg"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<script>
+function toggleChat() {
+  const chat = document.getElementById('chatWindow');
+  chat.classList.toggle('hidden');
+  chat.classList.toggle('flex');
+}
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const body = document.getElementById('chatBody');
+  body.innerHTML += `<div class="bg-orange-500 text-white p-2 rounded-lg text-right ml-8">${msg}</div>`;
+  input.value = '';
+  // رد آلي بسيط
+  setTimeout(() => {
+    let reply = "شكراً لسؤالك! سأقوم بالرد عليك قريباً.";
+    if (msg.includes("جدول") || msg.includes("توقيت")) reply = "يمكنك العثور على جدول التوقيت في صفحة 'نجاحي'.";
+    if (msg.includes("مطعم") || msg.includes("أكل")) reply = "تفضل بزيارة صفحة 'المطاعم والمقاهي'.";
+    body.innerHTML += `<div class="bg-gray-100 p-2 rounded-lg text-left mr-8">${reply}</div>`;
+    body.scrollTop = body.scrollHeight;
+  }, 500);
+}
+</script>
 </body>
 </html>
