@@ -359,7 +359,7 @@
             </div>
             <div>
               <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>المقاومة القصوى (fc)</span><span id="strength-val" class="text-red-600">25</span> MPa</label>
-              <input type="range" id="strength-slider" min="10" max="50" value="25" class" class="slider-custom">
+              <input type="range" id="strength-slider" min="10" max="50" value="25" " class="slider-custom">
             </div>
             <div class="bg-red-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-red-100 dark:border-slate-700">
               <p class="text-xs text-gray-500 mb-1">حالة المكعب</p>
@@ -774,8 +774,7 @@
           </div>
         </div>`).join('');
     }
-    function addCronoTask() {
-          function addCronoTask() {
+        function addCronoTask() {
       const name = document.getElementById('crono-name').value;
       const time = document.getElementById('crono-time').value;
       if (!name || !time) return alert("الرجاء إدخال اسم المهمة والوقت");
