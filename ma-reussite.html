@@ -69,6 +69,12 @@
 
     .bg-mesh { background-image: radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.08) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.06) 0px, transparent 50%); }
     .dark .bg-mesh { background-image: radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.1) 0px, transparent 50%); }
+
+    /* تنسيقات الكرونو */
+    .timeline-line { position: absolute; right: 15px; top: 0; bottom: 0; width: 2px; background: #fed7aa; z-index: 0; }
+    .dark .timeline-line { background: #334155; }
+    .timeline-dot { position: absolute; right: 10px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; z-index: 1; }
+    .dark .timeline-dot { border-color: #1e293b; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 bg-mesh">
@@ -308,7 +314,33 @@
         </div>
       </div>
 
-      <!-- 3. المساعد الأكاديمي (AI) -->
+      <!-- 3. الكرونو ونظام التذكير بالمهام -->
+      <div class="glass-card p-6 rounded-3xl border border-indigo-100 dark:border-slate-700 mt-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div>
+            <h4 class="font-black text-lg text-slate-900 dark:text-white">الكرونو والتذكير بالمهام</h4>
+            <p class="text-xs text-slate-500">خطط ليومك ورتب مهامك حسب الوقت</p>
+          </div>
+        </div>
+
+        <!-- إضافة مهمة للكرونو -->
+        <div class="flex flex-col md:flex-row gap-3 mb-8 bg-gray-50 dark:bg-slate-800 p-4 rounded-2xl border border-gray-100 dark:border-slate-700">
+          <input type="text" id="crono-name" placeholder="اسم المهمة (مثلاً: مراجعة الرياضيات)..." class="flex-1 p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
+          <input type="time" id="crono-time" class="p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
+          <button onclick="addCronoTask()" class="bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-indigo-700 transition">إضافة للكرونو</button>
+        </div>
+
+        <!-- الخط الزمني -->
+        <div class="relative pl-8 pr-4">
+          <div class="timeline-line"></div>
+          <div id="crono-container" class="space-y-6">
+            <!-- المهام ستظهر هنا -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. المساعد الأكاديمي (AI) -->
       <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 mt-6">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-robot"></i></div>
@@ -381,6 +413,7 @@
       { name: 'Drive 8', desc: 'Info - الإعلام الآلي', url: 'https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9', icon: 'fa-laptop-code', color: 'rose' },
       { name: 'Drive 9', desc: 'Génie Civil - الهندسة', url: 'https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9', icon: 'fa-building', color: 'orange' },
       { name: 'Drive 10', desc: 'Sujets divers', url: 'https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs', icon: 'fa-layer-group', color: 'violet' },
+           { name: 'Drive 10', desc: 'Sujets divers', url: 'https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs', icon: 'fa-layer-group', color: 'violet' },
       { name: 'Drive 11', desc: 'Concours - المسابقات', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-trophy', color: 'yellow' }
     ];
 
@@ -418,13 +451,13 @@
       { subject: 'MDF', name: 'Dr. Noureddine Azzam', url: 'https://youtube.com/channel/UC0a8xy1l7eDQ9bVrsl2KmJg', color: 'blue', icon: 'fa-water' },
       { subject: 'Analyse 3', name: 'Mohammed-Ealmin BOUATOUCHE', url: 'http://www.youtube.com/@mathinfo0199', color: 'purple', icon: 'fa-calculator' },
       { subject: 'Physique 3/4', name: 'N. MAGHLAOUI', url: 'https://www.youtube.com/@e-learningphysiquewithn.ma570', color: 'cyan', icon: 'fa-atom' },
-            { subject: 'Chimie 3', name: 'PRÉPA CHIMIE', url: 'https://www.youtube.com/@prepachimie2020', color: 'pink', icon: 'fa-flask' },
+      { subject: 'Chimie 3', name: 'PRÉPA CHIMIE', url: 'https://www.youtube.com/@prepachimie2020', color: 'pink', icon: 'fa-flask' },
       { subject: 'Électronique', name: 'Elmostafa Elkacem', url: 'https://www.youtube.com/@ElmostafaElkacem', color: 'indigo', icon: 'fa-bolt' }
     ];
 
     const teachers1cp = [
       { subject: 'Analyses / Algèbres', name: '15 Min Math Lr 💡', url: 'https://www.youtube.com/@15MinMathLr', color: 'orange', icon: 'fa-square-root-variable' },
-      { subject: 'Physique', name: 'Prof_Ourihane Physique', url: 'http://www.youtube.com/@Profourihane', color: 'blue', icon: 'fa-atom' },
+      { subject: 'Physique', name: 'Prof_Ourihane Physique', url: 'http://www.youtube.com/@profourihane', color: 'blue', icon: 'fa-atom' },
       { subject: 'Chimie', name: 'الأستاذ سامي براسي', url: 'https://www.youtube.com/@الأستاذساميبراسي', color: 'pink', icon: 'fa-flask' },
       { subject: 'Informatique', name: 'Hassan EL BAHI', url: 'https://www.youtube.com/@hassanbahi', color: 'emerald', icon: 'fa-laptop-code' }
     ];
@@ -534,7 +567,7 @@
       else { status.innerText = ""; }
     }
 
-    // --- 5.2 عجلة المواد (ديناميكية) ---
+    // --- 5.2 عجلة المواد ---
     let myModules = JSON.parse(localStorage.getItem('enstp_modules')) || ['رياضيات', 'فيزياء'];
 
     function renderModules() {
@@ -585,7 +618,7 @@
       }, 100);
     }
 
-    // --- 5.3 قائمة المهام ---
+    // --- 5.3 قائمة المهام (To-Do List) ---
     let tasks = JSON.parse(localStorage.getItem('enstp_tasks')) || [];
     function renderTasks() {
       const list = document.getElementById('task-list');
@@ -614,7 +647,50 @@
     function toggleTask(i) { tasks[i].done = !tasks[i].done; localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
     function delTask(i) { tasks.splice(i, 1); localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
 
-    // --- 5.4 المساعد الأكاديمي (AI) ---
+    // --- 5.4 الكرونو والتذكير بالمهام ---
+    let cronoTasks = JSON.parse(localStorage.getItem('enstp_timeline')) || [];
+
+    function renderCrono() {
+      const container = document.getElementById('crono-container');
+      if (cronoTasks.length === 0) {
+        container.innerHTML = '<p class="text-gray-400 text-sm text-center py-4">لا توجد مهام مضافة في الكرونو.</p>';
+        return;
+      }
+      // ترتيب المهام حسب الوقت
+      cronoTasks.sort((a, b) => a.time.localeCompare(b.time));
+      
+      container.innerHTML = cronoTasks.map((t, i) => `
+        <div class="relative ${t.done ? 'opacity-60' : ''}">
+          <div class="timeline-dot ${t.done ? 'bg-emerald-500' : 'bg-brand-500'}" style="top: 1rem;"></div>
+          <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-slate-700 ml-8 shadow-sm flex justify-between items-center">
+            <div>
+              <span class="text-xs font-black text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/30 px-2 py-0.5 rounded">${t.time}</span>
+              <p class="font-bold text-gray-800 dark:text-gray-200 mt-1 ${t.done ? 'line-through' : ''}">${t.name}</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="toggleCronoTask(${i})" class="w-8 h-8 rounded-full ${t.done ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 dark:bg-slate-700 text-gray-500'} flex items-center justify-center transition"><i class="fa-solid fa-check"></i></button>
+              <button onclick="deleteCronoTask(${i})" class="w-8 h-8 rounded-full bg-red-50 dark:bg-red-900/20 text-red-500 flex items-center justify-center transition"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addCronoTask() {
+      const name = document.getElementById('crono-name').value;
+      const time = document.getElementById('crono-time').value;
+      if (!name || !time) return alert("الرجاء إدخال اسم المهمة والوقت");
+      cronoTasks.push({ name, time, done: false });
+      localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks));
+      document.getElementById('crono-name').value = '';
+      document.getElementById('crono-time').value = '';
+      renderCrono();
+    }
+
+    function toggleCronoTask(i) { cronoTasks[i].done = !cronoTasks[i].done; localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
+    function deleteCronoTask(i) { cronoTasks.splice(i, 1); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
+
+    // --- 5.5 المساعد الأكاديمي (AI) ---
     function generateAIPrompt() {
       const topic = document.getElementById('ai-topic').value.trim();
       const type = document.getElementById('ai-type').value;
@@ -659,9 +735,10 @@
     document.addEventListener('DOMContentLoaded', () => {
       renderDrives();
       renderTeachers();
-      addSubjectRow();
-      renderTasks();
-      renderModules();
+      addSubjectRow(); // للحاسبة
+      renderTasks();   // لقائمة المهام
+      renderModules(); // لعجلة المواد
+      renderCrono();   // للكرونو
     });
   </script>
 </body>
