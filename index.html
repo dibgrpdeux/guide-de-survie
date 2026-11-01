@@ -726,7 +726,6 @@
       .action-btn, .sound-btn { width: 36px; height: 36px; }
       .nav-logo { height: 38px; }
       
-      /* ✅ بطاقة واحدة في السطر */
       .cards-grid { 
         grid-template-columns: 1fr; 
         gap: 20px; 
@@ -839,6 +838,7 @@
       <a href="shopping.html" class="section-pill"><i class="fa-solid fa-utensils"></i> المطاعم</a>
       <a href="alger.html" class="section-pill"><i class="fa-solid fa-map-location-dot"></i> السياحة</a>
       <a href="shopping.html" class="section-pill"><i class="fa-solid fa-cart-shopping"></i> التسوق</a>
+      <a href="marketplace.html" class="section-pill"><i class="fa-solid fa-store"></i> سوق الطالب</a>
       <a href="qr.html" class="section-pill"><i class="fa-solid fa-qrcode"></i> QR Codes</a>
     </div>
   </div>
@@ -855,12 +855,12 @@
       <div class="card-body">
         <h3 class="card-title">مدرستي</h3>
         <p class="card-sub">الأساتذة، المباني، والتاريخ</p>
-              </div>
+      </div>
     </a>
 
     <a href="administration.html" class="card">
       <div class="card-img-wrap">
-        <img src="images (74).jpeg" alt="إدارتي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=إدارتي'">
+                <img src="images (74).jpeg" alt="إدارتي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=إدارتي'">
       </div>
       <div class="card-body">
         <h3 class="card-title">إدارتي</h3>
@@ -948,7 +948,16 @@
       </div>
     </a>
 
-    
+    <!-- ✅ بطاقة سوق الطالب (Marketplace) -->
+    <a href="marketplace.html" class="card">
+      <div class="card-img-wrap">
+        <img src="b.jpg" alt="سوق الطالب" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=سوق+الطالب'">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">سوق الطالب</h3>
+        <p class="card-sub">بيع وشراء الكتب والأدوات</p>
+      </div>
+    </a>
 
     <a href="qr.html" class="card">
       <div class="card-img-wrap">
@@ -1359,25 +1368,15 @@
         setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
       }
     });
-      // ... (باقي كود السكريبت القديم الخاص بك) ...
-    document.addEventListener('keydown', (e) => {
-      if (e.code === 'Space') {
-        mascotKangaroo.classList.add('jump');
-        playSound('kangaroo');
-        setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
-      }
-    });
-  </script> <!-- هنا يتم إغلاق السكريبت القديم -->
+  </script>
 
-  <!-- ✅ ضع كود sift هنا، خارج السكريبت القديم -->
+  <!-- ✅ إضافة محرك بحث sift (في حال الرغبة في استخدامه لاحقاً) -->
+  <!-- 
   <script type="module" src="https://cdn.jsdelivr.net/npm/sift-search@latest/dist/sift-search.js"></script>
-  
-  <!-- ✅ وسم البحث (يمكنك وضعه حيث تريده أن يظهر في الصفحة) -->
   <div style="max-width: 600px; margin: 20px auto;">
       <sift-search db="/sift-index.db"></sift-search>
-  </div>
+  </div> 
+  -->
 
-</body>
-  </script>
 </body>
 </html>
