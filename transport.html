@@ -414,7 +414,7 @@
     <div id="content-carpool" class="hidden space-y-6">
       
       <div class="glass-card rounded-3xl p-6 md:p-8 border-2 border-amber-100 relative overflow-hidden">
-                <div class="absolute -top-20 -right-20 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl"></div>
+         w-64 h-64 bg-amber-400/10 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-orange-400/10 rounded-full blur-3xl"></div>
 
         <div class="flex items-center gap-3 border-b border-amber-100 pb-4 relative z-10 mb-6">
@@ -437,7 +437,7 @@
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
             <input type="text" id="carpool-from" placeholder="الانطلاق (القبة)" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
             <input type="text" id="carpool-to" placeholder="الوجهة (وهران)" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
-            <input type="time" id="carpool-time" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full">
+            <input type="datetime-local" id="carpool-datetime" class="p-3 rounded-xl border border-amber-200 text-sm outline-none w-full text-gray-500">
             <button onclick="addCarpool()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl transition text-sm">نشر الرحلة</button>
           </div>
         </div>
@@ -446,7 +446,7 @@
         <div class="relative z-10">
           <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-list text-amber-500"></i> الرحلات المتاحة</h4>
           <div id="carpool-list" class="space-y-6">
-            <!-- سيتم إدراج الرحلات هنا -->
+            <!-- سيتم إدراج الرحلات هنا عبر JavaScript -->
           </div>
         </div>
 
@@ -462,25 +462,21 @@
   <script>
     // --- 1. التبديل بين التبويبات ---
     function switchTab(tab) {
-      // إخفاء الكل
       document.getElementById('content-univ').classList.add('hidden');
       document.getElementById('content-public').classList.add('hidden');
       document.getElementById('content-carpool').classList.add('hidden');
       
-      // إزالة التنشيط من الأزرار
       ['tab-univ', 'tab-public', 'tab-carpool'].forEach(id => {
         document.getElementById(id).classList.remove('active');
         document.getElementById(id).classList.add('border-transparent');
       });
 
-      // إظهار القسم المطلوب
       document.getElementById('content-' + tab).classList.remove('hidden');
       const activeBtn = document.getElementById('tab-' + tab);
       activeBtn.classList.add('active');
       activeBtn.classList.remove('border-transparent');
     }
 
-    // تفعيل التبويب الأول افتراضياً
     document.addEventListener('DOMContentLoaded', () => switchTab('univ'));
 
     // --- 2. الأكورديون (القوائم المنسدلة) ---
@@ -511,7 +507,7 @@
       }
     }
 
-    // --- 3. نظام مشاركة سيارات الأجرة (Carpooling) مع التعليقات ---
+    // --- 3. نظام مشاركة سيارات الأجرة (Carpooling) ---
     let carpools = JSON.parse(localStorage.getItem('enstp_carpools')) || [];
 
     function renderCarpools() {
@@ -521,11 +517,15 @@
         return;
       }
 
-      list.innerHTML = carpools.map((c, i) => {
-        // بناء رقم الواتساب (إزالة الصفر الأول وإضافة رمز الدولة 213)
+      // ترتيب الرحلات حسب التاريخ والوقت (الأقرب أولاً)
+      const sortedCarpools = [...carpools].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+
+      list.innerHTML = sortedCarpools.map((c) => {
+        // إيجاد الفهرس الأصلي للحذف
+        const originalIndex = carpools.findIndex(item => item.datetime === c.datetime && item.name === c.name);
+
         let waNumber = c.phone.replace(/^0/, '213');
         
-        // عرض التعليقات
         let commentsHTML = '';
         if (c.comments && c.comments.length > 0) {
           commentsHTML = c.comments.map(comment => `
@@ -538,7 +538,6 @@
 
         return `
         <div class="bg-white rounded-2xl border border-amber-100 shadow-sm overflow-hidden">
-          <!-- تفاصيل الرحلة -->
           <div class="p-4 border-b border-gray-100 bg-amber-50/30">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
               <div class="flex items-center gap-3">
@@ -551,33 +550,33 @@
                     <i class="fa-solid fa-arrow-left text-amber-500 text-sm"></i> 
                     <span>${c.to}</span>
                   </div>
-                  <div class="text-xs text-gray-500 mt-1 flex gap-3">
-                    <span><i class="fa-solid fa-user"></i> ${c.name}</span>
-                    <span><i class="fa-regular fa-clock text-amber-500"></i> ${c.time}</span>
+                  <div class="text-xs text-gray-500 mt-1 flex flex-col md:flex-row gap-2 md:gap-4">
+                    <span><i class="fa-solid fa-user text-amber-500"></i> ${c.name}</span>
+                    <span class="font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded"><i class="fa-regular fa-calendar"></i> ${c.displayDate}</span>
+                    <span class="font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded"><i class="fa-regular fa-clock"></i> ${c.displayTime}</span>
                   </div>
                 </div>
               </div>
               
               <div class="flex gap-2 w-full md:w-auto">
-                <a href="https://wa.me/${waNumber}?text=مرحباً ${c.name}، رأيت رحلتك من ${c.from} إلى ${c.to} وأريد مشاركتك." target="_blank" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-green-600 transition">
+                <a href="https://wa.me/${waNumber}?text=مرحباً ${c.name}، رأيت رحلتك من ${c.from} إلى ${c.to} يوم ${c.displayDate} وأريد مشاركتك." target="_blank" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-green-600 transition">
                   <i class="fa-brands fa-whatsapp text-lg"></i> تواصل
                 </a>
-                <button onclick="deleteCarpool(${i})" class="bg-red-50 text-red-500 px-3 py-2 rounded-lg hover:bg-red-100 transition">
+                <button onclick="deleteCarpool(${originalIndex})" class="bg-red-50 text-red-500 px-3 py-2 rounded-lg hover:bg-red-100 transition">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- التعليقات -->
           <div class="p-4 bg-gray-50">
             <div class="space-y-2 mb-3">
               ${commentsHTML || '<p class="text-xs text-gray-400">لا توجد تعليقات بعد.</p>'}
             </div>
             <div class="flex gap-2">
-              <input type="text" id="comment-name-${i}" placeholder="اسمك..." class="w-24 p-2 rounded-lg border text-xs outline-none">
-              <input type="text" id="comment-text-${i}" placeholder="أضف تعليقاً (مثلاً: أنا مهتم، لدي مكانان)..." class="flex-1 p-2 rounded-lg border text-xs outline-none">
-              <button onclick="addComment(${i})" class="bg-gray-800 text-white px-3 rounded-lg text-xs font-bold hover:bg-gray-900 transition">تعليق</button>
+              <input type="text" id="comment-name-${originalIndex}" placeholder="اسمك..." class="w-24 p-2 rounded-lg border text-xs outline-none">
+              <input type="text" id="comment-text-${originalIndex}" placeholder="أضف تعليقاً (مثلاً: أنا مهتم، لدي مكانان)..." class="flex-1 p-2 rounded-lg border text-xs outline-none">
+              <button onclick="addComment(${originalIndex})" class="bg-gray-800 text-white px-3 rounded-lg text-xs font-bold hover:bg-gray-900 transition">تعليق</button>
             </div>
           </div>
         </div>
@@ -590,21 +589,32 @@
       const phone = document.getElementById('carpool-phone').value.trim();
       const from = document.getElementById('carpool-from').value.trim();
       const to = document.getElementById('carpool-to').value.trim();
-      const time = document.getElementById('carpool-time').value;
+      const datetime = document.getElementById('carpool-datetime').value;
 
-      if (!name || !phone || !from || !to || !time) {
-        return alert("الرجاء تعبئة جميع الحقول (الاسم، الهاتف، الانطلاق، الوجهة، الوقت).");
+      if (!name || !phone || !from || !to || !datetime) {
+        return alert("الرجاء تعبئة جميع الحقول (الاسم، الهاتف، الانطلاق، الوجهة، التاريخ والوقت).");
       }
 
-      carpools.push({ name, phone, from, to, time, comments: [] });
+      // تنسيق التاريخ والوقت للعرض
+      const dateObj = new Date(datetime);
+      const formattedDate = dateObj.toLocaleDateString('ar-DZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const formattedTime = dateObj.toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' });
+
+      carpools.push({ 
+        name, phone, from, to, 
+        datetime: datetime,
+        displayDate: formattedDate,
+        displayTime: formattedTime,
+        comments: [] 
+      });
+      
       localStorage.setItem('enstp_carpools', JSON.stringify(carpools));
       
-      // تفريغ الحقول
       document.getElementById('carpool-name').value = '';
       document.getElementById('carpool-phone').value = '';
       document.getElementById('carpool-from').value = '';
       document.getElementById('carpool-to').value = '';
-      document.getElementById('carpool-time').value = '';
+      document.getElementById('carpool-datetime').value = '';
       
       renderCarpools();
     }
@@ -630,7 +640,6 @@
       renderCarpools();
     }
 
-    // تهيئة الرحلات عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', () => {
       renderCarpools();
     });
