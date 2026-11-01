@@ -27,7 +27,6 @@
             'shimmer': 'shimmer 2.5s infinite linear',
             'float': 'float 4s ease-in-out infinite',
             'pulse-glow': 'pulseGlow 2.5s ease-in-out infinite',
-            'spin-slow': 'spin 8s linear infinite',
           },
           keyframes: {
             fadeInUp: {
@@ -64,25 +63,19 @@
     }
     ::-webkit-scrollbar-thumb:hover { background: #c2410c; }
 
-    /* Glassmorphism amélioré */
+    /* Glassmorphism */
     .glass-card { 
       background: rgba(255, 255, 255, 0.85); 
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
       border: 1px solid rgba(255, 255, 255, 0.9); 
-      box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.02),
-        0 10px 30px -5px rgba(0, 0, 0, 0.05),
-        0 20px 50px -15px rgba(249, 115, 22, 0.1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 20px 50px -15px rgba(249, 115, 22, 0.1);
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .dark .glass-card {
       background: rgba(30, 41, 59, 0.75);
       border-color: rgba(255, 255, 255, 0.08);
-      box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.2),
-        0 10px 30px -5px rgba(0, 0, 0, 0.3),
-        0 20px 50px -15px rgba(249, 115, 22, 0.15);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 20px 50px -15px rgba(249, 115, 22, 0.15);
     }
 
     .glass-nav { 
@@ -117,12 +110,9 @@
       border-color: #f97316; 
       box-shadow: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
     }
-    .dark .link-card:hover {
-      box-shadow: 0 25px 50px -12px rgba(249, 115, 22, 0.15);
-    }
     .link-card > * { position: relative; z-index: 1; }
 
-    /* Effet shimmer sur les titres */
+    /* Effet shimmer */
     .shimmer-text {
       background: linear-gradient(90deg, #c2410c, #f97316, #ea580c, #c2410c);
       background-size: 200% auto;
@@ -132,44 +122,18 @@
       animation: shimmer 4s linear infinite;
     }
 
-    /* Bouton Dark Mode avec rotation */
     .dark-toggle { transition: all 0.4s ease; }
     .dark-toggle:hover { transform: rotate(180deg) scale(1.1); }
 
-    /* Barre de recherche */
+    /* Search bar */
     .search-input {
       background: rgba(255, 255, 255, 0.9);
       transition: all 0.3s ease;
     }
-    .dark .search-input {
-      background: rgba(30, 41, 59, 0.9);
-    }
+    .dark .search-input { background: rgba(30, 41, 59, 0.9); }
     .search-input:focus {
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
       border-color: #f97316;
-    }
-
-    /* Badge animé */
-    .badge-glow {
-      position: relative;
-    }
-    .badge-glow::after {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      opacity: 0;
-      z-index: -1;
-      animation: pulseGlow 2s infinite;
-    }
-
-    /* Stats counter */
-    .stat-card {
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .stat-card:hover {
-      transform: translateY(-4px) scale(1.03);
     }
 
     /* Avatar prof */
@@ -183,35 +147,23 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       transition: transform 0.3s ease;
     }
-    .prof-item:hover .prof-avatar {
-      transform: scale(1.1) rotate(5deg);
-    }
+    .prof-item:hover .prof-avatar { transform: scale(1.1) rotate(5deg); }
 
-    /* Reveal animation on scroll */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* Background mesh */
     .bg-mesh {
       background-image: 
         radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.08) 0px, transparent 50%),
         radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.06) 0px, transparent 50%),
-        radial-gradient(at 0% 50%, rgba(251, 191, 36, 0.05) 0px, transparent 50%),
-        radial-gradient(at 80% 50%, rgba(249, 115, 22, 0.05) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(251, 146, 60, 0.05) 0px, transparent 50%);
+        radial-gradient(at 0% 50%, rgba(251, 191, 36, 0.05) 0px, transparent 50%);
     }
     .dark .bg-mesh {
       background-image: 
         radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.1) 0px, transparent 50%),
-        radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.08) 0px, transparent 50%),
-        radial-gradient(at 0% 50%, rgba(251, 191, 36, 0.05) 0px, transparent 50%);
+        radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.08) 0px, transparent 50%);
     }
   </style>
 </head>
@@ -220,37 +172,24 @@
   <!-- Header -->
   <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-      <!-- Logo -->
       <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-500/30 hover:scale-105 transition-transform">
-          E
-        </div>
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-500/30">E</div>
         <div>
-          <h1 class="font-bold text-slate-900 dark:text-white text-base leading-tight">
-            ENSTP <span class="shimmer-text">Ma Réussite</span>
-          </h1>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-            <i class="fa-solid fa-graduation-cap text-brand-500"></i>
-            المدرسة الوطنية العليا
-          </p>
+          <h1 class="font-bold text-slate-900 dark:text-white text-base leading-tight">ENSTP <span class="shimmer-text">Ma Réussite</span></h1>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1"><i class="fa-solid fa-graduation-cap text-brand-500"></i> المدرسة الوطنية العليا</p>
         </div>
       </div>
       
-      <!-- Actions -->
       <div class="flex items-center gap-2 md:gap-3">
-        <!-- Langues -->
         <div class="hidden sm:flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
           <button onclick="setLanguage('ar')" id="btn-ar" class="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-brand-600 text-white transition-all">عربي</button>
           <button onclick="setLanguage('fr')" id="btn-fr" class="text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-700 transition-all">FR</button>
           <button onclick="setLanguage('en')" id="btn-en" class="text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-700 transition-all">EN</button>
         </div>
-        
-        <!-- Dark Mode -->
         <button onclick="toggleDarkMode()" class="dark-toggle w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center shadow-sm hover:border-brand-400 transition">
           <i class="fa-solid fa-moon dark:hidden"></i>
           <i class="fa-solid fa-sun hidden dark:block text-brand-400"></i>
         </button>
-
         <a href="index.html" class="px-4 py-2.5 rounded-xl bg-brand-100 dark:bg-slate-800 text-brand-800 dark:text-brand-400 hover:bg-brand-200 dark:hover:bg-slate-700 text-xs font-bold transition flex items-center gap-2">
           <i class="fa-solid fa-house"></i>
           <span class="hidden md:inline">الرئيسية</span>
@@ -263,7 +202,6 @@
     
     <!-- HERO SECTION -->
     <section class="reveal relative overflow-hidden glass-card rounded-[2rem] p-8 lg:p-12 border-2 border-white dark:border-slate-700">
-      <!-- Decorative blobs -->
       <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand-400/20 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl"></div>
       
@@ -279,8 +217,6 @@
           <p class="text-sm lg:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
             كل ما تحتاجه للنجاح: جداول التوقيت، الملخصات، الامتحانات السابقة، وأفضل قنوات اليوتيوب لأفضل الأساتذة.
           </p>
-          
-          <!-- Stats -->
           <div class="grid grid-cols-3 gap-3 pt-4">
             <div class="stat-card bg-white/70 dark:bg-slate-800/70 backdrop-blur rounded-xl p-3 border border-brand-200 dark:border-slate-700">
               <div class="text-2xl font-black text-brand-600 dark:text-brand-400">11</div>
@@ -296,8 +232,6 @@
             </div>
           </div>
         </div>
-        
-        <!-- Icon -->
         <div class="relative flex-shrink-0">
           <div class="absolute inset-0 bg-gradient-to-br from-brand-400 to-amber-500 rounded-[2rem] blur-2xl opacity-40 animate-pulse-glow"></div>
           <div class="relative w-32 h-32 lg:w-40 lg:h-40 rounded-[2rem] bg-gradient-to-br from-brand-500 via-brand-600 to-amber-600 text-white flex items-center justify-center text-6xl shadow-2xl animate-float">
@@ -318,7 +252,6 @@
           <p class="text-xs text-slate-500 dark:text-slate-400">جدول التوقيت الخاص بفوجك</p>
         </div>
       </div>
-      
       <a href="schedule.html" class="link-card glass-card flex items-center justify-between p-6 rounded-2xl group">
         <div class="flex items-center gap-4">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-50 to-amber-50 dark:from-slate-700 dark:to-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
@@ -335,34 +268,7 @@
         </div>
       </a>
     </section>
-    
- <!-- ✅ إضافة حاسبة المعدل هنا -->
-      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 reveal border-2 border-brand-100 mt-6">
-        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-slate-700 pb-4">
-          <div class="w-12 h-12 rounded-2xl bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center text-2xl shadow-sm">
-            <i class="fa-solid fa-calculator"></i>
-          </div>
-          <div>
-            <h3 class="text-xl font-black text-slate-900 dark:text-white">حاسبة المعدل الفصلي</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">احسب معدلك (60% امتحان + 40% TD/TP)</p>
-          </div>
-        </div>
 
-        <div id="calc-subjects-container" class="space-y-3">
-          <!-- سيتم إدراج المواد هنا عبر JavaScript -->
-        </div>
-
-        <button onclick="addSubjectRow()" class="w-full py-3 border-2 border-dashed border-brand-300 dark:border-brand-700 text-brand-600 dark:text-brand-400 font-bold rounded-xl hover:bg-brand-50 dark:hover:bg-slate-800 transition">
-          <i class="fa-solid fa-plus"></i> إضافة مادة أخرى
-        </button>
-
-        <div class="bg-gradient-to-r from-brand-500 to-amber-500 p-6 rounded-2xl shadow-lg text-white text-center mt-6">
-          <h4 class="text-sm font-bold mb-1 opacity-90">المعدل النهائي للسداسي</h4>
-          <div id="calc-final-result" class="text-5xl font-black">0.00</div>
-          <p id="calc-result-status" class="text-sm font-bold mt-2"></p>
-        </div>
-      </div>
-    </section>
     <!-- DRIVES -->
     <section class="reveal space-y-5">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -375,22 +281,13 @@
             <p class="text-xs text-slate-500 dark:text-slate-400">11 مجلد Google Drive</p>
           </div>
         </div>
-        
-        <!-- Search bar -->
         <div class="relative w-full md:w-72">
           <i class="fa-solid fa-search absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-          <input 
-            type="text" 
-            id="driveSearch" 
-            placeholder="ابحث في المجلدات..." 
-            class="search-input w-full pr-11 pl-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none"
-          >
+          <input type="text" id="driveSearch" placeholder="ابحث في المجلدات..." class="search-input w-full pr-11 pl-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none">
         </div>
       </div>
       
-      <div id="drivesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Drive cards (JS will fill) -->
-      </div>
+      <div id="drivesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       
       <div id="noResults" class="hidden text-center py-10">
         <i class="fa-solid fa-search text-5xl text-slate-300 dark:text-slate-600 mb-4"></i>
@@ -411,16 +308,12 @@
       </div>
       
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
         <!-- 2CP -->
         <div class="glass-card rounded-3xl p-6 lg:p-8 relative overflow-hidden">
           <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-400/20 to-transparent rounded-bl-full"></div>
-          
           <div class="relative flex items-center justify-between mb-6 pb-4 border-b border-brand-100 dark:border-slate-700">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-amber-500 text-white flex items-center justify-center font-black text-xl shadow-lg">
-                2
-              </div>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-amber-500 text-white flex items-center justify-center font-black text-xl shadow-lg">2</div>
               <div>
                 <h4 class="font-black text-lg text-slate-900 dark:text-white">السنة الثانية</h4>
                 <p class="text-xs text-slate-500 dark:text-slate-400">2CP - Classes Préparatoires</p>
@@ -428,21 +321,15 @@
             </div>
             <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300">5 أساتذة</span>
           </div>
-          
-          <div class="space-y-3" id="teachers2cp">
-            <!-- JS will fill -->
-          </div>
+          <div class="space-y-3" id="teachers2cp"></div>
         </div>
 
         <!-- 1CP -->
         <div class="glass-card rounded-3xl p-6 lg:p-8 relative overflow-hidden">
           <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-400/20 to-transparent rounded-bl-full"></div>
-          
           <div class="relative flex items-center justify-between mb-6 pb-4 border-b border-emerald-100 dark:border-slate-700">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center font-black text-xl shadow-lg">
-                1
-              </div>
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center font-black text-xl shadow-lg">1</div>
               <div>
                 <h4 class="font-black text-lg text-slate-900 dark:text-white">السنة الأولى</h4>
                 <p class="text-xs text-slate-500 dark:text-slate-400">1CP - Classes Préparatoires</p>
@@ -450,12 +337,91 @@
             </div>
             <span class="text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">4 أساتذة</span>
           </div>
+          <div class="space-y-3" id="teachers1cp"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ✅ صندوق أدوات الطالب (جديد) -->
+    <!-- ========================================== -->
+    <section class="reveal space-y-6">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <i class="fa-solid fa-toolbox"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">صندوق أدوات الطالب</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">أدوات ذكية لتنظيم وقتك وحساب معدلاتك</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- 1. حاسبة المعدل -->
+        <div class="glass-card rounded-3xl p-6 border border-brand-100 dark:border-slate-700 space-y-4">
+          <h4 class="font-bold text-lg text-brand-900 dark:text-brand-400 flex items-center gap-2"><i class="fa-solid fa-calculator"></i> حاسبة المعدل الفصلي</h4>
           
-          <div class="space-y-3" id="teachers1cp">
-            <!-- JS will fill -->
+          <div id="calc-subjects" class="space-y-2 max-h-60 overflow-y-auto pr-2">
+            <!-- أسطر المواد ستضاف هنا -->
+          </div>
+          
+          <button onclick="addSubjectRow()" class="text-xs font-bold text-brand-600 hover:text-brand-800 dark:text-brand-400 flex items-center gap-1"><i class="fa-solid fa-plus"></i> إضافة مادة</button>
+
+          <div class="bg-brand-50 dark:bg-slate-800 p-4 rounded-xl text-center">
+            <p class="text-xs text-brand-800 dark:text-brand-300 font-bold mb-1">المعدل النهائي (60% امتحان + 40% TD)</p>
+            <div id="calc-result" class="text-3xl font-black text-brand-600">0.00</div>
+            <p id="calc-status" class="text-xs font-bold mt-1"></p>
           </div>
         </div>
 
+        <!-- 2. عجلة المواد وقائمة المهام -->
+        <div class="space-y-6">
+          <!-- عجلة المواد -->
+          <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700 text-center">
+            <h4 class="font-bold text-lg text-orange-900 dark:text-orange-400 mb-4 flex items-center justify-center gap-2"><i class="fa-solid fa-dice"></i> عجلة المواد</h4>
+            <div id="wheel-result" class="h-12 flex items-center justify-center text-xl font-black text-orange-600 mb-4 bg-orange-50 dark:bg-slate-800 rounded-xl">?</div>
+            <button onclick="spinWheel()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition">ماذا أراجع الآن؟</button>
+          </div>
+
+          <!-- قائمة المهام -->
+          <div class="glass-card rounded-3xl p-6 border border-emerald-100 dark:border-slate-700">
+            <h4 class="font-bold text-lg text-emerald-900 dark:text-emerald-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> مهامي الدراسية</h4>
+            <div class="flex gap-2 mb-3">
+              <input type="text" id="task-input" placeholder="مهمة جديدة..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
+              <button onclick="addTask()" class="bg-emerald-500 text-white px-4 rounded-lg font-bold text-sm">+</button>
+            </div>
+            <ul id="task-list" class="space-y-2 max-h-32 overflow-y-auto pr-1"></ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3. المساعد الأكاديمي (AI) -->
+      <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 mt-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-robot"></i></div>
+          <div>
+            <h4 class="font-black text-lg text-slate-900 dark:text-white">المساعد الأكاديمي</h4>
+            <p class="text-xs text-slate-500">توليد أوامر ذكية لـ ChatGPT وتلخيص المحاضرات</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">الموضوع أو النص:</label>
+            <input type="text" id="ai-topic" placeholder="مثال: الخرسانة المسلحة..." class="w-full p-3 rounded-xl border dark:bg-slate-800 dark:border-slate-600 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">نوع المساعدة:</label>
+            <select id="ai-type" class="w-full p-3 rounded-xl border dark:bg-slate-800 dark:border-slate-600 outline-none">
+              <option value="summary">تلخيص المحاضرة</option>
+              <option value="quiz">توليد أسئلة مراجعة</option>
+            </select>
+          </div>
+        </div>
+        <button onclick="generateAIPrompt()" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> توليد الأمر ونسخه
+        </button>
       </div>
     </section>
 
@@ -477,10 +443,7 @@
     // ============================================
     if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
     }
-
     function toggleDarkMode() {
       if (document.documentElement.classList.contains('dark')) {
         document.documentElement.classList.remove('dark');
@@ -492,23 +455,7 @@
     }
 
     // ============================================
-    // 2. LANGUAGE
-    // ============================================
-    function setLanguage(lang) {
-      ['ar', 'fr', 'en'].forEach(l => {
-        const btn = document.getElementById(`btn-${l}`);
-        if (btn) {
-          if (l === lang) btn.className = 'text-xs font-bold px-2.5 py-1.5 rounded-lg bg-brand-600 text-white transition-all';
-          else btn.className = 'text-xs font-bold px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-700 transition-all';
-        }
-      });
-      if (typeof window.setLanguageOriginal === 'function') {
-        window.setLanguageOriginal(lang);
-      }
-    }
-
-    // ============================================
-    // 3. DRIVES DATA & RENDER
+    // 2. DRIVES DATA & RENDER
     // ============================================
     const drives = [
       { name: 'Drive 1', desc: '2CP - السنة الثانية', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-folder', color: 'emerald' },
@@ -527,14 +474,11 @@
     function renderDrives(filter = '') {
       const grid = document.getElementById('drivesGrid');
       const noResults = document.getElementById('noResults');
-      const filtered = drives.filter(d => 
-        d.name.toLowerCase().includes(filter.toLowerCase()) || 
-        d.desc.toLowerCase().includes(filter.toLowerCase())
-      );
+      const filtered = drives.filter(d => d.name.toLowerCase().includes(filter.toLowerCase()) || d.desc.toLowerCase().includes(filter.toLowerCase()));
       
       if (filtered.length === 0) {
         grid.innerHTML = '';
-        noResults.classList.remove('hidden');
+                noResults.classList.remove('hidden');
         return;
       }
       noResults.classList.add('hidden');
@@ -561,7 +505,7 @@
     });
 
     // ============================================
-    // 4. TEACHERS DATA & RENDER
+    // 3. TEACHERS DATA & RENDER
     // ============================================
     const teachers2cp = [
       { subject: 'MDF', name: 'Dr. Noureddine Azzam', url: 'https://youtube.com/channel/UC0a8xy1l7eDQ9bVrsl2KmJg', color: 'blue', icon: 'fa-water' },
@@ -579,13 +523,10 @@
     ];
 
     function renderTeachers() {
-      // Render 2CP
       document.getElementById('teachers2cp').innerHTML = teachers2cp.map(t => `
         <a href="${t.url}" target="_blank" class="prof-item group block bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-md transition-all">
           <div class="flex items-center gap-3">
-            <div class="prof-avatar bg-${t.color}-500">
-              <i class="fa-solid ${t.icon}"></i>
-            </div>
+            <div class="prof-avatar bg-${t.color}-500"><i class="fa-solid ${t.icon}"></i></div>
             <div class="flex-1 min-w-0">
               <span class="font-black text-xs text-brand-600 dark:text-brand-400 uppercase block">${t.subject}</span>
               <span class="text-sm text-slate-700 dark:text-slate-300 truncate block" dir="ltr">${t.name}</span>
@@ -595,13 +536,10 @@
         </a>
       `).join('');
 
-      // Render 1CP
       document.getElementById('teachers1cp').innerHTML = teachers1cp.map(t => `
         <a href="${t.url}" target="_blank" class="prof-item group block bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-md transition-all">
           <div class="flex items-center gap-3">
-            <div class="prof-avatar bg-${t.color}-500">
-              <i class="fa-solid ${t.icon}"></i>
-            </div>
+            <div class="prof-avatar bg-${t.color}-500"><i class="fa-solid ${t.icon}"></i></div>
             <div class="flex-1 min-w-0">
               <span class="font-black text-xs text-emerald-600 dark:text-emerald-400 uppercase block">${t.subject}</span>
               <span class="text-sm text-slate-700 dark:text-slate-300 truncate block" dir="ltr">${t.name}</span>
@@ -613,7 +551,7 @@
     }
 
     // ============================================
-    // 5. SCROLL REVEAL
+    // 4. SCROLL REVEAL
     // ============================================
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -627,79 +565,112 @@
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     // ============================================
+    // 5. صندوق أدوات الطالب (حاسبة، عجلة، مهام)
+    // ============================================
+    
+    // --- 5.1 حاسبة المعدل ---
+    let subjectCount = 0;
+    function addSubjectRow() {
+      subjectCount++;
+      const container = document.getElementById('calc-subjects');
+      const div = document.createElement('div');
+      div.className = "flex gap-2 items-center bg-white dark:bg-slate-900 p-2 rounded-lg border border-gray-200 dark:border-slate-700";
+      div.id = `sub-${subjectCount}`;
+      div.innerHTML = `
+        <input type="number" step="0.01" max="20" placeholder="امتحان" class="w-16 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 exam-in" oninput="calcGPA()">
+        <input type="number" step="0.01" max="20" placeholder="TD/TP" class="w-16 p-1 text-xs border rounded bg-gray-50 dark:bg-slate-800 td-in" oninput="calcGPA()">
+        <button onclick="this.parentElement.remove(); calcGPA();" class="text-red-500 text-xs px-1"><i class="fa-solid fa-xmark"></i></button>
+      `;
+      container.appendChild(div);
+    }
+
+    function calcGPA() {
+      const rows = document.querySelectorAll('#calc-subjects > div');
+      let total = 0, count = 0;
+      rows.forEach(r => {
+        const exam = parseFloat(r.querySelector('.exam-in').value) || 0;
+        const td = parseFloat(r.querySelector('.td-in').value) || 0;
+        total += (exam * 0.6) + (td * 0.4);
+        count++;
+      });
+      const gpa = count > 0 ? (total / count) : 0;
+      document.getElementById('calc-result').innerText = gpa.toFixed(2);
+      
+      const status = document.getElementById('calc-status');
+      if (gpa >= 10) { status.innerText = "🎉 ناجح"; status.className = "text-xs font-bold text-emerald-500"; }
+      else if (gpa >= 7) { status.innerText = "⚠️ استدراك"; status.className = "text-xs font-bold text-amber-500"; }
+      else if (gpa > 0) { status.innerText = "❌ راسب"; status.className = "text-xs font-bold text-red-500"; }
+    }
+
+    // --- 5.2 عجلة المواد ---
+    const subjects = ['رياضيات', 'فيزياء', 'إعلام آلي', 'لغة إنجليزية', 'هندسة'];
+    function spinWheel() {
+      const resultEl = document.getElementById('wheel-result');
+      let counter = 0;
+      const interval = setInterval(() => {
+        resultEl.innerText = subjects[Math.floor(Math.random() * subjects.length)];
+        counter++;
+        if (counter > 10) {
+          clearInterval(interval);
+          resultEl.classList.add('scale-110', 'text-2xl');
+          setTimeout(() => resultEl.classList.remove('scale-110', 'text-2xl'), 300);
+        }
+      }, 100);
+    }
+
+    // --- 5.3 قائمة المهام ---
+    let tasks = JSON.parse(localStorage.getItem('enstp_tasks')) || [];
+    function renderTasks() {
+      const list = document.getElementById('task-list');
+      list.innerHTML = tasks.map((t, i) => `
+        <li class="flex items-center justify-between text-sm p-2 bg-gray-50 dark:bg-slate-800 rounded border ${t.done ? 'opacity-50 line-through' : ''}">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask(${i})" class="accent-emerald-500">
+            <span>${t.text}</span>
+          </label>
+          <button onclick="delTask(${i})" class="text-red-400"><i class="fa-solid fa-trash text-xs"></i></button>
+        </li>
+      `).join('');
+    }
+    function addTask() {
+      const val = document.getElementById('task-input').value;
+      if (!val) return;
+      tasks.push({ text: val, done: false });
+      localStorage.setItem('enstp_tasks', JSON.stringify(tasks));
+      document.getElementById('task-input').value = '';
+      renderTasks();
+    }
+    function toggleTask(i) { tasks[i].done = !tasks[i].done; localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
+    function delTask(i) { tasks.splice(i, 1); localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
+
+    // --- 5.4 المساعد الأكاديمي (AI) ---
+    function generateAIPrompt() {
+      const topic = document.getElementById('ai-topic').value;
+      const type = document.getElementById('ai-type').value;
+      if (!topic) return alert("الرجاء إدخال الموضوع أولاً");
+
+      let prompt = "";
+      if (type === 'summary') {
+        prompt = `أنت أستاذ في المدرسة الوطنية العليا للأشغال العمومية. قم بتلخيص النص التالي في نقاط واضحة ومختصرة مع التركيز على المعادلات والمفاهيم الأساسية للامتحان: "${topic}"`;
+      } else {
+        prompt = `أنت مصمم امتحانات. قم بإنشاء 5 أسئلة اختيار من متعدد (QCM) صعبة قليلاً حول الموضوع التالي: "${topic}". أرفق الإجابات الصحيحة في النهاية.`;
+      }
+
+      navigator.clipboard.writeText(prompt).then(() => {
+        alert("✅ تم نسخ الأمر! سيتم فتح ChatGPT الآن. فقط الصقه في المحادثة.");
+        window.open('https://chatgpt.com', '_blank');
+      });
+    }
+
+    // ============================================
     // 6. INIT
     // ============================================
     document.addEventListener('DOMContentLoaded', () => {
       renderDrives();
       renderTeachers();
+      addSubjectRow(); // إضافة أول سطر للحاسبة
+      renderTasks();   // عرض المهام المحفوظة
     });
   </script>
-      // ==========================================
-    // حاسبة المعدل
-    // ==========================================
-    let subjectRowCount = 0;
-
-    function addSubjectRow() {
-      subjectRowCount++;
-      const container = document.getElementById('calc-subjects-container');
-      const div = document.createElement('div');
-      div.className = "grid grid-cols-1 md:grid-cols-4 gap-2 items-center bg-white dark:bg-slate-800 p-3 rounded-xl border border-gray-100 dark:border-slate-700 shadow-sm";
-      div.id = `calc-subject-${subjectRowCount}`;
-      div.innerHTML = `
-        <input type="text" placeholder="اسم المادة" class="p-2.5 rounded-lg border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-sm w-full dark:text-white focus:ring-2 focus:ring-brand-500 outline-none calc-subject-name">
-        <div class="relative">
-          <input type="number" step="0.01" min="0" max="20" placeholder="الامتحان /20" class="p-2.5 rounded-lg border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-sm w-full dark:text-white focus:ring-2 focus:ring-brand-500 outline-none calc-exam-score" oninput="calculateGPA()">
-        </div>
-        <div class="relative">
-          <input type="number" step="0.01" min="0" max="20" placeholder="TD/TP /20" class="p-2.5 rounded-lg border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-sm w-full dark:text-white focus:ring-2 focus:ring-brand-500 outline-none calc-td-score" oninput="calculateGPA()">
-        </div>
-        <button onclick="this.parentElement.remove(); calculateGPA();" class="text-red-500 hover:text-red-700 font-bold text-sm p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition flex items-center justify-center gap-1">
-          <i class="fa-solid fa-trash"></i> <span class="md:hidden">حذف</span>
-        </button>
-      `;
-      container.appendChild(div);
-    }
-
-    function calculateGPA() {
-      const subjects = document.querySelectorAll('[id^="calc-subject-"]');
-      let totalPoints = 0;
-      let totalCoeff = 0;
-
-      subjects.forEach(sub => {
-        const exam = parseFloat(sub.querySelector('.calc-exam-score').value) || 0;
-        const td = parseFloat(sub.querySelector('.calc-td-score').value) || 0;
-        
-        // حساب معدل المادة: (الامتحان * 0.6) + (الأعمال الموجهة * 0.4)
-        // ملاحظة: إذا لم يتم إدخال علامة TD، يتم اعتبارها 0. 
-        // إذا كانت المادة لا تحتوي على TD (امتحان فقط)، يمكنك تعديل المعادلة لتصبح exam فقط عند الحاجة.
-        const subjectAvg = (exam * 0.6) + (td * 0.4);
-        totalPoints += subjectAvg;
-        totalCoeff++;
-      });
-
-      const finalGPA = totalCoeff > 0 ? (totalPoints / totalCoeff) : 0;
-      const resultEl = document.getElementById('calc-final-result');
-      const statusEl = document.getElementById('calc-result-status');
-      
-      resultEl.innerText = finalGPA.toFixed(2);
-
-      if (finalGPA >= 10) {
-        resultEl.className = "text-5xl font-black text-white";
-        statusEl.innerText = "🎉 مبروك، أنت ناجح!";
-      } else if (finalGPA >= 7 && finalGPA < 10) {
-        resultEl.className = "text-5xl font-black text-yellow-200";
-        statusEl.innerText = "⚠️ أنت في الاستدراك، ركز أكثر!";
-      } else {
-        resultEl.className = "text-5xl font-black text-red-200";
-        statusEl.innerText = "❌ للأسف، تحتاج إلى مجهود أكبر.";
-      }
-    }
-
-    // إضافة أول مادة تلقائياً عند فتح الصفحة
-    document.addEventListener('DOMContentLoaded', () => {
-      // ... (أكواد التهيئة السابقة) ...
-      addSubjectRow(); // إضافة أول سطر للحاسبة
-    });
 </body>
 </html>
-
