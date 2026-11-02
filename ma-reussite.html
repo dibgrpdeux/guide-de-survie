@@ -1,211 +1,33 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guide ENSTP - Ma Réussite</title>
-  
-  <script src="translate.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
-          },
-          animation: {
-            'shimmer': 'shimmer 2.5s infinite linear',
-            'float': 'float 4s ease-in-out infinite',
-            'pulse-glow': 'pulseGlow 2.5s ease-in-out infinite',
-          },
-          keyframes: {
-            shimmer: { '0%': { backgroundPosition: '-1000px 0' }, '100%': { backgroundPosition: '1000px 0' } },
-            float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-            pulseGlow: { '0%, 100%': { boxShadow: '0 0 20px rgba(249, 115, 22, 0.3)' }, '50%': { boxShadow: '0 0 40px rgba(249, 115, 22, 0.6)' } }
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    body { font-family: 'Cairo', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; }
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #f97316, #ea580c); border-radius: 10px; }
-    
-    .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 30px -5px rgba(0, 0, 0, 0.05); transition: all 0.4s ease; }
-    .dark .glass-card { background: rgba(30, 41, 59, 0.75); border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
-    
-    .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(249, 115, 22, 0.15); }
-    .dark .glass-nav { background: rgba(15, 23, 42, 0.85); border-bottom-color: rgba(249, 115, 22, 0.2); }
-
-    .tab-btn { transition: all 0.3s ease; }
-    .tab-btn.active { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.5); border-color: transparent; }
-
-    .shimmer-text { background: linear-gradient(90deg, #c2410c, #f97316, #ea580c, #c2410c); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; }
-    
-    .dark-toggle { transition: all 0.4s ease; }
-    .dark-toggle:hover { transform: rotate(180deg) scale(1.1); }
-
-    .search-input { background: rgba(255, 255, 255, 0.9); transition: all 0.3s ease; }
-    .dark .search-input { background: rgba(30, 41, 59, 0.9); }
-    .search-input:focus { box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2); border-color: #f97316; }
-
-    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    .bg-mesh { background-image: radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.08) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.06) 0px, transparent 50%); }
-    .dark .bg-mesh { background-image: radial-gradient(at 40% 20%, rgba(249, 115, 22, 0.1) 0px, transparent 50%); }
-
-    .timeline-line { position: absolute; right: 15px; top: 0; bottom: 0; width: 2px; background: #fed7aa; z-index: 0; }
-    .dark .timeline-line { background: #334155; }
-    .timeline-dot { position: absolute; right: 10px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; z-index: 1; }
-    .dark .timeline-dot { border-color: #1e293b; }
-
-    .lab-tab { transition: all 0.3s ease; cursor: pointer; }
-    .lab-tab.active { background: #ea580c; color: white; border-color: #ea580c; }
-    .slider-custom { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #fed7aa; outline: none; }
-    .dark .slider-custom { background: #334155; }
-    .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #ea580c; cursor: pointer; }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 bg-mesh">
-
-  <!-- Header -->
-  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 flex items-center justify-center text-white font-black text-xl shadow-lg">E</div>
-        <div>
-          <h1 class="font-bold text-slate-900 dark:text-white text-base leading-tight">ENSTP <span class="shimmer-text">Ma Réussite</span></h1>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1"><i class="fa-solid fa-graduation-cap text-brand-500"></i> المدرسة الوطنية العليا</p>
-        </div>
-      </div>
-      
-      <div class="flex items-center gap-2 md:gap-3">
-        <button onclick="toggleDarkMode()" class="dark-toggle w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center shadow-sm hover:border-brand-400 transition">
-          <i class="fa-solid fa-moon dark:hidden"></i>
-          <i class="fa-solid fa-sun hidden dark:block text-brand-400"></i>
-        </button>
-        <a href="index.html" class="px-4 py-2.5 rounded-xl bg-brand-100 dark:bg-slate-800 text-brand-800 dark:text-brand-400 hover:bg-brand-200 text-xs font-bold transition flex items-center gap-2">
-          <i class="fa-solid fa-house"></i><span class="hidden md:inline">الرئيسية</span>
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex-grow w-full space-y-8">
-
-    <!-- أزرار الأقسام (Tabs) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <button onclick="switchTab('schedule')" id="tab-schedule" class="tab-btn active glass-card p-5 rounded-3xl flex items-center justify-center gap-3 border-2 border-brand-100">
-        <i class="fa-solid fa-calendar-days text-2xl"></i>
-        <span class="text-lg font-black">استعمال الزمن</span>
-      </button>
-      <button onclick="switchTab('exams')" id="tab-exams" class="tab-btn glass-card p-5 rounded-3xl flex items-center justify-center gap-3 border-2 border-transparent hover:border-emerald-200">
-        <i class="fa-solid fa-file-signature text-2xl"></i>
-        <span class="text-lg font-black">الواجبات والامتحانات</span>
-      </button>
-      <button onclick="switchTab('tools')" id="tab-tools" class="tab-btn glass-card p-5 rounded-3xl flex items-center justify-center gap-3 border-2 border-transparent hover:border-indigo-200">
-        <i class="fa-solid fa-toolbox text-2xl"></i>
-        <span class="text-lg font-black">صندوق أدوات الطالب</span>
-      </button>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 1. قسم استعمال الزمن -->
-    <!-- ========================================== -->
-    <div id="content-schedule" class="space-y-6">
-      <div class="glass-card p-6 md:p-8 rounded-3xl border border-brand-100">
-        <div class="flex items-center gap-3 mb-6 border-b pb-4">
-          <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-2xl">
-            <i class="fa-solid fa-clock"></i>
-          </div>
-          <div>
-            <h2 class="text-xl font-black text-gray-900 dark:text-white">جدول التوقيت</h2>
-            <p class="text-sm text-gray-500">اطلع على أوقات المحاضرات والأعمال الموجهة</p>
-          </div>
-        </div>
-        <a href="schedule.html" class="block bg-brand-50 dark:bg-slate-800 p-6 rounded-2xl text-center hover:bg-brand-100 transition border border-brand-200 dark:border-slate-700">
-          <i class="fa-solid fa-arrow-left text-3xl text-brand-500 mb-3"></i>
-          <h3 class="font-bold text-lg text-brand-900 dark:text-brand-400">الانتقال إلى صفحة الجدول الكامل</h3>
-          <p class="text-xs text-gray-500 mt-1">حدد قسمك، سنتك، وفوجك للحصول على توقيتك الدقيق مع إمكانية إضافة ملاحظات.</p>
-        </a>
-      </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 2. قسم الواجبات والامتحانات -->
-    <!-- ========================================== -->
-    <div id="content-exams" class="hidden space-y-6">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-folder-open"></i>
-          </div>
-          <div>
-            <h2 class="text-xl font-black text-slate-900 dark:text-white">مكتبة الملفات</h2>
-            <p class="text-xs text-slate-500">روابط Google Drive للدروس والملخصات</p>
-          </div>
-        </div>
-        <div class="relative w-full md:w-72">
-          <i class="fa-solid fa-search absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-          <input type="text" id="driveSearch" placeholder="ابحث في المجلدات..." class="search-input w-full pr-11 pl-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none">
-        </div>
-      </div>
-      
-      <div id="drivesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-      <div id="noResults" class="hidden text-center py-10">
-        <i class="fa-solid fa-search text-5xl text-slate-300 dark:text-slate-600 mb-4"></i>
-        <p class="text-slate-500 dark:text-slate-400">لا توجد نتائج مطابقة</p>
-      </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 3. قسم صندوق أدوات الطالب -->
-    <!-- ========================================== -->
     <div id="content-tools" class="hidden space-y-6">
-      
-      <!-- أدوات الأكاديمية -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- حاسبة المعدل -->
         <div class="glass-card rounded-3xl p-6 border border-brand-100 dark:border-slate-700 space-y-4">
-          <h4 class="font-bold text-lg text-brand-900 dark:text-brand-400 flex items-center gap-2"><i class="fa-solid fa-calculator"></i> حاسبة المعدل الفصلي</h4>
+          <h4 class="font-bold text-lg text-brand-900 dark:text-brand-400 flex items-center gap-2"><i class="fa-solid fa-calculator"></i> <span data-i18n="calc_title">حاسبة المعدل الفصلي</span></h4>
           <div class="flex items-center gap-2 px-1 text-[10px] font-bold text-gray-500 mb-1">
-            <div class="w-8 text-center">معامل</div><div class="w-14 text-center">امتحان</div><div class="w-14 text-center">TD/TP</div><div class="w-16 text-center">النوع</div><div class="w-4"></div>
+            <div class="w-8 text-center" data-i18n="calc_coeff">معامل</div><div class="w-14 text-center" data-i18n="calc_exam">امتحان</div><div class="w-14 text-center" data-i18n="calc_td">TD/TP</div><div class="w-16 text-center" data-i18n="calc_type">النوع</div><div class="w-4"></div>
           </div>
           <div id="calc-subjects" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
-          <button onclick="addSubjectRow()" class="text-xs font-bold text-brand-600 hover:text-brand-800 dark:text-brand-400 flex items-center gap-1"><i class="fa-solid fa-plus"></i> إضافة مادة</button>
+          <button onclick="addSubjectRow()" class="text-xs font-bold text-brand-600 hover:text-brand-800 dark:text-brand-400 flex items-center gap-1"><i class="fa-solid fa-plus"></i> <span data-i18n="calc_add">إضافة مادة</span></button>
           <div class="bg-brand-50 dark:bg-slate-800 p-4 rounded-xl text-center">
-            <p class="text-xs text-brand-800 dark:text-brand-300 font-bold mb-1">المعدل النهائي المرجح</p>
+            <p class="text-xs text-brand-800 dark:text-brand-300 font-bold mb-1" data-i18n="calc_result">المعدل النهائي المرجح</p>
             <div id="calc-result" class="text-3xl font-black text-brand-600">0.00</div>
             <p id="calc-status" class="text-xs font-bold mt-1"></p>
           </div>
         </div>
-
-        <!-- العجلة والمهام -->
         <div class="space-y-6">
           <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700">
-            <h4 class="font-bold text-lg text-orange-900 dark:text-orange-400 mb-4 flex items-center justify-center gap-2"><i class="fa-solid fa-dice"></i> عجلة المواد</h4>
+            <h4 class="font-bold text-lg text-orange-900 dark:text-orange-400 mb-4 flex items-center justify-center gap-2"><i class="fa-solid fa-dice"></i> <span data-i18n="wheel_title">عجلة المواد</span></h4>
             <div class="flex gap-2 mb-4">
-              <input type="text" id="module-input" placeholder="أضف مادة..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
+              <input type="text" id="module-input" data-i18n-placeholder="wheel_placeholder" placeholder="أضف مادة..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
               <button onclick="addModule()" class="bg-orange-500 text-white px-3 rounded-lg font-bold text-sm"><i class="fa-solid fa-plus"></i></button>
             </div>
             <div id="modules-list" class="flex flex-wrap gap-1 mb-4 max-h-24 overflow-y-auto justify-center"></div>
             <div id="wheel-result" class="h-12 flex items-center justify-center text-xl font-black text-orange-600 mb-4 bg-orange-50 dark:bg-slate-800 rounded-xl">?</div>
-            <button onclick="spinWheel()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition">ماذا أراجع الآن؟</button>
+            <button onclick="spinWheel()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition" data-i18n="wheel_btn">ماذا أراجع الآن؟</button>
           </div>
-
           <div class="glass-card rounded-3xl p-6 border border-emerald-100 dark:border-slate-700">
-            <h4 class="font-bold text-lg text-emerald-900 dark:text-emerald-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> مهامي الدراسية</h4>
+            <h4 class="font-bold text-lg text-emerald-900 dark:text-emerald-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> <span data-i18n="tasks_title">مهامي الدراسية</span></h4>
             <div class="flex gap-2 mb-3">
-              <input type="text" id="task-input" placeholder="مهمة جديدة..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
+              <input type="text" id="task-input" data-i18n-placeholder="tasks_placeholder" placeholder="مهمة جديدة..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
               <button onclick="addTask()" class="bg-emerald-500 text-white px-4 rounded-lg font-bold text-sm">+</button>
             </div>
             <ul id="task-list" class="space-y-2 max-h-32 overflow-y-auto pr-1"></ul>
@@ -213,16 +35,15 @@
         </div>
       </div>
 
-      <!-- الكرونو -->
       <div class="glass-card p-6 rounded-3xl border border-indigo-100 dark:border-slate-700">
         <div class="flex items-center gap-3 mb-6">
           <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
-          <div><h4 class="font-black text-lg text-slate-900 dark:text-white">الكرونو والتذكير بالمهام</h4><p class="text-xs text-slate-500">خطط ليومك ورتب مهامك حسب الوقت</p></div>
+          <div><h4 class="font-black text-lg text-slate-900 dark:text-white" data-i18n="crono_title">الكرونو والتذكير بالمهام</h4><p class="text-xs text-slate-500" data-i18n="crono_desc">خطط ليومك ورتب مهامك حسب الوقت</p></div>
         </div>
         <div class="flex flex-col md:flex-row gap-3 mb-8 bg-gray-50 dark:bg-slate-800 p-4 rounded-2xl border border-gray-100 dark:border-slate-700">
-          <input type="text" id="crono-name" placeholder="اسم المهمة..." class="flex-1 p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
+          <input type="text" id="crono-name" data-i18n-placeholder="crono_placeholder" placeholder="اسم المهمة..." class="flex-1 p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
           <input type="time" id="crono-time" class="p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
-          <button onclick="addCronoTask()" class="bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-indigo-700 transition">إضافة للكرونو</button>
+          <button onclick="addCronoTask()" class="bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-indigo-700 transition" data-i18n="crono_add">إضافة للكرونو</button>
         </div>
         <div class="relative pl-8 pr-4">
           <div class="timeline-line"></div>
@@ -230,13 +51,12 @@
         </div>
       </div>
 
-      <!-- المترجم الفوري -->
       <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 flex flex-col mt-6">
         <div class="flex items-center gap-3 mb-4 border-b pb-3">
           <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-language"></i></div>
           <div>
-            <h4 class="font-black text-lg text-slate-900 dark:text-white">المترجم الفوري</h4>
-            <p class="text-xs text-slate-500">ترجمة أي كلمة بين العربية، الفرنسية والإنجليزية</p>
+            <h4 class="font-black text-lg text-slate-900 dark:text-white" data-i18n="translate_title">المترجم الفوري</h4>
+            <p class="text-xs text-slate-500" data-i18n="translate_desc">ترجمة أي كلمة بين العربية، الفرنسية والإنجليزية</p>
           </div>
         </div>
         <div class="flex gap-2 mb-4">
@@ -249,382 +69,101 @@
           </select>
         </div>
         <div class="flex gap-2">
-          <input type="text" id="translate-input" placeholder="اكتب الكلمة هنا..." class="flex-1 p-3 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 outline-none text-sm focus:ring-2 focus:ring-blue-400">
-          <button onclick="translateText()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition">ترجمة</button>
+          <input type="text" id="translate-input" data-i18n-placeholder="translate_input" placeholder="اكتب الكلمة هنا..." class="flex-1 p-3 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 outline-none text-sm focus:ring-2 focus:ring-blue-400">
+          <button onclick="translateText()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition" data-i18n="translate_btn">ترجمة</button>
         </div>
         <div id="translate-result" class="mt-4 p-4 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-center hidden">
-          <p class="text-sm text-gray-500 mb-1">الترجمة:</p>
+          <p class="text-sm text-gray-500 mb-1" data-i18n="translate_result">الترجمة:</p>
           <p id="translated-text" class="text-2xl font-black text-blue-700 dark:text-blue-400"></p>
         </div>
         <p id="translate-error" class="text-xs text-red-500 mt-2 hidden"></p>
       </div>
 
-      <!-- المختبر الافتراضي -->
       <div class="glass-card p-6 rounded-3xl border border-cyan-100 dark:border-slate-700 mt-6">
         <div class="flex items-center gap-3 mb-6 border-b pb-4">
           <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-xl"><i class="fa-solid fa-flask"></i></div>
           <div>
-            <h4 class="font-black text-lg text-slate-900 dark:text-white">المختبر الافتراضي</h4>
-            <p class="text-xs text-slate-500">قم بتجارب فيزيائية وهندسية تفاعلية مباشرة من متصفحك</p>
+            <h4 class="font-black text-lg text-slate-900 dark:text-white" data-i18n="lab_title">المختبر الافتراضي</h4>
+            <p class="text-xs text-slate-500" data-i18n="lab_desc">قم بتجارب فيزيائية وهندسية تفاعلية مباشرة من متصفحك</p>
           </div>
         </div>
 
         <div class="flex flex-wrap gap-2 mb-6">
-          <button onclick="switchLab('pendulum')" id="lab-tab-pendulum" class="lab-tab active px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">1. البندول</button>
-          <button onclick="switchLab('circuit')" id="lab-tab-circuit" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">2. الدارة</button>
-          <button onclick="switchLab('projectile')" id="lab-tab-projectile" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">3. المقذوفات</button>
-          <button onclick="switchLab('concrete')" id="lab-tab-concrete" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">4. الخرسانة</button>
-          <button onclick="switchLab('spring')" id="lab-tab-spring" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">5. الزنبرك</button>
-          <button onclick="switchLab('waves')" id="lab-tab-waves" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">6. الأمواج</button>
-          <button onclick="switchLab('chimie')" id="lab-tab-chimie" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">7. الكيمياء</button>
+          <button onclick="switchLab('pendulum')" id="lab-tab-pendulum" class="lab-tab active px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">1. <span data-i18n="lab_pendulum">البندول</span></button>
+          <button onclick="switchLab('circuit')" id="lab-tab-circuit" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">2. <span data-i18n="lab_circuit">الدارة</span></button>
+          <button onclick="switchLab('projectile')" id="lab-tab-projectile" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">3. <span data-i18n="lab_projectile">المقذوفات</span></button>
+          <button onclick="switchLab('concrete')" id="lab-tab-concrete" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">4. <span data-i18n="lab_concrete">الخرسانة</span></button>
+          <button onclick="switchLab('spring')" id="lab-tab-spring" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">5. <span data-i18n="lab_spring">الزنبرك</span></button>
+          <button onclick="switchLab('waves')" id="lab-tab-waves" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">6. <span data-i18n="lab_waves">الأمواج</span></button>
+          <button onclick="switchLab('chimie')" id="lab-tab-chimie" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">7. <span data-i18n="lab_chimie">الكيمياء</span></button>
           <button onclick="switchLab('rdm')" id="lab-tab-rdm" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">8. RDM</button>
           <button onclick="switchLab('mdf')" id="lab-tab-mdf" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">9. MDF</button>
-          <button onclick="switchLab('optics')" id="lab-tab-optics" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">10. البصريات</button>
-          <button onclick="switchLab('thermo')" id="lab-tab-thermo" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">11. الديناميكا</button>
-          <button onclick="switchLab('magnet')" id="lab-tab-magnet" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">12. المغناطيسية</button>
-          <button onclick="switchLab('momentum')" id="lab-tab-momentum" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">13. الزخم</button>
+          <button onclick="switchLab('optics')" id="lab-tab-optics" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">10. <span data-i18n="lab_optics">البصريات</span></button>
+          <button onclick="switchLab('thermo')" id="lab-tab-thermo" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">11. <span data-i18n="lab_thermo">الديناميكا</span></button>
+          <button onclick="switchLab('magnet')" id="lab-tab-magnet" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">12. <span data-i18n="lab_magnet">المغناطيسية</span></button>
+          <button onclick="switchLab('momentum')" id="lab-tab-momentum" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">13. <span data-i18n="lab_momentum">الزخم</span></button>
         </div>
 
-        <!-- 1. البندول -->
         <div id="lab-content-pendulum" class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="pendulumCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
           </div>
           <div class="space-y-6 flex flex-col justify-center">
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>طول الخيط (L)</span><span id="length-val" class="text-cyan-600">150</span></label>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span data-i18n="lab_length">طول الخيط (L)</span><span id="length-val" class="text-cyan-600">150</span></label>
               <input type="range" id="length-slider" min="50" max="250" value="150" class="slider-custom">
             </div>
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>زاوية الإطلاق (θ)</span><span id="angle-val" class="text-cyan-600">45</span>°</label>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span data-i18n="lab_angle">زاوية الإطلاق (θ)</span><span id="angle-val" class="text-cyan-600">45</span>°</label>
               <input type="range" id="angle-slider" min="10" max="90" value="45" class="slider-custom">
             </div>
             <div class="bg-cyan-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-cyan-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">الزمن الدوري (T)</p>
+              <p class="text-xs text-gray-500 mb-1" data-i18n="lab_period">الزمن الدوري (T)</p>
               <p class="text-2xl font-black text-cyan-700 dark:text-cyan-400" id="period-result">0.00 s</p>
             </div>
           </div>
         </div>
 
-        <!-- 2. الدارة -->
         <div id="lab-content-circuit" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="circuitCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
           </div>
           <div class="space-y-6 flex flex-col justify-center">
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>الجهد (V)</span><span id="voltage-val" class="text-yellow-600">12</span> V</label>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span data-i18n="lab_voltage">الجهد (V)</span><span id="voltage-val" class="text-yellow-600">12</span> V</label>
               <input type="range" id="voltage-slider" min="1" max="24" value="12" class="slider-custom">
             </div>
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>المقاومة (R)</span><span id="resistance-val" class="text-yellow-600">10</span> Ω</label>
+              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span data-i18n="lab_resistance">المقاومة (R)</span><span id="resistance-val" class="text-yellow-600">10</span> Ω</label>
               <input type="range" id="resistance-slider" min="1" max="50" value="10" class="slider-custom">
             </div>
             <div class="bg-yellow-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-yellow-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">شدة التيار (I) = V / R</p>
+              <p class="text-xs text-gray-500 mb-1" data-i18n="lab_current">شدة التيار (I) = V / R</p>
               <p class="text-2xl font-black text-yellow-700 dark:text-yellow-400" id="current-result">1.20 A</p>
             </div>
           </div>
         </div>
 
-        <!-- 3. المقذوفات -->
         <div id="lab-content-projectile" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="projectileCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
           </div>
           <div class="space-y-6 flex flex-col justify-center">
             <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>السرعة الابتدائية (v0)</span><span id="velocity-val" class="text-blue-600">50</span> m/s</label>
-              <input type="range" id="velocity-slider" min="10" max="100" value="50" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>زاوية الإطلاق (α)</span><span id="angle-proj-val" class="text-blue-600">45</span>°</label>
-              <input type="range" id="angle-proj-slider" min="10" max="80" value="45" class="slider-custom">
-            </div>
-            <div class="bg-blue-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-blue-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">المدى (R) وأقصى ارتفاع (H)</p>
-              <p class="text-xl font-black text-blue-700 dark:text-blue-400" id="projectile-result">R: 0m | H: 0m</p>
-            </div>
-          </div>
-        </div>
+                <script>
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
-        <!-- 4. الخرسانة -->
-        <div id="lab-content-concrete" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="concreteCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>القوة المطبقة (F)</span><span id="force-val" class="text-red-600">0</span> kN</label>
-              <input type="range" id="force-slider" min="0" max="100" value="0" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>المقاومة القصوى (fc)</span><span id="strength-val" class="text-red-600">25</span> MPa</label>
-              <input type="range" id="strength-slider" min="10" max="50" value="25" class="slider-custom">
-            </div>
-            <div class="bg-red-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-red-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">حالة المكعب</p>
-              <p class="text-xl font-black text-red-700 dark:text-red-400" id="concrete-result">سليم</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. الزنبرك -->
-        <div id="lab-content-spring" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="springCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>ثابت الزنبرك (k)</span><span id="k-val" class="text-pink-600">20</span> N/m</label>
-              <input type="range" id="k-slider" min="5" max="100" value="20" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>الاستطالة (x)</span><span id="x-val" class="text-pink-600">10</span> cm</label>
-              <input type="range" id="x-slider" min="1" max="30" value="10" class="slider-custom">
-            </div>
-            <div class="bg-pink-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-pink-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">القوة (F = k × x)</p>
-              <p class="text-2xl font-black text-pink-700 dark:text-pink-400" id="spring-result">2.00 N</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. الأمواج -->
-        <div id="lab-content-waves" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="wavesCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>التردد (f)</span><span id="freq-val" class="text-teal-600">2</span> Hz</label>
-              <input type="range" id="freq-slider" min="1" max="10" value="2" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>السعة (A)</span><span id="amp-val" class="text-teal-600">50</span></label>
-              <input type="range" id="amp-slider" min="10" max="100" value="50" class="slider-custom">
-            </div>
-            <div class="bg-teal-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-teal-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">الطول الموجي (λ = v / f)</p>
-              <p class="text-2xl font-black text-teal-700 dark:text-teal-400" id="wave-result">170 m</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7. الكيمياء -->
-        <div id="lab-content-chimie" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="chimieCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>حجم الحمض (HCl)</span><span id="acid-val" class="text-purple-600">10</span> mL</label>
-              <input type="range" id="acid-slider" min="1" max="50" value="10" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>حجم القاعدة (NaOH)</span><span id="base-val" class="text-purple-600">10</span> mL</label>
-              <input type="range" id="base-slider" min="1" max="50" value="10" class="slider-custom">
-            </div>
-            <div class="bg-purple-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-purple-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">حالة الوسط (pH)</p>
-              <p class="text-2xl font-black text-purple-700 dark:text-purple-400" id="ph-result">متعادل (pH=7)</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 8. RDM -->
-        <div id="lab-content-rdm" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="rdmCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>الحمل المطبق (P)</span><span id="load-val" class="text-orange-600">50</span> kN</label>
-              <input type="range" id="load-slider" min="10" max="200" value="50" class="slider-custom">
-            </div>
-            <div class="bg-orange-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-orange-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">أقصى عزم انحناء (M_max)</p>
-              <p class="text-2xl font-black text-orange-700 dark:text-orange-400" id="moment-result">0 kN.m</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 9. MDF -->
-        <div id="lab-content-mdf" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="mdfCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>طول العارضة (L)</span><span id="len-val" class="text-lime-600">10</span> m</label>
-              <input type="range" id="len-slider" min="2" max="20" value="10" class="slider-custom">
-            </div>
-            <div class="bg-lime-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-lime-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">الانحراف الأقصى (f)</p>
-              <p class="text-2xl font-black text-lime-700 dark:text-lime-400" id="deflection-result">0 mm</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10. البصريات -->
-        <div id="lab-content-optics" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="opticsCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>زاوية السقوط (θ1)</span><span id="angle1-val" class="text-indigo-600">30</span>°</label>
-              <input type="range" id="angle1-slider" min="0" max="80" value="30" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>معامل الانكسار (n2)</span><span id="n2-val" class="text-indigo-600">1.5</span></label>
-              <input type="range" id="n2-slider" min="1" max="2.5" step="0.1" value="1.5" class="slider-custom">
-            </div>
-            <div class="bg-indigo-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-indigo-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">زاوية الانكسار (θ2)</p>
-              <p class="text-2xl font-black text-indigo-700 dark:text-indigo-400" id="angle2-result">0°</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 11. الديناميكا الحرارية -->
-        <div id="lab-content-thermo" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="thermoCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>الضغط (P)</span><span id="p-val" class="text-rose-600">1</span> atm</label>
-              <input type="range" id="p-slider" min="0.5" max="5" step="0.1" value="1" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>عدد المولات (n)</span><span id="n-val" class="text-rose-600">1</span> mol</label>
-              <input type="range" id="n-slider" min="0.5" max="5" step="0.1" value="1" class="slider-custom">
-            </div>
-            <div class="bg-rose-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-rose-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">درجة الحرارة (T = PV/nR)</p>
-              <p class="text-2xl font-black text-rose-700 dark:text-rose-400" id="temp-result">0 K</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 12. المغناطيسية -->
-        <div id="lab-content-magnet" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="magnetCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>شدة التيار (I)</span><span id="current-val" class="text-cyan-600">2</span> A</label>
-              <input type="range" id="current-slider" min="1" max="10" value="2" class="slider-custom">
-            </div>
-            <div class="bg-cyan-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-cyan-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">المجال المغناطيسي (B)</p>
-              <p class="text-2xl font-black text-cyan-700 dark:text-cyan-400" id="b-result">0 μT</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 13. الزخم -->
-        <div id="lab-content-momentum" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
-            <canvas id="momentumCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
-          </div>
-          <div class="space-y-6 flex flex-col justify-center">
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>كتلة الكرة 1 (m1)</span><span id="m1-val" class="text-amber-600">2</span> kg</label>
-              <input type="range" id="m1-slider" min="1" max="10" value="2" class="slider-custom">
-            </div>
-            <div>
-              <label class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><span>سرعة الكرة 1 (v1)</span><span id="v1-val" class="text-amber-600">5</span> m/s</label>
-              <input type="range" id="v1-slider" min="1" max="10" value="5" class="slider-custom">
-            </div>
-            <div class="bg-amber-50 dark:bg-slate-800 p-4 rounded-xl text-center border border-amber-100 dark:border-slate-700">
-              <p class="text-xs text-gray-500 mb-1">الزخم الكلي (P = m*v)</p>
-              <p class="text-2xl font-black text-amber-700 dark:text-amber-400" id="momentum-result">0 kg.m/s</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- بطاقة مختبر الجزيئات 3D -->
-        <div class="col-span-1 md:col-span-2 bg-gradient-to-r from-emerald-500 to-teal-600 p-6 rounded-2xl shadow-lg mt-4 text-white flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-4">
-            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl">
-              <i class="fa-solid fa-atom"></i>
-            </div>
-            <div>
-              <h4 class="font-black text-xl">مختبر الجزيئات 3D</h1>
-              <p class="text-emerald-100 text-sm mt-1">تجارب تفاعلية ثلاثية الأبعاد لاهتزازات الجزيئات (H2O, CO2).</p>
-            </div>
-          </div>
-          <a href="molecule-lab.html" class="px-6 py-3 bg-white text-emerald-700 font-black rounded-xl hover:bg-emerald-50 transition shadow-md flex items-center gap-2">
-            <i class="fa-solid fa-flask"></i> ابدأ التجربة
-          </a>
-        </div>
-
-        <!-- ✅ بطاقة تمثيلات كرام، فيشر، ولويس -->
-        <a href="stereochemistry.html" class="glass-card p-6 rounded-3xl border border-purple-100 dark:border-slate-700 hover:scale-[1.02] transition-all group flex flex-col md:flex-row items-center justify-between gap-4">
-  <div class="flex items-center gap-4">
-    <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-      <i class="fa-solid fa-cubes"></i>
-    </div>
-    <div>
-      <h4 class="font-black text-lg text-slate-900 dark:text-white">تمثيلات 3D: كرام، فيشر، لويس</h4>
-      <p class="text-xs text-slate-500 dark:text-slate-400">مجسمات تفاعلية للمركبات ذات المدارات d.</p>
-    </div>
-  </div>
-  <i class="fa-solid fa-arrow-left text-purple-500 group-hover:-translate-x-2 transition-transform text-xl hidden md:block"></i>
-</a>
-
-      </div>
-      <!-- نهاية المختبر الافتراضي -->
-
-      <!-- المساعد الأكاديمي (AI) -->
-      <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 mt-6">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-robot"></i></div>
-          <div><h4 class="font-black text-lg text-slate-900 dark:text-white">المساعد الأكاديمي (AI)</h4><p class="text-xs text-slate-500">توليد أوامر ذكية لـ ChatGPT</p></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" id="ai-topic" placeholder="الموضوع (مثال: الخرسانة المسلحة)..." class="w-full p-3 rounded-xl border dark:bg-slate-800 dark:border-slate-600 outline-none">
-          <select id="ai-type" class="w-full p-3 rounded-xl border dark:bg-slate-800 dark:border-slate-600 outline-none">
-            <option value="summary">تلخيص المحاضرة</option>
-            <option value="quiz">توليد أسئلة مراجعة</option>
-          </select>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
-          <button onclick="generateAIPrompt()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
-            <i class="fa-solid fa-copy"></i> نسخ الأمر وفتح ChatGPT
-          </button>
-          <a id="fallback-link" href="#" target="_blank" class="w-full bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 opacity-50 pointer-events-none">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح ChatGPT مباشرة
-          </a>
-        </div>
-        <p id="ai-status" class="text-xs text-center mt-2 text-gray-500"></p>
-      </div>
-
-    </div>
-
-  </main>
-
-  <footer class="glass-nav border-t border-brand-100 dark:border-slate-800 py-6 mt-10">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-xs text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2">
-        <span>© 2026 ENSTP Kouba</span><span class="w-1 h-1 rounded-full bg-brand-400"></span><span>جميع الحقوق محفوظة</span>
-      </p>
-    </div>
-  </footer>
-
-  <script>
-    // ==========================================
-    // 1. DARK MODE & TABS
-    // ==========================================
-    if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+    /* ==========================================
+       1. Dark Mode
+       ========================================== */
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     }
 
+    /* ==========================================
+       2. Tabs
+       ========================================== */
     function switchTab(tabId) {
       ['schedule', 'exams', 'tools'].forEach(t => {
         document.getElementById('content-' + t).classList.add('hidden');
@@ -638,9 +177,9 @@
       activeBtn.classList.remove('border-transparent');
     }
 
-    // ==========================================
-    // 2. DRIVES (Google Drive Data)
-    // ==========================================
+    /* ==========================================
+       3. Drives
+       ========================================== */
     const drives = [
       { name: 'Drive 1', desc: '2CP - السنة الثانية', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-folder', color: 'emerald' },
       { name: 'Drive 2', desc: 'Cours - الدروس', url: 'https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg', icon: 'fa-book', color: 'blue' },
@@ -650,7 +189,7 @@
       { name: 'Drive 6', desc: 'Chimie & Physique', url: 'https://drive.google.com/drive/folders/15N8LPatF0r-1AimmRPbpLa9aNUmV0cod', icon: 'fa-flask', color: 'pink' },
       { name: 'Drive 7', desc: 'Maths - الرياضيات', url: 'https://drive.google.com/drive/folders/0B0pugt6XdltcQ09UR2h6UTdwWkU', icon: 'fa-square-root-variable', color: 'indigo' },
       { name: 'Drive 8', desc: 'Info - الإعلام الآلي', url: 'https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9', icon: 'fa-laptop-code', color: 'rose' },
-      { name: 'Drive 9', desc: 'Génie Civil - الهندسة', url: 'https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9', icon: 'fa-building', color: 'orange' },
+            { name: 'Drive 9', desc: 'Génie Civil - الهندسة', url: 'https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9', icon: 'fa-building', color: 'orange' },
       { name: 'Drive 10', desc: 'Sujets divers', url: 'https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs', icon: 'fa-layer-group', color: 'violet' },
       { name: 'Drive 11', desc: 'Concours - المسابقات', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-trophy', color: 'yellow' }
     ];
@@ -678,11 +217,12 @@
         </a>
       `).join('');
     }
+
     document.getElementById('driveSearch').addEventListener('input', (e) => renderDrives(e.target.value));
 
-    // ==========================================
-    // 3. TOOLS (Calculator, Wheel, Tasks, Crono)
-    // ==========================================
+    /* ==========================================
+       4. Calculatrice
+       ========================================== */
     function addSubjectRow() {
       const container = document.getElementById('calc-subjects');
       const div = document.createElement('div');
@@ -698,6 +238,7 @@
       `;
       container.appendChild(div);
     }
+
     function calcGPA() {
       const rows = document.querySelectorAll('.calc-row');
       let total = 0, coeffs = 0;
@@ -725,6 +266,9 @@
       else status.innerHTML = '';
     }
 
+    /* ==========================================
+       5. Roue des matières
+       ========================================== */
     let myModules = JSON.parse(localStorage.getItem('enstp_modules')) || ['رياضيات', 'فيزياء'];
     function renderModules() {
       const list = document.getElementById('modules-list');
@@ -753,6 +297,9 @@
       }, 100);
     }
 
+    /* ==========================================
+       6. Tâches
+       ========================================== */
     let tasks = JSON.parse(localStorage.getItem('enstp_tasks')) || [];
     function renderTasks() {
       const list = document.getElementById('task-list');
@@ -772,6 +319,9 @@
     function toggleTask(i) { tasks[i].done = !tasks[i].done; localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
     function delTask(i) { tasks.splice(i, 1); localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
 
+    /* ==========================================
+       7. Chrono
+       ========================================== */
     let cronoTasks = JSON.parse(localStorage.getItem('enstp_timeline')) || [];
     function renderCrono() {
       const container = document.getElementById('crono-container');
@@ -779,7 +329,7 @@
       cronoTasks.sort((a, b) => a.time.localeCompare(b.time));
       container.innerHTML = cronoTasks.map((t, i) => `
         <div class="relative ${t.done ? 'opacity-60' : ''}">
-          <div class="timeline-dot ${t.done ? 'bg-emerald-500' : 'bg-brand-500'}" " style="top: 1rem;"></div>
+          <div class="timeline-dot ${t.done ? 'bg-emerald-500' : 'bg-brand-500'}" style="top: 1rem;"></div>
           <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-slate-700 ml-8 shadow-sm flex justify-between items-center">
             <div>
               <span class="text-xs font-black text-brand-600 bg-brand-50 px-2 py-0.5 rounded">${t.time}</span>
@@ -792,7 +342,6 @@
           </div>
         </div>`).join('');
     }
-
     function addCronoTask() {
       const name = document.getElementById('crono-name').value;
       const time = document.getElementById('crono-time').value;
@@ -806,9 +355,9 @@
     function toggleCronoTask(i) { cronoTasks[i].done = !cronoTasks[i].done; localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
     function deleteCronoTask(i) { cronoTasks.splice(i, 1); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
 
-    // ==========================================
-    // 4. المترجم الفوري
-    // ==========================================
+    /* ==========================================
+       8. Traducteur
+       ========================================== */
     async function translateText() {
       const text = document.getElementById('translate-input').value.trim();
       const from = document.getElementById('lang-from').value;
@@ -828,9 +377,9 @@
       } catch (e) { errorBox.innerText = "حدث خطأ في الاتصال."; errorBox.classList.remove('hidden'); }
     }
 
-    // ==========================================
-    // 5. المساعد الأكاديمي (AI)
-    // ==========================================
+    /* ==========================================
+       9. Assistant AI
+       ========================================== */
     function generateAIPrompt() {
       const topic = document.getElementById('ai-topic').value.trim();
       const type = document.getElementById('ai-type').value;
@@ -848,9 +397,9 @@
       } else { statusEl.innerText = "اضغط على الزر الاحتياطي."; statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold"; }
     }
 
-    // ==========================================
-    // 6. المختبر الافتراضي (Virtual Lab)
-    // ==========================================
+    /* ==========================================
+       10. Virtual Lab
+       ========================================== */
     function switchLab(labId) {
       ['pendulum', 'circuit', 'projectile', 'concrete', 'spring', 'waves', 'chimie', 'rdm', 'mdf', 'optics', 'thermo', 'magnet', 'momentum'].forEach(l => {
         const content = document.getElementById('lab-content-' + l);
@@ -875,7 +424,7 @@
       if (labId === 'momentum') drawMomentum();
     }
 
-    // 1. البندول
+    // 1. Pendule
     let pendulumAnim, pendAngle = 0, pendVel = 0, pendLength = 150;
     const pendGravity = 0.005;
     function startPendulum() {
@@ -901,7 +450,7 @@
     }
     function updatePeriod() { document.getElementById('period-result').innerText = (2 * Math.PI * Math.sqrt((pendLength/100) / 9.81)).toFixed(2) + ' s'; }
 
-    // 2. الدارة
+    // 2. Circuit
     function drawCircuit() {
       const canvas = document.getElementById('circuitCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -920,7 +469,7 @@
       vS.oninput = update; rS.oninput = update; update();
     }
 
-    // 3. المقذوفات
+    // 3. Projectile
     let projAnim;
     function startProjectile() {
       cancelAnimationFrame(projAnim);
@@ -946,7 +495,7 @@
       vS.oninput = reset; aS.oninput = reset; draw();
     }
 
-    // 4. الخرسانة
+    // 4. Concrete
     function drawConcrete() {
       const canvas = document.getElementById('concreteCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -965,7 +514,7 @@
       fS.oninput = update; sS.oninput = update; update();
     }
 
-    // 5. الزنبرك
+    // 5. Spring
     function drawSpring() {
       const canvas = document.getElementById('springCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -984,7 +533,7 @@
       kS.oninput = update; xS.oninput = update; update();
     }
 
-    // 6. الأمواج
+    // 6. Waves
     let waveAnim;
     function drawWaves() {
       cancelAnimationFrame(waveAnim);
@@ -1008,7 +557,7 @@
       update();
     }
 
-    // 7. الكيمياء
+    // 7. Chimie
     function drawChimie() {
       const canvas = document.getElementById('chimieCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -1082,7 +631,7 @@
       lenS.oninput = update; update();
     }
 
-    // 10. البصريات
+    // 10. Optics
     function drawOptics() {
       const canvas = document.getElementById('opticsCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -1107,7 +656,7 @@
       a1S.oninput = update; n2S.oninput = update; update();
     }
 
-    // 11. الديناميكا
+    // 11. Thermo
     function drawThermo() {
       const canvas = document.getElementById('thermoCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -1117,7 +666,7 @@
         const T = (P * V) / (n * R);
         document.getElementById('p-val').innerText = P.toFixed(1);
         document.getElementById('n-val').innerText = n.toFixed(1);
-        document.getElementById('temp-result').innerText = T.toFixed(1) + ' K';
+               document.getElementById('temp-result').innerText = T.toFixed(1) + ' K';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#64748b'; ctx.lineWidth = 4; ctx.strokeRect(100, 50, 150, 200);
         const num = Math.floor(n * 20);
@@ -1129,8 +678,10 @@
       pS.oninput = update; nS.oninput = update; update();
     }
 
-    // 12. المغناطيسية
+    // 12. Magnet
+    let magnetAnim;
     function drawMagnet() {
+      cancelAnimationFrame(magnetAnim);
       const canvas = document.getElementById('magnetCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
       const iS = document.getElementById('current-slider');
@@ -1149,12 +700,12 @@
           ctx.beginPath(); ctx.arc(cx, cy, i * 40, 0, Math.PI * 2); ctx.stroke();
         }
         time += 0.02;
-        requestAnimationFrame(update);
+        magnetAnim = requestAnimationFrame(update);
       }
       update();
     }
 
-    // 13. الزخم
+    // 13. Momentum
     function drawMomentum() {
       const canvas = document.getElementById('momentumCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -1173,16 +724,382 @@
       m1S.oninput = update; v1S.oninput = update; update();
     }
 
-    // ==========================================
-    // 7. INIT
-    // ==========================================
+    /* ==========================================
+       11. Translations (ar / fr / en)
+       ========================================== */
+    window.REUSSITE_TRANSLATIONS = {
+      ar: {
+        page_title: "Guide ENSTP - Ma Réussite",
+        nav_app_sub: "المدرسة الوطنية العليا",
+        nav_home: "الرئيسية",
+        tab_schedule: "استعمال الزمن",
+        tab_exams: "الواجبات والامتحانات",
+        tab_tools: "صندوق أدوات الطالب",
+        schedule_title: "جدول التوقيت",
+        schedule_desc: "اطلع على أوقات المحاضرات والأعمال الموجهة",
+        schedule_full_btn: "الانتقال إلى صفحة الجدول الكامل",
+        schedule_full_desc: "حدد قسمك، سنتك، وفوجك للحصول على توقيتك الدقيق مع إمكانية إضافة ملاحظات.",
+        library_title: "مكتبة الملفات",
+        library_desc: "روابط Google Drive للدروس والملخصات",
+        library_search: "ابحث في المجلدات...",
+        library_no_results: "لا توجد نتائج مطابقة",
+        calc_title: "حاسبة المعدل الفصلي",
+        calc_coeff: "معامل",
+        calc_exam: "امتحان",
+        calc_td: "TD/TP",
+        calc_type: "النوع",
+        calc_add: "إضافة مادة",
+        calc_result: "المعدل النهائي المرجح",
+        wheel_title: "عجلة المواد",
+        wheel_placeholder: "أضف مادة...",
+        wheel_btn: "ماذا أراجع الآن؟",
+        tasks_title: "مهامي الدراسية",
+        tasks_placeholder: "مهمة جديدة...",
+        crono_title: "الكرونو والتذكير بالمهام",
+        crono_desc: "خطط ليومك ورتب مهامك حسب الوقت",
+        crono_placeholder: "اسم المهمة...",
+        crono_add: "إضافة للكرونو",
+        translate_title: "المترجم الفوري",
+        translate_desc: "ترجمة أي كلمة بين العربية، الفرنسية والإنجليزية",
+        translate_input: "اكتب الكلمة هنا...",
+        translate_btn: "ترجمة",
+        translate_result: "الترجمة:",
+        lab_title: "المختبر الافتراضي",
+        lab_desc: "قم بتجارب فيزيائية وهندسية تفاعلية مباشرة من متصفحك",
+        lab_pendulum: "البندول", lab_circuit: "الدارة", lab_projectile: "المقذوفات", lab_concrete: "الخرسانة",
+        lab_spring: "الزنبرك", lab_waves: "الأمواج", lab_chimie: "الكيمياء", lab_optics: "البصريات",
+        lab_thermo: "الديناميكا", lab_magnet: "المغناطيسية", lab_momentum: "الزخم",
+        lab_length: "طول الخيط (L)", lab_angle: "زاوية الإطلاق (θ)", lab_period: "الزمن الدوري (T)",
+        lab_voltage: "الجهد (V)", lab_resistance: "المقاومة (R)", lab_current: "شدة التيار (I) = V / R",
+        lab_velocity: "السرعة الابتدائية (v0)", lab_angle_proj: "زاوية الإطلاق (α)", lab_projectile_result: "المدى (R) وأقصى ارتفاع (H)",
+        lab_force: "القوة المطبقة (F)", lab_strength: "المقاومة القصوى (fc)", lab_concrete_status: "حالة المكعب",
+        lab_k: "ثابت الزنبرك (k)", lab_x: "الاستطالة (x)", lab_spring_result: "القوة (F = k × x)",
+        lab_freq: "التردد (f)", lab_amp: "السعة (A)", lab_wave_result: "الطول الموجي (λ = v / f)",
+        lab_acid: "حجم الحمض (HCl)", lab_base: "حجم القاعدة (NaOH)", lab_ph: "حالة الوسط (pH)",
+        lab_load: "الحمل المطبق (P)", lab_moment: "أقصى عزم انحناء (M_max)",
+        lab_len: "طول العارضة (L)", lab_deflection: "الانحراف الأقصى (f)",
+        lab_angle1: "زاوية السقوط (θ1)", lab_n2: "معامل الانكسار (n2)", lab_angle2: "زاوية الانكسار (θ2)",
+        lab_p: "الضغط (P)", lab_n: "عدد المولات (n)", lab_temp: "درجة الحرارة (T = PV/nR)",
+        lab_current2: "شدة التيار (I)", lab_b: "المجال المغناطيسي (B)",
+        lab_m1: "كتلة الكرة 1 (m1)", lab_v1: "سرعة الكرة 1 (v1)", lab_momentum_result: "الزخم الكلي (P = m*v)",
+        molecule_lab_title: "مختبر الجزيئات 3D",
+        molecule_lab_desc: "تجارب تفاعلية ثلاثية الأبعاد لاهتزازات الجزيئات (H2O, CO2).",
+        molecule_lab_btn: "ابدأ التجربة",
+        stereo_title: "تمثيلات 3D: كرام، فيشر، لويس",
+        stereo_desc: "مجسمات تفاعلية للمركبات ذات المدارات d.",
+        ai_title: "المساعد الأكاديمي (AI)",
+        ai_desc: "توليد أوامر ذكية لـ ChatGPT",
+        ai_topic: "الموضوع (مثال: الخرسانة المسلحة)...",
+        ai_summary: "تلخيص المحاضرة",
+        ai_quiz: "توليد أسئلة مراجعة",
+        ai_copy: "نسخ الأمر وفتح ChatGPT",
+        ai_open: "فتح ChatGPT مباشرة",
+        footer_rights: "جميع الحقوق محفوظة",
+        chat_title: "المساعد الافتراضي",
+        chat_welcome: "مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟",
+        chat_placeholder: "اكتب سؤالك..."
+      },
+      fr: {
+        page_title: "Guide ENSTP - Ma Réussite",
+        nav_app_sub: "École Nationale Supérieure",
+        nav_home: "Accueil",
+        tab_schedule: "Emploi du temps",
+        tab_exams: "Devoirs et Examens",
+        tab_tools: "Boîte à outils",
+        schedule_title: "Emploi du temps",
+        schedule_desc: "Consultez les horaires des cours et TD",
+        schedule_full_btn: "Accéder à l'emploi du temps complet",
+        schedule_full_desc: "Sélectionnez votre département, année et groupe pour votre emploi du temps précis avec possibilité d'ajouter des notes.",
+        library_title: "Bibliothèque de fichiers",
+        library_desc: "Liens Google Drive pour les cours et résumés",
+        library_search: "Rechercher dans les dossiers...",
+        library_no_results: "Aucun résultat",
+        calc_title: "Calculatrice de moyenne",
+        calc_coeff: "Coef",
+        calc_exam: "Examen",
+        calc_td: "TD/TP",
+        calc_type: "Type",
+        calc_add: "Ajouter une matière",
+        calc_result: "Moyenne pondérée",
+        wheel_title: "Roue des matières",
+        wheel_placeholder: "Ajouter une matière...",
+        wheel_btn: "Que réviser maintenant ?",
+        tasks_title: "Mes tâches",
+        tasks_placeholder: "Nouvelle tâche...",
+        crono_title: "Chrono et rappels",
+        crono_desc: "Planifiez votre journée et organisez vos tâches",
+        crono_placeholder: "Nom de la tâche...",
+        crono_add: "Ajouter au chrono",
+        translate_title: "Traducteur instantané",
+        translate_desc: "Traduire un mot entre arabe, français et anglais",
+        translate_input: "Écrivez le mot ici...",
+        translate_btn: "Traduire",
+        translate_result: "Traduction :",
+        lab_title: "Laboratoire virtuel",
+        lab_desc: "Expériences interactives de physique et d'ingénierie dans votre navigateur",
+        lab_pendulum: "Pendule", lab_circuit: "Circuit", lab_projectile: "Projectile", lab_concrete: "Béton",
+        lab_spring: "Ressort", lab_waves: "Ondes", lab_chimie: "Chimie", lab_optics: "Optique",
+        lab_thermo: "Thermodynamique", lab_magnet: "Magnétisme", lab_momentum: "Quantité de mouvement",
+        lab_length: "Longueur du fil (L)", lab_angle: "Angle initial (θ)", lab_period: "Période (T)",
+        lab_voltage: "Tension (V)", lab_resistance: "Résistance (R)", lab_current: "Courant (I) = V / R",
+        lab_velocity: "Vitesse initiale (v0)", lab_angle_proj: "Angle (α)", lab_projectile_result: "Portée (R) et hauteur max (H)",
+        lab_force: "Force appliquée (F)", lab_strength: "Résistance max (fc)", lab_concrete_status: "État du cube",
+        lab_k: "Constante du ressort (k)", lab_x: "Élongation (x)", lab_spring_result: "Force (F = k × x)",
+        lab_freq: "Fréquence (f)", lab_amp: "Amplitude (A)", lab_wave_result: "Longueur d'onde (λ = v / f)",
+        lab_acid: "Volume acide (HCl)", lab_base: "Volume base (NaOH)", lab_ph: "État du milieu (pH)",
+        lab_load: "Charge appliquée (P)", lab_moment: "Moment fléchissant max (M_max)",
+        lab_len: "Longueur poutre (L)", lab_deflection: "Flèche max (f)",
+        lab_angle1: "Angle d'incidence (θ1)", lab_n2: "Indice de réfraction (n2)", lab_angle2: "Angle de réfraction (θ2)",
+        lab_p: "Pression (P)", lab_n: "Nombre de moles (n)", lab_temp: "Température (T = PV/nR)",
+        lab_current2: "Courant (I)", lab_b: "Champ magnétique (B)",
+        lab_m1: "Masse balle 1 (m1)", lab_v1: "Vitesse balle 1 (v1)", lab_momentum_result: "Quantité de mouvement (P = m*v)",
+        molecule_lab_title: "Laboratoire moléculaire 3D",
+        molecule_lab_desc: "Expériences interactives 3D des vibrations moléculaires (H2O, CO2).",
+        molecule_lab_btn: "Commencer l'expérience",
+        stereo_title: "Représentations 3D : Cram, Fischer, Lewis",
+        stereo_desc: "Modèles interactifs de complexes à orbitales d.",
+        ai_title: "Assistant académique (IA)",
+        ai_desc: "Générer des prompts intelligents pour ChatGPT",
+        ai_topic: "Sujet (ex : béton armé)...",
+        ai_summary: "Résumer le cours",
+        ai_quiz: "Générer des questions de révision",
+        ai_copy: "Copier et ouvrir ChatGPT",
+        ai_open: "Ouvrir ChatGPT",
+        footer_rights: "Tous droits réservés",
+        chat_title: "Assistant virtuel",
+        chat_welcome: "Bonjour ! 👋 Je suis votre assistant ENSTP. Comment puis-je vous aider ?",
+        chat_placeholder: "Écrivez votre question..."
+      },
+      en: {
+        page_title: "ENSTP Guide - My Success",
+        nav_app_sub: "National Higher School",
+        nav_home: "Home",
+        tab_schedule: "Schedule",
+        tab_exams: "Assignments & Exams",
+        tab_tools: "Student Toolbox",
+        schedule_title: "Class Schedule",
+        schedule_desc: "View lecture and TD times",
+        schedule_full_btn: "Go to full schedule",
+        schedule_full_desc: "Select your department, year and group to get your precise schedule with the option to add notes.",
+        library_title: "File Library",
+        library_desc: "Google Drive links for courses and summaries",
+        library_search: "Search folders...",
+        library_no_results: "No matching results",
+        calc_title: "Semester Average Calculator",
+        calc_coeff: "Coef",
+        calc_exam: "Exam",
+        calc_td: "TD/TP",
+        calc_type: "Type",
+        calc_add: "Add subject",
+        calc_result: "Weighted average",
+        wheel_title: "Subject Wheel",
+        wheel_placeholder: "Add subject...",
+        wheel_btn: "What should I revise now?",
+        tasks_title: "My Study Tasks",
+        tasks_placeholder: "New task...",
+        crono_title: "Chrono & Task Reminders",
+        crono_desc: "Plan your day and organize your tasks by time",
+        crono_placeholder: "Task name...",
+        crono_add: "Add to chrono",
+        translate_title: "Instant Translator",
+        translate_desc: "Translate any word between Arabic, French and English",
+        translate_input: "Type the word here...",
+        translate_btn: "Translate",
+        translate_result: "Translation:",
+        lab_title: "Virtual Lab",
+        lab_desc: "Interactive physics and engineering experiments in your browser",
+        lab_pendulum: "Pendulum", lab_circuit: "Circuit", lab_projectile: "Projectile", lab_concrete: "Concrete",
+        lab_spring: "Spring", lab_waves: "Waves", lab_chimie: "Chemistry", lab_optics: "Optics",
+        lab_thermo: "Thermodynamics", lab_magnet: "Magnetism", lab_momentum: "Momentum",
+        lab_length: "String length (L)", lab_angle: "Release angle (θ)", lab_period: "Period (T)",
+        lab_voltage: "Voltage (V)", lab_resistance: "Resistance (R)", lab_current: "Current (I) = V / R",
+        lab_velocity: "Initial velocity (v0)", lab_angle_proj: "Angle (α)", lab_projectile_result: "Range (R) and max height (H)",
+        lab_force: "Applied force (F)", lab_strength: "Max strength (fc)", lab_concrete_status: "Cube state",
+        lab_k: "Spring constant (k)", lab_x: "Elongation (x)", lab_spring_result: "Force (F = k × x)",
+        lab_freq: "Frequency (f)", lab_amp: "Amplitude (A)", lab_wave_result: "Wavelength (λ = v / f)",
+        lab_acid: "Acid volume (HCl)", lab_base: "Base volume (NaOH)", lab_ph: "Medium state (pH)",
+        lab_load: "Applied load (P)", lab_moment: "Max bending moment (M_max)",
+        lab_len: "Beam length (L)", lab_deflection: "Max deflection (f)",
+        lab_angle1: "Incidence angle (θ1)", lab_n2: "Refraction index (n2)", lab_angle2: "Refraction angle (θ2)",
+        lab_p: "Pressure (P)", lab_n: "Number of moles (n)", lab_temp: "Temperature (T = PV/nR)",
+        lab_current2: "Current (I)", lab_b: "Magnetic field (B)",
+        lab_m1: "Ball 1 mass (m1)", lab_v1: "Ball 1 velocity (v1)", lab_momentum_result: "Momentum (P = m*v)",
+        molecule_lab_title: "3D Molecule Lab",
+        molecule_lab_desc: "3D interactive experiments of molecular vibrations (H2O, CO2).",
+        molecule_lab_btn: "Start experiment",
+        stereo_title: "3D Representations: Cram, Fischer, Lewis",
+        stereo_desc: "Interactive models of d-orbital complexes.",
+        ai_title: "Academic Assistant (AI)",
+        ai_desc: "Generate smart prompts for ChatGPT",
+        ai_topic: "Topic (e.g. reinforced concrete)...",
+        ai_summary: "Summarize lecture",
+        ai_quiz: "Generate review questions",
+        ai_copy: "Copy prompt and open ChatGPT",
+        ai_open: "Open ChatGPT",
+        footer_rights: "All rights reserved",
+        chat_title: "Virtual Assistant",
+        chat_welcome: "Hello! 👋 I'm your ENSTP assistant. How can I help you?",
+        chat_placeholder: "Type your question..."
+      }
+    };
+
+    /* ==========================================
+       12. Appliquer la traduction
+       ========================================== */
+    window.applyReussiteTranslation = function(lang) {
+      const dict = window.REUSSITE_TRANSLATIONS[lang] || window.REUSSITE_TRANSLATIONS.ar;
+
+      if (dict.page_title) document.title = dict.page_title;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          const icon = el.querySelector('i');
+          if (icon) {
+            el.innerHTML = '';
+            el.appendChild(icon);
+            el.appendChild(document.createTextNode(' ' + dict[key]));
+          } else {
+            el.innerText = dict[key];
+          }
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+    };
+
+    /* ==========================================
+       13. setLanguage()
+       ========================================== */
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      localStorage.setItem('enstp_lang', lang);
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      window.applyReussiteTranslation(lang);
+    };
+
+    /* ==========================================
+       14. Chatbot
+       ========================================== */
+    function toggleChat() {
+      const chat = document.getElementById('chatWindow');
+      if (!chat) return;
+      chat.classList.toggle('hidden');
+      chat.classList.toggle('open');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      if (!input || !body) return;
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      body.innerHTML += `
+        <div style="display:flex;justify-content:flex-end;">
+          <div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">
+            ${msg}
+          </div>
+        </div>`;
+      input.value = '';
+      body.scrollTop = body.scrollHeight;
+
+      setTimeout(() => {
+        let reply = "شكراً لسؤالك! سأقوم بالرد عليك قريباً.";
+        const m = msg.toLowerCase();
+
+        if (m.includes("جدول") || m.includes("توقيت") || m.includes("schedule") || m.includes("emploi")) {
+          reply = "📅 جدول التوقيت متاح في تبويب <strong>استعمال الزمن</strong>.";
+        } else if (m.includes("drive") || m.includes("ملفات") || m.includes("cours")) {
+          reply = "📂 روابط Google Drive موجودة في تبويب <strong>الواجبات والامتحانات</strong>.";
+        } else if (m.includes("معدل") || m.includes("moyenne") || m.includes("calcul")) {
+          reply = "🧮 استعمل <strong>حاسبة المعدل</strong> في تبويب صندوق الأدوات.";
+        } else if (m.includes("مختبر") || m.includes("lab") || m.includes("تجربة")) {
+          reply = "🔬 المختبر الافتراضي به 13 تجربة تفاعلية في تبويب <strong>صندوق الأدوات</strong>.";
+        } else if (m.includes("chatgpt") || m.includes("ai") || m.includes("مساعد")) {
+          reply = "🤖 المساعد الأكاديمي (AI) متاح في تبويب <strong>صندوق الأدوات</strong>.";
+        } else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("bonjour") || m.includes("hello")) {
+          reply = "👋 أهلاً بك! كيف يمكنني مساعدتك؟";
+        } else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) {
+          reply = "💛 على الرحب والسعة!";
+        }
+
+        body.innerHTML += `
+          <div style="display:flex;justify-content:flex-start;">
+            <div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">
+              ${reply}
+            </div>
+          </div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 500);
+    }
+
+    /* ==========================================
+       15. Kangourou
+       ========================================== */
+    const kangarooContainer = document.getElementById('kangarooContainer');
+    const kangarooSvg = document.getElementById('kangarooSvg');
+
+    if (kangarooContainer) {
+      kangarooContainer.addEventListener('click', () => {
+        if (kangarooSvg) {
+          kangarooSvg.style.animation = 'none';
+          kangarooSvg.offsetHeight;
+          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
+          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
+        }
+        toggleChat();
+      });
+
+      kangarooContainer.addEventListener('mouseenter', () => {
+        if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)';
+      });
+      kangarooContainer.addEventListener('mouseleave', () => {
+        if (kangarooSvg) kangarooSvg.style.transform = '';
+      });
+    }
+
+    /* ==========================================
+       16. Initialisation
+       ========================================== */
     document.addEventListener('DOMContentLoaded', () => {
+      // Thème sauvegardé
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+
+      // Langue sauvegardée
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      window.setLanguage(savedLang);
+
+      // Initialisation des outils
       renderDrives();
-      addSubjectRow(); 
-      renderTasks();   
-      renderModules(); 
-      renderCrono();   
+      addSubjectRow();
+      renderTasks();
+      renderModules();
+      renderCrono();
       setTimeout(startPendulum, 100);
+
+      // Enter pour chat
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+        });
+      }
+
+      // Tab par défaut
+      switchTab('schedule');
     });
   </script>
 </body>
