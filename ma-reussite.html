@@ -50,6 +50,10 @@
     .slider-custom { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #fed7aa; outline: none; }
     .dark .slider-custom { background: #334155; }
     .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #ea580c; cursor: pointer; }
+    .lang-btn { padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; transition: 0.2s; color: #64748b; background: transparent; border: none; cursor: pointer; }
+    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
+    .lang-btn.active { background: #f97316; color: white; }
+    .reveal.visible:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -12px rgba(249, 115, 22, 0.2); }
     button, a, .glass-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
     input:focus, select:focus, textarea:focus { outline: none; border-color: #f97316 !important; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important; }
     #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1001; width: 320px; max-height: 420px; background: white; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); border: 1px solid #fed7aa; display: none; flex-direction: column; }
@@ -57,9 +61,6 @@
     .dark #chatWindow { background: #1e293b; border-color: #334155; color: #f8fafc; }
     @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
     @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
-    .lang-btn { padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
-    .lang-btn.active { background: #f97316; color: white; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 bg-mesh">
@@ -73,6 +74,7 @@
           <p class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1"><i class="fa-solid fa-graduation-cap text-brand-500"></i> <span data-i18n="nav_app_sub">المدرسة الوطنية العليا</span></p>
         </div>
       </div>
+      
       <div class="flex items-center gap-2 md:gap-3">
         <div class="flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
           <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
@@ -144,7 +146,111 @@
         <p class="text-slate-500 dark:text-slate-400" data-i18n="library_no_results">لا توجد نتائج مطابقة</p>
       </div>
     </div>
-            <div id="lab-content-pendulum" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div id="content-tools" class="hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass-card rounded-3xl p-6 border border-brand-100 dark:border-slate-700 space-y-4">
+          <h4 class="font-bold text-lg text-brand-900 dark:text-brand-400 flex items-center gap-2"><i class="fa-solid fa-calculator"></i> <span data-i18n="calc_title">حاسبة المعدل الفصلي</span></h4>
+          <div class="flex items-center gap-2 px-1 text-[10px] font-bold text-gray-500 mb-1">
+            <div class="w-8 text-center" data-i18n="calc_coeff">معامل</div><div class="w-14 text-center" data-i18n="calc_exam">امتحان</div><div class="w-14 text-center" data-i18n="calc_td">TD/TP</div><div class="w-16 text-center" data-i18n="calc_type">النوع</div><div class="w-4"></div>
+          </div>
+          <div id="calc-subjects" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
+          <button onclick="addSubjectRow()" class="text-xs font-bold text-brand-600 hover:text-brand-800 dark:text-brand-400 flex items-center gap-1"><i class="fa-solid fa-plus"></i> <span data-i18n="calc_add">إضافة مادة</span></button>
+          <div class="bg-brand-50 dark:bg-slate-800 p-4 rounded-xl text-center">
+            <p class="text-xs text-brand-800 dark:text-brand-300 font-bold mb-1" data-i18n="calc_result">المعدل النهائي المرجح</p>
+            <div id="calc-result" class="text-3xl font-black text-brand-600">0.00</div>
+            <p id="calc-status" class="text-xs font-bold mt-1"></p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="glass-card rounded-3xl p-6 border border-orange-100 dark:border-slate-700">
+            <h4 class="font-bold text-lg text-orange-900 dark:text-orange-400 mb-4 flex items-center justify-center gap-2"><i class="fa-solid fa-dice"></i> <span data-i18n="wheel_title">عجلة المواد</span></h4>
+            <div class="flex gap-2 mb-4">
+              <input type="text" id="module-input" data-i18n-placeholder="wheel_placeholder" placeholder="أضف مادة..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
+              <button onclick="addModule()" class="bg-orange-500 text-white px-3 rounded-lg font-bold text-sm"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <div id="modules-list" class="flex flex-wrap gap-1 mb-4 max-h-24 overflow-y-auto justify-center"></div>
+            <div id="wheel-result" class="h-12 flex items-center justify-center text-xl font-black text-orange-600 mb-4 bg-orange-50 dark:bg-slate-800 rounded-xl">?</div>
+            <button onclick="spinWheel()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition" data-i18n="wheel_btn">ماذا أراجع الآن؟</button>
+          </div>
+          <div class="glass-card rounded-3xl p-6 border border-emerald-100 dark:border-slate-700">
+            <h4 class="font-bold text-lg text-emerald-900 dark:text-emerald-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> <span data-i18n="tasks_title">مهامي الدراسية</span></h4>
+            <div class="flex gap-2 mb-3">
+              <input type="text" id="task-input" data-i18n-placeholder="tasks_placeholder" placeholder="مهمة جديدة..." class="flex-1 p-2 rounded-lg border dark:bg-slate-800 dark:border-slate-600 text-sm outline-none">
+              <button onclick="addTask()" class="bg-emerald-500 text-white px-4 rounded-lg font-bold text-sm">+</button>
+            </div>
+            <ul id="task-list" class="space-y-2 max-h-32 overflow-y-auto pr-1"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card p-6 rounded-3xl border border-indigo-100 dark:border-slate-700">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div><h4 class="font-black text-lg text-slate-900 dark:text-white" data-i18n="crono_title">الكرونو والتذكير بالمهام</h4><p class="text-xs text-slate-500" data-i18n="crono_desc">خطط ليومك ورتب مهامك حسب الوقت</p></div>
+        </div>
+        <div class="flex flex-col md:flex-row gap-3 mb-8 bg-gray-50 dark:bg-slate-800 p-4 rounded-2xl border border-gray-100 dark:border-slate-700">
+          <input type="text" id="crono-name" data-i18n-placeholder="crono_placeholder" placeholder="اسم المهمة..." class="flex-1 p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
+          <input type="time" id="crono-time" class="p-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-900 outline-none text-sm">
+          <button onclick="addCronoTask()" class="bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-indigo-700 transition" data-i18n="crono_add">إضافة للكرونو</button>
+        </div>
+        <div class="relative pl-8 pr-4">
+          <div class="timeline-line"></div>
+          <div id="crono-container" class="space-y-6"></div>
+        </div>
+      </div>
+
+      <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 flex flex-col mt-6">
+        <div class="flex items-center gap-3 mb-4 border-b pb-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-language"></i></div>
+          <div>
+            <h4 class="font-black text-lg text-slate-900 dark:text-white" data-i18n="translate_title">المترجم الفوري</h4>
+            <p class="text-xs text-slate-500" data-i18n="translate_desc">ترجمة أي كلمة بين العربية، الفرنسية والإنجليزية</p>
+          </div>
+        </div>
+        <div class="flex gap-2 mb-4">
+          <select id="lang-from" class="w-24 p-2 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 text-sm outline-none">
+            <option value="fr">فرنسي</option><option value="ar" selected>عربي</option><option value="en">إنجليزي</option>
+          </select>
+          <i class="fa-solid fa-arrow-left text-gray-400 mt-3"></i>
+          <select id="lang-to" class="w-24 p-2 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 text-sm outline-none">
+            <option value="ar">عربي</option><option value="fr" selected>فرنسي</option><option value="en">إنجليزي</option>
+          </select>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="translate-input" data-i18n-placeholder="translate_input" placeholder="اكتب الكلمة هنا..." class="flex-1 p-3 rounded-xl border border-blue-200 dark:border-slate-600 bg-blue-50 dark:bg-slate-900 outline-none text-sm focus:ring-2 focus:ring-blue-400">
+          <button onclick="translateText()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition" data-i18n="translate_btn">ترجمة</button>
+        </div>
+        <div id="translate-result" class="mt-4 p-4 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-center hidden">
+          <p class="text-sm text-gray-500 mb-1" data-i18n="translate_result">الترجمة:</p>
+          <p id="translated-text" class="text-2xl font-black text-blue-700 dark:text-blue-400"></p>
+        </div>
+        <p id="translate-error" class="text-xs text-red-500 mt-2 hidden"></p>
+      </div>
+                <div class="glass-card p-6 rounded-3xl border border-cyan-100 dark:border-slate-700 mt-6">
+        <div class="flex items-center gap-3 mb-6 border-b pb-4">
+          <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-xl"><i class="fa-solid fa-flask"></i></div>
+          <div>
+            <h4 class="font-black text-lg text-slate-900 dark:text-white" data-i18n="lab_title">المختبر الافتراضي</h4>
+            <p class="text-xs text-slate-500" data-i18n="lab_desc">قم بتجارب فيزيائية وهندسية تفاعلية مباشرة من متصفحك</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2 mb-6">
+          <button onclick="switchLab('pendulum')" id="lab-tab-pendulum" class="lab-tab active px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">1. <span data-i18n="lab_pendulum">البندول</span></button>
+          <button onclick="switchLab('circuit')" id="lab-tab-circuit" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">2. <span data-i18n="lab_circuit">الدارة</span></button>
+          <button onclick="switchLab('projectile')" id="lab-tab-projectile" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">3. <span data-i18n="lab_projectile">المقذوفات</span></button>
+          <button onclick="switchLab('concrete')" id="lab-tab-concrete" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">4. <span data-i18n="lab_concrete">الخرسانة</span></button>
+          <button onclick="switchLab('spring')" id="lab-tab-spring" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">5. <span data-i18n="lab_spring">الزنبرك</span></button>
+          <button onclick="switchLab('waves')" id="lab-tab-waves" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">6. <span data-i18n="lab_waves">الأمواج</span></button>
+          <button onclick="switchLab('chimie')" id="lab-tab-chimie" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">7. <span data-i18n="lab_chimie">الكيمياء</span></button>
+          <button onclick="switchLab('rdm')" id="lab-tab-rdm" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">8. RDM</button>
+          <button onclick="switchLab('mdf')" id="lab-tab-mdf" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">9. MDF</button>
+          <button onclick="switchLab('optics')" id="lab-tab-optics" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">10. <span data-i18n="lab_optics">البصريات</span></button>
+          <button onclick="switchLab('thermo')" id="lab-tab-thermo" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">11. <span data-i18n="lab_thermo">الديناميكا</span></button>
+          <button onclick="switchLab('magnet')" id="lab-tab-magnet" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">12. <span data-i18n="lab_magnet">المغناطيسية</span></button>
+          <button onclick="switchLab('momentum')" id="lab-tab-momentum" class="lab-tab px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800">13. <span data-i18n="lab_momentum">الزخم</span></button>
+        </div>
+
+        <div id="lab-content-pendulum" class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="pendulumCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
           </div>
@@ -184,7 +290,7 @@
           </div>
         </div>
 
-                <div id="lab-content-projectile" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+        <div id="lab-content-projectile" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="projectileCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
           </div>
@@ -203,8 +309,7 @@
             </div>
           </div>
         </div>
-
-        <div id="lab-content-concrete" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+                <div id="lab-content-concrete" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 flex items-center justify-center p-2">
             <canvas id="concreteCanvas" width="350" height="350" class="max-w-full h-auto"></canvas>
           </div>
@@ -394,9 +499,7 @@
 
         <div class="col-span-1 md:col-span-2 bg-gradient-to-r from-emerald-500 to-teal-600 p-6 rounded-2xl shadow-lg mt-4 text-white flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center gap-4">
-            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl">
-              <i class="fa-solid fa-atom"></i>
-            </div>
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl"><i class="fa-solid fa-atom"></i></div>
             <div>
               <h4 class="font-black text-xl" data-i18n="molecule_lab_title">مختبر الجزيئات 3D</h4>
               <p class="text-emerald-100 text-sm mt-1" data-i18n="molecule_lab_desc">تجارب تفاعلية ثلاثية الأبعاد لاهتزازات الجزيئات (H2O, CO2).</p>
@@ -409,9 +512,7 @@
 
         <a href="stereochemistry.html" class="glass-card p-6 rounded-3xl border border-purple-100 dark:border-slate-700 hover:scale-[1.02] transition-all group flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              <i class="fa-solid fa-cubes"></i>
-            </div>
+            <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition"><i class="fa-solid fa-cubes"></i></div>
             <div>
               <h4 class="font-black text-lg text-slate-900 dark:text-white" data-i18n="stereo_title">تمثيلات 3D: كرام، فيشر، لويس</h4>
               <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="stereo_desc">مجسمات تفاعلية للمركبات ذات المدارات d.</p>
@@ -419,7 +520,6 @@
           </div>
           <i class="fa-solid fa-arrow-left text-purple-500 group-hover:-translate-x-2 transition-transform text-xl hidden md:block"></i>
         </a>
-
       </div>
 
       <div class="glass-card p-6 rounded-3xl border border-blue-100 dark:border-slate-700 mt-6">
@@ -438,13 +538,12 @@
           <button onclick="generateAIPrompt()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-copy"></i> <span data-i18n="ai_copy">نسخ الأمر وفتح ChatGPT</span>
           </button>
-          <a id="fallback-link" href="#" target="_blank" class="w-full bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 opacity-50 pointer-events-none">
+          <a id="fallback-link" href="#" target="_blank" class="w-full bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-slate-700 hover:bg-indigo-100 font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 opacity-50 pointer-events-none">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-i18n="ai_open">فتح ChatGPT مباشرة</span>
           </a>
         </div>
         <p id="ai-status" class="text-xs text-center mt-2 text-gray-500"></p>
       </div>
-
     </div>
   </main>
 
@@ -456,7 +555,7 @@
     </div>
   </footer>
 
-  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;" title="المساعد الافتراضي">
+  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;">
     <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
       <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
@@ -482,43 +581,259 @@
 
   <div id="chatWindow" class="hidden">
     <div style="background: linear-gradient(135deg, #f97316, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
-      <span style="display: flex; align-items: center; gap: 8px;">
-        <i class="fa-solid fa-comments"></i>
-        <span data-i18n="chat_title">المساعد الافتراضي</span>
-      </span>
-      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+      <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span></span>
+      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
-      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">
-        مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟
-      </div>
+      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
     </div>
     <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
       <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
-      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: 0.2s;">
-        <i class="fa-solid fa-paper-plane"></i>
-      </button>
+      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
-
-  <script>
+    <script>
+    // ============================================================
+    // 1. VARIABLES GLOBALES
+    // ============================================================
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
-    /* ============================================================
-       t() : traduit une clé selon la langue courante
-       ============================================================ */
-    function t(key) {
-      const dict = window.REUSSITE_TRANSLATIONS[currentLang] || window.REUSSITE_TRANSLATIONS.ar;
-      return dict[key] || key;
-    }
-
+    // ============================================================
+    // 2. DARK MODE
+    // ============================================================
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     }
 
+    // ============================================================
+    // 3. FONCTION t() — TRADUCTION
+    // ============================================================
+    function t(key) {
+      const dict = window.REUSSITE_TRANSLATIONS[currentLang] || window.REUSSITE_TRANSLATIONS.ar;
+      return dict[key] || key;
+    }
+    window.t = t;
+
+    // ============================================================
+    // 4. TRADUCTIONS COMPLÈTES
+    // ============================================================
+    window.REUSSITE_TRANSLATIONS = {
+      ar: {
+        page_title: "Guide ENSTP - Ma Réussite",
+        nav_app_sub: "المدرسة الوطنية العليا", nav_home: "الرئيسية",
+        tab_schedule: "استعمال الزمن", tab_exams: "الواجبات والامتحانات", tab_tools: "صندوق أدوات الطالب",
+        schedule_title: "جدول التوقيت", schedule_desc: "اطلع على أوقات المحاضرات والأعمال الموجهة",
+        schedule_full_btn: "الانتقال إلى صفحة الجدول الكامل",
+        schedule_full_desc: "حدد قسمك، سنتك، وفوجك للحصول على توقيتك الدقيق مع إمكانية إضافة ملاحظات.",
+        library_title: "مكتبة الملفات", library_desc: "روابط Google Drive للدروس والملخصات",
+        library_search: "ابحث في المجلدات...", library_no_results: "لا توجد نتائج مطابقة",
+        calc_title: "حاسبة المعدل الفصلي",
+        calc_coeff: "معامل", calc_exam: "امتحان", calc_td: "TD/TP", calc_type: "النوع",
+        calc_type_both: "الكل", calc_type_exam: "امتحان", calc_type_td: "TD فقط",
+        calc_add: "إضافة مادة", calc_result: "المعدل النهائي المرجح",
+        calc_status_pass: "ناجح", calc_status_rattrapage: "استدراك", calc_status_fail: "راسب",
+        wheel_title: "عجلة المواد", wheel_placeholder: "أضف مادة...", wheel_btn: "ماذا أراجع الآن؟",
+        no_modules: "أضف مواد للبدء",
+        tasks_title: "مهامي الدراسية", tasks_placeholder: "مهمة جديدة...", no_tasks: "لا توجد مهام",
+        crono_title: "الكرونو والتذكير بالمهام", crono_desc: "خطط ليومك ورتب مهامك حسب الوقت",
+        crono_placeholder: "اسم المهمة...", crono_add: "إضافة للكرونو", no_crono: "لا توجد مهام.",
+        translate_title: "المترجم الفوري", translate_desc: "ترجمة أي كلمة بين العربية، الفرنسية والإنجليزية",
+        translate_input: "اكتب الكلمة هنا...", translate_btn: "ترجمة", translate_result: "الترجمة:",
+        translate_error: "حدث خطأ في الاتصال.",
+        lab_title: "المختبر الافتراضي", lab_desc: "قم بتجارب فيزيائية وهندسية تفاعلية مباشرة من متصفحك",
+        lab_pendulum: "البندول", lab_circuit: "الدارة", lab_projectile: "المقذوفات", lab_concrete: "الخرسانة",
+        lab_spring: "الزنبرك", lab_waves: "الأمواج", lab_chimie: "الكيمياء", lab_optics: "البصريات",
+        lab_thermo: "الديناميكا", lab_magnet: "المغناطيسية", lab_momentum: "الزخم",
+        lab_length: "طول الخيط (L)", lab_angle: "زاوية الإطلاق (θ)", lab_period: "الزمن الدوري (T)",
+        lab_voltage: "الجهد (V)", lab_resistance: "المقاومة (R)", lab_current: "شدة التيار (I) = V / R",
+        lab_velocity: "السرعة الابتدائية (v0)", lab_angle_proj: "زاوية الإطلاق (α)", lab_projectile_result: "المدى (R) وأقصى ارتفاع (H)",
+        lab_force: "القوة المطبقة (F)", lab_strength: "المقاومة القصوى (fc)", lab_concrete_status: "حالة المكعب",
+        concrete_ok: "سليم", concrete_broken: "انهار",
+        lab_k: "ثابت الزنبرك (k)", lab_x: "الاستطالة (x)", lab_spring_result: "القوة (F = k × x)",
+        lab_freq: "التردد (f)", lab_amp: "السعة (A)", lab_wave_result: "الطول الموجي (λ = v / f)",
+        lab_acid: "حجم الحمض (HCl)", lab_base: "حجم القاعدة (NaOH)", lab_ph: "حالة الوسط (pH)",
+        ph_acid: "وسط حمضي (pH < 7)", ph_base: "وسط قاعدي (pH > 7)", ph_neutral: "متعادل (pH = 7)",
+        lab_load: "الحمل المطبق (P)", lab_moment: "أقصى عزم انحناء (M_max)",
+        lab_len: "طول العارضة (L)", lab_deflection: "الانحراف الأقصى (f)",
+        lab_angle1: "زاوية السقوط (θ1)", lab_n2: "معامل الانكسار (n2)", lab_angle2: "زاوية الانكسار (θ2)",
+        lab_p: "الضغط (P)", lab_n: "عدد المولات (n)", lab_temp: "درجة الحرارة (T = PV/nR)",
+        lab_current2: "شدة التيار (I)", lab_b: "المجال المغناطيسي (B)",
+        lab_m1: "كتلة الكرة 1 (m1)", lab_v1: "سرعة الكرة 1 (v1)", lab_momentum_result: "الزخم الكلي (P = m*v)",
+        molecule_lab_title: "مختبر الجزيئات 3D", molecule_lab_desc: "تجارب تفاعلية ثلاثية الأبعاد لاهتزازات الجزيئات (H2O, CO2).", molecule_lab_btn: "ابدأ التجربة",
+        stereo_title: "تمثيلات 3D: كرام، فيشر، لويس", stereo_desc: "مجسمات تفاعلية للمركبات ذات المدارات d.",
+        ai_title: "المساعد الأكاديمي (AI)", ai_desc: "توليد أوامر ذكية لـ ChatGPT",
+        ai_topic: "الموضوع (مثال: الخرسانة المسلحة)...", ai_summary: "تلخيص المحاضرة", ai_quiz: "توليد أسئلة مراجعة",
+        ai_copy: "نسخ الأمر وفتح ChatGPT", ai_open: "فتح ChatGPT مباشرة",
+        ai_status_copied: "✅ تم النسخ! فتح ChatGPT...", ai_status_fallback: "اضغط على الزر الاحتياطي.",
+        alert_add_module: "الرجاء إضافة مادة!", alert_crono_required: "الرجاء إدخال اسم المهمة والوقت",
+        alert_enter_word: "الرجاء إدخال كلمة.", alert_enter_topic: "الرجاء إدخال الموضوع",
+        footer_rights: "جميع الحقوق محفوظة",
+        chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟", chat_placeholder: "اكتب سؤالك...",
+        chat_default: "شكراً!", chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
+        chat_schedule: "جدول التوقيت متاح في تبويب استعمال الزمن.",
+        chat_drives: "روابط Google Drive في تبويب الواجبات والامتحانات.",
+        chat_calc: "استعمل حاسبة المعدل في صندوق الأدوات.",
+        chat_lab: "المختبر الافتراضي به 13 تجربة تفاعلية.",
+        chat_ai: "المساعد الأكاديمي (AI) متاح في صندوق الأدوات."
+      },
+      fr: {
+        page_title: "Guide ENSTP - Ma Réussite",
+        nav_app_sub: "École Nationale Supérieure", nav_home: "Accueil",
+        tab_schedule: "Emploi du temps", tab_exams: "Devoirs et Examens", tab_tools: "Boîte à outils",
+        schedule_title: "Emploi du temps", schedule_desc: "Consultez les horaires des cours et TD",
+        schedule_full_btn: "Accéder à l'emploi du temps complet",
+        schedule_full_desc: "Sélectionnez votre département, année et groupe pour votre emploi du temps précis.",
+        library_title: "Bibliothèque de fichiers", library_desc: "Liens Google Drive pour les cours et résumés",
+        library_search: "Rechercher dans les dossiers...", library_no_results: "Aucun résultat",
+        calc_title: "Calculatrice de moyenne",
+        calc_coeff: "Coef", calc_exam: "Examen", calc_td: "TD/TP", calc_type: "Type",
+        calc_type_both: "Tous", calc_type_exam: "Examen", calc_type_td: "TD seul",
+        calc_add: "Ajouter une matière", calc_result: "Moyenne pondérée",
+        calc_status_pass: "Réussi", calc_status_rattrapage: "Rattrapage", calc_status_fail: "Échoué",
+        wheel_title: "Roue des matières", wheel_placeholder: "Ajouter une matière...", wheel_btn: "Que réviser maintenant ?",
+        no_modules: "Ajoutez des matières pour commencer",
+        tasks_title: "Mes tâches", tasks_placeholder: "Nouvelle tâche...", no_tasks: "Aucune tâche",
+        crono_title: "Chrono et rappels", crono_desc: "Planifiez votre journée et organisez vos tâches",
+        crono_placeholder: "Nom de la tâche...", crono_add: "Ajouter au chrono", no_crono: "Aucune tâche.",
+        translate_title: "Traducteur instantané", translate_desc: "Traduire un mot entre arabe, français et anglais",
+        translate_input: "Écrivez le mot ici...", translate_btn: "Traduire", translate_result: "Traduction :",
+        translate_error: "Erreur de connexion.",
+        lab_title: "Laboratoire virtuel", lab_desc: "Expériences interactives de physique et d'ingénierie",
+        lab_pendulum: "Pendule", lab_circuit: "Circuit", lab_projectile: "Projectile", lab_concrete: "Béton",
+        lab_spring: "Ressort", lab_waves: "Ondes", lab_chimie: "Chimie", lab_optics: "Optique",
+        lab_thermo: "Thermodynamique", lab_magnet: "Magnétisme", lab_momentum: "Quantité de mouvement",
+        lab_length: "Longueur du fil (L)", lab_angle: "Angle initial (θ)", lab_period: "Période (T)",
+        lab_voltage: "Tension (V)", lab_resistance: "Résistance (R)", lab_current: "Courant (I) = V / R",
+        lab_velocity: "Vitesse initiale (v0)", lab_angle_proj: "Angle (α)", lab_projectile_result: "Portée (R) et hauteur max (H)",
+        lab_force: "Force appliquée (F)", lab_strength: "Résistance max (fc)", lab_concrete_status: "État du cube",
+        concrete_ok: "Intact", concrete_broken: "Rupture",
+        lab_k: "Constante du ressort (k)", lab_x: "Élongation (x)", lab_spring_result: "Force (F = k × x)",
+        lab_freq: "Fréquence (f)", lab_amp: "Amplitude (A)", lab_wave_result: "Longueur d'onde (λ = v / f)",
+        lab_acid: "Volume acide (HCl)", lab_base: "Volume base (NaOH)", lab_ph: "État du milieu (pH)",
+        ph_acid: "Milieu acide (pH < 7)", ph_base: "Milieu basique (pH > 7)", ph_neutral: "Neutre (pH = 7)",
+        lab_load: "Charge appliquée (P)", lab_moment: "Moment fléchissant max (M_max)",
+        lab_len: "Longueur poutre (L)", lab_deflection: "Flèche max (f)",
+        lab_angle1: "Angle d'incidence (θ1)", lab_n2: "Indice de réfraction (n2)", lab_angle2: "Angle de réfraction (θ2)",
+        lab_p: "Pression (P)", lab_n: "Nombre de moles (n)", lab_temp: "Température (T = PV/nR)",
+        lab_current2: "Courant (I)", lab_b: "Champ magnétique (B)",
+        lab_m1: "Masse balle 1 (m1)", lab_v1: "Vitesse balle 1 (v1)", lab_momentum_result: "Quantité de mouvement (P = m*v)",
+        molecule_lab_title: "Laboratoire moléculaire 3D", molecule_lab_desc: "Expériences interactives 3D des vibrations moléculaires (H2O, CO2).", molecule_lab_btn: "Commencer l'expérience",
+        stereo_title: "Représentations 3D : Cram, Fischer, Lewis", stereo_desc: "Modèles interactifs de complexes à orbitales d.",
+        ai_title: "Assistant académique (IA)", ai_desc: "Générer des prompts intelligents pour ChatGPT",
+        ai_topic: "Sujet (ex : béton armé)...", ai_summary: "Résumer le cours", ai_quiz: "Générer des questions de révision",
+        ai_copy: "Copier et ouvrir ChatGPT", ai_open: "Ouvrir ChatGPT",
+        ai_status_copied: "✅ Copié ! Ouverture de ChatGPT...", ai_status_fallback: "Cliquez sur le bouton de secours.",
+        alert_add_module: "Veuillez ajouter une matière !", alert_crono_required: "Veuillez entrer le nom et l'heure de la tâche",
+        alert_enter_word: "Veuillez entrer un mot.", alert_enter_topic: "Veuillez entrer le sujet",
+        footer_rights: "Tous droits réservés",
+        chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?", chat_placeholder: "Votre question...",
+        chat_default: "Merci !", chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
+        chat_schedule: "L'emploi du temps est dans l'onglet Emploi du temps.",
+        chat_drives: "Les liens Google Drive sont dans l'onglet Devoirs et Examens.",
+        chat_calc: "Utilisez la calculatrice dans la Boîte à outils.",
+        chat_lab: "Le laboratoire virtuel contient 13 expériences interactives.",
+        chat_ai: "L'assistant académique (IA) est dans la Boîte à outils."
+      },
+      en: {
+        page_title: "ENSTP Guide - My Success",
+        nav_app_sub: "National Higher School", nav_home: "Home",
+        tab_schedule: "Schedule", tab_exams: "Assignments & Exams", tab_tools: "Student Toolbox",
+        schedule_title: "Class Schedule", schedule_desc: "View lecture and TD times",
+        schedule_full_btn: "Go to full schedule",
+        schedule_full_desc: "Select your department, year and group to get your precise schedule.",
+        library_title: "File Library", library_desc: "Google Drive links for courses and summaries",
+        library_search: "Search folders...", library_no_results: "No matching results",
+        calc_title: "Semester Average Calculator",
+        calc_coeff: "Coef", calc_exam: "Exam", calc_td: "TD/TP", calc_type: "Type",
+        calc_type_both: "All", calc_type_exam: "Exam", calc_type_td: "TD only",
+        calc_add: "Add subject", calc_result: "Weighted average",
+        calc_status_pass: "Passed", calc_status_rattrapage: "Remedial", calc_status_fail: "Failed",
+        wheel_title: "Subject Wheel", wheel_placeholder: "Add subject...", wheel_btn: "What should I revise now?",
+        no_modules: "Add subjects to start",
+        tasks_title: "My Study Tasks", tasks_placeholder: "New task...", no_tasks: "No tasks",
+        crono_title: "Chrono & Task Reminders", crono_desc: "Plan your day and organize your tasks",
+        crono_placeholder: "Task name...", crono_add: "Add to chrono", no_crono: "No tasks.",
+        translate_title: "Instant Translator", translate_desc: "Translate any word between Arabic, French and English",
+        translate_input: "Type the word here...", translate_btn: "Translate", translate_result: "Translation:",
+        translate_error: "Connection error.",
+        lab_title: "Virtual Lab", lab_desc: "Interactive physics and engineering experiments",
+        lab_pendulum: "Pendulum", lab_circuit: "Circuit", lab_projectile: "Projectile", lab_concrete: "Concrete",
+        lab_spring: "Spring", lab_waves: "Waves", lab_chimie: "Chemistry", lab_optics: "Optics",
+        lab_thermo: "Thermodynamics", lab_magnet: "Magnetism", lab_momentum: "Momentum",
+        lab_length: "String length (L)", lab_angle: "Release angle (θ)", lab_period: "Period (T)",
+        lab_voltage: "Voltage (V)", lab_resistance: "Resistance (R)", lab_current: "Current (I) = V / R",
+        lab_velocity: "Initial velocity (v0)", lab_angle_proj: "Angle (α)", lab_projectile_result: "Range (R) and max height (H)",
+        lab_force: "Applied force (F)", lab_strength: "Max strength (fc)", lab_concrete_status: "Cube state",
+        concrete_ok: "Intact", concrete_broken: "Broken",
+        lab_k: "Spring constant (k)", lab_x: "Elongation (x)", lab_spring_result: "Force (F = k × x)",
+        lab_freq: "Frequency (f)", lab_amp: "Amplitude (A)", lab_wave_result: "Wavelength (λ = v / f)",
+        lab_acid: "Acid volume (HCl)", lab_base: "Base volume (NaOH)", lab_ph: "Medium state (pH)",
+        ph_acid: "Acidic (pH < 7)", ph_base: "Basic (pH > 7)", ph_neutral: "Neutral (pH = 7)",
+        lab_load: "Applied load (P)", lab_moment: "Max bending moment (M_max)",
+        lab_len: "Beam length (L)", lab_deflection: "Max deflection (f)",
+        lab_angle1: "Incidence angle (θ1)", lab_n2: "Refraction index (n2)", lab_angle2: "Refraction angle (θ2)",
+        lab_p: "Pressure (P)", lab_n: "Number of moles (n)", lab_temp: "Temperature (T = PV/nR)",
+        lab_current2: "Current (I)", lab_b: "Magnetic field (B)",
+        lab_m1: "Ball 1 mass (m1)", lab_v1: "Ball 1 velocity (v1)", lab_momentum_result: "Momentum (P = m*v)",
+        molecule_lab_title: "3D Molecule Lab", molecule_lab_desc: "3D interactive experiments of molecular vibrations (H2O, CO2).", molecule_lab_btn: "Start experiment",
+        stereo_title: "3D Representations: Cram, Fischer, Lewis", stereo_desc: "Interactive models of d-orbital complexes.",
+        ai_title: "Academic Assistant (AI)", ai_desc: "Generate smart prompts for ChatGPT",
+        ai_topic: "Topic (e.g. reinforced concrete)...", ai_summary: "Summarize lecture", ai_quiz: "Generate review questions",
+        ai_copy: "Copy prompt and open ChatGPT", ai_open: "Open ChatGPT",
+        ai_status_copied: "✅ Copied! Opening ChatGPT...", ai_status_fallback: "Click the fallback button.",
+        alert_add_module: "Please add a subject!", alert_crono_required: "Please enter task name and time",
+        alert_enter_word: "Please enter a word.", alert_enter_topic: "Please enter the topic",
+        footer_rights: "All rights reserved",
+        chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?", chat_placeholder: "Your question...",
+        chat_default: "Thanks!", chat_hello: "Welcome!", chat_thanks: "You're welcome!",
+        chat_schedule: "The schedule is in the Schedule tab.",
+        chat_drives: "Google Drive links are in the Assignments & Exams tab.",
+        chat_calc: "Use the average calculator in the Toolbox.",
+        chat_lab: "The virtual lab has 13 interactive experiments.",
+        chat_ai: "The AI academic assistant is in the Toolbox."
+      }
+    };
+
+    // ============================================================
+    // 5. APPLIQUER LA TRADUCTION
+    // ============================================================
+    window.applyReussiteTranslation = function(lang) {
+      const dict = window.REUSSITE_TRANSLATIONS[lang] || window.REUSSITE_TRANSLATIONS.ar;
+      if (dict.page_title) document.title = dict.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          const icon = el.querySelector('i');
+          if (icon) { el.innerHTML = ''; el.appendChild(icon); el.appendChild(document.createTextNode(' ' + dict[key])); }
+          else el.innerText = dict[key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+      // Re-render dynamique
+      if (typeof renderDrives === 'function') renderDrives();
+      if (typeof renderModules === 'function') renderModules();
+      if (typeof renderTasks === 'function') renderTasks();
+      if (typeof renderCrono === 'function') renderCrono();
+    };
+
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      localStorage.setItem('enstp_lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+      window.applyReussiteTranslation(lang);
+    };
+
+    // ============================================================
+    // 6. TABS
+    // ============================================================
     function switchTab(tabId) {
       ['schedule', 'exams', 'tools'].forEach(t => {
         document.getElementById('content-' + t).classList.add('hidden');
@@ -532,9 +847,9 @@
       activeBtn.classList.remove('border-transparent');
     }
 
-    /* ============================================================
-       DRIVES
-       ============================================================ */
+    // ============================================================
+    // 7. DRIVES (11)
+    // ============================================================
     const drives = [
       { name: 'Drive 1', desc: '2CP - السنة الثانية', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-folder', color: 'emerald' },
       { name: 'Drive 2', desc: 'Cours - الدروس', url: 'https://drive.google.com/drive/folders/0B_CGw7Y6e7IKc25GZER4cUY0Zjg', icon: 'fa-book', color: 'blue' },
@@ -543,41 +858,33 @@
       { name: 'Drive 5', desc: 'Analyses - التحليل', url: 'https://drive.google.com/drive/folders/1ObXGyxubN5d7MgtTyts1H7vUfTPSs3Z7', icon: 'fa-calculator', color: 'cyan' },
       { name: 'Drive 6', desc: 'Chimie & Physique', url: 'https://drive.google.com/drive/folders/15N8LPatF0r-1AimmRPbpLa9aNUmV0cod', icon: 'fa-flask', color: 'pink' },
       { name: 'Drive 7', desc: 'Maths - الرياضيات', url: 'https://drive.google.com/drive/folders/0B0pugt6XdltcQ09UR2h6UTdwWkU', icon: 'fa-square-root-variable', color: 'indigo' },
-          { name: 'Drive 8', desc: 'Info - الإعلام الآلي', url: 'https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9', icon: 'fa-laptop-code', color: 'rose' },
-    { name: 'Drive 9', desc: 'Génie Civil - الهندسة', url: 'https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9', icon: 'fa-building', color: 'orange' },
-    { name: 'Drive 10', desc: 'Sujets divers', url: 'https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs', icon: 'fa-layer-group', color: 'violet' },
-    { name: 'Drive 11', desc: 'Concours - المسابقات', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-trophy', color: 'yellow' }
+      { name: 'Drive 8', desc: 'Info - الإعلام الآلي', url: 'https://drive.google.com/drive/folders/1Yx3qfMasmFed7DkskWCeJFW9pQP_jBL9', icon: 'fa-laptop-code', color: 'rose' },
+      { name: 'Drive 9', desc: 'Génie Civil - الهندسة', url: 'https://drive.google.com/drive/folders/1hizJBXQ4LRbd5a45LIVfMLPuSNJ68SC9', icon: 'fa-building', color: 'orange' },
+      { name: 'Drive 10', desc: 'Sujets divers', url: 'https://drive.google.com/drive/folders/0B-h3ajJdyTSiZ0IzRmVmanFYMWs', icon: 'fa-layer-group', color: 'violet' },
+      { name: 'Drive 11', desc: 'Concours - المسابقات', url: 'https://drive.google.com/drive/folders/1F6eeHKwbSHbB8xQnIToS--HvbroCRC4J', icon: 'fa-trophy', color: 'yellow' }
     ];
 
     function renderDrives(filter = '') {
       const grid = document.getElementById('drivesGrid');
       const noResults = document.getElementById('noResults');
       const filtered = drives.filter(d => d.name.toLowerCase().includes(filter.toLowerCase()) || d.desc.toLowerCase().includes(filter.toLowerCase()));
-      
       if (filtered.length === 0) { grid.innerHTML = ''; noResults.classList.remove('hidden'); return; }
       noResults.classList.add('hidden');
-      
       grid.innerHTML = filtered.map(d => `
         <a href="${d.url}" target="_blank" class="glass-card p-5 rounded-2xl flex items-center justify-between group border border-slate-100 dark:border-slate-700 hover:border-brand-300 transition-all">
           <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-xl bg-${d.color}-100 text-${d.color}-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
-              <i class="fa-solid ${d.icon}"></i>
-            </div>
-            <div>
-              <span class="font-black text-sm text-slate-900 dark:text-white block">${d.name}</span>
-              <span class="text-xs text-slate-500">${d.desc}</span>
-            </div>
+            <div class="w-11 h-11 rounded-xl bg-${d.color}-100 text-${d.color}-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform"><i class="fa-solid ${d.icon}"></i></div>
+            <div><span class="font-black text-sm text-slate-900 dark:text-white block">${d.name}</span><span class="text-xs text-slate-500">${d.desc}</span></div>
           </div>
           <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-brand-500"></i>
         </a>
       `).join('');
     }
-
     document.getElementById('driveSearch').addEventListener('input', (e) => renderDrives(e.target.value));
 
-    /* ============================================================
-       CALCULATRICE
-       ============================================================ */
+    // ============================================================
+    // 8. CALCULATRICE
+    // ============================================================
     function addSubjectRow() {
       const container = document.getElementById('calc-subjects');
       const div = document.createElement('div');
@@ -623,21 +930,14 @@
       else status.innerHTML = '';
     }
 
-    /* ============================================================
-       ROUE DES MATIÈRES
-       ============================================================ */
+    // ============================================================
+    // 9. ROUE
+    // ============================================================
     let myModules = JSON.parse(localStorage.getItem('enstp_modules')) || ['رياضيات', 'فيزياء'];
     function renderModules() {
       const list = document.getElementById('modules-list');
-      if (myModules.length === 0) { 
-        list.innerHTML = `<span class="text-xs text-gray-400">${t('no_modules')}</span>`; 
-        return; 
-      }
-      list.innerHTML = myModules.map((m, index) => `
-        <span class="bg-orange-100 text-orange-800 text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1">
-          ${m} <button onclick="removeModule(${index})" class="text-orange-500 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
-        </span>
-      `).join('');
+      if (myModules.length === 0) { list.innerHTML = `<span class="text-xs text-gray-400">${t('no_modules')}</span>`; return; }
+      list.innerHTML = myModules.map((m, i) => `<span class="bg-orange-100 text-orange-800 text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1">${m} <button onclick="removeModule(${i})" class="text-orange-500 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button></span>`).join('');
     }
     function addModule() {
       const input = document.getElementById('module-input');
@@ -657,16 +957,13 @@
       }, 100);
     }
 
-    /* ============================================================
-       TÂCHES
-       ============================================================ */
+    // ============================================================
+    // 10. TÂCHES
+    // ============================================================
     let tasks = JSON.parse(localStorage.getItem('enstp_tasks')) || [];
     function renderTasks() {
       const list = document.getElementById('task-list');
-      if(tasks.length === 0) { 
-        list.innerHTML = `<li class="text-xs text-gray-400 text-center py-2">${t('no_tasks')}</li>`; 
-        return; 
-      }
+      if(tasks.length === 0) { list.innerHTML = `<li class="text-xs text-gray-400 text-center py-2">${t('no_tasks')}</li>`; return; }
       list.innerHTML = tasks.map((task, i) => `
         <li class="flex items-center justify-between text-sm p-2 bg-gray-50 dark:bg-slate-800 rounded border ${task.done ? 'opacity-50 line-through' : ''}">
           <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${i})" class="accent-emerald-500"><span>${task.text}</span></label>
@@ -682,28 +979,22 @@
     function toggleTask(i) { tasks[i].done = !tasks[i].done; localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
     function delTask(i) { tasks.splice(i, 1); localStorage.setItem('enstp_tasks', JSON.stringify(tasks)); renderTasks(); }
 
-    /* ============================================================
-       CHRONO
-       ============================================================ */
+    // ============================================================
+    // 11. CHRONO
+    // ============================================================
     let cronoTasks = JSON.parse(localStorage.getItem('enstp_timeline')) || [];
     function renderCrono() {
       const container = document.getElementById('crono-container');
-      if (cronoTasks.length === 0) { 
-        container.innerHTML = `<p class="text-gray-400 text-sm text-center py-4">${t('no_crono')}</p>`; 
-        return; 
-      }
+      if (cronoTasks.length === 0) { container.innerHTML = `<p class="text-gray-400 text-sm text-center py-4">${t('no_crono')}</p>`; return; }
       cronoTasks.sort((a, b) => a.time.localeCompare(b.time));
       container.innerHTML = cronoTasks.map((task, i) => `
         <div class="relative ${task.done ? 'opacity-60' : ''}">
           <div class="timeline-dot ${task.done ? 'bg-emerald-500' : 'bg-brand-500'}" style="top: 1rem;"></div>
           <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-slate-700 ml-8 shadow-sm flex justify-between items-center">
-            <div>
-              <span class="text-xs font-black text-brand-600 bg-brand-50 px-2 py-0.5 rounded">${task.time}</span>
-              <p class="font-bold text-gray-800 dark:text-gray-200 mt-1 ${task.done ? 'line-through' : ''}">${task.name}</p>
-            </div>
+            <div><span class="text-xs font-black text-brand-600 bg-brand-50 px-2 py-0.5 rounded">${task.time}</span><p class="font-bold text-gray-800 dark:text-gray-200 mt-1 ${task.done ? 'line-through' : ''}">${task.name}</p></div>
             <div class="flex gap-2">
-              <button onclick="toggleCronoTask(${i})" class="w-8 h-8 rounded-full ${task.done ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-500'} flex items-center justify-center transition"><i class="fa-solid fa-check"></i></button>
-              <button onclick="deleteCronoTask(${i})" class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center transition"><i class="fa-solid fa-trash"></i></button>
+              <button onclick="toggleCronoTask(${i})" class="w-8 h-8 rounded-full ${task.done ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-500'} flex items-center justify-center"><i class="fa-solid fa-check"></i></button>
+              <button onclick="deleteCronoTask(${i})" class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
         </div>`).join('');
@@ -712,18 +1003,15 @@
       const name = document.getElementById('crono-name').value;
       const time = document.getElementById('crono-time').value;
       if (!name || !time) return alert(t('alert_crono_required'));
-      cronoTasks.push({ name, time, done: false }); 
-      localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks));
-      document.getElementById('crono-name').value = ''; 
-      document.getElementById('crono-time').value = ''; 
-      renderCrono();
+      cronoTasks.push({ name, time, done: false }); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks));
+      document.getElementById('crono-name').value = ''; document.getElementById('crono-time').value = ''; renderCrono();
     }
     function toggleCronoTask(i) { cronoTasks[i].done = !cronoTasks[i].done; localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
     function deleteCronoTask(i) { cronoTasks.splice(i, 1); localStorage.setItem('enstp_timeline', JSON.stringify(cronoTasks)); renderCrono(); }
 
-    /* ============================================================
-       TRADUCTEUR
-       ============================================================ */
+    // ============================================================
+    // 12. TRADUCTEUR
+    // ============================================================
     async function translateText() {
       const text = document.getElementById('translate-input').value.trim();
       const from = document.getElementById('lang-from').value;
@@ -740,41 +1028,32 @@
         if (data.responseData && data.responseData.translatedText) {
           resultText.innerText = data.responseData.translatedText; resultBox.classList.remove('hidden');
         } else throw new Error();
-      } catch (e) { 
-        errorBox.innerText = t('translate_error'); 
-        errorBox.classList.remove('hidden'); 
-      }
+      } catch (e) { errorBox.innerText = t('translate_error'); errorBox.classList.remove('hidden'); }
     }
 
-    /* ============================================================
-       ASSISTANT AI
-       ============================================================ */
+    // ============================================================
+    // 13. AI
+    // ============================================================
     function generateAIPrompt() {
       const topic = document.getElementById('ai-topic').value.trim();
       const type = document.getElementById('ai-type').value;
       const statusEl = document.getElementById('ai-status');
       const fallbackBtn = document.getElementById('fallback-link');
       if (!topic) return alert(t('alert_enter_topic'));
-      let prompt = type === 'summary' 
-        ? `Tu es un professeur. Résume ce cours : "${topic}"` 
-        : `Tu es un concepteur d'examens. Génère 5 questions sur : "${topic}"`;
+      let prompt = type === 'summary' ? `Résume ce cours : "${topic}"` : `Génère 5 questions sur : "${topic}"`;
       const url = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
       fallbackBtn.href = url; fallbackBtn.classList.remove('opacity-50', 'pointer-events-none');
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(prompt).then(() => {
-          statusEl.innerText = t('ai_status_copied'); 
-          statusEl.className = "text-xs text-center mt-2 text-emerald-500 font-bold";
+          statusEl.innerText = t('ai_status_copied'); statusEl.className = "text-xs text-center mt-2 text-emerald-500 font-bold";
           window.open(url, '_blank');
         });
-      } else { 
-        statusEl.innerText = t('ai_status_fallback'); 
-        statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold"; 
-      }
+      } else { statusEl.innerText = t('ai_status_fallback'); statusEl.className = "text-xs text-center mt-2 text-amber-500 font-bold"; }
     }
 
-    /* ============================================================
-       LABO VIRTUEL
-       ============================================================ */
+    // ============================================================
+    // 14. LABOS (13 expériences)
+    // ============================================================
     function switchLab(labId) {
       ['pendulum', 'circuit', 'projectile', 'concrete', 'spring', 'waves', 'chimie', 'rdm', 'mdf', 'optics', 'thermo', 'magnet', 'momentum'].forEach(l => {
         const content = document.getElementById('lab-content-' + l);
@@ -812,12 +1091,12 @@
       updatePeriod();
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const originX = canvas.width / 2, originY = 30;
+        const ox = canvas.width/2, oy = 30;
         pendVel += (-pendGravity / (pendLength/100)) * Math.sin(pendAngle); pendAngle += pendVel;
-        const x = originX + pendLength * Math.sin(pendAngle), y = originY + pendLength * Math.cos(pendAngle);
-        ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(x, y); ctx.strokeStyle = '#64748b'; ctx.lineWidth = 2; ctx.stroke();
-        ctx.beginPath(); ctx.arc(originX, originY, 4, 0, Math.PI * 2); ctx.fillStyle = '#1e293b'; ctx.fill();
-        ctx.beginPath(); ctx.arc(x, y, 15, 0, Math.PI * 2); ctx.fillStyle = '#ea580c'; ctx.fill(); ctx.strokeStyle = '#c2410c'; ctx.lineWidth = 3; ctx.stroke();
+        const x = ox + pendLength * Math.sin(pendAngle), y = oy + pendLength * Math.cos(pendAngle);
+        ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(x, y); ctx.strokeStyle = '#64748b'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.beginPath(); ctx.arc(ox, oy, 4, 0, Math.PI*2); ctx.fillStyle = '#1e293b'; ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 15, 0, Math.PI*2); ctx.fillStyle = '#ea580c'; ctx.fill(); ctx.strokeStyle = '#c2410c'; ctx.lineWidth = 3; ctx.stroke();
         pendulumAnim = requestAnimationFrame(draw);
       }
       draw();
@@ -834,10 +1113,10 @@
         document.getElementById('current-result').innerText = I.toFixed(2) + ' A';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 4; ctx.beginPath(); ctx.rect(50, 50, 250, 200); ctx.stroke();
-        ctx.fillStyle = '#3b82f6'; ctx.fillRect(40, 120, 20, 60); ctx.fillStyle = '#fff'; ctx.font = '12px Arial'; ctx.fillText(V+'V', 42, 115);
-        ctx.fillStyle = '#eab308'; ctx.fillRect(290, 130, 20, 40); ctx.fillStyle = '#fff'; ctx.fillText(R+'Ω', 285, 125);
+        ctx.fillStyle = '#3b82f6'; ctx.fillRect(40, 120, 20, 60);
+        ctx.fillStyle = '#eab308'; ctx.fillRect(290, 130, 20, 40);
         const br = Math.min(I / 2, 1);
-        ctx.beginPath(); ctx.arc(175, 50, 20, 0, Math.PI * 2); ctx.fillStyle = `rgba(253, 224, 71, ${br})`; ctx.fill(); ctx.strokeStyle = '#ca8a04'; ctx.stroke();
+        ctx.beginPath(); ctx.arc(175, 50, 20, 0, Math.PI*2); ctx.fillStyle = `rgba(253,224,71,${br})`; ctx.fill(); ctx.strokeStyle = '#ca8a04'; ctx.stroke();
       }
       vS.oninput = update; rS.oninput = update; update();
     }
@@ -850,19 +1129,18 @@
       const vS = document.getElementById('velocity-slider'), aS = document.getElementById('angle-proj-slider');
       let t = 0;
       function reset() {
-        const v0 = parseInt(vS.value), angle = parseInt(aS.value), rad = angle * Math.PI / 180, g = 9.81;
+        const v0 = parseInt(vS.value), angle = parseInt(aS.value), rad = angle*Math.PI/180, g = 9.81;
         document.getElementById('velocity-val').innerText = v0; document.getElementById('angle-proj-val').innerText = angle;
         document.getElementById('projectile-result').innerText = `R: ${((v0*v0*Math.sin(2*rad))/g).toFixed(1)}m | H: ${((v0*v0*Math.sin(rad)**2)/(2*g)).toFixed(1)}m`;
         t = 0; cancelAnimationFrame(projAnim); draw();
       }
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
-        const v0 = parseInt(vS.value), angle = parseInt(aS.value), rad = angle * Math.PI / 180, g = 9.81;
-        const x = 30 + (v0 * Math.cos(rad) * t * 2), y = canvas.height - 30 - (v0 * Math.sin(rad) * t - 0.5 * g * t * t) * 2;
-        ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.fill();
-        if (y < canvas.height + 50 && x < canvas.width) { t += 0.05; projAnim = requestAnimationFrame(draw); }
-        else setTimeout(reset, 1000);
+        ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height-20, canvas.width, 20);
+        const v0 = parseInt(vS.value), angle = parseInt(aS.value), rad = angle*Math.PI/180, g = 9.81;
+        const x = 30 + (v0*Math.cos(rad)*t*2), y = canvas.height-30 - (v0*Math.sin(rad)*t - 0.5*g*t*t)*2;
+        ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI*2); ctx.fill();
+        if (y < canvas.height+50 && x < canvas.width) { t += 0.05; projAnim = requestAnimationFrame(draw); } else setTimeout(reset, 1000);
       }
       vS.oninput = reset; aS.oninput = reset; draw();
     }
@@ -890,15 +1168,15 @@
       const ctx = canvas.getContext('2d');
       const kS = document.getElementById('k-slider'), xS = document.getElementById('x-slider');
       function update() {
-        const k = parseInt(kS.value), x = parseInt(xS.value) / 100;
+        const k = parseInt(kS.value), x = parseInt(xS.value)/100;
         document.getElementById('k-val').innerText = k; document.getElementById('x-val').innerText = (x*100).toFixed(0);
-        document.getElementById('spring-result').innerText = (k * x).toFixed(2) + ' N';
+        document.getElementById('spring-result').innerText = (k*x).toFixed(2) + ' N';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#64748b'; ctx.fillRect(0, 50, canvas.width, 10);
         ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(175, 60);
-        for (let i = 0; i <= x * 300; i += 10) ctx.lineTo(175 + (i%20===0 ? 15 : -15), 60 + i);
+        for (let i = 0; i <= x*300; i += 10) ctx.lineTo(175 + (i%20===0?15:-15), 60+i);
         ctx.stroke();
-        ctx.fillStyle = '#ea580c'; ctx.fillRect(150, 60 + x*300, 50, 50);
+        ctx.fillStyle = '#ea580c'; ctx.fillRect(150, 60+x*300, 50, 50);
       }
       kS.oninput = update; xS.oninput = update; update();
     }
@@ -913,13 +1191,13 @@
       function update() {
         const freq = parseInt(fS.value), amp = parseInt(aS.value);
         document.getElementById('freq-val').innerText = freq; document.getElementById('amp-val').innerText = amp;
-        document.getElementById('wave-result').innerText = (340 / freq).toFixed(1) + ' m';
+        document.getElementById('wave-result').innerText = (340/freq).toFixed(1) + ' m';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, canvas.height/2); ctx.lineTo(canvas.width, canvas.height/2); ctx.stroke();
         ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3; ctx.beginPath();
         for (let x = 0; x < canvas.width; x++) {
-          const y = canvas.height/2 + Math.sin(x * (freq/50) + time) * amp;
-          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          const y = canvas.height/2 + Math.sin(x*(freq/50)+time)*amp;
+          if (x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
         }
         ctx.stroke(); time += 0.1; waveAnim = requestAnimationFrame(update);
       }
@@ -940,8 +1218,8 @@
         document.getElementById('ph-result').innerText = resultText; document.getElementById('ph-result').style.color = color;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#64748b'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(100, 50); ctx.lineTo(100, 250); ctx.lineTo(250, 250); ctx.lineTo(250, 150); ctx.stroke();
-        const totalHeight = acid + base, fillHeight = Math.min(totalHeight * 4, 100);
-        ctx.fillStyle = color; ctx.globalAlpha = 0.5; ctx.fillRect(105, 245 - fillHeight, 140, fillHeight); ctx.globalAlpha = 1;
+        const totalHeight = acid+base, fillHeight = Math.min(totalHeight*4, 100);
+        ctx.fillStyle = color; ctx.globalAlpha = 0.5; ctx.fillRect(105, 245-fillHeight, 140, fillHeight); ctx.globalAlpha = 1;
       }
       acidS.oninput = update; baseS.oninput = update; update();
     }
@@ -953,21 +1231,15 @@
       function update() {
         const P = parseInt(loadS.value);
         document.getElementById('load-val').innerText = P;
-        const M_max = (P * 10) / 4;
+        const M_max = (P*10)/4;
         document.getElementById('moment-result').innerText = M_max.toFixed(2) + ' kN.m';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#94a3b8'; ctx.fillRect(50, 150, 250, 20);
-        ctx.fillStyle = '#475569'; ctx.beginPath(); ctx.moveTo(50, 170); ctx.lineTo(30, 200); ctx.lineTo(70, 200); ctx.fill();
-        ctx.beginPath(); ctx.moveTo(300, 170); ctx.lineTo(280, 200); ctx.lineTo(320, 200); ctx.fill();
-        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(175, 50); ctx.lineTo(175, 140); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(165, 130); ctx.lineTo(175, 145); ctx.lineTo(185, 130); ctx.fill();
-        ctx.fillStyle = '#ea580c'; ctx.font = 'bold 14px Cairo'; ctx.textAlign = 'center'; ctx.fillText(P + ' kN', 175, 35);
+        ctx.fillStyle = '#475569'; ctx.beginPath(); ctx.moveTo(50,170); ctx.lineTo(30,200); ctx.lineTo(70,200); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(300,170); ctx.lineTo(280,200); ctx.lineTo(320,200); ctx.fill();
+        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(175,50); ctx.lineTo(175,140); ctx.stroke();
         ctx.strokeStyle = '#c2410c'; ctx.lineWidth = 2; ctx.beginPath();
-        for (let x = 50; x <= 300; x += 5) {
-          const normX = (x - 175) / 125;
-          const y = 200 - (M_max * 2) * (1 - normX * normX);
-          if (x === 50) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
+        for (let x = 50; x <= 300; x += 5) { const nx = (x-175)/125; const y = 200 - (M_max*2)*(1-nx*nx); if (x===50) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
         ctx.stroke();
       }
       loadS.oninput = update; update();
@@ -980,19 +1252,15 @@
       function update() {
         const L = parseInt(lenS.value);
         document.getElementById('len-val').innerText = L;
-        const P = 50 * 1000, E = 200 * 10**9, I = 0.001;
-        const f = (P * Math.pow(L, 3)) / (48 * E * I) * 1000;
+        const P = 50*1000, E = 200*10**9, I = 0.001;
+        const f = (P*Math.pow(L,3))/(48*E*I)*1000;
         document.getElementById('deflection-result').innerText = f.toFixed(2) + ' mm';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 6; ctx.beginPath();
-        for (let x = 50; x <= 300; x++) {
-          const normX = (x - 175) / 125;
-          const y = 150 + (f * 2) * (1 - normX * normX);
-          if (x === 50) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
+        for (let x = 50; x <= 300; x++) { const nx = (x-175)/125; const y = 150 + (f*2)*(1-nx*nx); if (x===50) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
         ctx.stroke();
-        ctx.fillStyle = '#475569'; ctx.beginPath(); ctx.moveTo(50, 150); ctx.lineTo(30, 180); ctx.lineTo(70, 180); ctx.fill();
-        ctx.beginPath(); ctx.moveTo(300, 150); ctx.lineTo(280, 180); ctx.lineTo(320, 180); ctx.fill();
+        ctx.fillStyle = '#475569'; ctx.beginPath(); ctx.moveTo(50,150); ctx.lineTo(30,180); ctx.lineTo(70,180); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(300,150); ctx.lineTo(280,180); ctx.lineTo(320,180); ctx.fill();
       }
       lenS.oninput = update; update();
     }
@@ -1003,20 +1271,17 @@
       const a1S = document.getElementById('angle1-slider'), n2S = document.getElementById('n2-slider');
       function update() {
         const a1 = parseInt(a1S.value), n2 = parseFloat(n2S.value), n1 = 1;
-        const rad1 = a1 * Math.PI / 180;
-        const rad2 = Math.asin((n1 / n2) * Math.sin(rad1));
-        const a2 = Math.round(rad2 * 180 / Math.PI);
-        document.getElementById('angle1-val').innerText = a1;
-        document.getElementById('n2-val').innerText = n2;
-        document.getElementById('angle2-result').innerText = a2 + '°';
+        const rad1 = a1*Math.PI/180;
+        const rad2 = Math.asin((n1/n2)*Math.sin(rad1));
+        const a2 = Math.round(rad2*180/Math.PI);
+        document.getElementById('angle1-val').innerText = a1; document.getElementById('n2-val').innerText = n2; document.getElementById('angle2-result').innerText = a2 + '°';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height/2);
         ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0, canvas.height/2); ctx.lineTo(canvas.width, canvas.height/2); ctx.stroke();
-        const startX = canvas.width/2 - Math.sin(rad1) * 150, startY = canvas.height/2 - Math.cos(rad1) * 150;
-        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(startX, startY); ctx.lineTo(canvas.width/2, canvas.height/2); ctx.stroke();
-        const endX = canvas.width/2 + Math.sin(rad2) * 150, endY = canvas.height/2 + Math.cos(rad2) * 150;
-        ctx.strokeStyle = '#ef4444'; ctx.beginPath(); ctx.moveTo(canvas.width/2, canvas.height/2); ctx.lineTo(endX, endY); ctx.stroke();
-        ctx.strokeStyle = '#94a3b8'; ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.moveTo(canvas.width/2, 0); ctx.lineTo(canvas.width/2, canvas.height); ctx.stroke(); ctx.setLineDash([]);
+        const sx = canvas.width/2 - Math.sin(rad1)*150, sy = canvas.height/2 - Math.cos(rad1)*150;
+        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(canvas.width/2, canvas.height/2); ctx.stroke();
+        const ex = canvas.width/2 + Math.sin(rad2)*150, ey = canvas.height/2 + Math.cos(rad2)*150;
+        ctx.strokeStyle = '#ef4444'; ctx.beginPath(); ctx.moveTo(canvas.width/2, canvas.height/2); ctx.lineTo(ex, ey); ctx.stroke();
       }
       a1S.oninput = update; n2S.oninput = update; update();
     }
@@ -1027,17 +1292,13 @@
       const pS = document.getElementById('p-slider'), nS = document.getElementById('n-slider');
       function update() {
         const P = parseFloat(pS.value), n = parseFloat(nS.value), V = 22.4, R = 0.0821;
-                const T = (P * V) / (n * R);
-        document.getElementById('p-val').innerText = P.toFixed(1);
-        document.getElementById('n-val').innerText = n.toFixed(1);
+        const T = (P*V)/(n*R);
+        document.getElementById('p-val').innerText = P.toFixed(1); document.getElementById('n-val').innerText = n.toFixed(1);
         document.getElementById('temp-result').innerText = T.toFixed(1) + ' K';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#64748b'; ctx.lineWidth = 4; ctx.strokeRect(100, 50, 150, 200);
-        const num = Math.floor(n * 20);
-        for (let i = 0; i < num; i++) {
-          ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(110 + Math.random() * 130, 60 + Math.random() * 180, 3, 0, Math.PI * 2); ctx.fill();
-        }
-        ctx.fillStyle = '#475569'; ctx.fillRect(90, 40, 170, 15);
+        const num = Math.floor(n*20);
+        for (let i = 0; i < num; i++) { ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(110+Math.random()*130, 60+Math.random()*180, 3, 0, Math.PI*2); ctx.fill(); }
       }
       pS.oninput = update; nS.oninput = update; update();
     }
@@ -1048,21 +1309,15 @@
       const canvas = document.getElementById('magnetCanvas'); if(!canvas) return;
       const ctx = canvas.getContext('2d');
       const iS = document.getElementById('current-slider');
-      let time = 0;
       function update() {
-        const I = parseInt(iS.value), mu0 = 4 * Math.PI * 10**-7, r = 0.1;
-        const B = (mu0 * I) / (2 * Math.PI * r) * 10**6;
+        const I = parseInt(iS.value), mu0 = 4*Math.PI*10**-7, r = 0.1;
+        const B = (mu0*I)/(2*Math.PI*r)*10**6;
         document.getElementById('current-val').innerText = I;
         document.getElementById('b-result').innerText = B.toFixed(2) + ' μT';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const cx = canvas.width/2, cy = canvas.height/2;
-        ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#fff'; ctx.font = 'bold 12px Arial'; ctx.textAlign = 'center'; ctx.fillText('I', cx, cy + 4);
-        for (let i = 1; i <= 4; i++) {
-          ctx.strokeStyle = `rgba(234, 88, 12, ${0.6 - i*0.1})`; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.arc(cx, cy, i * 40, 0, Math.PI * 2); ctx.stroke();
-        }
-        time += 0.02;
+        ctx.fillStyle = '#ea580c'; ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI*2); ctx.fill();
+        for (let i = 1; i <= 4; i++) { ctx.strokeStyle = `rgba(234,88,12,${0.6-i*0.1})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, i*40, 0, Math.PI*2); ctx.stroke(); }
         magnetAnim = requestAnimationFrame(update);
       }
       update();
@@ -1073,370 +1328,19 @@
       const ctx = canvas.getContext('2d');
       const m1S = document.getElementById('m1-slider'), v1S = document.getElementById('v1-slider');
       function update() {
-        const m1 = parseInt(m1S.value), v1 = parseInt(v1S.value), P = m1 * v1;
-        document.getElementById('m1-val').innerText = m1;
-        document.getElementById('v1-val').innerText = v1;
+        const m1 = parseInt(m1S.value), v1 = parseInt(v1S.value), P = m1*v1;
+        document.getElementById('m1-val').innerText = m1; document.getElementById('v1-val').innerText = v1;
         document.getElementById('momentum-result').innerText = P + ' kg.m/s';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(100, canvas.height/2, 20 + m1 * 2, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(120 + m1*2, canvas.height/2); ctx.lineTo(160 + m1*2, canvas.height/2); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(150 + m1*2, canvas.height/2 - 5); ctx.lineTo(160 + m1*2, canvas.height/2); ctx.lineTo(150 + m1*2, canvas.height/2 + 5); ctx.fill();
-        ctx.fillStyle = '#64748b'; ctx.font = 'bold 14px Cairo'; ctx.textAlign = 'right'; ctx.fillText(`v = ${v1} m/s`, 280, canvas.height/2 - 20);
+        ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(100, canvas.height/2, 20+m1*2, 0, Math.PI*2); ctx.fill();
+        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(120+m1*2, canvas.height/2); ctx.lineTo(160+m1*2, canvas.height/2); ctx.stroke();
       }
       m1S.oninput = update; v1S.oninput = update; update();
     }
 
-    /* ============================================================
-       TRADUCTIONS COMPLÈTES
-       ============================================================ */
-    window.REUSSITE_TRANSLATIONS = {
-      ar: {
-        page_title: "Guide ENSTP - Ma Réussite",
-        nav_app_sub: "المدرسة الوطنية العليا",
-        nav_home: "الرئيسية",
-        tab_schedule: "استعمال الزمن",
-        tab_exams: "الواجبات والامتحانات",
-        tab_tools: "صندوق أدوات الطالب",
-        schedule_title: "جدول التوقيت",
-        schedule_desc: "اطلع على أوقات المحاضرات والأعمال الموجهة",
-        schedule_full_btn: "الانتقال إلى صفحة الجدول الكامل",
-        schedule_full_desc: "حدد قسمك، سنتك، وفوجك للحصول على توقيتك الدقيق مع إمكانية إضافة ملاحظات.",
-        library_title: "مكتبة الملفات",
-        library_desc: "روابط Google Drive للدروس والملخصات",
-        library_search: "ابحث في المجلدات...",
-        library_no_results: "لا توجد نتائج مطابقة",
-        calc_title: "حاسبة المعدل الفصلي",
-        calc_coeff: "معامل",
-        calc_exam: "امتحان",
-        calc_td: "TD/TP",
-        calc_type: "النوع",
-        calc_type_both: "الكل",
-        calc_type_exam: "امتحان",
-        calc_type_td: "TD فقط",
-        calc_add: "إضافة مادة",
-        calc_result: "المعدل النهائي المرجح",
-        calc_status_pass: "ناجح",
-        calc_status_rattrapage: "استدراك",
-        calc_status_fail: "راسب",
-        wheel_title: "عجلة المواد",
-        wheel_placeholder: "أضف مادة...",
-        wheel_btn: "ماذا أراجع الآن؟",
-        no_modules: "أضف مواد للبدء",
-        tasks_title: "مهامي الدراسية",
-        tasks_placeholder: "مهمة جديدة...",
-        no_tasks: "لا توجد مهام",
-        crono_title: "الكرونو والتذكير بالمهام",
-        crono_desc: "خطط ليومك ورتب مهامك حسب الوقت",
-        crono_placeholder: "اسم المهمة...",
-        crono_add: "إضافة للكرونو",
-        no_crono: "لا توجد مهام.",
-        translate_title: "المترجم الفوري",
-        translate_desc: "ترجمة أي كلمة بين العربية، الفرنسية والإنجليزية",
-        translate_input: "اكتب الكلمة هنا...",
-        translate_btn: "ترجمة",
-        translate_result: "الترجمة:",
-        translate_error: "حدث خطأ في الاتصال.",
-        lab_title: "المختبر الافتراضي",
-        lab_desc: "قم بتجارب فيزيائية وهندسية تفاعلية مباشرة من متصفحك",
-        lab_pendulum: "البندول", lab_circuit: "الدارة", lab_projectile: "المقذوفات", lab_concrete: "الخرسانة",
-        lab_spring: "الزنبرك", lab_waves: "الأمواج", lab_chimie: "الكيمياء", lab_optics: "البصريات",
-        lab_thermo: "الديناميكا", lab_magnet: "المغناطيسية", lab_momentum: "الزخم",
-        lab_length: "طول الخيط (L)", lab_angle: "زاوية الإطلاق (θ)", lab_period: "الزمن الدوري (T)",
-        lab_voltage: "الجهد (V)", lab_resistance: "المقاومة (R)", lab_current: "شدة التيار (I) = V / R",
-        lab_velocity: "السرعة الابتدائية (v0)", lab_angle_proj: "زاوية الإطلاق (α)", lab_projectile_result: "المدى (R) وأقصى ارتفاع (H)",
-        lab_force: "القوة المطبقة (F)", lab_strength: "المقاومة القصوى (fc)", lab_concrete_status: "حالة المكعب",
-        concrete_ok: "سليم", concrete_broken: "انهار",
-        lab_k: "ثابت الزنبرك (k)", lab_x: "الاستطالة (x)", lab_spring_result: "القوة (F = k × x)",
-        lab_freq: "التردد (f)", lab_amp: "السعة (A)", lab_wave_result: "الطول الموجي (λ = v / f)",
-        lab_acid: "حجم الحمض (HCl)", lab_base: "حجم القاعدة (NaOH)", lab_ph: "حالة الوسط (pH)",
-        ph_acid: "وسط حمضي (pH < 7)", ph_base: "وسط قاعدي (pH > 7)", ph_neutral: "متعادل (pH = 7)",
-        lab_load: "الحمل المطبق (P)", lab_moment: "أقصى عزم انحناء (M_max)",
-        lab_len: "طول العارضة (L)", lab_deflection: "الانحراف الأقصى (f)",
-        lab_angle1: "زاوية السقوط (θ1)", lab_n2: "معامل الانكسار (n2)", lab_angle2: "زاوية الانكسار (θ2)",
-        lab_p: "الضغط (P)", lab_n: "عدد المولات (n)", lab_temp: "درجة الحرارة (T = PV/nR)",
-        lab_current2: "شدة التيار (I)", lab_b: "المجال المغناطيسي (B)",
-        lab_m1: "كتلة الكرة 1 (m1)", lab_v1: "سرعة الكرة 1 (v1)", lab_momentum_result: "الزخم الكلي (P = m*v)",
-        molecule_lab_title: "مختبر الجزيئات 3D",
-        molecule_lab_desc: "تجارب تفاعلية ثلاثية الأبعاد لاهتزازات الجزيئات (H2O, CO2).",
-        molecule_lab_btn: "ابدأ التجربة",
-        stereo_title: "تمثيلات 3D: كرام، فيشر، لويس",
-        stereo_desc: "مجسمات تفاعلية للمركبات ذات المدارات d.",
-        ai_title: "المساعد الأكاديمي (AI)",
-        ai_desc: "توليد أوامر ذكية لـ ChatGPT",
-        ai_topic: "الموضوع (مثال: الخرسانة المسلحة)...",
-        ai_summary: "تلخيص المحاضرة",
-        ai_quiz: "توليد أسئلة مراجعة",
-        ai_copy: "نسخ الأمر وفتح ChatGPT",
-        ai_open: "فتح ChatGPT مباشرة",
-        ai_status_copied: "✅ تم النسخ! فتح ChatGPT...",
-        ai_status_fallback: "اضغط على الزر الاحتياطي.",
-        alert_add_module: "الرجاء إضافة مادة!",
-        alert_crono_required: "الرجاء إدخال اسم المهمة والوقت",
-        alert_enter_word: "الرجاء إدخال كلمة.",
-        alert_enter_topic: "الرجاء إدخال الموضوع",
-        footer_rights: "جميع الحقوق محفوظة",
-        chat_title: "المساعد الافتراضي",
-        chat_welcome: "مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟",
-        chat_placeholder: "اكتب سؤالك..."
-                chat_default: "شكراً لسؤالك! سأقوم بالرد عليك قريباً.",
-        chat_schedule: "جدول التوقيت متاح في تبويب <strong>استعمال الزمن</strong>.",
-        chat_drives: "روابط Google Drive موجودة في تبويب <strong>الواجبات والامتحانات</strong>.",
-        chat_calc: "استعمل <strong>حاسبة المعدل</strong> في تبويب صندوق الأدوات.",
-        chat_lab: "المختبر الافتراضي به 13 تجربة تفاعلية في تبويب <strong>صندوق الأدوات</strong>.",
-        chat_ai: "المساعد الأكاديمي (AI) متاح في تبويب <strong>صندوق الأدوات</strong>.",
-        chat_hello: "أهلاً بك! كيف يمكنني مساعدتك؟",
-        chat_thanks: "على الرحب والسعة!",
-      },
-      fr: {
-        page_title: "Guide ENSTP - Ma Réussite",
-        nav_app_sub: "École Nationale Supérieure",
-        nav_home: "Accueil",
-        tab_schedule: "Emploi du temps",
-        tab_exams: "Devoirs et Examens",
-        tab_tools: "Boîte à outils",
-        schedule_title: "Emploi du temps",
-        schedule_desc: "Consultez les horaires des cours et TD",
-        schedule_full_btn: "Accéder à l'emploi du temps complet",
-        schedule_full_desc: "Sélectionnez votre département, année et groupe pour votre emploi du temps précis avec possibilité d'ajouter des notes.",
-        library_title: "Bibliothèque de fichiers",
-        library_desc: "Liens Google Drive pour les cours et résumés",
-        library_search: "Rechercher dans les dossiers...",
-        library_no_results: "Aucun résultat",
-        calc_title: "Calculatrice de moyenne",
-        calc_coeff: "Coef",
-        calc_exam: "Examen",
-        calc_td: "TD/TP",
-        calc_type: "Type",
-        calc_type_both: "Tous",
-        calc_type_exam: "Examen",
-        calc_type_td: "TD seul",
-        calc_add: "Ajouter une matière",
-        calc_result: "Moyenne pondérée",
-        calc_status_pass: "Réussi",
-        calc_status_rattrapage: "Rattrapage",
-        calc_status_fail: "Échoué",
-        wheel_title: "Roue des matières",
-        wheel_placeholder: "Ajouter une matière...",
-        wheel_btn: "Que réviser maintenant ?",
-        no_modules: "Ajoutez des matières pour commencer",
-        tasks_title: "Mes tâches",
-        tasks_placeholder: "Nouvelle tâche...",
-        no_tasks: "Aucune tâche",
-        crono_title: "Chrono et rappels",
-        crono_desc: "Planifiez votre journée et organisez vos tâches",
-        crono_placeholder: "Nom de la tâche...",
-        crono_add: "Ajouter au chrono",
-        no_crono: "Aucune tâche.",
-        translate_title: "Traducteur instantané",
-        translate_desc: "Traduire un mot entre arabe, français et anglais",
-        translate_input: "Écrivez le mot ici...",
-        translate_btn: "Traduire",
-        translate_result: "Traduction :",
-        translate_error: "Erreur de connexion.",
-        lab_title: "Laboratoire virtuel",
-        lab_desc: "Expériences interactives de physique et d'ingénierie dans votre navigateur",
-        lab_pendulum: "Pendule", lab_circuit: "Circuit", lab_projectile: "Projectile", lab_concrete: "Béton",
-        lab_spring: "Ressort", lab_waves: "Ondes", lab_chimie: "Chimie", lab_optics: "Optique",
-        lab_thermo: "Thermodynamique", lab_magnet: "Magnétisme", lab_momentum: "Quantité de mouvement",
-        lab_length: "Longueur du fil (L)", lab_angle: "Angle initial (θ)", lab_period: "Période (T)",
-        lab_voltage: "Tension (V)", lab_resistance: "Résistance (R)", lab_current: "Courant (I) = V / R",
-        lab_velocity: "Vitesse initiale (v0)", lab_angle_proj: "Angle (α)", lab_projectile_result: "Portée (R) et hauteur max (H)",
-        lab_force: "Force appliquée (F)", lab_strength: "Résistance max (fc)", lab_concrete_status: "État du cube",
-        concrete_ok: "Intact", concrete_broken: "Rupture",
-        lab_k: "Constante du ressort (k)", lab_x: "Élongation (x)", lab_spring_result: "Force (F = k × x)",
-        lab_freq: "Fréquence (f)", lab_amp: "Amplitude (A)", lab_wave_result: "Longueur d'onde (λ = v / f)",
-        lab_acid: "Volume acide (HCl)", lab_base: "Volume base (NaOH)", lab_ph: "État du milieu (pH)",
-        ph_acid: "Milieu acide (pH < 7)", ph_base: "Milieu basique (pH > 7)", ph_neutral: "Neutre (pH = 7)",
-        lab_load: "Charge appliquée (P)", lab_moment: "Moment fléchissant max (M_max)",
-        lab_len: "Longueur poutre (L)", lab_deflection: "Flèche max (f)",
-        lab_angle1: "Angle d'incidence (θ1)", lab_n2: "Indice de réfraction (n2)", lab_angle2: "Angle de réfraction (θ2)",
-        lab_p: "Pression (P)", lab_n: "Nombre de moles (n)", lab_temp: "Température (T = PV/nR)",
-        lab_current2: "Courant (I)", lab_b: "Champ magnétique (B)",
-        lab_m1: "Masse balle 1 (m1)", lab_v1: "Vitesse balle 1 (v1)", lab_momentum_result: "Quantité de mouvement (P = m*v)",
-        molecule_lab_title: "Laboratoire moléculaire 3D",
-        molecule_lab_desc: "Expériences interactives 3D des vibrations moléculaires (H2O, CO2).",
-        molecule_lab_btn: "Commencer l'expérience",
-        stereo_title: "Représentations 3D : Cram, Fischer, Lewis",
-        stereo_desc: "Modèles interactifs de complexes à orbitales d.",
-        ai_title: "Assistant académique (IA)",
-        ai_desc: "Générer des prompts intelligents pour ChatGPT",
-        ai_topic: "Sujet (ex : béton armé)...",
-        ai_summary: "Résumer le cours",
-        ai_quiz: "Générer des questions de révision",
-        ai_copy: "Copier et ouvrir ChatGPT",
-        ai_open: "Ouvrir ChatGPT",
-        ai_status_copied: "✅ Copié ! Ouverture de ChatGPT...",
-        ai_status_fallback: "Cliquez sur le bouton de secours.",
-        alert_add_module: "Veuillez ajouter une matière !",
-        alert_crono_required: "Veuillez entrer le nom et l'heure de la tâche",
-        alert_enter_word: "Veuillez entrer un mot.",
-        alert_enter_topic: "Veuillez entrer le sujet",
-        footer_rights: "Tous droits réservés",
-        chat_title: "Assistant virtuel",
-        chat_welcome: "Bonjour ! 👋 Je suis votre assistant ENSTP. Comment puis-je vous aider ?",
-        chat_placeholder: "Écrivez votre question..."
-                chat_default: "Merci pour votre question ! Je vous répondrai bientôt.",
-        chat_schedule: "L'emploi du temps est disponible dans l'onglet <strong>Emploi du temps</strong>.",
-        chat_drives: "Les liens Google Drive sont dans l'onglet <strong>Devoirs et Examens</strong>.",
-        chat_calc: "Utilisez la <strong>calculatrice de moyenne</strong> dans la Boîte à outils.",
-        chat_lab: "Le laboratoire virtuel contient 13 expériences interactives dans <strong>Boîte à outils</strong>.",
-        chat_ai: "L'assistant académique (IA) est dans <strong>Boîte à outils</strong>.",
-        chat_hello: "Bienvenue ! Comment puis-je vous aider ?",
-        chat_thanks: "Avec plaisir !",
-    },
-      en: {
-        page_title: "ENSTP Guide - My Success",
-        nav_app_sub: "National Higher School",
-        nav_home: "Home",
-        tab_schedule: "Schedule",
-        tab_exams: "Assignments & Exams",
-        tab_tools: "Student Toolbox",
-        schedule_title: "Class Schedule",
-        schedule_desc: "View lecture and TD times",
-        schedule_full_btn: "Go to full schedule",
-        schedule_full_desc: "Select your department, year and group to get your precise schedule with the option to add notes.",
-        library_title: "File Library",
-        library_desc: "Google Drive links for courses and summaries",
-        library_search: "Search folders...",
-        library_no_results: "No matching results",
-        calc_title: "Semester Average Calculator",
-        calc_coeff: "Coef",
-        calc_exam: "Exam",
-        calc_td: "TD/TP",
-        calc_type: "Type",
-        calc_type_both: "All",
-        calc_type_exam: "Exam",
-        calc_type_td: "TD only",
-        calc_add: "Add subject",
-        calc_result: "Weighted average",
-        calc_status_pass: "Passed",
-        calc_status_rattrapage: "Remedial",
-        calc_status_fail: "Failed",
-        wheel_title: "Subject Wheel",
-        wheel_placeholder: "Add subject...",
-        wheel_btn: "What should I revise now?",
-        no_modules: "Add subjects to start",
-        tasks_title: "My Study Tasks",
-        tasks_placeholder: "New task...",
-        no_tasks: "No tasks",
-        crono_title: "Chrono & Task Reminders",
-        crono_desc: "Plan your day and organize your tasks by time",
-        crono_placeholder: "Task name...",
-        crono_add: "Add to chrono",
-        no_crono: "No tasks.",
-        translate_title: "Instant Translator",
-        translate_desc: "Translate any word between Arabic, French and English",
-        translate_input: "Type the word here...",
-        translate_btn: "Translate",
-        translate_result: "Translation:",
-        translate_error: "Connection error.",
-        lab_title: "Virtual Lab",
-        lab_desc: "Interactive physics and engineering experiments in your browser",
-        lab_pendulum: "Pendulum", lab_circuit: "Circuit", lab_projectile: "Projectile", lab_concrete: "Concrete",
-        lab_spring: "Spring", lab_waves: "Waves", lab_chimie: "Chemistry", lab_optics: "Optics",
-        lab_thermo: "Thermodynamics", lab_magnet: "Magnetism", lab_momentum: "Momentum",
-        lab_length: "String length (L)", lab_angle: "Release angle (θ)", lab_period: "Period (T)",
-        lab_voltage: "Voltage (V)", lab_resistance: "Resistance (R)", lab_current: "Current (I) = V / R",
-        lab_velocity: "Initial velocity (v0)", lab_angle_proj: "Angle (α)", lab_projectile_result: "Range (R) and max height (H)",
-        lab_force: "Applied force (F)", lab_strength: "Max strength (fc)", lab_concrete_status: "Cube state",
-        concrete_ok: "Intact", concrete_broken: "Broken",
-        lab_k: "Spring constant (k)", lab_x: "Elongation (x)", lab_spring_result: "Force (F = k × x)",
-        lab_freq: "Frequency (f)", lab_amp: "Amplitude (A)", lab_wave_result: "Wavelength (λ = v / f)",
-        lab_acid: "Acid volume (HCl)", lab_base: "Base volume (NaOH)", lab_ph: "Medium state (pH)",
-        ph_acid: "Acidic (pH < 7)", ph_base: "Basic (pH > 7)", ph_neutral: "Neutral (pH = 7)",
-        lab_load: "Applied load (P)", lab_moment: "Max bending moment (M_max)",
-        lab_len: "Beam length (L)", lab_deflection: "Max deflection (f)",
-        lab_angle1: "Incidence angle (θ1)", lab_n2: "Refraction index (n2)", lab_angle2: "Refraction angle (θ2)",
-        lab_p: "Pressure (P)", lab_n: "Number of moles (n)", lab_temp: "Temperature (T = PV/nR)",
-        lab_current2: "Current (I)", lab_b: "Magnetic field (B)",
-        lab_m1: "Ball 1 mass (m1)", lab_v1: "Ball 1 velocity (v1)", lab_momentum_result: "Momentum (P = m*v)",
-        molecule_lab_title: "3D Molecule Lab",
-        molecule_lab_desc: "3D interactive experiments of molecular vibrations (H2O, CO2).",
-        molecule_lab_btn: "Start experiment",
-        stereo_title: "3D Representations: Cram, Fischer, Lewis",
-        stereo_desc: "Interactive models of d-orbital complexes.",
-        ai_title: "Academic Assistant (AI)",
-        ai_desc: "Generate smart prompts for ChatGPT",
-        ai_topic: "Topic (e.g. reinforced concrete)...",
-        ai_summary: "Summarize lecture",
-        ai_quiz: "Generate review questions",
-        ai_copy: "Copy prompt and open ChatGPT",
-        ai_open: "Open ChatGPT",
-        ai_status_copied: "✅ Copied! Opening ChatGPT...",
-        ai_status_fallback: "Click the fallback button.",
-        alert_add_module: "Please add a subject!",
-        alert_crono_required: "Please enter task name and time",
-        alert_enter_word: "Please enter a word.",
-        alert_enter_topic: "Please enter the topic",
-        footer_rights: "All rights reserved",
-        chat_title: "Virtual Assistant",
-        chat_welcome: "Hello! 👋 I'm your ENSTP assistant. How can I help you?",
-        chat_placeholder: "Type your question..."
-                chat_default: "Thanks for your question! I'll reply soon.",
-        chat_schedule: "The schedule is available in the <strong>Schedule</strong> tab.",
-        chat_drives: "Google Drive links are in the <strong>Assignments & Exams</strong> tab.",
-        chat_calc: "Use the <strong>average calculator</strong> in the Toolbox.",
-        chat_lab: "The virtual lab has 13 interactive experiments in <strong>Toolbox</strong>.",
-        chat_ai: "The AI academic assistant is in <strong>Toolbox</strong>.",
-        chat_hello: "Welcome! How can I help you?",
-        chat_thanks: "You're welcome!",
-      }
-    };
-
-    /* ============================================================
-       APPLIQUER LA TRADUCTION
-       ============================================================ */
-    window.applyReussiteTranslation = function(lang) {
-      const dict = window.REUSSITE_TRANSLATIONS[lang] || window.REUSSITE_TRANSLATIONS.ar;
-
-      if (dict.page_title) document.title = dict.page_title;
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
-          const icon = el.querySelector('i');
-          if (icon) {
-            el.innerHTML = '';
-            el.appendChild(icon);
-            el.appendChild(document.createTextNode(' ' + dict[key]));
-          } else {
-            el.innerText = dict[key];
-          }
-        }
-      });
-
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (dict[key]) el.placeholder = dict[key];
-      });
-
-      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-      document.documentElement.lang = lang;
-
-      // Ré-render les éléments dynamiques
-      if (typeof renderModules === 'function') renderModules();
-      if (typeof renderTasks === 'function') renderTasks();
-      if (typeof renderCrono === 'function') renderCrono();
-      if (typeof renderDrives === 'function') renderDrives();
-    };
-
-    /* ============================================================
-       setLanguage()
-       ============================================================ */
-    window.setLanguage = function(lang) {
-      currentLang = lang;
-      localStorage.setItem('enstp_lang', lang);
-
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-' + lang);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      window.applyReussiteTranslation(lang);
-    };
-
-    /* ============================================================
-       CHATBOT
-       ============================================================ */
+    // ============================================================
+    // 15. CHATBOT
+    // ============================================================
     function toggleChat() {
       const chat = document.getElementById('chatWindow');
       if (!chat) return;
@@ -1450,52 +1354,29 @@
       if (!input || !body) return;
       const msg = input.value.trim();
       if (!msg) return;
-
-      body.innerHTML += `
-        <div style="display:flex;justify-content:flex-end;">
-          <div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">
-            ${msg}
-          </div>
-        </div>`;
+      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div></div>`;
       input.value = '';
       body.scrollTop = body.scrollHeight;
-
       setTimeout(() => {
         let reply = t('chat_default');
         const m = msg.toLowerCase();
-
-        if (m.includes("جدول") || m.includes("توقيت") || m.includes("schedule") || m.includes("emploi")) {
-          reply = "📅 " + t('chat_schedule');
-        } else if (m.includes("drive") || m.includes("ملفات") || m.includes("cours")) {
-          reply = "📂 " + t('chat_drives');
-        } else if (m.includes("معدل") || m.includes("moyenne") || m.includes("calcul")) {
-          reply = "🧮 " + t('chat_calc');
-        } else if (m.includes("مختبر") || m.includes("lab") || m.includes("تجربة")) {
-          reply = "🔬 " + t('chat_lab');
-        } else if (m.includes("chatgpt") || m.includes("ai") || m.includes("مساعد")) {
-          reply = "🤖 " + t('chat_ai');
-        } else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("bonjour") || m.includes("hello")) {
-          reply = "👋 " + t('chat_hello');
-        } else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) {
-          reply = "💛 " + t('chat_thanks');
-        }
-
-        body.innerHTML += `
-          <div style="display:flex;justify-content:flex-start;">
-            <div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">
-              ${reply}
-            </div>
-          </div>`;
+        if (m.includes("جدول") || m.includes("توقيت") || m.includes("schedule") || m.includes("emploi")) reply = "📅 " + t('chat_schedule');
+        else if (m.includes("drive") || m.includes("ملفات") || m.includes("cours")) reply = "📂 " + t('chat_drives');
+        else if (m.includes("معدل") || m.includes("moyenne") || m.includes("calcul")) reply = "🧮 " + t('chat_calc');
+        else if (m.includes("مختبر") || m.includes("lab") || m.includes("تجربة")) reply = "🔬 " + t('chat_lab');
+        else if (m.includes("chatgpt") || m.includes("ai") || m.includes("مساعد")) reply = "🤖 " + t('chat_ai');
+        else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
+        else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
+        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div></div>`;
         body.scrollTop = body.scrollHeight;
       }, 500);
     }
 
-    /* ============================================================
-       KANGOUROU
-       ============================================================ */
+    // ============================================================
+    // 16. KANGOUROU
+    // ============================================================
     const kangarooContainer = document.getElementById('kangarooContainer');
     const kangarooSvg = document.getElementById('kangarooSvg');
-
     if (kangarooContainer) {
       kangarooContainer.addEventListener('click', () => {
         if (kangarooSvg) {
@@ -1506,35 +1387,33 @@
         }
         toggleChat();
       });
-
-      kangarooContainer.addEventListener('mouseenter', () => {
-        if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)';
-      });
-      kangarooContainer.addEventListener('mouseleave', () => {
-        if (kangarooSvg) kangarooSvg.style.transform = '';
-      });
+      kangarooContainer.addEventListener('mouseenter', () => { if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
+      kangarooContainer.addEventListener('mouseleave', () => { if (kangarooSvg) kangarooSvg.style.transform = ''; });
     }
 
-    /* ============================================================
-       INITIALISATION
-       ============================================================ */
+    // ============================================================
+    // 17. INITIALISATION
+    // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
-      // Thème sauvegardé
-      if (localStorage.getItem('theme') === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
-
-      // Langue sauvegardée
+      // Thème
+      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+      
+      // Langue
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      window.setLanguage(savedLang);
-
-      // Initialisation
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + savedLang);
+      if (activeBtn) activeBtn.classList.add('active');
+      currentLang = savedLang;
+      window.applyReussiteTranslation(savedLang);
+      
+      // Outils
       renderDrives();
       addSubjectRow();
       renderTasks();
       renderModules();
       renderCrono();
       setTimeout(startPendulum, 100);
+      switchTab('schedule');
 
       // Chat Enter
       const chatInput = document.getElementById('chatInput');
@@ -1543,10 +1422,8 @@
           if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
         });
       }
-
-      // Tab par défaut
-      switchTab('schedule');
     });
   </script>
 </body>
 </html>
+      
