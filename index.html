@@ -573,7 +573,7 @@
       position: fixed;
       bottom: 20px;
       right: 20px;
-      z-index: 900;
+      z-index: 1000;
       cursor: grab;
       user-select: none;
       transition: bottom 0.3s ease, right 0.3s ease;
@@ -697,6 +697,7 @@
       .card-body { padding: 18px 15px 22px; }
       
       .mascot-bubble { font-size: 0.7rem; padding: 6px 10px; }
+      #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; }
     }
 
     ::-webkit-scrollbar { width: 10px; }
@@ -745,9 +746,9 @@
     <img src="logo.png" alt="ENSTP Logo" class="nav-logo" onerror="this.style.display='none'">
 
     <div class="lang-switch">
-      <button class="lang-btn active" onclick="setLang('ar', event)">العربية</button>
-      <button class="lang-btn" onclick="setLang('fr', event)">Français</button>
-      <button class="lang-btn" onclick="setLang('en', event)">English</button>
+      <button class="lang-btn active" onclick="setLang('ar', event)" id="btn-ar">العربية</button>
+      <button class="lang-btn" onclick="setLang('fr', event)" id="btn-fr">Français</button>
+      <button class="lang-btn" onclick="setLang('en', event)" id="btn-en">English</button>
     </div>
 
     <div class="nav-actions">
@@ -820,8 +821,8 @@
       <a href="administration.html" class="section-pill"><i class="fa-solid fa-file-signature"></i> <span data-i18n="sec_admin">إدارتي</span></a>
       <a href="ma-reussite.html" class="section-pill"><i class="fa-solid fa-graduation-cap"></i> <span data-i18n="sec_success">نجاحي</span></a>
       <a href="residence.html" class="section-pill"><i class="fa-solid fa-bed"></i> <span data-i18n="sec_residence">حياتي الجامعية</span></a>
-      <a href="sport.html" class="section-pill"><i class="fa-solid fa-dumbbell"></i> <span data-i18n="sec_sport">صحتي ورياضتي</span></a>
-            <a href="forum.html" class="section-pill"><i class="fa-solid fa-users"></i> <span data-i18n="sec_forum">ملتقى الطلبة</span></a>
+            <a href="sport.html" class="section-pill"><i class="fa-solid fa-dumbbell"></i> <span data-i18n="sec_sport">صحتي ورياضتي</span></a>
+      <a href="forum.html" class="section-pill"><i class="fa-solid fa-users"></i> <span data-i18n="sec_forum">ملتقى الطلبة</span></a>
       <a href="transport.html" class="section-pill"><i class="fa-solid fa-bus"></i> <span data-i18n="sec_transport">النقل</span></a>
       <a href="resto.html" class="section-pill"><i class="fa-solid fa-utensils"></i> <span data-i18n="sec_food">المطاعم</span></a>
       <a href="alger.html" class="section-pill"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="sec_leisure">السياحة</span></a>
@@ -938,7 +939,7 @@
 
     <a href="marketplace.html" class="card">
       <div class="card-img-wrap">
-        <img src="b.jpg" alt="سوق الطالب" onerror="this.src='https://via.placeholder.com/400x300/f97316+ffffff?text=سوق+الطالب'">
+        <img src="b.jpg" alt="سوق الطالب" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=سوق+الطالب'">
       </div>
       <div class="card-body">
         <h3 class="card-title" data-i18n="sec_marketplace">سوق الطالب</h3>
@@ -959,7 +960,7 @@
   </section>
 
   <!-- ==========================================
-       🦘 الكنغر المتحرك
+       🦘 الكنغر المتحرك (يفتح الدردشة عند النقر)
        ========================================== -->
   <div class="mascot-container" id="mascotContainer">
     <div class="mascot-bubble" id="mascotBubble" data-i18n="mascot_hello">مرحبا! 👋</div>
@@ -984,6 +985,35 @@
       <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
       <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
     </svg>
+  </div>
+
+  <!-- ==========================================
+       نافذة الدردشة (تفتح من الكنغر) - فوق الكنغر
+       ========================================== -->
+  <div id="chatWindow"
+       class="fixed bottom-28 right-6 z-[1001] w-80 bg-white rounded-2xl shadow-2xl border border-orange-200 hidden flex-col"
+       style="max-height: 420px;">
+    <div class="bg-gradient-to-r from-orange-500 to-amber-500 text-white p-3 rounded-t-2xl font-bold flex justify-between items-center">
+      <span class="flex items-center gap-2">
+        <i class="fa-solid fa-comments"></i> المساعد الافتراضي
+      </span>
+      <button onclick="toggleChat()" class="hover:bg-white/20 rounded-lg w-7 h-7 flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div id="chatBody" class="p-3 overflow-y-auto text-sm space-y-2" style="height: 300px;">
+      <div class="bg-orange-50 p-2 rounded-lg text-gray-800">
+        مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟
+      </div>
+    </div>
+    <div class="p-2 border-t flex gap-1">
+      <input type="text" id="chatInput" placeholder="اكتب سؤالك..."
+             class="flex-1 p-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-orange-400">
+      <button onclick="sendMessage()"
+              class="bg-orange-500 hover:bg-orange-600 text-white px-3 rounded-lg transition">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
   </div>
 
   <!-- ==========================================
@@ -1024,7 +1054,7 @@
       }
     });
 
-    /* 2. تغيير اللغة */
+    /* 2. تغيير اللغة (سيُعاد تعريفها في آخر الملف لتشمل الترجمة) */
     function setLang(lang, event) {
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
       if (event) event.target.classList.add('active');
@@ -1221,7 +1251,7 @@
       exploreBtn.addEventListener('click', () => playSound('success'));
     }
 
-    /* 9. 🦘 تفاعلات الكنغر */
+    /* 9. 🦘 تفاعلات الكنغر + فتح الدردشة */
     const mascotContainer = document.getElementById('mascotContainer');
     const mascotKangaroo = document.getElementById('mascotKangaroo');
     const mascotBubble = document.getElementById('mascotBubble');
@@ -1243,13 +1273,15 @@
       }, 2500);
     }
 
+    // النقر على الكنغر: قفزة + فتح/إغلاق الدردشة
     mascotContainer.addEventListener('click', () => {
       if (mascotContainer.classList.contains('dragging')) return;
+
       mascotKangaroo.classList.add('jump');
       playSound('kangaroo');
-      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-      showBubble(randomMsg);
       setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
+
+      toggleChat();
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -1342,10 +1374,88 @@
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.code === 'Space') {
+      if (e.code === 'Space' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
         mascotKangaroo.classList.add('jump');
         playSound('kangaroo');
         setTimeout(() => mascotKangaroo.classList.remove('jump'), 700);
+      }
+    });
+
+    /* ==========================================
+       🤖 Chatbot (يُفتح من الكنغر)
+       ========================================== */
+    function toggleChat() {
+      const chat = document.getElementById('chatWindow');
+      if (!chat) return;
+
+      const isHidden = chat.classList.contains('hidden');
+
+      if (isHidden) {
+        chat.classList.remove('hidden');
+        chat.classList.add('flex');
+        if (mascotBubble) mascotBubble.classList.remove('visible');
+      } else {
+        chat.classList.add('hidden');
+        chat.classList.remove('flex');
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      if (!input || !body) return;
+
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      body.innerHTML += `
+        <div class="flex justify-end">
+          <div class="bg-orange-500 text-white p-2 rounded-2xl rounded-br-sm max-w-[80%] text-sm">
+            ${msg}
+          </div>
+        </div>`;
+      input.value = '';
+      body.scrollTop = body.scrollHeight;
+
+      setTimeout(() => {
+        let reply = "شكراً لسؤالك! سأقوم بالرد عليك قريباً.";
+        const m = msg.toLowerCase();
+
+        if (m.includes("جدول") || m.includes("توقيت") || m.includes("emploi")) {
+          reply = "📅 يمكنك العثور على جدول التوقيت في صفحة <strong>نجاحي</strong>.";
+        } else if (m.includes("مطعم") || m.includes("أكل") || m.includes("resto")) {
+          reply = "🍽️ تفضل بزيارة صفحة <strong>المطاعم والمقاهي</strong>.";
+        } else if (m.includes("نقل") || m.includes("حافلة") || m.includes("مترو") || m.includes("bus")) {
+          reply = "🚌 كل معلومات النقل في صفحة <strong>النقل</strong>.";
+        } else if (m.includes("إقامة") || m.includes("سكن") || m.includes("residence")) {
+          reply = "🏠 تجد كل ما يخص الإقامة في صفحة <strong>حياتي الجامعية</strong>.";
+        } else if (m.includes("تسجيل") || m.includes("وثائق") || m.includes("admin")) {
+          reply = "📄 راجع صفحة <strong>إدارتي</strong> للوثائق والإجراءات.";
+        } else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("bonjour") || m.includes("hello")) {
+          reply = "👋 أهلاً بك! كيف يمكنني مساعدتك؟";
+        } else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) {
+          reply = "💛 على الرحب والسعة!";
+        }
+
+        body.innerHTML += `
+          <div class="flex justify-start">
+            <div class="bg-orange-50 text-gray-800 p-2 rounded-2xl rounded-bl-sm max-w-[80%] text-sm">
+              ${reply}
+            </div>
+          </div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatInputEl = document.getElementById('chatInput');
+      if (chatInputEl) {
+        chatInputEl.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
       }
     });
   </script>
@@ -1354,15 +1464,12 @@
        الترجمة (ar / fr / en) - مدمجة في الملف
        ========================================== -->
   <script id="enstp-translations">
-    // ==========================================
-    // ترجمة index.html (ar / fr / en)
-    // ==========================================
     window.INDEX_TRANSLATIONS = {
       ar: {
         page_title: "دليل الطالب - ENSTP",
         sound_toggle: "تشغيل/إيقاف الصوت",
         theme_toggle: "تبديل الوضع",
-        search_title: "بحث / Recherche",
+        search_title: "بحث",
         search_placeholder: "ابحث عن قسم، خدمة، أو معلومة...",
         home_badge: "الدليل الشامل للطلبة",
         home_title_1: "المدرسة العليا",
@@ -1386,7 +1493,7 @@
         sec_transport_desc: "الحافلات، المترو، والترامواي",
         sec_food: "المطاعم",
         sec_food_desc: "أفضل الوجهات القريبة",
-        sec_leisure: "السياحة",
+                sec_leisure: "السياحة",
         sec_leisure_desc: "معالم الجزائر العاصمة",
         sec_shopping: "التسوق",
         sec_shopping_desc: "المحلات، الأسعار، والعروض",
@@ -1471,15 +1578,20 @@
       }
     };
 
-    // تطبيق الترجمة على الصفحة
+    // ==========================================
+    // Fonction qui applique la traduction
+    // ==========================================
     window.applyIndexTranslation = function(lang) {
       const dict = window.INDEX_TRANSLATIONS[lang] || window.INDEX_TRANSLATIONS.ar;
 
-      // النصوص
+      // Nettoyer le titre de la page
+      if (dict.page_title) document.title = dict.page_title;
+
+      // Parcourir tous les éléments [data-i18n]
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (dict[key]) {
-          // إذا كان العنصر يحتوي على أيقونة، لا نحذفها
+          // Si l'élément contient une icône <i>, on la conserve
           const icon = el.querySelector('i');
           if (icon) {
             el.innerHTML = '';
@@ -1491,41 +1603,64 @@
         }
       });
 
-      // placeholders
+      // Placeholders
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
         if (dict[key]) el.placeholder = dict[key];
       });
 
-      // titles (tooltips)
+      // Attributs title (tooltips)
       document.querySelectorAll('[data-i18n-title]').forEach(el => {
         const key = el.getAttribute('data-i18n-title');
         if (dict[key]) el.title = dict[key];
       });
 
-      // عنوان الصفحة
-      if (dict.page_title) document.title = dict.page_title;
+      // Mettre à jour la bulle du kangourou (si non visible)
+      const bubble = document.getElementById('mascotBubble');
+      if (bubble && dict.mascot_hello && !bubble.classList.contains('visible')) {
+        bubble.textContent = dict.mascot_hello;
+      }
 
-      // المربع الترحيبي للكنغر (إن كان ظاهرًا)
-           const bubble = document.getElementById('mascotBubble');
-      if (bubble && dict.mascot_hello) {
-        // On ne remplace que si la bulle n'est pas en cours d'animation
-        if (!bubble.classList.contains('visible')) {
-          bubble.textContent = dict.mascot_hello;
-        }
+      // Mettre à jour le placeholder du chat
+      const chatInputEl = document.getElementById('chatInput');
+      if (chatInputEl) {
+        const placeholders = { ar: "اكتب سؤالك...", fr: "Écrivez votre question...", en: "Type your question..." };
+        chatInputEl.placeholder = placeholders[lang] || placeholders.ar;
+      }
+
+      // Mettre à jour le titre de la fenêtre de chat
+      const chatTitle = document.querySelector('#chatWindow .font-bold span');
+      if (chatTitle) {
+        const titles = { ar: "المساعد الافتراضي", fr: "Assistant virtuel", en: "Virtual Assistant" };
+        chatTitle.innerHTML = `<i class="fa-solid fa-comments"></i> ${titles[lang] || titles.ar}`;
+      }
+
+      // Mettre à jour le message d'accueil du chat (si vide)
+      const chatBody = document.getElementById('chatBody');
+      if (chatBody && chatBody.children.length === 1) {
+        const welcomes = {
+          ar: "مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟",
+          fr: "Bonjour ! 👋 Je suis votre assistant ENSTP. Comment puis-je vous aider ?",
+          en: "Hello! 👋 I'm your ENSTP assistant. How can I help you?"
+        };
+        chatBody.firstElementChild.textContent = welcomes[lang] || welcomes.ar;
       }
     };
 
     // ==========================================
-    // Fonction setLang() : change la langue + applique la traduction
-    // (remplace celle définie plus haut pour intégrer la traduction)
+    // Redéfinir setLang() pour intégrer la traduction
     // ==========================================
     window.setLang = function(lang, event) {
       // Boutons actifs
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      if (event) event.target.classList.add('active');
+      if (event) {
+        event.target.classList.add('active');
+      } else {
+        const btn = document.getElementById('btn-' + lang);
+        if (btn) btn.classList.add('active');
+      }
 
-      // Direction du document
+      // Direction + langue du document
       document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
       document.documentElement.setAttribute('lang', lang);
 
@@ -1541,16 +1676,18 @@
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+
       // Activer le bon bouton
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById('btn-' + savedLang);
       if (activeBtn) activeBtn.classList.add('active');
+
       // Appliquer la traduction
       window.applyIndexTranslation(savedLang);
     });
 
     // ==========================================
-    // Particules (particles.js) - inchangé
+    // Particles.js (conservé tel quel)
     // ==========================================
     if (window.particlesJS) {
       particlesJS("particles-js", {
@@ -1570,55 +1707,7 @@
         "retina_detect": true
       });
     }
-
-    // ==========================================
-    // Chatbot (inchangé)
-    // ==========================================
-    function toggleChat() {
-      const chat = document.getElementById('chatWindow');
-      if (!chat) return;
-      chat.classList.toggle('hidden');
-      chat.classList.toggle('flex');
-    }
-
-    function sendMessage() {
-      const input = document.getElementById('chatInput');
-      const body = document.getElementById('chatBody');
-      if (!input || !body) return;
-      const msg = input.value.trim();
-      if (!msg) return;
-      body.innerHTML += `<div class="bg-orange-500 text-white p-2 rounded-lg text-right ml-8">${msg}</div>`;
-      input.value = '';
-      setTimeout(() => {
-        let reply = "شكراً لسؤالك! سأقوم بالرد عليك قريباً.";
-        if (msg.includes("جدول") || msg.includes("توقيت")) reply = "يمكنك العثور على جدول التوقيت في صفحة 'نجاحي'.";
-        if (msg.includes("مطعم") || msg.includes("أكل")) reply = "تفضل بزيارة صفحة 'المطاعم والمقاهي'.";
-        body.innerHTML += `<div class="bg-gray-100 p-2 rounded-lg text-left mr-8">${reply}</div>`;
-        body.scrollTop = body.scrollHeight;
-      }, 500);
-    }
   </script>
 
-  <!-- ==========================================
-       زر المساعد العائم + نافذة الدردشة (inchangés)
-       ========================================== -->
-  <button onclick="toggleChat()" class="fixed bottom-6 left-6 z-50 w-14 h-14 bg-orange-500 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition">
-    <i class="fa-solid fa-comments text-xl"></i>
-  </button>
-
-  <div id="chatWindow" class="fixed bottom-24 left-6 z-50 w-80 bg-white rounded-2xl shadow-2xl border border-orange-200 hidden flex-col" style="max-height: 400px;">
-    <div class="bg-orange-500 text-white p-3 rounded-t-2xl font-bold flex justify-between">
-      <span>المساعد الافتراضي</span>
-      <button onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="chatBody" class="p-3 overflow-y-auto text-sm space-y-2" style="height: 300px;">
-      <div class="bg-orange-50 p-2 rounded-lg">مرحباً! كيف يمكنني مساعدتك؟</div>
-    </div>
-    <div class="p-2 border-t flex gap-1">
-      <input type="text" id="chatInput" placeholder="اكتب سؤالك..." class="flex-1 p-2 border rounded-lg text-sm">
-      <button onclick="sendMessage()" class="bg-orange-500 text-white px-3 rounded-lg"><i class="fa-solid fa-paper-plane"></i></button>
-    </div>
-  </div>
-
 </body>
-</html>                                                                                                                         
+</html>
