@@ -3,23 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>التسوق والخدمات - ENSTP</title>
+  <title data-i18n="page_title">التسوق والخدمات - ENSTP</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="translate.js"></script>
 
   <style> 
-    body { font-family: 'Cairo', sans-serif; background: #fff7ed; }
-    .dark body { background: #1a1410; }
+    body { font-family: 'Cairo', sans-serif; background: #fff7ed; transition: background-color 0.4s, color 0.4s; }
+    html.dark body { background: #1a1410; color: #f8fafc; }
     
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.15); }
-    .dark .glass-card { background: rgba(30, 20, 15, 0.95); border-color: rgba(249, 115, 22, 0.2); }
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.15); transition: all 0.3s ease; }
+    html.dark .glass-card { background: rgba(30, 20, 15, 0.95); border-color: rgba(249, 115, 22, 0.2); }
     
-    /* Carousel Gallery */
     .gallery-scroll { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 8px; scroll-snap-type: x mandatory; }
     .gallery-scroll::-webkit-scrollbar { height: 6px; }
-    .gallery-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
     .gallery-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
     .gallery-item { flex: 0 0 auto; width: 240px; height: 160px; scroll-snap-align: start; border-radius: 0.75rem; overflow: hidden; border: 1px solid #e2e8f0; background: #f8fafc; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
     .gallery-item:hover { transform: scale(1.05); box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.3); }
@@ -34,14 +31,25 @@
 
     .card-cover { width: 100%; height: 180px; object-fit: cover; border-radius: 1rem 1rem 0 0; transition: transform 0.4s ease; }
     .glass-card:hover .card-cover { transform: scale(1.05); }
+
+    /* Chat window */
+    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1001; width: 320px; max-height: 420px; background: white; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); border: 1px solid #fed7aa; display: none; flex-direction: column; }
+    #chatWindow.open { display: flex; }
+    html.dark #chatWindow { background: #1e293b; border-color: #334155; color: #f8fafc; }
+    @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+
+    @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
+
+    button, a, .glass-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #f97316 !important; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important; }
   </style>
 </head>
 <body class="min-h-screen">
 
   <header class="sticky top-0 z-50 glass-card backdrop-blur-md border-b px-4 py-3">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-2">
       <h1 class="font-bold text-gray-900 dark:text-white text-lg flex items-center gap-2">
-        <i class="fa-solid fa-cart-shopping text-orange-500"></i> التسوق والخدمات اليومية
+        <i class="fa-solid fa-cart-shopping text-orange-500"></i> <span data-i18n="shop_title">التسوق والخدمات اليومية</span>
       </h1>
       <div class="flex items-center gap-3">
         <div class="flex items-center gap-1 bg-gray-50 dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm">
@@ -49,33 +57,32 @@
           <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
           <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 hover:bg-orange-200 text-xs font-bold transition">الرئيسية</a>
+        <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center shadow-sm hover:bg-orange-50 dark:hover:bg-slate-700 transition">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-orange-400"></i>
+        </button>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 hover:bg-orange-200 text-xs font-bold transition" data-i18n="nav_home">الرئيسية</a>
       </div>
     </div>
   </header>
 
   <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
     
-    <!-- شريط التصنيفات -->
     <div id="categoriesBar" class="flex flex-wrap gap-2 justify-center"></div>
 
-    <!-- شريط الفرز -->
     <div class="glass-card p-3 rounded-2xl shadow-sm flex items-center justify-between flex-wrap gap-2 border border-orange-100 dark:border-slate-700">
-      <span class="text-sm font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-sort text-orange-500"></i> فرز حسب:</span>
+      <span class="text-sm font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-sort text-orange-500"></i> <span data-i18n="sort_by">فرز حسب:</span></span>
       <div class="flex flex-wrap gap-2">
-        <button onclick="setSort('default')" id="sort-default" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white">الافتراضي</button>
-        <button onclick="setSort('dist')" id="sort-dist" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">المسافة (الأقرب)</button>
-        <button onclick="setSort('price')" id="sort-price" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">السعر (الأرخص)</button>
-        <button onclick="setSort('rating')" id="sort-rating" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200">التقييم (الأعلى)</button>
+        <button onclick="setSort('default')" id="sort-default" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white" data-i18n="sort_default">الافتراضي</button>
+        <button onclick="setSort('dist')" id="sort-dist" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200" data-i18n="sort_dist">المسافة</button>
+        <button onclick="setSort('price')" id="sort-price" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200" data-i18n="sort_price">السعر</button>
+        <button onclick="setSort('rating')" id="sort-rating" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200" data-i18n="sort_rating">التقييم</button>
       </div>
     </div>
 
-    <!-- عرض البطاقات -->
     <div id="itemsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
-
-  <!-- نافذة التفاصيل -->
-  <div id="itemModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div id="itemModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-4xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
       <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
       
@@ -84,55 +91,197 @@
         <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
       </div>
 
-      <!-- الفيديو -->
       <div id="modalVideoContainer" class="space-y-2 hidden">
-        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> <span data-i18n="modal_video">فيديو تعريفي:</span></h4>
         <div id="modalVideo" class="w-full aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
       </div>
 
-      <!-- معرض الصور المتحرك -->
       <div id="modalMenuContainer" class="space-y-2 hidden">
-        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> معرض الصور:</h4>
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> <span data-i18n="modal_gallery">معرض الصور:</span></h4>
         <div id="modalMenuGallery" class="gallery-scroll"></div>
       </div>
 
       <div class="space-y-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
         <div>
-          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-regular fa-clock text-gray-500 mr-1.5"></i> أوقات العمل:</h4>
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-regular fa-clock text-gray-500 mr-1.5"></i> <span data-i18n="shop_hours">أوقات العمل:</span></h4>
           <p id="modalHours" class="bg-orange-50 dark:bg-slate-900 p-3 rounded-xl border border-orange-100 dark:border-slate-700"></p>
         </div>
         <div id="modalTextMenuContainer">
-          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-circle-info text-emerald-500 mr-1.5"></i> تفاصيل إضافية:</h4>
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-circle-info text-emerald-500 mr-1.5"></i> <span data-i18n="shop_extra">تفاصيل إضافية:</span></h4>
           <p id="modalTextMenu" class="bg-emerald-50/60 dark:bg-emerald-900/20 p-3 rounded-xl border border-emerald-100 dark:border-emerald-800"></p>
         </div>
       </div>
 
       <div id="modalMapContainer" class="space-y-2 hidden">
-        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> الموقع على الخريطة:</h4>
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> <span data-i18n="label_map">الموقع على الخريطة:</span></h4>
         <div id="modalMap" class="w-full h-64 rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
       </div>
 
       <div class="flex gap-2 pt-4 border-t border-gray-100 dark:border-slate-700">
-        <a id="modalPhoneBtn" href="#" class="hidden flex-1 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-center py-3 rounded-xl font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-phone"></i> اتصل</a>
-        <a id="modalMapBtn" href="#" target="_blank" class="hidden flex-1 bg-orange-50 dark:bg-slate-700 hover:bg-orange-100 text-center py-3 rounded-xl font-bold text-orange-700 dark:text-orange-400"><i class="fa-solid fa-map-location-dot"></i> فتح الخريطة</a>
+        <a id="modalPhoneBtn" href="#" class="hidden flex-1 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-center py-3 rounded-xl font-bold text-gray-700 dark:text-gray-300"><i class="fa-solid fa-phone"></i> <span data-i18n="btn_call">اتصل</span></a>
+        <a id="modalMapBtn" href="#" target="_blank" class="hidden flex-1 bg-orange-50 dark:bg-slate-700 hover:bg-orange-100 text-center py-3 rounded-xl font-bold text-orange-700 dark:text-orange-400"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="btn_map">فتح الخريطة</span></a>
       </div>
     </div>
   </div>
 
-  <script src="data/shopping.js"></script>
-  
+  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;">
+    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+      <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
+      <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
+      <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
+      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
+      <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
+      <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
+      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
+      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
+      <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
+      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
+      <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
+      <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
+      <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
+      <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
+      <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
+      <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
+      <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
+      <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div id="chatWindow" class="hidden">
+    <div style="background: linear-gradient(135deg, #f97316, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+      <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span></span>
+      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
+    </div>
+    <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
+      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
+      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- SHOP_DATA — NE PAS MODIFIER -->
   <script>
+    window.SHOP_DATA = {
+      cats: {
+        courses:  { icon: "🛒", title: { ar: "التسوق اليومي", fr: "Courses", en: "Groceries" } },
+        pharma:   { icon: "💊", title: { ar: "الصيدليات", fr: "Pharmacies", en: "Pharmacies" } },
+        tel:      { icon: "📱", title: { ar: "محلات الهواتف", fr: "Téléphonie", en: "Phone Stores" } },
+        copie:    { icon: "🖨️", title: { ar: "النسخ والطبع", fr: "Copie & Print", en: "Print & Copy" } },
+        beaute:   { icon: "💈", title: { ar: "الحلاقة", fr: "Beauté", en: "Beauty" } }
+      },
+      items: [
+        { c: "pharma", n: "Pharmacie Attoui", r: 4.5, p: 2, dist: 0.6, h: [["08:00", "20:00"]], t: "", g: [36.7260, 3.0750], video: "", menu: { ar: "صيدلية عامة، أدوية ومستلزمات طبية", fr: "Pharmacie générale, médicaments et matériel médical", en: "General pharmacy, medicines and medical supplies" }, menuImages: ["attoui 1.jpg", "attoui 2.jpg", "attoui 3.jpg", "attoui 4.jpg", "attoui 5.jpg"] },
+        { c: "pharma", n: "Pharmacie Djarar", r: 4.6, p: 2, dist: 0.8, h: [["08:30", "21:00"]], t: "", g: [36.7275, 3.0765], video: "", menu: { ar: "صيدلية، مستحضرات تجميل طبية", fr: "Pharmacie, cosmétiques médicaux", en: "Pharmacy, medical cosmetics" }, menuImages: ["djerar 1.jpg", "djerar 3.jpg", "djerar 4.jpg", "djerar 5.jpg", "djrar 2.jpg"] },
+        { c: "pharma", n: "Pharmacie Hassani", r: 4.4, p: 2, dist: 1.0, h: [["09:00", "19:30"]], t: "", g: [36.7285, 3.0780], video: "", menu: { ar: "صيدلية، أدوية مزمنة", fr: "Pharmacie, médicaments chroniques", en: "Pharmacy, chronic medicines" }, menuImages: ["hassani 1.jpg", "hassani 2.jpg", "hassani 3.jpg", "hassani 4.jpg", "hassani 5.jpg"] },
+        { c: "pharma", n: "Pharmacie Hadibi", r: 4.2, p: 2, dist: 1.2, h: [["08:00", "20:00"]], t: "", g: [36.7290, 3.0800], video: "", menu: { ar: "صيدلية، مستلزمات الأطفال", fr: "Pharmacie, articles pour bébés", en: "Pharmacy, baby supplies" }, menuImages: ["hadibi 1.jpg", "hadibi 2.jpg", "hadibi 3.jpg"] },
+        { c: "pharma", n: "Pharmacie Torkiche", r: 4.3, p: 2, dist: 1.5, h: [["08:00", "21:00"]], t: "", g: [36.7300, 3.0820], video: "", menu: { ar: "صيدلية، فحص ضغط وسكري", fr: "Pharmacie, tension et diabète", en: "Pharmacy, BP and diabetes check" }, menuImages: ["torkich 1.jpg", "torkich 2.jpg"] },
+        { c: "pharma", n: "Pharmacie Harket", r: 4.1, p: 2, dist: 1.7, h: [["09:00", "20:00"]], t: "", g: [36.7310, 3.0830], video: "", menu: { ar: "صيدلية، عناية بالبشرة", fr: "Pharmacie, soins de la peau", en: "Pharmacy, skin care" }, menuImages: ["harkat 1.jpg", "harkat 2.jpg"] },
+        { c: "pharma", n: "Pharmacie Baziz", r: 4.0, p: 2, dist: 1.9, h: [["08:30", "20:30"]], t: "", g: [36.7320, 3.0840], video: "", menu: { ar: "صيدلية، مكملات غذائية", fr: "Pharmacie, compléments alimentaires", en: "Pharmacy, food supplements" }, menuImages: ["baziz 1.jpg", "baziz 2.jpg"] },
+        { c: "pharma", n: "Pharmacie Chikhi", r: 4.7, p: 2, dist: 0.9, h: [["08:00", "22:00"]], t: "", g: [36.7255, 3.0735], video: "", menu: { ar: "صيدلية مناوبة، أدوية نادرة", fr: "Pharmacie de garde, médicaments rares", en: "On-call pharmacy, rare medicines" }, menuImages: ["chikhi 1.jpg", "chikhi 2.jpg", "chikhi 3.jpg"] },
+        { c: "tel", n: "Progress Phone", r: 4.3, p: 2, dist: 0.7, h: [["09:00", "20:00"]], t: "", g: [36.7265, 3.0760], video: "", menu: { ar: "هواتف ذكية، إكسسوارات", fr: "Smartphones, accessoires", en: "Smartphones, accessories" }, menuImages: ["rogres 1.jpg", "rogres 2.jpg", "rogres 3.jpg"] },
+        { c: "tel", n: "Prestige Mobile", r: 4.5, p: 3, dist: 1.1, h: [["09:30", "21:00"]], t: "", g: [36.7280, 3.0780], video: "", menu: { ar: "هواتف رائدة، أجهزة لوحية", fr: "Téléphones haut de gamme, tablettes", en: "High-end phones, tablets" }, menuImages: ["prestige 1.jpg", "prestige 2.jpg", "prestige 3.jpg", "prestige 4.jpg"] },
+        { c: "tel", n: "Brothers Phone Kouba", r: 4.2, p: 2, dist: 1.0, h: [["09:00", "20:30"]], t: "", g: [36.7270, 3.0755], video: "1-eKHcz31Oc", menu: { ar: "إصلاح هواتف، بيع مستعمل", fr: "Réparation de téléphones, vente d'occasion", en: "Phone repair, used sales" }, menuImages: ["brother 2.jpg", "brother 3.jpg", "brother 4.jpg", "brothers 1.jpg"] },
+        { c: "tel", n: "Yoka Phone", r: 4.0, p: 1, dist: 1.3, h: [["10:00", "22:00"]], t: "", g: [36.7290, 3.0795], video: "", menu: { ar: "هواتف اقتصادية، شواحن", fr: "Téléphones économiques, chargeurs", en: "Budget phones, chargers" }, menuImages: ["yoka 1.jpg", "yoka 2.jpg", "yoka 3.jpg", "yoka 5.jpg", "yoka 6.jpg"] },
+        { c: "tel", n: "Castle Phone", r: 4.4, p: 2, dist: 1.6, h: [["09:00", "21:00"]], t: "", g: [36.7300, 3.0810], video: "", menu: { ar: "هواتف وأجهزة لوحية، صيانة", fr: "Téléphones et tablettes, maintenance", en: "Phones and tablets, maintenance" }, menuImages: ["cafe1.jpg", "cafe2.jpg", "castle 1.jpg", "castle 2.jpg", "castle 3.jpg", "castle 4.jpg"] },
+        { c: "tel", n: "Theme Phone", r: 4.1, p: 1, dist: 1.8, h: [["09:30", "20:00"]], t: "", g: [36.7310, 3.0825], video: "", menu: { ar: "إكسسوارات، سماعات", fr: "Accessoires, écouteurs", en: "Accessories, headphones" }, menuImages: ["theme 1.jpg", "theme 2.jpg", "theme 3.jpg", "theme 4.jpg", "theme 5.jpg"] },
+        { c: "tel", n: "Hamia Phone", r: 4.3, p: 2, dist: 2.0, h: [["08:30", "21:30"]], t: "", g: [36.7320, 3.0840], video: "", menu: { ar: "هواتف، بطاقات شحن", fr: "Téléphones, cartes de recharge", en: "Phones, recharge cards" }, menuImages: ["hamia 1.jpg", "hamia 2.jpg", "hamia 3.jpg", "hamia 4.jpg", "hamia 5.jpg", "hamia 6.jpg"] },
+        { c: "tel", n: "Fiane Phone", r: 4.6, p: 3, dist: 1.4, h: [["09:00", "22:00"]], t: "", g: [36.7295, 3.0775], video: "", menu: { ar: "أحدث الهواتف، ضمان رسمي", fr: "Derniers téléphones, garantie officielle", en: "Latest phones, official warranty" }, menuImages: ["fiane 1.jpg", "fiane 2.jpg", "fiane 3.jpg", "fiane 4.jpg", "fiane 5.jpg", "chikhi 4.jpg"] },
+        { c: "courses", n: "Supérette El-Benna", r: 3.8, p: 1, dist: 0.5, h: [["07:00", "22:30"]], t: "", g: [36.7246946, 3.0744576], video: "_bspquujzqg", menu: { ar: "مواد غذائية، تنظيف", fr: "Alimentation, Nettoyage", en: "Food, Cleaning" }, menuImages: [] },
+        { c: "copie", n: "مكتبة عمي داوود", r: 4.2, p: 1, dist: 0.3, h: [["08:00", "19:00"]], t: "", g: [36.7255, 3.0710], video: "0TiwKh8Bc2g", menu: { ar: "طباعة، نسخ، تجليد", fr: "Impression, Photocopie, Reliure", en: "Printing, Copy, Binding" }, menuImages: [] },
+        { c: "copie", n: "Maktabet El-Nour", r: 4.2, p: 1, dist: 0.4, h: [["08:00", "19:00"]], t: "", g: [36.7255, 3.0710], video: "", menu: { ar: "طباعة، نسخ، تجليد", fr: "Impression, Photocopie, Reliure", en: "Printing, Copy, Binding" }, menuImages: [] },
+        { c: "beaute", n: "Salon El-Wafa", r: 4.6, p: 2, dist: 0.9, h: [["09:00", "21:00"]], t: "", g: [36.7260, 3.0720], video: "", menu: { ar: "حلاقة رجالية", fr: "Coiffure homme", en: "Men's haircut" }, menuImages: [] }
+      ]
+    };
+  </script>
+    <script>
     const data = window.SHOP_DATA;
     let currentCat = 'pharma';
     let currentSort = 'default';
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
-    const originalSetLanguage = window.setLanguage;
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    function t(key) {
+      const dict = window.SHOPPING_TRANSLATIONS[currentLang] || window.SHOPPING_TRANSLATIONS.ar;
+      return dict[key] || key;
+    }
+
+    window.SHOPPING_TRANSLATIONS = {
+      ar: {
+        page_title: "التسوق والخدمات - ENSTP", nav_home: "الرئيسية",
+        shop_title: "التسوق والخدمات اليومية",
+        sort_by: "فرز حسب:", sort_default: "الافتراضي", sort_dist: "المسافة", sort_price: "السعر", sort_rating: "التقييم",
+        shop_hours: "أوقات العمل:", shop_extra: "تفاصيل إضافية:",
+        label_map: "الموقع على الخريطة:", modal_video: "فيديو تعريفي:", modal_gallery: "معرض الصور:",
+        btn_call: "اتصل", btn_map: "فتح الخريطة", btn_details: "عرض التفاصيل",
+        no_items: "لا توجد عناصر في هذا القسم.",
+        chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
+        chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
+        chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
+        chat_shopping: "تصفح المتاجر والخدمات في هذه الصفحة."
+      },
+      fr: {
+        page_title: "Shopping et services - ENSTP", nav_home: "Accueil",
+        shop_title: "Shopping et services",
+        sort_by: "Trier par :", sort_default: "Par défaut", sort_dist: "Distance", sort_price: "Prix", sort_rating: "Note",
+        shop_hours: "Horaires :", shop_extra: "Détails :",
+        label_map: "Emplacement :", modal_video: "Vidéo :", modal_gallery: "Galerie :",
+        btn_call: "Appeler", btn_map: "Ouvrir la carte", btn_details: "Voir détails",
+        no_items: "Aucun élément dans cette catégorie.",
+        chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
+        chat_placeholder: "Votre question...", chat_default: "Merci !",
+        chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
+        chat_shopping: "Parcourez les commerces sur cette page."
+      },
+      en: {
+        page_title: "Shopping & Services - ENSTP", nav_home: "Home",
+        shop_title: "Shopping & Daily Services",
+        sort_by: "Sort by:", sort_default: "Default", sort_dist: "Distance", sort_price: "Price", sort_rating: "Rating",
+        shop_hours: "Hours:", shop_extra: "Additional details:",
+        label_map: "Location:", modal_video: "Video:", modal_gallery: "Gallery:",
+        btn_call: "Call", btn_map: "Open map", btn_details: "View details",
+        no_items: "No items in this category.",
+        chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
+        chat_placeholder: "Your question...", chat_default: "Thanks!",
+        chat_hello: "Welcome!", chat_thanks: "You're welcome!",
+        chat_shopping: "Browse shops on this page."
+      }
+    };
+
+    window.applyShoppingTranslation = function(lang) {
+      const dict = window.SHOPPING_TRANSLATIONS[lang] || window.SHOPPING_TRANSLATIONS.ar;
+      if (dict.page_title) document.title = dict.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          const icon = el.querySelector('i');
+          if (icon) { el.innerHTML = ''; el.appendChild(icon); el.appendChild(document.createTextNode(' ' + dict[key])); }
+          else el.innerText = dict[key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+      if (typeof renderCategories === 'function') renderCategories();
+      if (typeof renderItems === 'function') renderItems();
+    };
+
     window.setLanguage = function(lang) {
       currentLang = lang;
-      if(originalSetLanguage) originalSetLanguage(lang);
-      renderCategories();
-      renderItems();
+      localStorage.setItem('enstp_lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+      window.applyShoppingTranslation(lang);
     };
 
     function renderCategories() {
@@ -143,7 +292,7 @@
           const cat = data.cats[key];
           const btn = document.createElement('button');
           btn.className = `filter-btn px-4 py-2 rounded-xl font-bold text-sm border border-orange-200 dark:border-slate-700 ${key === currentCat ? 'active' : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300'}`;
-          btn.innerHTML = `${cat.icon} ${cat.title[currentLang]}`;
+          btn.innerHTML = `${cat.icon} ${cat.title[currentLang] || cat.title.ar}`;
           btn.onclick = () => { currentCat = key; renderCategories(); renderItems(); };
           bar.appendChild(btn);
         }
@@ -152,9 +301,9 @@
 
     function setSort(type) {
       currentSort = type;
-      ['default', 'dist', 'price', 'rating'].forEach(t => {
-        const btn = document.getElementById(`sort-${t}`);
-        if (t === type) btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white";
+      ['default', 'dist', 'price', 'rating'].forEach(tp => {
+        const btn = document.getElementById(`sort-${tp}`);
+        if (tp === type) btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white";
         else btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200";
       });
       renderItems();
@@ -163,15 +312,13 @@
     function renderItems() {
       const grid = document.getElementById('itemsGrid');
       grid.innerHTML = '';
-      
       let items = data.items.filter(i => i.c === currentCat);
-      
       if (currentSort === 'dist') items.sort((a, b) => (a.dist || 999) - (b.dist || 999));
       else if (currentSort === 'price') items.sort((a, b) => a.p - b.p);
       else if (currentSort === 'rating') items.sort((a, b) => b.r - a.r);
 
       if (items.length === 0) {
-        grid.innerHTML = `<p class="text-center text-gray-500 col-span-full py-10">لا توجد عناصر في هذا القسم.</p>`;
+        grid.innerHTML = `<p class="text-center text-gray-500 col-span-full py-10">${t('no_items')}</p>`;
         return;
       }
 
@@ -206,7 +353,7 @@
               ${menuText ? `<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">${menuText}</p>` : ''}
             </div>
             <div class="mt-4 pt-3 border-t border-orange-100 dark:border-slate-700 text-center text-xs font-bold text-orange-600 dark:text-orange-400">
-              <i class="fa-solid fa-eye"></i> عرض التفاصيل
+              <i class="fa-solid fa-eye"></i> ${t('btn_details')}
             </div>
           </div>
         `;
@@ -217,21 +364,17 @@
     function openModal(item) {
       document.getElementById('itemModal').classList.remove('hidden');
       document.getElementById('modalTitle').innerText = item.n;
-      document.getElementById('modalSubtitle').innerText = `${data.cats[item.c].title[currentLang]} | ${item.r} ⭐`;
-      
-      let hoursStr = 'غير محدد';
-      if (item.h && item.h.length > 0) hoursStr = item.h.map(h => `${h[0]} - ${h[1]}`).join(' | ');
+      document.getElementById('modalSubtitle').innerText = `${data.cats[item.c].title[currentLang] || data.cats[item.c].title.ar} | ${item.r} ⭐`;
+
+      let hoursStr = t('shop_hours') + ' ' + (item.h && item.h.length > 0 ? item.h.map(h => `${h[0]} - ${h[1]}`).join(' | ') : '-');
       document.getElementById('modalHours').innerText = hoursStr;
 
-      // عرض الفيديو
       const videoContainer = document.getElementById('modalVideoContainer');
       const videoDiv = document.getElementById('modalVideo');
       if (item.video) {
         videoContainer.classList.remove('hidden');
         videoDiv.innerHTML = `<iframe src="https://www.youtube.com/embed/${item.video}" width="100%" height="100%" style="border:0;" allowfullscreen></iframe>`;
-      } else {
-        videoContainer.classList.add('hidden');
-      }
+      } else videoContainer.classList.add('hidden');
 
       const textMenuContainer = document.getElementById('modalTextMenuContainer');
       const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
@@ -240,14 +383,13 @@
         document.getElementById('modalTextMenu').innerText = menuText;
       } else textMenuContainer.classList.add('hidden');
 
-      // معرض الصور المتحرك (Carousel)
       const menuContainer = document.getElementById('modalMenuContainer');
       const menuGallery = document.getElementById('modalMenuGallery');
       menuGallery.innerHTML = '';
       if (item.menuImages && item.menuImages.length > 0) {
         menuContainer.classList.remove('hidden');
         item.menuImages.forEach(img => {
-          menuGallery.innerHTML += `<div class="gallery-item" onclick="window.open('${img}', '_blank')"><img src="${img}" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs p-2 text-center\\'>صورة غير متوفرة</div>'"></div>`;
+          menuGallery.innerHTML += `<div class="gallery-item" onclick="window.open('${img}', '_blank')"><img src="${img}" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs p-2 text-center\\'>Image N/A</div>'"></div>`;
         });
       } else menuContainer.classList.add('hidden');
 
@@ -256,9 +398,7 @@
       if (item.g) {
         mapContainer.classList.remove('hidden');
         mapDiv.innerHTML = `<iframe src="https://www.google.com/maps?q=${item.g[0]},${item.g[1]}&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
-      } else {
-        mapContainer.classList.add('hidden');
-      }
+      } else mapContainer.classList.add('hidden');
 
       const phoneBtn = document.getElementById('modalPhoneBtn');
       if (item.t) { phoneBtn.href = `tel:${item.t}`; phoneBtn.classList.remove('hidden'); } else phoneBtn.classList.add('hidden');
@@ -271,14 +411,65 @@
 
     function closeModal() { document.getElementById('itemModal').classList.add('hidden'); }
 
+    function toggleChat() {
+      const chat = document.getElementById('chatWindow');
+      if (!chat) return;
+      chat.classList.toggle('hidden');
+      chat.classList.toggle('open');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      if (!input || !body) return;
+      const msg = input.value.trim();
+      if (!msg) return;
+      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div></div>`;
+      input.value = '';
+      body.scrollTop = body.scrollHeight;
+      setTimeout(() => {
+        let reply = t('chat_default');
+        const m = msg.toLowerCase();
+        if (m.includes("تسوق") || m.includes("صيدلية") || m.includes("مطعم") || m.includes("shop") || m.includes("pharmacie")) reply = "🛒 " + t('chat_shopping');
+        else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
+        else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
+        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div></div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 500);
+    }
+
+    const kangarooContainer = document.getElementById('kangarooContainer');
+    const kangarooSvg = document.getElementById('kangarooSvg');
+    if (kangarooContainer) {
+      kangarooContainer.addEventListener('click', () => {
+        if (kangarooSvg) {
+          kangarooSvg.style.animation = 'none';
+          kangarooSvg.offsetHeight;
+          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
+          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
+        }
+        toggleChat();
+      });
+      kangarooContainer.addEventListener('mouseenter', () => { if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
+      kangarooContainer.addEventListener('mouseleave', () => { if (kangarooSvg) kangarooSvg.style.transform = ''; });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      if (typeof window.SHOP_DATA === 'undefined') {
-        document.getElementById('itemsGrid').innerHTML = '<p class="text-red-500 font-bold text-center col-span-full">خطأ في تحميل البيانات.</p>';
-        return;
-      }
+      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + savedLang);
+      if (activeBtn) activeBtn.classList.add('active');
+      currentLang = savedLang;
+      window.applyShoppingTranslation(savedLang);
       renderCategories();
       renderItems();
-      setTimeout(() => { if(window.setLanguage) window.setLanguage(currentLang); }, 100);
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+        });
+      }
     });
   </script>
 </body>
