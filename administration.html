@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>إدارتي - ENSTP</title>
+  <title data-i18n="admin_page_title">إدارتي - ENSTP</title>
 
-  <script src="translate.js"></script>
   <style>
     body { top: 0 !important; }
     .skiptranslate iframe { display: none !important; }
@@ -43,11 +42,9 @@
     body { font-family: 'Cairo', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; background-color: #ffffff; }
     .dark body { background-color: #0f172a; }
     
-    /* خلفية بيضاء نقية */
     .bg-main { background-color: #ffffff; transition: background-color 0.4s ease; }
     .dark .bg-main { background-color: #0f172a; }
 
-    /* البطاقات */
     .glass-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); transition: all 0.3s ease; }
     .dark .glass-card { background: #1e293b; border-color: #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
     
@@ -58,11 +55,9 @@
     .accordion-content.active { max-height: 3000px; transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
     .rotate-180 { transform: rotate(180deg); }
     
-    /* الأنيميشن: الظهور واحدة تلو الأخرى */
     .reveal { opacity: 0; transform: translateY(50px) scale(0.95); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
 
-    /* CDE Hero */
     .cde-hero {
       position: relative;
       border-radius: 1.5rem;
@@ -86,7 +81,6 @@
       color: white;
     }
 
-    /* Video Container */
     .video-container {
       position: relative;
       padding-bottom: 56.25%;
@@ -102,6 +96,57 @@
       width: 100%;
       height: 100%;
       border: 0;
+    }
+
+    /* ==========================================
+       تحسينات المظهر الموحدة (إضافة فقط)
+       ========================================== */
+    .glass-card, button, a {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px -12px rgba(249, 115, 22, 0.2);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #f97316 !important;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important;
+    }
+
+    @keyframes enstpPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .enstp-pulse { animation: enstpPulse 2s ease-in-out infinite; }
+
+    /* Chat window */
+    #chatWindow {
+      position: fixed;
+      bottom: 110px;
+      right: 20px;
+      z-index: 1001;
+      width: 320px;
+      max-height: 420px;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      border: 1px solid #fed7aa;
+      display: none;
+      flex-direction: column;
+    }
+    #chatWindow.open { display: flex; }
+    .dark #chatWindow { background: #1e293b; border-color: #334155; color: #f8fafc; }
+    @media (max-width: 640px) {
+      #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; }
+    }
+
+    @keyframes kangarooJump {
+      0%, 100% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); }
+      60% { transform: translateY(-10px) scale(1) rotate(5deg); }
     }
   </style>
 </head>
@@ -143,14 +188,12 @@
       <p class="text-gray-600 dark:text-gray-400 mt-2" data-i18n="admin_page_subtitle">كل ما تحتاجه من وثائق وإجراءات إدارية في مكان واحد.</p>
     </div>
 
-    <!-- ========================================== -->
     <!-- قسم التواصل مع الإدارة -->
-    <!-- ========================================== -->
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-orange-100 dark:border-slate-700 overflow-hidden reveal">
       <button onclick="toggleAccordion('contact')" class="w-full flex items-center justify-between p-5 bg-orange-50 dark:bg-slate-700 hover:bg-orange-100 dark:hover:bg-slate-600 transition text-right">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-orange-200 dark:bg-brand-900/40 text-orange-700 dark:text-brand-400 flex items-center justify-center font-bold"><i class="fa-solid fa-envelope"></i></div>
-          <h3 class="font-bold text-lg text-orange-900 dark:text-brand-400">التواصل مع الإدارة</h3>
+          <h3 class="font-bold text-lg text-orange-900 dark:text-brand-400" data-i18n="admin_contact">التواصل مع الإدارة</h3>
         </div>
         <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" id="icon-contact"></i>
       </button>
@@ -158,36 +201,36 @@
         <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
           <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 bg-orange-50 dark:bg-slate-900/50 p-3 rounded-lg border border-orange-100 dark:border-slate-700">
             <i class="fa-solid fa-info-circle text-orange-500"></i>
-            يرجى تعبئة النموذج أدناه. عند الإرسال، سيفتح تطبيق البريد الإلكتروني الخاص بك وستكون الرسالة جاهزة للإنشاء. فقط اضغط "إرسال".
+            <span data-i18n="admin_contact_info">يرجى تعبئة النموذج أدناه. عند الإرسال، سيفتح تطبيق البريد الإلكتروني الخاص بك وستكون الرسالة جاهزة للإنشاء. فقط اضغط "إرسال".</span>
           </p>
 
           <form id="contactForm" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">اللقب (Nom):</label>
-                <input type="text" id="nom" required placeholder="أدخل لقبك" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold focus:ring-2 focus:ring-brand-500 outline-none" />
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="form_nom">اللقب (Nom):</label>
+                <input type="text" id="nom" required placeholder="أدخل لقبك" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold outline-none" />
               </div>
               <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">الإسم (Prénom):</label>
-                <input type="text" id="prenom" required placeholder="أدخل اسمك" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold focus:ring-2 focus:ring-brand-500 outline-none" />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">البريد الإلكتروني (Email):</label>
-                <input type="email" id="email" required placeholder="example@enstp.edu.dz" dir="ltr" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold focus:ring-2 focus:ring-brand-500 outline-none text-left" />
-              </div>
-              <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">رقم التسجيل (N° Inscription):</label>
-                <input type="text" id="num_inscription" required placeholder="أدخل رقم التسجيل" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold focus:ring-2 focus:ring-brand-500 outline-none" />
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="form_prenom">الإسم (Prénom):</label>
+                <input type="text" id="prenom" required placeholder="أدخل اسمك" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold outline-none" />
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">التخصص (Département):</label>
-                <select id="dept" required onchange="updateYears()" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold focus:ring-2 focus:ring-brand-500 outline-none cursor-pointer">
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="form_email">البريد الإلكتروني (Email):</label>
+                <input type="email" id="email" required placeholder="example@enstp.edu.dz" dir="ltr" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold outline-none text-left" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="form_num">رقم التسجيل (N° Inscription):</label>
+                <input type="text" id="num_inscription" required placeholder="أدخل رقم التسجيل" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold outline-none" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="form_dept">التخصص (Département):</label>
+                <select id="dept" required onchange="updateYears()" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold outline-none cursor-pointer">
                   <option value="" disabled selected>اختر التخصص...</option>
                   <option value="prep">قسم تحضيري (CP)</option>
                   <option value="dib">قسم منشآت قاعدية (DIB)</option>
@@ -195,16 +238,16 @@
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">السنة الدراسية:</label>
-                <select id="year" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold focus:ring-2 focus:ring-brand-500 outline-none cursor-pointer" disabled>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="form_year">السنة الدراسية:</label>
+                <select id="year" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold outline-none cursor-pointer" disabled>
                   <option value="" disabled selected>اختر السنة...</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">الفوج (Groupe):</label>
-              <select id="group" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold focus:ring-2 focus:ring-brand-500 outline-none cursor-pointer">
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="form_group">الفوج (Groupe):</label>
+              <select id="group" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold outline-none cursor-pointer">
                 <option value="" disabled selected>اختر الفوج...</option>
                 <option value="الفوج 1">الفوج 1</option>
                 <option value="الفوج 2">الفوج 2</option>
@@ -222,32 +265,30 @@
             </div>
 
             <div>
-              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">الطلب / الرسالة:</label>
-              <textarea id="message" required rows="4" placeholder="اكتب طلبك أو استفسارك هنا بالتفصيل..." class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold focus:ring-2 focus:ring-brand-500 outline-none resize-none"></textarea>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="form_message">الطلب / الرسالة:</label>
+              <textarea id="message" required rows="4" placeholder="اكتب طلبك أو استفسارك هنا بالتفصيل..." class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-semibold outline-none resize-none"></textarea>
             </div>
 
             <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg py-3 rounded-xl shadow-lg hover:shadow-orange-500/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-3">
               <i class="fa-solid fa-paper-plane"></i>
-              <span>إرسال الطلب</span>
+              <span data-i18n="form_send">إرسال الطلب</span>
             </button>
             
             <p class="text-center text-xs font-bold text-gray-500 dark:text-gray-400 mt-2">
               <i class="fa-solid fa-envelope-open-text text-orange-500"></i>
-              يرجى تفقد بريدك الإلكتروني بعد الإرسال للتأكد من استلام الطلب.
+              <span data-i18n="form_check_email">يرجى تفقد بريدك الإلكتروني بعد الإرسال للتأكد من استلام الطلب.</span>
             </p>
           </form>
         </div>
       </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- قسم مركز تطوير المقاولاتية CDE -->
-    <!-- ========================================== -->
+    <!-- قسم CDE -->
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden reveal">
       <button onclick="toggleAccordion('cde')" class="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 transition text-right">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold"><i class="fa-solid fa-lightbulb"></i></div>
-          <h3 class="font-bold text-lg text-brand-900 dark:text-brand-400">مركز تطوير المقاولاتية (CDE)</h3>
+          <h3 class="font-bold text-lg text-brand-900 dark:text-brand-400" data-i18n="cde_title">مركز تطوير المقاولاتية (CDE)</h3>
         </div>
         <i class="fa-solid fa-chevron-down text-brand-500 transition-transform" id="icon-cde"></i>
       </button>
@@ -257,14 +298,14 @@
           <div class="cde-hero">
             <div class="cde-hero-overlay"></div>
             <div class="cde-hero-content w-full">
-              <h4 class="text-2xl font-black text-white">المنصة الوطنية لمراكز تطوير المقاولاتية</h4>
-              <p class="text-sm text-gray-200">"أفضل طريقة للتنبؤ بالمستقبل هي صنعه"</p>
+              <h4 class="text-2xl font-black text-white" data-i18n="cde_hero_title">المنصة الوطنية لمراكز تطوير المقاولاتية</h4>
+              <p class="text-sm text-gray-200" data-i18n="cde_hero_sub">"أفضل طريقة للتنبؤ بالمستقبل هي صنعه"</p>
             </div>
           </div>
 
           <div>
-            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2">التعريف العام</h5>
-            <p class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl leading-relaxed">
+            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2" data-i18n="cde_def_title">التعريف العام</h5>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl leading-relaxed" data-i18n="cde_def_text">
               تعد مراكز تطوير المقاولاتية (CDE) هياكل متخصصة تم إنشاؤها داخل الجامعات والمؤسسات الجامعية والمدارس العليا (مثل المدرسة الوطنية العليا للأشغال العمومية ENSTP) ومؤسسات التكوين المهني في الجزائر، وذلك بتأطير مشترك بين وزارة التعليم العالي والبحث العلمي ووزارة اقتصاد المعرفة والمؤسسات الناشئة والمؤسسات المصغرة (عبر الوكالة الوطنية لدعم وتنمية المقاولاتية NESDA).
             </p>
           </div>
@@ -272,50 +313,50 @@
           <div class="grid grid-cols-3 gap-3 text-center">
             <div class="bg-brand-50 dark:bg-slate-900/50 p-3 rounded-xl border border-brand-100 dark:border-slate-700">
               <div class="text-2xl font-black text-brand-600 dark:text-brand-400">700+</div>
-              <div class="text-xs font-bold text-gray-600 dark:text-gray-400">مرشد ومدرب</div>
+              <div class="text-xs font-bold text-gray-600 dark:text-gray-400" data-i18n="cde_stat1">مرشد ومدرب</div>
             </div>
             <div class="bg-brand-50 dark:bg-slate-900/50 p-3 rounded-xl border border-brand-100 dark:border-slate-700">
               <div class="text-2xl font-black text-brand-600 dark:text-brand-400">50,000+</div>
-              <div class="text-xs font-bold text-gray-600 dark:text-gray-400">طالب مكون سنوياً</div>
+              <div class="text-xs font-bold text-gray-600 dark:text-gray-400" data-i18n="cde_stat2">طالب مكون سنوياً</div>
             </div>
             <div class="bg-brand-50 dark:bg-slate-900/50 p-3 rounded-xl border border-brand-100 dark:border-slate-700">
               <div class="text-2xl font-black text-brand-600 dark:text-brand-400">100+</div>
-              <div class="text-xs font-bold text-gray-600 dark:text-gray-400">مركز عبر الوطن</div>
+              <div class="text-xs font-bold text-gray-600 dark:text-gray-400" data-i18n="cde_stat3">مركز عبر الوطن</div>
             </div>
           </div>
 
           <div>
-            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3">الركائز والخدمات الأساسية</h5>
+            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3" data-i18n="cde_pillars_title">الركائز والخدمات الأساسية</h5>
             <ul class="space-y-2">
               <li class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg border-r-4 border-brand-400">
-                <strong class="text-brand-700 dark:text-brand-400">1. التوعية والتحسيس:</strong> تنظيم محاضرات وورشات عمل وفعاليات توعوية لإطلاع الطالب على فوائد عالم المقاولاتية.
+                <strong class="text-brand-700 dark:text-brand-400" data-i18n="cde_p1_title">1. التوعية والتحسيس:</strong> <span data-i18n="cde_p1_desc">تنظيم محاضرات وورشات عمل وفعاليات توعوية لإطلاع الطالب على فوائد عالم المقاولاتية.</span>
               </li>
               <li class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg border-r-4 border-brand-400">
-                <strong class="text-brand-700 dark:text-brand-400">2. التكوين والتأهيل:</strong> دورات تدريبية تغطي التخطيط الاستراتيجي، التسيير المالي، التسويق، والجوانب القانونية.
+                <strong class="text-brand-700 dark:text-brand-400" data-i18n="cde_p2_title">2. التكوين والتأهيل:</strong> <span data-i18n="cde_p2_desc">دورات تدريبية تغطي التخطيط الاستراتيجي، التسيير المالي، التسويق، والجوانب القانونية.</span>
               </li>
               <li class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg border-r-4 border-brand-400">
-                <strong class="text-brand-700 dark:text-brand-400">3. المرافقة والاستشارات:</strong> توجيه ودعم مخصص من خبراء لمرافقة الطالب وتحويل الأفكار إلى مؤسسات.
+                <strong class="text-brand-700 dark:text-brand-400" data-i18n="cde_p3_title">3. المرافقة والاستشارات:</strong> <span data-i18n="cde_p3_desc">توجيه ودعم مخصص من خبراء لمرافقة الطالب وتحويل الأفكار إلى مؤسسات.</span>
               </li>
               <li class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg border-r-4 border-brand-400">
-                <strong class="text-brand-700 dark:text-brand-400">4. التمويل والشراكات:</strong> تيسير الحصول على التمويل عبر آليات NESDA والدعم الفخري والمصغر.
+                <strong class="text-brand-700 dark:text-brand-400" data-i18n="cde_p4_title">4. التمويل والشراكات:</strong> <span data-i18n="cde_p4_desc">تيسير الحصول على التمويل عبر آليات NESDA والدعم الفخري والمصغر.</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2">مركز CDE بالمدرسة (ENSTP)</h5>
+            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2" data-i18n="cde_enstp_title">مركز CDE بالمدرسة (ENSTP)</h5>
             <div class="bg-brand-50 dark:bg-slate-900/50 p-4 rounded-xl border border-brand-100 dark:border-slate-700 space-y-2">
-              <p>يستهدف المركز مهندسي المستقبل وطلبة التخرج في تخصصات الأشغال العمومية والهندسة المدنية، حيث يعمل على:</p>
+              <p data-i18n="cde_enstp_intro">يستهدف المركز مهندسي المستقبل وطلبة التخرج في تخصصات الأشغال العمومية والهندسة المدنية، حيث يعمل على:</p>
               <ul class="list-disc list-inside space-y-1 text-sm">
-                <li>تحويل مشاريع مذكرات التخرج إلى مؤسسات مصغرة وناشئة (القرار الوزاري 1275).</li>
-                <li>تسجيل الطلبات والمعالجة الرقمية الكاملة عبر البوابة الوطنية.</li>
-                <li>مرافقة التجسيد الميداني للمشاريع المتعلقة بالهندسة الذكية والبناء المستدام.</li>
+                <li data-i18n="cde_enstp_li1">تحويل مشاريع مذكرات التخرج إلى مؤسسات مصغرة وناشئة (القرار الوزاري 1275).</li>
+                <li data-i18n="cde_enstp_li2">تسجيل الطلبات والمعالجة الرقمية الكاملة عبر البوابة الوطنية.</li>
+                <li data-i18n="cde_enstp_li3">مرافقة التجسيد الميداني للمشاريع المتعلقة بالهندسة الذكية والبناء المستدام.</li>
               </ul>
             </div>
           </div>
 
           <div>
-            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3">معرض الصور</h5>
+            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3" data-i18n="cde_gallery_title">معرض الصور</h5>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
               <img src="a1.jpg" alt="CDE 1" class="rounded-lg w-full h-32 object-cover shadow-sm hover:scale-105 transition cursor-pointer" onerror="this.style.display='none'">
               <img src="a2.jpg" alt="CDE 2" class="rounded-lg w-full h-32 object-cover shadow-sm hover:scale-105 transition cursor-pointer" onerror="this.style.display='none'">
@@ -328,34 +369,34 @@
           </div>
 
           <div>
-            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2">معلومات الاتصال</h5>
+            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-2" data-i18n="cde_contact_title">معلومات الاتصال</h5>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <a href="https://cde.dz" target="_blank" class="flex items-center gap-3 bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 transition">
                 <i class="fa-solid fa-globe text-brand-500 text-xl"></i>
                 <div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">الموقع الإلكتروني</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400" data-i18n="cde_web">الموقع الإلكتروني</div>
                   <div class="font-bold text-gray-900 dark:text-white" dir="ltr">cde.dz</div>
                 </div>
               </a>
               <a href="mailto:contact@cde.dz" class="flex items-center gap-3 bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 transition">
                 <i class="fa-solid fa-envelope text-brand-500 text-xl"></i>
                 <div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">البريد الإلكتروني</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400" data-i18n="cde_email">البريد الإلكتروني</div>
                   <div class="font-bold text-gray-900 dark:text-white" dir="ltr">contact@cde.dz</div>
                 </div>
               </a>
               <div class="flex items-center gap-3 bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
                 <i class="fa-solid fa-phone text-brand-500 text-xl"></i>
                 <div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">الهاتف</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400" data-i18n="cde_phone">الهاتف</div>
                   <div class="font-bold text-gray-900 dark:text-white" dir="ltr">023 56 50 16</div>
                 </div>
               </div>
               <div class="flex items-center gap-3 bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
                 <i class="fa-solid fa-location-dot text-brand-500 text-xl"></i>
                 <div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">العنوان</div>
-                  <div class="font-bold text-gray-900 dark:text-white">شارع سيدي غاريدي، القبة، الجزائر</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400" data-i18n="cde_address">العنوان</div>
+                  <div class="font-bold text-gray-900 dark:text-white" data-i18n="cde_address_val">شارع سيدي غاريدي، القبة، الجزائر</div>
                 </div>
               </div>
             </div>
@@ -364,36 +405,37 @@
       </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- قسم حاضنة المدرسة (مع الفيديو) -->
-    <!-- ========================================== -->
+    <!-- قسم حاضنة المدرسة -->
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden reveal">
       <button onclick="toggleAccordion('incubator')" class="w-full flex items-center justify-between p-5 bg-emerald-50 dark:bg-slate-700 hover:bg-emerald-100 dark:hover:bg-slate-600 transition text-right">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-emerald-200 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold"><i class="fa-solid fa-rocket"></i></div>
-          <h3 class="font-bold text-lg text-emerald-900 dark:text-emerald-400">حاضنة المدرسة</h3>
+          <h3 class="font-bold text-lg text-emerald-900 dark:text-emerald-400" data-i18n="incub_title">حاضنة المدرسة</h3>
         </div>
         <i class="fa-solid fa-chevron-down text-emerald-500 transition-transform" id="icon-incubator"></i>
       </button>
       <div id="content-incubator" class="accordion-content">
         <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
-          <p class="bg-emerald-50 dark:bg-slate-900/50 p-4 rounded-xl border border-emerald-100 dark:border-slate-700 leading-relaxed">
+          <p class="bg-emerald-50 dark:bg-slate-900/50 p-4 rounded-xl border border-emerald-100 dark:border-slate-700 leading-relaxed" data-i18n="incub_desc">
             تُعتبر حاضنة أعمال المدرسة الوطنية العليا للأشغال العمومية (ENSTP) فضاءً ديناميكياً يهدف إلى دعم الابتكار وريادة الأعمال لدى الطلبة وتحويل أفكارهم إلى مشاريع حقيقية وشركات ناشئة، وذلك في إطار القرار الوزاري رقم 1275 (مشاريع مبتكرة / شركات ناشئة).
           </p>
           <ul class="space-y-2">
             <li class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg border-r-4 border-emerald-400">
-              <strong class="text-emerald-700 dark:text-emerald-400">الدعم الموجه (المرافقة):</strong> مساندة الطلبة في تطوير أفكارهم المبتكرة وتحويلها إلى مشاريع قابلة للتنفيذ في مجالات البنية التحتية والأشغال العامة.
+              <strong class="text-emerald-700 dark:text-emerald-400" data-i18n="incub_p1_title">الدعم الموجه (المرافقة):</strong> <span data-i18n="incub_p1_desc">مساندة الطلبة في تطوير أفكارهم المبتكرة وتحويلها إلى مشاريع قابلة للتنفيذ في مجالات البنية التحتية والأشغال العامة.</span>
+            </li>
+                        <li class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg border-r-4 border-emerald-400">
+              <strong class="text-emerald-700 dark:text-emerald-400" data-i18n="incub_p1_title">الدعم الموجه (المرافقة):</strong> <span data-i18n="incub_p1_desc">مساندة الطلبة في تطوير أفكارهم المبتكرة وتحويلها إلى مشاريع قابلة للتنفيذ في مجالات البنية التحتية والأشغال العامة.</span>
             </li>
             <li class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg border-r-4 border-emerald-400">
-              <strong class="text-emerald-700 dark:text-emerald-400">التكوين وورش العمل:</strong> تنظيم دورات تكوينية ومخيمات تدريبية (مثل مخيمات الابتكار وريادة الأعمال بالتعاون مع شركاء مثل حاضنة Catalyst).
+              <strong class="text-emerald-700 dark:text-emerald-400" data-i18n="incub_p2_title">التكوين وورش العمل:</strong> <span data-i18n="incub_p2_desc">تنظيم دورات تكوينية ومخيمات تدريبية (مثل مخيمات الابتكار وريادة الأعمال بالتعاون مع شركاء مثل حاضنة Catalyst).</span>
             </li>
             <li class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg border-r-4 border-emerald-400">
-              <strong class="text-emerald-700 dark:text-emerald-400">مساحات العمل المشترك:</strong> توفير فضاءات مخصصة للتعاون وتبادل الأفكار والعمل الجماعي بين رواد الأعمال الشباب.
+              <strong class="text-emerald-700 dark:text-emerald-400" data-i18n="incub_p3_title">مساحات العمل المشترك:</strong> <span data-i18n="incub_p3_desc">توفير فضاءات مخصصة للتعاون وتبادل الأفكار والعمل الجماعي بين رواد الأعمال الشباب.</span>
             </li>
           </ul>
 
           <div class="pt-4">
-            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3"><i class="fa-solid fa-video text-red-500 mr-2"></i> فيديو تعريفي</h5>
+            <h5 class="font-bold text-lg text-gray-900 dark:text-white mb-3"><i class="fa-solid fa-video text-red-500 mr-2"></i> <span data-i18n="incub_video_title">فيديو تعريفي</span></h5>
             <div class="video-container">
               <iframe src="https://www.youtube.com/embed/wjSMCDvCYAA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -402,32 +444,30 @@
       </div>
     </div>
 
-    <!-- ========================================== -->
     <!-- قسم NESDA -->
-    <!-- ========================================== -->
     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden reveal">
       <button onclick="toggleAccordion('nesda')" class="w-full flex items-center justify-between p-5 bg-purple-50 dark:bg-slate-700 hover:bg-purple-100 dark:hover:bg-slate-600 transition text-right">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-purple-200 dark:bg-purple-900/40 text-purple-700 dark:text-purple-400 flex items-center justify-center font-bold"><i class="fa-solid fa-handshake"></i></div>
-          <h3 class="font-bold text-lg text-purple-900 dark:text-purple-400">مركز تطوير المقاولاتية NESDA</h3>
+          <h3 class="font-bold text-lg text-purple-900 dark:text-purple-400" data-i18n="nesda_title">مركز تطوير المقاولاتية NESDA</h3>
         </div>
         <i class="fa-solid fa-chevron-down text-purple-500 transition-transform" id="icon-nesda"></i>
       </button>
       <div id="content-nesda" class="accordion-content">
         <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
-          <p class="bg-purple-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 leading-relaxed">
+          <p class="bg-purple-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 leading-relaxed" data-i18n="nesda_desc">
             الوكالة الوطنية لدعم وتنمية المقاولاتية (NESDA) هي وكالة حكومية جزائرية تهدف إلى دعم إنشاء وتطوير المؤسسات المصغرة. يعمل مركز NESDA في ENSTP على مرافقة الطلبة والمهندسين الشباب في تجسيد مشاريعهم من خلال آليات التمويل والدعم المتاحة.
           </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 text-center">
               <i class="fa-solid fa-coins text-purple-500 text-2xl mb-2"></i>
-              <h5 class="font-bold text-gray-900 dark:text-white text-sm mb-1">التمويل</h5>
-              -xs text-gray-600 dark:text-gray-400">دعم مالي للمشاريع الشبابية</p>
+              <h5 class="font-bold text-gray-900 dark:text-white text-sm mb-1" data-i18n="nesda_f1_title">التمويل</h5>
+              <p class="text-xs text-gray-600 dark:text-gray-400" data-i18n="nesda_f1_desc">دعم مالي للمشاريع الشبابية</p>
             </div>
             <div class="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-purple-100 dark:border-slate-700 text-center">
               <i class="fa-solid fa-chart-line text-purple-500 text-2xl mb-2"></i>
-              <h5 class="font-bold text-gray-900 dark:text-white text-sm mb-1">المرافقة</h5>
-              <p class="text-xs text-gray-600 dark:text-gray-400">متابعة المشاريع خطوة بخطوة</p>
+              <h5 class="font-bold text-gray-900 dark:text-white text-sm mb-1" data-i18n="nesda_f2_title">المرافقة</h5>
+              <p class="text-xs text-gray-600 dark:text-gray-400" data-i18n="nesda_f2_desc">متابعة المشاريع خطوة بخطوة</p>
             </div>
           </div>
         </div>
@@ -454,10 +494,10 @@
             <div class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
               <strong class="block mb-1" data-i18n="admin_missions">المهام الموجهة للطلبة:</strong>
               <ul class="list-disc list-inside text-xs space-y-1">
-                <li>ضمان المتابعة الإدارية للطلبة.</li>
-                <li>الإعلام والتوجيه بخصوص إجراءات التمدرس.</li>
-                <li>تسليم الشهادات والوثائق الإدارية.</li>
-                <li>متابعة التسجيلات والنتائج.</li>
+                <li data-i18n="admin_t1_m1">ضمان المتابعة الإدارية للطلبة.</li>
+                <li data-i18n="admin_t1_m2">الإعلام والتوجيه بخصوص إجراءات التمدرس.</li>
+                <li data-i18n="admin_t1_m3">تسليم الشهادات والوثائق الإدارية.</li>
+                <li data-i18n="admin_t1_m4">متابعة التسجيلات والنتائج.</li>
               </ul>
             </div>
           </div>
@@ -469,9 +509,9 @@
             <div class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
               <strong class="block mb-1" data-i18n="admin_missions">المهام الموجهة للطلبة:</strong>
               <ul class="list-disc list-inside text-xs space-y-1">
-                <li>الإشراف العام على سير الدراسة.</li>
-                <li>المصادقة على البرامج والتوقيتات.</li>
-                <li>اتخاذ القرارات المتعلقة بالحالات الأكاديمية.</li>
+                <li data-i18n="admin_t2_m1">الإشراف العام على سير الدراسة.</li>
+                <li data-i18n="admin_t2_m2">المصادقة على البرامج والتوقيتات.</li>
+                <li data-i18n="admin_t2_m3">اتخاذ القرارات المتعلقة بالحالات الأكاديمية.</li>
               </ul>
             </div>
           </div>
@@ -483,9 +523,9 @@
             <div class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
               <strong class="block mb-1" data-i18n="admin_missions">المهام الموجهة للطلبة:</strong>
               <ul class="list-disc list-inside text-xs space-y-1">
-                <li>متابعة المواظبة والانتظام.</li>
-                <li>إدارة الغيابات والمبررات.</li>
-                <li>معالجة الملفات التأديبية.</li>
+                <li data-i18n="admin_t3_m1">متابعة المواظبة والانتظام.</li>
+                <li data-i18n="admin_t3_m2">إدارة الغيابات والمبررات.</li>
+                <li data-i18n="admin_t3_m3">معالجة الملفات التأديبية.</li>
               </ul>
             </div>
           </div>
@@ -506,27 +546,27 @@
       <div id="content-cnas" class="accordion-content">
         <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
           <div class="bg-blue-50 dark:bg-slate-900/50 p-4 rounded-xl border border-blue-100 dark:border-slate-700">
-            <p class="font-bold text-blue-900 dark:text-blue-400 mb-2"><i class="fa-solid fa-location-dot"></i> أين يقع مكتب الضمان الاجتماعي؟</p>
-            <p>يقع المكتب داخل المدرسة (ENSTP)، مقابل الحاضنة (Incubateur) وبيت الطالب، بجانب مكتب الطبيب مباشرة.</p>
+            <p class="font-bold text-blue-900 dark:text-blue-400 mb-2"><i class="fa-solid fa-location-dot"></i> <span data-i18n="cnas_q1">أين يقع مكتب الضمان الاجتماعي؟</span></p>
+            <p data-i18n="cnas_a1">يقع المكتب داخل المدرسة (ENSTP)، مقابل الحاضنة (Incubateur) وبيت الطالب، بجانب مكتب الطبيب مباشرة.</p>
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-folder-open text-amber-500"></i> ما هي الوثائق المطلوبة؟</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-folder-open text-amber-500"></i> <span data-i18n="cnas_q2">ما هي الوثائق المطلوبة؟</span></p>
             <ul class="list-disc list-inside bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg space-y-1">
-              <li>شهادة الميلاد.</li>
-              <li>شهادة الإقامة.</li>
-              <li>نسخة من بطاقة التعريف الوطنية البيومترية.</li>
-              <li>نسخة من شهادة التسجيل المدرسي.</li>
-              <li>صك بريدي (Chèque postal barré).</li>
+              <li data-i18n="cnas_d1">شهادة الميلاد.</li>
+              <li data-i18n="cnas_d2">شهادة الإقامة.</li>
+              <li data-i18n="cnas_d3">نسخة من بطاقة التعريف الوطنية البيومترية.</li>
+              <li data-i18n="cnas_d4">نسخة من شهادة التسجيل المدرسي.</li>
+              <li data-i18n="cnas_d5">صك بريدي (Chèque postal barré).</li>
             </ul>
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-regular fa-calendar-days text-emerald-500"></i> ما هي أيام استقبال الملفات؟</p>
-            <p class="bg-emerald-50 dark:bg-emerald-900/30 p-2 rounded-lg inline-block text-emerald-800 dark:text-emerald-400 font-bold">الاثنين، الثلاثاء، والخميس.</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-regular fa-calendar-days text-emerald-500"></i> <span data-i18n="cnas_q3">ما هي أيام استقبال الملفات؟</span></p>
+            <p class="bg-emerald-50 dark:bg-emerald-900/30 p-2 rounded-lg inline-block text-emerald-800 dark:text-emerald-400 font-bold" data-i18n="cnas_a3">الاثنين، الثلاثاء، والخميس.</p>
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-laptop-medical text-purple-500"></i> كيف أسجل في منصة الهناء (EL HANAA)؟</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-laptop-medical text-purple-500"></i> <span data-i18n="cnas_q4">كيف أسجل في منصة الهناء (EL HANAA)؟</span></p>
             <a href="https://elhanaa.cnas.dz/inscription.xhtml" target="_blank" class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold transition mt-2">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> الدخول إلى منصة الهناء
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-i18n="cnas_btn">الدخول إلى منصة الهناء</span>
             </a>
           </div>
         </div>
@@ -550,23 +590,23 @@
             <img src="library3.png" alt="قاعة المطالعة" class="rounded-lg w-full object-cover shadow-sm" onerror="this.style.display='none'">
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-regular fa-clock text-amber-600"></i> ما هي أوقات عمل المكتبة؟</p>
-            <p class="bg-amber-50 dark:bg-amber-900/30 p-2 rounded-lg text-amber-900 dark:text-amber-400">الفترة الصباحية: 09:00 إلى 11:45 | الفترة المسائية: 13:00 إلى 15:00.</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-regular fa-clock text-amber-600"></i> <span data-i18n="biblio_q1">ما هي أوقات عمل المكتبة؟</span></p>
+            <p class="bg-amber-50 dark:bg-amber-900/30 p-2 rounded-lg text-amber-900 dark:text-amber-400" data-i18n="biblio_a1">الفترة الصباحية: 09:00 إلى 11:45 | الفترة المسائية: 13:00 إلى 15:00.</p>
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-list-check text-emerald-600"></i> ما هي شروط ووثائق التسجيل؟</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-list-check text-emerald-600"></i> <span data-i18n="biblio_q2">ما هي شروط ووثائق التسجيل؟</span></p>
             <ul class="list-disc list-inside bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg space-y-1">
-              <li>شهادة مدرسية تثبت الانتماء للمدرسة.</li>
-              <li>صورة شخصية حديثة.</li>
-              <li>ملء استمارة التسجيل الإلكترونية.</li>
+              <li data-i18n="biblio_d1">شهادة مدرسية تثبت الانتماء للمدرسة.</li>
+              <li data-i18n="biblio_d2">صورة شخصية حديثة.</li>
+              <li data-i18n="biblio_d3">ملء استمارة التسجيل الإلكترونية.</li>
             </ul>
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> ما هي القواعد الداخلية للمكتبة؟</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> <span data-i18n="biblio_q3">ما هي القواعد الداخلية للمكتبة؟</span></p>
             <ul class="list-disc list-inside text-red-800 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg space-y-1">
-              <li>منع الصوت العالي لضمان تركيز الطلبة.</li>
-              <li>يُمنع منعاً باتاً تناول الأكل أو المشروبات.</li>
-              <li>الحفاظ على نظافة المكان.</li>
+              <li data-i18n="biblio_r1">منع الصوت العالي لضمان تركيز الطلبة.</li>
+              <li data-i18n="biblio_r2">يُمنع منعاً باتاً تناول الأكل أو المشروبات.</li>
+              <li data-i18n="biblio_r3">الحفاظ على نظافة المكان.</li>
             </ul>
           </div>
         </div>
@@ -585,12 +625,12 @@
       <div id="content-univ" class="accordion-content">
         <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف يتم التسجيل في الإقامة الجامعية؟</p>
-            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">التسجيل يتم رقمياً عبر منصة PROGRES...</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1" data-i18n="univ_q1">كيف يتم التسجيل في الإقامة الجامعية؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg" data-i18n="univ_a1">التسجيل يتم رقمياً عبر منصة PROGRES...</p>
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف أتقدم بطلب للحصول على المنحة الجامعية؟</p>
-            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">يتم إيداع ملف المنحة رقمياً عبر المنصة...</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1" data-i18n="univ_q2">كيف أتقدم بطلب للحصول على المنحة الجامعية؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg" data-i18n="univ_a2">يتم إيداع ملف المنحة رقمياً عبر المنصة...</p>
           </div>
         </div>
       </div>
@@ -608,12 +648,12 @@
       <div id="content-scolarite" class="accordion-content">
         <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">ضاع مني بطاقة الطالب أو شهادة التسجيل؟</p>
-            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">يجب التوجه فوراً إلى مصلحة التمدرس...</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1" data-i18n="scol_q1">ضاع مني بطاقة الطالب أو شهادة التسجيل؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg" data-i18n="scol_a1">يجب التوجه فوراً إلى مصلحة التمدرس...</p>
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف أحصل على كشف النقاط؟</p>
-            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">كشوف النقاط تُسلم رسمياً من مصلحة التمدرس...</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1" data-i18n="scol_q2">كيف أحصل على كشف النقاط؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg" data-i18n="scol_a2">كشوف النقاط تُسلم رسمياً من مصلحة التمدرس...</p>
           </div>
         </div>
       </div>
@@ -631,12 +671,12 @@
       <div id="content-examens" class="accordion-content">
         <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف أبرر الغيابات؟</p>
-            <p class="bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-400 p-3 rounded-lg">يجب تقديم تبرير في غضون 48 ساعة...</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1" data-i18n="exam_q1">كيف أبرر الغيابات؟</p>
+            <p class="bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-400 p-3 rounded-lg" data-i18n="exam_a1">يجب تقديم تبرير في غضون 48 ساعة...</p>
           </div>
           <div>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">كيف يتم التعامل مع الاستدراك؟</p>
-            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">إذا كان معدلك أقل من 10/20...</p>
+            <p class="font-bold text-gray-900 dark:text-white mb-1" data-i18n="exam_q2">كيف يتم التعامل مع الاستدراك؟</p>
+            <p class="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg" data-i18n="exam_a2">إذا كان معدلك أقل من 10/20...</p>
           </div>
         </div>
       </div>
@@ -648,8 +688,61 @@
     <p>© 2026 ENSTP Kouba.</p>
   </footer>
 
+  <!-- 🦘 الكنغر (يفتح الشات بوت) -->
+  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;" title="المساعد الافتراضي">
+    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+      <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
+      <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
+      <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
+      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
+      <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
+      <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
+      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
+      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
+      <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
+      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
+      <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
+      <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
+      <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
+      <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
+      <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
+      <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
+      <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
+      <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- 🤖 نافذة الشات بوت (تفتح من الكنغر) -->
+  <div id="chatWindow" class="hidden">
+    <div style="background: linear-gradient(135deg, #f97316, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+      <span style="display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-comments"></i>
+        <span data-i18n="chat_title">المساعد الافتراضي</span>
+      </span>
+      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">
+        مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟
+      </div>
+    </div>
+    <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
+      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
+      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: 0.2s;">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
   <script>
-    // --- الوضع الليلي (Dark Mode) ---
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+
+    /* ==========================================
+       1. Dark Mode
+       ========================================== */
     function toggleDarkMode() {
       const html = document.documentElement;
       if (html.classList.contains('dark')) {
@@ -661,7 +754,9 @@
       }
     }
 
-    // --- أكورديون ---
+    /* ==========================================
+       2. Accordéon
+       ========================================== */
     function toggleAccordion(id) {
       const content = document.getElementById('content-' + id);
       const icon = document.getElementById('icon-' + id);
@@ -689,7 +784,9 @@
       }
     }
 
-    // --- نموذج التواصل ---
+    /* ==========================================
+       3. Formulaire de contact
+       ========================================== */
     function updateYears() {
       const dept = document.getElementById('dept').value;
       const yearSelect = document.getElementById('year');
@@ -698,6 +795,7 @@
       if (dept === 'prep') {
         yearSelect.innerHTML += `<option value="السنة الأولى تحضيري (1CP)">السنة الأولى تحضيري (1CP)</option><option value="السنة الثانية تحضيري (2CP)">السنة الثانية تحضيري (2CP)</option>`;
       } else if (dept === 'dib') {
+             } else if (dept === 'dib') {
         yearSelect.innerHTML += `<option value="السنة الأولى مهندس (DIB)">السنة الأولى مهندس (DIB)</option><option value="السنة الثانية مهندس (DIB)">السنة الثانية مهندس (DIB)</option><option value="السنة الثالثة مهندس (DIB)">السنة الثالثة مهندس (DIB)</option>`;
       } else if (dept === 'dms') {
         yearSelect.innerHTML += `<option value="السنة الأولى مهندس (DMS)">السنة الأولى مهندس (DMS)</option><option value="السنة الثانية مهندس (DMS)">السنة الثانية مهندس (DMS)</option><option value="السنة الثالثة مهندس (DMS)">السنة الثالثة مهندس (DMS)</option>`;
@@ -720,7 +818,7 @@
       let targetEmail = '';
       if (dept === 'prep') targetEmail = 'm.tebani@enstp.edu.dz';
       else if (dept === 'dib') targetEmail = 'i.makoudi@enstp.edu.dz';
-      else if (dept === 'dms') targetEmail = 'YOUR_DMS_EMAIL@enstp.edu.dz';
+      else if (dept === 'dms') targetEmail = 'm.bourebia83@gmail.com';
 
       const subject = encodeURIComponent("طلب جديد - " + nom + " " + prenom + " - " + year);
       const body = encodeURIComponent(
@@ -746,32 +844,542 @@
       }, 5000);
     });
 
-    // --- تحميل الوضع الليلي عند البدء ---
-    window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('theme') === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
-      
-      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      setTimeout(() => {
-        if (typeof setLanguage === 'function') setLanguage(savedLang);
-      }, 100);
-    });
-
-    // --- أنيميشن الظهور واحدة تلو الأخرى (Scroll Reveal) ---
+    /* ==========================================
+       4. Reveal animations
+       ========================================== */
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.classList.add('visible');
-          }, index * 150); // تأخير 150ms بين كل عنصر
+          }, index * 150);
           revealObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
     revealElements.forEach(el => revealObserver.observe(el));
+
+    /* ==========================================
+       5. Traductions (ar / fr / en)
+       ========================================== */
+    window.ADMIN_TRANSLATIONS = {
+      ar: {
+        nav_app_sub: "المدرسة الوطنية العليا",
+        nav_home: "الرئيسية",
+        admin_page_title: "دليل الإدارة والخدمات",
+        admin_page_subtitle: "كل ما تحتاجه من وثائق وإجراءات إدارية في مكان واحد.",
+        admin_contact: "التواصل مع الإدارة",
+        admin_contact_info: "يرجى تعبئة النموذج أدناه. عند الإرسال، سيفتح تطبيق البريد الإلكتروني الخاص بك وستكون الرسالة جاهزة للإنشاء. فقط اضغط \"إرسال\".",
+        form_nom: "اللقب (Nom):",
+        form_prenom: "الإسم (Prénom):",
+        form_email: "البريد الإلكتروني (Email):",
+        form_num: "رقم التسجيل (N° Inscription):",
+        form_dept: "التخصص (Département):",
+        form_year: "السنة الدراسية:",
+        form_group: "الفوج (Groupe):",
+        form_message: "الطلب / الرسالة:",
+        form_send: "إرسال الطلب",
+        form_check_email: "يرجى تفقد بريدك الإلكتروني بعد الإرسال للتأكد من استلام الطلب.",
+        cde_title: "مركز تطوير المقاولاتية (CDE)",
+        cde_hero_title: "المنصة الوطنية لمراكز تطوير المقاولاتية",
+        cde_hero_sub: "\"أفضل طريقة للتنبؤ بالمستقبل هي صنعه\"",
+        cde_def_title: "التعريف العام",
+        cde_def_text: "تعد مراكز تطوير المقاولاتية (CDE) هياكل متخصصة تم إنشاؤها داخل الجامعات والمؤسسات الجامعية والمدارس العليا (مثل المدرسة الوطنية العليا للأشغال العمومية ENSTP) ومؤسسات التكوين المهني في الجزائر، وذلك بتأطير مشترك بين وزارة التعليم العالي والبحث العلمي ووزارة اقتصاد المعرفة والمؤسسات الناشئة والمؤسسات المصغرة (عبر الوكالة الوطنية لدعم وتنمية المقاولاتية NESDA).",
+        cde_stat1: "مرشد ومدرب",
+        cde_stat2: "طالب مكون سنوياً",
+        cde_stat3: "مركز عبر الوطن",
+        cde_pillars_title: "الركائز والخدمات الأساسية",
+        cde_p1_title: "1. التوعية والتحسيس:",
+        cde_p1_desc: "تنظيم محاضرات وورشات عمل وفعاليات توعوية لإطلاع الطالب على فوائد عالم المقاولاتية.",
+        cde_p2_title: "2. التكوين والتأهيل:",
+        cde_p2_desc: "دورات تدريبية تغطي التخطيط الاستراتيجي، التسيير المالي، التسويق، والجوانب القانونية.",
+        cde_p3_title: "3. المرافقة والاستشارات:",
+        cde_p3_desc: "توجيه ودعم مخصص من خبراء لمرافقة الطالب وتحويل الأفكار إلى مؤسسات.",
+        cde_p4_title: "4. التمويل والشراكات:",
+        cde_p4_desc: "تيسير الحصول على التمويل عبر آليات NESDA والدعم الفخري والمصغر.",
+        cde_enstp_title: "مركز CDE بالمدرسة (ENSTP)",
+        cde_enstp_intro: "يستهدف المركز مهندسي المستقبل وطلبة التخرج في تخصصات الأشغال العمومية والهندسة المدنية، حيث يعمل على:",
+        cde_enstp_li1: "تحويل مشاريع مذكرات التخرج إلى مؤسسات مصغرة وناشئة (القرار الوزاري 1275).",
+        cde_enstp_li2: "تسجيل الطلبات والمعالجة الرقمية الكاملة عبر البوابة الوطنية.",
+        cde_enstp_li3: "مرافقة التجسيد الميداني للمشاريع المتعلقة بالهندسة الذكية والبناء المستدام.",
+        cde_gallery_title: "معرض الصور",
+        cde_contact_title: "معلومات الاتصال",
+        cde_web: "الموقع الإلكتروني",
+        cde_email: "البريد الإلكتروني",
+        cde_phone: "الهاتف",
+        cde_address: "العنوان",
+        cde_address_val: "شارع سيدي غاريدي، القبة، الجزائر",
+        incub_title: "حاضنة المدرسة",
+        incub_desc: "تُعتبر حاضنة أعمال المدرسة الوطنية العليا للأشغال العمومية (ENSTP) فضاءً ديناميكياً يهدف إلى دعم الابتكار وريادة الأعمال لدى الطلبة وتحويل أفكارهم إلى مشاريع حقيقية وشركات ناشئة، وذلك في إطار القرار الوزاري رقم 1275 (مشاريع مبتكرة / شركات ناشئة).",
+        incub_p1_title: "الدعم الموجه (المرافقة):",
+        incub_p1_desc: "مساندة الطلبة في تطوير أفكارهم المبتكرة وتحويلها إلى مشاريع قابلة للتنفيذ في مجالات البنية التحتية والأشغال العامة.",
+        incub_p2_title: "التكوين وورش العمل:",
+        incub_p2_desc: "تنظيم دورات تكوينية ومخيمات تدريبية (مثل مخيمات الابتكار وريادة الأعمال بالتعاون مع شركاء مثل حاضنة Catalyst).",
+        incub_p3_title: "مساحات العمل المشترك:",
+        incub_p3_desc: "توفير فضاءات مخصصة للتعاون وتبادل الأفكار والعمل الجماعي بين رواد الأعمال الشباب.",
+        incub_video_title: "فيديو تعريفي",
+        nesda_title: "مركز تطوير المقاولاتية NESDA",
+        nesda_desc: "الوكالة الوطنية لدعم وتنمية المقاولاتية (NESDA) هي وكالة حكومية جزائرية تهدف إلى دعم إنشاء وتطوير المؤسسات المصغرة. يعمل مركز NESDA في ENSTP على مرافقة الطلبة والمهندسين الشباب في تجسيد مشاريعهم من خلال آليات التمويل والدعم المتاحة.",
+        nesda_f1_title: "التمويل",
+        nesda_f1_desc: "دعم مالي للمشاريع الشبابية",
+        nesda_f2_title: "المرافقة",
+        nesda_f2_desc: "متابعة المشاريع خطوة بخطوة",
+        admin_direction: "الإدارة العامة والمسؤولين",
+        admin_location: "الموقع",
+        admin_hours: "أوقات العمل: الأحد إلى الخميس 8:00 - 16:00",
+        admin_missions: "المهام الموجهة للطلبة:",
+        admin_t1_m1: "ضمان المتابعة الإدارية للطلبة.",
+        admin_t1_m2: "الإعلام والتوجيه بخصوص إجراءات التمدرس.",
+        admin_t1_m3: "تسليم الشهادات والوثائق الإدارية.",
+        admin_t1_m4: "متابعة التسجيلات والنتائج.",
+        admin_t2_m1: "الإشراف العام على سير الدراسة.",
+        admin_t2_m2: "المصادقة على البرامج والتوقيتات.",
+        admin_t2_m3: "اتخاذ القرارات المتعلقة بالحالات الأكاديمية.",
+        admin_t3_m1: "متابعة المواظبة والانتظام.",
+        admin_t3_m2: "إدارة الغيابات والمبررات.",
+        admin_t3_m3: "معالجة الملفات التأديبية.",
+        admin_social: "الضمان الاجتماعي (CNAS)",
+        cnas_q1: "أين يقع مكتب الضمان الاجتماعي؟",
+        cnas_a1: "يقع المكتب داخل المدرسة (ENSTP)، مقابل الحاضنة (Incubateur) وبيت الطالب، بجانب مكتب الطبيب مباشرة.",
+        cnas_q2: "ما هي الوثائق المطلوبة؟",
+        cnas_d1: "شهادة الميلاد.",
+        cnas_d2: "شهادة الإقامة.",
+        cnas_d3: "نسخة من بطاقة التعريف الوطنية البيومترية.",
+        cnas_d4: "نسخة من شهادة التسجيل المدرسي.",
+        cnas_d5: "صك بريدي (Chèque postal barré).",
+        cnas_q3: "ما هي أيام استقبال الملفات؟",
+        cnas_a3: "الاثنين، الثلاثاء، والخميس.",
+        cnas_q4: "كيف أسجل في منصة الهناء (EL HANAA)؟",
+        cnas_btn: "الدخول إلى منصة الهناء",
+        admin_library: "مكتبة المدرسة",
+        biblio_q1: "ما هي أوقات عمل المكتبة؟",
+        biblio_a1: "الفترة الصباحية: 09:00 إلى 11:45 | الفترة المسائية: 13:00 إلى 15:00.",
+        biblio_q2: "ما هي شروط ووثائق التسجيل؟",
+        biblio_d1: "شهادة مدرسية تثبت الانتماء للمدرسة.",
+        biblio_d2: "صورة شخصية حديثة.",
+        biblio_d3: "ملء استمارة التسجيل الإلكترونية.",
+        biblio_q3: "ما هي القواعد الداخلية للمكتبة؟",
+        biblio_r1: "منع الصوت العالي لضمان تركيز الطلبة.",
+        biblio_r2: "يُمنع منعاً باتاً تناول الأكل أو المشروبات.",
+        biblio_r3: "الحفاظ على نظافة المكان.",
+        admin_university: "الخدمات الجامعية",
+        univ_q1: "كيف يتم التسجيل في الإقامة الجامعية؟",
+        univ_a1: "التسجيل يتم رقمياً عبر منصة PROGRES...",
+        univ_q2: "كيف أتقدم بطلب للحصول على المنحة الجامعية؟",
+        univ_a2: "يتم إيداع ملف المنحة رقمياً عبر المنصة...",
+        admin_scolarite: "مصلحة التمدرس والوثائق",
+        scol_q1: "ضاع مني بطاقة الطالب أو شهادة التسجيل؟",
+        scol_a1: "يجب التوجه فوراً إلى مصلحة التمدرس...",
+        scol_q2: "كيف أحصل على كشف النقاط؟",
+        scol_a2: "كشوف النقاط تُسلم رسمياً من مصلحة التمدرس...",
+        admin_exams: "الامتحانات والغيابات",
+        exam_q1: "كيف أبرر الغيابات؟",
+        exam_a1: "يجب تقديم تبرير في غضون 48 ساعة...",
+        exam_q2: "كيف يتم التعامل مع الاستدراك؟",
+        exam_a2: "إذا كان معدلك أقل من 10/20...",
+        chat_title: "المساعد الافتراضي",
+        chat_welcome: "مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟",
+        chat_placeholder: "اكتب سؤالك..."
+      },
+      fr: {
+        nav_app_sub: "École Nationale Supérieure",
+        nav_home: "Accueil",
+        admin_page_title: "Guide de l'Administration et des Services",
+        admin_page_subtitle: "Tous vos documents et démarches administratives en un seul endroit.",
+        admin_contact: "Contacter l'administration",
+        admin_contact_info: "Remplissez le formulaire ci-dessous. À l'envoi, votre application mail s'ouvrira avec le message prêt. Cliquez sur \"Envoyer\".",
+        form_nom: "Nom :",
+        form_prenom: "Prénom :",
+        form_email: "Email :",
+        form_num: "N° Inscription :",
+        form_dept: "Département :",
+        form_year: "Année d'études :",
+        form_group: "Groupe :",
+        form_message: "Demande / Message :",
+        form_send: "Envoyer la demande",
+        form_check_email: "Veuillez vérifier votre email après l'envoi.",
+        cde_title: "Centre de Développement de l'Entrepreneuriat (CDE)",
+        cde_hero_title: "Plateforme Nationale des CDE",
+        cde_hero_sub: "\"La meilleure façon de prédire l'avenir, c'est de le créer\"",
+        cde_def_title: "Définition générale",
+        cde_def_text: "Les Centres de Développement de l'Entrepreneuriat (CDE) sont des structures spécialisées créées au sein des universités, des établissements universitaires, des grandes écoles (comme l'ENSTP) et des établissements de formation professionnelle en Algérie, sous la tutelle conjointe du Ministère de l'Enseignement Supérieur et de la Recherche Scientifique et du Ministère de l'Économie de la Connaissance, des Startups et des Micro-entreprises (via l'ANADE).",
+        cde_stat1: "Conseillers et formateurs",
+        cde_stat2: "Étudiants formés/an",
+        cde_stat3: "Centres à travers le pays",
+        cde_pillars_title: "Piliers et services essentiels",
+        cde_p1_title: "1. Sensibilisation :",
+        cde_p1_desc: "Organisation de conférences, ateliers et événements pour informer les étudiants sur l'entrepreneuriat.",
+        cde_p2_title: "2. Formation et qualification :",
+        cde_p2_desc: "Sessions couvrant la planification stratégique, la gestion financière, le marketing et les aspects juridiques.",
+        cde_p3_title: "3. Accompagnement et conseil :",
+        cde_p3_desc: "Orientation et soutien personnalisé par des experts pour transformer les idées en entreprises.",
+        cde_p4_title: "4. Financement et partenariats :",
+        cde_p4_desc: "Facilitation de l'accès au financement via les mécanismes ANADE et les dispositifs de soutien.",
+        cde_enstp_title: "CDE à l'ENSTP",
+        cde_enstp_intro: "Le centre cible les futurs ingénieurs et les étudiants en fin de cycle en travaux publics et génie civil, et œuvre à :",
+        cde_enstp_li1: "Transformer les projets de fin d'études en micro-entreprises et startups (arrêté ministériel 1275).",
+        cde_enstp_li2: "Enregistrer les demandes et assurer le traitement numérique complet via le portail national.",
+        cde_enstp_li3: "Accompagner la concrétisation des projets liés à l'ingénierie intelligente et à la construction durable.",
+        cde_gallery_title: "Galerie photos",
+        cde_contact_title: "Informations de contact",
+        cde_web: "Site web",
+        cde_email: "Email",
+        cde_phone: "Téléphone",
+        cde_address: "Adresse",
+        cde_address_val: "Rue Sidi Garidi, Kouba, Alger",
+        incub_title: "Incubateur de l'école",
+        incub_desc: "L'incubateur d'entreprises de l'ENSTP est un espace dynamique visant à soutenir l'innovation et l'entrepreneuriat chez les étudiants, en transformant leurs idées en projets réels et startups, dans le cadre de l'arrêté ministériel n°1275 (projets innovants / startups).",
+        incub_p1_title: "Soutien ciblé (accompagnement) :",
+        incub_p1_desc: "Accompagner les étudiants dans le développement de leurs idées innovantes et leur transformation en projets réalisables dans les infrastructures et les travaux publics.",
+        incub_p2_title: "Formation et ateliers :",
+        incub_p2_desc: "Organisation de cycles de formation et de camps d'entraînement (comme les camps d'innovation et d'entrepreneuriat avec des partenaires comme l'incubateur Catalyst).",
+        incub_p3_title: "Espaces de coworking :",
+        incub_p3_desc: "Fournir des espaces dédiés à la collaboration, à l'échange d'idées et au travail d'équipe entre jeunes entrepreneurs.",
+        incub_video_title: "Vidéo de présentation",
+        nesda_title: "Centre de Développement de l'Entrepreneuriat NESDA",
+        nesda_desc: "L'Agence Nationale d'Appui et de Développement de l'Entrepreneuriat (NESDA/ANADE) est une agence gouvernementale algérienne visant à soutenir la création et le développement de micro-entreprises. Le centre NESDA à l'ENSTP accompagne les étudiants et jeunes ingénieurs dans la concrétisation de leurs projets via les mécanismes de financement et de soutien disponibles.",
+        nesda_f1_title: "Financement",
+        nesda_f1_desc: "Soutien financier aux projets de jeunes",
+        nesda_f2_title: "Accompagnement",
+        nesda_f2_desc: "Suivi des projets étape par étape",
+        admin_direction: "Direction générale et responsables",
+        admin_location: "Emplacement",
+        admin_hours: "Horaires : Dimanche à Jeudi 8h00 - 16h00",
+        admin_missions: "Missions pour les étudiants :",
+        admin_t1_m1: "Assurer le suivi administratif des étudiants.",
+        admin_t1_m2: "Informer et orienter sur les procédures de scolarité.",
+        admin_t1_m3: "Délivrer les certificats et documents administratifs.",
+        admin_t1_m4: "Suivre les inscriptions et les résultats.",
+        admin_t2_m1: "Superviser le déroulement des études.",
+        admin_t2_m2: "Valider les programmes et les emplois du temps.",
+        admin_t2_m3: "Prendre les décisions relatives aux situations académiques.",
+        admin_t3_m1: "Suivre l'assiduité et la discipline.",
+        admin_t3_m2: "Gérer les absences et les justificatifs.",
+        admin_t3_m3: "Traiter les dossiers disciplinaires.",
+        admin_social: "Sécurité Sociale (CNAS)",
+        cnas_q1: "Où se trouve le bureau de la sécurité sociale ?",
+        cnas_a1: "Le bureau se trouve à l'intérieur de l'ENSTP, en face de l'incubateur et de la maison de l'étudiant, juste à côté du bureau du médecin.",
+        cnas_q2: "Quels sont les documents requis ?",
+        cnas_d1: "Acte de naissance.",
+        cnas_d2: "Certificat de résidence.",
+        cnas_d3: "Copie de la carte d'identité biométrique.",
+        cnas_d4: "Copie du certificat d'inscription scolaire.",
+        cnas_d5: "Chèque postal barré.",
+        cnas_q3: "Quels sont les jours de réception ?",
+        cnas_a3: "Lundi, Mardi et Jeudi.",
+        cnas_q4: "Comment s'inscrire sur la plateforme EL HANAA ?",
+        cnas_btn: "Accéder à EL HANAA",
+        admin_library: "Bibliothèque de l'école",
+        biblio_q1: "Quels sont les horaires d'ouverture ?",
+        biblio_a1: "Matin : 09h00 à 11h45 | Après-midi : 13h00 à 15h00.",
+        biblio_q2: "Quelles sont les conditions et documents d'inscription ?",
+        biblio_d1: "Certificat de scolarité prouvant l'appartenance à l'école.",
+        biblio_d2: "Photo récente.",
+        biblio_d3: "Remplir le formulaire d'inscription en ligne.",
+        biblio_q3: "Quel est le règlement intérieur ?",
+        biblio_r1: "Interdiction de faire du bruit.",
+        biblio_r2: "Interdiction formelle de manger ou boire.",
+        biblio_r3: "Maintenir la propreté des lieux.",
+        admin_university: "Services Universitaires",
+        univ_q1: "Comment s'inscrire à la résidence universitaire ?",
+        univ_a1: "L'inscription se fait numériquement via la plateforme PROGRES...",
+        univ_q2: "Comment demander la bourse universitaire ?",
+        univ_a2: "Le dossier de bourse est déposé numériquement via la plateforme...",
+        admin_scolarite: "Service Scolarité et Documents",
+        scol_q1: "J'ai perdu ma carte d'étudiant ou mon certificat d'inscription ?",
+        scol_a1: "Vous devez vous rendre immédiatement au service Scolarité...",
+        scol_q2: "Comment obtenir un relevé de notes ?",
+        scol_a2: "Les relevés de notes sont délivrés officiellement par le service Scolarité...",
+        admin_exams: "Examens et Absences",
+        exam_q1: "Comment justifier une absence ?",
+        exam_a1: "Vous devez présenter un justificatif dans les 48 heures...",
+        exam_q2: "Comment se déroulent les rattrapages ?",
+        exam_a2: "Si votre moyenne est inférieure à 10/20...",
+        chat_title: "Assistant virtuel",
+        chat_welcome: "Bonjour ! 👋 Je suis votre assistant ENSTP. Comment puis-je vous aider ?",
+        chat_placeholder: "Écrivez votre question..."
+      },
+      en: {
+        nav_app_sub: "National Higher School",
+        nav_home: "Home",
+        admin_page_title: "Administration & Services Guide",
+        admin_page_subtitle: "All your documents and administrative procedures in one place.",
+        admin_contact: "Contact the administration",
+        admin_contact_info: "Fill in the form below. On submission, your email app will open with the message ready. Just click \"Send\".",
+        form_nom: "Last name:",
+        form_prenom: "First name:",
+        form_email: "Email:",
+        form_num: "Registration No.:",
+        form_dept: "Department:",
+        form_year: "Academic Year:",
+        form_group: "Group:",
+        form_message: "Request / Message:",
+        form_send: "Send request",
+        form_check_email: "Please check your email after sending.",
+        cde_title: "Center for Entrepreneurship Development (CDE)",
+        cde_hero_title: "National Platform of CDEs",
+        cde_hero_sub: "\"The best way to predict the future is to create it\"",
+        cde_def_title: "General definition",
+        cde_def_text: "The Centers for Entrepreneurship Development (CDE) are specialized structures created within universities, higher education institutions, higher schools (such as ENSTP) and vocational training institutions in Algeria, under the joint supervision of the Ministry of Higher Education and Scientific Research and the Ministry of Knowledge Economy, Startups and Micro-enterprises (through the National Agency for Entrepreneurship Support and Development - NESDA).",
+        cde_stat1: "Advisors and trainers",
+        cde_stat2: "Students trained/year",
+        cde_stat3: "Centers across the country",
+        cde_pillars_title: "Pillars and essential services",
+        cde_p1_title: "1. Awareness:",
+        cde_p1_desc: "Organizing lectures, workshops and awareness events to inform students about entrepreneurship.",
+        cde_p2_title: "2. Training and qualification:",
+        cde_p2_desc: "Sessions covering strategic planning, financial management, marketing and legal aspects.",
+        cde_p3_title: "3. Support and consulting:",
+        cde_p3_desc: "Personalized guidance and support from experts to transform ideas into businesses.",
+        cde_p4_title: "4. Financing and partnerships:",
+        cde_p4_desc: "Facilitating access to funding through NESDA mechanisms and support schemes.",
+        cde_enstp_title: "CDE at ENSTP",
+        cde_enstp_intro: "The center targets future engineers and graduating students in public works and civil engineering, and works to:",
+        cde_enstp_li1: "Transform graduation projects into micro-enterprises and startups (Ministerial Decree 1275).",
+        cde_enstp_li2: "Register applications and ensure full digital processing via the national portal.",
+        cde_enstp_li3: "Support the concrete realization of projects related to smart engineering and sustainable construction.",
+        cde_gallery_title: "Photo gallery",
+        cde_contact_title: "Contact information",
+        cde_web: "Website",
+        cde_email: "Email",
+        cde_phone: "Phone",
+        cde_address: "Address",
+        cde_address_val: "Sidi Garidi Street, Kouba, Algiers",
+        incub_title: "School Incubator",
+        incub_desc: "The ENSTP business incubator is a dynamic space aimed at supporting innovation and entrepreneurship among students, transforming their ideas into real projects and startups, within the framework of Ministerial Decree No. 1275 (innovative projects / startups).",
+        incub_p1_title: "Targeted support (accompaniment):",
+        incub_p1_desc: "Assisting students in developing their innovative ideas and transforming them into feasible projects in infrastructure and public works.",
+        incub_p2_title: "Training and workshops:",
+        incub_p2_desc: "Organizing training cycles and boot camps (such as innovation and entrepreneurship camps with partners like Catalyst incubator).",
+        incub_p3_title: "Coworking spaces:",
+        incub_p3_desc: "Providing dedicated spaces for collaboration, exchange of ideas and teamwork among young entrepreneurs.",
+        incub_video_title: "Presentation video",
+        nesda_title: "NESDA Entrepreneurship Development Center",
+        nesda_desc: "The National Agency for Entrepreneurship Support and Development (NESDA) is an Algerian government agency aimed at supporting the creation and development of micro-enterprises. The NESDA center at ENSTP supports students and young engineers in realizing their projects through available financing and support mechanisms.",
+        nesda_f1_title: "Financing",
+        nesda_f1_desc: "Financial support for youth projects",
+        nesda_f2_title: "Support",
+        nesda_f2_desc: "Step-by-step project follow-up",
+        admin_direction: "General Management and Officials",
+        admin_location: "Location",
+        admin_hours: "Working hours: Sunday to Thursday 8:00 - 16:00",
+        admin_missions: "Student-oriented missions:",
+        admin_t1_m1: "Ensure administrative follow-up of students.",
+        admin_t1_m2: "Inform and guide on academic procedures.",
+        admin_t1_m3: "Deliver certificates and administrative documents.",
+        admin_t1_m4: "Follow up on registrations and results.",
+        admin_t2_m1: "General supervision of studies.",
+        admin_t2_m2: "Approve programs and schedules.",
+        admin_t2_m3: "Make decisions regarding academic situations.",
+        admin_t3_m1: "Monitor attendance and discipline.",
+        admin_t3_m2: "Manage absences and justifications.",
+        admin_t3_m3: "Process disciplinary files.",
+        admin_social: "Social Security (CNAS)",
+        cnas_q1: "Where is the social security office?",
+        cnas_a1: "The office is located inside ENSTP, opposite the incubator and the student house, right next to the doctor's office.",
+        cnas_q2: "What documents are required?",
+        cnas_d1: "Birth certificate.",
+        cnas_d2: "Residence certificate.",
+        cnas_d3: "Copy of the biometric ID card.",
+        cnas_d4: "Copy of the school registration certificate.",
+        cnas_d5: "Crossed postal cheque.",
+        cnas_q3: "What are the reception days?",
+        cnas_a3: "Monday, Tuesday and Thursday.",
+        cnas_q4: "How do I register on the EL HANAA platform?",
+        cnas_btn: "Access EL HANAA",
+        admin_library: "School Library",
+        biblio_q1: "What are the library's opening hours?",
+        biblio_a1: "Morning: 09:00 to 11:45 | Afternoon: 13:00 to 15:00.",
+        biblio_q2: "What are the registration conditions and documents?",
+        biblio_d1: "School certificate proving membership in the school.",
+        biblio_d2: "Recent ID photo.",
+        biblio_d3: "Fill in the online registration form.",
+        biblio_q3: "What are the internal rules of the library?",
+        biblio_r1: "No loud noise to ensure students' concentration.",
+        biblio_r2: "Eating or drinking is strictly prohibited.",
+        biblio_r3: "Maintain cleanliness of the premises.",
+        admin_university: "University Services",
+        univ_q1: "How do I register for university residence?",
+        univ_a1: "Registration is done digitally via the PROGRES platform...",
+        univ_q2: "How do I apply for a university scholarship?",
+        univ_a2: "The scholarship file is submitted digitally via the platform...",
+        admin_scolarite: "Scolarité and Documents Service",
+        scol_q1: "I lost my student card or registration certificate?",
+        scol_a1: "You must go immediately to the Scolarité service...",
+        scol_q2: "How do I get a transcript?",
+        scol_a2: "Transcripts are officially issued by the Scolarité service...",
+        admin_exams: "Exams and Absences",
+        exam_q1: "How do I justify absences?",
+        exam_a1: "You must provide a justification within 48 hours...",
+        exam_q2: "How are remedial exams handled?",
+        exam_a2: "If your average is below 10/20...",
+        chat_title: "Virtual Assistant",
+        chat_welcome: "Hello! 👋 I'm your ENSTP assistant. How can I help you?",
+        chat_placeholder: "Type your question..."
+      }
+    };
+
+    /* ==========================================
+       6. Appliquer la traduction
+       ========================================== */
+    window.applyAdminTranslation = function(lang) {
+      const dict = window.ADMIN_TRANSLATIONS[lang] || window.ADMIN_TRANSLATIONS.ar;
+
+      // Titre de la page
+      if (dict.admin_page_title) document.title = dict.admin_page_title + " - ENSTP";
+
+      // Textes
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          const icon = el.querySelector('i');
+          if (icon) {
+            el.innerHTML = '';
+            el.appendChild(icon);
+            el.appendChild(document.createTextNode(' ' + dict[key]));
+                    } else {
+            el.innerText = dict[key];
+          }
+        }
+      });
+
+      // Placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+
+      // Attributs title (tooltips)
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        if (dict[key]) el.title = dict[key];
+      });
+
+      // Direction du document
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+    };
+
+    /* ==========================================
+       7. setLanguage()
+       ========================================== */
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      localStorage.setItem('enstp_lang', lang);
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      window.applyAdminTranslation(lang);
+    };
+
+    /* ==========================================
+       8. Chatbot depuis le kangourou
+       ========================================== */
+    function toggleChat() {
+      const chat = document.getElementById('chatWindow');
+      if (!chat) return;
+      chat.classList.toggle('hidden');
+      chat.classList.toggle('open');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      if (!input || !body) return;
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      body.innerHTML += `
+        <div style="display:flex;justify-content:flex-end;">
+          <div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">
+            ${msg}
+          </div>
+        </div>`;
+      input.value = '';
+      body.scrollTop = body.scrollHeight;
+
+      setTimeout(() => {
+        let reply = "شكراً لسؤالك! سأقوم بالرد عليك قريباً.";
+        const m = msg.toLowerCase();
+
+        if (m.includes("cdE") || m.includes("مقاولاتية") || m.includes("entrepreneur")) {
+          reply = "💡 مركز CDE موجود لمساعدتك على تحويل أفكارك إلى مشاريع. راجع تبويب <strong>CDE</strong>.";
+        } else if (m.includes("حاضنة") || m.includes("incubateur") || m.includes("incubator")) {
+          reply = "🚀 الحاضنة ترافقك لتحويل مشروع تخرجك إلى شركة ناشئة. راجع تبويب <strong>الحاضنة</strong>.";
+        } else if (m.includes("ضمان") || m.includes("cnas") || m.includes("sécurité")) {
+          reply = "🛡️ مكتب CNAS داخل المدرسة مقابل الحاضنة. الوثائق المطلوبة في تبويب <strong>الضمان الاجتماعي</strong>.";
+        } else if (m.includes("مكتبة") || m.includes("bibliothèque") || m.includes("library")) {
+          reply = "📚 المكتبة مفتوحة من 09:00 إلى 11:45 و من 13:00 إلى 15:00.";
+        } else if (m.includes("غياب") || m.includes("absence") || m.includes("examen")) {
+          reply = "📝 يجب تبرير الغيابات في غضون 48 ساعة. راجع تبويب <strong>الامتحانات</strong>.";
+        } else if (m.includes("تسجيل") || m.includes("inscription") || m.includes("register")) {
+          reply = "📄 استعمل النموذج في تبويب <strong>التواصل مع الإدارة</strong>.";
+        } else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("bonjour") || m.includes("hello")) {
+          reply = "👋 أهلاً بك! كيف يمكنني مساعدتك؟";
+        } else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) {
+          reply = "💛 على الرحب والسعة!";
+        }
+
+        body.innerHTML += `
+          <div style="display:flex;justify-content:flex-start;">
+            <div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">
+              ${reply}
+            </div>
+          </div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 500);
+    }
+
+    /* ==========================================
+       9. Kangourou : clic = ouvrir le chat + saut
+       ========================================== */
+    const kangarooContainer = document.getElementById('kangarooContainer');
+    const kangarooSvg = document.getElementById('kangarooSvg');
+
+    if (kangarooContainer) {
+      kangarooContainer.addEventListener('click', () => {
+        if (kangarooSvg) {
+          kangarooSvg.style.animation = 'none';
+          kangarooSvg.offsetHeight;
+          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
+          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
+        }
+        toggleChat();
+      });
+
+      kangarooContainer.addEventListener('mouseenter', () => {
+        if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)';
+      });
+      kangarooContainer.addEventListener('mouseleave', () => {
+        if (kangarooSvg) kangarooSvg.style.transform = '';
+      });
+    }
+
+    /* ==========================================
+       10. Initialisation au chargement
+       ========================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Appliquer le thème sauvegardé
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+
+      // Appliquer la langue sauvegardée
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      window.setLanguage(savedLang);
+
+      // Enter pour envoyer le message chat
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+        });
+      }
+    });
   </script>
 </body>
 </html>
