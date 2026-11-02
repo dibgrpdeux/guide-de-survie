@@ -17,11 +17,7 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
-              400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c',
-              800: '#9a3412', 900: '#7c2d12',
-            }
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
           }
         }
       }
@@ -38,12 +34,15 @@
     .glass-nav { background: #fff7ed; border-bottom: 1px solid #fed7aa; transition: all 0.3s ease; }
     html.dark .glass-nav { background: #1a1410; border-bottom-color: #334155; }
 
-    .tab-btn { transition: all 0.3s ease; }
-    .tab-btn.active { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.5); border-color: transparent; }
+    .filter-btn { transition: all 0.3s ease; }
+    .filter-btn.active { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); border-color: transparent; }
 
-    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
+    .card-item { background: white; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: all 0.3s ease; display: flex; flex-direction: column; border: 1px solid #f1f5f9; }
+    html.dark .card-item { background: #1e293b; border-color: #334155; }
+    .card-item:hover { transform: translateY(-5px); box-shadow: 0 15px 35px -10px rgba(249, 115, 22, 0.25); border-color: #fb923c; }
+    
+    .map-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.75rem; }
+    .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
@@ -54,39 +53,9 @@
     .gallery-item:hover { transform: scale(1.05); }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-    .doctor-card { background: white; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: all 0.3s ease; display: flex; flex-direction: column; border: 1px solid #f1f5f9; }
-    html.dark .doctor-card { background: #1e293b; border-color: #334155; }
-    .doctor-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px -10px rgba(249, 115, 22, 0.25); border-color: #fb923c; }
-    .doctor-header { height: 70px; position: relative; }
-    .doctor-avatar { position: absolute; bottom: -30px; right: 20px; width: 70px; height: 70px; border-radius: 50%; background: #ffffff; border: 4px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.5rem; color: #ea580c; z-index: 2; }
-    html.dark .doctor-avatar { border-color: #1e293b; background: #0f172a; }
-    .doctor-body { padding: 40px 20px 20px 20px; text-align: right; display: flex; flex-direction: column; flex-grow: 1; }
-    .doctor-name { font-size: 1.1rem; font-weight: 900; color: #1e293b; margin-bottom: 4px; }
-    html.dark .doctor-name { color: #f8fafc; }
-    .doctor-specialty { display: inline-block; font-size: 0.75rem; font-weight: 800; background: #fff7ed; color: #c2410c; padding: 2px 10px; border-radius: 10px; margin-bottom: 10px; align-self: flex-start; border: 1px solid #fed7aa; }
-    html.dark .doctor-specialty { background: rgba(194, 65, 12, 0.2); color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
-    .doctor-info { font-size: 0.85rem; color: #64748b; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px; }
-    html.dark .doctor-info { color: #94a3b8; }
-
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
+    .lang-btn { padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; transition: 0.2s; color: #64748b; background: transparent; border: none; cursor: pointer; }
     .lang-btn:hover { background: #ffedd5; color: #9a3412; }
     .lang-btn.active { background: #f97316; color: white; }
-
-    .map-container { width: 100%; height: 180px; border-radius: 0.75rem; overflow: hidden; border: 1px solid #e2e8f0; margin-top: 8px; }
-    html.dark .map-container { border-color: #334155; }
-    .map-container iframe { width: 100%; height: 100%; border: 0; }
-    .map-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; font-weight: 700; color: #ea580c; margin-top: 6px; cursor: pointer; }
-    .map-btn:hover { text-decoration: underline; }
-
-    /* Chat */
-    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1001; width: 320px; max-height: 420px; background: white; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); border: 1px solid #fed7aa; display: none; flex-direction: column; }
-    #chatWindow.open { display: flex; }
-    html.dark #chatWindow { background: #1e293b; border-color: #334155; color: #f8fafc; }
-    @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
-
-    @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
-
-    button, a, .glass-card, .doctor-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -115,576 +84,355 @@
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full space-y-8">
+  <main class="max-w-7xl mx-auto px-4 py-10 flex-grow w-full space-y-8">
 
-    <div class="text-center mb-8 reveal">
+    <div class="text-center mb-8">
       <h2 class="text-3xl font-black text-gray-900 dark:text-white" data-i18n="sport_title">صحتي ورياضتي</h2>
       <p class="text-gray-600 dark:text-gray-400 mt-2" data-i18n="sport_desc">دليل الأطباء، عيادات الأسنان، صالات الرياضة، والأنشطة البدنية.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-      <button onclick="switchTab('health')" id="tab-health" class="tab-btn active glass-card p-5 rounded-2xl flex items-center justify-center gap-3 border-2 border-brand-100">
-        <i class="fa-solid fa-heart-pulse text-2xl"></i>
-        <span class="text-lg font-black" data-i18n="tab_health">صحتي (الأطباء)</span>
+    <!-- Filtres -->
+    <div id="filtersBar" class="flex flex-wrap gap-2 justify-center sticky top-[60px] z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur p-2 rounded-2xl shadow-sm border border-orange-100 dark:border-slate-700">
+      <button onclick="setFilter('all')" id="filter-all" class="filter-btn active px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
+        <i class="fa-solid fa-list"></i> <span data-i18n="filter_all">الكل</span>
       </button>
-      <button onclick="switchTab('sport')" id="tab-sport" class="tab-btn glass-card p-5 rounded-2xl flex items-center justify-center gap-3 border-2 border-transparent hover:border-emerald-200">
-        <i class="fa-solid fa-dumbbell text-2xl"></i>
-        <span class="text-lg font-black" data-i18n="tab_sport">رياضتي (اللياقة)</span>
+      <button onclick="setFilter('medecin')" id="filter-medecin" class="filter-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
+        <i class="fa-solid fa-stethoscope"></i> <span data-i18n="filter_medecin">الأطباء</span>
+      </button>
+      <button onclick="setFilter('dentiste')" id="filter-dentiste" class="filter-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
+        <i class="fa-solid fa-tooth"></i> <span data-i18n="filter_dentiste">الأسنان</span>
+      </button>
+      <button onclick="setFilter('salle')" id="filter-salle" class="filter-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
+        <i class="fa-solid fa-dumbbell"></i> <span data-i18n="filter_salle">الصالات</span>
+      </button>
+      <button onclick="setFilter('video')" id="filter-video" class="filter-btn px-5 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">
+        <i class="fa-solid fa-video"></i> <span data-i18n="filter_video">الفيديوهات</span>
       </button>
     </div>
 
-    <div id="content-health" class="space-y-10">
-      
-      <section class="reveal">
-        <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
-          <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-stethoscope"></i></div>
-          <div>
-            <h3 class="text-2xl font-black text-gray-900 dark:text-white" data-i18n="doctors_title">الأطباء</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="doctors_desc">قائمة الأطباء القريبة من المدرسة.</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #f97316, #f59e0b);"><div class="doctor-avatar">FA</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Dr Farid Aissani</h4>
-              <span class="doctor-specialty" data-i18n="spec_cardio">أمراض القلب</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Coopemad Sud, Bt 71/4, Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 70 54 57</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Coopemad%20Sud%20Bt%2071%2F4%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Coopemad+Sud+Bt+71/4+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #ec4899, #f43f5e);"><div class="doctor-avatar">AB</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Dr Amina Bendali</h4>
-              <span class="doctor-specialty" data-i18n="spec_gyn">أمراض النساء والتوليد</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Route des Annassers, Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0553 24 07 60</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Route%20des%20Annassers%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Route+des+Annassers+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #10b981, #34d399);"><div class="doctor-avatar">HO</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Dr Houria Ouabdesselam</h4>
-              <span class="doctor-specialty" data-i18n="spec_pedia">طب الأطفال</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Jolie Vue 2, 1216 logements, Bt 12, Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0697 28 58 17</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Jolie%20Vue%202%201216%20logements%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Jolie+Vue+2+1216+logements+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #3b82f6, #6366f1);"><div class="doctor-avatar">MB</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Dr Mokhtar Bengherbi</h4>
-              <span class="doctor-specialty" data-i18n="spec_eye">طب العيون</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 70 avenue des Frères Abdeslami, Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">023 60 16 78</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=70%20avenue%20des%20Fr%C3%A8res%20Abdeslami%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=70+avenue+des+Frères+Abdeslami+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);"><div class="doctor-avatar">AD</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Dr Abdelghani Debba</h4>
-              <span class="doctor-specialty" data-i18n="spec_eye">طب العيون</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 75 avenue des Frères Abdeslami, Vieux Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0660 39 29 22</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=75%20avenue%20des%20Fr%C3%A8res%20Abdeslami%20Vieux%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=75+avenue+des+Frères+Abdeslami+Vieux+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);"><div class="doctor-avatar">FA</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Dr Farid Ait Allaoua</h4>
-              <span class="doctor-specialty" data-i18n="spec_eye">طب العيون</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 43 rue des Frères Abdeslami, Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0696 57 94 94</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=43%20rue%20des%20Fr%C3%A8res%20Abdeslami%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=43+rue+des+Frères+Abdeslami+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #14b8a6, #2dd4bf);"><div class="doctor-avatar">WB</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Dr Widad Benantar</h4>
-              <span class="doctor-specialty" data-i18n="spec_pedia">طب الأطفال</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Sastra / Jolie Vue 2, Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">021 68 89 13</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Cit%C3%A9%20Sastra%20Jolie%20Vue%202%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Cité+Sastra+Jolie+Vue+2+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #ef4444, #f87171);"><div class="doctor-avatar">ZB</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Dr Zineb Belhadj</h4>
-              <span class="doctor-specialty" data-i18n="spec_gyn">أمراض النساء والتوليد</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> 12 avenue des Frères Abdeslami, 1er étage, Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0559 67 11 71</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=12%20avenue%20des%20Fr%C3%A8res%20Abdeslami%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=12+avenue+des+Frères+Abdeslami+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-header" style="background: linear-gradient(135deg, #6366f1, #818cf8);"><div class="doctor-avatar">PB</div></div>
-            <div class="doctor-body">
-              <h4 class="doctor-name">Pr Bouferrouk</h4>
-              <span class="doctor-specialty" data-i18n="spec_cardio">أمراض القلب</span>
-              <div class="doctor-info"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Cité Garidi 1, Bt 8 n°1, Kouba</div>
-              <div class="doctor-info"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> <span dir="ltr">0551 26 84 36</span></div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Cit%C3%A9%20Garidi%201%20Bt%208%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Cité+Garidi+1+Bt+8+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-        </div>
-      </section>
-            <section class="reveal">
-        <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
-          <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-tooth"></i></div>
-          <div>
-            <h3 class="text-2xl font-black text-gray-900 dark:text-white" data-i18n="dentists_title">عيادات الأسنان</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="dentists_desc">أفضل عيادات الأسنان في منطقة القبة.</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="glass-card rounded-2xl overflow-hidden border border-blue-100 dark:border-slate-700">
-            <div class="p-4 bg-blue-500 text-white">
-              <h4 class="font-bold text-lg">Cabinet Dental GR</h4>
-              <p class="text-xs text-blue-100" data-i18n="dental_clinic">عيادة أسنان</p>
-            </div>
-            <div class="p-4 space-y-3">
-              <div class="doctor-info"><i class="fa-solid fa-phone text-blue-500"></i> <span dir="ltr">0558 58 11 07</span></div>
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('gr 1.jpg', '_blank')"><img src="gr 1.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('gr 2.jpg', '_blank')"><img src="gr 2.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('gr 3.jpg', '_blank')"><img src="gr 3.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('gr 4.jpg', '_blank')"><img src="gr 4.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('gr 5.jpg', '_blank')"><img src="gr 5.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('gr6.jpg', '_blank')"><img src="gr6.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Cabinet%20Dental%20GR%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Cabinet+Dental+GR+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-blue-100 dark:border-slate-700">
-            <div class="p-4 bg-blue-600 text-white">
-              <h4 class="font-bold text-lg">Cabinet Dentaire Kouba</h4>
-              <p class="text-xs text-blue-100" data-i18n="dental_clinic">عيادة أسنان</p>
-            </div>
-            <div class="p-4 space-y-3">
-              <div class="doctor-info"><i class="fa-solid fa-phone text-blue-500"></i> <span dir="ltr">0666 42 12 72</span></div>
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('cabinet1.jpg', '_blank')"><img src="cabinet1.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Cabinet%20Dentaire%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Cabinet+Dentaire+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-blue-100 dark:border-slate-700">
-            <div class="p-4 bg-indigo-500 text-white">
-              <h4 class="font-bold text-lg">NN Cabinet Dentaire</h4>
-              <p class="text-xs text-indigo-100" data-i18n="dental_clinic">عيادة أسنان</p>
-            </div>
-            <div class="p-4 space-y-3">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('nn1.jpg', '_blank')"><img src="nn1.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('nn2.jpg', '_blank')"><img src="nn2.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('nn3.jpg', '_blank')"><img src="nn3.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('nn4.jpg', '_blank')"><img src="nn4.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=NN%20Cabinet%20Dentaire%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=NN+Cabinet+Dentaire+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-blue-100 dark:border-slate-700">
-            <div class="p-4 bg-teal-500 text-white">
-              <h4 class="font-bold text-lg">Cabinet Dentaire Dr Noui</h4>
-              <p class="text-xs text-teal-100" data-i18n="dental_clinic">عيادة أسنان</p>
-            </div>
-            <div class="p-4 space-y-3">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('noui 1.jpg', '_blank')"><img src="noui 1.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('noui 2.jpg', '_blank')"><img src="noui 2.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('noui 3.jpg', '_blank')"><img src="noui 3.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('noui 4.jpg', '_blank')"><img src="noui 4.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-                <div class="gallery-item" onclick="window.open('noui 5.jpg', '_blank')"><img src="noui 5.jpg" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 text-xs\'>Image</div>'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Cabinet%20Dentaire%20Dr%20Noui%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Cabinet+Dentaire+Dr+Noui+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div id="content-sport" class="hidden space-y-10">
-      <section class="reveal">
-        <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-dumbbell"></i></div>
-          <div>
-            <h3 class="text-2xl font-black text-gray-900 dark:text-white" data-i18n="sport_value_title">قيمة الرياضة</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="sport_value_desc">فيديوهات توعوية حول أهمية النشاط البدني.</p>
-          </div>
-        </div>
-        <div id="sportContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-      </section>
-
-      <section class="reveal">
-        <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-slate-700 pb-3">
-          <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-heart-pulse"></i></div>
-          <div>
-            <h3 class="text-2xl font-black text-gray-900 dark:text-white" data-i18n="gyms_title">صالات الرياضة واللياقة</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="gyms_desc">أفضل الصالات القريبة من المدرسة.</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="glass-card rounded-2xl overflow-hidden border border-orange-100 dark:border-slate-700">
-            <div class="p-4 bg-orange-500 text-white"><h4 class="font-bold text-lg">Ares Sport</h4><p class="text-xs text-orange-100" data-i18n="gym_label">صالة رياضية</p></div>
-            <div class="p-4">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('ares 1.jpg', '_blank')"><img src="ares 1.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('ares 2.jpg', '_blank')"><img src="ares 2.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('ares 3.jpg', '_blank')"><img src="ares 3.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('ares 4.jpg', '_blank')"><img src="ares 4.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Ares%20Sport%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Ares+Sport+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-pink-100 dark:border-slate-700">
-            <div class="p-4 bg-pink-500 text-white"><h4 class="font-bold text-lg">Club des Femmes</h4><p class="text-xs text-pink-100" data-i18n="gym_women">صالة رياضية للنساء</p></div>
-            <div class="p-4">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('bas 1.jpg', '_blank')"><img src="bas 1.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('bas 3.jpg', '_blank')"><img src="bas 3.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('bas 4.jpg', '_blank')"><img src="bas 4.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Club%20des%20Femmes%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Club+des+Femmes+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-red-100 dark:border-slate-700">
-            <div class="p-4 bg-red-500 text-white"><h4 class="font-bold text-lg">Fitness Club</h4><p class="text-xs text-red-100" data-i18n="gym_fitness">صالة لياقة</p></div>
-            <div class="p-4">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('club 1.jpg', '_blank')"><img src="club 1.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('club 2.jpg', '_blank')"><img src="club 2.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Fitness%20Club%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Fitness+Club+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-indigo-100 dark:border-slate-700">
-            <div class="p-4 bg-indigo-500 text-white"><h4 class="font-bold text-lg">Bouzid Club</h4><p class="text-xs text-indigo-100" data-i18n="gym_label">صالة رياضية</p></div>
-            <div class="p-4">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('bouzid 1.jpg', '_blank')"><img src="bouzid 1.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('bouzid 2.jpg', '_blank')"><img src="bouzid 2.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Bouzid%20Club%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Bouzid+Club+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-blue-100 dark:border-slate-700">
-            <div class="p-4 bg-blue-500 text-white"><h4 class="font-bold text-lg">Kouba Olympic</h4><p class="text-xs text-blue-100" data-i18n="gym_swim">مسبح وصالة رياضية</p></div>
-            <div class="p-4">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('swiming 1.jpg', '_blank')"><img src="swiming 1.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('swiming 2.jpg', '_blank')"><img src="swiming 2.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Kouba%20Olympic%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Kouba+Olympic+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-teal-100 dark:border-slate-700">
-            <div class="p-4 bg-teal-500 text-white"><h4 class="font-bold text-lg">Fitness City</h4><p class="text-xs text-teal-100" data-i18n="gym_fitness">صالة لياقة</p></div>
-            <div class="p-4">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('city 1.jpg', '_blank')"><img src="city 1.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('city 2.jpg', '_blank')"><img src="city 2.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('city 3.jpg', '_blank')"><img src="city 3.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Fitness%20City%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Fitness+City+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-2xl overflow-hidden border border-amber-100 dark:border-slate-700">
-            <div class="p-4 bg-amber-500 text-white"><h4 class="font-bold text-lg">Body Boost Gym</h4><p class="text-xs text-amber-100" data-i18n="gym_bodybuilding">صالة كمال أجسام</p></div>
-            <div class="p-4">
-              <div class="gallery-scroll">
-                <div class="gallery-item" onclick="window.open('gym 1.jpg', '_blank')"><img src="gym 1.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('gym 2.jpg', '_blank')"><img src="gym 2.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('gym 3.jpg', '_blank')"><img src="gym 3.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('gym 4.jpg', '_blank')"><img src="gym 4.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-                <div class="gallery-item" onclick="window.open('gym 5.jpg', '_blank')"><img src="gym 5.jpg" onerror="this.parentElement.innerHTML='Image'"></div>
-              </div>
-              <div class="map-container"><iframe src="https://maps.google.com/maps?q=Body%20Boost%20Gym%20Kouba%20Alger&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
-              <a href="https://www.google.com/maps/search/?api=1&query=Body+Boost+Gym+Kouba+Alger" target="_blank" class="map-btn"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span></a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <!-- Grille -->
+    <div id="itemsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
 
   <footer class="glass-nav border-t border-gray-200 dark:border-slate-700 py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400">
     <p>© 2026 ENSTP Kouba.</p>
   </footer>
 
-  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;">
-    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
-      <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
-      <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
-      <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
-      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
-      <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
-      <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
-      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
-      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
-      <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
-      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
-      <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
-      <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
-      <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
-      <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
-      <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
-      <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
-      <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
-      <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
-    </svg>
+  <!-- Modal -->
+  <div id="itemModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-3xl w-full p-6 lg:p-8 space-y-6 shadow-2xl relative max-h-[95vh] overflow-y-auto">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 flex items-center justify-center transition z-20"><i class="fa-solid fa-xmark text-lg"></i></button>
+      
+      <div class="border-b border-orange-100 dark:border-slate-700 pb-4 pr-10">
+        <h2 id="modalTitle" class="text-2xl font-black text-gray-900 dark:text-white"></h2>
+        <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
+      </div>
+
+      <div id="modalVideoContainer" class="space-y-2 hidden">
+        <div id="modalVideo" class="w-full aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
+      </div>
+
+      <div id="modalGalleryContainer" class="space-y-2 hidden">
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> <span data-i18n="modal_gallery">معرض الصور:</span></h4>
+        <div id="modalGallery" class="gallery-scroll"></div>
+      </div>
+
+      <div class="space-y-4 text-sm text-gray-700 dark:text-gray-300">
+        <div id="modalAddressContainer">
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-location-dot text-orange-500 mr-1.5"></i> <span data-i18n="modal_address">العنوان:</span></h4>
+          <p id="modalAddress" class="bg-orange-50 dark:bg-slate-900 p-3 rounded-xl border border-orange-100 dark:border-slate-700"></p>
+        </div>
+        <div id="modalPhoneContainer">
+          <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1"><i class="fa-solid fa-phone text-orange-500 mr-1.5"></i> <span data-i18n="modal_phone">الهاتف:</span></h4>
+          <p id="modalPhone" class="bg-orange-50 dark:bg-slate-900 p-3 rounded-xl border border-orange-100 dark:border-slate-700" dir="ltr"></p>
+        </div>
+      </div>
+
+      <div id="modalMapContainer" class="space-y-2 hidden">
+        <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> <span data-i18n="modal_map">الموقع:</span></h4>
+        <div id="modalMap" class="map-container bg-gray-200 dark:bg-slate-700"></div>
+        <a id="modalMapBtn" href="#" target="_blank" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold text-xs transition">
+          <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="open_in_maps">فتح في خرائط جوجل</span>
+        </a>
+      </div>
+    </div>
   </div>
 
-  <div id="chatWindow" class="hidden">
-    <div style="background: linear-gradient(135deg, #f97316, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
-      <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span></span>
-      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
-      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
-    </div>
-    <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
-      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
-      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
-    </div>
-  </div>
-    <script>
+  <!-- Chargement des données -->
+  <script src="data/sport.js"></script>
+
+  <script>
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+    let currentFilter = 'all';
 
+    // ============================================================
+    // DARK MODE
+    // ============================================================
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     }
+    if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+
+    // ============================================================
+    // TRADUCTIONS
+    // ============================================================
+    window.SPORT_TRANSLATIONS = {
+      ar: {
+        page_title: "صحتي ورياضتي - ENSTP",
+        nav_app_sub: "المدرسة الوطنية العليا", nav_home: "الرئيسية",
+        sport_title: "صحتي ورياضتي",
+        sport_desc: "دليل الأطباء، عيادات الأسنان، صالات الرياضة، والأنشطة البدنية.",
+        filter_all: "الكل", filter_medecin: "الأطباء", filter_dentiste: "الأسنان", filter_salle: "الصالات", filter_video: "الفيديوهات",
+        modal_gallery: "معرض الصور:", modal_address: "العنوان:", modal_phone: "الهاتف:", modal_map: "الموقع:",
+        open_in_maps: "فتح في خرائط جوجل",
+        no_items: "لا توجد عناصر.",
+        group_medecin: "طبيب", group_dentiste: "عيادة أسنان", group_salle: "صالة رياضية", group_video: "فيديو"
+      },
+      fr: {
+        page_title: "Santé & Sport - ENSTP",
+        nav_app_sub: "École Nationale Supérieure", nav_home: "Accueil",
+        sport_title: "Santé & Sport",
+        sport_desc: "Médecins, dentistes, salles de sport et activités physiques.",
+        filter_all: "Tous", filter_medecin: "Médecins", filter_dentiste: "Dentistes", filter_salle: "Salles", filter_video: "Vidéos",
+        modal_gallery: "Galerie:", modal_address: "Adresse:", modal_phone: "Téléphone:", modal_map: "Emplacement:",
+        open_in_maps: "Ouvrir dans Google Maps",
+        no_items: "Aucun élément.",
+        group_medecin: "Médecin", group_dentiste: "Dentiste", group_salle: "Salle de sport", group_video: "Vidéo"
+      },
+      en: {
+        page_title: "Health & Sport - ENSTP",
+        nav_app_sub: "National Higher School", nav_home: "Home",
+        sport_title: "Health & Sport",
+        sport_desc: "Doctors, dentists, gyms and physical activities.",
+        filter_all: "All", filter_medecin: "Doctors", filter_dentiste: "Dentists", filter_salle: "Gyms", filter_video: "Videos",
+        modal_gallery: "Gallery:", modal_address: "Address:", modal_phone: "Phone:", modal_map: "Location:",
+        open_in_maps: "Open in Google Maps",
+        no_items: "No items.",
+        group_medecin: "Doctor", group_dentiste: "Dentist", group_salle: "Gym", group_video: "Video"
+      }
+    };
 
     function t(key) {
       const dict = window.SPORT_TRANSLATIONS[currentLang] || window.SPORT_TRANSLATIONS.ar;
       return dict[key] || key;
     }
+    window.t = t;
 
-    window.SPORT_TRANSLATIONS = {
-      ar: {
-        page_title: "صحتي ورياضتي - ENSTP", nav_app_sub: "المدرسة الوطنية العليا", nav_home: "الرئيسية",
-        sport_title: "صحتي ورياضتي", sport_desc: "دليل الأطباء، عيادات الأسنان، صالات الرياضة، والأنشطة البدنية.",
-        tab_health: "صحتي (الأطباء)", tab_sport: "رياضتي (اللياقة)",
-        doctors_title: "الأطباء", doctors_desc: "قائمة الأطباء القريبة من المدرسة.",
-        dentists_title: "عيادات الأسنان", dentists_desc: "أفضل عيادات الأسنان في منطقة القبة.",
-        sport_value_title: "قيمة الرياضة", sport_value_desc: "فيديوهات توعوية حول أهمية النشاط البدني.",
-        gyms_title: "صالات الرياضة واللياقة", gyms_desc: "أفضل الصالات القريبة من المدرسة.",
-        spec_cardio: "أمراض القلب", spec_gyn: "أمراض النساء والتوليد", spec_pedia: "طب الأطفال", spec_eye: "طب العيون",
-        dental_clinic: "عيادة أسنان", gym_label: "صالة رياضية", gym_women: "صالة رياضية للنساء",
-        gym_fitness: "صالة لياقة", gym_swim: "مسبح وصالة رياضية", gym_bodybuilding: "صالة كمال أجسام",
-        open_in_maps: "فتح في خرائط جوجل",
-        chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
-        chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
-        chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
-        chat_sport: "تصفح الأطباء والصالات الرياضية في هذه الصفحة."
-      },
-      fr: {
-        page_title: "Santé & Sport - ENSTP", nav_app_sub: "École Nationale Supérieure", nav_home: "Accueil",
-        sport_title: "Santé & Sport", sport_desc: "Médecins, dentistes, salles de sport et activités physiques.",
-        tab_health: "Santé (Médecins)", tab_sport: "Sport (Fitness)",
-        doctors_title: "Médecins", doctors_desc: "Liste des médecins proches de l'école.",
-        dentists_title: "Dentistes", dentists_desc: "Meilleurs cabinets dentaires à Kouba.",
-        sport_value_title: "Valeur du sport", sport_value_desc: "Vidéos sur l'importance de l'activité physique.",
-        gyms_title: "Salles de sport et fitness", gyms_desc: "Meilleures salles proches de l'école.",
-        spec_cardio: "Cardiologie", spec_gyn: "Gynécologie", spec_pedia: "Pédiatrie", spec_eye: "Ophtalmologie",
-        dental_clinic: "Cabinet dentaire", gym_label: "Salle de sport", gym_women: "Salle pour femmes",
-        gym_fitness: "Salle de fitness", gym_swim: "Piscine et salle", gym_bodybuilding: "Salle de musculation",
-        open_in_maps: "Ouvrir dans Google Maps",
-        chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
-        chat_placeholder: "Votre question...", chat_default: "Merci !",
-        chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
-        chat_sport: "Parcourez les médecins et salles sur cette page."
-      },
-      en: {
-        page_title: "Health & Sport - ENSTP", nav_app_sub: "National Higher School", nav_home: "Home",
-        sport_title: "Health & Sport", sport_desc: "Doctors, dentists, gyms and physical activities.",
-        tab_health: "Health (Doctors)", tab_sport: "Sport (Fitness)",
-        doctors_title: "Doctors", doctors_desc: "List of doctors near the school.",
-        dentists_title: "Dentists", dentists_desc: "Best dental clinics in Kouba.",
-        sport_value_title: "Value of Sport", sport_value_desc: "Videos on the importance of physical activity.",
-        gyms_title: "Gyms and Fitness Centers", gyms_desc: "Best gyms near the school.",
-        spec_cardio: "Cardiology", spec_gyn: "Gynecology", spec_pedia: "Pediatrics", spec_eye: "Ophthalmology",
-        dental_clinic: "Dental clinic", gym_label: "Gym", gym_women: "Women's gym",
-        gym_fitness: "Fitness gym", gym_swim: "Pool and gym", gym_bodybuilding: "Bodybuilding gym",
-        open_in_maps: "Open in Google Maps",
-        chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
-        chat_placeholder: "Your question...", chat_default: "Thanks!",
-        chat_hello: "Welcome!", chat_thanks: "You're welcome!",
-        chat_sport: "Browse doctors and gyms on this page."
-      }
-    };
-
-    window.applySportTranslation = function(lang) {
+    // ============================================================
+    // SET LANGUAGE
+    // ============================================================
+    function applyTranslation(lang) {
       const dict = window.SPORT_TRANSLATIONS[lang] || window.SPORT_TRANSLATIONS.ar;
       if (dict.page_title) document.title = dict.page_title;
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (dict[key]) {
           const icon = el.querySelector('i');
-          if (icon) { el.innerHTML = ''; el.appendChild(icon); el.appendChild(document.createTextNode(' ' + dict[key])); }
-          else el.innerText = dict[key];
+          if (icon) {
+            el.innerHTML = '';
+            el.appendChild(icon);
+            el.appendChild(document.createTextNode(' ' + dict[key]));
+          } else {
+            el.innerText = dict[key];
+          }
         }
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (dict[key]) el.placeholder = dict[key];
       });
       document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
       document.documentElement.lang = lang;
-    };
+      renderItems();
+    }
 
-    window.setLanguage = function(lang) {
+    function setLanguage(lang) {
       currentLang = lang;
       localStorage.setItem('enstp_lang', lang);
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById('btn-' + lang);
       if (activeBtn) activeBtn.classList.add('active');
-      window.applySportTranslation(lang);
-    };
-
-    function switchTab(tabId) {
-      document.getElementById('content-health').classList.add('hidden');
-      document.getElementById('content-sport').classList.add('hidden');
-      document.getElementById('tab-health').classList.remove('active');
-      document.getElementById('tab-health').classList.add('border-transparent');
-      document.getElementById('tab-sport').classList.remove('active');
-      document.getElementById('tab-sport').classList.add('border-transparent');
-      document.getElementById('content-' + tabId).classList.remove('hidden');
-      const activeBtn = document.getElementById('tab-' + tabId);
-      activeBtn.classList.add('active');
-      activeBtn.classList.remove('border-transparent');
+      applyTranslation(lang);
     }
 
-    function getYoutubeId(url) {
+    // ============================================================
+    // FILTER
+    // ============================================================
+    function setFilter(filter) {
+      currentFilter = filter;
+      ['all', 'medecin', 'dentiste', 'salle', 'video'].forEach(f => {
+        const btn = document.getElementById('filter-' + f);
+        if (btn) {
+          if (f === filter) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+      renderItems();
+    }
+
+    // ============================================================
+    // RENDER ITEMS
+    // ============================================================
+    function renderItems() {
+      const grid = document.getElementById('itemsGrid');
+      grid.innerHTML = '';
+
+      if (typeof window.SECTIONS === 'undefined') {
+        grid.innerHTML = `<p class="text-red-500 font-bold text-center col-span-full">Erreur: data/sport.js non chargé.</p>`;
+        return;
+      }
+
+      const sport = window.SECTIONS.find(s => s.id === 'sport');
+      if (!sport) {
+        grid.innerHTML = `<p class="text-red-500 font-bold text-center col-span-full">Section sport introuvable.</p>`;
+        return;
+      }
+
+      let items = sport.items;
+      if (currentFilter !== 'all') {
+        items = items.filter(i => i.category === currentFilter);
+      }
+
+      if (items.length === 0) {
+        grid.innerHTML = `<p class="text-gray-500 text-center col-span-full py-10">${t('no_items')}</p>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const title = item.title ? (item.title[currentLang] || item.title.ar || item.title.fr) : '';
+        const specialty = item.specialty ? (item.specialty[currentLang] || item.specialty.ar || item.specialty.fr) : '';
+        const desc = item.desc ? (item.desc[currentLang] || item.desc.ar || item.desc.fr) : '';
+        const categoryLabel = t('group_' + item.category);
+
+        // Image de couverture
+        let coverImage = null;
+        if (item.images && item.images.length > 0) coverImage = item.images[0];
+
+        let mediaHtml = '';
+        if (item.video || item.videoUrl) {
+          const videoId = item.video || extractYoutubeId(item.videoUrl);
+          mediaHtml = `<div class="video-container bg-gray-200 dark:bg-slate-900"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen loading="lazy"></iframe></div>`;
+        } else if (coverImage) {
+          mediaHtml = `<div class="h-48 overflow-hidden rounded-t-2xl"><img src="${coverImage}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center bg-orange-50 dark:bg-slate-800 text-orange-300 text-4xl\\'>${item.icon || '📷'}</div>'"></div>`;
+        } else {
+          mediaHtml = `<div class="h-48 flex items-center justify-center bg-orange-50 dark:bg-slate-800 text-orange-300 text-5xl rounded-t-2xl">${item.icon || '📷'}</div>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'card-item cursor-pointer';
+        card.onclick = () => openModal(item);
+        card.innerHTML = `
+          ${mediaHtml}
+          <div class="p-4 flex flex-col flex-grow">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">${item.icon || '📌'}</span>
+              <span class="text-[10px] font-bold text-orange-600 bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded">${categoryLabel}</span>
+            </div>
+            <h3 class="font-bold text-lg text-gray-900 dark:text-white">${title}</h3>
+            ${specialty ? `<p class="text-xs text-brand-600 dark:text-brand-400 font-bold mt-1">${specialty}</p>` : ''}
+            ${desc ? `<p class="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">${desc}</p>` : ''}
+            ${item.address ? `<p class="text-xs text-gray-500 dark:text-gray-400 mt-2"><i class="fa-solid fa-location-dot text-orange-500 mr-1"></i> ${item.address}</p>` : ''}
+            ${item.phone ? `<p class="text-xs text-gray-500 dark:text-gray-400 mt-1" dir="ltr"><i class="fa-solid fa-phone text-orange-500 mr-1"></i> ${item.phone}</p>` : ''}
+            <div class="mt-3 pt-3 border-t border-orange-100 dark:border-slate-700 text-center text-xs font-bold text-orange-600 dark:text-orange-400">
+              <i class="fa-solid fa-eye"></i> ${t('filter_all') === 'Tous' ? 'Voir détails' : (currentLang === 'en' ? 'View details' : 'عرض التفاصيل')}
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function extractYoutubeId(url) {
       if (!url) return null;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
       const match = url.match(regExp);
       return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    const sportVideos = [
-      { video: "aqPng7nyFZU", title: "المركب الرياضي القبة" },
-      { video: "byDM5wQ3wcc", title: "فيديو تحفيزي (قاريدي)" },
-      { videoUrl: "https://youtube.com/shorts/s4IcvPRD5dY", title: "تجاوز نفسك" }
-    ];
+    // ============================================================
+    // MODAL
+    // ============================================================
+    function openModal(item) {
+      document.getElementById('itemModal').classList.remove('hidden');
 
-    function renderSport() {
-      const container = document.getElementById('sportContainer');
-      container.innerHTML = '';
-      sportVideos.forEach(item => {
-        let videoId = item.video;
-        if (!videoId && item.videoUrl) videoId = getYoutubeId(item.videoUrl);
-        const card = document.createElement('div');
-        card.className = "glass-card p-2 rounded-2xl border border-orange-100 dark:border-slate-700 shadow-sm";
-        card.innerHTML = `
-          <div class="video-container bg-gray-200 dark:bg-slate-900">
-            ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>` : '<div class="flex items-center justify-center h-full text-gray-400">Video unavailable</div>'}
-          </div>
-          <p class="text-center text-sm font-bold text-gray-800 dark:text-gray-200 mt-2">${item.title || ''}</p>
-        `;
-        container.appendChild(card);
-      });
+      const title = item.title ? (item.title[currentLang] || item.title.ar || item.title.fr) : '';
+      const specialty = item.specialty ? (item.specialty[currentLang] || item.specialty.ar || item.specialty.fr) : '';
+      const categoryLabel = t('group_' + item.category);
+
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalSubtitle').innerText = specialty || categoryLabel;
+
+      // Vidéo
+      const videoContainer = document.getElementById('modalVideoContainer');
+      const videoDiv = document.getElementById('modalVideo');
+      const videoId = item.video || (item.videoUrl ? extractYoutubeId(item.videoUrl) : null);
+      if (videoId) {
+        videoContainer.classList.remove('hidden');
+        videoDiv.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
+      } else {
+        videoContainer.classList.add('hidden');
+      }
+
+      // Galerie
+      const galleryContainer = document.getElementById('modalGalleryContainer');
+      const gallery = document.getElementById('modalGallery');
+      gallery.innerHTML = '';
+      if (item.images && item.images.length > 0) {
+        galleryContainer.classList.remove('hidden');
+        item.images.forEach(img => {
+          gallery.innerHTML += `<div class="gallery-item" onclick="window.open('${img}', '_blank')"><img src="${img}" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs\\'>Image</div>'"></div>`;
+        });
+      } else {
+        galleryContainer.classList.add('hidden');
+      }
+
+      // Adresse
+      const addressContainer = document.getElementById('modalAddressContainer');
+      if (item.address) {
+        addressContainer.classList.remove('hidden');
+        document.getElementById('modalAddress').innerText = item.address;
+      } else {
+        addressContainer.classList.add('hidden');
+      }
+
+      // Téléphone
+      const phoneContainer = document.getElementById('modalPhoneContainer');
+      if (item.phone) {
+        phoneContainer.classList.remove('hidden');
+        document.getElementById('modalPhone').innerText = item.phone;
+      } else {
+        phoneContainer.classList.add('hidden');
+      }
+
+      // Map
+      const mapContainer = document.getElementById('modalMapContainer');
+      const mapDiv = document.getElementById('modalMap');
+      const mapBtn = document.getElementById('modalMapBtn');
+      if (item.map || item.mapCoords) {
+        mapContainer.classList.remove('hidden');
+        const query = item.mapCoords ? `${item.mapCoords[0]},${item.mapCoords[1]}` : encodeURIComponent(item.map);
+        mapDiv.innerHTML = `<iframe src="https://www.google.com/maps?q=${query}&output=embed" allowfullscreen loading="lazy"></iframe>`;
+        mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${query}`;
+      } else {
+        mapContainer.classList.add('hidden');
+      }
+
+      document.querySelector('#itemModal > div').scrollTop = 0;
     }
 
-    function toggleChat() {
-      const chat = document.getElementById('chatWindow');
-      if (!chat) return;
-      chat.classList.toggle('hidden');
-      chat.classList.toggle('open');
+    function closeModal() {
+      document.getElementById('itemModal').classList.add('hidden');
+      document.getElementById('modalMap').innerHTML = '';
+      document.getElementById('modalVideo').innerHTML = '';
     }
 
-    function sendMessage() {
-      const input = document.getElementById('chatInput');
-      const body = document.getElementById('chatBody');
-      if (!input || !body) return;
-      const msg = input.value.trim();
-      if (!msg) return;
-      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div></div>`;
-      input.value = '';
-      body.scrollTop = body.scrollHeight;
-      setTimeout(() => {
-        let reply = t('chat_default');
-        const m = msg.toLowerCase();
-        if (m.includes("طبيب") || m.includes("docteur") || m.includes("doctor") || m.includes("sport") || m.includes("رياضة")) reply = "🏥 " + t('chat_sport');
-        else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
-        else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
-        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div></div>`;
-        body.scrollTop = body.scrollHeight;
-      }, 500);
-    }
-
-    const kangarooContainer = document.getElementById('kangarooContainer');
-    const kangarooSvg = document.getElementById('kangarooSvg');
-    if (kangarooContainer) {
-      kangarooContainer.addEventListener('click', () => {
-        if (kangarooSvg) {
-          kangarooSvg.style.animation = 'none';
-          kangarooSvg.offsetHeight;
-          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
-          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
-        }
-        toggleChat();
-      });
-      kangarooContainer.addEventListener('mouseenter', () => { if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
-      kangarooContainer.addEventListener('mouseleave', () => { if (kangarooSvg) kangarooSvg.style.transform = ''; });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+    // ============================================================
+    // INIT
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById('btn-' + savedLang);
       if (activeBtn) activeBtn.classList.add('active');
       currentLang = savedLang;
-      window.applySportTranslation(savedLang);
-      renderSport();
-      switchTab('health');
-      const chatInput = document.getElementById('chatInput');
-      if (chatInput) {
-        chatInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
-        });
-      }
+      applyTranslation(savedLang);
     });
   </script>
 </body>
