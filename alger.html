@@ -18,8 +18,14 @@
     .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    
+    /* Carousel Gallery */
+    .gallery-scroll { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 8px; scroll-snap-type: x mandatory; }
     .gallery-scroll::-webkit-scrollbar { height: 6px; }
     .gallery-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
+    .gallery-item { flex: 0 0 auto; width: 200px; height: 150px; scroll-snap-align: start; border-radius: 0.75rem; overflow: hidden; border: 1px solid #e2e8f0; background: #f8fafc; cursor: pointer; transition: transform 0.3s ease; }
+    .gallery-item:hover { transform: scale(1.05); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
     .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: #64748b; transition: 0.2s; }
     .lang-btn:hover { background: #ffedd5; color: #9a3412; }
@@ -62,9 +68,10 @@
         <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
       </div>
 
+      <!-- معرض الصور المتحرك -->
       <div id="modalGalleryContainer" class="space-y-2">
         <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> معرض الصور:</h4>
-        <div id="modalGallery" class="flex overflow-x-auto gap-3 pb-2 snap-x gallery-scroll"></div>
+        <div id="modalGallery" class="gallery-scroll"></div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -99,29 +106,31 @@
       { id: 'zeralda', category: 'شواطئ', title: 'زرالدة (Zeralda)', icon: '🏖️', history: 'يبعد 35 كم. الخيار الآمن للعائلات، به منتجعات ومرافق. مواقف السيارات مدفوعة (~200 دج).', transport: 'الطريق السيار A1. يفضل الوصول قبل الساعة 10 صباحاً في الصيف.', map: 'Zeralda plage Alger', images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], videos: [] },
       { id: 'ain_taya', category: 'شواطئ', title: 'عين طاية (Ain Taya)', icon: '🏖️', history: 'يبعد 22 كم فقط. شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع. الدخول مجاني لكن المواقف محدودة.', transport: 'الاتجاه شرقاً. يفضل الذهاب في أيام الأسبوع لتجنب الازدحام.', map: 'Ain Taya plage Alger', images: ['images (22).jpeg','images (23).jpeg', 'images (24).jpeg','images (25).jpeg' ], videos: [] },
       { id: 'club_pins', category: 'شواطئ', title: 'نادي الصنوبر (Club des Pins)', icon: '🏖️', history: 'يبعد 28 كم. أقل ازدحاماً، مثالي للأطفال الصغار نظراً لهدوء المياه.', transport: 'الطريق السيار A1 باتجاه الغرب.', map: 'Club des Pins Alger', images: [ 'images (26).jpeg', 'images (27).jpeg','images (28).jpeg' ], videos: [] },
-      
+     
       // ==========================================
       // الحدائق (Parks)
       // ==========================================
-      { id: 'jardin_essai', category: 'حدائق', title: 'حديقة التجارب بالحامة', icon: '🌳', history: 'تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم، تضم آلاف الأنواع النباتية النادرة.', transport: 'مترو الأنفاق (محطة الحامة) أو الحافلات.', map: 'Jardin d\'Essai El Hamma Alger', images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], videos: [{ id: 'peHUzgnaTOI', title: 'زيارة حديقة التجارب' }] },
+      { id: 'jardin_essai', category: 'حدائق', title: 'حديقة التجارب بالحامة', icon: '🌳', history: 'تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم، تضم آلاف الأنواع النباتية النادرة.', transport: 'مترو الأنفاق (محطة الحامة) أو الحافلات.', map: 'Jardin d\'Essai El Hamma Alger', images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], videos: [{ id: 'DOHY1JVqmDU', title: 'حديقة التجارب' }] },
       { id: 'parc_ben_aknoun', category: 'حدائق', title: 'حديقة بن عكنون', icon: '🌳', history: 'حديقة ترفيهية شهيرة تضم حديقة حيوانات كبيرة ومساحات خضراء واسعة.', transport: 'حافلات أو طاكسي.', map: 'Parc Ben Aknoun Alger', images: ['images (11).jpeg', 'images (12).jpeg'], videos: [] },
       { id: 'bois_arcades', category: 'حدائق', title: 'غابة الأركاد (حيدرة)', icon: '🌳', history: 'غابة حضرية هادئة في قلب حيدرة، تحتوي على مسارات للمشي والجري.', transport: 'سيارة أو حافلة إلى حيدرة.', map: 'Bois des Arcades Hydra Alger', images: ['images (13).jpeg', 'images (14).jpeg', 'images (15).jpeg'], videos: [] },
-      { id: 'dream_park', category: 'حدائق', title: 'دريم بارك (Dream Park)', icon: '🎢', history: 'مدينة ألعاب ترفيهية كبيرة في الجزائر العاصمة، مناسبة للعائلات والأصدقاء.', transport: 'سيارة أو حافلة (حي باب الزوار).', map: 'Dream Park Alger', images: [], videos: [{ id: 'tiDBo1RUS0o', title: 'جولة في Dream Park' }, { id: 'm06w-6eQJfY', title: 'Dream Park' }] },
-      { id: 'marsy_splash', category: 'حدائق', title: 'مارسي سبلاش (Marsy Splash)', icon: '🌊', history: 'مدينة ألعاب مائية شهيرة، مثالية لفصل الصيف.', transport: 'سيارة أو حافلة (منطقة زرالدة).', map: 'Marsy Splash Alger', images: ['marsy 1.PNG', 'marsy 2.PNG', 'marsy 3.PNG', 'marsy 4.PNG'], videos: [] },
+      { id: 'dream_park', category: 'حدائق', title: 'دريم بارك (Dream Park)', icon: '🎢', history: 'مدينة ألعاب ترفيهية كبيرة في الجزائر العاصمة، مناسبة للعائلات والأصدقاء.', transport: 'سيارة أو حافلة (حي باب الزوار).', map: 'Dream Park Alger', images: ['OIP (9).webp', 'OIP (10).webp', 'OIP (11).webp'], videos: [{ id: 'tiDBo1RUS0o', title: 'جولة في Dream Park' }, { id: 'm06w-6eQJfY', title: 'Dream Park' }] },
+      { id: 'marsy_splash', category: 'حدائق', title: 'مارسي (Marsy Studio)', icon: '🌊', history: 'مدينة ألعاب مائية شهيرة، مثالية لفصل الصيف.', transport: 'سيارة أو حافلة (منطقة زرالدة).', map: 'Marsy Splash Alger', images: ['marsy 1.PNG', 'marsy 2.PNG', 'marsy 3.PNG', 'marsy 4.PNG'], videos: [] },
       { id: 'jump_ouled_fayet', category: 'حدائق', title: 'جامب أولاد فايت (Jump Ouled Fayet)', icon: '🤸', history: 'فضاء ترفيهي رياضي (Trampoline Park) للأطفال والكبار.', transport: 'سيارة أو حافلة إلى أولاد فايت.', map: 'Jump Ouled Fayet Alger', images: ['teri 1.JPEG', 'teri 2.JPEG', 'teri 3.JPEG', 'teri 4.JPEG', 'teri 5.JPEG', 'teri 6.JPEG'], videos: [] },
       { id: 'rageroom', category: 'حدائق', title: 'راج روم باب الزوار (Rage Room)', icon: '💥', history: 'غرفة تفريغ نفسي (تكسير الأشياء) في باب الزوار، تجربة فريدة لتفريغ الطاقة.', transport: 'سيارة أو حافلة إلى باب الزوار.', map: 'Rage Room Bab Ezzouar Alger', images: ['rage 1.PNG', 'rage 2.PNG', 'rage 3.PNG', 'rage 4.PNG', 'rage 5.PNG', 'rage 6.PNG', 'rage 7.PNG'], videos: [] },
 
       // ==========================================
       // الثقافة والتاريخ (Culture & History)
       // ==========================================
-      { id: 'casbah', category: 'ثقافة وتاريخ', title: 'قصبة الجزائر', icon: '🏛️', history: 'موقع تراثي عالمي منذ 1992. المدينة القديمة للجزائر، تأسست في القرن العاشر، وتضم قصوراً عثمانية ومساجد تاريخية.', transport: 'محطة مترو ساحة الشهداء، أو الحافلات.', map: 'Casbah Alger', images: ['images (29).jpeg', 'images (35).jpeg', 'images (36).jpeg', 'images (37).jpeg', 'images (38).jpeg', 'images (39).jpeg', 'images (40).jpeg', 'images (41).jpeg', 'images (42).jpeg' ], videos: [{ id: 'WmGY2OywWiE', title: 'زيارة القصبة' }, { id: 'tUq3e9LslTM', title: 'القصبة' }] },
+      { id: 'casbah', category: 'ثقافة وتاريخ', title: 'قصبة الجزائر', icon: '🏛️', history: 'موقع تراثي عالمي منذ 1992. المدينة القديمة للجزائر، تأسست في القرن العاشر، وتضم قصوراً عثمانية ومساجد تاريخية.', transport: 'محطة مترو ساحة الشهداء، أو الحافلات.', map: 'Casbah Alger', images: ['images (29).jpeg', 'images (35).jpeg', 'images (36).jpeg', 'images (37).jpeg', 'images (38).jpeg', 'images (39).jpeg', 'images (40).jpeg', 'images (41).jpeg', 'images (42).jpeg' ], videos: [{ id: 'K7f2zx0UFsg', title: 'زيارة القصبة' }, { id: 'WmGY2OywWiE', title: 'القصبة' }, { id: 'tUq3e9LslTM', title: 'القصبة 2' }] },
       { id: 'martyrs_memorial', category: 'ثقافة وتاريخ', title: 'مقام الشهيد', icon: '🗼', history: 'نصب تذكاري ضخم يخلد ذكرى شهداء حرب الاستقلال الجزائرية.', transport: 'سيارة أو حافلة إلى منطقة رياض الفتح.', map: 'Maqam Echahid Alger', images: ['images (45).jpeg', 'images (43).jpeg', 'images (44).jpeg' ], videos: [{ id: 'URc2i9CWkxk', title: 'مقام الشهيد' }] },
-      { id: 'bardo_museum', category: 'ثقافة وتاريخ', title: 'المتحف الوطني باردو', icon: '🏛️', history: 'يقع في قصر يعود للقرن الثامن عشر. يضم مجموعات أثرية وفنوناً إفريقية وتقليدية.', transport: 'حافلات أو طاكسي (حي الحامة).', map: 'Musée du Bardo Alger', images: ['images (51).jpeg', 'images (52).jpeg', 'images (53).jpeg', 'images (54).jpeg'], videos: [{ id: 'tEcX6KZpSiM', title: 'زيارة متحف الباردو' }] },
+      { id: 'bardo_museum', category: 'ثقافة وتاريخ', title: 'المتحف الوطني باردو', icon: '🏛️', history: 'يقع في قصر يعود للقرن الثامن عشر. يضم مجموعات أثرية وفنوناً إفريقية وتقليدية.', transport: 'حافلات أو طاكسي (حي الحامة).', map: 'Musée du Bardo Alger', images: ['images (51).jpeg', 'images (52).jpeg', 'images (53).jpeg', 'images (54).jpeg'], videos: [{ id: 'Bx-EhrdmjbA', title: 'زيارة متحف الباردو' }, { id: 'tEcX6KZpSiM', title: 'متحف باردو' }] },
       { id: 'notre_dame', category: 'ثقافة وتاريخ', title: 'كنيسة سيدة إفريقيا', icon: '⛪', history: 'كنيسة كاثوليكية تقع على تلة تطل على خليج الجزائر، تتميز بمعمارها البيزنطي وقبتها الزرقاء.', transport: 'الترامواي أو الحافلات.', map: 'Notre-Dame d\'Afrique Alger', images: ['images (17).jpeg', 'images (18).jpeg', 'images (19).jpeg'], videos: [] },
       { id: 'grande_poste', category: 'ثقافة وتاريخ', title: 'البريد المركزي', icon: '🏛️', history: 'مبنى تاريخي في قلب العاصمة، يتميز بمعماره الموريسكي.', transport: 'مترو الأنفاق (محطة البريد المركزي).', map: 'Grande Poste Alger', images: [ 'images (58).jpeg', 'images (59).jpeg' ], videos: [{ id: 'QQbkX8MeCWI', title: 'زيارة البريد المركزي' }] },
       { id: 'kasser_el_rayes', category: 'ثقافة وتاريخ', title: 'قصر الرياس', icon: '🏰', history: 'قصر عثماني تاريخي في القصبة، يعود للقرن السادس عشر، يضم متحفاً للفنون والتقاليد.', transport: 'محطة مترو ساحة الشهداء ثم مشياً.', map: 'Palais des Raïs Alger', images: ['kasser 1.jpg', 'kasser 2.jpg', 'kasser 3.jpg', 'kasser 4.jpg', 'kasser 5.jpg', 'kasser 6.jpg', 'kasser 7.jpg', 'kasser 8.jpg'], videos: [] },
       { id: 'palais_arts', category: 'ثقافة وتاريخ', title: 'قصر الفنون الجميلة', icon: '🎨', history: 'متحف الفنون الجميلة في الجزائر العاصمة، يضم مجموعات فنية رائعة.', transport: 'حي الحامة، بالقرب من حديقة التجارب.', map: 'Musée des Beaux-Arts Alger', images: ['fonon 1.JPEG', 'fonon 2.JPEG', 'fonon 3.JPEG', 'fonon 4.JPEG', 'fonon 5.JPEG', 'fonon 6.JPEG', 'fonon 7.JPEG', 'fonon 8.JPEG'], videos: [] },
-      { id: 'dar_el_soltan', category: 'ثقافة وتاريخ', title: 'دار السلطان', icon: '🏛️', history: 'منزل عثماني تقليدي في القصبة، يعكس العمارة الجزائرية القديمة.', transport: 'القصبة، محطة مترو ساحة الشهداء.', map: 'Dar El Soltan Alger', images: [], videos: [{ id: 'RGcjn0WhOeI', title: 'دار السلطان' }] },
+      { id: 'dar_el_soltan', category: 'ثقافة وتاريخ', title: 'دار السلطان', icon: '🏛️', history: 'منزل عثماني تقليدي في القصبة، يعكس العمارة الجزائرية القديمة.', transport: 'القصبة، محطة مترو ساحة الشهداء.', map: 'Dar El Soltan Alger', images: ['OIP (12).webp', 'OIP (13).webp', 'OIP (14).webp', 'OIP (15).webp'], videos: [{ id: 'RGcjn0WhOeI', title: 'دار السلطان' }] },
+      { id: 'garden_city', category: 'حدائق', title: 'جاردن سيتي (Garden City)', icon: '🌺', history: 'حديقة ومساحة ترفيهية جديدة في الجزائر العاصمة، مناسبة للعائلات.', transport: 'سيارة أو حافلة.', map: 'Garden City Alger', images: [], videos: [{ id: 'CWeCAiqxtL4', title: 'Welcome to garden city' }] },
+      { id: 'hamma_park', category: 'حدائق', title: 'حديقة الحامة (Hamma Park)', icon: '🌲', history: 'حديقة عامة كبيرة في قلب الجزائر العاصمة، مكان مثالي للتنزه.', transport: 'مترو الأنفاق (محطة الحامة).', map: 'Hamma Park Alger', images: [], videos: [{ id: 'NNHh_lcMfPo', title: 'Welcome to hamma park' }] },
 
       // ==========================================
       // المساجد (Mosques)
@@ -129,9 +138,6 @@
       { id: 'djamaa_djazair', category: 'مساجد', title: 'جامع الجزائر الأعظم', icon: '🕌', history: 'ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً).', transport: 'مترو الأنفاق أو الحافلات، يقع في المحمدية.', map: 'Djamaa El Djazair Alger', images: ['images (60).jpeg','images (61).jpeg','images (62).jpeg','images (63).jpeg'], videos: [{ id: 'jLedHzZuxE4', title: 'جامع الجزائر الأعظم' }, { id: 'CZ7_3PCqDok', title: 'المسجد الأعظم' }] },
       { id: 'ketchaoua', category: 'مساجد', title: 'مسجد كتشاوة', icon: '🕌', history: 'من أقدم مساجد الجزائر (يعود للعهد العثماني).', transport: 'محطة مترو ساحة الشهداء، ثم مشياً إلى القصبة.', map: 'Ketchaoua Mosque Alger', images: ['images (68).jpeg','images (69).jpeg','images (70).jpeg','images (71).jpeg','images (72).jpeg'], videos: [] },
 
-      // ==========================================
-      // وكالات السفر (Travel Agencies)
-      // ==========================================
       ];
 
     let currentCategory = 'الكل';
@@ -191,14 +197,14 @@
       const mapQuery = encodeURIComponent(place.map);
       document.getElementById('modalMap').innerHTML = `<iframe src="https://www.google.com/maps?q=${mapQuery}&output=embed" allowfullscreen="" loading="lazy"></iframe>`;
       
-      // معرض الصور
+      // Carousel Gallery
       const galleryContainer = document.getElementById('modalGalleryContainer');
       const gallery = document.getElementById('modalGallery');
       gallery.innerHTML = '';
       if (place.images && place.images.length > 0) {
         galleryContainer.classList.remove('hidden');
         place.images.forEach(img => {
-          gallery.innerHTML += `<div class="flex-shrink-0 w-48 h-32 snap-center rounded-xl overflow-hidden border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 cursor-pointer" onclick="window.open('${img}', '_blank')"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs\\'>صورة غير متوفرة</div>'"></div>`;
+          gallery.innerHTML += `<div class="gallery-item" onclick="window.open('${img}', '_blank')"><img src="${img}" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs p-2 text-center\\'>صورة غير متوفرة</div>'"></div>`;
         });
       } else {
         galleryContainer.classList.add('hidden');
