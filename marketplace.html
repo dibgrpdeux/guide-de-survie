@@ -3,67 +3,307 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سوق الطالب - ENSTP</title>
-  
+  <title data-i18n="page_title">سوق الطالب - ENSTP</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-800 font-sans">
 
-  <!-- الهيدر -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b px-4 py-3 mb-8 shadow-sm">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; transition: background-color 0.4s, color 0.4s; }
+    html.dark body { background: #0f172a; color: #f8fafc; }
+    
+    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.3s ease; }
+    html.dark .glass-card { background: #1e293b; border-color: #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
+    
+    .glass-nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; transition: all 0.3s ease; }
+    html.dark .glass-nav { background: #0f172a; border-bottom-color: #334155; }
+
+    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: #64748b; transition: 0.2s; }
+    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
+    .lang-btn.active { background: #f97316; color: white; }
+
+    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1001; width: 320px; max-height: 420px; background: white; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); border: 1px solid #fed7aa; display: none; flex-direction: column; }
+    #chatWindow.open { display: flex; }
+    html.dark #chatWindow { background: #1e293b; border-color: #334155; color: #f8fafc; }
+    @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+
+    @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
+
+    button, a, .glass-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #f97316 !important; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important; }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-sans min-h-screen flex flex-col justify-between">
+
+  <header class="sticky top-0 z-50 glass-nav px-4 py-3 mb-8">
+    <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-2">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-2xl bg-orange-500 flex items-center justify-center text-white font-black text-lg shadow-md"><i class="fa-solid fa-store"></i></div>
         <div>
-          <h1 class="font-bold text-gray-900 text-base leading-tight">سوق الطالب</h1>
-          <p class="text-[11px] text-gray-500">بيع وشراء بين طلبة ENSTP</p>
+          <h1 class="font-bold text-gray-900 dark:text-white text-base leading-tight" data-i18n="market_title">سوق الطالب</h1>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400" data-i18n="market_subtitle">بيع وشراء بين طلبة ENSTP</p>
         </div>
       </div>
-      <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold transition">الرئيسية</a>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1 bg-gray-100 dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700">
+          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
+          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
+          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+        </div>
+        <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center shadow-sm hover:bg-orange-50 dark:hover:bg-slate-700 transition">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-orange-400"></i>
+        </button>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 text-xs font-bold transition" data-i18n="nav_home">الرئيسية</a>
+      </div>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 pb-12 space-y-8">
+  <main class="max-w-6xl mx-auto px-4 pb-12 space-y-8 flex-grow w-full">
 
-    <!-- إضافة منتج -->
-    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-200">
-      <h2 class="text-xl font-black text-gray-900 mb-4 flex items-center gap-2">
-        <i class="fa-solid fa-plus-circle text-orange-500"></i> أضف منتجك للبيع
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-gray-200 dark:border-slate-700">
+      <h2 class="text-xl font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-plus-circle text-orange-500"></i> <span data-i18n="market_add_title">أضف منتجك للبيع</span>
       </h2>
       <form id="productForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="text" id="prod-title" required placeholder="اسم المنتج (مثال: آلة حاسبة Casio)" class="p-3 rounded-xl border w-full outline-none focus:ring-2 focus:ring-orange-500">
-        <input type="number" id="prod-price" required placeholder="السعر (دج)" class="p-3 rounded-xl border w-full outline-none focus:ring-2 focus:ring-orange-500">
-        <input type="tel" id="prod-phone" required placeholder="رقم الهاتف (واتساب)" dir="ltr" class="p-3 rounded-xl border w-full outline-none focus:ring-2 focus:ring-orange-500">
-        <input type="url" id="prod-image" placeholder="رابط الصورة (اختياري)" dir="ltr" class="p-3 rounded-xl border w-full outline-none focus:ring-2 focus:ring-orange-500">
-        <textarea id="prod-desc" required placeholder="الوصف / الحالة..." rows="2" class="p-3 rounded-xl border w-full md:col-span-2 outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+        <input type="text" id="prod-title" required data-i18n-placeholder="market_prod_title" placeholder="اسم المنتج (مثال: آلة حاسبة Casio)" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full outline-none focus:ring-2 focus:ring-orange-500">
+        <input type="number" id="prod-price" required data-i18n-placeholder="market_prod_price" placeholder="السعر (دج)" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full outline-none focus:ring-2 focus:ring-orange-500">
+        <input type="tel" id="prod-phone" required data-i18n-placeholder="market_prod_phone" placeholder="رقم الهاتف (واتساب)" dir="ltr" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full outline-none focus:ring-2 focus:ring-orange-500">
+        <input type="url" id="prod-image" data-i18n-placeholder="market_prod_image" placeholder="رابط الصورة (اختياري)" dir="ltr" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full outline-none focus:ring-2 focus:ring-orange-500">
+        <textarea id="prod-desc" required data-i18n-placeholder="market_prod_desc" placeholder="الوصف / الحالة..." rows="2" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full md:col-span-2 outline-none focus:ring-2 focus:ring-orange-500"></textarea>
         <button type="submit" id="submitBtn" class="md:col-span-2 bg-orange-500 text-white font-black text-lg py-3 rounded-xl shadow-lg hover:bg-orange-600 transition flex items-center justify-center gap-2">
-          <i class="fa-solid fa-upload"></i> نشر المنتج
+          <i class="fa-solid fa-upload"></i> <span data-i18n="market_publish">نشر المنتج</span>
         </button>
       </form>
     </div>
 
-    <!-- شبكة المنتجات -->
     <div>
-      <h2 class="text-2xl font-black text-gray-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-box-open text-orange-500"></i> المنتجات المعروضة</h2>
+      <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-box-open text-orange-500"></i> <span data-i18n="market_products">المنتجات المعروضة</span></h2>
       <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- سيتم إدراج المنتجات هنا -->
+        <!-- produits injectés -->
       </div>
       <div id="loading" class="text-center py-10 hidden">
         <i class="fa-solid fa-spinner fa-spin text-3xl text-orange-500"></i>
-        <p class="text-gray-500 mt-2">جاري تحميل المنتجات...</p>
+        <p class="text-gray-500 mt-2" data-i18n="market_loading">جاري تحميل المنتجات...</p>
       </div>
     </div>
 
   </main>
+    <footer class="glass-nav border-t border-gray-200 dark:border-slate-800 py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400">
+    <p>© 2026 ENSTP Kouba.</p>
+  </footer>
 
-  <!-- استدعاء Firebase -->
+  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;">
+    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+      <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
+      <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
+      <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
+      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
+      <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
+      <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
+      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
+      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
+      <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
+      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
+      <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
+      <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
+      <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
+      <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
+      <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
+      <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
+      <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
+      <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div id="chatWindow" class="hidden">
+    <div style="background: linear-gradient(135deg, #f97316, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+      <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span></span>
+      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
+    </div>
+    <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
+      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
+      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    function t(key) {
+      const dict = window.MARKETPLACE_TRANSLATIONS[currentLang] || window.MARKETPLACE_TRANSLATIONS.ar;
+      return dict[key] || key;
+    }
+
+    window.MARKETPLACE_TRANSLATIONS = {
+      ar: {
+        page_title: "سوق الطالب - ENSTP", nav_home: "الرئيسية",
+        market_title: "سوق الطالب", market_subtitle: "بيع وشراء بين طلبة ENSTP",
+        market_add_title: "أضف منتجك للبيع",
+        market_prod_title: "اسم المنتج (مثال: آلة حاسبة Casio)",
+        market_prod_price: "السعر (دج)",
+        market_prod_phone: "رقم الهاتف (واتساب)",
+        market_prod_image: "رابط الصورة (اختياري)",
+        market_prod_desc: "الوصف / الحالة...",
+        market_publish: "نشر المنتج",
+        market_products: "المنتجات المعروضة", market_loading: "جاري تحميل المنتجات...",
+        market_contact: "تواصل", market_empty: "لا توجد منتجات معروضة حالياً.",
+        chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
+        chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
+        chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
+        chat_market: "تصفح المنتجات أو أضف منتجك في هذه الصفحة."
+      },
+      fr: {
+        page_title: "Marché Étudiant - ENSTP", nav_home: "Accueil",
+        market_title: "Marché Étudiant", market_subtitle: "Achat et vente entre étudiants ENSTP",
+        market_add_title: "Ajouter votre produit",
+        market_prod_title: "Nom du produit (ex : calculatrice Casio)",
+        market_prod_price: "Prix (DA)",
+        market_prod_phone: "Téléphone (WhatsApp)",
+        market_prod_image: "Lien de l'image (optionnel)",
+        market_prod_desc: "Description / État...",
+        market_publish: "Publier le produit",
+        market_products: "Produits en vente", market_loading: "Chargement...",
+        market_contact: "Contacter", market_empty: "Aucun produit pour l'instant.",
+        chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
+        chat_placeholder: "Votre question...", chat_default: "Merci !",
+        chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
+        chat_market: "Parcourez les produits ou ajoutez le vôtre sur cette page."
+      },
+      en: {
+        page_title: "Student Market - ENSTP", nav_home: "Home",
+        market_title: "Student Market", market_subtitle: "Buy and sell between ENSTP students",
+        market_add_title: "Add your product",
+        market_prod_title: "Product name (e.g. Casio calculator)",
+        market_prod_price: "Price (DA)",
+        market_prod_phone: "Phone (WhatsApp)",
+        market_prod_image: "Image URL (optional)",
+        market_prod_desc: "Description / Condition...",
+        market_publish: "Publish product",
+        market_products: "Products for sale", market_loading: "Loading...",
+        market_contact: "Contact", market_empty: "No products yet.",
+        chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
+        chat_placeholder: "Your question...", chat_default: "Thanks!",
+        chat_hello: "Welcome!", chat_thanks: "You're welcome!",
+        chat_market: "Browse products or add yours on this page."
+      }
+    };
+
+    window.applyMarketplaceTranslation = function(lang) {
+      const dict = window.MARKETPLACE_TRANSLATIONS[lang] || window.MARKETPLACE_TRANSLATIONS.ar;
+      if (dict.page_title) document.title = dict.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          const icon = el.querySelector('i');
+          if (icon) { el.innerHTML = ''; el.appendChild(icon); el.appendChild(document.createTextNode(' ' + dict[key])); }
+          else el.innerText = dict[key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+    };
+
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      localStorage.setItem('enstp_lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+      window.applyMarketplaceTranslation(lang);
+    };
+
+    function toggleChat() {
+      const chat = document.getElementById('chatWindow');
+      if (!chat) return;
+      chat.classList.toggle('hidden');
+      chat.classList.toggle('open');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      if (!input || !body) return;
+      const msg = input.value.trim();
+      if (!msg) return;
+      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div></div>`;
+      input.value = '';
+      body.scrollTop = body.scrollHeight;
+      setTimeout(() => {
+        let reply = t('chat_default');
+        const m = msg.toLowerCase();
+        if (m.includes("سوق") || m.includes("منتج") || m.includes("market") || m.includes("produit")) reply = "🛒 " + t('chat_market');
+        else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
+        else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
+        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div></div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 500);
+    }
+
+    const kangarooContainer = document.getElementById('kangarooContainer');
+    const kangarooSvg = document.getElementById('kangarooSvg');
+    if (kangarooContainer) {
+      kangarooContainer.addEventListener('click', () => {
+        if (kangarooSvg) {
+          kangarooSvg.style.animation = 'none';
+          kangarooSvg.offsetHeight;
+          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
+          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
+        }
+        toggleChat();
+      });
+      kangarooContainer.addEventListener('mouseenter', () => { if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
+      kangarooContainer.addEventListener('mouseleave', () => { if (kangarooSvg) kangarooSvg.style.transform = ''; });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + savedLang);
+      if (activeBtn) activeBtn.classList.add('active');
+      currentLang = savedLang;
+      window.applyMarketplaceTranslation(savedLang);
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+        });
+      }
+    });
+  </script>
+
+  <!-- Firebase Marketplace -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // نفس إعدادات Firebase الخاصة بالمنتدى
     const firebaseConfig = {
       apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
       authDomain: "enstp-forum-c5a28.firebaseapp.com",
@@ -81,11 +321,11 @@
     const loading = document.getElementById('loading');
     const submitBtn = document.getElementById('submitBtn');
 
-    // إضافة منتج إلى Firestore
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري النشر...';
+      const originalHTML = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ...';
 
       try {
         await addDoc(collection(db, "marketplace"), {
@@ -98,14 +338,13 @@
         });
         form.reset();
       } catch (err) {
-        alert("حدث خطأ أثناء النشر: " + err.message);
+        alert("Error: " + err.message);
       } finally {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fa-solid fa-upload"></i> نشر المنتج';
+        submitBtn.innerHTML = `<i class="fa-solid fa-upload"></i> <span>${window.t('market_publish')}</span>`;
       }
     });
 
-    // عرض المنتجات في الوقت الفعلي (لكل الزوار)
     loading.classList.remove('hidden');
     const q = query(collection(db, "marketplace"), orderBy("createdAt", "desc"));
     
@@ -114,31 +353,31 @@
       grid.innerHTML = '';
       
       if (snapshot.empty) {
-        grid.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500 bg-white rounded-2xl border">لا توجد منتجات معروضة حالياً.</div>';
+        grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500 bg-white dark:bg-slate-800 rounded-2xl border dark:border-slate-700">${window.t('market_empty')}</div>`;
         return;
       }
 
-      snapshot.forEach((doc) => {
-        const p = doc.data();
+      snapshot.forEach((docSnap) => {
+        const p = docSnap.data();
         const waPhone = p.phone.replace(/^0/, '213');
         let imgHtml = p.image 
           ? `<img src="${p.image}" class="w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/400x300/f1f5f9/94a3b8?text=No+Image'">` 
-          : `<div class="w-full h-48 bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-image text-4xl text-gray-300"></i></div>`;
+          : `<div class="w-full h-48 bg-gray-100 dark:bg-slate-700 flex items-center justify-center"><i class="fa-solid fa-image text-4xl text-gray-300"></i></div>`;
 
         grid.innerHTML += `
-          <div class="bg-white rounded-2xl border overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
             ${imgHtml}
             <div class="p-4 flex-grow flex flex-col">
               <div class="flex justify-between items-start mb-2">
-                <h3 class="font-bold text-lg text-gray-900">${p.title}</h3>
-                <span class="bg-orange-100 text-orange-700 font-black text-sm px-2 py-1 rounded-lg whitespace-nowrap">${p.price} دج</span>
+                <h3 class="font-bold text-lg text-gray-900 dark:text-white">${p.title}</h3>
+                <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 font-black text-sm px-2 py-1 rounded-lg whitespace-nowrap">${p.price} DA</span>
               </div>
-              <p class="text-sm text-gray-600 mb-4 flex-grow">${p.desc}</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">${p.desc}</p>
               <div class="flex gap-2 mt-auto">
-                <a href="https://wa.me/${waPhone}?text=مرحباً، أنا مهتم بمنتجك: ${p.title}" target="_blank" class="flex-1 bg-green-500 text-white font-bold py-2 rounded-xl text-sm hover:bg-green-600 flex items-center justify-center gap-1">
-                  <i class="fa-brands fa-whatsapp"></i> تواصل
+                <a href="https://wa.me/${waPhone}?text=Bonjour" target="_blank" class="flex-1 bg-green-500 text-white font-bold py-2 rounded-xl text-sm hover:bg-green-600 flex items-center justify-center gap-1">
+                  <i class="fa-brands fa-whatsapp"></i> <span>${window.t('market_contact')}</span>
                 </a>
-                <button onclick="deleteProduct('${doc.id}')" class="bg-red-50 text-red-500 px-3 py-2 rounded-xl hover:bg-red-100">
+                <button onclick="deleteProduct('${docSnap.id}')" class="bg-red-50 dark:bg-red-900/30 text-red-500 px-3 py-2 rounded-xl hover:bg-red-100">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </div>
@@ -147,12 +386,10 @@
       });
     });
 
-    // حذف منتج
     window.deleteProduct = async (id) => {
-      if (!confirm("هل أنت متأكد من حذف هذا المنتج؟")) return;
-      try {
-        await deleteDoc(doc(db, "marketplace", id));
-      } catch (e) { alert("خطأ في الحذف: " + e.message); }
+      if (!confirm("Confirmer la suppression ?")) return;
+      try { await deleteDoc(doc(db, "marketplace", id)); }
+      catch (e) { alert("Error: " + e.message); }
     };
   </script>
 </body>
