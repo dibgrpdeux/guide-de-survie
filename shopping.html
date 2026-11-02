@@ -1,15 +1,4 @@
 <!DOCTYPE html>
-<div class="relative w-full h-64 md:h-80 rounded-3xl overflow-hidden shadow-xl mb-6">
-  <div id="carousel" class="w-full h-full relative">
-    <img src="MEGA 1.jpg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" id="slide-0">
-    <img src="ON EST LA 1.jpg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" id="slide-1">
-    <img src="nafess 1.jpg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" id="slide-2">
-    <img src="brunch 1.jpg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" id="slide-3">
-  </div>
-  <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
-    <h2 class="text-white text-2xl font-black">اكتشف أفضل المطاعم والمقاهي</h2>
-  </div>
-</div>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -27,10 +16,15 @@
     .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.15); }
     .dark .glass-card { background: rgba(30, 20, 15, 0.95); border-color: rgba(249, 115, 22, 0.2); }
     
+    /* Carousel Gallery */
+    .gallery-scroll { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 8px; scroll-snap-type: x mandatory; }
     .gallery-scroll::-webkit-scrollbar { height: 6px; }
     .gallery-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
     .gallery-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
-    
+    .gallery-item { flex: 0 0 auto; width: 240px; height: 160px; scroll-snap-align: start; border-radius: 0.75rem; overflow: hidden; border: 1px solid #e2e8f0; background: #f8fafc; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .gallery-item:hover { transform: scale(1.05); box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.3); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
     .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: #64748b; transition: 0.2s; }
     .lang-btn:hover { background: #ffedd5; color: #9a3412; }
     .lang-btn.active { background: #f97316; color: white; }
@@ -38,17 +32,8 @@
     .filter-btn { transition: all 0.3s ease; }
     .filter-btn.active { background: #f97316; color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
 
-    /* تنسيق صورة الغلاف */
-    .card-cover {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 1rem 1rem 0 0;
-      transition: transform 0.4s ease;
-    }
-    .glass-card:hover .card-cover {
-      transform: scale(1.05);
-    }
+    .card-cover { width: 100%; height: 180px; object-fit: cover; border-radius: 1rem 1rem 0 0; transition: transform 0.4s ease; }
+    .glass-card:hover .card-cover { transform: scale(1.05); }
   </style>
 </head>
 <body class="min-h-screen">
@@ -99,16 +84,16 @@
         <p id="modalSubtitle" class="text-sm text-orange-600 dark:text-orange-400 font-bold mt-1"></p>
       </div>
 
-      <!-- قسم الفيديو -->
+      <!-- الفيديو -->
       <div id="modalVideoContainer" class="space-y-2 hidden">
         <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-brands fa-youtube text-red-500 mr-1.5"></i> فيديو تعريفي:</h4>
         <div id="modalVideo" class="w-full aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
       </div>
 
-      <!-- معرض الصور -->
+      <!-- معرض الصور المتحرك -->
       <div id="modalMenuContainer" class="space-y-2 hidden">
         <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-images text-orange-500 mr-1.5"></i> معرض الصور:</h4>
-        <div id="modalMenuGallery" class="flex overflow-x-auto gap-3 pb-2 gallery-scroll snap-x"></div>
+        <div id="modalMenuGallery" class="gallery-scroll"></div>
       </div>
 
       <div class="space-y-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -122,7 +107,6 @@
         </div>
       </div>
 
-      <!-- الخريطة -->
       <div id="modalMapContainer" class="space-y-2 hidden">
         <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> الموقع على الخريطة:</h4>
         <div id="modalMap" class="w-full h-64 rounded-xl overflow-hidden bg-gray-200 dark:bg-slate-700"></div>
@@ -139,7 +123,7 @@
   
   <script>
     const data = window.SHOP_DATA;
-    let currentCat = 'pharma'; // البداية بقسم الصيدليات
+    let currentCat = 'pharma';
     let currentSort = 'default';
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
@@ -196,7 +180,6 @@
         const distStr = item.dist !== null ? `${item.dist} km` : '';
         const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
 
-        // اختيار صورة الغلاف (أول صورة في القائمة)
         const coverImage = item.menuImages && item.menuImages.length > 0 ? item.menuImages[0] : null;
         let imageHTML = '';
         if (coverImage) {
@@ -257,13 +240,14 @@
         document.getElementById('modalTextMenu').innerText = menuText;
       } else textMenuContainer.classList.add('hidden');
 
+      // معرض الصور المتحرك (Carousel)
       const menuContainer = document.getElementById('modalMenuContainer');
       const menuGallery = document.getElementById('modalMenuGallery');
       menuGallery.innerHTML = '';
       if (item.menuImages && item.menuImages.length > 0) {
         menuContainer.classList.remove('hidden');
         item.menuImages.forEach(img => {
-          menuGallery.innerHTML += `<div class="flex-shrink-0 w-64 h-80 snap-center rounded-xl overflow-hidden border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 cursor-pointer" onclick="window.open('${img}', '_blank')"><img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs p-2 text-center\\'>صورة غير متوفرة</div>'"></div>`;
+          menuGallery.innerHTML += `<div class="gallery-item" onclick="window.open('${img}', '_blank')"><img src="${img}" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-400 text-xs p-2 text-center\\'>صورة غير متوفرة</div>'"></div>`;
         });
       } else menuContainer.classList.add('hidden');
 
@@ -299,17 +283,3 @@
   </script>
 </body>
 </html>
-<script>
-let currentSlide = 0;
-const slides = document.querySelectorAll('[id^="slide-"]');
-function showSlide(index) {
-  slides.forEach((img, i) => {
-    img.classList.toggle('opacity-100', i === index);
-    img.classList.toggle('opacity-0', i !== index);
-  });
-}
-setInterval(() => {
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-}, 4000);
-</script>
