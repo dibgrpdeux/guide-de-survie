@@ -131,7 +131,7 @@
       box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
     }
 
-    .kangaroo-svg { width: 38px; height: 38px; transition: transform 0.3s ease; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15)); }
+    .kangaroo-svg { width: 38px; height: 38px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15)); }
 
     [data-theme="dark"] .kangaroo-btn {
       background: linear-gradient(135deg, #1e293b, #0f172a);
@@ -299,8 +299,6 @@
       scroll-snap-align: start;
       transition: 0.3s;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      position: relative;
-      overflow: hidden;
     }
 
     .section-pill:hover {
@@ -419,11 +417,7 @@
       max-width: 600px;
       border-radius: 20px;
       padding: 20px;
-      transform: translateY(-20px);
-      transition: 0.3s;
     }
-
-    .search-overlay.active .search-box { transform: translateY(0); }
 
     .search-input-wrapper {
       display: flex;
@@ -445,7 +439,6 @@
       color: var(--text-main);
     }
 
-    /* ============ KANGOUROU MASCOTTE ============ */
     .mascot-container {
       position: fixed;
       bottom: 20px;
@@ -469,9 +462,7 @@
 
     .mascot-container:hover .mascot-kangaroo { transform: scale(1.1); }
 
-    .mascot-kangaroo.jump {
-      animation: kangarooBigJump 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+    .mascot-kangaroo.jump { animation: kangarooBigJump 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
     @keyframes kangarooBigJump {
       0% { transform: translateY(0) scale(1); }
@@ -516,13 +507,10 @@
       border-top-color: var(--primary);
     }
 
-    .mascot-bubble.visible {
-      opacity: 1;
-      transform: translateX(50%) translateY(0);
-    }
+    .mascot-bubble.visible { opacity: 1; transform: translateX(50%) translateY(0); }
 
     /* ============================================
-       🤖 FENÊTRE CHAT AI — DESIGN MODERNE
+       FENÊTRE CHAT AI
        ============================================ */
     #aiChatWindow {
       position: fixed;
@@ -544,18 +532,13 @@
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    #aiChatWindow.open {
-      display: flex;
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
+    #aiChatWindow.open { display: flex; transform: translateY(0) scale(1); opacity: 1; }
 
     [data-theme="dark"] #aiChatWindow {
       background: #1e293b;
       box-shadow: 0 25px 70px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(249, 115, 22, 0.2);
     }
 
-    /* Header de la fenêtre AI */
     .ai-chat-header {
       background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%);
       padding: 16px 20px;
@@ -576,13 +559,7 @@
       pointer-events: none;
     }
 
-    .ai-chat-header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      position: relative;
-      z-index: 1;
-    }
+    .ai-chat-header-left { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
 
     .ai-avatar {
       width: 44px;
@@ -616,35 +593,9 @@
       50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
     }
 
-    .ai-chat-info h3 {
-      margin: 0;
-      font-size: 15px;
-      font-weight: 800;
-      color: white;
-    }
-
-    .ai-chat-info p {
-      margin: 2px 0 0;
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.85);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .ai-chat-info p::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: blinkDot 1.5s infinite;
-    }
-
-    @keyframes blinkDot {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    .ai-chat-info h3 { margin: 0; font-size: 15px; font-weight: 800; color: white; }
+    .ai-chat-info p { margin: 2px 0 0; font-size: 11px; color: rgba(255, 255, 255, 0.85); display: flex; align-items: center; gap: 4px; }
+    .ai-chat-info p::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
 
     .ai-close-btn {
       width: 32px;
@@ -663,12 +614,8 @@
       z-index: 1;
     }
 
-    .ai-close-btn:hover {
-      background: rgba(255, 255, 255, 0.35);
-      transform: rotate(90deg);
-    }
+    .ai-close-btn:hover { background: rgba(255, 255, 255, 0.35); transform: rotate(90deg); }
 
-    /* Messages */
     .ai-chat-body {
       flex: 1;
       overflow-y: auto;
@@ -681,29 +628,12 @@
       scrollbar-color: #fed7aa transparent;
     }
 
-    [data-theme="dark"] .ai-chat-body {
-      background: #0f172a;
-    }
-
+    [data-theme="dark"] .ai-chat-body { background: #0f172a; }
     .ai-chat-body::-webkit-scrollbar { width: 6px; }
-    .ai-chat-body::-webkit-scrollbar-thumb {
-      background: #fed7aa;
-      border-radius: 10px;
-    }
+    .ai-chat-body::-webkit-scrollbar-thumb { background: #fed7aa; border-radius: 10px; }
 
-    /* Message bulle */
-    .ai-msg {
-      display: flex;
-      gap: 8px;
-      max-width: 100%;
-      animation: msgIn 0.3s ease;
-    }
-
-    @keyframes msgIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    .ai-msg { display: flex; gap: 8px; max-width: 100%; animation: msgIn 0.3s ease; }
+    @keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .ai-msg.user { flex-direction: row-reverse; }
 
     .ai-msg-avatar {
@@ -718,13 +648,8 @@
       color: white;
     }
 
-    .ai-msg.bot .ai-msg-avatar {
-      background: linear-gradient(135deg, #f97316, #ea580c);
-    }
-
-    .ai-msg.user .ai-msg-avatar {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-    }
+    .ai-msg.bot .ai-msg-avatar { background: linear-gradient(135deg, #f97316, #ea580c); }
+    .ai-msg.user .ai-msg-avatar { background: linear-gradient(135deg, #3b82f6, #2563eb); }
 
     .ai-msg-content {
       padding: 10px 14px;
@@ -755,7 +680,6 @@
       border-top-left-radius: 6px;
     }
 
-    /* Indicateur de frappe */
     .ai-typing {
       display: flex;
       gap: 4px;
@@ -768,10 +692,7 @@
       margin-left: 40px;
     }
 
-    [data-theme="dark"] .ai-typing {
-      background: #1e293b;
-      border-color: #334155;
-    }
+    [data-theme="dark"] .ai-typing { background: #1e293b; border-color: #334155; }
 
     .ai-typing span {
       width: 8px;
@@ -789,7 +710,6 @@
       30% { transform: translateY(-8px); opacity: 1; }
     }
 
-    /* Suggestions rapides */
     .ai-suggestions {
       display: flex;
       gap: 6px;
@@ -812,19 +732,9 @@
       transition: 0.2s;
     }
 
-    .ai-suggestion:hover {
-      background: #f97316;
-      color: white;
-      border-color: #f97316;
-    }
+    .ai-suggestion:hover { background: #f97316; color: white; border-color: #f97316; }
+    [data-theme="dark"] .ai-suggestion { background: #1e293b; border-color: #334155; color: #fdba74; }
 
-    [data-theme="dark"] .ai-suggestion {
-      background: #1e293b;
-      border-color: #334155;
-      color: #fdba74;
-    }
-
-    /* Input */
     .ai-chat-input-wrap {
       padding: 10px 14px 14px;
       background: #ffffff;
@@ -835,10 +745,7 @@
       flex-shrink: 0;
     }
 
-    [data-theme="dark"] .ai-chat-input-wrap {
-      background: #1e293b;
-      border-top-color: #334155;
-    }
+    [data-theme="dark"] .ai-chat-input-wrap { background: #1e293b; border-top-color: #334155; }
 
     .ai-chat-input {
       flex: 1;
@@ -861,11 +768,7 @@
       background: white;
     }
 
-    [data-theme="dark"] .ai-chat-input {
-      background: #0f172a;
-      border-color: #334155;
-      color: #f8fafc;
-    }
+    [data-theme="dark"] .ai-chat-input { background: #0f172a; border-color: #334155; color: #f8fafc; }
 
     .ai-send-btn {
       width: 42px;
@@ -884,16 +787,8 @@
       flex-shrink: 0;
     }
 
-    .ai-send-btn:hover {
-      transform: scale(1.08) rotate(-15deg);
-      box-shadow: 0 6px 16px rgba(249, 115, 22, 0.6);
-    }
-
-    .ai-send-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
+    .ai-send-btn:hover { transform: scale(1.08) rotate(-15deg); box-shadow: 0 6px 16px rgba(249, 115, 22, 0.6); }
+    .ai-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     @media (max-width: 640px) {
       #aiChatWindow {
@@ -909,9 +804,6 @@
 
   <div id="particles-js"></div>
 
-  <!-- ==========================================
-       NAVBAR
-       ========================================== -->
   <nav class="top-navbar">
     <img src="logo.png" alt="ENSTP Logo" class="nav-logo" onerror="this.style.display='none'">
 
@@ -925,11 +817,9 @@
       <button class="sound-btn" id="soundToggle" title="Toggle sound">
         <i class="fa-solid fa-volume-high" id="soundIcon"></i>
       </button>
-
       <button class="action-btn" id="themeToggle" title="Toggle theme">
         <i class="fa-solid fa-moon"></i>
       </button>
-
       <button class="kangaroo-btn" id="searchBtn" title="Search">
         <svg class="kangaroo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
           <path d="M14 48 Q6 44 8 52 Q10 58 16 54 Z" fill="#ea580c"/>
@@ -952,35 +842,24 @@
     </div>
   </nav>
 
-  <!-- ==========================================
-       HERO
-       ========================================== -->
   <header class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
-
     <img src="logo.png" alt="ENSTP Logo" class="hero-logo" onerror="this.style.display='none'">
-
     <div class="hero-badge">
       <i class="fa-solid fa-location-dot"></i> <span data-i18n="home_badge">الدليل الشامل للطلبة</span>
     </div>
-
     <h1 class="hero-title">
       <span data-i18n="home_title_1">المدرسة العليا</span><br><span data-i18n="home_title_2">للأشغال العمومية</span>
     </h1>
-
     <p class="hero-desc" data-i18n="home_desc">
       منصة رقمية متكاملة تجمع كل ما يحتاجه طالب ENSTP: التوجيه، التواصل، الخدمات اليومية، النقل، الإقامة الجامعية، السياحة، التسوق، المطاعم...
     </p>
-
     <a href="#sections" class="btn-explore">
       <i class="fa-solid fa-arrow-down"></i> <span data-i18n="home_start">ابدأ</span>
     </a>
   </header>
 
-  <!-- ==========================================
-       SECTIONS
-       ========================================== -->
   <div class="sections-slider-container" id="sections">
     <div class="sections-slider">
       <a href="ma-ecole.html" class="section-pill"><i class="fa-solid fa-school"></i> <span data-i18n="sec_school">مدرستي</span></a>
@@ -998,112 +877,57 @@
     </div>
   </div>
 
-  <!-- ==========================================
-       CARDS
-       ========================================== -->
   <section class="cards-grid" id="cardsGrid">
-
     <a href="ma-ecole.html" class="card">
       <div class="card-img-wrap"><img src="image_5ab38fe5 (1).jpg" alt="مدرستي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=مدرستي'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_school">مدرستي</h3>
-        <p class="card-sub" data-i18n="sec_school_desc">الأساتذة، المباني، والتاريخ</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_school">مدرستي</h3><p class="card-sub" data-i18n="sec_school_desc">الأساتذة، المباني، والتاريخ</p></div>
     </a>
-
     <a href="administration.html" class="card">
       <div class="card-img-wrap"><img src="images (74).jpeg" alt="إدارتي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=إدارتي'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_admin">إدارتي</h3>
-        <p class="card-sub" data-i18n="sec_admin_desc">الوثائق، الشهادات، والخدمات</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_admin">إدارتي</h3><p class="card-sub" data-i18n="sec_admin_desc">الوثائق، الشهادات، والخدمات</p></div>
     </a>
-
     <a href="ma-reussite.html" class="card">
       <div class="card-img-wrap"><img src="image_806ac8b5.jpg" alt="نجاحي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=نجاحي'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_success">نجاحي</h3>
-        <p class="card-sub" data-i18n="sec_success_desc">الدروس، الامتحانات، والتوقيت</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_success">نجاحي</h3><p class="card-sub" data-i18n="sec_success_desc">الدروس، الامتحانات، والتوقيت</p></div>
     </a>
-
     <a href="residence.html" class="card">
       <div class="card-img-wrap"><img src="images (76).jpeg" alt="حياتي الجامعية" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=حياتي'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_residence">حياتي الجامعية</h3>
-        <p class="card-sub" data-i18n="sec_residence_desc">الإقامة، الوجبات، والمرافق</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_residence">حياتي الجامعية</h3><p class="card-sub" data-i18n="sec_residence_desc">الإقامة، الوجبات، والمرافق</p></div>
     </a>
-
     <a href="sport.html" class="card">
       <div class="card-img-wrap"><img src="images (77).jpeg" alt="صحتي ورياضتي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=رياضتي'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_sport">صحتي ورياضتي</h3>
-        <p class="card-sub" data-i18n="sec_sport_desc">الرياضة، الأنشطة، والصحة</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_sport">صحتي ورياضتي</h3><p class="card-sub" data-i18n="sec_sport_desc">الرياضة، الأنشطة، والصحة</p></div>
     </a>
-
     <a href="forum.html" class="card">
       <div class="card-img-wrap"><img src="images71.jpeg" alt="ملتقى الطلبة" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=ملتقى'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_forum">ملتقى الطلبة</h3>
-        <p class="card-sub" data-i18n="sec_forum_desc">النقاشات، النوادي، والفعاليات</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_forum">ملتقى الطلبة</h3><p class="card-sub" data-i18n="sec_forum_desc">النقاشات، النوادي، والفعاليات</p></div>
     </a>
-
     <a href="transport.html" class="card">
       <div class="card-img-wrap"><img src="images80.jpg" alt="النقل" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=النقل'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_transport">النقل</h3>
-        <p class="card-sub" data-i18n="sec_transport_desc">الحافلات، المترو، والترامواي</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_transport">النقل</h3><p class="card-sub" data-i18n="sec_transport_desc">الحافلات، المترو، والترامواي</p></div>
     </a>
-
     <a href="resto.html" class="card">
       <div class="card-img-wrap"><img src="images (79).jpeg" alt="المطاعم" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=المطاعم'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_food">المطاعم</h3>
-        <p class="card-sub" data-i18n="sec_food_desc">أفضل الوجهات القريبة</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_food">المطاعم</h3><p class="card-sub" data-i18n="sec_food_desc">أفضل الوجهات القريبة</p></div>
     </a>
-
     <a href="alger.html" class="card">
       <div class="card-img-wrap"><img src="images82.jpg" alt="السياحة" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=السياحة'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_leisure">السياحة</h3>
-        <p class="card-sub" data-i18n="sec_leisure_desc">معالم الجزائر العاصمة</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_leisure">السياحة</h3><p class="card-sub" data-i18n="sec_leisure_desc">معالم الجزائر العاصمة</p></div>
     </a>
-
     <a href="shopping.html" class="card">
       <div class="card-img-wrap"><img src="images (80).jpeg" alt="التسوق" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=التسوق'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_shopping">التسوق</h3>
-        <p class="card-sub" data-i18n="sec_shopping_desc">المحلات، الأسعار، والعروض</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_shopping">التسوق</h3><p class="card-sub" data-i18n="sec_shopping_desc">المحلات، الأسعار، والعروض</p></div>
     </a>
-
     <a href="marketplace.html" class="card">
       <div class="card-img-wrap"><img src="b.jpg" alt="سوق الطالب" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=سوق+الطالب'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_marketplace">سوق الطالب</h3>
-        <p class="card-sub" data-i18n="sec_marketplace_desc">بيع وشراء الكتب والأدوات</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_marketplace">سوق الطالب</h3><p class="card-sub" data-i18n="sec_marketplace_desc">بيع وشراء الكتب والأدوات</p></div>
     </a>
-
     <a href="qr.html" class="card">
       <div class="card-img-wrap"><img src="images (78).jpeg" alt="QR Codes" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=QR+Codes'"></div>
-      <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_qr">QR Codes</h3>
-        <p class="card-sub" data-i18n="sec_qr_desc">رموز سريعة للوصول المباشر</p>
-      </div>
+      <div class="card-body"><h3 class="card-title" data-i18n="sec_qr">QR Codes</h3><p class="card-sub" data-i18n="sec_qr_desc">رموز سريعة للوصول المباشر</p></div>
     </a>
-
   </section>
 
-  <!-- ==========================================
-       KANGOUROU
-       ========================================== -->
   <div class="mascot-container" id="mascotContainer">
     <div class="mascot-bubble" id="mascotBubble" data-i18n="mascot_hello">مرحبا! 👋</div>
     <svg class="mascot-kangaroo" id="mascotKangaroo" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
@@ -1129,23 +953,16 @@
     </svg>
   </div>
 
-  <!-- ==========================================
-       🤖 FENÊTRE CHAT AI
-       ========================================== -->
   <div id="aiChatWindow">
     <div class="ai-chat-header">
       <div class="ai-chat-header-left">
-        <div class="ai-avatar">
-          <i class="fa-solid fa-robot"></i>
-        </div>
+        <div class="ai-avatar"><i class="fa-solid fa-robot"></i></div>
         <div class="ai-chat-info">
           <h3 data-i18n="ai_assistant_name">المساعد الذكي</h3>
           <p data-i18n="ai_assistant_status">متصل الآن · يرد فوراً</p>
         </div>
       </div>
-      <button class="ai-close-btn" onclick="closeAIChat()">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+      <button class="ai-close-btn" onclick="closeAIChat()"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
     <div class="ai-chat-body" id="aiChatBody">
@@ -1172,9 +989,6 @@
     </div>
   </div>
 
-  <!-- ==========================================
-       SEARCH OVERLAY
-       ========================================== -->
   <div class="search-overlay" id="searchOverlay">
     <div class="search-box">
       <div class="search-input-wrapper">
@@ -1185,9 +999,6 @@
     </div>
   </div>
 
-  <!-- ==========================================
-       SCRIPT
-       ========================================== -->
   <script>
     /* ============================================================
        1. DARK MODE
@@ -1244,7 +1055,7 @@
         ai_welcome: "مرحباً! 👋 أنا المساعد الذكي لـ ENSTP. اسألني عن أي شيء: الدروس، الجدول، النصائح الدراسية، الرياضيات، الفيزياء...",
         ai_input_placeholder: "اكتب سؤالك...",
         ai_thinking: "يكتب...",
-        ai_error: "حدث خطأ، جرب مرة أخرى.",
+        ai_error: "عذراً، حدث خطأ. حاول مرة أخرى.",
         sugg_1: "جدول التوقيت", sugg_2: "تنظيم الوقت", sugg_3: "قانون نيوتن", sugg_4: "المطاعم"
       },
       fr: {
@@ -1272,7 +1083,7 @@
         ai_welcome: "Bonjour ! 👋 Je suis l'assistant intelligent de l'ENSTP. Posez-moi des questions : cours, emploi du temps, conseils d'études, maths, physique...",
         ai_input_placeholder: "Écrivez votre question...",
         ai_thinking: "Écrit...",
-        ai_error: "Erreur, réessayez.",
+        ai_error: "Désolé, une erreur. Réessayez.",
         sugg_1: "Emploi du temps", sugg_2: "Organisation", sugg_3: "Loi de Newton", sugg_4: "Restaurants"
       },
       en: {
@@ -1300,7 +1111,7 @@
         ai_welcome: "Hello! 👋 I'm the ENSTP smart assistant. Ask me anything: courses, schedule, study tips, math, physics...",
         ai_input_placeholder: "Type your question...",
         ai_thinking: "Typing...",
-        ai_error: "Error, please retry.",
+        ai_error: "Sorry, an error. Please retry.",
         sugg_1: "Schedule", sugg_2: "Time management", sugg_3: "Newton's law", sugg_4: "Restaurants"
       }
     };
@@ -1345,7 +1156,69 @@
     }
 
     /* ============================================================
-       3. RECHERCHE
+       3. KNOWLEDGE BASE — Base de connaissances ENSTP
+       ============================================================ */
+    window.ENSTP_KNOWLEDGE = {
+      sections: [
+        { name: "مدرستي", name_fr: "Mon École", name_en: "My School", url: "ma-ecole.html", keywords: ["مدرسة", "ecole", "school", "أساتذة", "enseignants", "teachers", "مباني", "bâtiments", "buildings"] },
+        { name: "إدارتي", name_fr: "Mon Administration", name_en: "My Administration", url: "administration.html", keywords: ["إدارة", "administration", "وثائق", "documents", "شهادات", "certificats"] },
+        { name: "نجاحي", name_fr: "Ma Réussite", name_en: "My Success", url: "ma-reussite.html", keywords: ["نجاح", "réussite", "success", "دروس", "cours", "courses", "امتحانات", "examens", "exams"] },
+        { name: "حياتي الجامعية", name_fr: "Ma Résidence", name_en: "My Residence", url: "residence.html", keywords: ["إقامة", "résidence", "residence", "سكن", "logement", "housing"] },
+        { name: "صحتي ورياضتي", name_fr: "Santé & Sport", name_en: "Health & Sport", url: "sport.html", keywords: ["رياضة", "sport", "صحة", "santé", "health", "أطباء", "médecins", "doctors", "dentistes"] },
+        { name: "ملتقى الطلبة", name_fr: "Forum Étudiant", name_en: "Student Forum", url: "forum.html", keywords: ["منتدى", "forum", "نقاش", "discussion", "chat"] },
+        { name: "النقل", name_fr: "Transport", name_en: "Transport", url: "transport.html", keywords: ["نقل", "transport", "حافلة", "bus", "مترو", "métro", "metro", "ترامواي", "tramway", "tram"] },
+        { name: "المطاعم", name_fr: "Restaurants", name_en: "Restaurants", url: "resto.html", keywords: ["مطعم", "restaurant", "مقهى", "café", "cafe", "أكل", "manger", "food", "eat"] },
+        { name: "السياحة", name_fr: "Tourisme", name_en: "Tourism", url: "alger.html", keywords: ["سياحة", "tourisme", "tourism", "شاطئ", "plage", "beach", "حديقة", "parc", "park", "مسجد", "mosquée", "mosque"] },
+        { name: "التسوق", name_fr: "Shopping", name_en: "Shopping", url: "shopping.html", keywords: ["تسوق", "shopping", "صيدلية", "pharmacie", "pharmacy", "محل", "magasin", "shop"] },
+        { name: "سوق الطالب", name_fr: "Marché Étudiant", name_en: "Student Market", url: "marketplace.html", keywords: ["سوق", "marché", "market", "بيع", "vendre", "sell", "شراء", "acheter", "buy"] },
+        { name: "QR Codes", name_fr: "QR Codes", name_en: "QR Codes", url: "qr.html", keywords: ["qr", "رمز", "code", "فوج", "groupe", "group"] }
+      ],
+      schedule: "جدول التوقيت متاح في صفحة schedule.html أو من خلال قسم نجاحي (ma-reussite.html). تحتاج إلى تحديد القسم (1CP, 2CP, DIB, DMS) والسنة والفوج.",
+      drives: "11 روابط Google Drive للدروس والملخصات موجودة في صفحة نجاحي (ma-reussite.html) في تبويب الواجبات والامتحانات.",
+      labs: "13 تجربة تفاعلية في المختبر الافتراضي: البندول، الدارة، المقذوفات، الخرسانة، الزنبرك، الأمواج، الكيمياء، RDM, MDF، البصريات، الديناميكا، المغناطيسية، الزخم. متاحة في ma-reussite.html.",
+      emergency: "أرقام الطوارئ: الحماية المدنية (14)، الشرطة (17)، أمن المدرسة (1548)، مستشفى مصطفى (021 71 00 00).",
+      restaurants: "أفضل المطاعم قرب ENSTP: Mega Pizza Kouba, On Est La, American Berger, KGB, Cheese Kou, So Pizza. المقاهي: Nafess Café, Brioch Cafétéria, Cafétéria Provence, Green Caffee, Celtic Coffee. التفاصيل في resto.html.",
+      pharmacies: "صيدليات قريبة: Pharmacie Attoui, Djarar, Hassani, Hadibi, Torkiche, Harket, Baziz, Chikhi. في shopping.html.",
+      residence: "3 إقامات جامعية: سعيد حمدين (600 سرير), امحمد يوسفي (500 سرير), قاريدي (1200 سرير). تفاصيل + qibla + menus في residence.html.",
+      transport: "مواقيت الحافلات، المترو (50 دج), الترامواي (40 دج), eTWASSEL (150 دج/سنة), تطبيقات VTC (Yassir, Heetch, InDrive), covoiturage. في transport.html.",
+      school_info: "المدرسة الوطنية العليا للأشغال العمومية (ENSTP) تأسست عام 1925 في القبة، الجزائر. تقدم تكويناً في الهندسة المدنية والأشغال العمومية.",
+      contact: "للاتصال: m.tebani@enstp.edu.dz (تحضيري), i.makoudi@enstp.edu.dz (DIB), m.bourebia83@gmail.com (DMS).",
+      sport: "9 أطباء (قلب، نساء، أطفال، عيون) + 4 عيادات أسنان + 7 صالات رياضة. في sport.html.",
+      forum: "منتدى الطلبة للنقاش وتبادل الملفات. في forum.html.",
+      qr: "رموز QR لكل فوج (1CP, 2CP, DIB, DMS). في qr.html."
+    };
+
+    window.searchKnowledge = function(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) return null;
+      
+      for (const section of window.ENSTP_KNOWLEDGE.sections) {
+        if (section.keywords.some(k => q.includes(k.toLowerCase()))) {
+          const name = currentLang === 'ar' ? section.name : (currentLang === 'fr' ? section.name_fr : section.name_en);
+          return `📍 **${name}**\n\nيمكنك الوصول إلى هذا القسم من الرابط: ${section.url}\n\nأو من الصفحة الرئيسية → ${name}`;
+        }
+      }
+      
+      const k = window.ENSTP_KNOWLEDGE;
+      if (q.includes("جدول") || q.includes("توقيت") || q.includes("emploi") || q.includes("schedule") || q.includes("timetable")) return k.schedule;
+      if (q.includes("drive") || q.includes("ملفات") || q.includes("fichiers") || q.includes("files")) return k.drives;
+      if (q.includes("مختبر") || q.includes("تجربة") || q.includes("lab") || q.includes("expérience")) return k.labs;
+      if (q.includes("طوارئ") || q.includes("urgence") || q.includes("emergency")) return k.emergency;
+      if (q.includes("مطعم") || q.includes("restaurant") || q.includes("eat") || q.includes("manger") || q.includes("café")) return k.restaurants;
+      if (q.includes("صيدلية") || q.includes("pharmacie") || q.includes("pharmacy")) return k.pharmacies;
+      if (q.includes("إقامة") || q.includes("résidence") || q.includes("residence") || q.includes("سكن")) return k.residence;
+      if (q.includes("نقل") || q.includes("transport") || q.includes("bus") || q.includes("مترو") || q.includes("métro")) return k.transport;
+      if (q.includes("مدرسة") || q.includes("école") || q.includes("school") || q.includes("enstp")) return k.school_info;
+      if (q.includes("اتصال") || q.includes("contact") || q.includes("بريد") || q.includes("email")) return k.contact;
+      if (q.includes("رياضة") || q.includes("sport") || q.includes("صحة") || q.includes("santé")) return k.sport;
+      if (q.includes("منتدى") || q.includes("forum")) return k.forum;
+      if (q.includes("qr")) return k.qr;
+      
+      return null;
+    };
+
+    /* ============================================================
+       4. RECHERCHE
        ============================================================ */
     const searchBtn = document.getElementById('searchBtn');
     const searchOverlay = document.getElementById('searchOverlay');
@@ -1381,7 +1254,7 @@
     });
 
     /* ============================================================
-       4. ANIMATION CARTES
+       5. ANIMATION CARTES
        ============================================================ */
     const cards = document.querySelectorAll('.card');
     const observer = new IntersectionObserver((entries) => {
@@ -1396,7 +1269,7 @@
     cards.forEach(card => observer.observe(card));
 
     /* ============================================================
-       5. SONS
+       6. SONS
        ============================================================ */
     let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
     let audioCtx = null;
@@ -1445,15 +1318,14 @@
     });
 
     /* ============================================================
-       6. KANGOUROU
+       7. KANGOUROU
        ============================================================ */
     const mascotContainer = document.getElementById('mascotContainer');
     const mascotKangaroo = document.getElementById('mascotKangaroo');
     const mascotBubble = document.getElementById('mascotBubble');
 
     let isDragging = false;
-    let offsetX, offsetY;
-    let dragStartX, dragStartY;
+    let dragStartX, dragStartY, offsetX, offsetY;
 
     mascotContainer.addEventListener('mousedown', startDrag);
     mascotContainer.addEventListener('touchstart', startDrag, { passive: false });
@@ -1491,12 +1363,11 @@
       mascotContainer.classList.remove('dragging');
       document.removeEventListener('mousemove', onDrag);
       document.removeEventListener('touchmove', onDrag);
-      document.removeEventListener('mousedown', startDrag);
-      document.removeEventListener('touchstart', startDrag);
+      document.removeEventListener('mouseup', endDrag);
+      document.removeEventListener('touchend', endDrag);
       if (!isDragging) {
         openAIChat();
       } else {
-        // Reset position
         setTimeout(() => {
           mascotContainer.style.left = '';
           mascotContainer.style.top = '';
@@ -1508,7 +1379,7 @@
     }
 
     /* ============================================================
-       7. CHAT AI
+       8. CHAT AI
        ============================================================ */
     const aiChatWindow = document.getElementById('aiChatWindow');
     const aiChatBody = document.getElementById('aiChatBody');
@@ -1568,23 +1439,59 @@
       const msg = aiChatInput.value.trim();
       if (!msg) return;
 
-      // Masquer les suggestions après 1er message
       aiSuggestions.style.display = 'none';
-
       addMessage(msg, 'user');
       aiChatInput.value = '';
       aiChatInput.style.height = 'auto';
       aiSendBtn.disabled = true;
       playSound('ai');
 
+      // Chercher d'abord dans la base locale
+      const knowledgeReply = window.searchKnowledge(msg);
+      if (knowledgeReply) {
+        setTimeout(() => {
+          addMessage(knowledgeReply, 'bot');
+          aiSendBtn.disabled = false;
+          aiChatInput.focus();
+        }, 300);
+        return;
+      }
+
+      // Sinon appeler l'AI
       const typing = showTyping();
 
       try {
+        const knowledgeContext = `
+Base de connaissances ENSTP:
+- Sections: ${window.ENSTP_KNOWLEDGE.sections.map(s => s.name).join(', ')}
+- Jardin: ${window.ENSTP_KNOWLEDGE.schedule}
+- Drives: ${window.ENSTP_KNOWLEDGE.drives}
+- Labs: ${window.ENSTP_KNOWLEDGE.labs}
+- Urgences: ${window.ENSTP_KNOWLEDGE.emergency}
+- Restaurants: ${window.ENSTP_KNOWLEDGE.restaurants}
+- Résidence: ${window.ENSTP_KNOWLEDGE.residence}
+- Transport: ${window.ENSTP_KNOWLEDGE.transport}
+- École: ${window.ENSTP_KNOWLEDGE.school_info}
+- Contact: ${window.ENSTP_KNOWLEDGE.contact}
+`;
+
         const systemPrompt = currentLang === 'ar' 
-          ? "أنت مساعد ذكي لطلبة المدرسة الوطنية العليا للأشغال العمومية (ENSTP) في القبة، الجزائر. أجب بإيجاز ووضوح بالعربية. يمكنك مساعدتهم في: التوجيه، الجدول الدراسي، الدروس، الرياضيات، الفيزياء، الكيمياء، الهندسة المدنية، تنظيم الوقت، النصائح الدراسية، النقل، الإقامة الجامعية. إذا لم تكن متأكداً، اقترح على الطالب استشارة موقع المدرسة."
+          ? `أنت مساعد ذكي لطلبة المدرسة الوطنية العليا للأشغال العمومية (ENSTP) في القبة، الجزائر. أجب بإيجاز ووضوح بالعربية.
+
+${knowledgeContext}
+
+إذا كان السؤال عن معلومات ENSTP، استخدم هذه القاعدة. إذا لم تكن متأكداً، اقترح على الطالب استشارة الموقع.`
           : currentLang === 'fr'
-          ? "Tu es un assistant intelligent pour les étudiants de l'ENSTP à Kouba, Alger. Réponds brièvement et clairement en français. Tu peux les aider sur : orientation, emploi du temps, cours, maths, physique, chimie, génie civil, organisation, conseils d'études, transport, résidence universitaire. Si tu n'es pas sûr, suggère à l'étudiant de consulter le site de l'école."
-          : "You are a smart assistant for ENSTP students in Kouba, Algeria. Answer briefly and clearly in English. You can help with: guidance, schedule, courses, math, physics, chemistry, civil engineering, time management, study tips, transport, university residence. If unsure, suggest checking the school website.";
+          ? `Tu es un assistant intelligent pour les étudiants de l'ENSTP à Kouba, Alger. Réponds brièvement et clairement en français.
+
+${knowledgeContext}
+
+Si la question concerne les infos ENSTP, utilise cette base. Sinon, aide l'étudiant avec tes connaissances générales.`
+          : `You are a smart assistant for ENSTP students in Kouba, Algeria. Answer briefly and clearly in English.
+
+${knowledgeContext}
+
+If the question is about ENSTP info, use this base. Otherwise, help the student with general knowledge.`;
 
         const response = await fetch('https://text.pollinations.ai/', {
           method: 'POST',
@@ -1615,7 +1522,6 @@
       }
     }
 
-    // Enter pour envoyer
     aiChatInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -1623,14 +1529,13 @@
       }
     });
 
-    // Auto-resize textarea
     aiChatInput.addEventListener('input', function() {
       this.style.height = 'auto';
       this.style.height = Math.min(this.scrollHeight, 80) + 'px';
     });
 
     /* ============================================================
-       8. BULLE MASCOTTE
+       9. BULLE MASCOTTE
        ============================================================ */
     mascotContainer.addEventListener('mouseenter', () => {
       if (aiChatWindow.classList.contains('open')) return;
@@ -1649,7 +1554,7 @@
     });
 
     /* ============================================================
-       9. INIT
+       10. INIT
        ============================================================ */
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
@@ -1659,7 +1564,6 @@
       currentLang = savedLang;
       applyTranslation(savedLang);
 
-      // Particles
       if (window.particlesJS) {
         particlesJS("particles-js", {
           "particles": {
