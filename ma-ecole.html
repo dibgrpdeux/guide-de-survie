@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مدرستي - ENSTP</title>
+  <title data-i18n="ecole_title">مدرستي - ENSTP</title>
   
   <script src="translate.js"></script>
   <style>
@@ -313,6 +313,45 @@
       transform: translateY(-2px);
       box-shadow: 0 12px 25px rgba(217, 119, 6, 0.5);
     }
+
+    /* ==========================================
+       تحسينات المظهر الموحدة (إضافة فقط)
+       ========================================== */
+    .tab-btn, .glass-card, .btn-amber, .director-card {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    @keyframes enstpPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .enstp-pulse { animation: enstpPulse 2s ease-in-out infinite; }
+
+    @keyframes enstpFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .enstp-fade { animation: enstpFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+    /* Chat window */
+    #chatWindow {
+      position: fixed;
+      bottom: 110px;
+      right: 20px;
+      z-index: 1001;
+      width: 320px;
+      max-height: 420px;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      border: 1px solid #fed7aa;
+      display: none;
+      flex-direction: column;
+    }
+    #chatWindow.open { display: flex; }
+    @media (max-width: 640px) {
+      #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -397,7 +436,7 @@
           </p>
         </div>
 
-        <!-- 🌐 الموقع الرسمي للمدرسة -->
+        <!-- 🌐 الموقع الرسمي -->
         <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xl shadow-lg">
@@ -416,7 +455,7 @@
           </a>
         </div>
 
-               <!-- 👩‍💼 بطاقة المديرة -->
+        <!-- 👩‍💼 بطاقة المديرة -->
         <div class="director-card">
           <img src="images (81).jpeg" alt="المديرة" class="director-photo" onerror="this.src='https://via.placeholder.com/140x140/d97706/ffffff?text=Directrice'" />
           <div class="director-info">
@@ -447,8 +486,6 @@
             </div>
           </div>
         </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -476,23 +513,23 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
             <h3 class="font-bold text-amber-900 mb-2">
-              <i class="fa-solid fa-flask text-amber-600 ml-2"></i> القسم التحضيري
+              <i class="fa-solid fa-flask text-amber-600 ml-2"></i> <span data-i18n="dept_prep">القسم التحضيري</span>
             </h3>
-            <p class="text-sm text-amber-700">Classes Préparatoires - السنة الأولى والثانية تحضيري</p>
+            <p class="text-sm text-amber-700" data-i18n="dept_prep_desc">Classes Préparatoires - السنة الأولى والثانية تحضيري</p>
           </div>
 
           <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
             <h3 class="font-bold text-amber-900 mb-2">
-              <i class="fa-solid fa-cubes text-amber-600 ml-2"></i> قسم مواد وهياكل
+              <i class="fa-solid fa-cubes text-amber-600 ml-2"></i> <span data-i18n="dept_dms">قسم مواد وهياكل</span>
             </h3>
-            <p class="text-sm text-amber-700">Matériaux & Structures - مواد البناء والهياكل</p>
+            <p class="text-sm text-amber-700" data-i18n="dept_dms_desc">Matériaux & Structures - مواد البناء والهياكل</p>
           </div>
 
           <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
             <h3 class="font-bold text-amber-900 mb-2">
-              <i class="fa-solid fa-bridge text-amber-600 ml-2"></i> قسم منشآت قاعدية
+              <i class="fa-solid fa-bridge text-amber-600 ml-2"></i> <span data-i18n="dept_dib">قسم منشآت قاعدية</span>
             </h3>
-            <p class="text-sm text-amber-700">Infrastructures - الطرقات والمنشآت القاعدية</p>
+            <p class="text-sm text-amber-700" data-i18n="dept_dib_desc">Infrastructures - الطرقات والمنشآت القاعدية</p>
           </div>
         </div>
       </div>
@@ -515,33 +552,33 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
             <div class="video-container"><iframe src="https://www.youtube.com/embed/8LfUbr6JoVE" allowfullscreen></iframe></div>
-            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">جولة عامة في المدرسة</p></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900" data-i18n="video_tour">جولة عامة في المدرسة</p></div>
           </div>
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
             <div class="video-container"><iframe src="https://www.youtube.com/embed/DQLbKFkIJh0" allowfullscreen></iframe></div>
-            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">أقسام التحضيري</p></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900" data-i18n="video_prepa">أقسام التحضيري</p></div>
           </div>
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
             <div class="video-container"><iframe src="https://www.youtube.com/embed/5LSyChDF-hA" allowfullscreen></iframe></div>
-            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">المدرج الكبير</p></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900" data-i18n="video_amphi">المدرج الكبير</p></div>
           </div>
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
             <div class="video-container"><iframe src="https://www.youtube.com/embed/uZ7HbehM_UU" allowfullscreen></iframe></div>
-            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">الأقسام العلمية</p></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900" data-i18n="video_dept">الأقسام العلمية</p></div>
           </div>
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
             <div class="video-container"><iframe src="https://www.youtube.com/embed/GUCHDgEJaIk" allowfullscreen></iframe></div>
-            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">مدخل المدرسة</p></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900" data-i18n="video_entrance">مدخل المدرسة</p></div>
           </div>
           <div class="rounded-2xl overflow-hidden border border-amber-200 bg-amber-50">
             <div class="video-container"><iframe src="https://www.youtube.com/embed/sFwHEHhgAbQ" allowfullscreen></iframe></div>
-            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900">المكتبة والمرافق</p></div>
+            <div class="p-4 text-center"><p class="text-sm font-bold text-amber-900" data-i18n="video_library">المكتبة والمرافق</p></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 🗺️ الخريطة - لون بني دافئ -->
+    <!-- 🗺️ الخريطة -->
     <div id="tab-map" class="tab-content">
       <div class="glass-card rounded-3xl p-8 border-2 border-amber-300 space-y-6" style="background: linear-gradient(135deg, #fffbeb, #fef3c7);">
         <div class="flex items-center gap-3">
@@ -564,19 +601,19 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
           <div class="p-4 rounded-xl border-2 border-amber-200 text-center" style="background: #fffbeb;">
             <i class="fa-solid fa-school text-2xl mb-2" style="color: #b45309;"></i>
-            <p class="text-xs font-bold" style="color: #78350f;">المدخل الرئيسي</p>
+            <p class="text-xs font-bold" style="color: #78350f;" data-i18n="map_entrance">المدخل الرئيسي</p>
           </div>
           <div class="p-4 rounded-xl border-2 border-amber-200 text-center" style="background: #fffbeb;">
             <i class="fa-solid fa-chalkboard text-2xl mb-2" style="color: #b45309;"></i>
-            <p class="text-xs font-bold" style="color: #78350f;">المدرجات</p>
+            <p class="text-xs font-bold" style="color: #78350f;" data-i18n="map_amphi">المدرجات</p>
           </div>
           <div class="p-4 rounded-xl border-2 border-amber-200 text-center" style="background: #fffbeb;">
             <i class="fa-solid fa-flask text-2xl mb-2" style="color: #b45309;"></i>
-            <p class="text-xs font-bold" style="color: #78350f;">المخابر</p>
+            <p class="text-xs font-bold" style="color: #78350f;" data-i18n="map_labs">المخابر</p>
           </div>
           <div class="p-4 rounded-xl border-2 border-amber-200 text-center" style="background: #fffbeb;">
             <i class="fa-solid fa-book text-2xl mb-2" style="color: #b45309;"></i>
-            <p class="text-xs font-bold" style="color: #78350f;">المكتبة</p>
+            <p class="text-xs font-bold" style="color: #78350f;" data-i18n="map_library">المكتبة</p>
           </div>
         </div>
       </div>
@@ -592,17 +629,62 @@
     </a>
   </footer>
 
+  <!-- 🦘 الكنغر (يفتح الشات بوت) -->
+  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;" title="المساعد الافتراضي">
+        <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(217,119,6,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+      <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
+      <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#b45309"/>
+      <ellipse cx="46" cy="68" rx="10" ry="5" fill="#b45309"/>
+      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#d97706"/>
+      <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fef3c7"/>
+      <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#b45309"/>
+      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#d97706"/>
+      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#d97706" transform="rotate(-15 38 12)"/>
+      <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fef3c7" transform="rotate(-15 38 12)"/>
+      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#d97706" transform="rotate(15 50 12)"/>
+      <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fef3c7" transform="rotate(15 50 12)"/>
+      <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fef3c7"/>
+      <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#78350f"/>
+      <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
+      <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
+      <path d="M47 36 Q51 38 54 36" stroke="#78350f" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="28" cy="44" rx="5" ry="3" fill="#b45309" transform="rotate(-30 28 44)"/>
+      <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#92400e" stroke-width="1.5"/>
+      <line x1="25" y1="41" x2="28" y2="44" stroke="#92400e" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- 🤖 نافذة الشات بوت (تفتح من الكنغر) -->
+  <div id="chatWindow" class="hidden">
+    <div style="background: linear-gradient(135deg, #d97706, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+      <span style="display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-comments"></i>
+        <span data-i18n="chat_title">المساعد الافتراضي</span>
+      </span>
+      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="background: #fef3c7; padding: 8px 12px; border-radius: 12px; color: #78350f;" data-i18n="chat_welcome">
+        مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟
+      </div>
+    </div>
+    <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
+      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
+      <button onclick="sendMessage()" style="background: #d97706; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: 0.2s;">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
   <!-- Script -->
   <script>
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-    function t(key) { return window.translations && window.translations[currentLang] && window.translations[currentLang][key] ? window.translations[currentLang][key] : key; }
 
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-      currentLang = lang;
-      if(originalSetLanguage) originalSetLanguage(lang);
-    };
-
+    // ==========================================
+    // 1. Onglets
+    // ==========================================
     function showTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -612,9 +694,314 @@
       document.querySelector('.tabs-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      if(window.setLanguage) setTimeout(() => setLanguage(currentLang), 100);
+    // ==========================================
+    // 2. Traductions (ar / fr / en)
+    // ==========================================
+    window.ECOLE_TRANSLATIONS = {
+      ar: {
+        nav_app_name: "دليل ENSTP",
+        nav_app_sub: "المدرسة الوطنية العليا",
+        nav_home: "الرئيسية",
+        ecole_title: "مدرستي",
+        ecole_hero_subtitle: "المدرسة الوطنية العليا للأشغال العمومية - القبة",
+        tab_about: "نبذة عن المدرسة",
+        tab_teachers: "هيئة التدريس",
+        tab_buildings: "مباني المدرسة",
+        tab_map: "الخريطة",
+        about_title: "نبذة عن المدرسة",
+        about_p1: "المدرسة الوطنية العليا للأشغال العمومية (ENSTP) هي مؤسسة عمومية ذات طابع علمي وتكنولوجي وثقافي، تقع في بلدية القبة بالجزائر العاصمة. تُعدّ من أعرق المؤسسات التعليمية في الجزائر، حيث تأسست عام 1925 تحت اسم \"مدرسة الأشغال العمومية\".",
+        about_p2: "تخرّج منها آلاف المهندسين الذين ساهموا في بناء البنية التحتية للبلاد: الطرق، الجسور، السدود، والمباني الكبرى. تقدم المدرسة تكويناً عالياً في مجالات الهندسة المدنية والأشغال العمومية، مع برامج أكاديمية معتمدة دولياً.",
+        about_p3: "تضم المدرسة عدة أقسام علمية: قسم المنشآت والجسور (Ouvrages)، قسم الطرقات والمرور (Infrastructures)، قسم البناء (Bâtiment)، ومخابر بحثية متطورة في ميكانيكا التربة، مواد البناء، والهندسة المدنية.",
+        about_website_title: "الموقع الإلكتروني الرسمي",
+        about_website_desc: "زيارة الموقع الرسمي للمدرسة للحصول على آخر الأخبار والتسجيلات",
+        about_website_btn: "زيارة الموقع",
+        director_name: "الأستاذة الدكتورة فوزية شافة (مقيدش)",
+        director_role: "مديرة المدرسة الوطنية العليا للأشغال العمومية (ENSTP)",
+        director_bio: "شخصية أكاديمية جزائرية بارزة تشغل منصب مديرة المدرسة الوطنية العليا للأشغال العمومية (ENSTP). نالت أعلى الشهادات الأكاديمية العليا وتدرجت في سلك التعليم العالي والبحث العلمي لتصبح من الكفاءات القيادية في قطاع المدارس العليا بالجزائر. تتمحور أبرز أعمالها ومسؤولياتها حول تسيير وإدارة المؤسسة الجامعية التي ترأسها، حيث تركز جهودها على تسريع عملية التحول الرقمي وعصرنة الهياكل البيداغوجية، إلى جانب إبرام اتفاقيات تعاون وشراكات إستراتيجية مع مختلف الهيئات والمؤسسات الوطنية لدعم حاضنات الأعمال، وتشجيع الابتكار، وتسهيل ولوج الطلبة والباحثين إلى مصادر المعرفة الأكاديمية.",
+        director_video_title: "نصائح السيدة المديرة للطلبة",
+        teachers_title: "هيئة التدريس",
+        teachers_desc: "تضم المدرسة نخبة من الأساتذة والباحثين في مختلف التخصصات الهندسية. يمكنك استعراض قائمة الأساتذة للسنة الأولى والثانية تحضيري مع تفاصيل كل أستاذ.",
+        teachers_btn: "عرض قائمة الأساتذة",
+        dept_prep: "القسم التحضيري",
+        dept_prep_desc: "Classes Préparatoires - السنة الأولى والثانية تحضيري",
+        dept_dms: "قسم مواد وهياكل",
+        dept_dms_desc: "Matériaux & Structures - مواد البناء والهياكل",
+        dept_dib: "قسم منشآت قاعدية",
+        dept_dib_desc: "Infrastructures - الطرقات والمنشآت القاعدية",
+        buildings_title: "مباني المدرسة",
+        buildings_desc: "جولة بالفيديو داخل المدرجات، القاعات، المخابر العلمية، والمرافق المختلفة.",
+        video_tour: "جولة عامة في المدرسة",
+        video_prepa: "أقسام التحضيري",
+        video_amphi: "المدرج الكبير",
+        video_dept: "الأقسام العلمية",
+        video_entrance: "مدخل المدرسة",
+        video_library: "المكتبة والمرافق",
+        map_title: "الخريطة ثلاثية الأبعاد",
+        map_desc: "خريطة تفاعلية ثلاثية الأبعاد تتيح لك التنقل بين المباني، المدرجات، والمرافق داخل المدرسة بسهولة. اضغط على الزر أدناه لفتح الخريطة في نافذة جديدة.",
+        map_btn: "فتح الخريطة ثلاثية الأبعاد",
+        map_entrance: "المدخل الرئيسي",
+        map_amphi: "المدرجات",
+        map_labs: "المخابر",
+        map_library: "المكتبة",
+        chat_title: "المساعد الافتراضي",
+        chat_welcome: "مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟",
+        chat_placeholder: "اكتب سؤالك..."
+      },
+      fr: {
+        nav_app_name: "Guide ENSTP",
+        nav_app_sub: "École Nationale Supérieure",
+        nav_home: "Accueil",
+        ecole_title: "Mon École",
+        ecole_hero_subtitle: "École Nationale Supérieure des Travaux Publics - Kouba",
+        tab_about: "À propos",
+        tab_teachers: "Corps Enseignant",
+        tab_buildings: "Bâtiments",
+        tab_map: "Carte",
+        about_title: "À propos de l'école",
+        about_p1: "L'École Nationale Supérieure des Travaux Publics (ENSTP) est un établissement public à caractère scientifique, technologique et culturel, situé dans la commune de Kouba à Alger. C'est l'un des plus anciens établissements d'enseignement en Algérie, fondé en 1925 sous le nom d'« École des Travaux Publics ».",
+        about_p2: "Des milliers d'ingénieurs en sont sortis et ont contribué à la construction des infrastructures du pays : routes, ponts, barrages et grands bâtiments. L'école offre une formation de haut niveau en génie civil et travaux publics, avec des programmes accrédités internationalement.",
+        about_p3: "L'école comprend plusieurs départements scientifiques : Ouvrages d'art, Infrastructures, Bâtiment, ainsi que des laboratoires de recherche avancés en mécanique des sols, matériaux de construction et génie civil.",
+        about_website_title: "Site officiel",
+        about_website_desc: "Visitez le site officiel pour les dernières actualités et inscriptions",
+        about_website_btn: "Visiter le site",
+        director_name: "Pr. Fouzia Chafa (Mekidech)",
+        director_role: "Directrice de l'ENSTP",
+        director_bio: "Personnalité académique algérienne de premier plan, elle occupe le poste de Directrice de l'École Nationale Supérieure des Travaux Publics (ENSTP). Titulaire des plus hauts diplômes académiques, elle a gravi les échelons de l'enseignement supérieur et de la recherche scientifique pour devenir une figure de leadership dans le secteur des grandes écoles en Algérie. Ses principales actions portent sur la gestion de l'établissement, l'accélération de la transformation numérique, la modernisation des structures pédagogiques, ainsi que la conclusion d'accords de coopération et de partenariats stratégiques avec diverses institutions nationales pour soutenir les incubateurs, encourager l'innovation et faciliter l'accès des étudiants et chercheurs aux sources de savoir académique.",
+        director_video_title: "Conseils de la Directrice aux étudiants",
+        teachers_title: "Corps Enseignant",
+        teachers_desc: "L'école réunit une élite d'enseignants et de chercheurs dans diverses disciplines d'ingénierie. Vous pouvez consulter la liste des enseignants de 1ère et 2ème année préparatoire avec les détails de chaque enseignant.",
+        teachers_btn: "Voir la liste des enseignants",
+        dept_prep: "Classes Préparatoires",
+        dept_prep_desc: "Classes Préparatoires - 1ère et 2ème année",
+        dept_dms: "Matériaux & Structures",
+        dept_dms_desc: "Matériaux & Structures - Matériaux de construction et structures",
+        dept_dib: "Infrastructures de Base",
+        dept_dib_desc: "Infrastructures - Routes et infrastructures de base",
+        buildings_title: "Bâtiments de l'école",
+        buildings_desc: "Visite vidéo des amphithéâtres, salles, laboratoires scientifiques et installations diverses.",
+        video_tour: "Visite générale de l'école",
+        video_prepa: "Classes préparatoires",
+        video_amphi: "Grand amphithéâtre",
+        video_dept: "Départements scientifiques",
+        video_entrance: "Entrée de l'école",
+        video_library: "Bibliothèque et installations",
+        map_title: "Carte 3D",
+        map_desc: "Carte interactive 3D pour naviguer facilement entre les bâtiments, amphithéâtres et installations de l'école. Cliquez sur le bouton ci-dessous pour ouvrir la carte dans une nouvelle fenêtre.",
+        map_btn: "Ouvrir la carte 3D",
+        map_entrance: "Entrée principale",
+        map_amphi: "Amphithéâtres",
+        map_labs: "Laboratoires",
+        map_library: "Bibliothèque",
+        chat_title: "Assistant virtuel",
+        chat_welcome: "Bonjour ! 👋 Je suis votre assistant ENSTP. Comment puis-je vous aider ?",
+        chat_placeholder: "Écrivez votre question..."
+      },
+      en: {
+        nav_app_name: "ENSTP Guide",
+        nav_app_sub: "National Higher School",
+        nav_home: "Home",
+        ecole_title: "My School",
+        ecole_hero_subtitle: "National Higher School of Public Works - Kouba",
+        tab_about: "About",
+        tab_teachers: "Faculty",
+        tab_buildings: "Buildings",
+        tab_map: "Map",
+        about_title: "About the school",
+        about_p1: "The National Higher School of Public Works (ENSTP) is a public institution of a scientific, technological and cultural nature, located in the municipality of Kouba in Algiers. It is one of the oldest educational institutions in Algeria, founded in 1925 under the name \"School of Public Works\".",
+        about_p2: "Thousands of engineers have graduated from it and contributed to building the country's infrastructure: roads, bridges, dams and major buildings. The school offers high-level training in civil engineering and public works, with internationally accredited academic programs.",
+        about_p3: "The school includes several scientific departments: Structures and Bridges (Ouvrages), Roads and Traffic (Infrastructures), Buildings (Bâtiment), as well as advanced research laboratories in soil mechanics, construction materials and civil engineering.",
+        about_website_title: "Official website",
+        about_website_desc: "Visit the official website for the latest news and registrations",
+        about_website_btn: "Visit website",
+        director_name: "Prof. Fouzia Chafa (Mekidech)",
+        director_role: "Director of ENSTP",
+        director_bio: "A prominent Algerian academic figure serving as Director of the National Higher School of Public Works (ENSTP). She holds the highest academic degrees and has risen through the ranks of higher education and scientific research to become a leading figure in Algeria's higher schools sector. Her main actions focus on managing the institution, accelerating digital transformation, modernizing pedagogical structures, as well as concluding cooperation agreements and strategic partnerships with various national institutions to support business incubators, encourage innovation, and facilitate students' and researchers' access to academic knowledge sources.",
+        director_video_title: "Director's Advice to Students",
+        teachers_title: "Faculty Members",
+        teachers_desc: "The school brings together elite teachers and researchers in various engineering disciplines. You can browse the list of teachers for 1st and 2nd preparatory years with details of each teacher.",
+        teachers_btn: "View list of teachers",
+        dept_prep: "Preparatory Classes",
+        dept_prep_desc: "Classes Préparatoires - 1st and 2nd year",
+        dept_dms: "Materials & Structures",
+        dept_dms_desc: "Matériaux & Structures - Construction materials and structures",
+        dept_dib: "Basic Infrastructures",
+        dept_dib_desc: "Infrastructures - Roads and basic infrastructures",
+        buildings_title: "School Buildings",
+        buildings_desc: "Video tour of amphitheaters, classrooms, scientific labs and various facilities.",
+        video_tour: "General school tour",
+        video_prepa: "Preparatory classes",
+        video_amphi: "Main amphitheater",
+        video_dept: "Scientific departments",
+        video_entrance: "School entrance",
+        video_library: "Library and facilities",
+        map_title: "3D Map",
+        map_desc: "Interactive 3D map to easily navigate between the school's buildings, amphitheaters and facilities. Click the button below to open the map in a new window.",
+        map_btn: "Open 3D map",
+        map_entrance: "Main entrance",
+        map_amphi: "Amphitheaters",
+        map_labs: "Laboratories",
+        map_library: "Library",
+        chat_title: "Virtual Assistant",
+        chat_welcome: "Hello! 👋 I'm your ENSTP assistant. How can I help you?",
+        chat_placeholder: "Type your question..."
+      }
+    };
+
+    // ==========================================
+    // 3. Appliquer la traduction
+    // ==========================================
+    window.applyEcoleTranslation = function(lang) {
+      const dict = window.ECOLE_TRANSLATIONS[lang] || window.ECOLE_TRANSLATIONS.ar;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          const icon = el.querySelector('i');
+          if (icon) {
+            el.innerHTML = '';
+            el.appendChild(icon);
+            el.appendChild(document.createTextNode(' ' + dict[key]));
+          } else {
+            el.innerText = dict[key];
+          }
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+
+      // Titre de la page
+      if (dict.ecole_title) document.title = dict.ecole_title + " - ENSTP";
+
+      // Direction
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+    };
+
+    // ==========================================
+    // 4. setLanguage()
+    // ==========================================
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      localStorage.setItem('enstp_lang', lang);
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      window.applyEcoleTranslation(lang);
+    };
+
+    // ==========================================
+    // 5. Chatbot depuis le kangourou
+    // ==========================================
+    function toggleChat() {
+      const chat = document.getElementById('chatWindow');
+      if (!chat) return;
+      chat.classList.toggle('hidden');
+      chat.classList.toggle('open');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      if (!input || !body) return;
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      body.innerHTML += `
+        <div style="display:flex;justify-content:flex-end;">
+          <div style="background:#d97706;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">
+            ${msg}
+          </div>
+        </div>`;
+      input.value = '';
+      body.scrollTop = body.scrollHeight;
+
+      setTimeout(() => {
+        let reply = "شكراً لسؤالك! سأقوم بالرد عليك قريباً.";
+        const m = msg.toLowerCase();
+
+        if (m.includes("مديرة") || m.includes("directrice") || m.includes("director")) {
+          reply = "👩‍💼 السيدة المديرة هي الأستاذة الدكتورة فوزية شافة (مقيدش).";
+        } else if (m.includes("فيديو") || m.includes("video")) {
+          reply = "🎥 تجد كل الفيديوهات في تبويب <strong>المباني</strong>.";
+        } else if (m.includes("خريطة") || m.includes("carte") || m.includes("map")) {
+          reply = "🗺️ الخريطة ثلاثية الأبعاد متاحة في تبويب <strong>الخريطة</strong>.";
+        } else if (m.includes("أستاذ") || m.includes("enseignant") || m.includes("teacher")) {
+          reply = "👨‍🏫 قائمة الأساتذة في تبويب <strong>هيئة التدريس</strong>.";
+        } else if (m.includes("تاريخ") || m.includes("histoire") || m.includes("history")) {
+          reply = "📜 تأسست المدرسة عام <strong>1925</strong>.";
+        } else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("bonjour") || m.includes("hello")) {
+          reply = "👋 أهلاً بك! كيف يمكنني مساعدتك؟";
+        } else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) {
+          reply = "💛 على الرحب والسعة!";
+        }
+
+        body.innerHTML += `
+          <div style="display:flex;justify-content:flex-start;">
+            <div style="background:#fef3c7;color:#78350f;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">
+              ${reply}
+            </div>
+          </div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 500);
+    }
+
+    // Enter pour envoyer
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+        });
+      }
+
+      // Appliquer la langue sauvegardée
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      window.setLanguage(savedLang);
     });
+
+    // ==========================================
+    // 6. Kangourou : clic = ouvrir le chat + saut
+    // ==========================================
+    const kangarooContainer = document.getElementById('kangarooContainer');
+    const kangarooSvg = document.getElementById('kangarooSvg');
+
+    if (kangarooContainer) {
+      kangarooContainer.addEventListener('click', () => {
+        // animation saut
+        if (kangarooSvg) {
+          kangarooSvg.style.animation = 'none';
+          kangarooSvg.offsetHeight; // force reflow
+          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
+          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
+        }
+        // ouvrir/fermer chat
+        toggleChat();
+      });
+
+      // hover : scale
+      kangarooContainer.addEventListener('mouseenter', () => {
+        if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)';
+      });
+      kangarooContainer.addEventListener('mouseleave', () => {
+        if (kangarooSvg) kangarooSvg.style.transform = '';
+      });
+    }
+
+    // Ajouter l'animation keyframes pour le saut
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes kangarooJump {
+        0%, 100% { transform: translateY(0) scale(1); }
+        30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); }
+        60% { transform: translateY(-10px) scale(1) rotate(5deg); }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
