@@ -34,12 +34,6 @@
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    button, a, .glass-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-    input:focus, select:focus, textarea:focus { outline: none; border-color: #f97316 !important; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important; }
-
-    /* ==========================================
-       Dark mode complet
-       ========================================== */
     html.dark body { background: #0f172a; color: #f8fafc; }
     html.dark .ambient-bg { background: linear-gradient(135deg, #0f172a 0%, #1a1410 100%); }
     html.dark .glass-card { background: rgba(30, 41, 59, 0.95); border-color: #334155; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3); }
@@ -69,10 +63,11 @@
     @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
 
     @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
-
     .lang-btn { padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; transition: 0.2s; color: #64748b; background: transparent; border: none; cursor: pointer; }
     .lang-btn:hover { background: #ffedd5; color: #9a3412; }
     .lang-btn.active { background: #f97316; color: white; }
+    button, a, .glass-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #f97316 !important; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
@@ -81,6 +76,7 @@
 
   <main class="max-w-5xl mx-auto w-full space-y-6">
 
+    <!-- الترويسة -->
     <div class="glass-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-4">
         <div class="w-16 h-16 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
@@ -106,6 +102,7 @@
       </div>
     </div>
 
+    <!-- أزرار التبويب -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <button onclick="switchTab('univ')" id="tab-univ" class="tab-btn active glass-card p-5 rounded-3xl flex items-center justify-center gap-3 border-2 border-brand-100">
         <i class="fa-solid fa-graduation-cap text-2xl"></i>
@@ -121,101 +118,69 @@
       </button>
     </div>
 
+    <!-- 1. قسم النقل الجامعي -->
     <div id="content-univ" class="space-y-6">
-      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4 border-r-4 border-brand-500">
-        <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-          <i class="fa-solid fa-clock text-brand-600"></i> <span data-i18n="bus_schedule_title">مواقيت حافلات (ENS - Revoil)</span>
+      
+      <!-- اختيار الوجهة -->
+      <div class="glass-card rounded-3xl p-6 md:p-8 border border-brand-100 dark:border-slate-700">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-location-dot text-brand-500"></i> <span data-i18n="select_destination">اختر وجهتك</span>
         </h2>
-        <p class="text-sm text-gray-500" data-i18n="bus_schedule_desc">الجدول الخاص بالفصل الأول 2026/2027.</p>
-        
-        <div class="overflow-x-auto rounded-xl border border-gray-200">
-          <table class="w-full text-sm text-right">
-            <thead class="bg-brand-50 text-brand-900 font-bold">
-              <tr>
-                <th class="p-3 border-b" data-i18n="bus_day">اليوم</th>
-                <th class="p-3 border-b" data-i18n="bus_departure">الانطلاق</th>
-                <th class="p-3 border-b" data-i18n="bus_return">العودة</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr><td class="p-3 font-bold" data-i18n="day_sat">السبت</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30</td></tr>
-              <tr><td class="p-3 font-bold" data-i18n="day_sun">الأحد</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">17h30</td></tr>
-              <tr><td class="p-3 font-bold" data-i18n="day_mon">الإثنين</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">11h30 / 14h30</td></tr>
-              <tr><td class="p-3 font-bold" data-i18n="day_tue">الثلاثاء</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
-              <tr><td class="p-3 font-bold" data-i18n="day_wed">الأربعاء</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
-              <tr><td class="p-3 font-bold" data-i18n="day_thu">الخميس</td><td class="p-3 font-mono" dir="ltr">07h30</td><td class="p-3 font-mono" dir="ltr">14h30 / 17h30</td></tr>
-            </tbody>
-          </table>
+        <div class="relative">
+          <select id="destinationSelect" class="w-full p-4 rounded-2xl border-2 border-brand-200 dark:border-slate-600 bg-brand-50 dark:bg-slate-800 text-gray-800 dark:text-gray-200 font-bold text-lg outline-none cursor-pointer appearance-none">
+            <option value="" disabled selected data-i18n="choose_dest">-- اختر وجهتك --</option>
+            <option value="revoil" data-i18n="dest_revoil">الإقامة الجامعية رويز - Revoil</option>
+            <option value="bachdjerrah" data-i18n="dest_bachdjerrah">باش جراح - الحراش</option>
+            <option value="tafourah" data-i18n="dest_tafourah">تافورة</option>
+            <option value="bouzareah" data-i18n="dest_bouzareah">بوزريعة</option>
+            <option value="blida" data-i18n="dest_blida">البليدة</option>
+          </select>
+          <i class="fa-solid fa-chevron-down absolute left-4 top-1/2 -translate-y-1/2 text-brand-500 pointer-events-none"></i>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="glass-card rounded-3xl p-6 space-y-3 border-t-4 border-brand-400">
-          <div class="flex justify-between items-center border-b pb-2">
-            <h3 class="font-bold text-lg text-brand-800" data-i18n="route1_title">القبة - باش جراح</h3>
-            <span class="text-xs bg-brand-100 text-brand-700 px-2 py-1 rounded" data-i18n="route1_badge">حافلة 12</span>
-          </div>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_dep">الانطلاق:</strong> <span data-i18n="route1_from">القبة</span></p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_arr">الوصول:</strong> <span data-i18n="route1_to">باش جراح</span></p>
+      <!-- نتائج المواقيت -->
+      <div id="scheduleResult" class="hidden space-y-6">
+        
+        <!-- عنوان وجهتك -->
+        <div class="flex items-center gap-2 mt-2 mb-4">
+          <i class="fa-solid fa-bus-simple text-brand-500 text-xl"></i>
+          <h3 id="faceTitle" class="text-2xl font-black text-gray-900 dark:text-white" data-i18n="your_destination">وجهتك:</h3>
         </div>
 
-        <div class="glass-card rounded-3xl p-6 space-y-3 border-t-4 border-brand-400">
-          <div class="flex justify-between items-center border-b pb-2">
-            <h3 class="font-bold text-lg text-brand-800" data-i18n="route2_title">القبة - الحراش</h3>
-            <span class="text-xs bg-brand-100 text-brand-700 px-2 py-1 rounded" data-i18n="route2_badge">حافلة 13</span>
+        <!-- بطاقة المواقيت -->
+        <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 border border-brand-100 dark:border-slate-700">
+          <div class="flex justify-between items-center border-b border-gray-200 dark:border-slate-700 pb-4">
+            <h3 id="resultTitle" class="text-xl font-bold text-brand-700 dark:text-brand-400"></h3>
+            <span class="text-xs bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-400 px-3 py-1 rounded-full font-bold" data-i18n="univ_bus">حافلة جامعية</span>
           </div>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_dep">الانطلاق:</strong> <span data-i18n="route2_from">القبة</span></p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_arr">الوصول:</strong> <span data-i18n="route2_to">الحراش</span></p>
-        </div>
-
-        <div class="glass-card rounded-3xl p-6 space-y-3 border-t-4 border-brand-400">
-          <div class="flex justify-between items-center border-b pb-2">
-            <h3 class="font-bold text-lg text-brand-800" data-i18n="route3_title">القبة - تافورة</h3>
-            <span class="text-xs bg-brand-100 text-brand-700 px-2 py-1 rounded" data-i18n="route3_badge">حافلة 14/15/16</span>
-          </div>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_dep">الانطلاق:</strong> <span data-i18n="route3_from">القبة</span></p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_arr">الوصول:</strong> <span data-i18n="route3_to">تافورة</span></p>
-          <div class="bg-brand-50 p-3 rounded-xl mt-2">
-            <p class="text-xs font-bold text-brand-800 mb-2" data-i18n="route3_times">أوقات الانطلاق:</p>
-            <div class="flex flex-wrap gap-2 text-xs font-mono text-brand-700" dir="ltr">
-              <span class="bg-white px-2 py-1 rounded border border-brand-200">14:00</span>
-              <span class="bg-white px-2 py-1 rounded border border-brand-200">14:30</span>
-              <span class="bg-white px-2 py-1 rounded border border-brand-200">15:00</span>
-              <span class="bg-white px-2 py-1 rounded border border-brand-200">15:30</span>
-              <span class="bg-white px-2 py-1 rounded border border-brand-200">17:15</span>
-              <span class="bg-white px-2 py-1 rounded border border-brand-200">18:00</span>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- الذهاب -->
+            <div class="bg-brand-50 dark:bg-slate-800 p-5 rounded-2xl border border-brand-100 dark:border-slate-700">
+              <h4 class="font-bold text-brand-900 dark:text-brand-300 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-sun text-amber-500"></i> <span data-i18n="outbound">الذهاب (صباحاً)</span>
+              </h4>
+              <div id="outboundTimes" class="flex flex-wrap gap-2"></div>
+            </div>
+            
+            <!-- العودة -->
+            <div class="bg-brand-50 dark:bg-slate-800 p-5 rounded-2xl border border-brand-100 dark:border-slate-700">
+              <h4 class="font-bold text-brand-900 dark:text-brand-300 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-moon text-indigo-500"></i> <span data-i18n="return_trip">العودة (مساءً)</span>
+              </h4>
+              <div id="returnTimes" class="flex flex-wrap gap-2"></div>
             </div>
           </div>
         </div>
 
-        <div class="glass-card rounded-3xl p-6 space-y-3 border-t-4 border-brand-400">
-          <div class="flex justify-between items-center border-b pb-2">
-            <h3 class="font-bold text-lg text-brand-800" data-i18n="route4_title">بوزريعة - القبة</h3>
-            <span class="text-xs bg-brand-100 text-brand-700 px-2 py-1 rounded" data-i18n="route4_badge">خط 06:30</span>
-          </div>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_dep">الانطلاق:</strong> <span data-i18n="route4_from">بوزريعة</span></p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route4_stop">المحطات:</strong> سعيد حمدين</p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_arr">الوصول:</strong> <span data-i18n="route4_to">القبة</span></p>
-        </div>
-
-        <div class="glass-card rounded-3xl p-6 space-y-3 border-t-4 border-brand-400">
-          <h3 class="font-bold text-lg text-brand-800 border-b pb-2" data-i18n="route5_title">القبة - البليدة</h3>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_dep">الانطلاق:</strong> <span data-i18n="route5_from">القبة</span></p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route4_stop">المحطات:</strong> <span data-i18n="route5_stops">محطة الأربعاء، صومعة البليدة</span></p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_arr">الوصول:</strong> <span data-i18n="route5_to">البليدة</span></p>
-          <p class="text-sm font-bold text-brand-700 mt-2"><span data-i18n="route_time">وقت الانطلاق:</span> <span class="font-mono bg-brand-100 px-2 py-1 rounded">16:00</span></p>
-        </div>
-
-        <div class="glass-card rounded-3xl p-6 space-y-3 border-t-4 border-brand-400">
-          <h3 class="font-bold text-lg text-brand-800 border-b pb-2" data-i18n="route6_title">البليدة - القبة</h3>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_dep">الانطلاق:</strong> <span data-i18n="route6_from">البليدة</span></p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route4_stop">المحطات:</strong> <span data-i18n="route6_stops">محطة الأربعاء، صومعة البليدة</span></p>
-          <p class="text-sm text-gray-600"><strong data-i18n="route_arr">الوصول:</strong> <span data-i18n="route6_to">القبة</span></p>
-          <p class="text-sm font-bold text-brand-700 mt-2"><span data-i18n="route_time">وقت الانطلاق:</span> <span class="font-mono bg-brand-100 px-2 py-1 rounded">06:30</span></p>
-        </div>
       </div>
     </div>
-        <div id="content-public" class="hidden space-y-4">
+
+    <!-- 2. قسم النقل العمومي -->
+    <div id="content-public" class="hidden space-y-4">
+      
+      <!-- أقرب محطات -->
       <div class="glass-card rounded-2xl overflow-hidden border border-brand-100">
         <button onclick="toggleAccordion('proches')" class="w-full flex items-center justify-between p-5 bg-brand-50 hover:bg-brand-100 transition text-right">
           <div class="flex items-center gap-3">
@@ -247,6 +212,7 @@
         </div>
       </div>
 
+      <!-- المترو والترامواي -->
       <div class="glass-card rounded-2xl overflow-hidden border border-brand-100">
         <button onclick="toggleAccordion('metro')" class="w-full flex items-center justify-between p-5 bg-brand-50 hover:bg-brand-100 transition text-right">
           <div class="flex items-center gap-3">
@@ -261,23 +227,14 @@
               <h4 class="font-bold text-blue-900 mb-2" data-i18n="nearest_metro">أقرب محطة ميترو للمدرسة</h4>
               <p class="text-xs text-blue-800" data-i18n="nearest_metro_desc">محطة حسيبة بوعلام (أو محطة حي البدر). للوصول إليها، خذ حافلة إلى بشدجرح، ثم انزل في محطة المترو.</p>
             </div>
+            
             <div class="mt-4">
               <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <span data-i18n="metro_video">فيديو توضيحي:</span></h4>
               <div class="video-container bg-gray-200 max-w-md mx-auto">
                 <iframe src="https://www.youtube.com/embed/VgahadPDf1I" allowfullscreen></iframe>
               </div>
             </div>
-            <div class="pt-3 border-t">
-              <h4 class="font-bold text-gray-800 mb-2" data-i18n="metro_stations_title">محطات المترو:</h4>
-              <div class="flex flex-wrap gap-1 text-xs">
-                <span class="bg-gray-100 px-2 py-1 rounded">ساحة الشهداء</span>
-                <span class="bg-gray-100 px-2 py-1 rounded">علي بومنجل</span>
-                <span class="bg-gray-100 px-2 py-1 rounded">تافورة</span>
-                <span class="bg-gray-100 px-2 py-1 rounded">الحامة</span>
-                <span class="bg-brand-100 text-brand-800 px-2 py-1 rounded font-bold" data-i18n="m_badr">حي البدر</span>
-                <span class="bg-gray-100 px-2 py-1 rounded">عين النعجة</span>
-              </div>
-            </div>
+
             <div class="flex flex-wrap gap-2 mt-2">
               <span class="bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-lg border border-emerald-200"><i class="fa-solid fa-ticket"></i> <span data-i18n="ticket_metro">مترو: 50 دج</span></span>
               <span class="bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-lg border border-emerald-200"><i class="fa-solid fa-ticket"></i> <span data-i18n="ticket_tram">ترامواي: 40 دج</span></span>
@@ -287,6 +244,43 @@
         </div>
       </div>
 
+      <!-- إضافة: كيفية الاشتراك في المترو والترامواي للطلبة -->
+      <div class="glass-card rounded-2xl overflow-hidden border border-emerald-200 dark:border-slate-700 mt-4">
+        <div class="p-5 bg-emerald-50 dark:bg-slate-800 border-b border-emerald-100 dark:border-slate-700">
+          <h3 class="font-bold text-lg text-emerald-900 dark:text-emerald-400 flex items-center gap-2">
+            <i class="fa-solid fa-id-card"></i> <span data-i18n="subscribe_title">كيفية الاشتراك في المترو والترامواي للطلبة</span>
+          </h3>
+        </div>
+        <div class="p-5 space-y-4 text-sm text-gray-700 dark:text-gray-300">
+          <p data-i18n="subscribe_desc">تقدم مؤسسة النقل الحضري (ETUSA / SETRAM) تخفيضات كبيرة للطلبة عبر بطاقة <strong>eTWASSEL</strong> أو الاشتراك الشهري/السنوي.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-gray-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-200 dark:border-slate-700">
+              <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-2">1. بطاقة eTWASSEL</h4>
+              <p class="text-xs text-gray-600 dark:text-gray-400" data-i18n="etwassel_desc">بطاقة إلكترونية مخصصة للطلبة، تسمح بالتنقل غير المحدود في الترامواي والمترو (وحتى الحافلات في بعض المناطق) بسعر 150 دج للسنة.</p>
+            </div>
+            <div class="bg-gray-50 dark:bg-slate-900 p-4 rounded-xl border border-gray-200 dark:border-slate-700">
+              <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-2">2. الوثائق المطلوبة</h4>
+              <ul class="list-disc list-inside text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                <li>شهادة مدرسية (تثبت الانتماء للمدرسة).</li>
+                <li>صورة شخصية.</li>
+                <li>نسخة من بطاقة التعريف الوطنية.</li>
+                <li>ملء استمارة الاشتراك.</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl border border-amber-200 dark:border-amber-800">
+            <p class="text-xs text-amber-900 dark:text-amber-300">
+              <i class="fa-solid fa-location-dot text-amber-600 mr-1"></i> 
+              <strong data-i18n="where_to_get">أين يتم الاشتراك؟</strong> 
+              <span data-i18n="where_to_get_desc">في محطات المترو الرئيسية (مثل ساحة الشهداء، تافورة، أو حي البدر) أو مكاتب SETRAM لمحطات الترامواي.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- محطة كبار المعطوبي -->
       <div class="glass-card rounded-2xl overflow-hidden border border-brand-100">
         <button onclick="toggleAccordion('kharouba')" class="w-full flex items-center justify-between p-5 bg-brand-50 hover:bg-brand-100 transition text-right">
           <div class="flex items-center gap-3">
@@ -314,6 +308,7 @@
         </div>
       </div>
 
+      <!-- المطار -->
       <div class="glass-card rounded-2xl overflow-hidden border border-brand-100">
         <button onclick="toggleAccordion('airport')" class="w-full flex items-center justify-between p-5 bg-brand-50 hover:bg-brand-100 transition text-right">
           <div class="flex items-center gap-3">
@@ -344,6 +339,7 @@
         </div>
       </div>
 
+      <!-- تطبيقات VTC -->
       <div class="glass-card rounded-2xl overflow-hidden border border-brand-100">
         <button onclick="toggleAccordion('apps')" class="w-full flex items-center justify-between p-5 bg-brand-50 hover:bg-brand-100 transition text-right">
           <div class="flex items-center gap-3">
@@ -374,6 +370,7 @@
       </div>
     </div>
 
+    <!-- 3. قسم مشاركة سيارات الأجرة (Carpooling) -->
     <div id="content-carpool" class="hidden space-y-6">
       <div class="glass-card rounded-3xl p-6 md:p-8 border-2 border-amber-100">
         <div class="flex items-center gap-3 border-b border-amber-100 pb-4 mb-6">
@@ -448,7 +445,8 @@
       <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
-    <script>
+
+  <script>
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
@@ -485,7 +483,6 @@
     }
 
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-
     function t(key) {
       const dict = window.TRANSPORT_TRANSLATIONS[currentLang] || window.TRANSPORT_TRANSLATIONS.ar;
       return dict[key] || key;
@@ -496,24 +493,22 @@
         page_title: "دليل النقل - ENSTP", nav_home: "الرئيسية",
         trans_title: "دليل النقل والمواصلات", trans_desc: "كل ما تحتاجه للتنقل.",
         tab_univ: "النقل الجامعي", tab_public: "النقل العمومي", tab_carpool: "مشاركة التاكسي",
-        bus_schedule_title: "مواقيت حافلات (ENS - Revoil)", bus_schedule_desc: "الفصل الأول 2026/2027.",
-        bus_day: "اليوم", bus_departure: "الانطلاق", bus_return: "العودة",
-        day_sat: "السبت", day_sun: "الأحد", day_mon: "الإثنين", day_tue: "الثلاثاء", day_wed: "الأربعاء", day_thu: "الخميس",
-        route_dep: "الانطلاق:", route_arr: "الوصول:", route4_stop: "المحطات:", route_time: "وقت الانطلاق:",
-        route1_title: "القبة - باش جراح", route1_badge: "حافلة 12", route1_from: "القبة", route1_to: "باش جراح",
-        route2_title: "القبة - الحراش", route2_badge: "حافلة 13", route2_from: "القبة", route2_to: "الحراش",
-        route3_title: "القبة - تافورة", route3_badge: "حافلة 14/15/16", route3_from: "القبة", route3_to: "تافورة", route3_times: "أوقات الانطلاق:",
-        route4_title: "بوزريعة - القبة", route4_badge: "خط 06:30", route4_from: "بوزريعة", route4_to: "القبة",
-        route5_title: "القبة - البليدة", route5_from: "القبة", route5_to: "البليدة", route5_stops: "محطة الأربعاء، صومعة البليدة",
-        route6_title: "البليدة - القبة", route6_from: "البليدة", route6_to: "القبة", route6_stops: "محطة الأربعاء، صومعة البليدة",
-        proches_title: "أقرب محطات النقل",
+        select_destination: "اختر وجهتك", choose_dest: "-- اختر وجهتك --",
+        dest_revoil: "الإقامة الجامعية رويز - Revoil", dest_bachdjerrah: "باش جراح - الحراش",
+        dest_tafourah: "تافورة", dest_bouzareah: "بوزريعة", dest_blida: "البليدة",
+        your_destination: "وجهتك:", univ_bus: "حافلة جامعية",
+        outbound: "الذهاب (صباحاً)", return_trip: "العودة (مساءً)",
+        proches_title: "أقرب محطات النقل للمدرسة (ENSTP)",
         stop_c_title: "محطة الحافلات (أمام CNEP)", stop_c_dist: "350 متر (5 دقائق).", stop_c_desc: "الوجهة: محطة بن عمر.",
         stop_b_title: "المحطة البرية القبة", stop_b_dist: "500 متر (7 دقائق).", stop_b_desc: "وجهات متعددة.",
         stop_d_title: "محطة القطار (ENS)", stop_d_dist: "950 متر (14 دقيقة).", stop_d_desc: "خطوط SNTF.",
         metro_title: "الميترو والترامواي", nearest_metro: "أقرب محطة ميترو",
         nearest_metro_desc: "محطة حسيبة بوعلام (أو حي البدر).", metro_video: "فيديو توضيحي:",
-        metro_stations_title: "محطات المترو:", m_badr: "حي البدر (تحويل)",
         ticket_metro: "مترو: 50 دج", ticket_tram: "ترامواي: 40 دج", etwassel: "eTWASSEL: 150 دج/سنة",
+        subscribe_title: "كيفية الاشتراك في المترو والترامواي للطلبة",
+        subscribe_desc: "تقدم مؤسسة النقل الحضري (ETUSA / SETRAM) تخفيضات كبيرة للطلبة عبر بطاقة eTWASSEL.",
+        etwassel_desc: "بطاقة إلكترونية مخصصة للطلبة، تسمح بالتنقل غير المحدود في الترامواي والمترو بسعر 150 دج للسنة.",
+        where_to_get: "أين يتم الاشتراك؟", where_to_get_desc: "في محطات المترو الرئيسية أو مكاتب SETRAM.",
         kharouba_title: "محطة كبار المعطوبي (الخروبة)", kharouba_desc: "من أهم محطات التنقل بين الولايات.",
         booking_title: "الحجز:", booking_desc: "عبر المنصة أو الحضور المباشر.",
         see_map: "الموقع على الخريطة", book_online: "SOFRETIM",
@@ -536,24 +531,22 @@
         page_title: "Guide Transport - ENSTP", nav_home: "Accueil",
         trans_title: "Guide de Transport", trans_desc: "Tout pour vos déplacements.",
         tab_univ: "Transport universitaire", tab_public: "Transport public", tab_carpool: "Covoiturage",
-        bus_schedule_title: "Horaires bus (ENS - Revoil)", bus_schedule_desc: "1er semestre 2026/2027.",
-        bus_day: "Jour", bus_departure: "Départ", bus_return: "Retour",
-        day_sat: "Samedi", day_sun: "Dimanche", day_mon: "Lundi", day_tue: "Mardi", day_wed: "Mercredi", day_thu: "Jeudi",
-        route_dep: "Départ:", route_arr: "Arrivée:", route4_stop: "Arrêts:", route_time: "Heure:",
-        route1_title: "Kouba - Bachdjerrah", route1_badge: "Bus 12", route1_from: "Kouba", route1_to: "Bachdjerrah",
-        route2_title: "Kouba - El Harrach", route2_badge: "Bus 13", route2_from: "Kouba", route2_to: "El Harrach",
-        route3_title: "Kouba - Taouria", route3_badge: "Bus 14/15/16", route3_from: "Kouba", route3_to: "Taouria", route3_times: "Heures:",
-        route4_title: "Bouzareah - Kouba", route4_badge: "Ligne 06:30", route4_from: "Bouzareah", route4_to: "Kouba",
-        route5_title: "Kouba - Blida", route5_from: "Kouba", route5_to: "Blida", route5_stops: "Gare El Arba",
-        route6_title: "Blida - Kouba", route6_from: "Blida", route6_to: "Kouba", route6_stops: "Gare El Arba",
+        select_destination: "Choisissez votre destination", choose_dest: "-- Choisissez --",
+        dest_revoil: "Résidence Revoil", dest_bachdjerrah: "Bachdjerrah - El Harrach",
+        dest_tafourah: "Tafourah", dest_bouzareah: "Bouzareah", dest_blida: "Blida",
+        your_destination: "Votre destination :", univ_bus: "Bus universitaire",
+        outbound: "Aller (Matin)", return_trip: "Retour (Soir)",
         proches_title: "Arrêts proches",
         stop_c_title: "Arrêt (face CNEP)", stop_c_dist: "350m (5 min).", stop_c_desc: "Vers Ben Omar.",
         stop_b_title: "Gare routière Kouba", stop_b_dist: "500m (7 min).", stop_b_desc: "Multiples destinations.",
         stop_d_title: "Gare SNTF (ENS)", stop_d_dist: "950m (14 min).", stop_d_desc: "Lignes SNTF.",
         metro_title: "Métro et Tramway", nearest_metro: "Station métro proche",
-        nearest_metro_desc: "Station Hassiba Boualem (ou Haï El Badr).", metro_video: "Vidéo:",
-        metro_stations_title: "Stations métro:", m_badr: "Haï El Badr (corresp.)",
+        nearest_metro_desc: "Station Hassiba Boualem.", metro_video: "Vidéo:",
         ticket_metro: "Métro: 50 DA", ticket_tram: "Tramway: 40 DA", etwassel: "eTWASSEL: 150 DA/an",
+        subscribe_title: "Comment s'abonner au Métro et Tramway",
+        subscribe_desc: "ETUSA / SETRAM offrent des réductions pour les étudiants via eTWASSEL.",
+        etwassel_desc: "Carte électronique pour étudiants : transports illimités pour 150 DA/an.",
+        where_to_get: "Où s'abonner ?", where_to_get_desc: "Aux stations principales ou guichets SETRAM.",
         kharouba_title: "Gare Kharouba", kharouba_desc: "Gare inter-wilayas importante.",
         booking_title: "Réservation:", booking_desc: "En ligne ou sur place.",
         see_map: "Voir la carte", book_online: "SOFRETIM",
@@ -576,24 +569,22 @@
         page_title: "Transport Guide - ENSTP", nav_home: "Home",
         trans_title: "Transport Guide", trans_desc: "Everything you need.",
         tab_univ: "University transport", tab_public: "Public transport", tab_carpool: "Ride sharing",
-        bus_schedule_title: "Bus Schedule (ENS - Revoil)", bus_schedule_desc: "1st semester 2026/2027.",
-        bus_day: "Day", bus_departure: "Departure", bus_return: "Return",
-        day_sat: "Saturday", day_sun: "Sunday", day_mon: "Monday", day_tue: "Tuesday", day_wed: "Wednesday", day_thu: "Thursday",
-        route_dep: "Departure:", route_arr: "Arrival:", route4_stop: "Stops:", route_time: "Time:",
-        route1_title: "Kouba - Bachdjerrah", route1_badge: "Bus 12", route1_from: "Kouba", route1_to: "Bachdjerrah",
-        route2_title: "Kouba - El Harrach", route2_badge: "Bus 13", route2_from: "Kouba", route2_to: "El Harrach",
-        route3_title: "Kouba - Taouria", route3_badge: "Bus 14/15/16", route3_from: "Kouba", route3_to: "Taouria", route3_times: "Times:",
-        route4_title: "Bouzareah - Kouba", route4_badge: "Line 06:30", route4_from: "Bouzareah", route4_to: "Kouba",
-        route5_title: "Kouba - Blida", route5_from: "Kouba", route5_to: "Blida", route5_stops: "Gare El Arba",
-        route6_title: "Blida - Kouba", route6_from: "Blida", route6_to: "Kouba", route6_stops: "Gare El Arba",
+        select_destination: "Select your destination", choose_dest: "-- Choose --",
+        dest_revoil: "Revoil Residence", dest_bachdjerrah: "Bachdjerrah - El Harrach",
+        dest_tafourah: "Tafourah", dest_bouzareah: "Bouzareah", dest_blida: "Blida",
+        your_destination: "Your destination:", univ_bus: "University bus",
+        outbound: "Outbound (Morning)", return_trip: "Return (Evening)",
         proches_title: "Nearby stops",
         stop_c_title: "Stop (facing CNEP)", stop_c_dist: "350m (5 min).", stop_c_desc: "To Ben Omar.",
         stop_b_title: "Kouba bus station", stop_b_dist: "500m (7 min).", stop_b_desc: "Multiple destinations.",
         stop_d_title: "SNTF station (ENS)", stop_d_dist: "950m (14 min).", stop_d_desc: "SNTF lines.",
         metro_title: "Metro and Tramway", nearest_metro: "Nearest metro",
-        nearest_metro_desc: "Hassiba Boualem (or Haï El Badr).", metro_video: "Video:",
-        metro_stations_title: "Metro stations:", m_badr: "Haï El Badr (transfer)",
+        nearest_metro_desc: "Hassiba Boualem station.", metro_video: "Video:",
         ticket_metro: "Metro: 50 DA", ticket_tram: "Tramway: 40 DA", etwassel: "eTWASSEL: 150 DA/year",
+        subscribe_title: "How to subscribe to Metro & Tramway",
+        subscribe_desc: "ETUSA / SETRAM offer student discounts via eTWASSEL.",
+        etwassel_desc: "Student electronic card: unlimited transport for 150 DA/year.",
+        where_to_get: "Where to subscribe?", where_to_get_desc: "At main stations or SETRAM counters.",
         kharouba_title: "Kharouba Station", kharouba_desc: "Major inter-wilaya station.",
         booking_title: "Booking:", booking_desc: "Online or on-site.",
         see_map: "See map", book_online: "SOFRETIM",
@@ -642,6 +633,54 @@
       window.applyTransportTranslation(lang);
     };
 
+    // بيانات المواقيت
+    const busSchedules = {
+      'revoil': { outbound: ['07:00', '07:30', '08:00'], return: ['13:00', '15:30', '17:15'] },
+      'bachdjerrah': { outbound: ['07:00', '07:30', '08:00', '08:30', '09:00', '10:00', '11:30'], return: ['13:00', '14:30', '16:00', '17:00', '18:00'] },
+      'tafourah': { outbound: ['07:15', '08:00', '10:00', '11:00'], return: ['14:00', '14:30', '15:00', '15:30', '17:15', '18:00'] },
+      'bouzareah': { outbound: ['06:30', '07:00'], return: ['13:00', '16:00'] },
+      'blida': { outbound: ['06:30', '07:00'], return: ['14:00', '16:00', '17:00'] }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const destSelect = document.getElementById('destinationSelect');
+      const scheduleResult = document.getElementById('scheduleResult');
+      const resultTitle = document.getElementById('resultTitle');
+      const outboundDiv = document.getElementById('outboundTimes');
+      const returnDiv = document.getElementById('returnTimes');
+
+      if (destSelect) {
+        destSelect.addEventListener('change', function() {
+          const key = this.value;
+          const data = busSchedules[key];
+          if (!data) return;
+
+          scheduleResult.classList.remove('hidden');
+          resultTitle.innerText = this.options[this.selectedIndex].text;
+
+          outboundDiv.innerHTML = data.outbound.map(time => 
+            `<span class="bg-white dark:bg-slate-700 text-brand-700 dark:text-brand-300 px-4 py-2 rounded-xl text-base font-bold border border-brand-200 dark:border-slate-600 shadow-sm">${time}</span>`
+          ).join('');
+
+          returnDiv.innerHTML = data.return.map(time => 
+            `<span class="bg-white dark:bg-slate-700 text-brand-700 dark:text-brand-300 px-4 py-2 rounded-xl text-base font-bold border border-brand-200 dark:border-slate-600 shadow-sm">${time}</span>`
+          ).join('');
+        });
+      }
+
+      // Initialisation langue & thème
+      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + savedLang);
+      if (activeBtn) activeBtn.classList.add('active');
+      currentLang = savedLang;
+      window.applyTransportTranslation(savedLang);
+
+      switchTab('univ');
+    });
+
+    // Chatbot (inchangé)
     function toggleChat() {
       const chat = document.getElementById('chatWindow');
       if (!chat) return;
@@ -684,36 +723,12 @@
       kangarooContainer.addEventListener('mouseenter', () => { if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
       kangarooContainer.addEventListener('mouseleave', () => { if (kangarooSvg) kangarooSvg.style.transform = ''; });
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // Thème sauvegardé
-      if (localStorage.getItem('theme') === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
-      // Langue sauvegardée
-      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-' + savedLang);
-      if (activeBtn) activeBtn.classList.add('active');
-      currentLang = savedLang;
-      window.applyTransportTranslation(savedLang);
-
-      // Chat Enter
-      const chatInput = document.getElementById('chatInput');
-      if (chatInput) {
-        chatInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
-        });
-      }
-
-      // Tab par défaut
-      switchTab('univ');
-    });
   </script>
 
+  <!-- Firebase Marketplace / Carpooling -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
@@ -735,7 +750,7 @@
       const datetime = document.getElementById('carpool-datetime').value;
       if (!name || !phone || !from || !to || !datetime) return alert("الرجاء تعبئة جميع الحقول.");
       try {
-        await addDoc(collection(db, "carpools"), { name, phone, from, to, datetime, comments: [], createdAt: serverTimestamp() });
+        await addDoc(collection(db, "carpools"), { name, phone, from, to, datetime, createdAt: serverTimestamp() });
         document.getElementById('carpool-name').value = '';
         document.getElementById('carpool-phone').value = '';
         document.getElementById('carpool-from').value = '';
@@ -748,13 +763,6 @@
       if (!confirm("هل أنت متأكد؟")) return;
       try { await deleteDoc(doc(db, "carpools", id)); }
       catch (e) { alert("خطأ: " + e.message); }
-    };
-
-    window.addCommentFirebase = async function(id, commentText, authorName) {
-      if (!commentText || !commentText.trim()) return alert("يرجى كتابة تعليق.");
-      try {
-        await updateDoc(doc(db, "carpools", id), { comments: arrayUnion({ author: authorName || 'مجهول', text: commentText.trim() }) });
-      } catch (e) { alert("خطأ: " + e.message); }
     };
 
     const list = document.getElementById('carpool-list');
@@ -773,15 +781,7 @@
           const dateObj = new Date(c.datetime);
           const formattedDate = dateObj.toLocaleDateString('ar-DZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
           const formattedTime = dateObj.toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' });
-          let commentsHTML = '';
-          if (c.comments && c.comments.length > 0) {
-            commentsHTML = c.comments.map(cmt => `
-              <div class="bg-white p-2 rounded-lg border border-gray-100 mt-2 text-sm shadow-sm">
-                <span class="font-bold text-amber-700 text-xs">${cmt.author}:</span>
-                <span class="text-gray-700 text-xs">${cmt.text}</span>
-              </div>
-            `).join('');
-          }
+
           list.innerHTML += `
             <div class="bg-white rounded-2xl border border-amber-100 shadow-sm overflow-hidden">
               <div class="p-4 border-b border-gray-100 bg-amber-50/30">
@@ -807,14 +807,6 @@
                       <i class="fa-solid fa-trash"></i>
                     </button>
                   </div>
-                </div>
-              </div>
-              <div class="p-4 bg-gray-50">
-                <div class="space-y-2 mb-3">${commentsHTML || '<p class="text-xs text-gray-400">لا توجد تعليقات.</p>'}</div>
-                <div class="flex gap-2">
-                  <input type="text" id="cmt-author-${id}" placeholder="اسمك..." class="w-24 p-2 rounded-lg border text-xs outline-none">
-                  <input type="text" id="cmt-text-${id}" placeholder="تعليق..." class="flex-1 p-2 rounded-lg border text-xs outline-none">
-                  <button onclick="addCommentFirebase('${id}', document.getElementById('cmt-text-${id}').value, document.getElementById('cmt-author-${id}').value)" class="bg-gray-800 text-white px-3 rounded-lg text-xs font-bold">تعليق</button>
                 </div>
               </div>
             </div>
