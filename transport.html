@@ -49,8 +49,6 @@
     html.dark .border-gray-200 { border-color: #334155 !important; }
     html.dark .bg-brand-50 { background-color: rgba(249, 115, 22, 0.15) !important; }
     html.dark .border-brand-100 { border-color: rgba(249, 115, 22, 0.3) !important; }
-    html.dark table thead { background-color: rgba(249, 115, 22, 0.15) !important; color: #fdba74 !important; }
-    html.dark table tbody tr:hover { background-color: rgba(249, 115, 22, 0.08) !important; }
     html.dark .bg-amber-50 { background-color: rgba(245, 158, 11, 0.1) !important; }
     html.dark .border-amber-200 { border-color: rgba(245, 158, 11, 0.3) !important; }
     html.dark .bg-indigo-50 { background-color: rgba(99, 102, 241, 0.1) !important; }
@@ -129,11 +127,32 @@
         <div class="relative">
           <select id="destinationSelect" class="w-full p-4 rounded-2xl border-2 border-brand-200 dark:border-slate-600 bg-brand-50 dark:bg-slate-800 text-gray-800 dark:text-gray-200 font-bold text-lg outline-none cursor-pointer appearance-none">
             <option value="" disabled selected data-i18n="choose_dest">-- اختر وجهتك --</option>
-            <option value="revoil" data-i18n="dest_revoil">الإقامة الجامعية رويز - Revoil</option>
-            <option value="bachdjerrah" data-i18n="dest_bachdjerrah">باش جراح - الحراش</option>
-            <option value="tafourah" data-i18n="dest_tafourah">تافورة</option>
-            <option value="bouzareah" data-i18n="dest_bouzareah">بوزريعة</option>
-            <option value="blida" data-i18n="dest_blida">البليدة</option>
+            <option value="revoil">الإقامة الجامعية رويز (REVOIL)</option>
+            <option value="bachdjerrah">باش جراح - الحراش</option>
+            <option value="tafourah">تافورة</option>
+            <option value="bouzareah">بوزريعة</option>
+            <option value="blida">البليدة (عبر الصومعة والأربعاء)</option>
+            <option value="bab_hassan">بابا حسن - الدويرة</option>
+            <option value="premier_mai">أول ماي</option>
+            <option value="ouled_fayet">أولاد فايت</option>
+            <option value="kharrouba_tafourah">خرسانة - تافورة</option>
+            <option value="tesala">تسالة المرجة</option>
+            <option value="maalma">المعالمة - سيدي عبد الله (سيدي بنور)</option>
+            <option value="residence_0201">الإقامة الجامعية 02-01 (المعالمة - بني مسوس)</option>
+            <option value="ain_benian">عين البنيان - سطوالي</option>
+            <option value="chattouf">شاطوناف</option>
+            <option value="roiba">رويبة - رغاية</option>
+            <option value="boufarik">بوفاريك</option>
+            <option value="fac_media">كلية الإعلام والاتصال</option>
+            <option value="bab_el_oued">باب الوادي</option>
+            <option value="ben_aknoun">بن عكنون</option>
+            <option value="mouttah">مفتاح</option>
+            <option value="yir_touta">بير توتة</option>
+            <option value="baraki">براقي - بن طلحة</option>
+            <option value="bousmail">بوسماعيل - بوهارون - عين تاغورايت</option>
+            <option value="zeralda">زرالدة</option>
+            <!-- إضافة باب الزوار -->
+            <option value="bab_ezzouar">باب الزوار</option>
           </select>
           <i class="fa-solid fa-chevron-down absolute left-4 top-1/2 -translate-y-1/2 text-brand-500 pointer-events-none"></i>
         </div>
@@ -170,6 +189,37 @@
                 <i class="fa-solid fa-moon text-indigo-500"></i> <span data-i18n="return_trip">العودة (مساءً)</span>
               </h4>
               <div id="returnTimes" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- مجتمع الوجهة (Firebase) -->
+        <div class="rounded-3xl overflow-hidden shadow-sm border border-gray-200 dark:border-slate-700">
+          <div class="bg-[#1e293b] text-white p-6 relative">
+            <h3 class="text-xl font-bold flex items-center gap-2 mb-2">
+              <i class="fa-solid fa-comments text-amber-400"></i> 
+              <span data-i18n="community_title">مجتمع وجهة: </span> <span id="communityTitle"></span>
+            </h3>
+            <p class="text-sm text-gray-300" data-i18n="community_desc">أخبر زملاءك بالمستجدات: تأخر، إلغاء، ازدحام...</p>
+            
+            <div class="mt-4 flex flex-col md:flex-row gap-2">
+              <select id="reportType" class="p-3 rounded-xl bg-slate-800 border border-slate-600 text-white text-sm outline-none">
+                <option value="delay" data-i18n="report_delay">تأخر</option>
+                <option value="cancel" data-i18n="report_cancel">إلغاء</option>
+                <option value="crowded" data-i18n="report_crowded">ازدحام</option>
+                <option value="ok" data-i18n="report_ok">في الوقت</option>
+              </select>
+              <input type="text" id="reportText" placeholder="تفاصيل إضافية (اختياري)..." data-i18n-placeholder="report_placeholder" class="flex-1 p-3 rounded-xl bg-slate-800 border border-slate-600 text-white text-sm outline-none">
+              <button onclick="submitFirebaseReport()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-xl transition text-sm" data-i18n="report_btn">إبلاغ</button>
+            </div>
+          </div>
+          
+          <div class="bg-white dark:bg-slate-800 p-4">
+            <h4 class="font-bold text-gray-800 dark:text-white mb-3 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-bolt text-amber-500"></i> <span data-i18n="last_reports">آخر التحديثات</span>
+            </h4>
+            <div id="firebaseReportsList" class="space-y-2 max-h-48 overflow-y-auto pr-2">
+              <p class="text-xs text-gray-500" data-i18n="no_reports">لا توجد تحديثات حالياً.</p>
             </div>
           </div>
         </div>
@@ -494,8 +544,6 @@
         trans_title: "دليل النقل والمواصلات", trans_desc: "كل ما تحتاجه للتنقل.",
         tab_univ: "النقل الجامعي", tab_public: "النقل العمومي", tab_carpool: "مشاركة التاكسي",
         select_destination: "اختر وجهتك", choose_dest: "-- اختر وجهتك --",
-        dest_revoil: "الإقامة الجامعية رويز - Revoil", dest_bachdjerrah: "باش جراح - الحراش",
-        dest_tafourah: "تافورة", dest_bouzareah: "بوزريعة", dest_blida: "البليدة",
         your_destination: "وجهتك:", univ_bus: "حافلة جامعية",
         outbound: "الذهاب (صباحاً)", return_trip: "العودة (مساءً)",
         proches_title: "أقرب محطات النقل للمدرسة (ENSTP)",
@@ -525,15 +573,17 @@
         carpool_contact: "تواصل", carpool_empty: "لا توجد رحلات.",
         chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋",
         chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
-        chat_bus: "معلومات النقل في هذه الصفحة.", chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!"
+        chat_bus: "معلومات النقل في هذه الصفحة.", chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
+        community_title: "مجتمع وجهة: ", community_desc: "أخبر زملاءك بالمستجدات: تأخر، إلغاء، ازدحام...",
+        report_delay: "تأخر", report_cancel: "إلغاء", report_crowded: "ازدحام", report_ok: "في الوقت",
+        report_placeholder: "تفاصيل إضافية (اختياري)...", report_btn: "إبلاغ",
+        last_reports: "آخر التحديثات", no_reports: "لا توجد تحديثات حالياً."
       },
       fr: {
         page_title: "Guide Transport - ENSTP", nav_home: "Accueil",
         trans_title: "Guide de Transport", trans_desc: "Tout pour vos déplacements.",
         tab_univ: "Transport universitaire", tab_public: "Transport public", tab_carpool: "Covoiturage",
         select_destination: "Choisissez votre destination", choose_dest: "-- Choisissez --",
-        dest_revoil: "Résidence Revoil", dest_bachdjerrah: "Bachdjerrah - El Harrach",
-        dest_tafourah: "Tafourah", dest_bouzareah: "Bouzareah", dest_blida: "Blida",
         your_destination: "Votre destination :", univ_bus: "Bus universitaire",
         outbound: "Aller (Matin)", return_trip: "Retour (Soir)",
         proches_title: "Arrêts proches",
@@ -563,15 +613,17 @@
         carpool_contact: "Contacter", carpool_empty: "Aucun trajet.",
         chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋",
         chat_placeholder: "Votre question...", chat_default: "Merci !",
-        chat_bus: "Infos transport sur cette page.", chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !"
+        chat_bus: "Infos transport sur cette page.", chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
+        community_title: "Communauté : ", community_desc: "Informez vos camarades : retard, annulation, embouteillage...",
+        report_delay: "Retard", report_cancel: "Annulé", report_crowded: "Bondé", report_ok: "À l'heure",
+        report_placeholder: "Détails (optionnel)...", report_btn: "Signaler",
+        last_reports: "Dernières mises à jour", no_reports: "Aucune mise à jour."
       },
       en: {
         page_title: "Transport Guide - ENSTP", nav_home: "Home",
         trans_title: "Transport Guide", trans_desc: "Everything you need.",
         tab_univ: "University transport", tab_public: "Public transport", tab_carpool: "Ride sharing",
         select_destination: "Select your destination", choose_dest: "-- Choose --",
-        dest_revoil: "Revoil Residence", dest_bachdjerrah: "Bachdjerrah - El Harrach",
-        dest_tafourah: "Tafourah", dest_bouzareah: "Bouzareah", dest_blida: "Blida",
         your_destination: "Your destination:", univ_bus: "University bus",
         outbound: "Outbound (Morning)", return_trip: "Return (Evening)",
         proches_title: "Nearby stops",
@@ -601,7 +653,11 @@
         carpool_contact: "Contact", carpool_empty: "No trips.",
         chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋",
         chat_placeholder: "Your question...", chat_default: "Thanks!",
-        chat_bus: "Transport info on this page.", chat_hello: "Welcome!", chat_thanks: "You're welcome!"
+        chat_bus: "Transport info on this page.", chat_hello: "Welcome!", chat_thanks: "You're welcome!",
+        community_title: "Community: ", community_desc: "Inform your peers: delay, cancellation, crowded...",
+        report_delay: "Delay", report_cancel: "Cancelled", report_crowded: "Crowded", report_ok: "On time",
+        report_placeholder: "Details (optional)...", report_btn: "Report",
+        last_reports: "Latest updates", no_reports: "No updates yet."
       }
     };
 
@@ -633,13 +689,34 @@
       window.applyTransportTranslation(lang);
     };
 
-    // بيانات المواقيت
+    // بيانات المواقيت بناءً على الصور
     const busSchedules = {
-      'revoil': { outbound: ['07:00', '07:30', '08:00'], return: ['13:00', '15:30', '17:15'] },
+      'revoil': { outbound: [], return: [] }, 
       'bachdjerrah': { outbound: ['07:00', '07:30', '08:00', '08:30', '09:00', '10:00', '11:30'], return: ['13:00', '14:30', '16:00', '17:00', '18:00'] },
       'tafourah': { outbound: ['07:15', '08:00', '10:00', '11:00'], return: ['14:00', '14:30', '15:00', '15:30', '17:15', '18:00'] },
       'bouzareah': { outbound: ['06:30', '07:00'], return: ['13:00', '16:00'] },
-      'blida': { outbound: ['06:30', '07:00'], return: ['14:00', '16:00', '17:00'] }
+      'blida': { outbound: [], return: [] }, 
+      'bab_hassan': { outbound: ['07:00', '09:30'], return: ['13:00', '17:15'] },
+      'premier_mai': { outbound: ['07:00', '09:30'], return: ['13:00', '17:15'] },
+      'ouled_fayet': { outbound: '07:00 إلى 12:20', return: ['17:15'] },
+      'kharrouba_tafourah': { outbound: '07:15 إلى 12:00 (كل 30 دقيقة)', return: '13:30 إلى 17:00 (كل 30/60 دقيقة)' },
+      'tesala': { outbound: ['07:00'], return: ['13:00', '17:15'] },
+      'maalma': { outbound: '07:00 (كل 30 دقيقة)', return: ['13:00', '14:00', '15:00', '16:00', '17:00', '18:00'] },
+      'residence_0201': { outbound: '07:00 (كل 30 دقيقة)', return: ['13:00', '14:00', '15:00', '16:00', '17:00', '18:00'] },
+      'ain_benian': { outbound: ['07:00', '07:15', '09:00', '10:00'], return: ['14:15', '15:30', '17:00', '18:00'] },
+      'chattouf': { outbound: ['07:15', '09:00', '10:00'], return: ['14:15', '15:30', '17:00', '18:00'] },
+      'roiba': { outbound: ['07:00'], return: ['16:00'] },
+      'boufarik': { outbound: ['07:00'], return: ['14:30', '16:00'] },
+      'fac_media': { outbound: ['07:00', '07:30', '08:00', '10:00', '10:30', '11:00'], return: ['13:30', '14:00', '15:15', '17:00', '18:00'] },
+      'bab_el_oued': { outbound: ['07:00', '09:30'], return: ['13:00', '17:15'] },
+      'ben_aknoun': { outbound: ['07:00', '09:30'], return: ['13:00', '17:15'] },
+      'mouttah': { outbound: ['07:00'], return: ['17:30'] },
+      'yir_touta': { outbound: ['07:00', '07:30'], return: ['15:30', '17:30'] },
+      'baraki': { outbound: ['07:00', '07:30', '08:00'], return: ['15:30', '17:30'] },
+      'bousmail': { outbound: ['06:45'], return: ['17:45'] },
+      'zeralda': { outbound: ['07:00'], return: ['14:30', '17:15'] },
+      // تمت إضافة باب الزوار بالتوقيت المطلوب
+      'bab_ezzouar': { outbound: '07:00 إلى 17:15 (كل نصف ساعة)', return: '07:00 إلى 17:15 (كل نصف ساعة)' }
     };
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -648,6 +725,7 @@
       const resultTitle = document.getElementById('resultTitle');
       const outboundDiv = document.getElementById('outboundTimes');
       const returnDiv = document.getElementById('returnTimes');
+      const communityTitle = document.getElementById('communityTitle');
 
       if (destSelect) {
         destSelect.addEventListener('change', function() {
@@ -657,18 +735,30 @@
 
           scheduleResult.classList.remove('hidden');
           resultTitle.innerText = this.options[this.selectedIndex].text;
+          communityTitle.innerText = this.options[this.selectedIndex].text;
 
-          outboundDiv.innerHTML = data.outbound.map(time => 
-            `<span class="bg-white dark:bg-slate-700 text-brand-700 dark:text-brand-300 px-4 py-2 rounded-xl text-base font-bold border border-brand-200 dark:border-slate-600 shadow-sm">${time}</span>`
-          ).join('');
+          function buildTimeHTML(timeData) {
+            if (Array.isArray(timeData)) {
+              if (timeData.length === 0) {
+                return `<div class="bg-amber-100 text-amber-900 px-4 py-2 rounded-xl text-sm font-bold border border-amber-300 w-full text-center">رحلات متتابعة (تقريباً كل ساعة / حسب الازدحام)</div>`;
+              }
+              return timeData.map(time => 
+                `<span class="bg-white dark:bg-slate-700 text-brand-700 dark:text-brand-300 px-4 py-2 rounded-xl text-base font-bold border border-brand-200 dark:border-slate-600 shadow-sm">${time}</span>`
+              ).join('');
+            } else if (typeof timeData === 'string') {
+              return `<div class="bg-amber-100 text-amber-900 px-4 py-2 rounded-xl text-sm font-bold border border-amber-300 w-full text-center">${timeData}</div>`;
+            }
+            return '';
+          }
 
-          returnDiv.innerHTML = data.return.map(time => 
-            `<span class="bg-white dark:bg-slate-700 text-brand-700 dark:text-brand-300 px-4 py-2 rounded-xl text-base font-bold border border-brand-200 dark:border-slate-600 shadow-sm">${time}</span>`
-          ).join('');
+          outboundDiv.innerHTML = buildTimeHTML(data.outbound);
+          returnDiv.innerHTML = buildTimeHTML(data.return);
+
+          // تحميل تقارير Firebase لهذه الوجهة
+          loadFirebaseReports(key);
         });
       }
 
-      // Initialisation langue & thème
       if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
@@ -676,11 +766,10 @@
       if (activeBtn) activeBtn.classList.add('active');
       currentLang = savedLang;
       window.applyTransportTranslation(savedLang);
-
       switchTab('univ');
     });
 
-    // Chatbot (inchangé)
+    // Chatbot
     function toggleChat() {
       const chat = document.getElementById('chatWindow');
       if (!chat) return;
@@ -725,10 +814,10 @@
     }
   </script>
 
-  <!-- Firebase Marketplace / Carpooling -->
+  <!-- Firebase (الإبلاغ والرحلات) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, where, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
@@ -742,6 +831,69 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // 1. نظام الإبلاغ (مجتمع الوجهة)
+    window.submitFirebaseReport = async function() {
+      const key = document.getElementById('destinationSelect').value;
+      if (!key) return;
+
+      const type = document.getElementById('reportType').value;
+      const text = document.getElementById('reportText').value.trim();
+      
+      try {
+        await addDoc(collection(db, "bus_reports"), {
+          dest: key,
+          type: type,
+          text: text,
+          time: serverTimestamp()
+        });
+        document.getElementById('reportText').value = '';
+      } catch (e) {
+        alert("خطأ أثناء الإبلاغ: " + e.message);
+      }
+    };
+
+    window.loadFirebaseReports = function(destKey) {
+      const list = document.getElementById('firebaseReportsList');
+      const q = query(collection(db, "bus_reports"), where("dest", "==", destKey), orderBy("time", "desc"));
+      
+      onSnapshot(q, (snapshot) => {
+        list.innerHTML = '';
+        if (snapshot.empty) {
+          list.innerHTML = `<p class="text-xs text-gray-500">لا توجد تحديثات حالياً.</p>`;
+          return;
+        }
+
+        const typeColors = {
+          delay: 'bg-amber-100 text-amber-800',
+          cancel: 'bg-red-100 text-red-800',
+          crowded: 'bg-orange-100 text-orange-800',
+          ok: 'bg-emerald-100 text-emerald-800'
+        };
+        const typeLabels = {
+          delay: window.t('report_delay'),
+          cancel: window.t('report_cancel'),
+          crowded: window.t('report_crowded'),
+          ok: window.t('report_ok')
+        };
+
+        snapshot.forEach((docSnap) => {
+          const r = docSnap.data();
+          const dateStr = r.time ? new Date(r.time.toDate()).toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }) : '...';
+          
+          list.innerHTML += `
+            <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-slate-900 border border-gray-100 dark:border-slate-700">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${typeColors[r.type] || 'bg-gray-100'}">${typeLabels[r.type] || r.type}</span>
+                <span class="text-xs text-gray-700 dark:text-gray-300">${r.text || '...'}</span>
+              </div>
+              <span class="text-[10px] text-gray-400">${dateStr}</span>
+            </div>
+          `;
+        });
+      });
+    };
+
+    // 2. مشاركة التاكسي (كما كانت سابقاً)
     window.addCarpoolFirebase = async function() {
       const name = document.getElementById('carpool-name').value.trim();
       const phone = document.getElementById('carpool-phone').value.trim();
@@ -765,13 +917,13 @@
       catch (e) { alert("خطأ: " + e.message); }
     };
 
-    const list = document.getElementById('carpool-list');
-    if (list) {
+    const carpoolList = document.getElementById('carpool-list');
+    if (carpoolList) {
       const q = query(collection(db, "carpools"), orderBy("createdAt", "desc"));
       onSnapshot(q, (snapshot) => {
-        list.innerHTML = '';
+        carpoolList.innerHTML = '';
         if (snapshot.empty) {
-          list.innerHTML = `<div class="text-center text-gray-500 py-6 bg-gray-50 rounded-xl border">${window.t('carpool_empty')}</div>`;
+          carpoolList.innerHTML = `<div class="text-center text-gray-500 py-6 bg-gray-50 rounded-xl border">${window.t('carpool_empty')}</div>`;
           return;
         }
         snapshot.forEach((docSnap) => {
@@ -782,7 +934,7 @@
           const formattedDate = dateObj.toLocaleDateString('ar-DZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
           const formattedTime = dateObj.toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' });
 
-          list.innerHTML += `
+          carpoolList.innerHTML += `
             <div class="bg-white rounded-2xl border border-amber-100 shadow-sm overflow-hidden">
               <div class="p-4 border-b border-gray-100 bg-amber-50/30">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
