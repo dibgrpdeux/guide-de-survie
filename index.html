@@ -14,12 +14,12 @@
       --primary-hover: #f59e0b;
       --orange: #f97316;
       --orange-dark: #ea580c;
-      --bg-color: #f8fafc;
-      --text-main: #1e293b;
+      --bg-color: #ffffff;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --nav-bg: rgba(255, 255, 255, 0.92);
-      --border-color: rgba(226, 232, 240, 0.8);
+      --card-bg: #ffffff;
+      --nav-bg: rgba(255, 255, 255, 0.95);
+      --border-color: #e2e8f0;
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
       --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
       --shadow-lg: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
@@ -29,9 +29,9 @@
       --bg-color: #0a1128;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --card-bg: rgba(15, 30, 65, 0.9);
-      --nav-bg: rgba(10, 17, 40, 0.92);
-      --border-color: rgba(30, 58, 138, 0.6);
+      --card-bg: #0f1e41;
+      --nav-bg: rgba(10, 17, 40, 0.95);
+      --border-color: #1e3a8a;
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
       --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
       --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.6);
@@ -53,124 +53,129 @@
     }
 
     /* ============================================
-       🌊 ARRIÈRE-PLAN ANIMÉ
+       🌊 ARRIÈRE-PLAN EN LIGNES ANIMÉES
        ============================================ */
     .animated-bg {
       position: fixed;
       inset: 0;
       z-index: -3;
       overflow: hidden;
-      background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 50%, #ffedd5 100%);
+      background: var(--bg-color);
       transition: background 0.6s ease;
     }
 
-    [data-theme="dark"] .animated-bg {
-      background: linear-gradient(135deg, #0a1128 0%, #0f1e41 50%, #1e3a8a 100%);
-    }
-
-    /* Bulles / blobs qui bougent */
-    .bg-blob {
+    /* Lignes diagonales qui bougent */
+    .bg-lines {
       position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.5;
-      animation: blobFloat 20s ease-in-out infinite;
+      inset: -50%;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          rgba(249, 115, 22, 0.08) 0px,
+          rgba(249, 115, 22, 0.08) 2px,
+          transparent 2px,
+          transparent 40px
+        );
+      animation: linesMove 20s linear infinite;
     }
 
-    .bg-blob:nth-child(1) {
-      width: 400px;
-      height: 400px;
-      background: rgba(249, 115, 22, 0.4);
-      top: -10%;
-      left: -10%;
-      animation-delay: 0s;
+    [data-theme="dark"] .bg-lines {
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          rgba(59, 130, 246, 0.12) 0px,
+          rgba(59, 130, 246, 0.12) 2px,
+          transparent 2px,
+          transparent 40px
+        );
     }
 
-    .bg-blob:nth-child(2) {
-      width: 500px;
-      height: 500px;
-      background: rgba(251, 191, 36, 0.35);
-      bottom: -15%;
-      right: -15%;
-      animation-delay: -5s;
+    @keyframes linesMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(80px, 80px); }
     }
 
-    .bg-blob:nth-child(3) {
-      width: 300px;
-      height: 300px;
-      background: rgba(234, 88, 12, 0.3);
-      top: 40%;
-      left: 40%;
-      animation-delay: -10s;
-    }
-
-    .bg-blob:nth-child(4) {
-      width: 350px;
-      height: 350px;
-      background: rgba(59, 130, 246, 0.25);
-      top: 20%;
-      right: 20%;
-      animation-delay: -15s;
-    }
-
-    [data-theme="dark"] .bg-blob:nth-child(1) {
-      background: rgba(249, 115, 22, 0.25);
-    }
-    [data-theme="dark"] .bg-blob:nth-child(2) {
-      background: rgba(59, 130, 246, 0.2);
-    }
-    [data-theme="dark"] .bg-blob:nth-child(3) {
-      background: rgba(30, 58, 138, 0.3);
-    }
-    [data-theme="dark"] .bg-blob:nth-child(4) {
-      background: rgba(251, 191, 36, 0.15);
-    }
-
-    @keyframes blobFloat {
-      0%, 100% {
-        transform: translate(0, 0) scale(1);
-      }
-      25% {
-        transform: translate(80px, -60px) scale(1.1);
-      }
-      50% {
-        transform: translate(-40px, 80px) scale(0.95);
-      }
-      75% {
-        transform: translate(60px, 40px) scale(1.05);
-      }
-    }
-
-    /* Vagues animées */
-    .bg-wave {
+    /* Lignes horizontales */
+    .bg-lines-h {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 200%;
-      height: 200px;
-      background: radial-gradient(ellipse at center, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
-      animation: waveMove 15s linear infinite;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(251, 191, 36, 0.06) 0px,
+          rgba(251, 191, 36, 0.06) 1px,
+          transparent 1px,
+          transparent 60px
+        );
+      animation: linesMoveH 25s linear infinite;
     }
 
-    .bg-wave:nth-child(6) {
-      animation-duration: 20s;
-      animation-direction: reverse;
-      opacity: 0.6;
-      height: 250px;
+    [data-theme="dark"] .bg-lines-h {
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(251, 191, 36, 0.08) 0px,
+          rgba(251, 191, 36, 0.08) 1px,
+          transparent 1px,
+          transparent 60px
+        );
     }
 
-    .bg-wave:nth-child(7) {
-      animation-duration: 25s;
-      opacity: 0.4;
-      height: 300px;
+    @keyframes linesMoveH {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(60px); }
     }
 
-    @keyframes waveMove {
-      0% { transform: translateX(-50%); }
-      100% { transform: translateX(0); }
+    /* Lignes verticales */
+    .bg-lines-v {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          rgba(234, 88, 12, 0.05) 0px,
+          rgba(234, 88, 12, 0.05) 1px,
+          transparent 1px,
+          transparent 80px
+        );
+      animation: linesMoveV 30s linear infinite;
     }
 
-    /* Étoiles / points qui bougent */
+    [data-theme="dark"] .bg-lines-v {
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          rgba(96, 165, 250, 0.08) 0px,
+          rgba(96, 165, 250, 0.08) 1px,
+          transparent 1px,
+          transparent 80px
+        );
+    }
+
+    @keyframes linesMoveV {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(80px); }
+    }
+
+    /* Grille de points */
+    .bg-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(249, 115, 22, 0.15) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: dotsPulse 8s ease-in-out infinite;
+    }
+
+    [data-theme="dark"] .bg-dots {
+      background-image: radial-gradient(circle, rgba(96, 165, 250, 0.2) 1px, transparent 1px);
+    }
+
+    @keyframes dotsPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Particules flottantes */
     .bg-particles {
       position: absolute;
       inset: 0;
@@ -179,8 +184,8 @@
 
     .bg-particle {
       position: absolute;
-      width: 4px;
-      height: 4px;
+      width: 3px;
+      height: 3px;
       border-radius: 50%;
       background: var(--orange);
       opacity: 0.4;
@@ -193,38 +198,10 @@
     }
 
     @keyframes particleFloat {
-      0% {
-        transform: translateY(100vh) translateX(0) scale(0);
-        opacity: 0;
-      }
+      0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
       10% { opacity: 0.6; }
       90% { opacity: 0.6; }
-      100% {
-        transform: translateY(-100px) translateX(100px) scale(1.5);
-        opacity: 0;
-      }
-    }
-
-    /* Grille en mouvement (subtile) */
-    .bg-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(249, 115, 22, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(249, 115, 22, 0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      animation: gridMove 30s linear infinite;
-    }
-
-    [data-theme="dark"] .bg-grid {
-      background-image:
-        linear-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
-    }
-
-    @keyframes gridMove {
-      0% { background-position: 0 0; }
-      100% { background-position: 60px 60px; }
+      100% { transform: translateY(-100px) translateX(100px) scale(1.5); opacity: 0; }
     }
 
     /* ============================================
@@ -240,7 +217,7 @@
       background: var(--nav-bg);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid var(--border-color);
+      border: 1.5px solid var(--border-color);
       border-radius: 22px;
       padding: 10px 14px;
       display: flex;
@@ -284,9 +261,7 @@
       animation: shimmer 3s linear infinite;
     }
 
-    @keyframes shimmer {
-      to { background-position: 200% center; }
-    }
+    @keyframes shimmer { to { background-position: 200% center; } }
 
     .nav-subtitle {
       font-size: 0.65rem;
@@ -499,8 +474,8 @@
     }
 
     .hero-badge {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.18);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
       color: #fff;
       padding: 8px 22px;
       border-radius: 30px;
@@ -519,7 +494,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
       transform: translateX(-100%);
       animation: badgeShine 3s ease-in-out infinite;
     }
@@ -549,7 +524,7 @@
       font-weight: 900;
       line-height: 1.15;
       margin-bottom: 22px;
-      text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+      text-shadow: 0 4px 30px rgba(0,0,0,0.5);
       letter-spacing: -1px;
     }
 
@@ -563,7 +538,7 @@
     }
 
     .hero-desc {
-      color: #e2e8f0;
+      color: #f1f5f9;
       max-width: 650px;
       font-size: 1.05rem;
       line-height: 1.8;
@@ -583,7 +558,7 @@
       align-items: center;
       gap: 10px;
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 10px 30px rgba(251, 191, 36, 0.45);
+      box-shadow: 0 10px 30px rgba(251, 191, 36, 0.5);
       position: relative;
       overflow: hidden;
     }
@@ -592,7 +567,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
       transform: translateX(-100%);
       transition: transform 0.6s ease;
     }
@@ -601,7 +576,7 @@
 
     .btn-explore:hover {
       transform: translateY(-4px) scale(1.03);
-      box-shadow: 0 15px 40px rgba(251, 191, 36, 0.65);
+      box-shadow: 0 15px 40px rgba(251, 191, 36, 0.7);
     }
 
     .btn-explore i { animation: bounceArrow 1.8s ease-in-out infinite; }
@@ -616,7 +591,7 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.7);
       font-size: 1.5rem;
       animation: scrollBounce 2s ease-in-out infinite;
       cursor: pointer;
@@ -656,7 +631,7 @@
       flex: 0 0 auto;
       background: var(--card-bg);
       backdrop-filter: blur(15px);
-      border: 1px solid var(--border-color);
+      border: 1.5px solid var(--border-color);
       padding: 11px 22px;
       border-radius: 50px;
       display: flex;
@@ -676,7 +651,7 @@
       color: white;
       border-color: var(--orange);
       transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(249, 115, 22, 0.35);
+      box-shadow: 0 12px 25px rgba(249, 115, 22, 0.4);
     }
 
     .section-pill i {
@@ -707,7 +682,7 @@
       background: var(--card-bg);
       border-radius: 22px;
       overflow: hidden;
-      border: 1px solid var(--border-color);
+      border: 1.5px solid var(--border-color);
       text-decoration: none;
       color: var(--text-main);
       display: flex;
@@ -748,7 +723,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(249, 115, 22, 0.35), transparent 50%);
+      background: linear-gradient(to top, rgba(249, 115, 22, 0.4), transparent 50%);
       opacity: 0;
       transition: opacity 0.3s;
     }
@@ -800,7 +775,7 @@
     }
 
     /* ============================================
-       KANGOUROU
+       KANGOUROU 3D
        ============================================ */
     .mascot-container {
       position: fixed;
@@ -810,37 +785,68 @@
       cursor: pointer;
       user-select: none;
       touch-action: none;
-      filter: drop-shadow(0 12px 20px rgba(249, 115, 22, 0.35));
+      perspective: 1000px;
+    }
+
+    .mascot-3d-wrapper {
+      transform-style: preserve-3d;
+      animation: kangaroo3DRotate 8s ease-in-out infinite;
     }
 
     .mascot-kangaroo {
-      width: 76px;
-      height: 96px;
+      width: 86px;
+      height: 108px;
       display: block;
       animation: mascotFloat 3.5s ease-in-out infinite;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       transform-origin: bottom center;
+      filter: drop-shadow(0 15px 25px rgba(249, 115, 22, 0.4)) drop-shadow(0 5px 10px rgba(0,0,0,0.2));
     }
 
     .mascot-container:hover .mascot-kangaroo {
-      transform: scale(1.12) rotate(-3deg);
+      transform: scale(1.15) rotateY(-15deg) rotateX(5deg);
     }
 
     .mascot-kangaroo.jump {
-      animation: kangarooBigJump 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: kangarooBigJump3D 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    @keyframes kangarooBigJump {
-      0% { transform: translateY(0) scale(1); }
-      20% { transform: translateY(-45px) scale(1.15) rotate(-12deg); }
-      50% { transform: translateY(-55px) scale(1) rotate(6deg); }
-      80% { transform: translateY(-12px) scale(0.95); }
-      100% { transform: translateY(0) scale(1); }
+    @keyframes kangarooBigJump3D {
+      0% { transform: translateY(0) scale(1) rotateY(0) rotateX(0); }
+      20% { transform: translateY(-50px) scale(1.2) rotateY(-20deg) rotateX(15deg); }
+      50% { transform: translateY(-60px) scale(1.1) rotateY(20deg) rotateX(-10deg); }
+      80% { transform: translateY(-15px) scale(0.98) rotateY(-10deg) rotateX(5deg); }
+      100% { transform: translateY(0) scale(1) rotateY(0) rotateX(0); }
     }
 
     @keyframes mascotFloat {
       0%, 100% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-14px) rotate(2deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
+    }
+
+    @keyframes kangaroo3DRotate {
+      0%, 100% { transform: rotateY(0) rotateX(0); }
+      25% { transform: rotateY(15deg) rotateX(-5deg); }
+      50% { transform: rotateY(0) rotateX(5deg); }
+      75% { transform: rotateY(-15deg) rotateX(-5deg); }
+    }
+
+    /* Ombre au sol */
+    .mascot-shadow {
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 15px;
+      background: radial-gradient(ellipse at center, rgba(249, 115, 22, 0.5) 0%, transparent 70%);
+      animation: shadowPulse 3.5s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes shadowPulse {
+      0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
+      50% { transform: translateX(-50%) scale(1.3); opacity: 0.3; }
     }
 
     .mascot-bubble {
@@ -883,16 +889,16 @@
        ============================================ */
     #aiChatWindow {
       position: fixed;
-      bottom: 130px;
+      bottom: 140px;
       right: 22px;
       z-index: 1001;
       width: 380px;
       max-width: calc(100vw - 44px);
       height: 540px;
-      max-height: calc(100vh - 160px);
+      max-height: calc(100vh - 170px);
       background: var(--card-bg);
       border-radius: 24px;
-      box-shadow: 0 30px 80px -10px rgba(0,0,0,0.4), 0 0 0 1px rgba(249, 115, 22, 0.15);
+      box-shadow: 0 30px 80px -10px rgba(0,0,0,0.4), 0 0 0 1px rgba(249, 115, 22, 0.2);
       display: none;
       flex-direction: column;
       overflow: hidden;
@@ -1201,7 +1207,7 @@
        ============================================ */
     .site-footer {
       background: var(--card-bg);
-      border-top: 1px solid var(--border-color);
+      border-top: 1.5px solid var(--border-color);
       padding: 30px 20px 20px;
       margin-top: 40px;
       position: relative;
@@ -1241,7 +1247,7 @@
 
     .back-to-top {
       position: fixed;
-      bottom: 130px;
+      bottom: 140px;
       right: 30px;
       width: 40px;
       height: 40px;
@@ -1278,11 +1284,8 @@
       .hero-title { font-size: 2rem; }
       .cards-grid { grid-template-columns: 1fr; gap: 18px; padding: 0 15px; }
       .card-img-wrap { height: 190px; }
-      #aiChatWindow { width: calc(100vw - 24px); right: 12px; bottom: 110px; height: calc(100vh - 140px); }
-      .mascot-kangaroo { width: 62px; height: 80px; }
-      .bg-blob { filter: blur(40px); }
-      .bg-blob:nth-child(1), .bg-blob:nth-child(2) { width: 250px; height: 250px; }
-      .bg-blob:nth-child(3), .bg-blob:nth-child(4) { width: 200px; height: 200px; }
+      #aiChatWindow { width: calc(100vw - 24px); right: 12px; bottom: 120px; height: calc(100vh - 150px); }
+      .mascot-kangaroo { width: 70px; height: 88px; }
     }
 
     @media (max-width: 480px) {
@@ -1296,16 +1299,13 @@
 <body>
 
   <!-- ==========================================
-       🌊 ARRIÈRE-PLAN ANIMÉ
+       🌊 ARRIÈRE-PLAN EN LIGNES ANIMÉES
        ========================================== -->
   <div class="animated-bg">
-    <div class="bg-blob"></div>
-    <div class="bg-blob"></div>
-    <div class="bg-blob"></div>
-    <div class="bg-blob"></div>
-    <div class="bg-wave"></div>
-    <div class="bg-wave"></div>
-    <div class="bg-grid"></div>
+    <div class="bg-lines"></div>
+    <div class="bg-lines-h"></div>
+    <div class="bg-lines-v"></div>
+    <div class="bg-dots"></div>
     <div class="bg-particles" id="bgParticles"></div>
   </div>
 
@@ -1347,7 +1347,7 @@
         <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
           <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
         </button>
-        <button class="dropdown-btn" onclick="toggleSound()" id="soundBtn" data-sound-toggle>
+        <button class="dropdown-btn" onclick="toggleSound()" id="soundBtn">
           <i class="fa-solid fa-volume-high"></i> <span data-i18n="menu_sound">الصوت</span>
         </button>
       </div>
@@ -1521,33 +1521,54 @@
   </button>
 
   <!-- ==========================================
-       KANGOUROU
+       KANGOUROU 3D
        ========================================== -->
   <div class="mascot-container" id="mascotContainer" title="المساعد الذكي">
     <div class="mascot-bubble" id="mascotBubble" data-i18n="mascot_hello">مرحبا! 👋</div>
-    <svg class="mascot-kangaroo" id="mascotKangaroo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 100 Q8 92 10 108 Q14 122 26 114 Z" fill="#c2410c" stroke="#9a3412" stroke-width="1.5"/>
-      <path d="M22 105 Q16 102 18 112 Q20 118 26 112 Z" fill="#ea580c"/>
-      <ellipse cx="52" cy="82" rx="28" ry="26" fill="#f97316" stroke="#c2410c" stroke-width="1.5"/>
-      <ellipse cx="55" cy="88" rx="16" ry="16" fill="#fef3c7"/>
-      <ellipse cx="72" cy="112" rx="14" ry="6" fill="#c2410c"/>
-      <ellipse cx="72" cy="112" rx="11" ry="4" fill="#ea580c"/>
-      <ellipse cx="40" cy="102" rx="9" ry="4.5" fill="#c2410c"/>
-      <ellipse cx="68" cy="44" rx="20" ry="18" fill="#f97316" stroke="#c2410c" stroke-width="1.5"/>
-      <ellipse cx="59" cy="20" rx="6" ry="14" fill="#f97316" stroke="#c2410c" stroke-width="1.5" transform="rotate(-15 59 20)"/>
-      <ellipse cx="59" cy="21" rx="3" ry="9" fill="#fed7aa" transform="rotate(-15 59 20)"/>
-      <ellipse cx="78" cy="20" rx="6" ry="14" fill="#f97316" stroke="#c2410c" stroke-width="1.5" transform="rotate(15 78 20)"/>
-      <ellipse cx="78" cy="21" rx="3" ry="9" fill="#fed7aa" transform="rotate(15 78 20)"/>
-      <ellipse cx="75" cy="52" rx="11" ry="9" fill="#fed7aa"/>
-      <ellipse cx="82" cy="49" rx="2.5" ry="2" fill="#7c2d12"/>
-      <circle cx="66" cy="38" r="3.5" fill="#1a1410"/>
-      <circle cx="67" cy="37" r="1.2" fill="#ffffff"/>
-      <circle cx="76" cy="38" r="3.5" fill="#1a1410"/>
-      <circle cx="77" cy="37" r="1.2" fill="#ffffff"/>
-      <path d="M70 55 Q76 60 82 55" stroke="#7c2d12" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <ellipse cx="46" cy="68" rx="7" ry="4" fill="#ea580c" transform="rotate(-30 46 68)"/>
-      <circle cx="62" cy="32" r="1.5" fill="rgba(255,255,255,0.7)"/>
-    </svg>
+    <div class="mascot-3d-wrapper">
+      <svg class="mascot-kangaroo" id="mascotKangaroo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="kBody" cx="40%" cy="30%">
+            <stop offset="0%" stop-color="#fdba74"/>
+            <stop offset="100%" stop-color="#c2410c"/>
+          </radialGradient>
+          <radialGradient id="kHead" cx="40%" cy="30%">
+            <stop offset="0%" stop-color="#fdba74"/>
+            <stop offset="100%" stop-color="#9a3412"/>
+          </radialGradient>
+          <radialGradient id="kShadow" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.4)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="50" cy="125" rx="40" ry="5" fill="url(#kShadow)"/>
+        <path d="M20 100 Q8 92 10 108 Q14 122 26 114 Z" fill="#9a3412"/>
+        <path d="M22 105 Q16 102 18 112 Q20 118 26 112 Z" fill="#ea580c"/>
+        <ellipse cx="72" cy="112" rx="14" ry="6" fill="#9a3412"/>
+        <ellipse cx="72" cy="112" rx="11" ry="4" fill="#c2410c"/>
+        <ellipse cx="40" cy="102" rx="9" ry="4.5" fill="#9a3412"/>
+        <ellipse cx="52" cy="82" rx="28" ry="26" fill="url(#kBody)" stroke="#9a3412" stroke-width="1.5"/>
+        <ellipse cx="55" cy="88" rx="16" ry="16" fill="#fef3c7"/>
+        <ellipse cx="55" cy="85" rx="8" ry="5" fill="rgba(255,255,255,0.4)"/>
+        <ellipse cx="68" cy="44" rx="20" ry="18" fill="url(#kHead)" stroke="#9a3412" stroke-width="1.5"/>
+        <ellipse cx="60" cy="36" rx="6" ry="4" fill="rgba(255,255,255,0.35)"/>
+        <ellipse cx="59" cy="20" rx="6" ry="14" fill="#f97316" stroke="#9a3412" stroke-width="1.5" transform="rotate(-15 59 20)"/>
+        <ellipse cx="59" cy="21" rx="3" ry="9" fill="#fed7aa" transform="rotate(-15 59 20)"/>
+        <ellipse cx="78" cy="20" rx="6" ry="14" fill="#f97316" stroke="#9a3412" stroke-width="1.5" transform="rotate(15 78 20)"/>
+        <ellipse cx="78" cy="21" rx="3" ry="9" fill="#fed7aa" transform="rotate(15 78 20)"/>
+        <ellipse cx="75" cy="52" rx="11" ry="9" fill="#fed7aa"/>
+        <ellipse cx="82" cy="49" rx="2.5" ry="2" fill="#7c2d12"/>
+        <circle cx="66" cy="38" r="3.5" fill="#1a1410"/>
+        <circle cx="67" cy="37" r="1.2" fill="#ffffff"/>
+        <circle cx="76" cy="38" r="3.5" fill="#1a1410"/>
+        <circle cx="77" cy="37" r="1.2" fill="#ffffff"/>
+        <path d="M70 55 Q76 60 82 55" stroke="#7c2d12" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="46" cy="68" rx="7" ry="4" fill="#ea580c" transform="rotate(-30 46 68)"/>
+        <circle cx="42" cy="72" r="4" fill="#fed7aa" stroke="#c2410c" stroke-width="1"/>
+        <circle cx="62" cy="32" r="1.5" fill="rgba(255,255,255,0.7)"/>
+      </svg>
+    </div>
+    <div class="mascot-shadow"></div>
   </div>
 
   <!-- ==========================================
@@ -1587,7 +1608,7 @@
        ========================================== -->
   <script>
     // ============================================================
-    // 1. GÉNÉRATION DES PARTICULES ANIMÉES
+    // PARTICULES
     // ============================================================
     function createBgParticles() {
       const container = document.getElementById('bgParticles');
@@ -1606,12 +1627,10 @@
     createBgParticles();
 
     // ============================================================
-    // 2. DARK MODE
+    // DARK MODE
     // ============================================================
     const html = document.documentElement;
-    if (localStorage.getItem('theme') === 'dark') {
-      html.setAttribute('data-theme', 'dark');
-    }
+    if (localStorage.getItem('theme') === 'dark') html.setAttribute('data-theme', 'dark');
 
     function toggleDarkMode() {
       if (html.getAttribute('data-theme') === 'dark') {
@@ -1635,7 +1654,7 @@
     }
 
     // ============================================================
-    // 3. SYSTÈME SONORE
+    // SONS
     // ============================================================
     let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
     let audioCtx = null;
@@ -1735,15 +1754,14 @@
     }
 
     // ============================================================
-    // 4. MENU
+    // MENU
     // ============================================================
     function toggleMenu() {
       const dropdown = document.getElementById('navDropdown');
       const btn = document.getElementById('menuBtn');
       const isOpen = dropdown.classList.toggle('open');
       btn.classList.toggle('active');
-      if (isOpen) playSound('open');
-      else playSound('close');
+      if (isOpen) playSound('open'); else playSound('close');
     }
 
     document.addEventListener('click', (e) => {
@@ -1756,7 +1774,7 @@
     });
 
     // ============================================================
-    // 5. TRADUCTIONS
+    // TRADUCTIONS
     // ============================================================
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
@@ -1882,7 +1900,7 @@
     }
 
     // ============================================================
-    // 6. RECHERCHE INSTANTANÉE
+    // RECHERCHE
     // ============================================================
     document.getElementById('searchInput').addEventListener('input', (e) => {
       const query = e.target.value.trim().toLowerCase();
@@ -1899,7 +1917,7 @@
     });
 
     // ============================================================
-    // 7. ANIMATION CARTES
+    // ANIMATION CARTES
     // ============================================================
     const cards = document.querySelectorAll('.card');
     const observer = new IntersectionObserver((entries) => {
@@ -1913,14 +1931,13 @@
     }, { threshold: 0.1 });
     cards.forEach(card => observer.observe(card));
 
-    // Sons sur les cartes / pills
     document.querySelectorAll('.card, .section-pill').forEach(el => {
       el.addEventListener('mouseenter', () => playSound('hover'));
       el.addEventListener('click', () => playSound('open'));
     });
 
     // ============================================================
-    // 8. BACK TO TOP
+    // BACK TO TOP
     // ============================================================
     const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
@@ -1928,7 +1945,7 @@
     });
 
     // ============================================================
-    // 9. KANGOUROU → AI
+    // KANGOUROU → AI
     // ============================================================
     const mascotContainer = document.getElementById('mascotContainer');
     const mascotKangaroo = document.getElementById('mascotKangaroo');
@@ -1949,7 +1966,7 @@
     });
 
     // ============================================================
-    // 10. CHAT AI
+    // AI CHAT
     // ============================================================
     const aiChatWindow = document.getElementById('aiChatWindow');
     const aiChatBody = document.getElementById('aiChatBody');
@@ -1960,7 +1977,7 @@
     function openAIChat() {
       mascotKangaroo.classList.add('jump');
       playSound('kangaroo');
-      setTimeout(() => mascotKangaroo.classList.remove('jump'), 800);
+      setTimeout(() => mascotKangaroo.classList.remove('jump'), 900);
       mascotBubble.classList.remove('visible');
       aiChatWindow.classList.add('open');
       playSound('open');
@@ -2007,9 +2024,6 @@
       sendAIMessage();
     }
 
-    // ============================================================
-    // 11. KNOWLEDGE BASE
-    // ============================================================
     window.ENSTP_KNOWLEDGE = {
       schedule: "جدول التوقيت متاح في صفحة schedule.html أو من خلال قسم نجاحي (ma-reussite.html).",
       drives: "11 روابط Google Drive للدروس والملخصات موجودة في صفحة نجاحي.",
@@ -2120,16 +2134,13 @@
       this.style.height = Math.min(this.scrollHeight, 80) + 'px';
     });
 
-    // ============================================================
-    // 12. DÉMARRER L'AMBIANCE AU 1ER CLIC
-    // ============================================================
     document.addEventListener('click', function startAmbientOnce() {
       if (soundEnabled) startAmbient();
       document.removeEventListener('click', startAmbientOnce);
     });
 
     // ============================================================
-    // 13. INIT
+    // INIT
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
