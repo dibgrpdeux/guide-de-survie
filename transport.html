@@ -29,7 +29,7 @@
     .tab-btn { transition: all 0.3s ease; }
     .tab-btn.active { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.5); border-color: transparent; }
     .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-    .accordion-content.active { max-height: 3000px; transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+    .accordion-content.active { max-height: 4000px; transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
     .rotate-180 { transform: rotate(180deg); }
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
@@ -127,7 +127,7 @@
         <div class="relative">
           <select id="destinationSelect" class="w-full p-4 rounded-2xl border-2 border-brand-200 dark:border-slate-600 bg-brand-50 dark:bg-slate-800 text-gray-800 dark:text-gray-200 font-bold text-lg outline-none cursor-pointer appearance-none">
             <option value="" disabled selected data-i18n="choose_dest">-- اختر وجهتك --</option>
-            <option value="revoil">الإقامة الجامعية رويز (REVOIL)</option>
+            <option value="revoil">الإقامة الجامعية رويسو (REVOIL)</option>
             <option value="bachdjerrah">باش جراح - الحراش</option>
             <option value="tafourah">تافورة</option>
             <option value="bouzareah">بوزريعة</option>
@@ -151,7 +151,6 @@
             <option value="baraki">براقي - بن طلحة</option>
             <option value="bousmail">بوسماعيل - بوهارون - عين تاغورايت</option>
             <option value="zeralda">زرالدة</option>
-            <!-- إضافة باب الزوار -->
             <option value="bab_ezzouar">باب الزوار</option>
           </select>
           <i class="fa-solid fa-chevron-down absolute left-4 top-1/2 -translate-y-1/2 text-brand-500 pointer-events-none"></i>
@@ -326,6 +325,124 @@
               <strong data-i18n="where_to_get">أين يتم الاشتراك؟</strong> 
               <span data-i18n="where_to_get_desc">في محطات المترو الرئيسية (مثل ساحة الشهداء، تافورة، أو حي البدر) أو مكاتب SETRAM لمحطات الترامواي.</span>
             </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- قطارات SNTF -->
+      <div class="glass-card rounded-2xl overflow-hidden border border-brand-100 mt-4">
+        <button onclick="toggleAccordion('train')" class="w-full flex items-center justify-between p-5 bg-blue-50 hover:bg-blue-100 transition text-right">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-200 text-blue-700 flex items-center justify-center font-bold"><i class="fa-solid fa-train"></i></div>
+            <h3 class="font-bold text-lg text-blue-900" data-i18n="train_title">قطارات SNTF (الخطوط الطويلة)</h3>
+          </div>
+          <i class="fa-solid fa-chevron-down text-blue-600 transition-transform" id="icon-train"></i>
+        </button>
+        <div id="content-train" class="accordion-content">
+          <div class="p-5 space-y-6 text-sm text-gray-700">
+            
+            <!-- بطاقة التخفيض -->
+            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex flex-col md:flex-row items-center gap-4">
+              <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center text-white font-black text-xl shrink-0">%</div>
+              <div>
+                <h4 class="font-bold text-emerald-900 text-lg mb-1" data-i18n="green_card">البطاقة الخضراء (Carte Verte)</h4>
+                <p class="text-xs text-emerald-800"><strong>خصم 40%</strong> للبطاقة الشهرية والربع سنوية، و <strong>خصم 30%</strong> للبطاقة الأسبوعية.</p>
+                <p class="text-xs text-emerald-800 mt-1"><strong>تذكرة ذهاب وإياب:</strong> خصم 20% للرحلات التي تتجاوز 400 كم.</p>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <!-- وهران -->
+              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h4 class="font-bold text-brand-700 mb-2 border-b pb-2"><i class="fa-solid fa-train text-blue-500"></i> الجزائر ↔ وهران</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-xs font-bold mb-1">الذهاب (الجزائر - وهران):</p>
+                    <p class="text-xs text-gray-600">06:00 | 08:00 | 14:00 | 17:00</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-bold mb-1">العودة (وهران - الجزائر):</p>
+                    <p class="text-xs text-gray-600">05:50 | 08:00 | 14:00 | 17:00</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- عنابة -->
+              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h4 class="font-bold text-brand-700 mb-2 border-b pb-2"><i class="fa-solid fa-train text-blue-500"></i> الجزائر ↔ عنابة (ليلي)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-xs font-bold mb-1">الذهاب (الأحد، الثلاثاء، الخميس):</p>
+                    <p class="text-xs text-gray-600">18:40</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-bold mb-1">العودة (الإثنين، الأربعاء، الجمعة):</p>
+                    <p class="text-xs text-gray-600">21:00</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- باتنة -->
+              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h4 class="font-bold text-brand-700 mb-2 border-b pb-2"><i class="fa-solid fa-train text-blue-500"></i> الجزائر ↔ باتنة (ليلي)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-xs font-bold mb-1">الذهاب (الجزائر - باتنة):</p>
+                    <p class="text-xs text-gray-600">22:50</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-bold mb-1">العودة (باتنة - الجزائر):</p>
+                    <p class="text-xs text-gray-600">13:15</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- تقرت -->
+              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h4 class="font-bold text-brand-700 mb-2 border-b pb-2"><i class="fa-solid fa-train text-blue-500"></i> الجزائر ↔ تقرت (ليلي)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-xs font-bold mb-1">الذهاب (السبت، الإثنين، الأربعاء):</p>
+                    <p class="text-xs text-gray-600">18:13</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-bold mb-1">العودة (الأحد، الثلاثاء، الخميس):</p>
+                    <p class="text-xs text-gray-600">17:30</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- بجاية -->
+              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h4 class="font-bold text-brand-700 mb-2 border-b pb-2"><i class="fa-solid fa-train text-blue-500"></i> الجزائر ↔ بجاية</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-xs font-bold mb-1">الذهاب (الجزائر - بجاية):</p>
+                    <p class="text-xs text-gray-600">06:30 | 14:33</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-bold mb-1">العودة (بجاية - الجزائر):</p>
+                    <p class="text-xs text-gray-600">06:30 | 14:33</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- تيبازة -->
+              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h4 class="font-bold text-brand-700 mb-2 border-b pb-2"><i class="fa-solid fa-train text-blue-500"></i> الجزائر ↔ تيبازة (ليلي)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-xs font-bold mb-1">الذهاب (السبت، الإثنين، الأربعاء):</p>
+                    <p class="text-xs text-gray-600">19:40</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-bold mb-1">العودة (الأحد، الثلاثاء، الخميس):</p>
+                    <p class="text-xs text-gray-600">17:30</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -566,6 +683,8 @@
         apps_title: "تطبيقات النقل الذكي", apps_desc: "أسعار معروفة وتتبع مباشر.",
         yassir_desc: "الأكثر شعبية.", heetch_desc: "تطبيق فرنسي.", indrive_desc: "تفاوض على السعر.",
         download: "تحميل",
+        train_title: "قطارات SNTF (الخطوط الطويلة)",
+        green_card: "البطاقة الخضراء (Carte Verte)",
         taxi_share_title: "مشاركة سيارات الأجرة", taxi_share_desc: "وفّر في التكاليف.",
         carpool_add: "أضف رحلتك", carpool_name: "اسمك", carpool_phone: "هاتفك (واتساب)",
         carpool_from: "الانطلاق", carpool_to: "الوجهة", carpool_publish: "نشر الرحلة",
@@ -606,6 +725,8 @@
         apps_title: "Applications VTC", apps_desc: "Prix fixes et suivi.",
         yassir_desc: "Le plus populaire.", heetch_desc: "App française.", indrive_desc: "Négociation.",
         download: "Télécharger",
+        train_title: "Trains SNTF (Longues distances)",
+        green_card: "Carte Verte",
         taxi_share_title: "Covoiturage", taxi_share_desc: "Économisez.",
         carpool_add: "Ajouter trajet", carpool_name: "Votre nom", carpool_phone: "Téléphone (WhatsApp)",
         carpool_from: "Départ", carpool_to: "Destination", carpool_publish: "Publier",
@@ -646,6 +767,8 @@
         apps_title: "VTC apps", apps_desc: "Fixed prices and tracking.",
         yassir_desc: "Most popular.", heetch_desc: "French app.", indrive_desc: "Negotiate price.",
         download: "Download",
+        train_title: "SNTF Trains (Long distance)",
+        green_card: "Carte Verte (Green Card)",
         taxi_share_title: "Ride Sharing", taxi_share_desc: "Save money.",
         carpool_add: "Add trip", carpool_name: "Your name", carpool_phone: "Phone (WhatsApp)",
         carpool_from: "From", carpool_to: "To", carpool_publish: "Publish",
@@ -715,7 +838,6 @@
       'baraki': { outbound: ['07:00', '07:30', '08:00'], return: ['15:30', '17:30'] },
       'bousmail': { outbound: ['06:45'], return: ['17:45'] },
       'zeralda': { outbound: ['07:00'], return: ['14:30', '17:15'] },
-      // تمت إضافة باب الزوار بالتوقيت المطلوب
       'bab_ezzouar': { outbound: '07:00 إلى 17:15 (كل نصف ساعة)', return: '07:00 إلى 17:15 (كل نصف ساعة)' }
     };
 
