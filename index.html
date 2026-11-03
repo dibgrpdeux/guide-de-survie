@@ -53,7 +53,8 @@
     }
 
     /* ============================================
-       🌊 ARRIÈRE-PLAN EN LIGNES ANIMÉES
+       🎨 ARRIÈRE-PLAN SIMPLE ET CLAIR
+       4 blobs doux qui flottent lentement
        ============================================ */
     .animated-bg {
       position: fixed;
@@ -64,144 +65,85 @@
       transition: background 0.6s ease;
     }
 
-    /* Lignes diagonales qui bougent */
-    .bg-lines {
+    .blob {
       position: absolute;
-      inset: -50%;
-      background-image:
-        repeating-linear-gradient(
-          45deg,
-          rgba(249, 115, 22, 0.08) 0px,
-          rgba(249, 115, 22, 0.08) 2px,
-          transparent 2px,
-          transparent 40px
-        );
-      animation: linesMove 20s linear infinite;
-    }
-
-    [data-theme="dark"] .bg-lines {
-      background-image:
-        repeating-linear-gradient(
-          45deg,
-          rgba(59, 130, 246, 0.12) 0px,
-          rgba(59, 130, 246, 0.12) 2px,
-          transparent 2px,
-          transparent 40px
-        );
-    }
-
-    @keyframes linesMove {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(80px, 80px); }
-    }
-
-    /* Lignes horizontales */
-    .bg-lines-h {
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          0deg,
-          rgba(251, 191, 36, 0.06) 0px,
-          rgba(251, 191, 36, 0.06) 1px,
-          transparent 1px,
-          transparent 60px
-        );
-      animation: linesMoveH 25s linear infinite;
-    }
-
-    [data-theme="dark"] .bg-lines-h {
-      background-image:
-        repeating-linear-gradient(
-          0deg,
-          rgba(251, 191, 36, 0.08) 0px,
-          rgba(251, 191, 36, 0.08) 1px,
-          transparent 1px,
-          transparent 60px
-        );
-    }
-
-    @keyframes linesMoveH {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(60px); }
-    }
-
-    /* Lignes verticales */
-    .bg-lines-v {
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          90deg,
-          rgba(234, 88, 12, 0.05) 0px,
-          rgba(234, 88, 12, 0.05) 1px,
-          transparent 1px,
-          transparent 80px
-        );
-      animation: linesMoveV 30s linear infinite;
-    }
-
-    [data-theme="dark"] .bg-lines-v {
-      background-image:
-        repeating-linear-gradient(
-          90deg,
-          rgba(96, 165, 250, 0.08) 0px,
-          rgba(96, 165, 250, 0.08) 1px,
-          transparent 1px,
-          transparent 80px
-        );
-    }
-
-    @keyframes linesMoveV {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(80px); }
-    }
-
-    /* Grille de points */
-    .bg-dots {
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(249, 115, 22, 0.15) 1px, transparent 1px);
-      background-size: 40px 40px;
-      animation: dotsPulse 8s ease-in-out infinite;
-    }
-
-    [data-theme="dark"] .bg-dots {
-      background-image: radial-gradient(circle, rgba(96, 165, 250, 0.2) 1px, transparent 1px);
-    }
-
-    @keyframes dotsPulse {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
-
-    /* Particules flottantes */
-    .bg-particles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .bg-particle {
-      position: absolute;
-      width: 3px;
-      height: 3px;
       border-radius: 50%;
-      background: var(--orange);
-      opacity: 0.4;
-      animation: particleFloat 15s linear infinite;
+      filter: blur(80px);
+      opacity: 0.35;
+      animation: blobFloat 25s ease-in-out infinite;
     }
 
-    [data-theme="dark"] .bg-particle {
+    /* Blob 1 - orange chaud en haut à gauche */
+    .blob-1 {
+      width: 500px;
+      height: 500px;
+      background: #f97316;
+      top: -10%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    /* Blob 2 - jaune/ambre en bas à droite */
+    .blob-2 {
+      width: 450px;
+      height: 450px;
+      background: #fbbf24;
+      bottom: -10%;
+      right: -10%;
+      animation-delay: -8s;
+    }
+
+    /* Blob 3 - orange foncé au centre */
+    .blob-3 {
+      width: 350px;
+      height: 350px;
+      background: #ea580c;
+      top: 50%;
+      left: 40%;
+      animation-delay: -15s;
+      opacity: 0.25;
+    }
+
+    [data-theme="dark"] .blob-1 { background: #f97316; opacity: 0.2; }
+    [data-theme="dark"] .blob-2 { background: #3b82f6; opacity: 0.15; }
+    [data-theme="dark"] .blob-3 { background: #1e3a8a; opacity: 0.3; }
+
+    @keyframes blobFloat {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(60px, -40px) scale(1.1);
+      }
+      66% {
+        transform: translate(-40px, 60px) scale(0.95);
+      }
+    }
+
+    /* Petits ronds décoratifs */
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      background: #f97316;
+      opacity: 0.15;
+      animation: dotFloat 15s linear infinite;
+    }
+
+    [data-theme="dark"] .dot {
       background: #60a5fa;
-      opacity: 0.6;
+      opacity: 0.25;
     }
 
-    @keyframes particleFloat {
-      0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.6; }
-      100% { transform: translateY(-100px) translateX(100px) scale(1.5); opacity: 0; }
+    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; animation-delay: 0s; }
+    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
+    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
+    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
+    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
+
+    @keyframes dotFloat {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-30px) translateX(20px); }
+      100% { transform: translateY(0) translateX(0); }
     }
 
     /* ============================================
@@ -831,7 +773,6 @@
       75% { transform: rotateY(-15deg) rotateX(-5deg); }
     }
 
-    /* Ombre au sol */
     .mascot-shadow {
       position: absolute;
       bottom: -8px;
@@ -1286,6 +1227,10 @@
       .card-img-wrap { height: 190px; }
       #aiChatWindow { width: calc(100vw - 24px); right: 12px; bottom: 120px; height: calc(100vh - 150px); }
       .mascot-kangaroo { width: 70px; height: 88px; }
+      .blob { filter: blur(60px); }
+      .blob-1 { width: 300px; height: 300px; }
+      .blob-2 { width: 280px; height: 280px; }
+      .blob-3 { width: 200px; height: 200px; }
     }
 
     @media (max-width: 480px) {
@@ -1299,14 +1244,17 @@
 <body>
 
   <!-- ==========================================
-       🌊 ARRIÈRE-PLAN EN LIGNES ANIMÉES
+       🎨 ARRIÈRE-PLAN : 3 BLOBS DOUX + 5 PETITS RONDS
        ========================================== -->
   <div class="animated-bg">
-    <div class="bg-lines"></div>
-    <div class="bg-lines-h"></div>
-    <div class="bg-lines-v"></div>
-    <div class="bg-dots"></div>
-    <div class="bg-particles" id="bgParticles"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="dot dot-1"></div>
+    <div class="dot dot-2"></div>
+    <div class="dot dot-3"></div>
+    <div class="dot dot-4"></div>
+    <div class="dot dot-5"></div>
   </div>
 
   <!-- ==========================================
@@ -1607,25 +1555,6 @@
        SCRIPT
        ========================================== -->
   <script>
-    // ============================================================
-    // PARTICULES
-    // ============================================================
-    function createBgParticles() {
-      const container = document.getElementById('bgParticles');
-      if (!container) return;
-      const count = window.innerWidth < 768 ? 15 : 30;
-      for (let i = 0; i < count; i++) {
-        const p = document.createElement('div');
-        p.className = 'bg-particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() * 15 + 's';
-        p.style.animationDuration = (10 + Math.random() * 15) + 's';
-        p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
-        container.appendChild(p);
-      }
-    }
-    createBgParticles();
-
     // ============================================================
     // DARK MODE
     // ============================================================
