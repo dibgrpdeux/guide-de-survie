@@ -25,7 +25,6 @@
       --shadow-lg: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
     }
 
-    /* MODE SOMBRE BLEU FONCÉ */
     [data-theme="dark"] {
       --bg-color: #0a1128;
       --text-main: #f8fafc;
@@ -50,25 +49,182 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       position: relative;
+      min-height: 100vh;
     }
 
-    body::before {
-      content: "";
+    /* ============================================
+       🌊 ARRIÈRE-PLAN ANIMÉ
+       ============================================ */
+    .animated-bg {
       position: fixed;
       inset: 0;
-      z-index: -1;
-      background-image:
-        radial-gradient(at 15% 10%, rgba(249, 115, 22, 0.08) 0px, transparent 50%),
-        radial-gradient(at 85% 20%, rgba(251, 191, 36, 0.06) 0px, transparent 50%),
-        radial-gradient(at 50% 80%, rgba(234, 88, 12, 0.05) 0px, transparent 50%);
+      z-index: -3;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 50%, #ffedd5 100%);
+      transition: background 0.6s ease;
+    }
+
+    [data-theme="dark"] .animated-bg {
+      background: linear-gradient(135deg, #0a1128 0%, #0f1e41 50%, #1e3a8a 100%);
+    }
+
+    /* Bulles / blobs qui bougent */
+    .bg-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.5;
+      animation: blobFloat 20s ease-in-out infinite;
+    }
+
+    .bg-blob:nth-child(1) {
+      width: 400px;
+      height: 400px;
+      background: rgba(249, 115, 22, 0.4);
+      top: -10%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .bg-blob:nth-child(2) {
+      width: 500px;
+      height: 500px;
+      background: rgba(251, 191, 36, 0.35);
+      bottom: -15%;
+      right: -15%;
+      animation-delay: -5s;
+    }
+
+    .bg-blob:nth-child(3) {
+      width: 300px;
+      height: 300px;
+      background: rgba(234, 88, 12, 0.3);
+      top: 40%;
+      left: 40%;
+      animation-delay: -10s;
+    }
+
+    .bg-blob:nth-child(4) {
+      width: 350px;
+      height: 350px;
+      background: rgba(59, 130, 246, 0.25);
+      top: 20%;
+      right: 20%;
+      animation-delay: -15s;
+    }
+
+    [data-theme="dark"] .bg-blob:nth-child(1) {
+      background: rgba(249, 115, 22, 0.25);
+    }
+    [data-theme="dark"] .bg-blob:nth-child(2) {
+      background: rgba(59, 130, 246, 0.2);
+    }
+    [data-theme="dark"] .bg-blob:nth-child(3) {
+      background: rgba(30, 58, 138, 0.3);
+    }
+    [data-theme="dark"] .bg-blob:nth-child(4) {
+      background: rgba(251, 191, 36, 0.15);
+    }
+
+    @keyframes blobFloat {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      25% {
+        transform: translate(80px, -60px) scale(1.1);
+      }
+      50% {
+        transform: translate(-40px, 80px) scale(0.95);
+      }
+      75% {
+        transform: translate(60px, 40px) scale(1.05);
+      }
+    }
+
+    /* Vagues animées */
+    .bg-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 200%;
+      height: 200px;
+      background: radial-gradient(ellipse at center, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
+      animation: waveMove 15s linear infinite;
+    }
+
+    .bg-wave:nth-child(6) {
+      animation-duration: 20s;
+      animation-direction: reverse;
+      opacity: 0.6;
+      height: 250px;
+    }
+
+    .bg-wave:nth-child(7) {
+      animation-duration: 25s;
+      opacity: 0.4;
+      height: 300px;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+
+    /* Étoiles / points qui bougent */
+    .bg-particles {
+      position: absolute;
+      inset: 0;
       pointer-events: none;
     }
 
-    [data-theme="dark"] body::before {
+    .bg-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: 0.4;
+      animation: particleFloat 15s linear infinite;
+    }
+
+    [data-theme="dark"] .bg-particle {
+      background: #60a5fa;
+      opacity: 0.6;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+      }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% {
+        transform: translateY(-100px) translateX(100px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* Grille en mouvement (subtile) */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
       background-image:
-        radial-gradient(at 15% 10%, rgba(249, 115, 22, 0.15) 0px, transparent 50%),
-        radial-gradient(at 85% 20%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
-        radial-gradient(at 50% 90%, rgba(30, 58, 138, 0.18) 0px, transparent 50%);
+        linear-gradient(rgba(249, 115, 22, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(249, 115, 22, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 30s linear infinite;
+    }
+
+    [data-theme="dark"] .bg-grid {
+      background-image:
+        linear-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
     }
 
     /* ============================================
@@ -117,7 +273,6 @@
       font-weight: 900;
       color: var(--text-main);
       line-height: 1.1;
-      letter-spacing: -0.3px;
     }
 
     .nav-title span {
@@ -167,10 +322,7 @@
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
     }
 
-    .nav-search input::placeholder {
-      color: var(--text-muted);
-      font-weight: 500;
-    }
+    .nav-search input::placeholder { color: var(--text-muted); font-weight: 500; }
 
     .nav-search i {
       position: absolute;
@@ -178,7 +330,6 @@
       color: var(--text-muted);
       font-size: 0.9rem;
       pointer-events: none;
-      transition: color 0.2s;
     }
 
     .nav-search input:focus + i { color: var(--orange); }
@@ -316,6 +467,7 @@
       background-position: center;
       z-index: -2;
       animation: heroZoom 20s ease-in-out infinite alternate;
+      opacity: 0.85;
     }
 
     @keyframes heroZoom {
@@ -326,7 +478,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.88) 100%);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.5) 0%, rgba(15, 23, 42, 0.85) 100%);
       z-index: -1;
     }
 
@@ -452,9 +604,7 @@
       box-shadow: 0 15px 40px rgba(251, 191, 36, 0.65);
     }
 
-    .btn-explore i {
-      animation: bounceArrow 1.8s ease-in-out infinite;
-    }
+    .btn-explore i { animation: bounceArrow 1.8s ease-in-out infinite; }
 
     @keyframes bounceArrow {
       0%, 100% { transform: translateY(0); }
@@ -490,25 +640,6 @@
       position: relative;
       z-index: 10;
       padding: 0 20px;
-    }
-
-    .sections-slider-container::before,
-    .sections-slider-container::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 30px;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .sections-slider-container::before {
-      right: 20px;
-      background: linear-gradient(to left, var(--bg-color), transparent);
-    }
-    .sections-slider-container::after {
-      left: 20px;
-      background: linear-gradient(to right, var(--bg-color), transparent);
     }
 
     .sections-slider {
@@ -926,13 +1057,8 @@
       color: white;
     }
 
-    .ai-msg.bot .ai-msg-avatar {
-      background: linear-gradient(135deg, #f97316, #ea580c);
-    }
-
-    .ai-msg.user .ai-msg-avatar {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-    }
+    .ai-msg.bot .ai-msg-avatar { background: linear-gradient(135deg, #f97316, #ea580c); }
+    .ai-msg.user .ai-msg-avatar { background: linear-gradient(135deg, #3b82f6, #2563eb); }
 
     .ai-msg-content {
       padding: 10px 14px;
@@ -1078,15 +1204,16 @@
       border-top: 1px solid var(--border-color);
       padding: 30px 20px 20px;
       margin-top: 40px;
+      position: relative;
+      z-index: 10;
     }
 
     .footer-content {
       max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
       text-align: center;
+      display: grid;
+      gap: 20px;
     }
 
     .footer-links {
@@ -1134,30 +1261,15 @@
       box-shadow: 0 6px 18px rgba(249, 115, 22, 0.4);
     }
 
-    .back-to-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .back-to-top:hover {
-      transform: translateY(-3px) scale(1.1);
-    }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+    .back-to-top:hover { transform: translateY(-3px) scale(1.1); }
 
     /* ============================================
        RESPONSIVE
        ============================================ */
     @media (max-width: 768px) {
-      .top-navbar {
-        flex-wrap: wrap;
-        padding: 8px 10px;
-        gap: 8px;
-        border-radius: 16px;
-      }
-      .nav-search {
-        order: 3;
-        flex-basis: 100%;
-        max-width: 100%;
-      }
+      .top-navbar { flex-wrap: wrap; padding: 8px 10px; gap: 8px; border-radius: 16px; }
+      .nav-search { order: 3; flex-basis: 100%; max-width: 100%; }
       .nav-title { font-size: 0.85rem; }
       .nav-subtitle { font-size: 0.6rem; }
       .nav-logo { height: 34px; }
@@ -1166,13 +1278,11 @@
       .hero-title { font-size: 2rem; }
       .cards-grid { grid-template-columns: 1fr; gap: 18px; padding: 0 15px; }
       .card-img-wrap { height: 190px; }
-      #aiChatWindow {
-        width: calc(100vw - 24px);
-        right: 12px;
-        bottom: 110px;
-        height: calc(100vh - 140px);
-      }
+      #aiChatWindow { width: calc(100vw - 24px); right: 12px; bottom: 110px; height: calc(100vh - 140px); }
       .mascot-kangaroo { width: 62px; height: 80px; }
+      .bg-blob { filter: blur(40px); }
+      .bg-blob:nth-child(1), .bg-blob:nth-child(2) { width: 250px; height: 250px; }
+      .bg-blob:nth-child(3), .bg-blob:nth-child(4) { width: 200px; height: 200px; }
     }
 
     @media (max-width: 480px) {
@@ -1184,6 +1294,20 @@
   </style>
 </head>
 <body>
+
+  <!-- ==========================================
+       🌊 ARRIÈRE-PLAN ANIMÉ
+       ========================================== -->
+  <div class="animated-bg">
+    <div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+    <div class="bg-wave"></div>
+    <div class="bg-wave"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-particles" id="bgParticles"></div>
+  </div>
 
   <!-- ==========================================
        NAVBAR
@@ -1207,7 +1331,6 @@
     </button>
   </nav>
 
-  <!-- Menu dropdown -->
   <div class="nav-dropdown" id="navDropdown">
     <div class="dropdown-section">
       <div class="dropdown-label">🌐 <span data-i18n="menu_lang">اللغة</span></div>
@@ -1224,7 +1347,7 @@
         <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
           <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
         </button>
-        <button class="dropdown-btn" onclick="toggleSound()" id="soundBtn">
+        <button class="dropdown-btn" onclick="toggleSound()" id="soundBtn" data-sound-toggle>
           <i class="fa-solid fa-volume-high"></i> <span data-i18n="menu_sound">الصوت</span>
         </button>
       </div>
@@ -1463,9 +1586,28 @@
        SCRIPT
        ========================================== -->
   <script>
-    /* ============================================================
-       1. DARK MODE
-       ============================================================ */
+    // ============================================================
+    // 1. GÉNÉRATION DES PARTICULES ANIMÉES
+    // ============================================================
+    function createBgParticles() {
+      const container = document.getElementById('bgParticles');
+      if (!container) return;
+      const count = window.innerWidth < 768 ? 15 : 30;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'bg-particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 15 + 's';
+        p.style.animationDuration = (10 + Math.random() * 15) + 's';
+        p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+        container.appendChild(p);
+      }
+    }
+    createBgParticles();
+
+    // ============================================================
+    // 2. DARK MODE
+    // ============================================================
     const html = document.documentElement;
     if (localStorage.getItem('theme') === 'dark') {
       html.setAttribute('data-theme', 'dark');
@@ -1480,7 +1622,7 @@
         localStorage.setItem('theme', 'dark');
       }
       updateThemeBtn();
-      playScreenClick();
+      playSound('click');
     }
 
     function updateThemeBtn() {
@@ -1492,9 +1634,9 @@
         : '<i class="fa-solid fa-moon"></i> <span>ليلي</span>';
     }
 
-    /* ============================================================
-       2. SONS — SYSTÈME COMPLET
-       ============================================================ */
+    // ============================================================
+    // 3. SYSTÈME SONORE
+    // ============================================================
     let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
     let audioCtx = null;
     let ambientAudio = null;
@@ -1505,110 +1647,71 @@
       return audioCtx;
     }
 
-    function playSound(type = 'click') {
+    function playTone(freq, duration, wave, vol, freqEnd) {
       if (!soundEnabled) return;
       try {
         const ctx = getAudioContext();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain); gain.connect(ctx.destination);
-        const sounds = {
-          click: { freq: 800, duration: 0.08, wave: 'sine', vol: 0.15 },
-          kangaroo: { freq: 700, duration: 0.18, wave: 'triangle', vol: 0.22 }
-        };
-        const s = sounds[type] || sounds.click;
-        osc.type = s.wave;
-        osc.frequency.setValueAtTime(s.freq, ctx.currentTime);
+        osc.type = wave || 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        if (freqEnd) osc.frequency.exponentialRampToValueAtTime(freqEnd, ctx.currentTime + duration);
         gain.gain.setValueAtTime(0, ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(s.vol, ctx.currentTime + 0.01);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + s.duration);
+        gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
         osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + s.duration);
-      } catch (err) {}
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) {}
     }
 
-    /* Bruit de clic d'écran (plus marqué) */
-    function playScreenClick() {
-      if (!soundEnabled) return;
-      try {
-        const ctx = getAudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(1200, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.06);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.08);
-      } catch (err) {}
+    function playSound(type = 'click') {
+      const sounds = {
+        click: () => playTone(800, 0.06, 'square', 0.12, 400),
+        hover: () => playTone(1200, 0.03, 'sine', 0.05),
+        open: () => playTone(600, 0.15, 'sine', 0.18, 1400),
+        close: () => playTone(1400, 0.15, 'sine', 0.15, 500),
+        success: () => playTone(1400, 0.2, 'sine', 0.2),
+        kangaroo: () => playTone(700, 0.18, 'triangle', 0.2, 1800)
+      };
+      (sounds[type] || sounds.click)();
     }
 
-    /* Son d'ouverture (whoosh) */
-    function playOpenSound() {
-      if (!soundEnabled) return;
-      try {
-        const ctx = getAudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(600, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.001, ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.2);
-      } catch (err) {}
-    }
-
-    /* Son de fermeture */
-    function playCloseSound() {
-      if (!soundEnabled) return;
-      try {
-        const ctx = getAudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1400, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(500, ctx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.15);
-      } catch (err) {}
-    }
-
-    /* Bruit ambiant doux (arrière-plan) */
-    function startAmbientSound() {
+    function startAmbient() {
       if (!soundEnabled || ambientAudio) return;
       try {
         const ctx = getAudioContext();
         const bufferSize = 2 * ctx.sampleRate;
         const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
         const output = noiseBuffer.getChannelData(0);
+        let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
         for (let i = 0; i < bufferSize; i++) {
-          output[i] = (Math.random() * 2 - 1) * 0.03;
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99886*b0 + white*0.0555179;
+          b1 = 0.99332*b1 + white*0.0750759;
+          b2 = 0.96900*b2 + white*0.1538520;
+          b3 = 0.86650*b3 + white*0.3104856;
+          b4 = 0.55000*b4 + white*0.5329522;
+          b5 = -0.7616*b5 - white*0.0168980;
+          output[i] = (b0+b1+b2+b3+b4+b5+b6 + white*0.5362) * 0.03;
+          b6 = white*0.115926;
         }
         ambientAudio = ctx.createBufferSource();
         ambientAudio.buffer = noiseBuffer;
         ambientAudio.loop = true;
         const filter = ctx.createBiquadFilter();
         filter.type = 'lowpass';
-        filter.frequency.value = 800;
+        filter.frequency.value = 600;
         const gain = ctx.createGain();
-        gain.gain.value = 0.04;
+        gain.gain.value = 0.035;
         ambientAudio.connect(filter);
         filter.connect(gain);
         gain.connect(ctx.destination);
         ambientAudio.start();
-      } catch (err) {}
+      } catch (e) {}
     }
 
-    function stopAmbientSound() {
+    function stopAmbient() {
       if (ambientAudio) {
         try { ambientAudio.stop(); } catch (e) {}
         ambientAudio = null;
@@ -1619,12 +1722,8 @@
       soundEnabled = !soundEnabled;
       localStorage.setItem('soundEnabled', soundEnabled);
       updateSoundBtn();
-      if (soundEnabled) {
-        playSound('click');
-        startAmbientSound();
-      } else {
-        stopAmbientSound();
-      }
+      if (soundEnabled) { playSound('success'); startAmbient(); }
+      else { stopAmbient(); }
     }
 
     function updateSoundBtn() {
@@ -1635,24 +1734,16 @@
         : '<i class="fa-solid fa-volume-xmark"></i> <span>صامت</span>';
     }
 
-    /* Démarrer l'ambiance au 1er clic utilisateur */
-    document.addEventListener('click', function startAmbientOnce() {
-      if (soundEnabled) {
-        startAmbientSound();
-        document.removeEventListener('click', startAmbientOnce);
-      }
-    });
-
-    /* ============================================================
-       3. MENU
-       ============================================================ */
+    // ============================================================
+    // 4. MENU
+    // ============================================================
     function toggleMenu() {
       const dropdown = document.getElementById('navDropdown');
       const btn = document.getElementById('menuBtn');
       const isOpen = dropdown.classList.toggle('open');
       btn.classList.toggle('active');
-      if (isOpen) playOpenSound();
-      else playCloseSound();
+      if (isOpen) playSound('open');
+      else playSound('close');
     }
 
     document.addEventListener('click', (e) => {
@@ -1664,9 +1755,9 @@
       }
     });
 
-    /* ============================================================
-       4. TRADUCTIONS
-       ============================================================ */
+    // ============================================================
+    // 5. TRADUCTIONS
+    // ============================================================
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
     window.INDEX_TRANSLATIONS = {
@@ -1674,16 +1765,11 @@
         page_title: "دليل الطالب - ENSTP",
         nav_subtitle: "دليل الطالب",
         search_placeholder: "ابحث عن قسم...",
-        menu_lang: "اللغة",
-        menu_settings: "الإعدادات",
-        menu_dark: "ليلي",
-        menu_sound: "الصوت",
+        menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي", menu_sound: "الصوت",
         home_badge: "الدليل الشامل للطلبة",
-        home_title_1: "المدرسة العليا",
-        home_title_2: "للأشغال العمومية",
+        home_title_1: "المدرسة العليا", home_title_2: "للأشغال العمومية",
         home_desc: "منصة رقمية متكاملة تجمع كل ما يحتاجه طالب ENSTP: التوجيه، التواصل، الخدمات اليومية، النقل، الإقامة الجامعية، السياحة، التسوق، المطاعم...",
-        home_start: "ابدأ",
-        mascot_hello: "مرحبا! 👋",
+        home_start: "ابدأ", mascot_hello: "مرحبا! 👋",
         sec_school: "مدرستي", sec_school_desc: "الأساتذة، المباني، والتاريخ",
         sec_admin: "إدارتي", sec_admin_desc: "الوثائق، الشهادات، والخدمات",
         sec_success: "نجاحي", sec_success_desc: "الدروس، الامتحانات، والتوقيت",
@@ -1696,29 +1782,20 @@
         sec_shopping: "التسوق", sec_shopping_desc: "المحلات، الأسعار، والعروض",
         sec_marketplace: "سوق الطالب", sec_marketplace_desc: "بيع وشراء الكتب والأدوات",
         sec_qr: "QR Codes", sec_qr_desc: "رموز سريعة للوصول المباشر",
-        nav_home: "الرئيسية",
-        footer_rights: "جميع الحقوق محفوظة",
-        ai_assistant_name: "المساعد الذكي",
-        ai_assistant_status: "متصل الآن · يرد فوراً",
+        nav_home: "الرئيسية", footer_rights: "جميع الحقوق محفوظة",
+        ai_assistant_name: "المساعد الذكي", ai_assistant_status: "متصل الآن · يرد فوراً",
         ai_welcome: "مرحباً! 👋 أنا المساعد الذكي لـ ENSTP. اسألني عن أي شيء: الدروس، الجدول، النصائح الدراسية، الرياضيات، الفيزياء...",
-        ai_input_placeholder: "اكتب سؤالك...",
-        ai_error: "عذراً، حدث خطأ. حاول مرة أخرى.",
+        ai_input_placeholder: "اكتب سؤالك...", ai_error: "عذراً، حدث خطأ. حاول مرة أخرى.",
         sugg_1: "جدول التوقيت", sugg_2: "المطاعم", sugg_3: "أرقام الطوارئ", sugg_4: "الإقامة"
       },
       fr: {
-        page_title: "Guide Étudiant - ENSTP",
-        nav_subtitle: "Guide étudiant",
+        page_title: "Guide Étudiant - ENSTP", nav_subtitle: "Guide étudiant",
         search_placeholder: "Rechercher une section...",
-        menu_lang: "Langue",
-        menu_settings: "Paramètres",
-        menu_dark: "Sombre",
-        menu_sound: "Son",
+        menu_lang: "Langue", menu_settings: "Paramètres", menu_dark: "Sombre", menu_sound: "Son",
         home_badge: "Guide complet des étudiants",
-        home_title_1: "École Nationale Supérieure",
-        home_title_2: "des Travaux Publics",
+        home_title_1: "École Nationale Supérieure", home_title_2: "des Travaux Publics",
         home_desc: "Une plateforme numérique complète qui rassemble tout ce dont un étudiant ENSTP a besoin : orientation, communication, services quotidiens, transport, résidence, tourisme, shopping, restaurants...",
-        home_start: "Commencer",
-        mascot_hello: "Bonjour ! 👋",
+        home_start: "Commencer", mascot_hello: "Bonjour ! 👋",
         sec_school: "Mon École", sec_school_desc: "Enseignants, bâtiments et histoire",
         sec_admin: "Mon Administration", sec_admin_desc: "Documents, certificats et services",
         sec_success: "Ma Réussite", sec_success_desc: "Cours, examens et emploi du temps",
@@ -1731,29 +1808,20 @@
         sec_shopping: "Shopping", sec_shopping_desc: "Commerces, prix et offres",
         sec_marketplace: "Marché Étudiant", sec_marketplace_desc: "Achat et vente de livres et outils",
         sec_qr: "QR Codes", sec_qr_desc: "Accès rapide par codes",
-        nav_home: "Accueil",
-        footer_rights: "Tous droits réservés",
-        ai_assistant_name: "Assistant Intelligent",
-        ai_assistant_status: "Connecté · Répond instantanément",
+        nav_home: "Accueil", footer_rights: "Tous droits réservés",
+        ai_assistant_name: "Assistant Intelligent", ai_assistant_status: "Connecté · Répond instantanément",
         ai_welcome: "Bonjour ! 👋 Je suis l'assistant intelligent de l'ENSTP. Posez-moi des questions : cours, emploi du temps, conseils d'études, maths, physique...",
-        ai_input_placeholder: "Écrivez votre question...",
-        ai_error: "Désolé, une erreur. Réessayez.",
+        ai_input_placeholder: "Écrivez votre question...", ai_error: "Désolé, une erreur. Réessayez.",
         sugg_1: "Emploi du temps", sugg_2: "Restaurants", sugg_3: "Urgences", sugg_4: "Résidence"
       },
       en: {
-        page_title: "Student Guide - ENSTP",
-        nav_subtitle: "Student guide",
+        page_title: "Student Guide - ENSTP", nav_subtitle: "Student guide",
         search_placeholder: "Search a section...",
-        menu_lang: "Language",
-        menu_settings: "Settings",
-        menu_dark: "Dark",
-        menu_sound: "Sound",
+        menu_lang: "Language", menu_settings: "Settings", menu_dark: "Dark", menu_sound: "Sound",
         home_badge: "Complete Student Guide",
-        home_title_1: "National Higher School",
-        home_title_2: "of Public Works",
+        home_title_1: "National Higher School", home_title_2: "of Public Works",
         home_desc: "A complete digital platform gathering everything an ENSTP student needs: guidance, communication, daily services, transport, residence, tourism, shopping, restaurants...",
-        home_start: "Start",
-        mascot_hello: "Hello! 👋",
+        home_start: "Start", mascot_hello: "Hello! 👋",
         sec_school: "My School", sec_school_desc: "Teachers, buildings and history",
         sec_admin: "My Administration", sec_admin_desc: "Documents, certificates and services",
         sec_success: "My Success", sec_success_desc: "Courses, exams and schedule",
@@ -1766,13 +1834,10 @@
         sec_shopping: "Shopping", sec_shopping_desc: "Shops, prices and offers",
         sec_marketplace: "Student Market", sec_marketplace_desc: "Buy and sell books and tools",
         sec_qr: "QR Codes", sec_qr_desc: "Quick access codes",
-        nav_home: "Home",
-        footer_rights: "All rights reserved",
-        ai_assistant_name: "Smart Assistant",
-        ai_assistant_status: "Online · Replies instantly",
+        nav_home: "Home", footer_rights: "All rights reserved",
+        ai_assistant_name: "Smart Assistant", ai_assistant_status: "Online · Replies instantly",
         ai_welcome: "Hello! 👋 I'm the ENSTP smart assistant. Ask me anything: courses, schedule, study tips, math, physics...",
-        ai_input_placeholder: "Type your question...",
-        ai_error: "Sorry, an error. Please retry.",
+        ai_input_placeholder: "Type your question...", ai_error: "Sorry, an error. Please retry.",
         sugg_1: "Schedule", sugg_2: "Restaurants", sugg_3: "Emergency", sugg_4: "Residence"
       }
     };
@@ -1813,16 +1878,15 @@
       const activeBtn = document.getElementById('btn-' + lang);
       if (activeBtn) activeBtn.classList.add('active');
       applyTranslation(lang);
-      playScreenClick();
+      playSound('click');
     }
 
-    /* ============================================================
-       5. RECHERCHE
-       ============================================================ */
+    // ============================================================
+    // 6. RECHERCHE INSTANTANÉE
+    // ============================================================
     document.getElementById('searchInput').addEventListener('input', (e) => {
       const query = e.target.value.trim().toLowerCase();
-      const allCards = document.querySelectorAll('.card');
-      allCards.forEach(card => {
+      document.querySelectorAll('.card').forEach(card => {
         const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
         const sub = card.querySelector('.card-sub')?.textContent.toLowerCase() || '';
         if (!query || title.includes(query) || sub.includes(query)) {
@@ -1834,9 +1898,9 @@
       });
     });
 
-    /* ============================================================
-       6. ANIMATION CARTES
-       ============================================================ */
+    // ============================================================
+    // 7. ANIMATION CARTES
+    // ============================================================
     const cards = document.querySelectorAll('.card');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1849,30 +1913,29 @@
     }, { threshold: 0.1 });
     cards.forEach(card => observer.observe(card));
 
-    // Sons sur les cartes
+    // Sons sur les cartes / pills
     document.querySelectorAll('.card, .section-pill').forEach(el => {
-      el.addEventListener('mouseenter', () => playScreenClick());
-      el.addEventListener('click', () => playOpenSound());
+      el.addEventListener('mouseenter', () => playSound('hover'));
+      el.addEventListener('click', () => playSound('open'));
     });
 
-    /* ============================================================
-       7. BACK TO TOP
-       ============================================================ */
+    // ============================================================
+    // 8. BACK TO TOP
+    // ============================================================
     const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
       backToTop.classList.toggle('visible', window.scrollY > 300);
     });
 
-    /* ============================================================
-       8. KANGOUROU → AI
-       ============================================================ */
+    // ============================================================
+    // 9. KANGOUROU → AI
+    // ============================================================
     const mascotContainer = document.getElementById('mascotContainer');
     const mascotKangaroo = document.getElementById('mascotKangaroo');
     const mascotBubble = document.getElementById('mascotBubble');
 
     mascotContainer.addEventListener('click', () => {
-      playScreenClick();
-      playOpenSound();
+      playSound('click');
       openAIChat();
     });
 
@@ -1885,9 +1948,9 @@
       mascotBubble.classList.remove('visible');
     });
 
-    /* ============================================================
-       9. CHAT AI
-       ============================================================ */
+    // ============================================================
+    // 10. CHAT AI
+    // ============================================================
     const aiChatWindow = document.getElementById('aiChatWindow');
     const aiChatBody = document.getElementById('aiChatBody');
     const aiChatInput = document.getElementById('aiChatInput');
@@ -1900,11 +1963,12 @@
       setTimeout(() => mascotKangaroo.classList.remove('jump'), 800);
       mascotBubble.classList.remove('visible');
       aiChatWindow.classList.add('open');
+      playSound('open');
       setTimeout(() => aiChatInput.focus(), 400);
     }
 
     function closeAIChat() {
-      playCloseSound();
+      playSound('close');
       aiChatWindow.classList.remove('open');
     }
 
@@ -1943,19 +2007,19 @@
       sendAIMessage();
     }
 
-    /* ============================================================
-       10. KNOWLEDGE BASE
-       ============================================================ */
+    // ============================================================
+    // 11. KNOWLEDGE BASE
+    // ============================================================
     window.ENSTP_KNOWLEDGE = {
-      schedule: "جدول التوقيت متاح في صفحة schedule.html أو من خلال قسم نجاحي (ma-reussite.html). تحتاج إلى تحديد القسم (1CP, 2CP, DIB, DMS) والسنة والفوج.",
-      drives: "11 روابط Google Drive للدروس والملخصات موجودة في صفحة نجاحي (ma-reussite.html).",
+      schedule: "جدول التوقيت متاح في صفحة schedule.html أو من خلال قسم نجاحي (ma-reussite.html).",
+      drives: "11 روابط Google Drive للدروس والملخصات موجودة في صفحة نجاحي.",
       labs: "13 تجربة تفاعلية في المختبر الافتراضي في ma-reussite.html.",
       emergency: "أرقام الطوارئ: الحماية المدنية (14)، الشرطة (17)، أمن المدرسة (1548)، مستشفى مصطفى (021 71 00 00).",
-      restaurants: "أفضل المطاعم: Mega Pizza, On Est La, American Berger, KGB, Cheese Kou, So Pizza. المقاهي: Nafess Café, Brioch, Provence, Green Caffee, Celtic Coffee. في resto.html.",
+      restaurants: "أفضل المطاعم: Mega Pizza, On Est La, American Berger, KGB, Cheese Kou, So Pizza. في resto.html.",
       pharmacies: "صيدليات: Attoui, Djarar, Hassani, Hadibi, Torkiche, Harket, Baziz, Chikhi. في shopping.html.",
-      residence: "3 إقامات: سعيد حمدين (600 سرير), امحمد يوسفي (500 سرير), قاريدي (1200 سرير). في residence.html.",
-      transport: "حافلات، مترو (50 دج), ترامواي (40 دج), eTWASSEL (150 دج/سنة), VTC. في transport.html.",
-      school_info: "ENSTP تأسست 1925 في القبة، الجزائر. تكوين في الهندسة المدنية والأشغال العمومية.",
+      residence: "3 إقامات: سعيد حمدين، امحمد يوسفي، قاريدي. في residence.html.",
+      transport: "حافلات، مترو (50 دج), ترامواي (40 دج), eTWASSEL. في transport.html.",
+      school_info: "ENSTP تأسست 1925 في القبة، الجزائر. تكوين في الهندسة المدنية.",
       contact: "m.tebani@enstp.edu.dz (تحضيري), i.makoudi@enstp.edu.dz (DIB), m.bourebia83@gmail.com (DMS).",
       sport: "9 أطباء + 4 عيادات أسنان + 7 صالات رياضة. في sport.html.",
       forum: "منتدى الطلبة في forum.html.",
@@ -1988,6 +2052,7 @@
 
       aiSuggestions.style.display = 'none';
       addMessage(msg, 'user');
+      playSound('click');
       aiChatInput.value = '';
       aiChatInput.style.height = 'auto';
       aiSendBtn.disabled = true;
@@ -1996,6 +2061,7 @@
       if (knowledgeReply) {
         setTimeout(() => {
           addMessage(knowledgeReply, 'bot');
+          playSound('success');
           aiSendBtn.disabled = false;
           aiChatInput.focus();
         }, 300);
@@ -2031,9 +2097,11 @@
 
         removeTyping();
         addMessage(reply, 'bot');
+        playSound('success');
       } catch (error) {
         removeTyping();
         addMessage(t('ai_error'), 'bot');
+        playSound('error');
       } finally {
         aiSendBtn.disabled = false;
         aiChatInput.focus();
@@ -2052,9 +2120,17 @@
       this.style.height = Math.min(this.scrollHeight, 80) + 'px';
     });
 
-    /* ============================================================
-       11. INIT
-       ============================================================ */
+    // ============================================================
+    // 12. DÉMARRER L'AMBIANCE AU 1ER CLIC
+    // ============================================================
+    document.addEventListener('click', function startAmbientOnce() {
+      if (soundEnabled) startAmbient();
+      document.removeEventListener('click', startAmbientOnce);
+    });
+
+    // ============================================================
+    // 13. INIT
+    // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
       document.querySelectorAll('.dropdown-btn').forEach(btn => btn.classList.remove('active'));
