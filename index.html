@@ -25,16 +25,17 @@
       --shadow-lg: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
     }
 
+    /* MODE SOMBRE BLEU FONCÉ */
     [data-theme="dark"] {
-      --bg-color: #1a1410;
+      --bg-color: #0a1128;
       --text-main: #f8fafc;
-      --text-muted: #a8a29e;
-      --card-bg: rgba(45, 27, 14, 0.9);
-      --nav-bg: rgba(26, 20, 16, 0.92);
-      --border-color: rgba(58, 42, 26, 0.8);
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.4);
-      --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.5);
+      --text-muted: #94a3b8;
+      --card-bg: rgba(15, 30, 65, 0.9);
+      --nav-bg: rgba(10, 17, 40, 0.92);
+      --border-color: rgba(30, 58, 138, 0.6);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
+      --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.6);
     }
 
     * { box-sizing: border-box; }
@@ -51,7 +52,6 @@
       position: relative;
     }
 
-    /* Background mesh subtil */
     body::before {
       content: "";
       position: fixed;
@@ -66,12 +66,13 @@
 
     [data-theme="dark"] body::before {
       background-image:
-        radial-gradient(at 15% 10%, rgba(249, 115, 22, 0.12) 0px, transparent 50%),
-        radial-gradient(at 85% 20%, rgba(251, 191, 36, 0.08) 0px, transparent 50%);
+        radial-gradient(at 15% 10%, rgba(249, 115, 22, 0.15) 0px, transparent 50%),
+        radial-gradient(at 85% 20%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 90%, rgba(30, 58, 138, 0.18) 0px, transparent 50%);
     }
 
     /* ============================================
-       NAVBAR MODERNE
+       NAVBAR
        ============================================ */
     .top-navbar {
       position: fixed;
@@ -139,7 +140,6 @@
       margin-top: 1px;
     }
 
-    /* Barre de recherche longue */
     .nav-search {
       flex: 1;
       max-width: 420px;
@@ -165,7 +165,6 @@
     .nav-search input:focus {
       border-color: var(--orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
-      background: var(--card-bg);
     }
 
     .nav-search input::placeholder {
@@ -184,7 +183,6 @@
 
     .nav-search input:focus + i { color: var(--orange); }
 
-    /* Bouton menu */
     .nav-menu-btn {
       width: 42px;
       height: 42px;
@@ -215,7 +213,6 @@
       border-color: var(--orange);
     }
 
-    /* Dropdown menu */
     .nav-dropdown {
       position: fixed;
       top: 72px;
@@ -331,6 +328,10 @@
       inset: 0;
       background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.88) 100%);
       z-index: -1;
+    }
+
+    [data-theme="dark"] .hero-overlay {
+      background: linear-gradient(180deg, rgba(10, 17, 40, 0.6) 0%, rgba(10, 17, 40, 0.95) 100%);
     }
 
     .hero-logo {
@@ -460,7 +461,6 @@
       50% { transform: translateY(4px); }
     }
 
-    /* Scroll indicator */
     .scroll-indicator {
       position: absolute;
       bottom: 20px;
@@ -665,11 +665,11 @@
     }
 
     [data-theme="dark"] .card-img-wrap {
-      background: linear-gradient(135deg, #2d1b0e, #3a2a1a);
+      background: linear-gradient(135deg, #1e3a8a, #0f1e41);
     }
 
     /* ============================================
-       MASCOTTE KANGOUROU AMÉLIORÉE
+       KANGOUROU
        ============================================ */
     .mascot-container {
       position: fixed;
@@ -1078,7 +1078,6 @@
       border-top: 1px solid var(--border-color);
       padding: 30px 20px 20px;
       margin-top: 40px;
-      position: relative;
     }
 
     .footer-content {
@@ -1113,7 +1112,6 @@
       font-weight: 600;
     }
 
-    /* Back to top button */
     .back-to-top {
       position: fixed;
       bottom: 130px;
@@ -1188,7 +1186,7 @@
 <body>
 
   <!-- ==========================================
-       NAVBAR MODERNE
+       NAVBAR
        ========================================== -->
   <nav class="top-navbar">
     <div class="nav-brand">
@@ -1395,51 +1393,36 @@
     </div>
   </footer>
 
-  <!-- Back to top -->
   <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">
     <i class="fa-solid fa-chevron-up"></i>
   </button>
 
   <!-- ==========================================
-       MASCOTTE KANGOUROU AMÉLIORÉE
+       KANGOUROU
        ========================================== -->
   <div class="mascot-container" id="mascotContainer" title="المساعد الذكي">
     <div class="mascot-bubble" id="mascotBubble" data-i18n="mascot_hello">مرحبا! 👋</div>
     <svg class="mascot-kangaroo" id="mascotKangaroo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
-      <!-- Queue -->
       <path d="M20 100 Q8 92 10 108 Q14 122 26 114 Z" fill="#c2410c" stroke="#9a3412" stroke-width="1.5"/>
       <path d="M22 105 Q16 102 18 112 Q20 118 26 112 Z" fill="#ea580c"/>
-      <!-- Corps -->
       <ellipse cx="52" cy="82" rx="28" ry="26" fill="#f97316" stroke="#c2410c" stroke-width="1.5"/>
-      <!-- Ventre -->
       <ellipse cx="55" cy="88" rx="16" ry="16" fill="#fef3c7"/>
-      <!-- Patte arrière -->
       <ellipse cx="72" cy="112" rx="14" ry="6" fill="#c2410c"/>
       <ellipse cx="72" cy="112" rx="11" ry="4" fill="#ea580c"/>
-      <!-- Patte avant -->
       <ellipse cx="40" cy="102" rx="9" ry="4.5" fill="#c2410c"/>
-      <!-- Tête -->
       <ellipse cx="68" cy="44" rx="20" ry="18" fill="#f97316" stroke="#c2410c" stroke-width="1.5"/>
-      <!-- Oreille gauche -->
       <ellipse cx="59" cy="20" rx="6" ry="14" fill="#f97316" stroke="#c2410c" stroke-width="1.5" transform="rotate(-15 59 20)"/>
       <ellipse cx="59" cy="21" rx="3" ry="9" fill="#fed7aa" transform="rotate(-15 59 20)"/>
-      <!-- Oreille droite -->
       <ellipse cx="78" cy="20" rx="6" ry="14" fill="#f97316" stroke="#c2410c" stroke-width="1.5" transform="rotate(15 78 20)"/>
       <ellipse cx="78" cy="21" rx="3" ry="9" fill="#fed7aa" transform="rotate(15 78 20)"/>
-      <!-- Museau -->
       <ellipse cx="75" cy="52" rx="11" ry="9" fill="#fed7aa"/>
-      <!-- Nez -->
       <ellipse cx="82" cy="49" rx="2.5" ry="2" fill="#7c2d12"/>
-      <!-- Yeux -->
-      <circle cx="66" cy="38" r="3.5" fill="#1a1410" id="kangarooEye1"/>
+      <circle cx="66" cy="38" r="3.5" fill="#1a1410"/>
       <circle cx="67" cy="37" r="1.2" fill="#ffffff"/>
-      <circle cx="76" cy="38" r="3.5" fill="#1a1410" id="kangarooEye2"/>
+      <circle cx="76" cy="38" r="3.5" fill="#1a1410"/>
       <circle cx="77" cy="37" r="1.2" fill="#ffffff"/>
-      <!-- Sourire -->
       <path d="M70 55 Q76 60 82 55" stroke="#7c2d12" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <!-- Bras avant -->
       <ellipse cx="46" cy="68" rx="7" ry="4" fill="#ea580c" transform="rotate(-30 46 68)"/>
-      <!-- Petit point brillant sur la tête -->
       <circle cx="62" cy="32" r="1.5" fill="rgba(255,255,255,0.7)"/>
     </svg>
   </div>
@@ -1486,7 +1469,6 @@
     const html = document.documentElement;
     if (localStorage.getItem('theme') === 'dark') {
       html.setAttribute('data-theme', 'dark');
-      updateThemeBtn();
     }
 
     function toggleDarkMode() {
@@ -1498,6 +1480,7 @@
         localStorage.setItem('theme', 'dark');
       }
       updateThemeBtn();
+      playScreenClick();
     }
 
     function updateThemeBtn() {
@@ -1510,10 +1493,11 @@
     }
 
     /* ============================================================
-       2. SON
+       2. SONS — SYSTÈME COMPLET
        ============================================================ */
     let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
     let audioCtx = null;
+    let ambientAudio = null;
 
     function getAudioContext() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1543,11 +1527,104 @@
       } catch (err) {}
     }
 
+    /* Bruit de clic d'écran (plus marqué) */
+    function playScreenClick() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(1200, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.06);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.08);
+      } catch (err) {}
+    }
+
+    /* Son d'ouverture (whoosh) */
+    function playOpenSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(600, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.001, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.2);
+      } catch (err) {}
+    }
+
+    /* Son de fermeture */
+    function playCloseSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1400, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(500, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.15);
+      } catch (err) {}
+    }
+
+    /* Bruit ambiant doux (arrière-plan) */
+    function startAmbientSound() {
+      if (!soundEnabled || ambientAudio) return;
+      try {
+        const ctx = getAudioContext();
+        const bufferSize = 2 * ctx.sampleRate;
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * 0.03;
+        }
+        ambientAudio = ctx.createBufferSource();
+        ambientAudio.buffer = noiseBuffer;
+        ambientAudio.loop = true;
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 800;
+        const gain = ctx.createGain();
+        gain.gain.value = 0.04;
+        ambientAudio.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+        ambientAudio.start();
+      } catch (err) {}
+    }
+
+    function stopAmbientSound() {
+      if (ambientAudio) {
+        try { ambientAudio.stop(); } catch (e) {}
+        ambientAudio = null;
+      }
+    }
+
     function toggleSound() {
       soundEnabled = !soundEnabled;
       localStorage.setItem('soundEnabled', soundEnabled);
       updateSoundBtn();
-      if (soundEnabled) playSound('click');
+      if (soundEnabled) {
+        playSound('click');
+        startAmbientSound();
+      } else {
+        stopAmbientSound();
+      }
     }
 
     function updateSoundBtn() {
@@ -1557,7 +1634,14 @@
         ? '<i class="fa-solid fa-volume-high"></i> <span>الصوت</span>'
         : '<i class="fa-solid fa-volume-xmark"></i> <span>صامت</span>';
     }
-    updateSoundBtn();
+
+    /* Démarrer l'ambiance au 1er clic utilisateur */
+    document.addEventListener('click', function startAmbientOnce() {
+      if (soundEnabled) {
+        startAmbientSound();
+        document.removeEventListener('click', startAmbientOnce);
+      }
+    });
 
     /* ============================================================
        3. MENU
@@ -1565,9 +1649,10 @@
     function toggleMenu() {
       const dropdown = document.getElementById('navDropdown');
       const btn = document.getElementById('menuBtn');
-      dropdown.classList.toggle('open');
+      const isOpen = dropdown.classList.toggle('open');
       btn.classList.toggle('active');
-      playSound('click');
+      if (isOpen) playOpenSound();
+      else playCloseSound();
     }
 
     document.addEventListener('click', (e) => {
@@ -1728,20 +1813,18 @@
       const activeBtn = document.getElementById('btn-' + lang);
       if (activeBtn) activeBtn.classList.add('active');
       applyTranslation(lang);
-      playSound('click');
+      playScreenClick();
     }
 
     /* ============================================================
-       5. RECHERCHE INSTANTANÉE
+       5. RECHERCHE
        ============================================================ */
     document.getElementById('searchInput').addEventListener('input', (e) => {
       const query = e.target.value.trim().toLowerCase();
       const allCards = document.querySelectorAll('.card');
-      
       allCards.forEach(card => {
         const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
         const sub = card.querySelector('.card-sub')?.textContent.toLowerCase() || '';
-        
         if (!query || title.includes(query) || sub.includes(query)) {
           card.style.display = 'flex';
           card.classList.add('visible');
@@ -1766,6 +1849,12 @@
     }, { threshold: 0.1 });
     cards.forEach(card => observer.observe(card));
 
+    // Sons sur les cartes
+    document.querySelectorAll('.card, .section-pill').forEach(el => {
+      el.addEventListener('mouseenter', () => playScreenClick());
+      el.addEventListener('click', () => playOpenSound());
+    });
+
     /* ============================================================
        7. BACK TO TOP
        ============================================================ */
@@ -1781,7 +1870,11 @@
     const mascotKangaroo = document.getElementById('mascotKangaroo');
     const mascotBubble = document.getElementById('mascotBubble');
 
-    mascotContainer.addEventListener('click', () => openAIChat());
+    mascotContainer.addEventListener('click', () => {
+      playScreenClick();
+      playOpenSound();
+      openAIChat();
+    });
 
     mascotContainer.addEventListener('mouseenter', () => {
       if (document.getElementById('aiChatWindow').classList.contains('open')) return;
@@ -1811,6 +1904,7 @@
     }
 
     function closeAIChat() {
+      playCloseSound();
       aiChatWindow.classList.remove('open');
     }
 
@@ -1969,6 +2063,7 @@
       currentLang = savedLang;
       applyTranslation(savedLang);
       updateThemeBtn();
+      updateSoundBtn();
     });
   </script>
 </body>
