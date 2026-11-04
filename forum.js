@@ -39,7 +39,7 @@ let currentChannelType = 'posts';
 let unsubscribeMessages = null;
 let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 let attachedFile = null;
-let pendingPrivateRoom = null; // الغرفة الخاصة التي تنتظر كلمة المرور
+let pendingPrivateRoom = null;
 
 const wilayas = ["01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة", "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة", "21 - سكيكدة", "22 - سيدي بلعباس", "23 - عنابة", "24 - قالمة", "25 - قسنطينة", "26 - المدية", "27 - مستغانم", "28 - المسيلة", "29 - معسكر", "30 - ورقلة", "31 - وهران", "32 - البيض", "33 - إليزي", "34 - برج بوعريريج", "35 - بومرداس", "36 - الطارف", "37 - تندوف", "38 - تيسمسيلت", "39 - الوادي", "40 - خنشلة", "41 - سوق أهراس", "42 - تيبازة", "43 - ميلة", "44 - عين الدفلى", "45 - النعامة", "46 - عين تموشنت", "47 - غرداية", "48 - غليزان"];
 
@@ -59,7 +59,9 @@ const postBtn = document.getElementById('postBtn');
 const postText = document.getElementById('postText');
 
 const wilayaSelect = document.getElementById('wilayaInput');
-wilayas.forEach(w => { wilayaSelect.innerHTML += `<option value="${w}">${w}</option>`; });
+if(wilayaSelect) {
+  wilayas.forEach(w => { wilayaSelect.innerHTML += `<option value="${w}">${w}</option>`; });
+}
 
 // ==========================================
 // 6. Dark Mode
@@ -84,84 +86,95 @@ window.toggleSidebar = function() {
 // ==========================================
 // 7. Auth
 // ==========================================
-toggleBtn.addEventListener('click', () => {
-  isLoginMode = !isLoginMode;
-  errorMsg.classList.add('hidden');
-  if (isLoginMode) {
-    registerFields.classList.add('hidden');
-    submitBtn.innerText = 'تسجيل الدخول';
-    toggleText.innerText = 'ليس لديك حساب؟';
-    toggleBtn.innerText = 'إنشاء حساب جديد';
-  } else {
-    registerFields.classList.remove('hidden');
-    submitBtn.innerText = 'إنشاء حساب';
-    toggleText.innerText = 'لديك حساب بالفعل؟';
-    toggleBtn.innerText = 'تسجيل الدخول';
-  }
-});
-
-submitBtn.addEventListener('click', async () => {
-  const email = document.getElementById('emailInput').value.trim();
-  const pass = document.getElementById('passInput').value;
-  if (!email.endsWith('@enstp.edu.dz')) return showError('يجب استخدام البريد المهني @enstp.edu.dz');
-  if (pass.length < 6) return showError('كلمة السر يجب أن تكون 6 أحرف على الأقل');
-
-  submitBtn.disabled = true;
-  submitBtn.innerText = 'جاري المعالجة...';
-  errorMsg.classList.add('hidden');
-
-  try {
+if(toggleBtn) {
+  toggleBtn.addEventListener('click', () => {
+    isLoginMode = !isLoginMode;
+    errorMsg.classList.add('hidden');
     if (isLoginMode) {
-      await signInWithEmailAndPassword(auth, email, pass);
+      registerFields.classList.add('hidden');
+      submitBtn.innerText = 'تسجيل الدخول';
+      toggleText.innerText = 'ليس لديك حساب؟';
+      toggleBtn.innerText = 'إنشاء حساب جديد';
     } else {
-      const name = document.getElementById('nameInput').value.trim();
-      const year = document.getElementById('yearInput').value;
-      const wilaya = document.getElementById('wilayaInput').value;
-      if (!name) throw new Error('يرجى إدخال الاسم');
-      const userCred = await createUserWithEmailAndPassword(auth, email, pass);
-      await updateProfile(userCred.user, { displayName: name });
-      await setDoc(doc(db, "users", userCred.user.uid), { name, email, year, wilaya });
+      registerFields.classList.remove('hidden');
+      submitBtn.innerText = 'إنشاء حساب';
+      toggleText.innerText = 'لديك حساب بالفعل؟';
+      toggleBtn.innerText = 'تسجيل الدخول';
     }
-  } catch (error) {
-    if (error.code === 'auth/email-already-in-use') showError('البريد مستخدم بالفعل');
-    else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') showError('البريد أو كلمة السر غير صحيحة');
-    else showError(error.message);
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerText = isLoginMode ? 'تسجيل الدخول' : 'إنشاء حساب';
-  }
-});
+  });
+}
+
+if(submitBtn) {
+  submitBtn.addEventListener('click', async () => {
+    const email = document.getElementById('emailInput').value.trim();
+    const pass = document.getElementById('passInput').value;
+    if (!email.endsWith('@enstp.edu.dz')) return showError('يجب استخدام البريد المهني @enstp.edu.dz');
+    if (pass.length < 6) return showError('كلمة السر يجب أن تكون 6 أحرف على الأقل');
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'جاري المعالجة...';
+    errorMsg.classList.add('hidden');
+
+    try {
+      if (isLoginMode) {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } else {
+        const name = document.getElementById('nameInput').value.trim();
+        const year = document.getElementById('yearInput').value;
+        const wilaya = document.getElementById('wilayaInput').value;
+        if (!name) throw new Error('يرجى إدخال الاسم');
+        const userCred = await createUserWithEmailAndPassword(auth, email, pass);
+        await updateProfile(userCred.user, { displayName: name });
+        await setDoc(doc(db, "users", userCred.user.uid), { name, email, year, wilaya });
+      }
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') showError('البريد مستخدم بالفعل');
+      else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') showError('البريد أو كلمة السر غير صحيحة');
+      else showError(error.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerText = isLoginMode ? 'تسجيل الدخول' : 'إنشاء حساب';
+    }
+  });
+}
 
 function showError(msg) { errorMsg.innerText = msg; errorMsg.classList.remove('hidden'); }
 
 onAuthStateChanged(auth, async (user) => {
-  loadingScreen.classList.add('hidden');
+  if(loadingScreen) loadingScreen.classList.add('hidden');
   if (user) {
     const userDoc = await getDoc(doc(db, "users", user.uid));
     const userData = userDoc.exists() ? userDoc.data() : { name: user.displayName, year: 'طالب', wilaya: '16 - الجزائر' };
     currentUserData = { uid: user.uid, name: userData.name, email: user.email, year: userData.year, wilaya: userData.wilaya };
-    authScreen.classList.add('hidden');
-    forumScreen.classList.remove('hidden');
-    document.getElementById('userAvatar').innerText = currentUserData.name.charAt(0);
-    document.getElementById('userName').innerText = currentUserData.name;
-    document.getElementById('userInfo').innerText = `${currentUserData.year} | ${currentUserData.wilaya}`;
+    
+    if(authScreen) authScreen.classList.add('hidden');
+    if(forumScreen) forumScreen.classList.remove('hidden');
+    
+    if(document.getElementById('userAvatar')) document.getElementById('userAvatar').innerText = currentUserData.name.charAt(0);
+    if(document.getElementById('userName')) document.getElementById('userName').innerText = currentUserData.name;
+    if(document.getElementById('userInfo')) document.getElementById('userInfo').innerText = `${currentUserData.year} | ${currentUserData.wilaya}`;
+    
     renderChannels();
     selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', document.querySelector('.active-room'));
   } else {
     currentUserData = null;
     if (unsubscribeMessages) unsubscribeMessages();
-    authScreen.classList.remove('hidden');
-    forumScreen.classList.add('hidden');
+    if(authScreen) authScreen.classList.remove('hidden');
+    if(forumScreen) forumScreen.classList.add('hidden');
   }
 });
 
-document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+if(document.getElementById('logoutBtn')) {
+  document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+}
 
 // ==========================================
 // 8. Channels
 // ==========================================
 function renderChannels() {
   const customContainer = document.getElementById('customChannels');
+  if(!customContainer) return;
+  
   onSnapshot(collection(db, "rooms"), (snapshot) => {
     customContainer.innerHTML = '';
     if (snapshot.empty) customContainer.innerHTML = `<div class="text-xs text-gray-500 px-2">لا توجد غرف بعد</div>`;
@@ -169,7 +182,7 @@ function renderChannels() {
       const room = docSnap.data();
       const icon = room.type === 'chat' ? 'fa-comments text-green-400' : 'fa-newspaper text-blue-400';
       const lockIcon = room.password ? ' <i class="fa-solid fa-lock text-red-400 text-[10px]"></i>' : '';
-      const isOwner = room.createdBy === currentUserData.name;
+      const isOwner = currentUserData && room.createdBy === currentUserData.name;
       const deleteBtn = isOwner ? `<button onclick="event.stopPropagation(); deleteRoom('${docSnap.id}', '${room.name.replace(/'/g, "\\'")}')" class="ml-auto text-red-400 hover:text-red-600 text-xs p-1" title="حذف"><i class="fa-solid fa-trash"></i></button>` : '';
       
       const btn = document.createElement('button');
@@ -190,7 +203,6 @@ function renderChannels() {
 }
 
 window.selectChannel = async (id, title, subtitle, type, btnElement, password = null) => {
-  // إذا كانت الغرفة خاصة وتحتاج كلمة مرور
   if (id.startsWith('room_') && password) {
     pendingPrivateRoom = { id, title, subtitle, type, btnElement, password };
     document.getElementById('roomPasswordInput').value = '';
@@ -206,22 +218,24 @@ window.selectChannel = async (id, title, subtitle, type, btnElement, password = 
 async function loadChannelContent(id, title, subtitle, type, btnElement) {
   currentChannelId = id;
   currentChannelType = type;
-  document.getElementById('channelTitle').innerHTML = `<i class="fa-solid ${type === 'chat' ? 'fa-comments text-green-500' : 'fa-globe text-blue-500'}"></i> ${title}`;
-  document.getElementById('channelSubtitle').innerText = subtitle;
-  document.getElementById('mobileTitle').innerText = title;
+  
+  if(document.getElementById('channelTitle')) document.getElementById('channelTitle').innerHTML = `<i class="fa-solid ${type === 'chat' ? 'fa-comments text-green-500' : 'fa-globe text-blue-500'}"></i> ${title}`;
+  if(document.getElementById('channelSubtitle')) document.getElementById('channelSubtitle').innerText = subtitle;
+  if(document.getElementById('mobileTitle')) document.getElementById('mobileTitle').innerText = title;
   
   const badge = document.getElementById('channelTypeBadge');
-  if (type === 'chat') {
-    badge.innerText = 'دردشة';
-    badge.className = "text-[10px] bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-3 py-1 rounded-full font-bold";
-    postText.placeholder = 'اكتب رسالة...';
-  } else {
-    badge.innerText = 'منشورات';
-    badge.className = "text-[10px] bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 px-3 py-1 rounded-full font-bold";
-    postText.placeholder = 'اكتب منشوراً...';
+  if (badge) {
+    if (type === 'chat') {
+      badge.innerText = 'دردشة';
+      badge.className = "text-[10px] bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-3 py-1 rounded-full font-bold";
+      if(postText) postText.placeholder = 'اكتب رسالة...';
+    } else {
+      badge.innerText = 'منشورات';
+      badge.className = "text-[10px] bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 px-3 py-1 rounded-full font-bold";
+      if(postText) postText.placeholder = 'اكتب منشوراً...';
+    }
   }
   
-  // إظهار زر إغلاق الغرفة فقط للغرف المخصصة (room_*)
   const closeBtn = document.getElementById('closeRoomBtn');
   if (closeBtn) {
     if (id.startsWith('room_')) {
@@ -233,8 +247,12 @@ async function loadChannelContent(id, title, subtitle, type, btnElement) {
   
   document.querySelectorAll('aside button').forEach(btn => btn.classList.remove('active-room'));
   if (btnElement) btnElement.classList.add('active-room');
+  
   loadMessages(id, type);
-  if (window.innerWidth < 768) document.getElementById('sidebar').classList.add('translate-x-full');
+  if (window.innerWidth < 768) {
+    const sb = document.getElementById('sidebar');
+    if (sb) sb.classList.add('translate-x-full');
+  }
 }
 
 // ==========================================
@@ -265,10 +283,11 @@ window.cancelRoomPassword = () => {
   document.getElementById('roomPasswordError').classList.add('hidden');
 };
 
-// السماح بالضغط على Enter في نافذة كلمة المرور
-document.getElementById('roomPasswordInput').addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') submitRoomPassword();
-});
+if(document.getElementById('roomPasswordInput')) {
+  document.getElementById('roomPasswordInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') submitRoomPassword();
+  });
+}
 
 // ==========================================
 // 8.c. إغلاق / حذف الغرفة
@@ -281,7 +300,6 @@ window.closeCurrentRoom = async () => {
   
   const roomId = currentChannelId.replace('room_', '');
   
-  // جلب بيانات الغرفة للتحقق من الملكية
   try {
     const roomSnap = await getDoc(doc(db, "rooms", roomId));
     if (!roomSnap.exists()) {
@@ -290,14 +308,13 @@ window.closeCurrentRoom = async () => {
     }
     const room = roomSnap.data();
     
-    if (room.createdBy !== currentUserData.name) {
+    if (!currentUserData || room.createdBy !== currentUserData.name) {
       alert('فقط من أنشأ الغرفة يمكنه إغلاقها');
       return;
     }
     
     if (!confirm(`هل أنت متأكد من إغلاق وحذف غرفة "${room.name}"؟\nسيتم حذف جميع الرسائل والمنشورات المرتبطة بها.`)) return;
     
-    // حذف كل الرسائل/المنشورات المرتبطة بالغرفة
     const q = query(collection(db, "posts"), where("channelId", "==", currentChannelId));
     const snap = await getDocs(q);
     const deletePromises = [];
@@ -306,12 +323,10 @@ window.closeCurrentRoom = async () => {
     });
     await Promise.all(deletePromises);
     
-    // حذف الغرفة نفسها
     await deleteDoc(doc(db, "rooms", roomId));
     
     alert('تم إغلاق الغرفة بنجاح');
     
-    // العودة إلى القاعة العامة
     const generalBtn = document.querySelector('.active-room') || null;
     selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', generalBtn);
     document.querySelectorAll('aside button').forEach(b => b.classList.remove('active-room'));
@@ -324,11 +339,9 @@ window.closeCurrentRoom = async () => {
   }
 };
 
-// حذف غرفة من القائمة الجانبية (للمالك)
 window.deleteRoom = async (roomId, roomName) => {
   if (!confirm(`حذف غرفة "${roomName}"؟ سيتم حذف جميع محتوياتها.`)) return;
   try {
-    // حذف الرسائل المرتبطة
     const channelId = `room_${roomId}`;
     const q = query(collection(db, "posts"), where("channelId", "==", channelId));
     const snap = await getDocs(q);
@@ -336,10 +349,8 @@ window.deleteRoom = async (roomId, roomName) => {
     snap.forEach((d) => deletePromises.push(deleteDoc(doc(db, "posts", d.id))));
     await Promise.all(deletePromises);
     
-    // حذف الغرفة
     await deleteDoc(doc(db, "rooms", roomId));
     
-    // إذا كانت الغرفة الحالية هي المحذوفة، عد للقاعة العامة
     if (currentChannelId === channelId) {
       document.querySelectorAll('aside button').forEach(b => b.classList.remove('active-room'));
       const firstGeneral = document.querySelector('aside button');
@@ -355,6 +366,7 @@ window.deleteRoom = async (roomId, roomName) => {
 // 9. Create Room
 // ==========================================
 window.createRoom = async () => {
+  if (!currentUserData) return alert("يجب تسجيل الدخول أولاً.");
   const name = document.getElementById('newRoomName').value.trim();
   const type = document.getElementById('newRoomType').value;
   const password = document.getElementById('newRoomPassword').value.trim();
@@ -377,7 +389,7 @@ window.createRoom = async () => {
 };
 
 // ==========================================
-// 10. File Upload (Supabase) - مع إصلاح RLS
+// 10. File Upload (Supabase)
 // ==========================================
 window.handleFileUpload = (event) => {
   const file = event.target.files[0];
@@ -415,11 +427,9 @@ window.clearFile = () => {
 };
 
 async function uploadFileToSupabase(file) {
-  // تنظيف اسم الملف من الأحرف غير المسموحة
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
   const fileName = `${Date.now()}_${currentUserData.uid}_${safeName}`;
   
-  // ✅ الحل: upsert: false لتجنب طلب RETURNING الذي يفشل بسبب سياسة SELECT
   const { data, error } = await supabase.storage
     .from('forum-files')
     .upload(fileName, file, {
@@ -439,50 +449,65 @@ async function uploadFileToSupabase(file) {
 // ==========================================
 // 11. Send Post
 // ==========================================
-postBtn.addEventListener('click', async () => {
-  const text = postText.value.trim();
-  if (!text && !attachedFile) return;
-  postBtn.disabled = true;
-  postBtn.innerText = '...';
-  let fileUrl = null;
-  let fileType = null;
-  try {
-    if (attachedFile) {
-      fileUrl = await uploadFileToSupabase(attachedFile);
-      fileType = attachedFile.type;
+if(postBtn) {
+  postBtn.addEventListener('click', async () => {
+    // ✅ FIX : Prevent null error
+    if (!currentUserData || !currentUserData.name) {
+      alert("يجب تسجيل الدخول أولاً لإرسال رسالة.");
+      return;
     }
-    await addDoc(collection(db, "posts"), {
-      channelId: currentChannelId,
-      channelType: currentChannelType,
-      content: text,
-      fileUrl: fileUrl,
-      fileType: fileType,
-      authorName: currentUserData.name,
-      authorYear: currentUserData.year,
-      authorEmail: currentUserData.email,
-      comments: [],
-      reactions: { like: [], love: [], laugh: [] },
-      createdAt: serverTimestamp()
-    });
-    postText.value = '';
-    postText.style.height = 'auto';
-    clearFile();
-  } catch (e) {
-    console.error(e);
-    alert("حدث خطأ أثناء الإرسال: " + e.message);
-  } finally {
-    postBtn.disabled = false;
-    postBtn.innerHTML = `إرسال <i class="fa-solid fa-paper-plane text-xs"></i>`;
-  }
-});
+
+    const text = postText.value.trim();
+    if (!text && !attachedFile) return;
+    
+    postBtn.disabled = true;
+    postBtn.innerText = '...';
+    let fileUrl = null;
+    let fileType = null;
+    
+    try {
+      if (attachedFile) {
+        fileUrl = await uploadFileToSupabase(attachedFile);
+        fileType = attachedFile.type;
+      }
+      await addDoc(collection(db, "posts"), {
+        channelId: currentChannelId,
+        channelType: currentChannelType,
+        content: text,
+        fileUrl: fileUrl,
+        fileType: fileType,
+        authorName: currentUserData.name,
+        authorYear: currentUserData.year,
+        authorEmail: currentUserData.email,
+        comments: [],
+        reactions: { like: [], love: [], laugh: [] },
+        createdAt: serverTimestamp()
+      });
+      postText.value = '';
+      postText.style.height = 'auto';
+      clearFile();
+    } catch (e) {
+      console.error(e);
+      alert("حدث خطأ أثناء الإرسال: " + e.message);
+    } finally {
+      postBtn.disabled = false;
+      postBtn.innerHTML = `إرسال <i class="fa-solid fa-paper-plane text-xs"></i>`;
+    }
+  });
+}
 
 // ==========================================
 // 12. Load Messages
 // ==========================================
 function loadMessages(channelId, type) {
+  // ✅ FIX : Prevent null error
+  if (!currentUserData) return;
+
   if (unsubscribeMessages) unsubscribeMessages();
   postsContainer.innerHTML = '<div class="text-center mt-10 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl"></i></div>';
+  
   const q = query(collection(db, "posts"), where("channelId", "==", channelId), orderBy("createdAt", "desc"));
+  
   unsubscribeMessages = onSnapshot(q, (snapshot) => {
     postsContainer.innerHTML = '';
     if (snapshot.empty) {
@@ -496,7 +521,10 @@ function loadMessages(channelId, type) {
     docs.forEach((docSnap) => {
       const post = docSnap.data();
       const postId = docSnap.id;
-      const isMe = post.authorEmail === currentUserData.email;
+      
+      // ✅ FIX : Prevent null error here too
+      const isMe = currentUserData && post.authorEmail === currentUserData.email;
+      
       const date = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR', { hour: '2-digit', minute: '2-digit' }) : '...';
 
       let mediaHtml = '';
@@ -516,7 +544,7 @@ function loadMessages(channelId, type) {
         const likeCount = reactions.like ? reactions.like.length : 0;
         const loveCount = reactions.love ? reactions.love.length : 0;
         const laughCount = reactions.laugh ? reactions.laugh.length : 0;
-        const myEmail = currentUserData.email;
+        const myEmail = currentUserData ? currentUserData.email : '';
         const hasLiked = reactions.like && reactions.like.includes(myEmail);
         const hasLoved = reactions.love && reactions.love.includes(myEmail);
         const hasLaughed = reactions.laugh && reactions.laugh.includes(myEmail);
@@ -553,7 +581,7 @@ function loadMessages(channelId, type) {
         let commentsHTML = '';
         if (post.comments && post.comments.length > 0) {
           post.comments.forEach((c, idx) => {
-            const isMyComment = c.author === currentUserData.name;
+            const isMyComment = currentUserData && c.author === currentUserData.name;
             commentsHTML += `
               <div class="bg-gray-50 dark:bg-slate-700 p-2 rounded-lg mt-2 text-sm flex gap-2 items-start group">
                 <div class="w-6 h-6 rounded-full bg-gray-300 dark:bg-slate-600 text-gray-700 dark:text-gray-200 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">${c.author.charAt(0)}</div>
@@ -601,7 +629,9 @@ function loadMessages(channelId, type) {
 // 13. Add Comment
 // ==========================================
 window.addComment = async (postId) => {
+  if (!currentUserData) return;
   const input = document.getElementById(`comment-input-${postId}`);
+  if(!input) return;
   const text = input.value.trim();
   if (!text) return;
   try {
@@ -644,12 +674,13 @@ window.deletePost = async (postId) => {
 // 16. React to Post
 // ==========================================
 window.reactToPost = async (postId, reactionType) => {
+  if (!currentUserData) return;
   try {
     const postRef = doc(db, "posts", postId);
     const postSnap = await getDoc(postRef);
     if (!postSnap.exists()) return;
 
-        const reactions = postSnap.data().reactions || { like: [], love: [], laugh: [] };
+    const reactions = postSnap.data().reactions || { like: [], love: [], laugh: [] };
     if (!reactions.like) reactions.like = [];
     if (!reactions.love) reactions.love = [];
     if (!reactions.laugh) reactions.laugh = [];
@@ -676,31 +707,36 @@ window.reactToPost = async (postId, reactionType) => {
 // ==========================================
 // 17. Auto-resize Textarea
 // ==========================================
-postText.addEventListener('input', function() {
-  this.style.height = 'auto';
-  this.style.height = (this.scrollHeight) + 'px';
-});
+if(postText) {
+  postText.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+  });
+}
 
 // ==========================================
 // 18. إغلاق النوافذ عند النقر خارجها
 // ==========================================
-document.getElementById('createRoomModal').addEventListener('click', (e) => {
-  if (e.target.id === 'createRoomModal') {
-    document.getElementById('createRoomModal').classList.add('hidden');
-  }
-});
+if(document.getElementById('createRoomModal')) {
+  document.getElementById('createRoomModal').addEventListener('click', (e) => {
+    if (e.target.id === 'createRoomModal') {
+      document.getElementById('createRoomModal').classList.add('hidden');
+    }
+  });
+}
 
-document.getElementById('roomPasswordModal').addEventListener('click', (e) => {
-  if (e.target.id === 'roomPasswordModal') {
-    cancelRoomPassword();
-  }
-});
+if(document.getElementById('roomPasswordModal')) {
+  document.getElementById('roomPasswordModal').addEventListener('click', (e) => {
+    if (e.target.id === 'roomPasswordModal') {
+      cancelRoomPassword();
+    }
+  });
+}
 
-// إغلاق نافذة إنشاء الغرفة بمفتاح Escape
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    document.getElementById('createRoomModal').classList.add('hidden');
-    if (!document.getElementById('roomPasswordModal').classList.contains('hidden')) {
+    if(document.getElementById('createRoomModal')) document.getElementById('createRoomModal').classList.add('hidden');
+    if (document.getElementById('roomPasswordModal') && !document.getElementById('roomPasswordModal').classList.contains('hidden')) {
       cancelRoomPassword();
     }
   }
@@ -714,7 +750,6 @@ if (typeof window.setLanguage === 'function') {
   window.setLanguage = function(lang) {
     currentLang = lang;
     originalSetLanguage(lang);
-    // إعادة رسم القنوات لتحديث النصوص إن لزم
     if (currentUserData) {
       renderChannels();
     }
