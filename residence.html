@@ -1,289 +1,860 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="page_title">دليل الإقامة الجامعية - ENSTP</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #fff7ed; color: #1e293b; transition: background-color 0.4s, color 0.4s; }
-    html.dark body { background: #1a1410; color: #f8fafc; }
-    
-    .ambient-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); transition: background 0.4s; }
-    html.dark .ambient-bg { background: linear-gradient(135deg, #1a1410 0%, #2d1b0e 100%); }
-    
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(249, 115, 22, 0.15); box-shadow: 0 20px 40px -15px rgba(249, 115, 22, 0.1); transition: all 0.3s ease; }
-    html.dark .glass-card { background: rgba(30, 20, 15, 0.95); border-color: rgba(249, 115, 22, 0.2); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3); }
-    
-    .glass-nav { background: rgba(255, 247, 237, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(249, 115, 22, 0.2); }
-    html.dark .glass-nav { background: rgba(26, 20, 16, 0.92); border-bottom-color: rgba(249, 115, 22, 0.3); }
-    
-    .map-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
-    .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-    .table-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .table-scroll::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
-    
-    .compass-container { position: relative; width: 260px; height: 260px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
-    .star-outer { position: absolute; width: 100%; height: 100%; background: linear-gradient(135deg, #f97316, #ea580c); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: rotateStar 20s linear infinite; opacity: 0.9; box-shadow: 0 0 30px rgba(249, 115, 22, 0.4); }
-    .star-inner { position: absolute; width: 70%; height: 70%; background: linear-gradient(135deg, #fff7ed, #ffedd5); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); display: flex; align-items: center; justify-content: center; z-index: 5; }
-    html.dark .star-inner { background: linear-gradient(135deg, #1e293b, #0f172a); }
-    @keyframes rotateStar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .compass-needle { position: absolute; width: 6px; height: 100px; background: linear-gradient(to bottom, #ef4444 50%, #cbd5e1 50%); top: 20px; border-radius: 6px; transform-origin: bottom center; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 15; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
-    .compass-center { position: absolute; width: 30px; height: 30px; background: radial-gradient(circle, #ea580c, #7c2d12); border-radius: 50%; border: 4px solid #fff; z-index: 20; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
-    .compass-center i { color: #fff; font-size: 14px; }
-    .kaaba-icon { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 25; font-size: 28px; color: #10b981; filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.6)); animation: floatKaaba 2s infinite ease-in-out; }
-    @keyframes floatKaaba { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+    :root {
+      --primary: #fbbf24; --primary-hover: #f59e0b;
+      --orange: #f97316; --orange-dark: #ea580c;
+      --bg-color: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
+      --card-bg: #ffffff; --nav-bg: rgba(255,255,255,0.95);
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    [data-theme="dark"] {
+      --bg-color: #0a1128; --text-main: #f8fafc; --text-muted: #94a3b8;
+      --card-bg: #0f1e41; --nav-bg: rgba(10,17,40,0.95);
+      --border-color: #1e3a8a;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--bg-color); color: var(--text-main);
+      transition: background-color .4s, color .4s;
+      margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+      min-height: 100vh; padding-top: 90px;
+    }
 
-    .emergency-card { transition: all 0.3s ease; }
-    .emergency-card:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2); }
-    .residence-card { transition: all 0.3s ease; }
-    .residence-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(249, 115, 22, 0.3); border-color: #f97316; }
-    .dark-toggle { transition: all 0.4s ease; }
-    .dark-toggle:hover { transform: rotate(180deg) scale(1.1); }
+    /* BLOBS */
+    .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: blobFloat 25s ease-in-out infinite; }
+    .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
+    .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
+    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .25; }
+    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.2 }
+    [data-theme="dark"] .blob-2 { background:#3b82f6; opacity:.15 }
+    [data-theme="dark"] .blob-3 { background:#1e3a8a; opacity:.3 }
+    @keyframes blobFloat {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(60px,-40px) scale(1.1); }
+      66% { transform: translate(-40px,60px) scale(.95); }
+    }
+    .dot { position: absolute; border-radius: 50%; background: #f97316; opacity: .15; animation: dotFloat 15s linear infinite; }
+    [data-theme="dark"] .dot { background: #60a5fa; opacity: .25; }
+    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; }
+    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
+    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
+    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
+    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
+    @keyframes dotFloat {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-30px) translateX(20px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
 
-    /* Chat */
-    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1001; width: 320px; max-height: 420px; background: white; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); border: 1px solid #fed7aa; display: none; flex-direction: column; }
+    /* NAVBAR */
+    .top-navbar {
+      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 96%; max-width: 1100px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1.5px solid var(--border-color);
+      border-radius: 22px; padding: 10px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; z-index: 1000; box-shadow: var(--shadow-md);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-title { font-size: 1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; }
+    .nav-title span {
+      background: linear-gradient(90deg,#f97316,#fbbf24,#f97316);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+    .nav-subtitle { font-size: .65rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
+    .nav-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; box-shadow: 0 6px 18px rgba(249,115,22,.35); flex-shrink: 0;
+    }
+    .nav-menu-btn {
+      width: 42px; height: 42px; border-radius: 14px;
+      border: 1.5px solid var(--border-color); background: var(--card-bg);
+      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .25s; font-size: 1rem; flex-shrink: 0;
+    }
+    .nav-menu-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,.35); }
+    .nav-menu-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .nav-dropdown {
+      position: fixed; top: 72px; left: 50%; transform: translateX(-50%) translateY(-10px);
+      width: 290px; max-width: 92%; background: var(--nav-bg);
+      backdrop-filter: blur(20px); border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 8px; box-shadow: var(--shadow-md);
+      z-index: 1001; opacity: 0; pointer-events: none;
+      transition: all .25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .nav-dropdown.open { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid var(--border-color); }
+    .dropdown-section:last-child { border-bottom: none; }
+    .dropdown-label { font-size: .65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; padding: 0 4px; }
+    .dropdown-row { display: flex; gap: 5px; flex-wrap: wrap; }
+    .dropdown-btn {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color);
+      background: var(--card-bg); color: var(--text-main);
+      font-family: inherit; font-size: .75rem; font-weight: 700;
+      cursor: pointer; transition: all .2s; display: inline-flex; align-items: center;
+      gap: 6px; flex: 1; justify-content: center; min-width: fit-content; text-decoration: none;
+    }
+    .dropdown-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: translateY(-1px); }
+    .dropdown-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+    /* HERO */
+    .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
+    .page-hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
+      margin: 0 0 8px; line-height: 1.2;
+    }
+    .page-hero h1 span {
+      background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
+
+    /* CONTENT */
+    .content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 22px;
+      box-shadow: var(--shadow-sm);
+      transition: all .3s;
+    }
+    .glass-card:hover { box-shadow: var(--shadow-md); }
+
+    .residence-card {
+      background: var(--card-bg); border: 1.5px solid var(--border-color);
+      border-radius: 22px; padding: 24px;
+      cursor: pointer; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .residence-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: var(--orange);
+      box-shadow: 0 25px 50px -12px rgba(249,115,22,.25);
+    }
+    .residence-icon {
+      width: 80px; height: 80px; border-radius: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; transition: all .3s;
+    }
+    .residence-card:hover .residence-icon { transform: rotate(-8deg) scale(1.1); }
+    .residence-icon.orange { background: rgba(249,115,22,.15); color: var(--orange); }
+    .residence-card:hover .residence-icon.orange { background: var(--orange); color: #fff; }
+    .residence-icon.amber { background: rgba(251,191,36,.15); color: var(--primary-hover); }
+    .residence-card:hover .residence-icon.amber { background: var(--primary-hover); color: #fff; }
+    .residence-icon.red { background: rgba(239,68,68,.15); color: #ef4444; }
+    .residence-card:hover .residence-icon.red { background: #ef4444; color: #fff; }
+    .residence-title {
+      font-size: 1.15rem; font-weight: 900; color: var(--text-main); margin: 0 0 4px;
+    }
+    .residence-sub { font-size: .78rem; color: var(--text-muted); font-weight: 600; margin: 0; }
+    .residence-badge {
+      font-size: .7rem; font-weight: 800; padding: 5px 12px; border-radius: 20px;
+      background: rgba(249,115,22,.12); color: var(--orange-dark);
+    }
+    [data-theme="dark"] .residence-badge { background: rgba(249,115,22,.2); color: #fdba74; }
+
+    /* ============================================================ */
+    /* 🧭 BOUSSOLE QIBLA AMÉLIORÉE                                   */
+    /* ============================================================ */
+    .qibla-section {
+      background: linear-gradient(135deg, rgba(251,191,36,.08), rgba(249,115,22,.05));
+      border: 1.5px solid rgba(249,115,22,.25);
+      border-radius: 22px;
+      padding: 28px;
+      margin-top: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .qibla-section::before {
+      content: ''; position: absolute; top: -50%; right: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(251,191,36,.15) 0%, transparent 60%);
+      animation: qiblaGlow 8s ease-in-out infinite; pointer-events: none;
+    }
+    [data-theme="dark"] .qibla-section { background: linear-gradient(135deg, rgba(251,191,36,.1), rgba(249,115,22,.08)); }
+    @keyframes qiblaGlow {
+      0%,100% { transform: scale(1); opacity: .5; }
+      50% { transform: scale(1.1); opacity: .8; }
+    }
+    .qibla-header { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border-color); margin-bottom: 24px; position: relative; z-index: 1; }
+    .qibla-header-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg,#fbbf24,#f97316);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; box-shadow: 0 6px 18px rgba(249,115,22,.35);
+    }
+    .qibla-header h3 { margin: 0 0 2px; font-size: 1.2rem; font-weight: 900; color: var(--text-main); }
+    .qibla-header p { margin: 0; font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+
+    .qibla-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    @media(max-width:768px){ .qibla-body { grid-template-columns: 1fr; } }
+
+    /* Compass */
+    .compass-wrapper {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+    .compass {
+      width: 260px; height: 260px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #fff7ed, #fed7aa 60%, #fbbf24 100%);
+      position: relative;
+      box-shadow:
+        0 25px 50px rgba(249,115,22,.35),
+        inset 0 0 30px rgba(255,255,255,.6),
+        inset 0 -10px 20px rgba(249,115,22,.2);
+      border: 4px solid #fff;
+      display: flex; align-items: center; justify-content: center;
+    }
+    [data-theme="dark"] .compass {
+      background: radial-gradient(circle at 30% 25%, #1e3a8a, #0f1e41 60%, #0a1128 100%);
+      box-shadow:
+        0 25px 50px rgba(0,0,0,.5),
+        inset 0 0 30px rgba(59,130,246,.3),
+        inset 0 -10px 20px rgba(0,0,0,.4);
+      border-color: #1e3a8a;
+    }
+    /* Cadran gradué */
+    .compass .tick {
+      position: absolute; left: 50%; top: 6px;
+      width: 2px; height: 10px; background: #7c2d12;
+      transform-origin: center 124px;
+      border-radius: 2px; opacity: .6;
+    }
+    [data-theme="dark"] .compass .tick { background: #60a5fa; opacity: .7; }
+    .compass .tick.major { height: 16px; width: 3px; background: #7c2d12; opacity: .9; }
+    [data-theme="dark"] .compass .tick.major { background: #93c5fd; }
+    /* Lettres N E S W */
+    .compass .cardinal {
+      position: absolute; font-weight: 900; font-size: .85rem; color: #7c2d12;
+      font-family: 'Cairo', sans-serif;
+    }
+    [data-theme="dark"] .compass .cardinal { color: #93c5fd; }
+    .compass .cardinal.n { top: 18px; left: 50%; transform: translateX(-50%); color: #dc2626; font-size: 1rem; }
+    [data-theme="dark"] .compass .cardinal.n { color: #f87171; }
+    .compass .cardinal.s { bottom: 18px; left: 50%; transform: translateX(-50%); }
+    .compass .cardinal.e { right: 18px; top: 50%; transform: translateY(-50%); }
+    .compass .cardinal.w { left: 18px; top: 50%; transform: translateY(-50%); }
+
+    /* Aiguille Kaaba */
+    .compass-needle-wrap {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      transform-origin: center center;
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+      z-index: 15;
+      pointer-events: none;
+    }
+    .compass-needle-kaaba {
+      position: absolute; top: 14px; left: 50%;
+      transform: translateX(-50%);
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg,#10b981,#059669);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; box-shadow: 0 6px 18px rgba(16,185,129,.6);
+      animation: kaabaPulse 2s ease-in-out infinite;
+    }
+    @keyframes kaabaPulse {
+      0%,100% { box-shadow: 0 6px 18px rgba(16,185,129,.6); transform: translateX(-50%) scale(1); }
+      50% { box-shadow: 0 6px 28px rgba(16,185,129,.9); transform: translateX(-50%) scale(1.08); }
+    }
+    .compass-needle-bar {
+      position: absolute; top: 40px; left: 50%;
+      width: 4px; height: 78px;
+      background: linear-gradient(to bottom, #10b981, #059669);
+      transform: translateX(-50%);
+      border-radius: 2px;
+      box-shadow: 0 0 12px rgba(16,185,129,.7);
+    }
+    .compass-needle-bar::after {
+      content: ''; position: absolute; bottom: -6px; left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 10px solid #059669;
+    }
+    .compass-center-dot {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px; height: 20px; border-radius: 50%;
+      background: radial-gradient(circle, #ea580c, #7c2d12);
+      border: 3px solid #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,.3);
+      z-index: 20;
+    }
+
+    /* Info panel */
+    .qibla-info-panel {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .angle-card {
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      color: #fff; padding: 18px 20px; border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(249,115,22,.35);
+      text-align: center;
+    }
+    .angle-card .label {
+      font-size: .72rem; font-weight: 800; opacity: .95;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .angle-card .value {
+      font-size: 2.4rem; font-weight: 900; margin-top: 4px;
+      font-variant-numeric: tabular-nums; letter-spacing: -1px;
+    }
+    .angle-card .direction {
+      font-size: .78rem; font-weight: 700; opacity: .9; margin-top: 2px;
+    }
+    .status-line {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px; border-radius: 12px;
+      background: var(--card-bg); border: 1.5px solid var(--border-color);
+      font-size: .85rem; font-weight: 700;
+    }
+    .status-line.success { color: #059669; border-color: rgba(16,185,129,.3); background: rgba(16,185,129,.08); }
+    .status-line.error { color: #dc2626; border-color: rgba(239,68,68,.3); background: rgba(239,68,68,.08); }
+    .status-line.loading { color: var(--orange-dark); border-color: rgba(249,115,22,.3); background: rgba(249,115,22,.08); }
+    [data-theme="dark"] .status-line.success { background: rgba(16,185,129,.15); color: #6ee7b7; }
+    [data-theme="dark"] .status-line.error { background: rgba(239,68,68,.15); color: #fca5a5; }
+    [data-theme="dark"] .status-line.loading { background: rgba(249,115,22,.15); color: #fdba74; }
+    .info-hint {
+      font-size: .75rem; color: var(--text-muted); font-weight: 600;
+      padding: 12px 14px; border-radius: 12px;
+      background: var(--card-bg); border: 1.5px dashed var(--border-color);
+      line-height: 1.6;
+    }
+
+    /* Emergency */
+    .emergency-card {
+      padding: 20px; border-radius: 18px;
+      text-align: center; text-decoration: none;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      transition: all .3s;
+      border: 1.5px solid;
+    }
+    .emergency-card:hover {
+      transform: translateY(-5px) scale(1.03);
+    }
+    .emergency-card .e-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+      transition: all .3s;
+    }
+    .emergency-card:hover .e-icon { transform: scale(1.15) rotate(-8deg); }
+    .emergency-card .e-number { font-size: 1.6rem; font-weight: 900; }
+    .emergency-card .e-label { font-size: .72rem; font-weight: 800; }
+    .emergency-card.red { background: rgba(239,68,68,.06); border-color: rgba(239,68,68,.25); color: #dc2626; }
+    .emergency-card.red .e-icon { background: rgba(239,68,68,.15); color: #dc2626; }
+    .emergency-card.blue { background: rgba(59,130,246,.06); border-color: rgba(59,130,246,.25); color: #2563eb; }
+    .emergency-card.blue .e-icon { background: rgba(59,130,246,.15); color: #2563eb; }
+    .emergency-card.amber { background: rgba(245,158,11,.06); border-color: rgba(245,158,11,.25); color: #d97706; }
+    .emergency-card.amber .e-icon { background: rgba(245,158,11,.15); color: #d97706; }
+    .emergency-card.emerald { background: rgba(16,185,129,.06); border-color: rgba(16,185,129,.25); color: #059669; }
+    .emergency-card.emerald .e-icon { background: rgba(16,185,129,.15); color: #059669; }
+    [data-theme="dark"] .emergency-card.red { background: rgba(239,68,68,.12); color: #fca5a5; }
+    [data-theme="dark"] .emergency-card.blue { background: rgba(59,130,246,.12); color: #93c5fd; }
+    [data-theme="dark"] .emergency-card.amber { background: rgba(245,158,11,.12); color: #fcd34d; }
+    [data-theme="dark"] .emergency-card.emerald { background: rgba(16,185,129,.12); color: #6ee7b7; }
+
+    /* Sections */
+    .section-card { padding: 24px; margin-top: 24px; }
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      padding-bottom: 16px; border-bottom: 1.5px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+    .section-header-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: #fff; flex-shrink: 0;
+    }
+    .section-header h3 { margin: 0 0 2px; font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
+    .section-header p { margin: 0; font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+
+    /* Tables */
+    .table-wrap { overflow-x: auto; border-radius: 14px; border: 1.5px solid var(--border-color); }
+    table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    thead { background: rgba(249,115,22,.1); }
+    [data-theme="dark"] thead { background: rgba(249,115,22,.15); }
+    th { padding: 12px; text-align: right; font-weight: 900; color: var(--orange-dark); border-bottom: 1.5px solid var(--border-color); }
+    [data-theme="dark"] th { color: #fdba74; }
+    td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); color: var(--text-main); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: rgba(249,115,22,.04); }
+    [data-theme="dark"] tr:hover { background: rgba(249,115,22,.08); }
+    td:first-child { font-weight: 800; color: var(--orange-dark); }
+    [data-theme="dark"] td:first-child { color: #fdba74; }
+
+    /* Videos & maps */
+    .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; border: 2px solid var(--border-color); }
+    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .map-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; border: 2px solid var(--border-color); }
+    .map-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* Buttons */
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: 12px;
+      background: var(--card-bg); border: 1.5px solid var(--border-color);
+      color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .85rem;
+      cursor: pointer; transition: all .2s; text-decoration: none;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-back:hover { border-color: var(--orange); color: var(--orange); transform: translateX(-3px); }
+
+    /* Facility cards */
+    .facility-card {
+      background: var(--card-bg); border: 1.5px solid var(--border-color);
+      border-radius: 16px; padding: 16px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: all .3s;
+    }
+    .facility-card:hover { border-color: var(--orange); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .facility-head { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color); }
+    .facility-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .facility-name { font-size: .85rem; font-weight: 800; color: var(--text-main); margin: 0; }
+    .facility-type { font-size: .65rem; font-weight: 700; color: var(--text-muted); }
+    .facility-line { display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+
+    /* Activity cards */
+    .activity-card { padding: 16px; border-radius: 14px; border: 1.5px solid; }
+    .activity-card h4 { margin: 0 0 6px; font-size: .9rem; font-weight: 900; }
+    .activity-card p { margin: 0; font-size: .78rem; font-weight: 600; line-height: 1.6; }
+    .activity-card.pink { background: rgba(236,72,153,.06); border-color: rgba(236,72,153,.25); color: #be185d; }
+    [data-theme="dark"] .activity-card.pink { background: rgba(236,72,153,.12); color: #f9a8d4; }
+    .activity-card.amber { background: rgba(245,158,11,.06); border-color: rgba(245,158,11,.25); color: #d97706; }
+    [data-theme="dark"] .activity-card.amber { background: rgba(245,158,11,.12); color: #fcd34d; }
+    .activity-card.purple { background: rgba(139,92,246,.06); border-color: rgba(139,92,246,.25); color: #7c3aed; }
+    [data-theme="dark"] .activity-card.purple { background: rgba(139,92,246,.12); color: #c4b5fd; }
+    .activity-card.blue { background: rgba(59,130,246,.06); border-color: rgba(59,130,246,.25); color: #2563eb; }
+    [data-theme="dark"] .activity-card.blue { background: rgba(59,130,246,.12); color: #93c5fd; }
+    .activity-card.gray { background: rgba(100,116,139,.06); border-color: rgba(100,116,139,.25); color: var(--text-main); }
+    [data-theme="dark"] .activity-card.gray { background: rgba(100,116,139,.12); }
+
+    /* CHAT */
+    #chatWindow {
+      position: fixed; bottom: 110px; right: 20px; z-index: 1500;
+      width: 340px; max-height: 480px;
+      background: var(--card-bg); border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      border: 1.5px solid var(--border-color);
+      display: none; flex-direction: column; overflow: hidden;
+    }
     #chatWindow.open { display: flex; }
-    html.dark #chatWindow { background: #1e293b; border-color: #334155; color: #f8fafc; }
-    @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+    @media(max-width:640px){ #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+    .chat-header {
+      background: linear-gradient(135deg,#f97316,#f59e0b);
+      color: #fff; padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-weight: 800;
+    }
+    .chat-header span { display: flex; align-items: center; gap: 8px; }
+    .chat-close-btn {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(255,255,255,.25); border: none; color: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    #chatBody {
+      padding: 12px; overflow-y: auto; height: 320px;
+      font-size: .85rem; display: flex; flex-direction: column; gap: 8px;
+      background: var(--bg-color);
+    }
+    .chat-input-wrap {
+      padding: 8px; border-top: 1px solid var(--border-color);
+      display: flex; gap: 6px; background: var(--card-bg);
+    }
+    #chatInput {
+      flex: 1; padding: 9px 12px;
+      border: 1.5px solid var(--border-color); border-radius: 10px;
+      font-size: .82rem; outline: none; font-family: inherit;
+      background: var(--bg-color); color: var(--text-main);
+    }
+    #chatInput:focus { border-color: var(--orange); }
+    .chat-send-btn {
+      background: var(--orange); color: #fff; border: none;
+      padding: 9px 14px; border-radius: 10px; cursor: pointer;
+    }
+    .chat-send-btn:hover { background: var(--orange-dark); }
 
-    @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
+    /* Kangourou */
+    .mascot-container { position: fixed; bottom: 22px; right: 22px; z-index: 1000; cursor: pointer; user-select: none; }
+    .mascot-kangaroo { width: 70px; height: 90px; filter: drop-shadow(0 10px 15px rgba(249,115,22,.3)); transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+    .mascot-kangaroo.jump { animation: kangarooJump .6s ease; }
+    @keyframes kangarooJump {
+      0%,100% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); }
+      60% { transform: translateY(-10px) scale(1) rotate(5deg); }
+    }
 
-    .lang-btn { padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; transition: 0.2s; color: #64748b; background: transparent; border: none; cursor: pointer; }
-    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
-    .lang-btn.active { background: #f97316; color: white; }
+    .site-footer { background: var(--card-bg); border-top: 1.5px solid var(--border-color); padding: 25px 20px; margin-top: 40px; text-align: center; }
+    .footer-copy { font-size: .78rem; color: var(--text-muted); font-weight: 600; }
 
-    button, a, .glass-card, .residence-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    @media(max-width:768px){
+      .top-navbar { padding: 8px 10px; border-radius: 16px; }
+      .nav-title { font-size: .85rem; }
+      .nav-subtitle { font-size: .6rem; }
+      .compass { width: 220px; height: 220px; }
+      .compass .tick { transform-origin: center 104px; }
+      .qibla-section { padding: 20px; }
+      .angle-card .value { font-size: 2rem; }
+    }
+    @media(max-width:400px){
+      .compass { width: 190px; height: 190px; }
+      .compass .tick { transform-origin: center 89px; }
+      .compass .cardinal { font-size: .72rem; }
+      .compass .cardinal.n { font-size: .85rem; }
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body>
 
-  <div class="ambient-bg"></div>
+  <div class="animated-bg">
+    <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
+    <div class="dot dot-1"></div><div class="dot dot-2"></div><div class="dot dot-3"></div><div class="dot dot-4"></div><div class="dot dot-5"></div>
+  </div>
 
-  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
-        <div>
-          <h1 class="font-bold text-gray-900 dark:text-white text-base leading-tight">ENSTP <span class="text-orange-500">Résidence</span></h1>
-          <p class="text-[11px] text-gray-500 dark:text-gray-400" data-i18n="nav_app_sub">دليل الإقامة الجامعية</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-2 flex-wrap">
-        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 p-1 rounded-xl border border-orange-200 dark:border-slate-700">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
-        </div>
-        <button onclick="toggleDarkMode()" class="dark-toggle w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-orange-600 dark:text-orange-400 flex items-center justify-center shadow-sm transition">
-          <i class="fa-solid fa-moon dark:hidden"></i>
-          <i class="fa-solid fa-sun hidden dark:block"></i>
-        </button>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 hover:bg-orange-200 text-xs font-bold flex items-center gap-2 transition" data-i18n="nav_home">الرئيسية</a>
+  <!-- NAVBAR -->
+  <nav class="top-navbar">
+    <div class="nav-brand">
+      <div class="nav-icon"><i class="fa-solid fa-bed"></i></div>
+      <div>
+        <div class="nav-title">ENSTP <span>Résidence</span></div>
+        <div class="nav-subtitle" data-i18n="nav_app_sub">دليل الإقامة الجامعية</div>
       </div>
     </div>
+    <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة">
+      <i class="fa-solid fa-sliders"></i>
+    </button>
+  </nav>
+
+  <div class="nav-dropdown" id="navDropdown">
+    <div class="dropdown-section">
+      <div class="dropdown-label">🌐 <span data-i18n="menu_lang">اللغة</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn active" onclick="setLanguage('ar')" id="btn-ar">🇩🇿 العربية</button>
+        <button class="dropdown-btn" onclick="setLanguage('fr')" id="btn-fr">🇫🇷 Français</button>
+        <button class="dropdown-btn" onclick="setLanguage('en')" id="btn-en">🇬🇧 English</button>
+      </div>
+    </div>
+    <div class="dropdown-section">
+      <div class="dropdown-label">⚙️ <span data-i18n="menu_settings">الإعدادات</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
+          <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
+        </button>
+        <a href="index.html" class="dropdown-btn">
+          <i class="fa-solid fa-house"></i> <span data-i18n="nav_home">الرئيسية</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="page-hero">
+    <h1><span data-i18n="res_hero_1">دليل</span> <span data-i18n="res_hero_2">الإقامة الجامعية</span></h1>
+    <p data-i18n="res_hero_desc">كل ما تحتاجه عن إقامتك الجامعية.</p>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-8">
+  <main class="content-wrap">
 
-    <div id="mainMenu" class="space-y-8">
-      <div class="text-center space-y-3">
-        <h2 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white" data-i18n="res_subtitle">اختر إقامتك الجامعية</h2>
-        <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="res_desc">تعرف على موقع إقامتك، المسافة، المرافق، وجدول الوجبات الأسبوعي.</p>
+    <!-- MAIN MENU -->
+    <div id="mainMenu">
+
+      <!-- Choix résidence -->
+      <div style="text-align:center;margin-bottom:24px;">
+        <h2 style="font-size:1.5rem;font-weight:900;color:var(--text-main);margin:0 0 6px;" data-i18n="res_subtitle">اختر إقامتك الجامعية</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;font-weight:600;margin:0;" data-i18n="res_desc">تعرف على موقع إقامتك، المسافة، المرافق، وجدول الوجبات.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <button onclick="showDetails('hamdine')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
-          <div class="w-20 h-20 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-3xl group-hover:bg-orange-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
-          <div><h3 class="font-bold text-gray-900 dark:text-white text-xl" data-i18n="res_hamdine">الإقامة الجامعية سعيد حمدين</h3><p class="text-xs text-gray-500 mt-1">حسين داي، الجزائر العاصمة</p></div>
-          <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-bold">600 سرير</span>
-        </button>
-
-        <button onclick="showDetails('youssefi')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
-          <div class="w-20 h-20 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-3xl group-hover:bg-amber-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
-          <div><h3 class="font-bold text-gray-900 dark:text-white text-xl" data-i18n="res_youssefi">الإقامة الجامعية امحمد يوسفي</h3><p class="text-xs text-gray-500 mt-1">حسين داي، الجزائر العاصمة</p></div>
-          <span class="text-xs bg-amber-50 text-amber-600 px-3 py-1 rounded-full font-bold">500 سرير</span>
-        </button>
-
-        <button onclick="showDetails('gueridi')" class="residence-card glass-card p-6 rounded-3xl flex flex-col items-center text-center gap-4 group border-2 border-transparent">
-          <div class="w-20 h-20 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-3xl group-hover:bg-red-500 group-hover:text-white transition"><i class="fa-solid fa-building-user"></i></div>
-          <div><h3 class="font-bold text-gray-900 dark:text-white text-xl" data-i18n="res_gueridi">الإقامة الجامعية قاريدي</h3><p class="text-xs text-gray-500 mt-1">بن عكنون، الجزائر العاصمة</p></div>
-          <span class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full font-bold">1200 سرير</span>
-        </button>
-      </div>
-            <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-orange-100 dark:border-orange-900/30 relative overflow-hidden">
-        <div class="flex items-center gap-3 border-b border-orange-100 dark:border-slate-700 pb-4 relative z-10">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400 to-amber-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-orange-500/30"><i class="fa-solid fa-compass"></i></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+        <button onclick="showDetails('hamdine')" class="residence-card">
+          <div class="residence-icon orange"><i class="fa-solid fa-building-user"></i></div>
           <div>
-            <h3 class="text-xl font-black text-gray-900 dark:text-white" data-i18n="qibla_title">بوصلة القبلة</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400" data-i18n="qibla_desc">حدد اتجاه القبلة بدقة من موقعك الحالي</p>
+            <h3 class="residence-title" data-i18n="res_hamdine">الإقامة الجامعية سعيد حمدين</h3>
+            <p class="residence-sub">حسين داي، الجزائر العاصمة</p>
+          </div>
+          <span class="residence-badge">600 سرير</span>
+        </button>
+
+        <button onclick="showDetails('youssefi')" class="residence-card">
+          <div class="residence-icon amber"><i class="fa-solid fa-building-user"></i></div>
+          <div>
+            <h3 class="residence-title" data-i18n="res_youssefi">الإقامة الجامعية امحمد يوسفي</h3>
+            <p class="residence-sub">حسين داي، الجزائر العاصمة</p>
+          </div>
+          <span class="residence-badge">500 سرير</span>
+        </button>
+
+        <button onclick="showDetails('gueridi')" class="residence-card">
+          <div class="residence-icon red"><i class="fa-solid fa-building-user"></i></div>
+          <div>
+            <h3 class="residence-title" data-i18n="res_gueridi">الإقامة الجامعية قاريدي</h3>
+            <p class="residence-sub">بن عكنون، الجزائر العاصمة</p>
+          </div>
+          <span class="residence-badge">1200 سرير</span>
+        </button>
+      </div>
+
+      <!-- 🧭 QIBLA COMPASS AMÉLIORÉE -->
+      <section class="qibla-section">
+        <div class="qibla-header">
+          <div class="qibla-header-icon"><i class="fa-solid fa-compass"></i></div>
+          <div>
+            <h3 data-i18n="qibla_title">بوصلة القبلة</h3>
+            <p data-i18n="qibla_desc">حدد اتجاه القبلة بدقة من موقعك الحالي</p>
           </div>
         </div>
 
-        <div class="flex flex-col md:flex-row items-center justify-center gap-12 relative z-10">
-          <div class="relative">
-            <div class="compass-container" id="compass">
-              <div class="star-outer"></div>
-              <div class="star-inner">
-                <i class="fa-solid fa-kaaba kaaba-icon" id="kaabaIcon" title="Qibla"></i>
-                <div class="compass-needle" id="needle"></div>
-                <div class="compass-center"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="qibla-body">
+          <!-- Compass -->
+          <div class="compass-wrapper">
+            <div class="compass" id="compass">
+              <!-- Cadran gradué (généré JS) -->
+              <div id="compassTicks"></div>
+              <!-- Lettres cardinales -->
+              <span class="cardinal n">N</span>
+              <span class="cardinal s">S</span>
+              <span class="cardinal e">E</span>
+              <span class="cardinal w">W</span>
+              <!-- Aiguille -->
+              <div class="compass-needle-wrap" id="needleWrap">
+                <div class="compass-needle-kaaba"><i class="fa-solid fa-kaaba"></i></div>
+                <div class="compass-needle-bar"></div>
               </div>
+              <!-- Centre -->
+              <div class="compass-center-dot"></div>
             </div>
           </div>
-          <div class="text-center md:text-right space-y-4">
-            <div class="bg-orange-50 dark:bg-slate-800 px-6 py-4 rounded-2xl border border-orange-200 dark:border-slate-700 shadow-sm inline-block">
-              <p class="text-xs text-orange-600 dark:text-orange-400 font-bold mb-1" data-i18n="qibla_angle">زاوية القبلة من الشمال</p>
-              <p class="text-4xl font-black text-orange-900 dark:text-orange-300" id="qiblaAngle">--°</p>
+
+          <!-- Info -->
+          <div class="qibla-info-panel">
+            <div class="angle-card">
+              <div class="label"><i class="fa-solid fa-location-crosshairs"></i> <span data-i18n="qibla_angle">زاوية القبلة من الشمال</span></div>
+              <div class="value" id="qiblaAngle">--°</div>
+              <div class="direction" id="qiblaDirection"></div>
             </div>
-            <p class="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center justify-center md:justify-start gap-2" id="qiblaStatus">
-              <i class="fa-solid fa-spinner fa-spin text-orange-500"></i> <span data-i18n="qibla_locating">جاري تحديد موقعك...</span>
-            </p>
-            <p class="text-[11px] text-gray-500 dark:text-gray-400 max-w-xs mx-auto md:mx-0 bg-orange-50 dark:bg-slate-800 p-3 rounded-xl border border-orange-100 dark:border-slate-700" data-i18n="qibla_info">
-              يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.
-            </p>
+            <div class="status-line loading" id="qiblaStatus">
+              <i class="fa-solid fa-spinner fa-spin"></i>
+              <span data-i18n="qibla_locating">جاري تحديد موقعك...</span>
+            </div>
+            <div class="info-hint">
+              <i class="fa-solid fa-circle-info" style="color:var(--orange);"></i>
+              <span data-i18n="qibla_info">يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.</span>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 mt-8 border-2 border-red-100 dark:border-red-900/30 relative overflow-hidden">
-        <div class="flex items-center gap-3 border-b border-red-100 dark:border-slate-700 pb-4">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-400 to-red-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-red-500/30"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <!-- 🚨 EMERGENCY -->
+      <section class="section-card glass-card" style="border:1.5px solid rgba(239,68,68,.25);">
+        <div class="section-header">
+          <div class="section-header-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);"><i class="fa-solid fa-triangle-exclamation"></i></div>
           <div>
-            <h3 class="text-xl font-black text-gray-900 dark:text-white" data-i18n="emergency_title">حالة الطوارئ</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400" data-i18n="emergency_desc">أرقام مهمة يجب أن تكون محفوظة في هاتفك</p>
+            <h3 data-i18n="emergency_title">حالة الطوارئ</h3>
+            <p data-i18n="emergency_desc">أرقام مهمة يجب أن تكون محفوظة في هاتفك</p>
           </div>
         </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <a href="tel:14" class="emergency-card bg-red-50 dark:bg-red-900/20 p-5 rounded-2xl text-center border border-red-200 dark:border-red-800 flex flex-col items-center justify-center gap-2 group">
-            <div class="w-12 h-12 rounded-full bg-red-200 text-red-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-fire-extinguisher"></i></div>
-            <div class="text-2xl font-black text-red-700 dark:text-red-400">14</div>
-            <div class="text-xs font-bold text-red-800 dark:text-red-300" data-i18n="emergency_civil">الحماية المدنية</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;">
+          <a href="tel:14" class="emergency-card red">
+            <div class="e-icon"><i class="fa-solid fa-fire-extinguisher"></i></div>
+            <div class="e-number">14</div>
+            <div class="e-label" data-i18n="emergency_civil">الحماية المدنية</div>
           </a>
-          <a href="tel:17" class="emergency-card bg-blue-50 dark:bg-blue-900/20 p-5 rounded-2xl text-center border border-blue-200 dark:border-blue-800 flex flex-col items-center justify-center gap-2 group">
-            <div class="w-12 h-12 rounded-full bg-blue-200 text-blue-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-shield-halved"></i></div>
-            <div class="text-2xl font-black text-blue-700 dark:text-blue-400">17</div>
-            <div class="text-xs font-bold text-blue-800 dark:text-blue-300" data-i18n="emergency_police">الشرطة</div>
+          <a href="tel:17" class="emergency-card blue">
+            <div class="e-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="e-number">17</div>
+            <div class="e-label" data-i18n="emergency_police">الشرطة</div>
           </a>
-          <a href="tel:1548" class="emergency-card bg-amber-50 dark:bg-amber-900/20 p-5 rounded-2xl text-center border border-amber-200 dark:border-amber-800 flex flex-col items-center justify-center gap-2 group">
-            <div class="w-12 h-12 rounded-full bg-amber-200 text-amber-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-building-shield"></i></div>
-            <div class="text-2xl font-black text-amber-700 dark:text-amber-400">1548</div>
-            <div class="text-xs font-bold text-amber-800 dark:text-amber-300" data-i18n="emergency_school">أمن المدرسة</div>
+          <a href="tel:1548" class="emergency-card amber">
+            <div class="e-icon"><i class="fa-solid fa-building-shield"></i></div>
+            <div class="e-number" style="font-size:1.3rem;">1548</div>
+            <div class="e-label" data-i18n="emergency_school">أمن المدرسة</div>
           </a>
-          <a href="tel:021710000" class="emergency-card bg-emerald-50 dark:bg-emerald-900/20 p-5 rounded-2xl text-center border border-emerald-200 dark:border-emerald-800 flex flex-col items-center justify-center gap-2 group">
-            <div class="w-12 h-12 rounded-full bg-emerald-200 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-110 transition"><i class="fa-solid fa-hospital"></i></div>
-            <div class="text-sm font-black text-emerald-700 dark:text-emerald-400 pt-1">021 71 00 00</div>
-            <div class="text-xs font-bold text-emerald-800 dark:text-emerald-300" data-i18n="emergency_hospital">مستشفى مصطفى</div>
+          <a href="tel:021710000" class="emergency-card emerald">
+            <div class="e-icon"><i class="fa-solid fa-hospital"></i></div>
+            <div class="e-number" style="font-size:.95rem;padding-top:6px;">021 71 00 00</div>
+            <div class="e-label" data-i18n="emergency_hospital">مستشفى مصطفى</div>
           </a>
         </div>
-      </div>
+      </section>
     </div>
 
-    <div id="detailsSection" class="hidden space-y-8">
-      <button onclick="hideDetails()" class="px-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 hover:bg-orange-50 text-sm font-bold flex items-center gap-2 transition shadow-sm w-fit">
+    <!-- DETAILS SECTION -->
+    <div id="detailsSection" style="display:none;">
+
+      <button onclick="hideDetails()" class="btn-back" style="margin-bottom:20px;">
         <i class="fa-solid fa-arrow-right"></i> <span data-i18n="res_back">العودة لقائمة الإقامات</span>
       </button>
 
-      <div class="border-b border-orange-100 dark:border-slate-700 pb-4">
-        <h2 id="detailTitle" class="text-3xl font-black text-orange-900 dark:text-orange-400"></h2>
+      <div style="padding-bottom:14px;border-bottom:1.5px solid var(--border-color);margin-bottom:20px;">
+        <h2 id="detailTitle" style="font-size:1.6rem;font-weight:900;color:var(--orange-dark);margin:0;"></h2>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 glass-card p-4 rounded-3xl space-y-3 border border-orange-100 dark:border-slate-700">
-          <h3 class="font-bold text-lg text-gray-800 dark:text-white px-2"><i class="fa-solid fa-map-location-dot text-orange-500 mr-2"></i> <span data-i18n="res_map">الموقع على الخريطة</span></h3>
-          <div id="mapContainer" class="map-container bg-gray-200 dark:bg-slate-700"></div>
-        </div>
-        <div class="glass-card p-6 rounded-3xl space-y-4 flex flex-col justify-center border border-orange-100 dark:border-slate-700">
-          <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-400 flex items-center justify-center text-2xl mb-2"><i class="fa-solid fa-route"></i></div>
-          <h3 class="font-bold text-lg text-gray-800 dark:text-white" data-i18n="res_distance">المسافة إلى المدرسة</h3>
-          <p id="distanceText" class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed"></p>
-        </div>
-      </div>
-
-      <div class="glass-card p-4 rounded-3xl space-y-3 border border-orange-100 dark:border-slate-700">
-        <h3 class="font-bold text-lg text-gray-800 dark:text-white px-2"><i class="fa-brands fa-youtube text-red-500 mr-2"></i> <span data-i18n="res_video">فيديو تعريفي عن الإقامة</span></h3>
-        <div id="videoContainer" class="video-container bg-gray-200 dark:bg-slate-700 max-w-2xl mx-auto"></div>
-      </div>
-
-      <!-- Mosquée ajoutée -->
-      <div id="mosqueSection" class="glass-card p-6 rounded-3xl space-y-4 border-2 border-emerald-100 dark:border-emerald-900/30">
-        <h3 class="font-bold text-xl text-emerald-900 dark:text-emerald-400 flex items-center gap-2">
-          <i class="fa-solid fa-mosque"></i> <span data-i18n="mosque_title">المسجد القريب: مسجد عبد اللطيف سلطاني</span>
-        </h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="mosque_desc">مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="space-y-2">
-            <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-video text-red-500 mr-1.5"></i> <span data-i18n="mosque_video">فيديو تعريفي:</span></h4>
-            <div class="video-container bg-gray-200 dark:bg-slate-700">
-              <iframe src="https://www.youtube.com/embed/q9iK6P3XsYA" allowfullscreen loading="lazy"></iframe>
-            </div>
+      <div style="display:grid;grid-template-columns:1fr;gap:20px;">
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;" id="mapAndDistance">
+          <div class="glass-card" style="padding:16px;">
+            <h3 style="font-size:1rem;font-weight:800;color:var(--text-main);margin:0 0 10px;display:flex;align-items:center;gap:8px;">
+              <i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i>
+              <span data-i18n="res_map">الموقع على الخريطة</span>
+            </h3>
+            <div id="mapContainer" class="map-wrap"></div>
           </div>
-          <div class="space-y-2">
-            <h4 class="font-bold text-gray-900 dark:text-white text-sm"><i class="fa-solid fa-map-location-dot text-orange-500 mr-1.5"></i> <span data-i18n="mosque_map">الموقع:</span></h4>
-            <div class="map-container bg-gray-200 dark:bg-slate-700">
-              <iframe src="https://maps.google.com/maps?q=36.7293464,3.0733515&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
+          <div class="glass-card" style="padding:16px;display:flex;flex-direction:column;justify-content:center;gap:10px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(249,115,22,.15);color:var(--orange);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">
+              <i class="fa-solid fa-route"></i>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=36.7293464,3.0733515" target="_blank" class="map-btn text-emerald-700 dark:text-emerald-400 font-bold text-xs inline-flex items-center gap-1 mt-1">
-              <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="mosque_open_maps">فتح في خرائط جوجل</span>
-            </a>
+            <h3 style="font-size:1rem;font-weight:800;color:var(--text-main);margin:0;" data-i18n="res_distance">المسافة إلى المدرسة</h3>
+            <p id="distanceText" style="font-size:.82rem;color:var(--text-muted);line-height:1.7;margin:0;"></p>
           </div>
         </div>
-      </div>
 
-      <div class="glass-card p-6 rounded-3xl space-y-4 border border-orange-100 dark:border-slate-700">
-        <h3 class="font-bold text-xl text-gray-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-utensils text-orange-500"></i> <span data-i18n="res_meals_title">جدول الوجبات الأسبوعي (مشترك)</span></h3>
-        <div class="overflow-x-auto table-scroll rounded-xl border border-gray-200 dark:border-slate-700">
-          <table class="w-full text-sm text-right">
-            <thead class="bg-orange-50 dark:bg-slate-800 text-orange-900 dark:text-orange-300 font-bold">
-              <tr><th class="p-3 border-b dark:border-slate-700" data-i18n="res_day">اليوم</th><th class="p-3 border-b dark:border-slate-700" data-i18n="res_breakfast">الفطور</th><th class="p-3 border-b dark:border-slate-700" data-i18n="res_lunch">الغداء</th><th class="p-3 border-b dark:border-slate-700" data-i18n="res_dinner">العشاء</th></tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100 dark:divide-slate-700">
-              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold" data-i18n="day_sun">الأحد</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، مربى، حلويات</td><td class="p-3 text-xs">سلطة، عدس، تونة، خبز، فاكهة</td><td class="p-3 text-xs">خبز، جبن، تليتلي، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold" data-i18n="day_mon">الإثنين</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات، جبن</td><td class="p-3 text-xs">معكرونة، لحم، صلصة، فاكهة</td><td class="p-3 text-xs">خبز، شطيطحة لحم، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold" data-i18n="day_tue">الثلاثاء</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">أرز، دجاج، صلصة، فاكهة</td><td class="p-3 text-xs">خبز، أرز بالدجاج، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold" data-i18n="day_wed">الأربعاء</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">كسكس، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، كباب باللحم، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold" data-i18n="day_thu">الخميس</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">شربة، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، كسكس بالدجاج، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold" data-i18n="day_fri">الجمعة</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">كسكس، دجاج، خضر، فاكهة</td><td class="p-3 text-xs">خبز، طاجين زيتون باللحم، سلطة، فاكهة</td></tr>
-              <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50"><td class="p-3 font-bold" data-i18n="day_sat">السبت</td><td class="p-3 text-xs">حليب، شوكولاطة، خبز، زبدة، حلويات</td><td class="p-3 text-xs">شربة، لحم، خضر، فاكهة</td><td class="p-3 text-xs">خبز، مثوم، سلطة، فاكهة</td></tr>
-            </tbody>
-          </table>
+        <div class="glass-card" style="padding:16px;">
+          <h3 style="font-size:1rem;font-weight:800;color:var(--text-main);margin:0 0 10px;display:flex;align-items:center;gap:8px;">
+            <i class="fa-brands fa-youtube" style="color:#ef4444;"></i>
+            <span data-i18n="res_video">فيديو تعريفي عن الإقامة</span>
+          </h3>
+          <div id="videoContainer" class="video-wrap" style="max-width:640px;margin:0 auto;"></div>
         </div>
-      </div>
 
-      <div id="youssefiActivities" class="glass-card p-6 rounded-3xl space-y-4 hidden border-2 border-emerald-100 dark:border-emerald-900/30">
-        <h3 class="font-bold text-xl text-emerald-900 dark:text-emerald-400 flex items-center gap-2"><i class="fa-solid fa-calendar-check"></i> <span data-i18n="res_activities_title">إعلان هام: أنشطة ومرافق إقامة امحمد يوسفي</span></h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="res_activities_desc">تعلن مصلحة النشاطات كافة الطالبات عن افتتاح مختلف المرافق حسب الجدول التالي:</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div class="bg-pink-50 dark:bg-pink-900/20 p-4 rounded-xl border border-pink-100 dark:border-pink-800"><h4 class="font-bold text-pink-900 dark:text-pink-400 mb-2" data-i18n="res_sport">قاعة الرياضة</h4><p class="text-sm text-pink-800 dark:text-pink-300">من الأحد إلى الأربعاء (الفترتين الصباحية والمسائية).</p></div>
-          <div class="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl border border-amber-100 dark:border-amber-800"><h4 class="font-bold text-amber-900 dark:text-amber-400 mb-2" data-i18n="res_library">المكتبة</h4><p class="text-sm text-amber-800 dark:text-amber-300">من الأحد إلى الخميس (الفترتين الصباحية والمسائية).</p></div>
-          <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-xl border border-purple-100 dark:border-purple-800"><h4 class="font-bold text-purple-900 dark:text-purple-400 mb-2" data-i18n="res_game1">قاعة الألعاب الأولى</h4><p class="text-sm text-purple-800 dark:text-purple-300">صباحاً: الأحد إلى الخميس. مساءً: الأحد والثلاثاء.</p></div>
-          <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800"><h4 class="font-bold text-blue-900 dark:text-blue-400 mb-2" data-i18n="res_game2">قاعة الألعاب الثانية</h4><p class="text-sm text-blue-800 dark:text-blue-300">صباحاً: الأحد إلى الخميس. مساءً: الإثنين والأربعاء.</p></div>
-          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-200 dark:border-slate-700 md:col-span-2"><h4 class="font-bold text-gray-900 dark:text-white mb-2" data-i18n="res_activity_hall">قاعة النشاطات</h4><p class="text-sm text-gray-800 dark:text-gray-300">يوم الخميس: 13:30 (بعد وجبة الغداء) و 20:00 (بعد وجبة العشاء).</p></div>
+        <!-- Mosquée -->
+        <div class="glass-card" style="padding:22px;border:1.5px solid rgba(16,185,129,.25);">
+          <h3 style="font-size:1.1rem;font-weight:900;color:#059669;margin:0 0 6px;display:flex;align-items:center;gap:10px;">
+            <i class="fa-solid fa-mosque"></i>
+            <span data-i18n="mosque_title">المسجد القريب: مسجد عبد اللطيف سلطاني</span>
+          </h3>
+          <p style="font-size:.82rem;color:var(--text-muted);font-weight:600;margin:0 0 14px;" data-i18n="mosque_desc">مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+            <div>
+              <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-video" style="color:#ef4444;"></i> <span data-i18n="mosque_video">فيديو تعريفي:</span></h4>
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/q9iK6P3XsYA" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>
+            <div>
+              <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i> <span data-i18n="mosque_map">الموقع:</span></h4>
+              <div class="map-wrap">
+                <iframe src="https://maps.google.com/maps?q=36.7293464,3.0733515&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
+              </div>
+              <a href="https://www.google.com/maps/search/?api=1&query=36.7293464,3.0733515" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:#059669;font-weight:800;font-size:.78rem;text-decoration:none;">
+                <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="mosque_open_maps">فتح في خرائط جوجل</span>
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="space-y-4">
-        <h3 class="font-bold text-xl text-gray-800 dark:text-white border-r-4 border-orange-500 pr-3" data-i18n="res_facilities_title">المحلات والمرافق القريبة</h3>
-        <div id="facilitiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <!-- Meals -->
+        <div class="glass-card" style="padding:22px;">
+          <h3 style="font-size:1.1rem;font-weight:900;color:var(--text-main);margin:0 0 14px;display:flex;align-items:center;gap:10px;">
+            <i class="fa-solid fa-utensils" style="color:var(--orange);"></i>
+            <span data-i18n="res_meals_title">جدول الوجبات الأسبوعي (مشترك)</span>
+          </h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="res_day">اليوم</th>
+                  <th data-i18n="res_breakfast">الفطور</th>
+                  <th data-i18n="res_lunch">الغداء</th>
+                  <th data-i18n="res_dinner">العشاء</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td data-i18n="day_sun">الأحد</td><td>حليب، شوكولاطة، خبز، زبدة، مربى، حلويات</td><td>سلطة، عدس، تونة، خبز، فاكهة</td><td>خبز، جبن، تليتلي، فاكهة</td></tr>
+                <tr><td data-i18n="day_mon">الإثنين</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات، جبن</td><td>معكرونة، لحم، صلصة، فاكهة</td><td>خبز، شطيطحة لحم، سلطة، فاكهة</td></tr>
+                <tr><td data-i18n="day_tue">الثلاثاء</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>أرز، دجاج، صلصة، فاكهة</td><td>خبز، أرز بالدجاج، سلطة، فاكهة</td></tr>
+                <tr><td data-i18n="day_wed">الأربعاء</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>كسكس، لحم، خضر، فاكهة</td><td>خبز، كباب باللحم، سلطة، فاكهة</td></tr>
+                <tr><td data-i18n="day_thu">الخميس</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>شربة، لحم، خضر، فاكهة</td><td>خبز، كسكس بالدجاج، سلطة، فاكهة</td></tr>
+                <tr><td data-i18n="day_fri">الجمعة</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>كسكس، دجاج، خضر، فاكهة</td><td>خبز، طاجين زيتون باللحم، سلطة، فاكهة</td></tr>
+                <tr><td data-i18n="day_sat">السبت</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>شربة، لحم، خضر، فاكهة</td><td>خبز، مثوم، سلطة، فاكهة</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Activités Youssefi -->
+        <div id="youssefiActivities" class="glass-card" style="padding:22px;border:1.5px solid rgba(16,185,129,.25);display:none;">
+          <h3 style="font-size:1.1rem;font-weight:900;color:#059669;margin:0 0 6px;display:flex;align-items:center;gap:10px;">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span data-i18n="res_activities_title">إعلان هام: أنشطة ومرافق إقامة امحمد يوسفي</span>
+          </h3>
+          <p style="font-size:.82rem;color:var(--text-muted);font-weight:600;margin:0 0 14px;" data-i18n="res_activities_desc">تعلن مصلحة النشاطات كافة الطالبات عن افتتاح مختلف المرافق حسب الجدول التالي:</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+            <div class="activity-card pink">
+              <h4 data-i18n="res_sport">قاعة الرياضة</h4>
+              <p>من الأحد إلى الأربعاء (الفترتين الصباحية والمسائية).</p>
+            </div>
+            <div class="activity-card amber">
+              <h4 data-i18n="res_library">المكتبة</h4>
+              <p>من الأحد إلى الخميس (الفترتين الصباحية والمسائية).</p>
+            </div>
+            <div class="activity-card purple">
+              <h4 data-i18n="res_game1">قاعة الألعاب الأولى</h4>
+              <p>صباحاً: الأحد إلى الخميس. مساءً: الأحد والثلاثاء.</p>
+            </div>
+            <div class="activity-card blue">
+              <h4 data-i18n="res_game2">قاعة الألعاب الثانية</h4>
+              <p>صباحاً: الأحد إلى الخميس. مساءً: الإثنين والأربعاء.</p>
+            </div>
+            <div class="activity-card gray" style="grid-column:1/-1;">
+              <h4 data-i18n="res_activity_hall">قاعة النشاطات</h4>
+              <p>يوم الخميس: 13:30 (بعد وجبة الغداء) و 20:00 (بعد وجبة العشاء).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Facilities -->
+        <div>
+          <h3 style="font-size:1.1rem;font-weight:900;color:var(--text-main);margin:0 0 12px;border-right:4px solid var(--orange);padding-right:12px;" data-i18n="res_facilities_title">المحلات والمرافق القريبة</h3>
+          <div id="facilitiesGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;"></div>
+        </div>
       </div>
     </div>
+
   </main>
 
-  <footer class="glass-nav border-t border-orange-100 dark:border-slate-800 py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400">
-    <p>© 2026 ENSTP القبة — تصميم فريق التطوير الطلابي.</p>
+  <footer class="site-footer">
+    <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
   </footer>
 
-  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;">
-    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+  <!-- KANGOUROU -->
+  <div class="mascot-container" id="kangarooContainer">
+    <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
       <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
       <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
@@ -306,120 +877,260 @@
     </svg>
   </div>
 
-  <div id="chatWindow" class="hidden">
-    <div style="background: linear-gradient(135deg, #f97316, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
-      <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span></span>
-      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+  <!-- CHAT -->
+  <div id="chatWindow">
+    <div class="chat-header">
+      <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد الافتراضي</span></span>
+      <button class="chat-close-btn" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
-      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
+    <div id="chatBody">
+      <div style="background:rgba(249,115,22,.12);padding:9px 13px;border-radius:12px;color:var(--orange-dark);font-weight:600;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
     </div>
-    <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
-      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
-      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+    <div class="chat-input-wrap">
+      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك...">
+      <button class="chat-send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
-    <script>
+
+  <script>
+    /* ============================================================ */
+    /* TRADUCTIONS                                                   */
+    /* ============================================================ */
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    }
-
-    function t(key) {
-      const dict = window.RESIDENCE_TRANSLATIONS[currentLang] || window.RESIDENCE_TRANSLATIONS.ar;
-      return dict[key] || key;
-    }
 
     window.RESIDENCE_TRANSLATIONS = {
       ar: {
-        page_title: "دليل الإقامة الجامعية - ENSTP", nav_app_sub: "دليل الإقامة الجامعية", nav_home: "الرئيسية",
-        res_subtitle: "اختر إقامتك الجامعية", res_desc: "تعرف على موقع إقامتك، المسافة، المرافق، وجدول الوجبات الأسبوعي.",
-        res_hamdine: "الإقامة الجامعية سعيد حمدين", res_youssefi: "الإقامة الجامعية امحمد يوسفي", res_gueridi: "الإقامة الجامعية قاريدي",
-        qibla_title: "بوصلة القبلة", qibla_desc: "حدد اتجاه القبلة بدقة من موقعك الحالي",
-        qibla_angle: "زاوية القبلة من الشمال", qibla_locating: "جاري تحديد موقعك...", qibla_info: "يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.",
-        emergency_title: "حالة الطوارئ", emergency_desc: "أرقام مهمة يجب أن تكون محفوظة في هاتفك",
-        emergency_civil: "الحماية المدنية", emergency_police: "الشرطة", emergency_school: "أمن المدرسة", emergency_hospital: "مستشفى مصطفى",
-        res_back: "العودة لقائمة الإقامات", res_map: "الموقع على الخريطة", res_distance: "المسافة إلى المدرسة",
-        res_video: "فيديو تعريفي عن الإقامة", res_meals_title: "جدول الوجبات الأسبوعي (مشترك)",
+        page_title: "دليل الإقامة الجامعية - ENSTP",
+        nav_app_sub: "دليل الإقامة الجامعية", nav_home: "الرئيسية",
+        menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي",
+        res_hero_1: "دليل", res_hero_2: "الإقامة الجامعية",
+        res_hero_desc: "كل ما تحتاجه عن إقامتك الجامعية.",
+        res_subtitle: "اختر إقامتك الجامعية",
+        res_desc: "تعرف على موقع إقامتك، المسافة، المرافق، وجدول الوجبات.",
+        res_hamdine: "الإقامة الجامعية سعيد حمدين",
+        res_youssefi: "الإقامة الجامعية امحمد يوسفي",
+        res_gueridi: "الإقامة الجامعية قاريدي",
+        qibla_title: "بوصلة القبلة",
+        qibla_desc: "حدد اتجاه القبلة بدقة من موقعك الحالي",
+        qibla_angle: "زاوية القبلة من الشمال",
+        qibla_locating: "جاري تحديد موقعك...",
+        qibla_info: "يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.",
+        qibla_found: "تم تحديد موقعك",
+        qibla_error: "تعذر تحديد الموقع",
+        qibla_direction_n: "شمال",
+        qibla_direction_ne: "شمال شرق",
+        qibla_direction_e: "شرق",
+        qibla_direction_se: "جنوب شرق",
+        qibla_direction_s: "جنوب",
+        qibla_direction_sw: "جنوب غرب",
+        qibla_direction_w: "غرب",
+        qibla_direction_nw: "شمال غرب",
+        emergency_title: "حالة الطوارئ",
+        emergency_desc: "أرقام مهمة يجب أن تكون محفوظة في هاتفك",
+        emergency_civil: "الحماية المدنية", emergency_police: "الشرطة",
+        emergency_school: "أمن المدرسة", emergency_hospital: "مستشفى مصطفى",
+        res_back: "العودة لقائمة الإقامات", res_map: "الموقع على الخريطة",
+        res_distance: "المسافة إلى المدرسة", res_video: "فيديو تعريفي عن الإقامة",
+        res_meals_title: "جدول الوجبات الأسبوعي (مشترك)",
         res_day: "اليوم", res_breakfast: "الفطور", res_lunch: "الغداء", res_dinner: "العشاء",
-        day_sun: "الأحد", day_mon: "الإثنين", day_tue: "الثلاثاء", day_wed: "الأربعاء", day_thu: "الخميس", day_fri: "الجمعة", day_sat: "السبت",
-        res_activities_title: "إعلان هام: أنشطة ومرافق إقامة امحمد يوسفي", res_activities_desc: "تعلن مصلحة النشاطات كافة الطالبات عن افتتاح مختلف المرافق حسب الجدول التالي:",
-        res_sport: "قاعة الرياضة", res_library: "المكتبة", res_game1: "قاعة الألعاب الأولى", res_game2: "قاعة الألعاب الثانية", res_activity_hall: "قاعة النشاطات",
+        day_sun: "الأحد", day_mon: "الإثنين", day_tue: "الثلاثاء",
+        day_wed: "الأربعاء", day_thu: "الخميس", day_fri: "الجمعة", day_sat: "السبت",
+        res_activities_title: "إعلان هام: أنشطة ومرافق إقامة امحمد يوسفي",
+        res_activities_desc: "تعلن مصلحة النشاطات كافة الطالبات عن افتتاح مختلف المرافق حسب الجدول التالي:",
+        res_sport: "قاعة الرياضة", res_library: "المكتبة",
+        res_game1: "قاعة الألعاب الأولى", res_game2: "قاعة الألعاب الثانية",
+        res_activity_hall: "قاعة النشاطات",
         res_facilities_title: "المحلات والمرافق القريبة",
-        mosque_title: "المسجد القريب: مسجد عبد اللطيف سلطاني", mosque_desc: "مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.",
-        mosque_video: "فيديو تعريفي:", mosque_map: "الموقع:", mosque_open_maps: "فتح في خرائط جوجل",
-        chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟", chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!", chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!", chat_residence: "تصفح الإقامات الجامعية في هذه الصفحة."
+        mosque_title: "المسجد القريب: مسجد عبد اللطيف سلطاني",
+        mosque_desc: "مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.",
+        mosque_video: "فيديو تعريفي:", mosque_map: "الموقع:",
+        mosque_open_maps: "فتح في خرائط جوجل",
+        chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
+        chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
+        chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
+        chat_residence: "تصفح الإقامات الجامعية في هذه الصفحة.",
+        footer_rights: "جميع الحقوق محفوظة"
       },
       fr: {
-        page_title: "Guide Résidence - ENSTP", nav_app_sub: "Guide de Résidence", nav_home: "Accueil",
-        res_subtitle: "Choisissez votre résidence", res_desc: "Découvrez l'emplacement, la distance, les installations et le menu.",
-        res_hamdine: "Résidence Saïd Hamdine", res_youssefi: "Résidence Mohamed Youssefi", res_gueridi: "Résidence Gueridi",
-        qibla_title: "Boussole Qibla", qibla_desc: "Déterminez la direction de la Qibla depuis votre position.",
-        qibla_angle: "Angle depuis le Nord", qibla_locating: "Localisation...", qibla_info: "Autorisez l'accès à la position et au gyroscope pour un résultat précis.",
+        page_title: "Guide Résidence - ENSTP",
+        nav_app_sub: "Guide de Résidence", nav_home: "Accueil",
+        menu_lang: "Langue", menu_settings: "Paramètres", menu_dark: "Sombre",
+        res_hero_1: "Guide", res_hero_2: "Résidence",
+        res_hero_desc: "Tout ce qu'il faut sur votre résidence.",
+        res_subtitle: "Choisissez votre résidence",
+        res_desc: "Découvrez l'emplacement, la distance, les installations et le menu.",
+        res_hamdine: "Résidence Saïd Hamdine",
+        res_youssefi: "Résidence Mohamed Youssefi",
+        res_gueridi: "Résidence Gueridi",
+        qibla_title: "Boussole Qibla",
+        qibla_desc: "Déterminez la direction de la Qibla depuis votre position.",
+        qibla_angle: "Angle depuis le Nord",
+        qibla_locating: "Localisation...",
+        qibla_info: "Autorisez l'accès à la position et au gyroscope pour un résultat précis.",
+        qibla_found: "Position détectée",
+        qibla_error: "Impossible de localiser",
+        qibla_direction_n: "Nord",
+        qibla_direction_ne: "Nord-est",
+        qibla_direction_e: "Est",
+        qibla_direction_se: "Sud-est",
+        qibla_direction_s: "Sud",
+        qibla_direction_sw: "Sud-ouest",
+        qibla_direction_w: "Ouest",
+        qibla_direction_nw: "Nord-ouest",
         emergency_title: "Urgences", emergency_desc: "Numéros importants à enregistrer",
-        emergency_civil: "Protection civile", emergency_police: "Police", emergency_school: "Sécurité école", emergency_hospital: "Hôpital Mustapha",
-        res_back: "Retour aux résidences", res_map: "Emplacement sur la carte", res_distance: "Distance de l'école",
-        res_video: "Vidéo de la résidence", res_meals_title: "Menu hebdomadaire (commun)",
+        emergency_civil: "Protection civile", emergency_police: "Police",
+        emergency_school: "Sécurité école", emergency_hospital: "Hôpital Mustapha",
+        res_back: "Retour aux résidences", res_map: "Emplacement sur la carte",
+        res_distance: "Distance de l'école", res_video: "Vidéo de la résidence",
+        res_meals_title: "Menu hebdomadaire (commun)",
         res_day: "Jour", res_breakfast: "Petit-déjeuner", res_lunch: "Déjeuner", res_dinner: "Dîner",
-        day_sun: "Dimanche", day_mon: "Lundi", day_tue: "Mardi", day_wed: "Mercredi", day_thu: "Jeudi", day_fri: "Vendredi", day_sat: "Samedi",
-        res_activities_title: "Activités Résidence Youssefi", res_activities_desc: "Ouverture des installations selon le calendrier:",
-        res_sport: "Salle de sport", res_library: "Bibliothèque", res_game1: "Salle de jeux 1", res_game2: "Salle de jeux 2", res_activity_hall: "Salle d'activités",
+        day_sun: "Dimanche", day_mon: "Lundi", day_tue: "Mardi",
+        day_wed: "Mercredi", day_thu: "Jeudi", day_fri: "Vendredi", day_sat: "Samedi",
+        res_activities_title: "Activités Résidence Youssefi",
+        res_activities_desc: "Ouverture des installations selon le calendrier:",
+        res_sport: "Salle de sport", res_library: "Bibliothèque",
+        res_game1: "Salle de jeux 1", res_game2: "Salle de jeux 2",
+        res_activity_hall: "Salle d'activités",
         res_facilities_title: "Commerces à proximité",
-        mosque_title: "Mosquée proche : Mosquée Abdellatif Soltani", mosque_desc: "Mosquée Abdellatif Soltani à Vieux Kouba, l'une des mosquées connues de la région.",
-        mosque_video: "Vidéo :", mosque_map: "Emplacement :", mosque_open_maps: "Ouvrir dans Google Maps",
-        chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?", chat_placeholder: "Votre question...", chat_default: "Merci !", chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !", chat_residence: "Parcourez les résidences sur cette page."
+        mosque_title: "Mosquée proche : Mosquée Abdellatif Soltani",
+        mosque_desc: "Mosquée Abdellatif Soltani à Vieux Kouba, l'une des mosquées connues de la région.",
+        mosque_video: "Vidéo :", mosque_map: "Emplacement :",
+        mosque_open_maps: "Ouvrir dans Google Maps",
+        chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
+        chat_placeholder: "Votre question...", chat_default: "Merci !",
+        chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
+        chat_residence: "Parcourez les résidences sur cette page.",
+        footer_rights: "Tous droits réservés"
       },
       en: {
-        page_title: "Residence Guide - ENSTP", nav_app_sub: "Residence Guide", nav_home: "Home",
-        res_subtitle: "Choose your residence", res_desc: "Discover location, distance, facilities and weekly menu.",
-        res_hamdine: "Saïd Hamdine Residence", res_youssefi: "Mohamed Youssefi Residence", res_gueridi: "Gueridi Residence",
-        qibla_title: "Qibla Compass", qibla_desc: "Find the Qibla direction from your location.",
-        qibla_angle: "Angle from North", qibla_locating: "Locating...", qibla_info: "Allow location and gyroscope access for accurate results.",
+        page_title: "Residence Guide - ENSTP",
+        nav_app_sub: "Residence Guide", nav_home: "Home",
+        menu_lang: "Language", menu_settings: "Settings", menu_dark: "Dark",
+        res_hero_1: "Residence", res_hero_2: "Guide",
+        res_hero_desc: "Everything about your residence.",
+        res_subtitle: "Choose your residence",
+        res_desc: "Discover location, distance, facilities and weekly menu.",
+        res_hamdine: "Saïd Hamdine Residence",
+        res_youssefi: "Mohamed Youssefi Residence",
+        res_gueridi: "Gueridi Residence",
+        qibla_title: "Qibla Compass",
+        qibla_desc: "Find the Qibla direction from your location.",
+        qibla_angle: "Angle from North",
+        qibla_locating: "Locating...",
+        qibla_info: "Allow location and gyroscope access for accurate results.",
+        qibla_found: "Location detected",
+        qibla_error: "Unable to locate",
+        qibla_direction_n: "North",
+        qibla_direction_ne: "Northeast",
+        qibla_direction_e: "East",
+        qibla_direction_se: "Southeast",
+        qibla_direction_s: "South",
+        qibla_direction_sw: "Southwest",
+        qibla_direction_w: "West",
+        qibla_direction_nw: "Northwest",
         emergency_title: "Emergency", emergency_desc: "Important numbers to save",
-        emergency_civil: "Civil Protection", emergency_police: "Police", emergency_school: "School Security", emergency_hospital: "Mustapha Hospital",
-        res_back: "Back to residences", res_map: "Location on map", res_distance: "Distance from school",
-        res_video: "Residence video", res_meals_title: "Weekly menu (common)",
+        emergency_civil: "Civil Protection", emergency_police: "Police",
+        emergency_school: "School Security", emergency_hospital: "Mustapha Hospital",
+        res_back: "Back to residences", res_map: "Location on map",
+        res_distance: "Distance from school", res_video: "Residence video",
+        res_meals_title: "Weekly menu (common)",
         res_day: "Day", res_breakfast: "Breakfast", res_lunch: "Lunch", res_dinner: "Dinner",
-        day_sun: "Sunday", day_mon: "Monday", day_tue: "Tuesday", day_wed: "Wednesday", day_thu: "Thursday", day_fri: "Friday", day_sat: "Saturday",
-        res_activities_title: "Youssefi Residence Activities", res_activities_desc: "Opening of facilities according to schedule:",
-        res_sport: "Sports Hall", res_library: "Library", res_game1: "Game Room 1", res_game2: "Game Room 2", res_activity_hall: "Activity Hall",
+        day_sun: "Sunday", day_mon: "Monday", day_tue: "Tuesday",
+        day_wed: "Wednesday", day_thu: "Thursday", day_fri: "Friday", day_sat: "Saturday",
+        res_activities_title: "Youssefi Residence Activities",
+        res_activities_desc: "Opening of facilities according to schedule:",
+        res_sport: "Sports Hall", res_library: "Library",
+        res_game1: "Game Room 1", res_game2: "Game Room 2",
+        res_activity_hall: "Activity Hall",
         res_facilities_title: "Nearby shops",
-        mosque_title: "Nearby Mosque: Abdellatif Soltani Mosque", mosque_desc: "Abdellatif Soltani Mosque in Vieux Kouba, a well-known mosque in the area.",
-        mosque_video: "Video:", mosque_map: "Location:", mosque_open_maps: "Open in Google Maps",
-        chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?", chat_placeholder: "Your question...", chat_default: "Thanks!", chat_hello: "Welcome!", chat_thanks: "You're welcome!", chat_residence: "Browse residences on this page."
+        mosque_title: "Nearby Mosque: Abdellatif Soltani Mosque",
+        mosque_desc: "Abdellatif Soltani Mosque in Vieux Kouba, a well-known mosque in the area.",
+        mosque_video: "Video:", mosque_map: "Location:",
+        mosque_open_maps: "Open in Google Maps",
+        chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
+        chat_placeholder: "Your question...", chat_default: "Thanks!",
+        chat_hello: "Welcome!", chat_thanks: "You're welcome!",
+        chat_residence: "Browse residences on this page.",
+        footer_rights: "All rights reserved"
       }
     };
 
-    window.applyResidenceTranslation = function(lang) {
-      const dict = window.RESIDENCE_TRANSLATIONS[lang] || window.RESIDENCE_TRANSLATIONS.ar;
-      if (dict.page_title) document.title = dict.page_title;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
+    function t(key){
+      const d = window.RESIDENCE_TRANSLATIONS[currentLang] || window.RESIDENCE_TRANSLATIONS.ar;
+      return d[key] || key;
+    }
+
+    window.applyResidenceTranslation = function(lang){
+      const d = window.RESIDENCE_TRANSLATIONS[lang] || window.RESIDENCE_TRANSLATIONS.ar;
+      if(d.page_title) document.title = d.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k = el.getAttribute('data-i18n');
+        if(d[k]){
           const icon = el.querySelector('i');
-          if (icon) { el.innerHTML = ''; el.appendChild(icon); el.appendChild(document.createTextNode(' ' + dict[key])); }
-          else el.innerText = dict[key];
+          if(icon){ el.innerHTML=''; el.appendChild(icon); el.appendChild(document.createTextNode(' '+d[k])); }
+          else el.innerText = d[k];
         }
       });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (dict[key]) el.placeholder = dict[key];
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-placeholder');
+        if(d[k]) el.placeholder = d[k];
       });
-      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.dir = (lang==='ar') ? 'rtl' : 'ltr';
       document.documentElement.lang = lang;
+      // Update theme button text
+      const tb = document.getElementById('themeBtn'); if(tb){
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        tb.innerHTML = isDark
+          ? '<i class="fa-solid fa-sun"></i> <span>'+d.menu_dark+'</span>'
+          : '<i class="fa-solid fa-moon"></i> <span>'+d.menu_dark+'</span>';
+      }
+      // Update qibla status if set
+      if(userLat !== null){
+        const sl = document.getElementById('qiblaStatus');
+        if(sl) sl.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span>${d.qibla_found}</span>`;
+      }
     };
 
-    window.setLanguage = function(lang) {
+    window.setLanguage = function(lang){
       currentLang = lang;
       localStorage.setItem('enstp_lang', lang);
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-' + lang);
-      if (activeBtn) activeBtn.classList.add('active');
-      window.applyResidenceTranslation(lang);
+      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
+      const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
+      applyResidenceTranslation(lang);
     };
 
+    /* ============================================================ */
+    /* DARK MODE                                                     */
+    /* ============================================================ */
+    const htmlEl = document.documentElement;
+    if(localStorage.getItem('theme')==='dark') htmlEl.setAttribute('data-theme','dark');
+
+    function toggleDarkMode(){
+      const isDark = htmlEl.getAttribute('data-theme')==='dark';
+      htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', htmlEl.getAttribute('data-theme'));
+      applyResidenceTranslation(currentLang);
+    }
+
+    /* ============================================================ */
+    /* MENU                                                          */
+    /* ============================================================ */
+    function toggleMenu(){
+      document.getElementById('navDropdown').classList.toggle('open');
+      document.getElementById('menuBtn').classList.toggle('active');
+    }
+    document.addEventListener('click', e=>{
+      const dd = document.getElementById('navDropdown');
+      const btn = document.getElementById('menuBtn');
+      if(!dd.contains(e.target) && !btn.contains(e.target)){
+        dd.classList.remove('open');
+        btn.classList.remove('active');
+      }
+    });
+
+    /* ============================================================ */
+    /* RESIDENCES                                                    */
+    /* ============================================================ */
     const residencesData = {
       'hamdine': {
         title: 'الإقامة الجامعية سعيد حمدين',
@@ -456,53 +1167,70 @@
       }
     };
 
-    function showDetails(id) {
+    function showDetails(id){
       const data = residencesData[id];
-      document.getElementById('mainMenu').classList.add('hidden');
-      document.getElementById('detailsSection').classList.remove('hidden');
+      document.getElementById('mainMenu').style.display = 'none';
+      document.getElementById('detailsSection').style.display = 'block';
       document.getElementById('detailTitle').innerText = data.title;
       document.getElementById('mapContainer').innerHTML = `<iframe src="${data.mapSrc}" allowfullscreen loading="lazy"></iframe>`;
       document.getElementById('distanceText').innerText = data.distance;
       document.getElementById('videoContainer').innerHTML = `<iframe src="${data.videoSrc}" allowfullscreen></iframe>`;
-      const youssefiSection = document.getElementById('youssefiActivities');
-      if (id === 'youssefi') youssefiSection.classList.remove('hidden');
-      else youssefiSection.classList.add('hidden');
+
+      const ys = document.getElementById('youssefiActivities');
+      ys.style.display = (id === 'youssefi') ? 'block' : 'none';
+
       const grid = document.getElementById('facilitiesGrid');
       grid.innerHTML = '';
       data.facilities.forEach(fac => {
-        let colorClass = 'bg-blue-100 text-blue-600';
-        if(fac.type === 'مرفق صحي') colorClass = 'bg-red-100 text-red-600';
-        if(fac.type === 'محل تجاري') colorClass = 'bg-emerald-100 text-emerald-600';
-        if(fac.type === 'ترفيه') colorClass = 'bg-purple-100 text-purple-600';
+        let colorClass = 'rgba(59,130,246,.15)', color = '#2563eb';
+        if(fac.type === 'مرفق صحي'){ colorClass = 'rgba(239,68,68,.15)'; color = '#dc2626'; }
+        if(fac.type === 'محل تجاري'){ colorClass = 'rgba(16,185,129,.15)'; color = '#059669'; }
+        if(fac.type === 'ترفيه'){ colorClass = 'rgba(139,92,246,.15)'; color = '#7c3aed'; }
         grid.innerHTML += `
-          <div class="glass-card p-5 rounded-2xl border border-orange-100 dark:border-slate-700 flex flex-col gap-3">
-            <div class="flex items-center gap-3 border-b border-gray-100 dark:border-slate-700 pb-3">
-              <div class="w-10 h-10 rounded-xl ${colorClass} flex items-center justify-center text-lg"><i class="fa-solid ${fac.icon}"></i></div>
-              <div><h4 class="font-bold text-gray-800 dark:text-white text-sm">${fac.name}</h4><span class="text-[10px] font-bold text-gray-500 dark:text-gray-400">${fac.type}</span></div>
+          <div class="facility-card">
+            <div class="facility-head">
+              <div class="facility-icon" style="background:${colorClass};color:${color};"><i class="fa-solid ${fac.icon}"></i></div>
+              <div>
+                <div class="facility-name">${fac.name}</div>
+                <div class="facility-type">${fac.type}</div>
+              </div>
             </div>
-            <div class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
-              <p class="flex items-center gap-2"><i class="fa-regular fa-clock text-gray-400 w-4"></i> <span dir="ltr">${fac.time}</span></p>
-              <p class="flex items-center gap-2"><i class="fa-solid fa-person-walking text-gray-400 w-4"></i> ${fac.distance}</p>
-            </div>
+            <div class="facility-line"><i class="fa-regular fa-clock" style="width:16px;color:var(--text-muted);"></i> <span dir="ltr">${fac.time}</span></div>
+            <div class="facility-line"><i class="fa-solid fa-person-walking" style="width:16px;color:var(--text-muted);"></i> ${fac.distance}</div>
           </div>
         `;
       });
-      window.scrollTo(0, 0);
+      window.scrollTo(0,0);
     }
 
-    function hideDetails() {
-      document.getElementById('detailsSection').classList.add('hidden');
-      document.getElementById('mainMenu').classList.remove('hidden');
+    function hideDetails(){
+      document.getElementById('detailsSection').style.display = 'none';
+      document.getElementById('mainMenu').style.display = 'block';
       document.getElementById('mapContainer').innerHTML = '';
       document.getElementById('videoContainer').innerHTML = '';
-      window.scrollTo(0, 0);
+      window.scrollTo(0,0);
     }
 
+    /* ============================================================ */
+    /* 🧭 QIBLA COMPASS                                              */
+    /* ============================================================ */
     const KAABA_LAT = 21.4225;
     const KAABA_LNG = 39.8262;
     let userLat = null, userLng = null, deviceHeading = null;
 
-    function calculateQiblaAngle(lat, lng) {
+    // Génère les ticks du cadran
+    (function buildTicks(){
+      const cont = document.getElementById('compassTicks');
+      if(!cont) return;
+      for(let i = 0; i < 72; i++){ // 72 ticks = 5° each
+        const t = document.createElement('div');
+        t.className = 'tick' + (i % 6 === 0 ? ' major' : '');
+        t.style.transform = `rotate(${i * 5}deg)`;
+        cont.appendChild(t);
+      }
+    })();
+
+    function calculateQiblaAngle(lat, lng){
       const phiK = KAABA_LAT * Math.PI / 180;
       const lambdaK = KAABA_LNG * Math.PI / 180;
       const phi = lat * Math.PI / 180;
@@ -514,36 +1242,56 @@
       return (qibla + 360) % 360;
     }
 
-    function updateCompass() {
-      if (deviceHeading === null || userLat === null) return;
+    function directionLabel(deg){
+      const dirs = ['n','ne','e','se','s','sw','w','nw'];
+      const idx = Math.round(((deg % 360) + 360) % 360 / 45) % 8;
+      const key = 'qibla_direction_' + dirs[idx];
+      return t(key);
+    }
+
+    function updateCompass(){
+      if(deviceHeading === null || userLat === null) return;
       const qiblaAngle = calculateQiblaAngle(userLat, userLng);
       const qiblaEl = document.getElementById('qiblaAngle');
       if(qiblaEl) qiblaEl.innerText = Math.round(qiblaAngle) + '°';
-      const needle = document.getElementById('needle');
-      if(needle) needle.style.transform = `rotate(${qiblaAngle - deviceHeading}deg)`;
+      const dirEl = document.getElementById('qiblaDirection');
+      if(dirEl) dirEl.innerText = directionLabel(qiblaAngle);
+      const needleWrap = document.getElementById('needleWrap');
+      if(needleWrap){
+        // Rotation relative à l'orientation de l'appareil
+        const rotation = qiblaAngle - deviceHeading;
+        needleWrap.style.transform = `rotate(${rotation}deg)`;
+      }
     }
 
-    if (navigator.geolocation) {
+    if(navigator.geolocation){
       navigator.geolocation.watchPosition(
-        (position) => {
-          userLat = position.coords.latitude;
-          userLng = position.coords.longitude;
-          const statusEl = document.getElementById('qiblaStatus');
-          if(statusEl) statusEl.innerHTML = `<span class="text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-check-circle"></i> ${t('qibla_found') || 'تم تحديد موقعك'}</span>`;
+        (pos)=>{
+          userLat = pos.coords.latitude;
+          userLng = pos.coords.longitude;
+          const sl = document.getElementById('qiblaStatus');
+          if(sl){
+            sl.className = 'status-line success';
+            sl.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span>${t('qibla_found')}</span>`;
+          }
           updateCompass();
         },
-        (error) => {
-          const statusEl = document.getElementById('qiblaStatus');
-          if(statusEl) statusEl.innerHTML = `<span class="text-red-500"><i class="fa-solid fa-triangle-exclamation"></i> ${t('qibla_error') || 'تعذر تحديد الموقع.'}</span>`;
-        }
+        (err)=>{
+          const sl = document.getElementById('qiblaStatus');
+          if(sl){
+            sl.className = 'status-line error';
+            sl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>${t('qibla_error')}</span>`;
+          }
+        },
+        { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 }
       );
     }
 
-    if (window.DeviceOrientationEvent) {
-      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        document.body.addEventListener('click', function requestAccess() {
-          DeviceOrientationEvent.requestPermission().then(permissionState => {
-            if (permissionState === 'granted') {
+    if(window.DeviceOrientationEvent){
+      if(typeof DeviceOrientationEvent.requestPermission === 'function'){
+        document.body.addEventListener('click', function requestAccess(){
+          DeviceOrientationEvent.requestPermission().then(state=>{
+            if(state === 'granted'){
               window.addEventListener('deviceorientationabsolute', handleOrientation);
               window.addEventListener('deviceorientation', handleOrientation);
               document.body.removeEventListener('click', requestAccess);
@@ -556,68 +1304,75 @@
       }
     }
 
-    function handleOrientation(event) {
+    function handleOrientation(event){
       let heading = null;
-      if (event.webkitCompassHeading) heading = event.webkitCompassHeading;
-      else if (event.alpha !== null) heading = 360 - event.alpha;
-      if (heading !== null) { deviceHeading = heading; updateCompass(); }
+      if(event.webkitCompassHeading) heading = event.webkitCompassHeading;
+      else if(event.alpha !== null) heading = 360 - event.alpha;
+      if(heading !== null){ deviceHeading = heading; updateCompass(); }
     }
 
-    function toggleChat() {
-      const chat = document.getElementById('chatWindow');
-      if (!chat) return;
-      chat.classList.toggle('hidden');
-      chat.classList.toggle('open');
+    /* ============================================================ */
+    /* CHAT                                                          */
+    /* ============================================================ */
+    function toggleChat(){
+      const c = document.getElementById('chatWindow');
+      if(!c) return;
+      c.classList.toggle('open');
     }
 
-    function sendMessage() {
+    function sendMessage(){
       const input = document.getElementById('chatInput');
       const body = document.getElementById('chatBody');
-      if (!input || !body) return;
+      if(!input || !body) return;
       const msg = input.value.trim();
-      if (!msg) return;
-      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div></div>`;
+      if(!msg) return;
+      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:9px 13px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:.82rem;font-weight:600;">${msg}</div></div>`;
       input.value = '';
       body.scrollTop = body.scrollHeight;
-      setTimeout(() => {
+      setTimeout(()=>{
         let reply = t('chat_default');
         const m = msg.toLowerCase();
-        if (m.includes("إقامة") || m.includes("residence") || m.includes("youssefi") || m.includes("hamdine")) reply = "🏠 " + t('chat_residence');
-        else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
-        else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
-        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div></div>`;
+        if(m.includes("إقامة") || m.includes("residence") || m.includes("youssefi") || m.includes("hamdine")) reply = "🏠 " + t('chat_residence');
+        else if(m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
+        else if(m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
+        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:rgba(249,115,22,.12);color:var(--orange-dark);padding:9px 13px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:.82rem;font-weight:600;">${reply}</div></div>`;
         body.scrollTop = body.scrollHeight;
       }, 500);
     }
 
+    /* ============================================================ */
+    /* KANGOUROU                                                     */
+    /* ============================================================ */
     const kangarooContainer = document.getElementById('kangarooContainer');
     const kangarooSvg = document.getElementById('kangarooSvg');
-    if (kangarooContainer) {
-      kangarooContainer.addEventListener('click', () => {
-        if (kangarooSvg) {
-          kangarooSvg.style.animation = 'none';
-          kangarooSvg.offsetHeight;
-          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
-          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
+    if(kangarooContainer){
+      kangarooContainer.addEventListener('click', ()=>{
+        if(kangarooSvg){
+          kangarooSvg.classList.remove('jump');
+          void kangarooSvg.offsetHeight;
+          kangarooSvg.classList.add('jump');
+          setTimeout(()=>kangarooSvg.classList.remove('jump'), 700);
         }
         toggleChat();
       });
-      kangarooContainer.addEventListener('mouseenter', () => { if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
-      kangarooContainer.addEventListener('mouseleave', () => { if (kangarooSvg) kangarooSvg.style.transform = ''; });
+      kangarooContainer.addEventListener('mouseenter', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
+      kangarooContainer.addEventListener('mouseleave', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = ''; });
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-' + savedLang);
-      if (activeBtn) activeBtn.classList.add('active');
-      currentLang = savedLang;
-      window.applyResidenceTranslation(savedLang);
+    /* ============================================================ */
+    /* INIT                                                          */
+    /* ============================================================ */
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const saved = localStorage.getItem('enstp_lang') || 'ar';
+      currentLang = saved;
+      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
+      const b = document.getElementById('btn-'+saved); if(b) b.classList.add('active');
+      applyResidenceTranslation(saved);
+
       const chatInput = document.getElementById('chatInput');
-      if (chatInput) {
-        chatInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+      if(chatInput){
+        chatInput.addEventListener('keypress', (e)=>{
+          if(e.key === 'Enter'){ e.preventDefault(); sendMessage(); }
         });
       }
     });
