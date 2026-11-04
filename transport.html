@@ -463,7 +463,7 @@
 
         <div class="search-input-wrap">
           <input type="text" id="busSearchInput" autocomplete="off"
-                 placeholder="ابحث عن وجهة... (مثال: تافورة، باب الزوار، البليدة)" />
+                 placeholder="ابحث عن وجهة... " />
           <i class="fa-solid fa-magnifying-glass"></i>
           <button type="button" class="clear-btn" onclick="clearBusSearch()"><i class="fa-solid fa-xmark"></i></button>
         </div>
@@ -479,7 +479,7 @@
         <div class="glass-card schedule-card">
           <div class="schedule-header">
             <h3 class="schedule-title" id="resultTitle"></h3>
-            <span class="univ-badge">حافلة جامعية</span>
+            <span class="univ-badge">حافلة</span>
           </div>
           <div class="schedule-days" id="daysSelector"></div>
           <div class="trips-grid" id="tripsContainer"></div>
@@ -491,15 +491,15 @@
             <h3><i class="fa-solid fa-comments"></i> تعليقات الطلبة</h3>
             <span class="co-count" id="commentsCount">0 تعليق</span>
           </div>
-          <p class="co-sub">شارك تجربتك مع هذا الخط — كل التعليقات مرئية لجميع الطلبة.</p>
+          <p class="co-sub">شارك .</p>
 
           <div class="co-form">
             <div class="co-form-row">
               <input type="text" id="coName" maxlength="30" placeholder="اسمك (اختياري)...">
             </div>
-            <textarea id="coText" maxlength="300" placeholder="اكتب تعليقك هنا... (تجربة، نصيحة، وقت فعلي...)"></textarea>
+            <textarea id="coText" maxlength="300" placeholder="اكتب تعليقك هنا..."></textarea>
             <div class="co-form-actions">
-              <span class="hint"><i class="fa-solid fa-eye"></i> مرئي للجميع</span>
+              <span class="hint"><i class="fa-solid fa-eye"></i> </span>
               <button id="coSubmit" class="co-submit" onclick="submitCommentFirebase()">
                 <i class="fa-solid fa-paper-plane"></i> نشر التعليق
               </button>
@@ -562,7 +562,7 @@
         </button>
         <div class="acc-body"><div class="acc-inner">
           <div class="info-card"><h4>Yassir</h4><p>الأكثر شعبية في الجزائر.</p><a href="https://yassir.com" target="_blank" class="btn-link btn-amber" style="margin-top:6px;display:inline-flex;padding:7px 12px;border-radius:8px;font-size:.75rem;font-weight:800;text-decoration:none;background:var(--primary-hover);color:#fff;"><i class="fa-solid fa-download"></i> تحميل</a></div>
-          <div class="info-card"><h4>Heetch</h4><p>تطبيق فرنسي منتشر في العاصمة.</p></div>
+          <div class="info-card"><h4>Heetch</h4><p>تطبيق منتشر في العاصمة.</p></div>
           <div class="info-card"><h4>InDrive</h4><p>اقترح السعر وتفاوض مع السائق.</p></div>
         </div></div>
       </div>
@@ -671,45 +671,44 @@
   <script>
     const WK = ['sun','mon','tue','wed','thu'];
     const R = (from,to,step)=>({rule:{from,to,step}});
-    const GROUPS = { res:'الإقامة الجامعية رويسو', alger:'العاصمة والجامعات (انطلاقاً من القبة)', wil:'الولايات المجاورة (انطلاقاً من القبة)' };
     const L_GO='الذهاب (صباحاً)', L_BACK='الرجوع / العودة';
 
     const ZONES = [
-      { id:'revoil', g:'res', name:'الإقامة الجامعية رويسو (REVOIL ↔ ENSTP)', days:WK,
+      { id:'revoil' , name:'الإقامة الجامعية رويسو (REVOIL ↔ ENSTP)', days:WK,
         trips:[ {k:'go',label:'الذهاب (Départ)',byDay:{sun:['07:40'],mon:['07:40'],tue:['07:40'],wed:['07:40'],thu:['07:40']}},
                 {k:'back',label:'الإياب (Retour)',byDay:{sun:['14:45','15:20','16:25','16:45','17:45'],mon:['11:20','13:00','15:20','16:25','17:00'],tue:['13:00','14:45','16:25','17:00'],wed:['15:20','16:25','17:00'],thu:['12:20','13:00','14:45','15:20','16:45']}} ] },
-      { id:'harrach', g:'alger', name:'باش جراح - الحراش', buses:3, trips:[
+      { id:'harrach',, name:'باش جراح - الحراش', buses:3, trips:[
         {k:'go',label:L_GO,t:['07:00','07:30','08:00','08:30','09:00','10:00','11:30']},
         {k:'back',label:L_BACK,t:['13:00','14:30','16:00','17:00','18:00']} ]},
-      { id:'meaalma-bm', g:'alger', name:'الإقامة الجامعية 01-02 · المعالمة - بني مسوس', buses:7, trips:[
+      { id:'meaalma-bm' , name:'الإقامة الجامعية 01-02 · المعالمة - بني مسوس', buses:7, trips:[
         {k:'go',label:L_GO,...R('07:00','12:30',30)},{k:'back',label:L_BACK,t:['13:00','14:00','15:00','16:00','17:00','18:00']} ]},
-      { id:'ain-benian', g:'alger', name:'عين البنيان - سطاوالي', buses:2, trips:[
+      { id:'ain-benian' , name:'عين البنيان - سطاوالي', buses:2, trips:[
         {k:'go',label:L_GO,t:['07:00','07:15','09:00','10:00']},{k:'back',label:L_BACK,t:['14:15','15:30','17:00','18:00']} ]},
-      { id:'chatonaf', g:'alger', name:'شاطوناف', buses:2, trips:[
+      { id:'chatonaf', name:'شاطوناف', buses:2, trips:[
         {k:'go',label:L_GO,t:['07:00','07:15','09:00','10:00']},{k:'back',label:L_BACK,t:['14:15','15:30','17:00','18:00']} ]},
-      { id:'kherouba', g:'alger', name:'خروبة', buses:4, trips:[
+      { id:'kherouba' , name:'خروبة', buses:4, trips:[
         {k:'go',label:L_GO,...R('07:15','12:00',30)},{k:'back',label:L_BACK,...R('13:30','17:00',30)} ]},
-      { id:'tessala', g:'alger', name:'تسالة المرجة', buses:1, trips:[
+      { id:'tessala', name:'تسالة المرجة', buses:1, trips:[
         {k:'go',label:L_GO,t:['07:00']},{k:'back',label:L_BACK,t:['13:00','17:15']} ]},
-      { id:'1mai', g:'alger', name:'أول ماي', buses:1, trips:[
+      { id:'1mai', name:'أول ماي', buses:1, trips:[
         {k:'go',label:L_GO,t:['07:00','09:30']},{k:'back',label:L_BACK,t:['13:00','17:15']} ]},
-      { id:'dweira', g:'alger', name:'بابا حسن - الدويرة', buses:1, trips:[
+      { id:'dweira', name:'بابا حسن - الدويرة', buses:1, trips:[
         {k:'go',label:L_GO,t:['07:00','09:30']},{k:'back',label:L_BACK,t:['13:00','17:15']} ]},
-      { id:'zeralda', g:'alger', name:'زرالدة', buses:1, trips:[
+      { id:'zeralda',  name:'زرالدة', buses:1, trips:[
         {k:'go',label:L_GO,t:['07:00']},{k:'back',label:L_BACK,t:['14:30','17:15']} ]},
-      { id:'tafourah', g:'alger', name:'تافورة', trips:[
+      { id:'tafourah',  name:'تافورة', trips:[
         {k:'go',label:'الذهاب',t:['07:15','08:00','10:00','11:00']},{k:'back',label:'العودة',t:['14:00','14:30','15:00','15:30','17:15','18:00']} ]},
-      { id:'blida', g:'wil', name:'البليدة (عبر الصومعة والأربعاء)', buses:1, trips:[
+      { id:'blida',  name:'البليدة (عبر الصومعة والأربعاء)', buses:1, trips:[
         {k:'go',label:L_GO,t:['06:30','06:45']},{k:'back',label:L_BACK,t:['14:30','16:00']} ]},
-      { id:'boufarik', g:'wil', name:'بوفاريك', buses:1, trips:[
+      { id:'boufarik',  name:'بوفاريك', buses:1, trips:[
         {k:'go',label:L_GO,t:['07:00']},{k:'back',label:L_BACK,t:['14:30','16:00']} ]},
-      { id:'rouiba', g:'wil', name:'رويبة - رغاية', buses:1, trips:[
+      { id:'rouiba',  name:'رويبة - رغاية', buses:1, trips:[
         {k:'go',label:L_GO,t:['07:00']},{k:'back',label:L_BACK,t:['16:00']} ]},
-      { id:'baraki', g:'wil', name:'براقي - بن طلحة', buses:2, trips:[
+      { id:'baraki',  name:'براقي - بن طلحة', buses:2, trips:[
         {k:'go',label:L_GO,t:['07:00','07:30']},{k:'back',label:L_BACK,t:['15:30','17:30']} ]},
-      { id:'birtouta', g:'wil', name:'بئر توتة', buses:2, trips:[
+      { id:'birtouta',  name:'بئر توتة', buses:2, trips:[
         {k:'go',label:L_GO,t:['07:00','07:30']},{k:'back',label:L_BACK,t:['15:30','17:30']} ]},
-      { id:'tipaza', g:'wil', name:'تيبازة / حجوط', buses:1, trips:[
+      { id:'tipaza',  name:'تيبازة / حجوط', buses:1, trips:[
         {k:'go',label:L_GO,t:['06:30','06:45']},{k:'back',label:L_BACK,t:['16:00','17:30']} ]},
     ];
     ZONES.forEach(z=>{ if(!z.days) z.days=WK; });
