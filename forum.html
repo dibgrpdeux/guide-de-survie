@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="light">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,77 +9,74 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <script src="translate.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
-    :root {
-      --primary: #fbbf24; --primary-hover: #f59e0b;
-      --orange: #f97316; --orange-dark: #ea580c;
-      --bg-color: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
-      --card-bg: #ffffff; --nav-bg: rgba(255,255,255,0.95);
-      --border-color: #e2e8f0;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
-    }
-    [data-theme="dark"] {
-      --bg-color: #0a1128; --text-main: #f8fafc; --text-muted: #94a3b8;
-      --card-bg: #0f1e41; --nav-bg: rgba(10,17,40,0.95);
-      --border-color: #1e3a8a;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Cairo', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      transition: background-color .4s, color .4s;
-      margin: 0; overflow: hidden; -webkit-font-smoothing: antialiased;
-      height: 100vh;
-    }
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    body { top: 0 !important; }
+    .skiptranslate iframe { display: none !important; }
+    .goog-te-banner-frame { display: none !important; }
+    #goog-gt-tt { display: none !important; }
+    #google_translate_element { display: none; }
+
+    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
+    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
+    .lang-btn.active { background: #f97316; color: white; }
+
+    body { font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #f97316, #ea580c); border-radius: 10px; }
 
     /* BLOBS */
-    .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: blobFloat 25s ease-in-out infinite; }
+    .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: #f8fafc; transition: background .6s; }
+    .dark .animated-bg { background: #0a1128; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .25; animation: blobFloat 25s ease-in-out infinite; }
     .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
     .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
-    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .25; }
-    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.2 }
-    [data-theme="dark"] .blob-2 { background:#3b82f6; opacity:.15 }
-    [data-theme="dark"] .blob-3 { background:#1e3a8a; opacity:.3 }
+    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .18; }
+    .dark .blob-1 { background:#f97316; opacity:.15 }
+    .dark .blob-2 { background:#3b82f6; opacity:.12 }
+    .dark .blob-3 { background:#1e3a8a; opacity:.25 }
     @keyframes blobFloat {
       0%,100% { transform: translate(0,0) scale(1); }
       33% { transform: translate(60px,-40px) scale(1.1); }
       66% { transform: translate(-40px,60px) scale(.95); }
     }
-    .dot { position: absolute; border-radius: 50%; background: #f97316; opacity: .15; animation: dotFloat 15s linear infinite; }
-    [data-theme="dark"] .dot { background: #60a5fa; opacity: .25; }
-    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; }
-    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
-    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
-    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
-    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
-    @keyframes dotFloat {
-      0% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-30px) translateX(20px); }
-      100% { transform: translateY(0) translateX(0); }
-    }
 
-    /* NAVBAR (top) */
+    /* NAVBAR */
     .top-navbar {
       position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
       width: 96%; max-width: 1200px;
-      background: var(--nav-bg);
+      background: rgba(255,255,255,0.95);
       backdrop-filter: blur(20px) saturate(180%);
-      border: 1.5px solid var(--border-color);
+      border: 1.5px solid #e2e8f0;
       border-radius: 22px; padding: 8px 14px;
       display: flex; justify-content: space-between; align-items: center;
-      gap: 12px; z-index: 1000; box-shadow: var(--shadow-md);
+      gap: 12px; z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all .3s;
+    }
+    .dark .top-navbar {
+      background: rgba(10,17,40,0.95);
+      border-color: #1e3a8a;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .nav-title { font-size: .95rem; font-weight: 900; color: var(--text-main); line-height: 1.1; }
+    .nav-title { font-size: .95rem; font-weight: 900; line-height: 1.1; color: #0f172a; }
+    .dark .nav-title { color: #f8fafc; }
     .nav-title span {
       background: linear-gradient(90deg,#f97316,#fbbf24,#f97316);
       background-size: 200% auto;
@@ -88,7 +85,8 @@
       animation: shimmer 3s linear infinite;
     }
     @keyframes shimmer { to { background-position: 200% center; } }
-    .nav-subtitle { font-size: .6rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
+    .nav-subtitle { font-size: .6rem; color: #64748b; font-weight: 600; margin-top: 1px; }
+    .dark .nav-subtitle { color: #94a3b8; }
     .nav-icon {
       width: 36px; height: 36px; border-radius: 10px;
       background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
@@ -97,345 +95,79 @@
     }
     .nav-menu-btn {
       width: 38px; height: 38px; border-radius: 12px;
-      border: 1.5px solid var(--border-color); background: var(--card-bg);
-      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      border: 1.5px solid #e2e8f0; background: #ffffff;
+      color: #0f172a; display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: all .25s; font-size: .95rem; flex-shrink: 0;
     }
-    .nav-menu-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,.35); }
-    .nav-menu-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .dark .nav-menu-btn { background: #0f1e41; color: #f8fafc; border-color: #1e3a8a; }
+    .nav-menu-btn:hover { background: #f97316; color: #fff; border-color: #f97316; transform: translateY(-2px); }
+    .nav-menu-btn.active { background: #f97316; color: #fff; border-color: #f97316; }
     .nav-dropdown {
       position: fixed; top: 66px; left: 50%; transform: translateX(-50%) translateY(-10px);
-      width: 290px; max-width: 92%; background: var(--nav-bg);
-      backdrop-filter: blur(20px); border: 1px solid var(--border-color);
-      border-radius: 20px; padding: 8px; box-shadow: var(--shadow-md);
+      width: 290px; max-width: 92%;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px); border: 1px solid #e2e8f0;
+      border-radius: 20px; padding: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       z-index: 1001; opacity: 0; pointer-events: none;
       transition: all .25s cubic-bezier(.34,1.56,.64,1);
     }
+    .dark .nav-dropdown { background: rgba(10,17,40,0.98); border-color: #1e3a8a; }
     .nav-dropdown.open { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
-    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid var(--border-color); }
+    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid #e2e8f0; }
+    .dark .dropdown-section { border-bottom-color: #1e3a8a; }
     .dropdown-section:last-child { border-bottom: none; }
-    .dropdown-label { font-size: .65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; padding: 0 4px; }
+    .dropdown-label { font-size: .65rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; padding: 0 4px; }
+    .dark .dropdown-label { color: #94a3b8; }
     .dropdown-row { display: flex; gap: 5px; flex-wrap: wrap; }
     .dropdown-btn {
-      padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color);
-      background: var(--card-bg); color: var(--text-main);
+      padding: 8px 12px; border-radius: 10px; border: 1px solid #e2e8f0;
+      background: #ffffff; color: #0f172a;
       font-family: inherit; font-size: .75rem; font-weight: 700;
       cursor: pointer; transition: all .2s; display: inline-flex; align-items: center;
       gap: 6px; flex: 1; justify-content: center; min-width: fit-content; text-decoration: none;
     }
-    .dropdown-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: translateY(-1px); }
-    .dropdown-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .dark .dropdown-btn { background: #0f1e41; color: #f8fafc; border-color: #1e3a8a; }
+    .dropdown-btn:hover { background: #fbbf24; color: #000; border-color: #fbbf24; transform: translateY(-1px); }
+    .dropdown-btn.active { background: #f97316; color: #fff; border-color: #f97316; }
 
-    /* LOADING */
-    #loadingScreen {
-      position: fixed; inset: 0;
-      background: var(--bg-color);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      z-index: 60;
-    }
-    #loadingScreen .spinner {
-      width: 48px; height: 48px; border-radius: 50%;
-      border: 4px solid rgba(249,115,22,.2);
-      border-top-color: var(--orange);
-      animation: spin 1s linear infinite;
-      margin-bottom: 16px;
-    }
+    /* Chat bubbles */
+    .chat-bubble-me { background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-radius: 18px 18px 4px 18px; }
+    .chat-bubble-other { background: #ffffff; color: #1e293b; border-radius: 18px 18px 18px 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .dark .chat-bubble-other { background: #1e293b; color: #f8fafc; border: 1px solid #334155; }
+
+    .active-room { background: #f3f4f6; }
+    .dark .active-room { background: #334155; }
+
+    /* Spinner */
     @keyframes spin { to { transform: rotate(360deg); } }
-    #loadingScreen p { font-weight: 800; color: var(--text-muted); font-size: .9rem; }
 
-    /* AUTH */
-    #authScreen {
-      position: fixed; inset: 0;
-      background: rgba(15,23,42,.6); backdrop-filter: blur(6px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 16px; z-index: 55;
-    }
-    .auth-card {
-      background: var(--card-bg); border-radius: 24px;
-      box-shadow: 0 30px 80px -10px rgba(0,0,0,.5);
-      padding: 32px; width: 100%; max-width: 440px;
-      max-height: 92vh; overflow-y: auto;
-      border: 1.5px solid var(--border-color);
-      position: relative;
-    }
-    .auth-logo {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #fff; display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; margin: 0 auto 12px;
-      box-shadow: 0 12px 30px rgba(249,115,22,.4);
-    }
-    .auth-card h2 { text-align: center; font-size: 1.4rem; font-weight: 900; margin: 0 0 6px; color: var(--text-main); }
-    .auth-card .auth-sub { text-align: center; font-size: .82rem; color: var(--text-muted); font-weight: 600; margin-bottom: 24px; }
-    .auth-field { margin-bottom: 14px; }
-    .auth-field label { display: block; font-size: .78rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
-    .auth-field input, .auth-field select {
-      width: 100%; padding: 12px 14px; border-radius: 12px;
-      border: 1.5px solid var(--border-color);
-      background: var(--bg-color); color: var(--text-main);
-      font-family: inherit; font-size: .88rem; font-weight: 600;
-      outline: none; transition: all .2s;
-    }
-    .auth-field input:focus, .auth-field select:focus {
-      border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.15);
-    }
-    .auth-error {
-      background: rgba(239,68,68,.1); color: #dc2626;
-      padding: 8px 12px; border-radius: 8px;
-      font-size: .78rem; font-weight: 800; text-align: center;
-      border: 1.5px solid rgba(239,68,68,.25);
-      margin-bottom: 12px;
-    }
-    .auth-submit {
-      width: 100%; padding: 12px 20px; border-radius: 12px;
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #fff; font-family: inherit; font-weight: 900; font-size: .92rem;
-      border: none; cursor: pointer;
-      box-shadow: 0 8px 22px rgba(249,115,22,.4);
-      transition: all .25s;
-    }
-    .auth-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(249,115,22,.55); }
-    .auth-toggle { text-align: center; margin-top: 16px; font-size: .82rem; }
-    .auth-toggle span { color: var(--text-muted); }
-    .auth-toggle button { background: none; border: none; color: var(--orange); font-weight: 800; cursor: pointer; margin-inline-start: 4px; }
-    .auth-toggle button:hover { text-decoration: underline; }
-
-    /* FORUM SCREEN */
-    #forumScreen {
-      position: fixed; inset: 0;
-      display: flex; flex-direction: row;
-    }
-    #forumScreen.hidden { display: none; }
-
-    /* SIDEBAR */
-    #sidebar {
-      width: 300px; height: 100%;
-      background: var(--card-bg);
-      border-inline-end: 1.5px solid var(--border-color);
-      display: flex; flex-direction: column;
-      flex-shrink: 0;
-      transition: transform .3s;
-      z-index: 20;
-    }
-    .sidebar-header {
-      padding: 14px 16px;
-      border-bottom: 1.5px solid var(--border-color);
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .sidebar-body { flex: 1; overflow-y: auto; padding: 12px; }
-    .sidebar-section-title {
-      font-size: .62rem; color: var(--text-muted);
-      font-weight: 900; text-transform: uppercase; letter-spacing: .5px;
-      margin: 0 0 8px; padding: 0 8px;
-    }
-    .sidebar-channel {
-      width: 100%; display: flex; align-items: center; gap: 10px;
-      padding: 10px 12px; border-radius: 12px;
-      background: transparent; border: none; cursor: pointer;
-      text-align: right; font-family: inherit; font-size: .85rem;
-      font-weight: 800; color: var(--text-main);
-      transition: all .2s;
-      margin-bottom: 4px;
-    }
-    .sidebar-channel:hover { background: rgba(249,115,22,.08); }
-    .sidebar-channel.active-room { background: rgba(249,115,22,.15); }
-    .sidebar-channel .ch-icon {
-      width: 34px; height: 34px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .9rem; flex-shrink: 0;
-    }
-    .sidebar-footer {
-      padding: 14px 16px;
-      border-top: 1.5px solid var(--border-color);
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 8px;
-    }
-    .user-avatar {
-      width: 38px; height: 38px; border-radius: 50%;
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #fff; display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: .85rem; flex-shrink: 0;
-      box-shadow: 0 3px 10px rgba(249,115,22,.35);
-    }
-    .logout-btn {
-      background: none; border: none; color: var(--text-muted);
-      cursor: pointer; padding: 8px; border-radius: 8px;
-      font-size: 1rem; transition: all .2s;
-    }
-    .logout-btn:hover { background: rgba(239,68,68,.12); color: #ef4444; }
-
-    /* MAIN AREA */
-    .forum-main {
-      flex: 1; display: flex; flex-direction: column;
-      background: var(--bg-color);
-      height: 100%; overflow: hidden;
-      position: relative;
-    }
-    .main-header {
-      background: var(--card-bg);
-      padding: 12px 20px;
-      border-bottom: 1.5px solid var(--border-color);
-      display: flex; align-items: center; justify-content: space-between;
-      z-index: 5;
-    }
-    .main-header h2 { font-size: 1rem; font-weight: 900; color: var(--text-main); margin: 0 0 2px; display: flex; align-items: center; gap: 8px; }
-    .main-header .subtitle { font-size: .72rem; color: var(--text-muted); font-weight: 600; }
-    .channel-badge { font-size: .68rem; padding: 4px 10px; border-radius: 20px; font-weight: 800; }
-
-    #postsContainer {
-      flex: 1; overflow-y: auto;
-      padding: 16px;
-      padding-bottom: 120px;
-      scroll-behavior: smooth;
-    }
-    .post-input-wrap {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: var(--card-bg);
-      border-top: 1.5px solid var(--border-color);
-      padding: 12px;
-      box-shadow: 0 -4px 12px rgba(0,0,0,.05);
-    }
-    .post-input-inner {
-      max-width: 900px; margin: 0 auto;
-      display: flex; gap: 8px; align-items: flex-end;
-    }
-    .attach-btn {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: rgba(249,115,22,.1); color: var(--orange);
-      border: none; cursor: pointer; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      transition: all .2s;
-    }
-    .attach-btn:hover { background: var(--orange); color: #fff; }
-    .post-input-box {
-      flex: 1;
-      background: var(--bg-color);
-      border: 1.5px solid var(--border-color);
-      border-radius: 16px;
-      padding: 6px 10px;
-      transition: all .2s;
-    }
-    .post-input-box:focus-within {
-      border-color: var(--orange);
-      box-shadow: 0 0 0 3px rgba(249,115,22,.15);
-    }
-    #postText {
-      width: 100%; padding: 8px;
-      background: transparent; border: none; outline: none;
-      resize: none; font-family: inherit; font-size: .88rem;
-      color: var(--text-main);
-    }
-    .send-btn {
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #fff; border: none;
-      padding: 8px 18px; border-radius: 10px;
-      font-family: inherit; font-weight: 800; font-size: .82rem;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-      box-shadow: 0 4px 12px rgba(249,115,22,.35);
-      transition: all .2s;
-      margin-top: 4px;
-    }
-    .send-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(249,115,22,.5); }
-
-    /* Mobile toggle */
-    .mobile-header { display: none; }
-
-    /* CHAT BUBBLES */
-    .chat-bubble-me {
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #fff; border-radius: 18px 18px 4px 18px;
-    }
-    .chat-bubble-other {
-      background: var(--card-bg); color: var(--text-main);
-      border-radius: 18px 18px 18px 4px;
-      box-shadow: 0 2px 6px rgba(0,0,0,.08);
-      border: 1px solid var(--border-color);
-    }
-
-    /* MODALS */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 70;
-      background: rgba(15,23,42,.6); backdrop-filter: blur(6px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 16px;
-    }
-    .modal-overlay.hidden { display: none; }
-    .modal-card {
-      background: var(--card-bg); border-radius: 22px;
-      padding: 24px; width: 100%; max-width: 400px;
-      box-shadow: 0 30px 80px -10px rgba(0,0,0,.5);
-      border: 1.5px solid var(--border-color);
-    }
-    .modal-card h3 { font-size: 1.15rem; font-weight: 900; color: var(--text-main); margin: 0 0 16px; }
-    .modal-field { margin-bottom: 12px; }
-    .modal-field label { display: block; font-size: .78rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
-    .modal-field input, .modal-field select {
-      width: 100%; padding: 11px 14px; border-radius: 12px;
-      border: 1.5px solid var(--border-color);
-      background: var(--bg-color); color: var(--text-main);
-      font-family: inherit; font-size: .88rem; font-weight: 600;
-      outline: none; transition: all .2s;
-    }
-    .modal-field input:focus, .modal-field select:focus {
-      border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.15);
-    }
-    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
-    .btn-cancel {
-      padding: 10px 20px; border-radius: 10px;
-      background: transparent; border: 1.5px solid var(--border-color);
-      color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .85rem;
-      cursor: pointer;
-    }
-    .btn-cancel:hover { background: rgba(0,0,0,.04); }
-    .btn-primary {
-      padding: 10px 20px; border-radius: 10px;
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #fff; border: none; cursor: pointer;
-      font-family: inherit; font-weight: 800; font-size: .85rem;
-      box-shadow: 0 4px 12px rgba(249,115,22,.35);
-    }
-    .btn-primary:hover { transform: translateY(-1px); }
-
+    /* Positions fixes forum */
     @media(max-width: 768px){
-      #sidebar {
-        position: absolute; top: 0; right: 0; bottom: 0;
-        transform: translateX(100%);
-        box-shadow: -10px 0 30px rgba(0,0,0,.2);
-        z-index: 40;
-      }
-      #sidebar.open { transform: translateX(0); }
-      .mobile-header {
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 12px 16px;
-        background: var(--card-bg);
-        border-bottom: 1.5px solid var(--border-color);
-      }
-      .main-header { display: none; }
       .top-navbar { width: 100%; border-radius: 0; top: 0; left: 0; transform: none; }
-      body { padding-top: 0; }
       #forumScreen { top: 56px; }
     }
-
     @media(min-width: 769px){
       #forumScreen { top: 68px; }
     }
   </style>
 </head>
-<body>
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 h-screen overflow-hidden">
 
   <!-- BLOBS -->
   <div class="animated-bg">
-    <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
-    <div class="dot dot-1"></div><div class="dot dot-2"></div><div class="dot dot-3"></div><div class="dot dot-4"></div><div class="dot dot-5"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <!-- NAVBAR (always visible) -->
+  <!-- NAVBAR unifiée -->
   <nav class="top-navbar">
     <div class="nav-brand">
       <div class="nav-icon"><i class="fa-solid fa-users-rays"></i></div>
       <div>
         <div class="nav-title">ENSTP <span>Forum</span></div>
-        <div class="nav-subtitle" data-i18n="forum_subtitle">ملتقى الطلبة</div>
+        <div class="nav-subtitle">ملتقى الطلبة</div>
       </div>
     </div>
     <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة">
@@ -445,7 +177,7 @@
 
   <div class="nav-dropdown" id="navDropdown">
     <div class="dropdown-section">
-      <div class="dropdown-label">🌐 <span data-i18n="menu_lang">اللغة</span></div>
+      <div class="dropdown-label">🌐 اللغة</div>
       <div class="dropdown-row">
         <button class="dropdown-btn active" onclick="setLanguage('ar')" id="btn-ar">🇩🇿 العربية</button>
         <button class="dropdown-btn" onclick="setLanguage('fr')" id="btn-fr">🇫🇷 Français</button>
@@ -453,464 +185,295 @@
       </div>
     </div>
     <div class="dropdown-section">
-      <div class="dropdown-label">⚙️ <span data-i18n="menu_settings">الإعدادات</span></div>
+      <div class="dropdown-label">⚙️ الإعدادات</div>
       <div class="dropdown-row">
         <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
-          <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
+          <i class="fa-solid fa-moon"></i> <span>ليلي</span>
         </button>
         <a href="index.html" class="dropdown-btn">
-          <i class="fa-solid fa-house"></i> <span data-i18n="nav_home">الرئيسية</span>
+          <i class="fa-solid fa-house"></i> <span>الرئيسية</span>
         </a>
       </div>
     </div>
   </div>
 
-  <!-- LOADING SCREEN -->
-  <div id="loadingScreen">
-    <div class="spinner"></div>
-    <p data-i18n="loading_text">جاري الاتصال بالمنتدى...</p>
+  <!-- ============================================================ -->
+  <!-- SCREENS ORIGINAUX (IDs + boutons conservés)                  -->
+  <!-- ============================================================ -->
+
+  <div id="loadingScreen" class="fixed inset-0 bg-white dark:bg-slate-900 flex flex-col items-center justify-center z-50">
+    <div class="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mb-4" style="animation: spin 1s linear infinite;"></div>
+    <p class="font-bold text-gray-600 dark:text-gray-400">جاري الاتصال بالمنتدى...</p>
   </div>
 
-  <!-- AUTH SCREEN -->
-  <div id="authScreen" class="hidden">
-    <div class="auth-card">
-      <div class="auth-logo"><i class="fa-solid fa-users-rays"></i></div>
-      <h2 data-i18n="auth_title">ملتقى طلبة ENSTP</h2>
-      <p class="auth-sub" data-i18n="auth_subtitle">مساحة آمنة للنقاش وتبادل الأفكار</p>
+  <div id="authScreen" class="fixed inset-0 bg-slate-900/95 flex items-center justify-center z-40 p-4 backdrop-blur-md hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-8 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
 
-      <div class="auth-field">
-        <label data-i18n="auth_email_label">البريد المهني</label>
-        <input type="email" id="emailInput" placeholder="student@enstp.edu.dz" dir="ltr">
-      </div>
-      <div class="auth-field">
-        <label data-i18n="auth_password_label">كلمة السر</label>
-        <input type="password" id="passInput" placeholder="********" dir="ltr">
+      <div class="absolute top-4 left-4 flex items-center gap-1 bg-gray-100 dark:bg-slate-700 p-1 rounded-lg border border-gray-200 dark:border-slate-600">
+        <button onclick="setLanguage('ar')" class="lang-btn active">عربي</button>
+        <button onclick="setLanguage('fr')" class="lang-btn">FR</button>
+        <button onclick="setLanguage('en')" class="lang-btn">EN</button>
       </div>
 
-      <div id="registerFields" class="hidden" style="border-top:1.5px solid var(--border-color);padding-top:14px;margin-top:14px;">
-        <div class="auth-field">
-          <label data-i18n="auth_name_label">الاسم واللقب</label>
-          <input type="text" id="nameInput" data-i18n-placeholder="auth_name_ph" placeholder="مثال: أحمد بن علي">
+      <div class="text-center mb-6 mt-4">
+        <div class="w-20 h-20 bg-gradient-to-br from-brand-400 to-brand-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 text-3xl shadow-lg">
+          <i class="fa-solid fa-users-rays"></i>
         </div>
-        <div class="auth-field">
-          <label data-i18n="auth_year_label">السنة الدراسية</label>
-          <select id="yearInput">
-            <option value="1CP">1CP</option>
-            <option value="2CP">2CP</option>
-            <option value="DIB">DIB</option>
-            <option value="DMS">DMS</option>
-          </select>
-        </div>
-        <div class="auth-field">
-          <label data-i18n="auth_wilaya_label">الولاية</label>
-          <select id="wilayaInput"></select>
-        </div>
+        <h2 class="text-2xl font-black text-gray-900 dark:text-white">ملتقى طلبة ENSTP</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">مساحة آمنة للنقاش وتبادل الأفكار</p>
       </div>
 
-      <p id="errorMsg" class="auth-error hidden"></p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">البريد المهني</label>
+          <input type="email" id="emailInput" placeholder="student@enstp.edu.dz" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition" dir="ltr">
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">كلمة السر</label>
+          <input type="password" id="passInput" placeholder="********" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition" dir="ltr">
+        </div>
 
-      <button id="submitBtn" class="auth-submit" data-i18n="auth_login">تسجيل الدخول</button>
+        <div id="registerFields" class="hidden space-y-4 pt-4 border-t border-gray-200 dark:border-slate-700">
+          <div>
+            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">الاسم واللقب</label>
+            <input type="text" id="nameInput" placeholder="مثال: أحمد بن علي" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">السنة الدراسية</label>
+            <select id="yearInput" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
+              <option value="1CP">1CP</option>
+              <option value="2CP">2CP</option>
+              <option value="DIB">DIB</option>
+              <option value="DMS">DMS</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">الولاية</label>
+            <select id="wilayaInput" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition"></select>
+          </div>
+        </div>
 
-      <div class="auth-toggle">
-        <span id="toggleText" data-i18n="auth_no_account">ليس لديك حساب؟</span>
-        <button id="toggleBtn" data-i18n="auth_create_account">إنشاء حساب جديد</button>
+        <p id="errorMsg" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 dark:bg-red-900/30 p-2 rounded-lg border border-red-200 dark:border-red-800"></p>
+
+        <button id="submitBtn" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-bold py-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">تسجيل الدخول</button>
+
+        <div class="text-center mt-4 text-sm">
+          <span id="toggleText" class="text-gray-500 dark:text-gray-400">ليس لديك حساب؟</span>
+          <button id="toggleBtn" class="text-brand-600 dark:text-brand-400 font-bold hover:underline ml-1">إنشاء حساب جديد</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- FORUM SCREEN -->
-  <div id="forumScreen" class="hidden">
+  <div id="forumScreen" class="hidden h-full flex flex-row relative">
 
-    <!-- SIDEBAR -->
-    <aside id="sidebar">
-      <div class="sidebar-header">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="nav-icon" style="width:36px;height:36px;border-radius:10px;font-size:1rem;">E</div>
+    <aside id="sidebar" class="w-80 bg-white dark:bg-slate-800 border-l border-gray-200 dark:border-slate-700 flex flex-col h-full shrink-0 transition-all duration-300 z-20 absolute md:relative right-0 translate-x-full md:translate-x-0">
+
+      <div class="p-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-between bg-white dark:bg-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
           <div>
-            <div style="font-size:.85rem;font-weight:900;color:var(--text-main);" data-i18n="sidebar_forum">ملتقى الطلبة</div>
-            <div style="font-size:.6rem;color:var(--text-muted);font-weight:600;">ENSTP Kouba</div>
+            <h1 class="font-bold text-sm text-gray-900 dark:text-white">ملتقى الطلبة</h1>
+            <p class="text-[10px] text-gray-500 dark:text-gray-400">ENSTP Kouba</p>
           </div>
         </div>
-        <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="nav-menu-btn" style="width:34px;height:34px;border-radius:10px;background:rgba(249,115,22,.12);color:var(--orange);" title="غرفة جديدة">
-          <i class="fa-solid fa-plus" style="font-size:.8rem;"></i>
-        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="toggleDarkMode()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-slate-600 transition">
+            <i class="fa-solid fa-moon dark:hidden text-sm"></i>
+            <i class="fa-solid fa-sun hidden dark:block text-sm text-brand-400"></i>
+          </button>
+          <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 flex items-center justify-center hover:bg-brand-200 dark:hover:bg-brand-900/60 transition">
+            <i class="fa-solid fa-plus text-sm"></i>
+          </button>
+        </div>
       </div>
 
-      <div class="sidebar-body">
-        <!-- General posts -->
-        <div style="margin-bottom:20px;">
-          <p class="sidebar-section-title" data-i18n="sidebar_posts">ساحة المنشورات</p>
-          <button onclick="selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', this)" class="sidebar-channel active-room">
-            <div class="ch-icon" style="background:rgba(59,130,246,.15);color:#3b82f6;">
-              <i class="fa-solid fa-globe"></i>
-            </div>
-            <span data-i18n="channel_general">القاعة العامة</span>
+      <div class="flex-1 overflow-y-auto p-3 space-y-6">
+        <div>
+          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">ساحة المنشورات</p>
+          <button onclick="selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300 active-room">
+            <div class="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center"><i class="fa-solid fa-globe"></i></div>
+            <span class="font-bold">القاعة العامة</span>
           </button>
         </div>
 
-        <!-- Chat rooms -->
-        <div style="margin-bottom:20px;">
-          <p class="sidebar-section-title" data-i18n="sidebar_chats">غرف الدردشة</p>
-          <div>
-            <button onclick="selectChannel('chat_1cp', 'Chat 1CP', 'نقاش مباشر', 'chat', this)" class="sidebar-channel">
-              <div class="ch-icon" style="background:rgba(16,185,129,.15);color:#059669;">
-                <i class="fa-solid fa-users"></i>
-              </div>
-              <span>Chat 1CP</span>
+        <div>
+          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">غرف الدردشة</p>
+          <div class="space-y-1">
+            <button onclick="selectChannel('chat_1cp', 'Chat 1CP', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
+              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+              <span class="font-bold">Chat 1CP</span>
             </button>
-            <button onclick="selectChannel('chat_2cp', 'Chat 2CP', 'نقاش مباشر', 'chat', this)" class="sidebar-channel">
-              <div class="ch-icon" style="background:rgba(16,185,129,.15);color:#059669;">
-                <i class="fa-solid fa-users"></i>
-              </div>
-              <span>Chat 2CP</span>
+            <button onclick="selectChannel('chat_2cp', 'Chat 2CP', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
+              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+              <span class="font-bold">Chat 2CP</span>
             </button>
-            <button onclick="selectChannel('chat_dib', 'Chat DIB', 'نقاش مباشر', 'chat', this)" class="sidebar-channel">
-              <div class="ch-icon" style="background:rgba(16,185,129,.15);color:#059669;">
-                <i class="fa-solid fa-users"></i>
-              </div>
-              <span>Chat DIB</span>
+            <button onclick="selectChannel('chat_dib', 'Chat DIB', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
+              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+              <span class="font-bold">Chat DIB</span>
             </button>
-            <button onclick="selectChannel('chat_dms', 'Chat DMS', 'نقاش مباشر', 'chat', this)" class="sidebar-channel">
-              <div class="ch-icon" style="background:rgba(16,185,129,.15);color:#059669;">
-                <i class="fa-solid fa-users"></i>
-              </div>
-              <span>Chat DMS</span>
+            <button onclick="selectChannel('chat_dms', 'Chat DMS', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
+              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+              <span class="font-bold">Chat DMS</span>
             </button>
           </div>
         </div>
 
-        <!-- Custom rooms -->
         <div>
-          <p class="sidebar-section-title" data-i18n="sidebar_custom">غرف الطلبة</p>
-          <div id="customChannels"></div>
+          <div class="flex justify-between items-center px-2 mb-2">
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">غرف الطلبة</p>
+          </div>
+          <div id="customChannels" class="space-y-1"></div>
         </div>
       </div>
 
-      <div class="sidebar-footer">
-        <div style="display:flex;align-items:center;gap:10px;overflow:hidden;">
-          <div id="userAvatar" class="user-avatar">U</div>
-          <div style="overflow:hidden;">
-            <p id="userName" style="font-size:.82rem;font-weight:900;color:var(--text-main);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">طالب</p>
-            <p id="userInfo" style="font-size:.62rem;color:var(--text-muted);margin:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" dir="ltr">info</p>
+      <div class="p-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 flex items-center justify-between">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div id="userAvatar" class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
+          <div class="overflow-hidden">
+            <p id="userName" class="text-sm font-bold truncate text-gray-900 dark:text-white">طالب</p>
+            <p id="userInfo" class="text-[10px] text-gray-500 dark:text-gray-400 truncate" dir="ltr">info</p>
           </div>
         </div>
-        <button id="logoutBtn" class="logout-btn" title="تسجيل الخروج">
-          <i class="fa-solid fa-power-off"></i>
-        </button>
+        <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition text-lg p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fa-solid fa-power-off"></i></button>
       </div>
     </aside>
 
-    <!-- MAIN -->
-    <main class="forum-main">
+    <main class="flex-1 flex flex-col bg-gray-50 dark:bg-slate-900 h-full relative transition-all duration-300 w-full">
 
-      <!-- Mobile header -->
-      <div class="mobile-header">
-        <button onclick="toggleSidebar()" style="background:none;border:none;color:var(--text-main);font-size:1.1rem;cursor:pointer;">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <h2 id="mobileTitle" style="font-size:.95rem;font-weight:900;color:var(--text-main);margin:0;">القاعة العامة</h2>
-        <div style="width:24px;"></div>
+      <div class="md:hidden bg-white dark:bg-slate-800 p-3 flex items-center justify-between border-b border-gray-200 dark:border-slate-700">
+        <button onclick="toggleSidebar()" class="text-gray-600 dark:text-gray-300 text-xl"><i class="fa-solid fa-bars"></i></button>
+        <h2 id="mobileTitle" class="font-bold text-gray-800 dark:text-white">القاعة العامة</h2>
+        <div class="w-8"></div>
       </div>
 
-      <!-- Desktop header -->
-      <div class="main-header">
+      <header class="bg-white dark:bg-slate-800 p-4 shadow-sm border-b border-gray-200 dark:border-slate-700 justify-between items-center z-10 hidden md:flex">
         <div>
-          <h2>
-            <i class="fa-solid fa-globe" style="color:#3b82f6;"></i>
-            <span id="channelTitle">القاعة العامة</span>
+          <h2 id="channelTitle" class="text-lg font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-globe text-blue-500"></i> القاعة العامة
           </h2>
-          <p class="subtitle" id="channelSubtitle">النقاشات العامة لجميع الطلبة</p>
+          <p id="channelSubtitle" class="text-xs text-gray-500 dark:text-gray-400">النقاشات العامة لجميع الطلبة</p>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span id="channelTypeBadge" class="channel-badge" style="background:rgba(59,130,246,.15);color:#3b82f6;" data-i18n="channel_posts_badge">منشورات</span>
-          <button onclick="closeCurrentRoom()" id="closeRoomBtn" class="hidden" style="background:rgba(239,68,68,.1);color:#ef4444;border:1.5px solid rgba(239,68,68,.3);padding:6px 12px;border-radius:8px;font-family:inherit;font-weight:800;font-size:.72rem;cursor:pointer;">
-            <i class="fa-solid fa-lock"></i> <span data-i18n="close_btn">إغلاق</span>
+        <div class="flex items-center gap-2">
+          <span id="channelTypeBadge" class="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full font-bold">منشورات</span>
+          <button onclick="closeCurrentRoom()" id="closeRoomBtn" class="hidden text-red-500 hover:text-red-700 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition border border-red-200 dark:border-red-800">
+            <i class="fa-solid fa-lock"></i> إغلاق
           </button>
         </div>
-      </div>
+      </header>
 
-      <!-- Posts container -->
-      <div id="postsContainer"></div>
+      <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24 scroll-smooth"></div>
 
-      <!-- Input -->
-      <div class="post-input-wrap">
-        <div class="post-input-inner">
-          <button onclick="document.getElementById('fileInput').click()" class="attach-btn" title="مرفق">
-            <i class="fa-solid fa-paperclip"></i>
+      <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 p-3 shadow-lg">
+        <div class="max-w-3xl mx-auto flex gap-2 items-end">
+          <button onclick="document.getElementById('fileInput').click()" class="w-11 h-11 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-300 flex items-center justify-center hover:bg-brand-100 dark:hover:bg-brand-900/40 hover:text-brand-600 transition shrink-0 mb-0.5">
+            <i class="fa-solid fa-paperclip text-lg"></i>
           </button>
-          <input type="file" id="fileInput" style="display:none;" accept="image/*,video/*,application/pdf" onchange="handleFileUpload(event)">
+          <input type="file" id="fileInput" class="hidden" accept="image/*,video/*,application/pdf" onchange="handleFileUpload(event)">
 
-          <div class="post-input-box">
-            <div id="filePreview" style="display:none;padding:6px 8px;"></div>
-            <textarea id="postText" rows="1" data-i18n-placeholder="post_placeholder" placeholder="اكتب رسالة..."></textarea>
-            <div style="display:flex;justify-content:flex-end;">
-              <button id="postBtn" class="send-btn">
-                <span data-i18n="send_btn">إرسال</span>
-                <i class="fa-solid fa-paper-plane"></i>
+          <div class="flex-1 bg-gray-100 dark:bg-slate-900 rounded-2xl border border-transparent focus-within:border-brand-300 dark:focus-within:border-brand-600 transition-all p-2">
+            <div id="filePreview" class="hidden px-2 pb-2"></div>
+            <textarea id="postText" rows="1" placeholder="اكتب رسالة..." class="w-full bg-transparent border-none outline-none resize-none px-2 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-500"></textarea>
+            <div class="flex justify-end items-center px-2 pt-1">
+              <button id="postBtn" class="bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md flex items-center gap-2">
+                <span>إرسال</span> <i class="fa-solid fa-paper-plane text-xs"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
-
     </main>
   </div>
 
-  <!-- CREATE ROOM MODAL -->
-  <div id="createRoomModal" class="modal-overlay hidden">
-    <div class="modal-card">
-      <h3 data-i18n="create_room_title">إنشاء غرفة جديدة</h3>
-      <div class="modal-field">
-        <label data-i18n="create_room_name">اسم الغرفة</label>
-        <input type="text" id="newRoomName" placeholder="..." data-i18n-placeholder="create_room_name_ph">
-      </div>
-      <div class="modal-field">
-        <label data-i18n="create_room_type">نوع الغرفة</label>
-        <select id="newRoomType">
-          <option value="chat" data-i18n="room_type_chat">دردشة</option>
-          <option value="posts" data-i18n="room_type_posts">منشورات</option>
-        </select>
-      </div>
-      <div class="modal-field">
-        <label data-i18n="create_room_password">كلمة مرور الغرفة (اختياري)</label>
-        <input type="password" id="newRoomPassword" data-i18n-placeholder="create_room_password_ph" placeholder="اتركها فارغة إذا كانت عامة">
-      </div>
-      <div class="modal-actions">
-        <button onclick="document.getElementById('createRoomModal').classList.add('hidden')" class="btn-cancel" data-i18n="cancel_btn">إلغاء</button>
-        <button onclick="createRoom()" class="btn-primary" data-i18n="create_btn">إنشاء</button>
+  <!-- Modal créer salle -->
+  <div id="createRoomModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 w-full max-w-sm shadow-2xl border border-gray-200 dark:border-slate-700">
+      <h3 class="text-xl font-black text-gray-900 dark:text-white mb-4">إنشاء غرفة جديدة</h3>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">اسم الغرفة</label>
+          <input type="text" id="newRoomName" placeholder="..." class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">نوع الغرفة</label>
+          <select id="newRoomType" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
+            <option value="chat">دردشة</option>
+            <option value="posts">منشورات</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">كلمة مرور الغرفة (اختياري)</label>
+          <input type="password" id="newRoomPassword" placeholder="اتركها فارغة إذا كانت عامة" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
+          <p class="text-[10px] text-gray-500 dark:text-gray-400 mt-1"><i class="fa-solid fa-lock"></i> الغرفة بكلمة مرور تصبح خاصة</p>
+        </div>
+        <div class="flex gap-2 justify-end pt-2">
+          <button onclick="document.getElementById('createRoomModal').classList.add('hidden')" class="px-5 py-2.5 text-gray-600 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-slate-700 rounded-xl transition">إلغاء</button>
+          <button onclick="createRoom()" class="px-5 py-2.5 bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition">إنشاء</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ROOM PASSWORD MODAL -->
-  <div id="roomPasswordModal" class="modal-overlay hidden">
-    <div class="modal-card" style="text-align:center;">
-      <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,.15);color:#ef4444;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 12px;">
-        <i class="fa-solid fa-lock"></i>
+  <!-- Modal mot de passe salle privée -->
+  <div id="roomPasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 w-full max-w-sm shadow-2xl border border-gray-200 dark:border-slate-700">
+      <div class="text-center mb-4">
+        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3 class="text-xl font-black text-gray-900 dark:text-white">غرفة خاصة</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">هذه الغرفة محمية بكلمة مرور</p>
       </div>
-      <h3 data-i18n="private_room_title">غرفة خاصة</h3>
-      <p style="font-size:.82rem;color:var(--text-muted);font-weight:600;margin:0 0 16px;" data-i18n="private_room_sub">هذه الغرفة محمية بكلمة مرور</p>
-      <div class="modal-field">
-        <input type="password" id="roomPasswordInput" data-i18n-placeholder="private_room_ph" placeholder="أدخل كلمة المرور" style="text-align:center;" dir="ltr">
-      </div>
-      <p id="roomPasswordError" class="auth-error hidden" data-i18n="wrong_password">كلمة المرور خاطئة</p>
-      <div class="modal-actions" style="justify-content:stretch;">
-        <button onclick="cancelRoomPassword()" class="btn-cancel" style="flex:1;" data-i18n="cancel_btn">إلغاء</button>
-        <button onclick="submitRoomPassword()" class="btn-primary" style="flex:1;" data-i18n="enter_btn">دخول</button>
+      <div class="space-y-4">
+        <input type="password" id="roomPasswordInput" placeholder="أدخل كلمة المرور" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition text-center" dir="ltr">
+        <p id="roomPasswordError" class="text-red-500 text-sm font-bold text-center hidden">كلمة المرور خاطئة</p>
+        <div class="flex gap-2">
+          <button onclick="cancelRoomPassword()" class="flex-1 px-5 py-2.5 text-gray-600 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-slate-700 rounded-xl transition">إلغاء</button>
+          <button onclick="submitRoomPassword()" class="flex-1 px-5 py-2.5 bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold rounded-xl shadow-md">دخول</button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- TRANSLATIONS (additions + fallback)                          -->
+  <!-- SCRIPTS                                                      -->
   <!-- ============================================================ -->
+
+  <!-- Menu helpers (uniquement des fonctions UI, PAS forum.js) -->
   <script>
-    (function(){
-      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') === 'dark' ? 'dark' : 'light');
-      document.documentElement.dir = (savedLang === 'ar') ? 'rtl' : 'ltr';
-      document.documentElement.lang = savedLang;
-
-      const FORUM_TR = {
-        ar: {
-          forum_page_title: "المنتدى الطلابي - ENSTP",
-          forum_subtitle: "ملتقى الطلبة",
-          menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي",
-          nav_home: "الرئيسية",
-          loading_text: "جاري الاتصال بالمنتدى...",
-          auth_title: "ملتقى طلبة ENSTP",
-          auth_subtitle: "مساحة آمنة للنقاش وتبادل الأفكار",
-          auth_email_label: "البريد المهني",
-          auth_password_label: "كلمة السر",
-          auth_name_label: "الاسم واللقب",
-          auth_name_ph: "مثال: أحمد بن علي",
-          auth_year_label: "السنة الدراسية",
-          auth_wilaya_label: "الولاية",
-          auth_login: "تسجيل الدخول",
-          auth_no_account: "ليس لديك حساب؟",
-          auth_create_account: "إنشاء حساب جديد",
-          sidebar_forum: "ملتقى الطلبة",
-          sidebar_posts: "ساحة المنشورات",
-          sidebar_chats: "غرف الدردشة",
-          sidebar_custom: "غرف الطلبة",
-          channel_general: "القاعة العامة",
-          channel_posts_badge: "منشورات",
-          close_btn: "إغلاق",
-          post_placeholder: "اكتب رسالة...",
-          send_btn: "إرسال",
-          create_room_title: "إنشاء غرفة جديدة",
-          create_room_name: "اسم الغرفة",
-          create_room_name_ph: "...",
-          create_room_type: "نوع الغرفة",
-          room_type_chat: "دردشة",
-          room_type_posts: "منشورات",
-          create_room_password: "كلمة مرور الغرفة (اختياري)",
-          create_room_password_ph: "اتركها فارغة إذا كانت عامة",
-          cancel_btn: "إلغاء",
-          create_btn: "إنشاء",
-          private_room_title: "غرفة خاصة",
-          private_room_sub: "هذه الغرفة محمية بكلمة مرور",
-          private_room_ph: "أدخل كلمة المرور",
-          wrong_password: "كلمة المرور خاطئة",
-          enter_btn: "دخول"
-        },
-        fr: {
-          forum_page_title: "Forum Étudiant - ENSTP",
-          forum_subtitle: "Forum étudiant",
-          menu_lang: "Langue", menu_settings: "Paramètres", menu_dark: "Sombre",
-          nav_home: "Accueil",
-          loading_text: "Connexion au forum...",
-          auth_title: "Forum ENSTP",
-          auth_subtitle: "Espace sécurisé de discussion",
-          auth_email_label: "Email professionnel",
-          auth_password_label: "Mot de passe",
-          auth_name_label: "Nom complet",
-          auth_name_ph: "Ex : Ahmed Ben Ali",
-          auth_year_label: "Année",
-          auth_wilaya_label: "Wilaya",
-          auth_login: "Se connecter",
-          auth_no_account: "Pas de compte ?",
-          auth_create_account: "Créer un compte",
-          sidebar_forum: "Forum étudiant",
-          sidebar_posts: "Publications",
-          sidebar_chats: "Chats",
-          sidebar_custom: "Salles étudiantes",
-          channel_general: "Salle générale",
-          channel_posts_badge: "Publications",
-          close_btn: "Fermer",
-          post_placeholder: "Écrire un message...",
-          send_btn: "Envoyer",
-          create_room_title: "Créer une salle",
-          create_room_name: "Nom de la salle",
-          create_room_name_ph: "...",
-          create_room_type: "Type",
-          room_type_chat: "Chat",
-          room_type_posts: "Publications",
-          create_room_password: "Mot de passe (optionnel)",
-          create_room_password_ph: "Laisser vide si public",
-          cancel_btn: "Annuler",
-          create_btn: "Créer",
-          private_room_title: "Salle privée",
-          private_room_sub: "Cette salle est protégée par un mot de passe",
-          private_room_ph: "Entrez le mot de passe",
-          wrong_password: "Mot de passe incorrect",
-          enter_btn: "Entrer"
-        },
-        en: {
-          forum_page_title: "Student Forum - ENSTP",
-          forum_subtitle: "Student forum",
-          menu_lang: "Language", menu_settings: "Settings", menu_dark: "Dark",
-          nav_home: "Home",
-          loading_text: "Connecting to forum...",
-          auth_title: "ENSTP Forum",
-          auth_subtitle: "Secure space for discussion",
-          auth_email_label: "Professional email",
-          auth_password_label: "Password",
-          auth_name_label: "Full name",
-          auth_name_ph: "e.g. Ahmed Ben Ali",
-          auth_year_label: "Academic year",
-          auth_wilaya_label: "Wilaya",
-          auth_login: "Sign in",
-          auth_no_account: "No account?",
-          auth_create_account: "Create account",
-          sidebar_forum: "Student forum",
-          sidebar_posts: "Posts",
-          sidebar_chats: "Chats",
-          sidebar_custom: "Student rooms",
-          channel_general: "General room",
-          channel_posts_badge: "Posts",
-          close_btn: "Close",
-          post_placeholder: "Write a message...",
-          send_btn: "Send",
-          create_room_title: "Create a room",
-          create_room_name: "Room name",
-          create_room_name_ph: "...",
-          create_room_type: "Type",
-          room_type_chat: "Chat",
-          room_type_posts: "Posts",
-          create_room_password: "Password (optional)",
-          create_room_password_ph: "Leave empty if public",
-          cancel_btn: "Cancel",
-          create_btn: "Create",
-          private_room_title: "Private room",
-          private_room_sub: "This room is password protected",
-          private_room_ph: "Enter the password",
-          wrong_password: "Wrong password",
-          enter_btn: "Enter"
-        }
-      };
-
-      function applyTr(lang){
-        const d = FORUM_TR[lang] || FORUM_TR.ar;
-        if(d.forum_page_title) document.title = d.forum_page_title;
-        document.querySelectorAll('[data-i18n]').forEach(el=>{
-          const k = el.getAttribute('data-i18n');
-          if(d[k]){
-            const icon = el.querySelector('i');
-            if(icon){ el.innerHTML=''; el.appendChild(icon); el.appendChild(document.createTextNode(' '+d[k])); }
-            else el.innerText = d[k];
-          }
-        });
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
-          const k = el.getAttribute('data-i18n-placeholder');
-          if(d[k]) el.placeholder = d[k];
-        });
-        document.documentElement.dir = (lang==='ar') ? 'rtl' : 'ltr';
-        document.documentElement.lang = lang;
-        const tb = document.getElementById('themeBtn');
-        if(tb){
-          const isDark = document.documentElement.getAttribute('data-theme')==='dark';
-          tb.innerHTML = isDark
-            ? '<i class="fa-solid fa-sun"></i> <span>'+d.menu_dark+'</span>'
-            : '<i class="fa-solid fa-moon"></i> <span>'+d.menu_dark+'</span>';
-        }
+    function toggleMenu(){
+      document.getElementById('navDropdown').classList.toggle('open');
+      document.getElementById('menuBtn').classList.toggle('active');
+    }
+    document.addEventListener('click', e=>{
+      const dd = document.getElementById('navDropdown');
+      const btn = document.getElementById('menuBtn');
+      if(dd && btn && !dd.contains(e.target) && !btn.contains(e.target)){
+        dd.classList.remove('open');
+        btn.classList.remove('active');
       }
+    });
 
+    // Fallback: si translate.js n'expose pas setLanguage, on ne casse rien
+    if(typeof window.setLanguage !== 'function'){
       window.setLanguage = function(lang){
         localStorage.setItem('enstp_lang', lang);
         document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
         const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
-        applyTr(lang);
-        // Also call forum.js setLanguage if available
-        if(typeof window.forumSetLanguage === 'function') window.forumSetLanguage(lang);
       };
+    }
 
+    // Fallback: si forum.js n'expose pas toggleDarkMode
+    if(typeof window.toggleDarkMode !== 'function'){
       window.toggleDarkMode = function(){
-        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
-        document.documentElement.setAttribute('data-theme', isDark?'light':'dark');
-        localStorage.setItem('theme', document.documentElement.getAttribute('data-theme'));
-        applyTr(localStorage.getItem('enstp_lang') || 'ar');
+        document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
       };
-
-      window.toggleMenu = function(){
-        document.getElementById('navDropdown').classList.toggle('open');
-        document.getElementById('menuBtn').classList.toggle('active');
-      };
-      document.addEventListener('click', e=>{
-        const dd = document.getElementById('navDropdown');
-        const btn = document.getElementById('menuBtn');
-        if(dd && btn && !dd.contains(e.target) && !btn.contains(e.target)){
-          dd.classList.remove('open');
-          btn.classList.remove('active');
-        }
-      });
-
-      window.toggleSidebar = function(){
-        const sb = document.getElementById('sidebar');
-        if(sb) sb.classList.toggle('open');
-      };
-
-      document.addEventListener('DOMContentLoaded', ()=>{
-        document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
-        const b = document.getElementById('btn-'+savedLang); if(b) b.classList.add('active');
-        applyTr(savedLang);
-      });
-    })();
+    }
+    if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
   </script>
 
-  <!-- ============================================================ -->
-  <!-- FORUM JS (unchanged)                                         -->
-  <!-- ============================================================ -->
+  <!-- forum.js INCHANGÉ -->
   <script type="module" src="forum.js"></script>
 
 </body>
