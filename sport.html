@@ -139,42 +139,28 @@
     }
     .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
 
-    /* HERO IMAGE (ta.jpg) */
-    .hero-image-banner {
-      max-width: 1100px; margin: 0 auto 24px; padding: 0 20px;
-    }
+    /* HERO BANNER ta.jpg */
+    .hero-image-banner { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; }
     .hero-image-banner .banner {
-      position: relative;
-      width: 100%;
-      height: 240px;
-      border-radius: 24px;
-      overflow: hidden;
+      position: relative; width: 100%; height: 240px;
+      border-radius: 24px; overflow: hidden;
       border: 2px solid var(--border-color);
       box-shadow: var(--shadow-md);
       background: linear-gradient(135deg, #f97316, #ea580c);
     }
     .hero-image-banner .banner img {
-      width: 100%; height: 100%; object-fit: cover;
-      display: block;
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
     .hero-image-banner .banner::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(15,23,42,.75), rgba(15,23,42,.1));
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,23,42,.8), rgba(15,23,42,.05));
     }
     .hero-image-banner .banner-content {
       position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 20px 24px;
-      z-index: 2;
-      color: #fff;
+      padding: 20px 24px; z-index: 2; color: #fff;
     }
-    .hero-image-banner .banner-content h3 {
-      margin: 0 0 4px; font-size: 1.3rem; font-weight: 900;
-    }
-    .hero-image-banner .banner-content p {
-      margin: 0; font-size: .88rem; font-weight: 600;
-      color: rgba(255,255,255,.9);
-    }
+    .hero-image-banner .banner-content h3 { margin: 0 0 4px; font-size: 1.3rem; font-weight: 900; }
+    .hero-image-banner .banner-content p { margin: 0; font-size: .88rem; font-weight: 600; color: rgba(255,255,255,.9); }
     @media(max-width:640px){
       .hero-image-banner .banner { height: 160px; border-radius: 18px; }
       .hero-image-banner .banner-content { padding: 14px 16px; }
@@ -386,7 +372,6 @@
       position: absolute; top: 0; left: 0;
       width: 100%; height: 100%; border: 0;
     }
-
     .map-btn {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 9px 16px; border-radius: 10px;
@@ -459,11 +444,10 @@
     <p data-i18n="sport_desc">دليل الأطباء، عيادات الأسنان، صالات الرياضة، والأنشطة البدنية.</p>
   </header>
 
-  <!-- HERO IMAGE (ta.jpg) -->
+  <!-- HERO BANNER ta.jpg -->
   <div class="hero-image-banner">
     <div class="banner">
-      <img src="ta.jpg" alt="Sport & Santé ENSTP"
-           onerror="this.style.display='none'; this.parentElement.querySelector('.banner-content').style.background='linear-gradient(135deg,#f97316,#ea580c)';">
+      <img src="ta.jpg" alt="Sport & Santé ENSTP" onerror="this.style.display='none';">
       <div class="banner-content">
         <h3 data-i18n="banner_title">الصحة والرياضة في ENSTP</h3>
         <p data-i18n="banner_desc">صحتك ولياقتك أولويتنا — اكتشف الأطباء والصالات والأنشطة.</p>
@@ -723,15 +707,25 @@
 
         const coverImage = (item.images && item.images.length > 0) ? item.images[0] : null;
 
+        /* ==================================================
+           ⚡ MEDIA LOGIC :
+           - vidéo (item.video / item.videoUrl) → iframe
+           - item a des images → 1ère image
+           - item category === 'salle' (sans image) → ta.jpg
+           - autres (médecin/dentiste sans image) → emoji
+           ================================================== */
         let mediaHTML;
         if(item.video || item.videoUrl){
           const videoId = item.video || extractYoutubeId(item.videoUrl);
           mediaHTML = `<div class="sport-card-cover"><div class="video-wrap" style="border-radius:0;border:none;"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen loading="lazy"></iframe></div></div>`;
         } else if(coverImage){
           mediaHTML = `<div class="sport-card-cover"><img src="${coverImage}" alt="${title}" onerror="this.parentElement.innerHTML='<div class=\\'no-img\\'>${item.icon || '📷'}</div>'"></div>`;
+        } else if(item.category === 'salle'){
+          // ✅ Salles de sport (fitness) sans image → ta.jpg
+          mediaHTML = `<div class="sport-card-cover"><img src="ta.jpg" alt="${title}" onerror="this.parentElement.innerHTML='<div class=\\'no-img\\'>${item.icon || '🏋️'}</div>'"></div>`;
         } else {
-          // Fallback : ta.jpg si pas d'image
-          mediaHTML = `<div class="sport-card-cover"><img src="ta.jpg" alt="Sport" onerror="this.parentElement.innerHTML='<div class=\\'no-img\\'>${item.icon || '📷'}</div>'"></div>`;
+          // ✅ Médecins / dentistes / vidéos sans image → icône emoji (PAS ta.jpg)
+          mediaHTML = `<div class="sport-card-cover"><div class="no-img">${item.icon || '📷'}</div></div>`;
         }
 
         const card = document.createElement('div');
