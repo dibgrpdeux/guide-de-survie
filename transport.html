@@ -352,15 +352,15 @@
             <h3><i class="fa-solid fa-comments"></i> <span data-i18n="comments_title">تعليقات الطلبة</span></h3>
             <span class="co-count" id="commentsCount" data-i18n="comments_count_zero">0 تعليق</span>
           </div>
-          <p class="co-sub" data-i18n="comments_sub">شارك تجربتك مع هذا الخط — كل التعليقات مرئية لجميع الطلبة.</p>
+          <p class="co-sub" data-i18n="comments_sub">شارك .</p>
 
           <div class="co-form">
             <div class="co-form-row">
               <input type="text" id="coName" maxlength="30" data-i18n-placeholder="co_name_ph" placeholder="اسمك (اختياري)...">
             </div>
-            <textarea id="coText" maxlength="300" data-i18n-placeholder="co_text_ph" placeholder="اكتب تعليقك هنا... (تجربة، نصيحة، وقت فعلي...)"></textarea>
+            <textarea id="coText" maxlength="300" data-i18n-placeholder="co_text_ph" placeholder="اكتب تعليقك هنا."></textarea>
             <div class="co-form-actions">
-              <span class="hint"><i class="fa-solid fa-eye"></i> <span data-i18n="co_hint">مرئي للجميع</span></span>
+              <span class="hint"><i class="fa-solid fa-eye"></i> <span data-i18n="co_hint">مرئي </span></span>
               <button id="coSubmit" class="co-submit" onclick="submitCommentFirebase()">
                 <i class="fa-solid fa-paper-plane"></i> <span data-i18n="co_submit">نشر التعليق</span>
               </button>
@@ -385,7 +385,7 @@
         <div class="acc-body"><div class="acc-inner">
           <div class="info-card"><h4><i class="fa-solid fa-bus"></i> <span data-i18n="proches_1_t">محطة الحافلات (أمام CNEP)</span></h4><p data-i18n="proches_1_p">350 متر (5 دقائق مشياً).</p></div>
           <div class="info-card"><h4><i class="fa-solid fa-bus"></i> <span data-i18n="proches_2_t">المحطة البرية القبة</span></h4><p data-i18n="proches_2_p">500 متر (7 دقائق مشياً).</p></div>
-          <div class="info-card"><h4><i class="fa-solid fa-train"></i> <span data-i18n="proches_3_t">محطة القطار (ENS)</span></h4><p data-i18n="proches_3_p">950 متر (14 دقيقة مشياً).</p></div>
+          <div class="info-card"><h4><i class="fa-solid fa-train"></i> <span data-i18n="proches_3_t">محطة القطار (</span></h4><p data-i18n="proches_3_p">950 متر (14 دقيقة مشياً).</p></div>
         </div></div>
       </div>
 
@@ -541,7 +541,7 @@
         bus_badge:"حافلة", bus_no_result:"لا توجد وجهة مطابقة", bus_results_count:"نتيجة",
         comments_title:"تعليقات الطلبة", comments_sub:"شارك تجربتك مع هذا الخط — كل التعليقات مرئية لجميع الطلبة.",
         comments_count_zero:"0 تعليق", comments_count_suffix:"تعليق",
-        co_name_ph:"اسمك (اختياري)...", co_text_ph:"اكتب تعليقك هنا... (تجربة، نصيحة، وقت فعلي...)",
+        co_name_ph:"اسمك (اختياري)...", co_text_ph:"اكتب تعليقك ",
         co_hint:"مرئي للجميع", co_submit:"نشر التعليق",
         co_empty:"لا توجد تعليقات بعد. كن أول من يشارك تجربته!",
         co_loading:"جاري تحميل التعليقات...",
@@ -550,8 +550,8 @@
         proches_title:"أقرب محطات النقل للمدرسة (ENSTP)",
         proches_1_t:"محطة الحافلات (أمام CNEP)", proches_1_p:"350 متر (5 دقائق مشياً).",
         proches_2_t:"المحطة البرية القبة", proches_2_p:"500 متر (7 دقائق مشياً).",
-        proches_3_t:"محطة القطار (ENS)", proches_3_p:"950 متر (14 دقيقة مشياً).",
-        metro_title:"الميترو والترامواي", metro_near:"أقرب محطة ميترو للمدرسة", metro_near_desc:"محطة حسيبة بوعلام.",
+        proches_3_t:"محطة  (etusa)", proches_3_p:"950 متر (14 دقيقة مشياً).",
+        metro_title:"الميترو والترامواي", metro_near:"أقرب محطة ميترو للمدرسة", metro_near_desc:"محطة بدر.",
         metro_ticket:"مترو: 50 دج", tram_ticket:"ترامواي: 40 دج", etwassel_ticket:"eTWASSEL: 150 دج/سنة",
         train_title:"قطارات SNTF (الخطوط الطويلة)",
         train_1_t:"الجزائر ↔ وهران", train_1_p:"الذهاب: 06:00 | 08:00 | 14:00 | 17:00",
@@ -581,9 +581,9 @@
         tab_univ:"Transport universitaire", tab_public:"Transport public", tab_carpool:"Covoiturage",
         choose_dest_title:"Choisissez votre destination", choose_dest:"-- Choisissez --", search_placeholder:"Rechercher une destination... ",
         bus_badge:"Bus", bus_no_result:"Aucune destination trouvée", bus_results_count:"résultat(s)",
-        comments_title:"Commentaires des étudiants", comments_sub:"Partagez votre expérience sur cette ligne — tous les commentaires sont visibles par tous.",
+        comments_title:"Commentaires des étudiants", comments_sub:"Partagez.",
         comments_count_zero:"0 commentaire", comments_count_suffix:"commentaire",
-        co_name_ph:"Votre nom (optionnel)...", co_text_ph:"Écrivez votre commentaire... (expérience, conseil, heure réelle...)",
+        co_name_ph:"Votre nom (optionnel)...", co_text_ph:"Écrivez votre commentaire",
         co_hint:"Visible par tous", co_submit:"Publier le commentaire",
         co_empty:"Aucun commentaire. Soyez le premier à partager !",
         co_loading:"Chargement des commentaires...",
@@ -592,7 +592,7 @@
         proches_title:"Arrêts proches de l'ENSTP",
         proches_1_t:"Arrêt bus (face CNEP)", proches_1_p:"350 m (5 min à pied).",
         proches_2_t:"Gare routière Kouba", proches_2_p:"500 m (7 min à pied).",
-        proches_3_t:"Gare SNTF (ENS)", proches_3_p:"950 m (14 min à pied).",
+        proches_3_t:"Gare kouba (Etusa)", proches_3_p:"950 m (14 min à pied).",
         metro_title:"Métro et Tramway", metro_near:"Station métro la plus proche", metro_near_desc:"Station Hassiba Boualem.",
         metro_ticket:"Métro : 50 DA", tram_ticket:"Tramway : 40 DA", etwassel_ticket:"eTWASSEL : 150 DA/an",
         train_title:"Trains SNTF (longues distances)",
