@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title data-i18n="forum_page_title">المنتدى الطلابي - ENSTP</title>
   
   <script src="translate.js"></script>
@@ -55,7 +55,7 @@
     .active-room { background: #f3f4f6; }
     .dark .active-room { background: #334155; }
 
-    /* === BLOBS & NAVBAR THEME === */
+    /* BLOBS */
     .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: #f8fafc; transition: background .6s; }
     .dark .animated-bg { background: #0a1128; }
     .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .25; animation: blobFloat 25s ease-in-out infinite; }
@@ -71,6 +71,7 @@
       66% { transform: translate(-40px,60px) scale(.95); }
     }
 
+    /* NAVBAR */
     .top-navbar {
       position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
       width: 96%; max-width: 1200px;
@@ -112,7 +113,6 @@
     .dark .nav-menu-btn { background: #0f1e41; color: #f8fafc; border-color: #1e3a8a; }
     .nav-menu-btn:hover { background: #f97316; color: #fff; border-color: #f97316; transform: translateY(-2px); }
     .nav-menu-btn.active { background: #f97316; color: #fff; border-color: #f97316; }
-    
     .nav-dropdown {
       position: fixed; top: 66px; left: 50%; transform: translateX(-50%) translateY(-10px);
       width: 290px; max-width: 92%;
@@ -142,6 +142,11 @@
     .dropdown-btn:hover { background: #fbbf24; color: #000; border-color: #fbbf24; transform: translateY(-1px); }
     .dropdown-btn.active { background: #f97316; color: #fff; border-color: #f97316; }
 
+    /* CORRECTION MOBILE POUR LA BARRE DE SAISIE */
+    .input-bar-container {
+      padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    }
+
     @media(max-width: 768px){
       .top-navbar { width: 100%; border-radius: 0; top: 0; left: 0; transform: none; }
       #forumScreen { top: 56px; }
@@ -153,14 +158,12 @@
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 h-screen overflow-hidden">
 
-  <!-- BLOBS -->
   <div class="animated-bg">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
   </div>
 
-  <!-- NAVBAR -->
   <nav class="top-navbar">
     <div class="nav-brand">
       <div class="nav-icon"><i class="fa-solid fa-users-rays"></i></div>
@@ -359,8 +362,8 @@
 
       <div id="postsContainer" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24 scroll-smooth"></div>
 
-      <!-- L'ORIGINAL (bouton déjà à côté dans votre code source) -->
-      <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 p-3 shadow-lg">
+      <!-- LA BARRE DE SAISIE ORIGINALE AVEC CORRECTION MOBILE -->
+      <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 p-3 shadow-lg input-bar-container">
         <div class="max-w-3xl mx-auto flex gap-2 items-end">
           <button onclick="document.getElementById('fileInput').click()" class="w-11 h-11 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-300 flex items-center justify-center hover:bg-brand-100 dark:hover:bg-brand-900/40 hover:text-brand-600 transition shrink-0 mb-0.5">
             <i class="fa-solid fa-paperclip text-lg"></i>
