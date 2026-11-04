@@ -1,129 +1,432 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="page_title">رموز QR للأفواج - ENSTP</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; transition: background-color 0.4s, color 0.4s; }
-    html.dark body { background: #0f172a; color: #f8fafc; }
-    
-    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.3s ease; }
-    html.dark .glass-card { background: #1e293b; border-color: #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
-    
-    .glass-nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; }
-    html.dark .glass-nav { background: #0f172a; border-bottom-color: #334155; }
+    :root {
+      --primary: #fbbf24; --primary-hover: #f59e0b;
+      --orange: #f97316; --orange-dark: #ea580c;
+      --bg-color: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
+      --card-bg: #ffffff; --nav-bg: rgba(255,255,255,0.95);
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    [data-theme="dark"] {
+      --bg-color: #0a1128; --text-main: #f8fafc; --text-muted: #94a3b8;
+      --card-bg: #0f1e41; --nav-bg: rgba(10,17,40,0.95);
+      --border-color: #1e3a8a;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color .4s, color .4s;
+      margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+      min-height: 100vh; padding-top: 90px;
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #f97316, #ea580c); border-radius: 10px; }
 
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: #64748b; transition: 0.2s; }
-    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
-    .lang-btn.active { background: #f97316; color: white; }
+    /* BLOBS */
+    .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: blobFloat 25s ease-in-out infinite; }
+    .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
+    .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
+    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .25; }
+    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.2 }
+    [data-theme="dark"] .blob-2 { background:#3b82f6; opacity:.15 }
+    [data-theme="dark"] .blob-3 { background:#1e3a8a; opacity:.3 }
+    @keyframes blobFloat {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(60px,-40px) scale(1.1); }
+      66% { transform: translate(-40px,60px) scale(.95); }
+    }
+    .dot { position: absolute; border-radius: 50%; background: #f97316; opacity: .15; animation: dotFloat 15s linear infinite; }
+    [data-theme="dark"] .dot { background: #60a5fa; opacity: .25; }
+    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; }
+    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
+    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
+    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
+    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
+    @keyframes dotFloat {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-30px) translateX(20px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
 
-    .filter-btn { transition: all 0.3s ease; }
-    .filter-btn.active { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); border-color: transparent; }
+    /* NAVBAR */
+    .top-navbar {
+      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 96%; max-width: 1100px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1.5px solid var(--border-color);
+      border-radius: 22px; padding: 10px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; z-index: 1000; box-shadow: var(--shadow-md);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-title { font-size: 1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; }
+    .nav-title span {
+      background: linear-gradient(90deg,#f97316,#fbbf24,#f97316);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+    .nav-subtitle { font-size: .65rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
+    .nav-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; box-shadow: 0 6px 18px rgba(249,115,22,.35); flex-shrink: 0;
+    }
+    .nav-menu-btn {
+      width: 42px; height: 42px; border-radius: 14px;
+      border: 1.5px solid var(--border-color); background: var(--card-bg);
+      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .25s; font-size: 1rem; flex-shrink: 0;
+    }
+    .nav-menu-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,.35); }
+    .nav-menu-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .nav-dropdown {
+      position: fixed; top: 72px; left: 50%; transform: translateX(-50%) translateY(-10px);
+      width: 290px; max-width: 92%; background: var(--nav-bg);
+      backdrop-filter: blur(20px); border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 8px; box-shadow: var(--shadow-md);
+      z-index: 1001; opacity: 0; pointer-events: none;
+      transition: all .25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .nav-dropdown.open { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid var(--border-color); }
+    .dropdown-section:last-child { border-bottom: none; }
+    .dropdown-label { font-size: .65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; padding: 0 4px; }
+    .dropdown-row { display: flex; gap: 5px; flex-wrap: wrap; }
+    .dropdown-btn {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color);
+      background: var(--card-bg); color: var(--text-main);
+      font-family: inherit; font-size: .75rem; font-weight: 700;
+      cursor: pointer; transition: all .2s; display: inline-flex; align-items: center;
+      gap: 6px; flex: 1; justify-content: center; min-width: fit-content; text-decoration: none;
+    }
+    .dropdown-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: translateY(-1px); }
+    .dropdown-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
 
-    .qr-card { background: white; border-radius: 20px; padding: 1.25rem; text-align: center; border: 2px solid #ffedd5; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
-    html.dark .qr-card { background: #1e293b; border-color: #334155; }
-    .qr-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -12px rgba(249, 115, 22, 0.3); border-color: #fb923c; }
+    /* HERO */
+    .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
+    .page-hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
+      margin: 0 0 8px; line-height: 1.2;
+    }
+    .page-hero h1 span {
+      background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
 
-    .qr-image { width: 100%; aspect-ratio: 1; border-radius: 12px; background: white; padding: 8px; object-fit: contain; }
-    html.dark .qr-image { background: #f8fafc; }
+    /* HERO BANNER qr.jpg */
+    .hero-image-banner { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; }
+    .hero-image-banner .banner {
+      position: relative; width: 100%; height: 240px;
+      border-radius: 24px; overflow: hidden;
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      background: linear-gradient(135deg, #f97316, #ea580c);
+    }
+    .hero-image-banner .banner img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .hero-image-banner .banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,23,42,.8), rgba(15,23,42,.05));
+    }
+    .hero-image-banner .banner-content {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 20px 24px; z-index: 2; color: #fff;
+    }
+    .hero-image-banner .banner-content h3 { margin: 0 0 4px; font-size: 1.3rem; font-weight: 900; }
+    .hero-image-banner .banner-content p { margin: 0; font-size: .88rem; font-weight: 600; color: rgba(255,255,255,.9); }
+    @media(max-width:640px){
+      .hero-image-banner .banner { height: 160px; border-radius: 18px; }
+      .hero-image-banner .banner-content { padding: 14px 16px; }
+      .hero-image-banner .banner-content h3 { font-size: 1rem; }
+      .hero-image-banner .banner-content p { font-size: .75rem; }
+    }
 
-    .qr-label { margin-top: 0.75rem; font-weight: 800; color: #7c2d12; font-size: 0.95rem; }
-    html.dark .qr-label { color: #fdba74; }
-    .qr-sub { font-size: 0.7rem; color: #64748b; margin-top: 0.25rem; }
-    html.dark .qr-sub { color: #94a3b8; }
+    /* CONTENT */
+    .content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
 
-    .download-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 0.7rem; font-weight: 700; color: #ea580c; margin-top: 0.5rem; cursor: pointer; text-decoration: none; }
-    .download-btn:hover { text-decoration: underline; }
+    /* Filters */
+    .filters-bar {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .filter-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 20px; border-radius: 16px;
+      background: var(--card-bg); border: 1.5px solid var(--border-color);
+      color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .88rem;
+      cursor: pointer; transition: all .3s cubic-bezier(.34,1.56,.64,1);
+      box-shadow: var(--shadow-sm);
+    }
+    .filter-chip:hover {
+      transform: translateY(-3px); border-color: var(--orange);
+      box-shadow: 0 10px 25px rgba(249,115,22,.2);
+    }
+    .filter-chip.active {
+      background: linear-gradient(135deg,#f97316,#ea580c);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 12px 30px rgba(249,115,22,.4);
+    }
 
-    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1001; width: 320px; max-height: 420px; background: white; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); border: 1px solid #fed7aa; display: none; flex-direction: column; }
+    /* QR grid */
+    #qrGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .qr-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      padding: 16px;
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+      box-shadow: var(--shadow-sm);
+      transition: all .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .qr-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: var(--orange);
+      box-shadow: 0 25px 50px -12px rgba(249,115,22,.25);
+    }
+    .qr-image {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 14px;
+      background: #ffffff;
+      padding: 8px;
+      object-fit: contain;
+      border: 1px solid var(--border-color);
+      transition: transform .3s;
+    }
+    .qr-card:hover .qr-image { transform: scale(1.04); }
+    [data-theme="dark"] .qr-image { background: #f8fafc; }
+
+    .qr-label {
+      margin-top: 12px;
+      font-weight: 900;
+      color: var(--orange-dark);
+      font-size: .95rem;
+    }
+    [data-theme="dark"] .qr-label { color: #fdba74; }
+    .qr-sub {
+      font-size: .72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .download-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .72rem; font-weight: 800;
+      color: var(--orange);
+      margin-top: 10px;
+      padding: 5px 12px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(249,115,22,.3);
+      background: rgba(249,115,22,.06);
+      cursor: pointer; text-decoration: none;
+      transition: all .2s;
+    }
+    .download-btn:hover {
+      background: var(--orange); color: #fff;
+      border-color: var(--orange);
+      transform: translateY(-1px);
+    }
+
+    /* CHAT */
+    #chatWindow {
+      position: fixed; bottom: 110px; right: 20px; z-index: 1500;
+      width: 340px; max-height: 480px;
+      background: var(--card-bg); border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      border: 1.5px solid var(--border-color);
+      display: none; flex-direction: column; overflow: hidden;
+    }
     #chatWindow.open { display: flex; }
-    html.dark #chatWindow { background: #1e293b; border-color: #334155; color: #f8fafc; }
-    @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+    @media(max-width:640px){ #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+    .chat-header {
+      background: linear-gradient(135deg,#f97316,#f59e0b);
+      color: #fff; padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-weight: 800;
+    }
+    .chat-header span { display: flex; align-items: center; gap: 8px; }
+    .chat-close-btn {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(255,255,255,.25); border: none; color: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    #chatBody {
+      padding: 12px; overflow-y: auto; height: 320px;
+      font-size: .85rem; display: flex; flex-direction: column; gap: 8px;
+      background: var(--bg-color);
+    }
+    .chat-input-wrap {
+      padding: 8px; border-top: 1px solid var(--border-color);
+      display: flex; gap: 6px; background: var(--card-bg);
+    }
+    #chatInput {
+      flex: 1; padding: 9px 12px;
+      border: 1.5px solid var(--border-color); border-radius: 10px;
+      font-size: .82rem; outline: none; font-family: inherit;
+      background: var(--bg-color); color: var(--text-main);
+    }
+    #chatInput:focus { border-color: var(--orange); }
+    .chat-send-btn {
+      background: var(--orange); color: #fff; border: none;
+      padding: 9px 14px; border-radius: 10px; cursor: pointer;
+    }
+    .chat-send-btn:hover { background: var(--orange-dark); }
 
-    @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
+    /* Kangourou */
+    .mascot-container { position: fixed; bottom: 22px; right: 22px; z-index: 1000; cursor: pointer; user-select: none; }
+    .mascot-kangaroo { width: 70px; height: 90px; filter: drop-shadow(0 10px 15px rgba(249,115,22,.3)); transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+    .mascot-kangaroo.jump { animation: kangarooJump .6s ease; }
+    @keyframes kangarooJump {
+      0%,100% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); }
+      60% { transform: translateY(-10px) scale(1) rotate(5deg); }
+    }
 
-    button, a, .glass-card, .qr-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .site-footer { background: var(--card-bg); border-top: 1.5px solid var(--border-color); padding: 25px 20px; margin-top: 40px; text-align: center; }
+    .footer-copy { font-size: .78rem; color: var(--text-muted); font-weight: 600; }
 
+    .hidden { display: none !important; }
+
+    /* Print */
     @media print {
-      header, footer, #kangarooContainer, #chatWindow, .filter-bar, .print-hide { display: none !important; }
-      body { background: white !important; }
-      .qr-card { break-inside: avoid; border: 1px solid #ddd; }
+      .top-navbar, .site-footer, .mascot-container, #chatWindow, .print-hide, .hero-image-banner { display: none !important; }
+      body { background: white !important; padding: 0 !important; }
+      .qr-card { break-inside: avoid; border: 1px solid #ddd !important; box-shadow: none !important; }
+      .qr-image { background: white !important; }
+      .page-hero, .filters-bar { display: none !important; }
+    }
+
+    @media(max-width:768px){
+      .top-navbar { padding: 8px 10px; border-radius: 16px; }
+      .nav-title { font-size: .85rem; }
+      .nav-subtitle { font-size: .6rem; }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body>
 
-  <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5">
-    <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white font-black text-lg shadow-md"><i class="fa-solid fa-qrcode"></i></div>
-        <div>
-          <h1 class="font-bold text-gray-900 dark:text-white text-base leading-tight" data-i18n="qr_title">رموز QR للأفواج</h1>
-          <p class="text-[11px] text-gray-500 dark:text-gray-400" data-i18n="qr_subtitle">كل فوج له رمزه الخاص</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-2 flex-wrap">
-        <div class="flex items-center gap-1 bg-gray-100 dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
-        </div>
-        <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center shadow-sm hover:bg-orange-50 dark:hover:bg-slate-700 transition">
-          <i class="fa-solid fa-moon dark:hidden"></i>
-          <i class="fa-solid fa-sun hidden dark:block text-orange-400"></i>
-        </button>
-        <button onclick="window.print()" class="print-hide px-3 py-2 rounded-xl bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 hover:bg-orange-200 text-xs font-bold transition flex items-center gap-1" data-i18n="qr_print">
-          <i class="fa-solid fa-print"></i> <span>طباعة</span>
-        </button>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 text-xs font-bold transition" data-i18n="nav_home">الرئيسية</a>
+  <!-- BLOBS -->
+  <div class="animated-bg">
+    <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
+    <div class="dot dot-1"></div><div class="dot dot-2"></div><div class="dot dot-3"></div><div class="dot dot-4"></div><div class="dot dot-5"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="top-navbar">
+    <div class="nav-brand">
+      <div class="nav-icon"><i class="fa-solid fa-qrcode"></i></div>
+      <div>
+        <div class="nav-title">ENSTP <span>QR Codes</span></div>
+        <div class="nav-subtitle" data-i18n="qr_subtitle">كل فوج له رمزه الخاص</div>
       </div>
     </div>
+    <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة">
+      <i class="fa-solid fa-sliders"></i>
+    </button>
+  </nav>
+
+  <div class="nav-dropdown" id="navDropdown">
+    <div class="dropdown-section">
+      <div class="dropdown-label">🌐 <span data-i18n="menu_lang">اللغة</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn active" onclick="setLanguage('ar')" id="btn-ar">🇩🇿 العربية</button>
+        <button class="dropdown-btn" onclick="setLanguage('fr')" id="btn-fr">🇫🇷 Français</button>
+        <button class="dropdown-btn" onclick="setLanguage('en')" id="btn-en">🇬🇧 English</button>
+      </div>
+    </div>
+    <div class="dropdown-section">
+      <div class="dropdown-label">⚙️ <span data-i18n="menu_settings">الإعدادات</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
+          <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
+        </button>
+        <button class="dropdown-btn print-hide" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> <span data-i18n="qr_print">طباعة</span>
+        </button>
+        <a href="index.html" class="dropdown-btn">
+          <i class="fa-solid fa-house"></i> <span data-i18n="nav_home">الرئيسية</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="page-hero">
+    <h1><span data-i18n="hero_1">رموز QR</span> <span data-i18n="hero_2">للأفواج</span></h1>
+    <p data-i18n="qr_desc">اختر القسم لعرض رموز QR لكل فوج. يمكنك طباعة كل الرموز أو تنزيلها.</p>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex-grow w-full space-y-8">
+  <!-- HERO BANNER qr.jpg -->
+  <div class="hero-image-banner">
+    <div class="banner">
+      <img src="qr.jpg" alt="QR Codes ENSTP"
+           onerror="this.style.display='none';">
+      <div class="banner-content">
+        <h3 data-i18n="banner_title">رموز QR للأفواج</h3>
+        <p data-i18n="banner_desc">امسح الرمز للوصول السريع إلى مجموعة فوجك.</p>
+      </div>
+    </div>
+  </div>
 
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-black text-gray-900 dark:text-white" data-i18n="qr_title">رموز QR للأفواج</h2>
-      <p class="text-gray-600 dark:text-gray-400 mt-2" data-i18n="qr_desc">اختر القسم لعرض رموز QR لكل فوج. يمكنك طباعة كل الرموز أو تنزيلها.</p>
+  <main class="content-wrap">
+
+    <!-- Filters -->
+    <div class="filters-bar" id="filtersBar">
+      <button onclick="setSection('1cp')" id="filter-1cp" class="filter-chip active">1CP</button>
+      <button onclick="setSection('2cp')" id="filter-2cp" class="filter-chip">2CP</button>
+      <button onclick="setSection('dib1')" id="filter-dib1" class="filter-chip">DIB 1</button>
+      <button onclick="setSection('dib2')" id="filter-dib2" class="filter-chip">DIB 2</button>
+      <button onclick="setSection('dib3')" id="filter-dib3" class="filter-chip">DIB 3</button>
+      <button onclick="setSection('dms1')" id="filter-dms1" class="filter-chip">DMS 1</button>
+      <button onclick="setSection('dms2')" id="filter-dms2" class="filter-chip">DMS 2</button>
+      <button onclick="setSection('dms3')" id="filter-dms3" class="filter-chip">DMS 3</button>
     </div>
 
-    <div id="filtersBar" class="filter-bar flex flex-wrap gap-2 justify-center sticky top-[60px] z-40 glass-card p-2 rounded-2xl shadow-sm border border-orange-100 dark:border-slate-700">
-      <button onclick="setSection('1cp')" id="filter-1cp" class="filter-btn active px-4 py-2 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">1CP</button>
-      <button onclick="setSection('2cp')" id="filter-2cp" class="filter-btn px-4 py-2 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">2CP</button>
-      <button onclick="setSection('dib1')" id="filter-dib1" class="filter-btn px-4 py-2 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">DIB 1</button>
-      <button onclick="setSection('dib2')" id="filter-dib2" class="filter-btn px-4 py-2 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">DIB 2</button>
-      <button onclick="setSection('dib3')" id="filter-dib3" class="filter-btn px-4 py-2 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">DIB 3</button>
-      <button onclick="setSection('dms1')" id="filter-dms1" class="filter-btn px-4 py-2 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">DMS 1</button>
-      <button onclick="setSection('dms2')" id="filter-dms2" class="filter-btn px-4 py-2 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">DMS 2</button>
-      <button onclick="setSection('dms3')" id="filter-dms3" class="filter-btn px-4 py-2 rounded-xl font-bold text-sm bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-orange-200 dark:border-slate-700">DMS 3</button>
-    </div>
+    <!-- Grid -->
+    <div id="qrGrid"></div>
 
-    <div id="qrGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
   </main>
-          <footer class="glass-nav border-t border-gray-200 dark:border-slate-800 py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400">
-    <p>© 2026 ENSTP Kouba.</p>
+
+  <footer class="site-footer">
+    <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
   </footer>
 
-  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;">
-    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+  <!-- KANGOUROU -->
+  <div class="mascot-container" id="kangarooContainer">
+    <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
       <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
       <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
@@ -146,43 +449,71 @@
     </svg>
   </div>
 
-  <div id="chatWindow" class="hidden">
-    <div style="background: linear-gradient(135deg, #f97316, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
-      <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span></span>
-      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+  <!-- CHAT -->
+  <div id="chatWindow">
+    <div class="chat-header">
+      <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد الافتراضي</span></span>
+      <button class="chat-close-btn" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
-      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
+    <div id="chatBody">
+      <div style="background:rgba(249,115,22,.12);padding:9px 13px;border-radius:12px;color:var(--orange-dark);font-weight:600;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
     </div>
-    <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
-      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
-      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+    <div class="chat-input-wrap">
+      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك...">
+      <button class="chat-send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
 
+  <!-- ============================================================ -->
+  <!-- SCRIPT                                                       -->
+  <!-- ============================================================ -->
   <script>
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
     let currentSection = '1cp';
 
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    /* ========== DARK MODE ========== */
+    const htmlEl = document.documentElement;
+    if(localStorage.getItem('theme')==='dark') htmlEl.setAttribute('data-theme','dark');
+    function toggleDarkMode(){
+      const isDark = htmlEl.getAttribute('data-theme')==='dark';
+      htmlEl.setAttribute('data-theme', isDark?'light':'dark');
+      localStorage.setItem('theme', htmlEl.getAttribute('data-theme'));
+      updateThemeBtn();
+    }
+    function updateThemeBtn(){
+      const tb = document.getElementById('themeBtn'); if(!tb) return;
+      const d = window.QR_TRANSLATIONS[currentLang] || window.QR_TRANSLATIONS.ar;
+      const isDark = htmlEl.getAttribute('data-theme')==='dark';
+      tb.innerHTML = isDark
+        ? '<i class="fa-solid fa-sun"></i> <span>'+d.menu_dark+'</span>'
+        : '<i class="fa-solid fa-moon"></i> <span>'+d.menu_dark+'</span>';
     }
 
-    function t(key) {
-      const dict = window.QR_TRANSLATIONS[currentLang] || window.QR_TRANSLATIONS.ar;
-      return dict[key] || key;
+    /* ========== MENU ========== */
+    function toggleMenu(){
+      document.getElementById('navDropdown').classList.toggle('open');
+      document.getElementById('menuBtn').classList.toggle('active');
     }
+    document.addEventListener('click', e=>{
+      const dd = document.getElementById('navDropdown');
+      const btn = document.getElementById('menuBtn');
+      if(!dd.contains(e.target) && !btn.contains(e.target)){
+        dd.classList.remove('open');
+        btn.classList.remove('active');
+      }
+    });
 
+    /* ========== TRANSLATIONS ========== */
     window.QR_TRANSLATIONS = {
       ar: {
         page_title: "رموز QR للأفواج - ENSTP", nav_home: "الرئيسية",
-        qr_title: "رموز QR للأفواج",
-        qr_subtitle: "كل فوج له رمزه الخاص",
+        menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي",
+        hero_1: "رموز QR", hero_2: "للأفواج",
+        banner_title: "رموز QR للأفواج",
+        banner_desc: "امسح الرمز للوصول السريع إلى مجموعة فوجك.",
+        qr_title: "رموز QR للأفواج", qr_subtitle: "كل فوج له رمزه الخاص",
         qr_desc: "اختر القسم لعرض رموز QR لكل فوج. يمكنك طباعة كل الرموز أو تنزيلها.",
-        qr_print: "طباعة",
-        qr_download: "تنزيل",
-        group_prefix: "الفوج",
+        qr_print: "طباعة", qr_download: "تنزيل", group_prefix: "الفوج",
         section_1cp: "السنة الأولى تحضيري",
         section_2cp: "السنة الثانية تحضيري",
         section_dib1: "DIB - السنة الأولى مهندس",
@@ -194,16 +525,18 @@
         chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
         chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
         chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
-        chat_qr: "هذه الصفحة تعرض رموز QR لكل فوج. اختر القسم لعرض الرموز."
+        chat_qr: "هذه الصفحة تعرض رموز QR لكل فوج. اختر القسم لعرض الرموز.",
+        footer_rights: "جميع الحقوق محفوظة"
       },
       fr: {
         page_title: "QR Codes des Classes - ENSTP", nav_home: "Accueil",
-        qr_title: "QR Codes des Classes",
-        qr_subtitle: "Chaque groupe a son propre QR",
+        menu_lang: "Langue", menu_settings: "Paramètres", menu_dark: "Sombre",
+        hero_1: "QR Codes", hero_2: "des Classes",
+        banner_title: "QR Codes des Classes",
+        banner_desc: "Scannez le code pour accéder rapidement à votre groupe.",
+        qr_title: "QR Codes des Classes", qr_subtitle: "Chaque groupe a son propre QR",
         qr_desc: "Choisissez la section pour afficher les QR codes de chaque groupe. Vous pouvez imprimer ou télécharger.",
-        qr_print: "Imprimer",
-        qr_download: "Télécharger",
-        group_prefix: "Groupe",
+        qr_print: "Imprimer", qr_download: "Télécharger", group_prefix: "Groupe",
         section_1cp: "1ère Année Préparatoire",
         section_2cp: "2ème Année Préparatoire",
         section_dib1: "DIB - 1ère Année Ingénieur",
@@ -215,16 +548,18 @@
         chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
         chat_placeholder: "Votre question...", chat_default: "Merci !",
         chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
-        chat_qr: "Cette page affiche les QR codes de chaque groupe. Choisissez une section."
+        chat_qr: "Cette page affiche les QR codes de chaque groupe. Choisissez une section.",
+        footer_rights: "Tous droits réservés"
       },
       en: {
         page_title: "Class QR Codes - ENSTP", nav_home: "Home",
-        qr_title: "Class QR Codes",
-        qr_subtitle: "Each group has its own QR",
+        menu_lang: "Language", menu_settings: "Settings", menu_dark: "Dark",
+        hero_1: "Class", hero_2: "QR Codes",
+        banner_title: "Class QR Codes",
+        banner_desc: "Scan the code for quick access to your group.",
+        qr_title: "Class QR Codes", qr_subtitle: "Each group has its own QR",
         qr_desc: "Choose a section to display QR codes for each group. You can print or download.",
-        qr_print: "Print",
-        qr_download: "Download",
-        group_prefix: "Group",
+        qr_print: "Print", qr_download: "Download", group_prefix: "Group",
         section_1cp: "1st Preparatory Year",
         section_2cp: "2nd Preparatory Year",
         section_dib1: "DIB - 1st Year Engineer",
@@ -236,11 +571,17 @@
         chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
         chat_placeholder: "Your question...", chat_default: "Thanks!",
         chat_hello: "Welcome!", chat_thanks: "You're welcome!",
-        chat_qr: "This page displays the QR codes for each group. Choose a section."
+        chat_qr: "This page displays the QR codes for each group. Choose a section.",
+        footer_rights: "All rights reserved"
       }
     };
 
-    // Structure des groupes
+    function t(key){
+      const d = window.QR_TRANSLATIONS[currentLang] || window.QR_TRANSLATIONS.ar;
+      return d[key] || key;
+    }
+
+    /* ========== SECTION DATA ========== */
     const sectionsData = {
       '1cp': { groups: Array.from({length: 12}, (_, i) => `g${i+1}`), title: 'section_1cp' },
       '2cp': { groups: Array.from({length: 12}, (_, i) => `g${i+1}`), title: 'section_2cp' },
@@ -252,65 +593,71 @@
       'dms3': { groups: ['promo'], title: 'section_dms3' }
     };
 
-    window.applyQrTranslation = function(lang) {
-      const dict = window.QR_TRANSLATIONS[lang] || window.QR_TRANSLATIONS.ar;
-      if (dict.page_title) document.title = dict.page_title;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
+    /* ========== APPLY TRANSLATION ========== */
+    window.applyQrTranslation = function(lang){
+      const d = window.QR_TRANSLATIONS[lang] || window.QR_TRANSLATIONS.ar;
+      if(d.page_title) document.title = d.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k = el.getAttribute('data-i18n');
+        if(d[k]){
           const icon = el.querySelector('i');
-          if (icon) { el.innerHTML = ''; el.appendChild(icon); el.appendChild(document.createTextNode(' ' + dict[key])); }
-          else el.innerText = dict[key];
+          if(icon){ el.innerHTML=''; el.appendChild(icon); el.appendChild(document.createTextNode(' '+d[k])); }
+          else el.innerText = d[k];
         }
       });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (dict[key]) el.placeholder = dict[key];
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-placeholder');
+        if(d[k]) el.placeholder = d[k];
       });
-      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.dir = (lang==='ar') ? 'rtl' : 'ltr';
       document.documentElement.lang = lang;
-      if (typeof renderQRs === 'function') renderQRs();
+      updateThemeBtn();
+      renderQRs();
     };
 
-    window.setLanguage = function(lang) {
+    window.setLanguage = function(lang){
       currentLang = lang;
       localStorage.setItem('enstp_lang', lang);
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-' + lang);
-      if (activeBtn) activeBtn.classList.add('active');
-      window.applyQrTranslation(lang);
+      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
+      const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
+      applyQrTranslation(lang);
     };
 
-    function setSection(section) {
+    /* ========== SECTION ========== */
+    function setSection(section){
       currentSection = section;
-      ['1cp','2cp','dib1','dib2','dib3','dms1','dms2','dms3'].forEach(s => {
-        const btn = document.getElementById('filter-' + s);
-        if (s === section) btn.classList.add('active');
-        else btn.classList.remove('active');
+      ['1cp','2cp','dib1','dib2','dib3','dms1','dms2','dms3'].forEach(s=>{
+        const btn = document.getElementById('filter-'+s);
+        if(btn){
+          if(s === section) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
       });
       renderQRs();
     }
 
-    function renderQRs() {
+    /* ========== RENDER QR ========== */
+    function renderQRs(){
       const grid = document.getElementById('qrGrid');
+      if(!grid) return;
       grid.innerHTML = '';
       const section = sectionsData[currentSection];
+      if(!section) return;
       const sectionTitle = t(section.title);
-      
-      section.groups.forEach(group => {
-        // Texte du QR : nom du groupe complet
+
+      section.groups.forEach(group=>{
         let groupName;
-        if (group === 'promo') {
+        if(group === 'promo'){
           groupName = `ENSTP - ${sectionTitle}`;
-        } else if (group.startsWith('sec')) {
+        } else if(group.startsWith('sec')){
           groupName = `ENSTP - ${sectionTitle} - Section ${group.replace('sec', '')}`;
         } else {
           groupName = `ENSTP - ${sectionTitle} - ${t('group_prefix')} ${group.replace('g', '')}`;
         }
-        
+
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(groupName)}&color=1e293b&bgcolor=ffffff&margin=10`;
-        const displayLabel = group === 'promo' ? sectionTitle : `${t('group_prefix')} ${group.replace('g', '').replace('sec', '')}`;
-        
+        const displayLabel = group === 'promo' ? sectionTitle : `${t('group_prefix')} ${group.replace('g','').replace('sec','')}`;
+
         const card = document.createElement('div');
         card.className = 'qr-card';
         card.innerHTML = `
@@ -318,69 +665,69 @@
           <div class="qr-label">${displayLabel}</div>
           <div class="qr-sub">${sectionTitle}</div>
           <a href="${qrUrl}" download="QR-${currentSection}-${group}.png" target="_blank" class="download-btn">
-            <i class="fa-solid fa-download"></i> ${t('qr_download')}
+            <i class="fa-solid fa-download"></i> <span>${t('qr_download')}</span>
           </a>
         `;
         grid.appendChild(card);
       });
     }
 
-    function toggleChat() {
-      const chat = document.getElementById('chatWindow');
-      if (!chat) return;
-      chat.classList.toggle('hidden');
-      chat.classList.toggle('open');
+    /* ========== CHAT ========== */
+    function toggleChat(){
+      const c = document.getElementById('chatWindow');
+      if(!c) return;
+      c.classList.toggle('open');
     }
-
-    function sendMessage() {
+    function sendMessage(){
       const input = document.getElementById('chatInput');
       const body = document.getElementById('chatBody');
-      if (!input || !body) return;
+      if(!input || !body) return;
       const msg = input.value.trim();
-      if (!msg) return;
-      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div></div>`;
+      if(!msg) return;
+      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:9px 13px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:.82rem;font-weight:600;">${msg}</div></div>`;
       input.value = '';
       body.scrollTop = body.scrollHeight;
-      setTimeout(() => {
+      setTimeout(()=>{
         let reply = t('chat_default');
         const m = msg.toLowerCase();
-        if (m.includes("qr") || m.includes("فوج") || m.includes("groupe") || m.includes("class")) reply = "📱 " + t('chat_qr');
-        else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
-        else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
-        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div></div>`;
+        if(m.includes("qr") || m.includes("فوج") || m.includes("groupe") || m.includes("class")) reply = "📱 " + t('chat_qr');
+        else if(m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
+        else if(m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
+        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:rgba(249,115,22,.12);color:var(--orange-dark);padding:9px 13px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:.82rem;font-weight:600;">${reply}</div></div>`;
         body.scrollTop = body.scrollHeight;
       }, 500);
     }
 
+    /* ========== KANGOUROU ========== */
     const kangarooContainer = document.getElementById('kangarooContainer');
     const kangarooSvg = document.getElementById('kangarooSvg');
-    if (kangarooContainer) {
-      kangarooContainer.addEventListener('click', () => {
-        if (kangarooSvg) {
-          kangarooSvg.style.animation = 'none';
-          kangarooSvg.offsetHeight;
-          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
-          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
+    if(kangarooContainer){
+      kangarooContainer.addEventListener('click', ()=>{
+        if(kangarooSvg){
+          kangarooSvg.classList.remove('jump');
+          void kangarooSvg.offsetHeight;
+          kangarooSvg.classList.add('jump');
+          setTimeout(()=>kangarooSvg.classList.remove('jump'), 700);
         }
         toggleChat();
       });
-      kangarooContainer.addEventListener('mouseenter', () => { if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
-      kangarooContainer.addEventListener('mouseleave', () => { if (kangarooSvg) kangarooSvg.style.transform = ''; });
+      kangarooContainer.addEventListener('mouseenter', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
+      kangarooContainer.addEventListener('mouseleave', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = ''; });
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-' + savedLang);
-      if (activeBtn) activeBtn.classList.add('active');
-      currentLang = savedLang;
-      window.applyQrTranslation(savedLang);
+    /* ========== INIT ========== */
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const saved = localStorage.getItem('enstp_lang') || 'ar';
+      currentLang = saved;
+      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
+      const b = document.getElementById('btn-'+saved); if(b) b.classList.add('active');
+      applyQrTranslation(saved);
       setSection('1cp');
+
       const chatInput = document.getElementById('chatInput');
-      if (chatInput) {
-        chatInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+      if(chatInput){
+        chatInput.addEventListener('keypress', e=>{
+          if(e.key === 'Enter'){ e.preventDefault(); sendMessage(); }
         });
       }
     });
