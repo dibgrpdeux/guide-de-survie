@@ -1,113 +1,465 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="page_title">سوق الطالب - ENSTP</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #f8fafc; color: #1e293b; transition: background-color 0.4s, color 0.4s; }
-    html.dark body { background: #0f172a; color: #f8fafc; }
-    
-    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.3s ease; }
-    html.dark .glass-card { background: #1e293b; border-color: #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
-    
-    .glass-nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; transition: all 0.3s ease; }
-    html.dark .glass-nav { background: #0f172a; border-bottom-color: #334155; }
+    :root {
+      --primary: #fbbf24; --primary-hover: #f59e0b;
+      --orange: #f97316; --orange-dark: #ea580c;
+      --bg-color: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
+      --card-bg: #ffffff; --nav-bg: rgba(255,255,255,0.95);
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    [data-theme="dark"] {
+      --bg-color: #0a1128; --text-main: #f8fafc; --text-muted: #94a3b8;
+      --card-bg: #0f1e41; --nav-bg: rgba(10,17,40,0.95);
+      --border-color: #1e3a8a;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color .4s, color .4s;
+      margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+      min-height: 100vh; padding-top: 90px;
+    }
 
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: #64748b; transition: 0.2s; }
-    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
-    .lang-btn.active { background: #f97316; color: white; }
+    /* BLOBS */
+    .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: blobFloat 25s ease-in-out infinite; }
+    .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
+    .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
+    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .25; }
+    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.2 }
+    [data-theme="dark"] .blob-2 { background:#3b82f6; opacity:.15 }
+    [data-theme="dark"] .blob-3 { background:#1e3a8a; opacity:.3 }
+    @keyframes blobFloat {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(60px,-40px) scale(1.1); }
+      66% { transform: translate(-40px,60px) scale(.95); }
+    }
+    .dot { position: absolute; border-radius: 50%; background: #f97316; opacity: .15; animation: dotFloat 15s linear infinite; }
+    [data-theme="dark"] .dot { background: #60a5fa; opacity: .25; }
+    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; }
+    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
+    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
+    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
+    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
+    @keyframes dotFloat {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-30px) translateX(20px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
 
-    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1001; width: 320px; max-height: 420px; background: white; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); border: 1px solid #fed7aa; display: none; flex-direction: column; }
+    /* NAVBAR */
+    .top-navbar {
+      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 96%; max-width: 1100px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1.5px solid var(--border-color);
+      border-radius: 22px; padding: 10px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; z-index: 1000; box-shadow: var(--shadow-md);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-title { font-size: 1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; }
+    .nav-title span {
+      background: linear-gradient(90deg,#f97316,#fbbf24,#f97316);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+    .nav-subtitle { font-size: .65rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
+    .nav-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; box-shadow: 0 6px 18px rgba(249,115,22,.35); flex-shrink: 0;
+    }
+    .nav-menu-btn {
+      width: 42px; height: 42px; border-radius: 14px;
+      border: 1.5px solid var(--border-color); background: var(--card-bg);
+      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .25s; font-size: 1rem; flex-shrink: 0;
+    }
+    .nav-menu-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,.35); }
+    .nav-menu-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .nav-dropdown {
+      position: fixed; top: 72px; left: 50%; transform: translateX(-50%) translateY(-10px);
+      width: 290px; max-width: 92%; background: var(--nav-bg);
+      backdrop-filter: blur(20px); border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 8px; box-shadow: var(--shadow-md);
+      z-index: 1001; opacity: 0; pointer-events: none;
+      transition: all .25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .nav-dropdown.open { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid var(--border-color); }
+    .dropdown-section:last-child { border-bottom: none; }
+    .dropdown-label { font-size: .65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; padding: 0 4px; }
+    .dropdown-row { display: flex; gap: 5px; flex-wrap: wrap; }
+    .dropdown-btn {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color);
+      background: var(--card-bg); color: var(--text-main);
+      font-family: inherit; font-size: .75rem; font-weight: 700;
+      cursor: pointer; transition: all .2s; display: inline-flex; align-items: center;
+      gap: 6px; flex: 1; justify-content: center; min-width: fit-content; text-decoration: none;
+    }
+    .dropdown-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: translateY(-1px); }
+    .dropdown-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+    /* HERO */
+    .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
+    .page-hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
+      margin: 0 0 8px; line-height: 1.2;
+    }
+    .page-hero h1 span {
+      background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
+
+    /* CONTENT */
+    .content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+
+    /* Form card */
+    .form-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 30px;
+    }
+    .form-card h2 {
+      font-size: 1.15rem; font-weight: 900; color: var(--text-main);
+      margin: 0 0 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .form-card h2 i { color: var(--orange); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media(max-width:640px){ .form-grid { grid-template-columns: 1fr; } }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-grid input, .form-grid textarea {
+      padding: 12px 14px; border-radius: 12px;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-color); color: var(--text-main);
+      font-family: inherit; font-size: .9rem; font-weight: 600;
+      outline: none; transition: all .2s;
+    }
+    .form-grid input:focus, .form-grid textarea:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(249,115,22,.15);
+    }
+    .form-grid textarea { resize: vertical; min-height: 70px; }
+    .submit-btn {
+      grid-column: 1 / -1;
+      padding: 14px 20px; border-radius: 12px;
+      background: linear-gradient(135deg,#f97316,#ea580c);
+      color: #fff; font-family: inherit; font-weight: 900; font-size: .95rem;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 8px 22px rgba(249,115,22,.4);
+      transition: all .25s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(249,115,22,.55); }
+    .submit-btn:disabled { opacity: .6; cursor: wait; transform: none; }
+
+    /* Products */
+    .products-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+    }
+    .products-header h2 {
+      font-size: 1.35rem; font-weight: 900; color: var(--text-main);
+      margin: 0; display: flex; align-items: center; gap: 10px;
+    }
+    .products-header h2 i { color: var(--orange); }
+    .products-count {
+      background: rgba(249,115,22,.12); color: var(--orange-dark);
+      padding: 5px 12px; border-radius: 20px;
+      font-size: .75rem; font-weight: 800;
+    }
+    [data-theme="dark"] .products-count { background: rgba(249,115,22,.2); color: #fdba74; }
+
+    #productsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px; overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: all .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .product-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: var(--orange);
+      box-shadow: 0 25px 50px -12px rgba(249,115,22,.25);
+    }
+    .product-img {
+      width: 100%; height: 200px; overflow: hidden;
+      background: linear-gradient(135deg, #fed7aa, #fbbf24);
+      position: relative;
+    }
+    .product-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .product-card:hover .product-img img { transform: scale(1.08); }
+    .product-img .no-img {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; color: rgba(249,115,22,.35);
+    }
+    .product-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+    .product-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 8px; margin-bottom: 10px;
+    }
+    .product-title {
+      font-size: 1.05rem; font-weight: 900; color: var(--text-main);
+      line-height: 1.25; margin: 0;
+      flex: 1;
+      transition: color .25s;
+    }
+    .product-card:hover .product-title { color: var(--orange); }
+    .product-price {
+      background: linear-gradient(135deg,#fef3c7,#fde68a);
+      color: #92400e;
+      padding: 6px 12px; border-radius: 10px;
+      font-size: .82rem; font-weight: 900; flex-shrink: 0;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .product-price { background: rgba(251,191,36,.2); color: #fcd34d; }
+    .product-desc {
+      font-size: .82rem; color: var(--text-muted); font-weight: 600;
+      line-height: 1.55; margin: 0 0 14px;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+    .product-actions {
+      display: flex; gap: 8px; margin-top: auto; padding-top: 12px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .product-actions .btn-contact {
+      flex: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; padding: 10px 14px;
+      border-radius: 10px;
+      background: linear-gradient(135deg,#22c55e,#16a34a);
+      color: #fff; font-weight: 800; font-size: .82rem;
+      text-decoration: none; transition: all .2s;
+      box-shadow: 0 4px 12px rgba(34,197,94,.3);
+    }
+    .product-actions .btn-contact:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34,197,94,.5); }
+    .product-actions .btn-delete {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(239,68,68,.1);
+      color: #ef4444;
+      border: none; cursor: pointer;
+      transition: all .2s;
+    }
+    .product-actions .btn-delete:hover { background: rgba(239,68,68,.2); transform: scale(1.05); }
+
+    /* Loading & empty */
+    #loading {
+      text-align: center; padding: 30px;
+    }
+    #loading .spinner {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 4px solid rgba(249,115,22,.2);
+      border-top-color: var(--orange);
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading p { color: var(--text-muted); font-weight: 700; margin: 0; }
+    .empty-state {
+      grid-column: 1/-1; text-align: center; padding: 40px 20px;
+      background: var(--card-bg); border-radius: 20px;
+      border: 1.5px dashed var(--border-color);
+      color: var(--text-muted); font-weight: 700;
+    }
+    .empty-state i { font-size: 2.5rem; opacity: .4; display: block; margin-bottom: 12px; color: var(--orange); }
+
+    /* CHAT */
+    #chatWindow {
+      position: fixed; bottom: 110px; right: 20px; z-index: 1500;
+      width: 340px; max-height: 480px;
+      background: var(--card-bg); border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      border: 1.5px solid var(--border-color);
+      display: none; flex-direction: column; overflow: hidden;
+    }
     #chatWindow.open { display: flex; }
-    html.dark #chatWindow { background: #1e293b; border-color: #334155; color: #f8fafc; }
-    @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+    @media(max-width:640px){ #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+    .chat-header {
+      background: linear-gradient(135deg,#f97316,#f59e0b);
+      color: #fff; padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-weight: 800;
+    }
+    .chat-header span { display: flex; align-items: center; gap: 8px; }
+    .chat-close-btn {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(255,255,255,.25); border: none; color: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    #chatBody {
+      padding: 12px; overflow-y: auto; height: 320px;
+      font-size: .85rem; display: flex; flex-direction: column; gap: 8px;
+      background: var(--bg-color);
+    }
+    .chat-input-wrap {
+      padding: 8px; border-top: 1px solid var(--border-color);
+      display: flex; gap: 6px; background: var(--card-bg);
+    }
+    #chatInput {
+      flex: 1; padding: 9px 12px;
+      border: 1.5px solid var(--border-color); border-radius: 10px;
+      font-size: .82rem; outline: none; font-family: inherit;
+      background: var(--bg-color); color: var(--text-main);
+    }
+    #chatInput:focus { border-color: var(--orange); }
+    .chat-send-btn {
+      background: var(--orange); color: #fff; border: none;
+      padding: 9px 14px; border-radius: 10px; cursor: pointer;
+    }
+    .chat-send-btn:hover { background: var(--orange-dark); }
 
-    @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
+    /* Kangourou */
+    .mascot-container { position: fixed; bottom: 22px; right: 22px; z-index: 1000; cursor: pointer; user-select: none; }
+    .mascot-kangaroo { width: 70px; height: 90px; filter: drop-shadow(0 10px 15px rgba(249,115,22,.3)); transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+    .mascot-kangaroo.jump { animation: kangarooJump .6s ease; }
+    @keyframes kangarooJump {
+      0%,100% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); }
+      60% { transform: translateY(-10px) scale(1) rotate(5deg); }
+    }
 
-    button, a, .glass-card { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-    input:focus, select:focus, textarea:focus { outline: none; border-color: #f97316 !important; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important; }
+    .site-footer { background: var(--card-bg); border-top: 1.5px solid var(--border-color); padding: 25px 20px; margin-top: 40px; text-align: center; }
+    .footer-copy { font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+
+    @media(max-width:768px){
+      .top-navbar { padding: 8px 10px; border-radius: 16px; }
+      .nav-title { font-size: .85rem; }
+      .nav-subtitle { font-size: .6rem; }
+    }
   </style>
 </head>
-<body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-sans min-h-screen flex flex-col justify-between">
+<body>
 
-  <header class="sticky top-0 z-50 glass-nav px-4 py-3 mb-8">
-    <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-2">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-orange-500 flex items-center justify-center text-white font-black text-lg shadow-md"><i class="fa-solid fa-store"></i></div>
-        <div>
-          <h1 class="font-bold text-gray-900 dark:text-white text-base leading-tight" data-i18n="market_title">سوق الطالب</h1>
-          <p class="text-[11px] text-gray-500 dark:text-gray-400" data-i18n="market_subtitle">بيع وشراء بين طلبة ENSTP</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1 bg-gray-100 dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-slate-700">
-          <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
-          <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
-          <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
-        </div>
-        <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center shadow-sm hover:bg-orange-50 dark:hover:bg-slate-700 transition">
-          <i class="fa-solid fa-moon dark:hidden"></i>
-          <i class="fa-solid fa-sun hidden dark:block text-orange-400"></i>
-        </button>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 text-xs font-bold transition" data-i18n="nav_home">الرئيسية</a>
+  <div class="animated-bg">
+    <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
+    <div class="dot dot-1"></div><div class="dot dot-2"></div><div class="dot dot-3"></div><div class="dot dot-4"></div><div class="dot dot-5"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="top-navbar">
+    <div class="nav-brand">
+      <div class="nav-icon"><i class="fa-solid fa-store"></i></div>
+      <div>
+        <div class="nav-title">ENSTP <span>Market</span></div>
+        <div class="nav-subtitle" data-i18n="market_subtitle">بيع وشراء بين طلبة ENSTP</div>
       </div>
     </div>
+    <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة">
+      <i class="fa-solid fa-sliders"></i>
+    </button>
+  </nav>
+
+  <div class="nav-dropdown" id="navDropdown">
+    <div class="dropdown-section">
+      <div class="dropdown-label">🌐 <span data-i18n="menu_lang">اللغة</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn active" onclick="setLanguage('ar')" id="btn-ar">🇩🇿 العربية</button>
+        <button class="dropdown-btn" onclick="setLanguage('fr')" id="btn-fr">🇫🇷 Français</button>
+        <button class="dropdown-btn" onclick="setLanguage('en')" id="btn-en">🇬🇧 English</button>
+      </div>
+    </div>
+    <div class="dropdown-section">
+      <div class="dropdown-label">⚙️ <span data-i18n="menu_settings">الإعدادات</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
+          <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
+        </button>
+        <a href="index.html" class="dropdown-btn">
+          <i class="fa-solid fa-house"></i> <span data-i18n="nav_home">الرئيسية</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="page-hero">
+    <h1><span data-i18n="hero_1">سوق</span> <span data-i18n="hero_2">الطالب</span></h1>
+    <p data-i18n="market_subtitle">بيع وشراء بين طلبة ENSTP</p>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 pb-12 space-y-8 flex-grow w-full">
+  <main class="content-wrap">
 
-    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-gray-200 dark:border-slate-700">
-      <h2 class="text-xl font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-        <i class="fa-solid fa-plus-circle text-orange-500"></i> <span data-i18n="market_add_title">أضف منتجك للبيع</span>
-      </h2>
-      <form id="productForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="text" id="prod-title" required data-i18n-placeholder="market_prod_title" placeholder="اسم المنتج (مثال: آلة حاسبة Casio)" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full outline-none focus:ring-2 focus:ring-orange-500">
-        <input type="number" id="prod-price" required data-i18n-placeholder="market_prod_price" placeholder="السعر (دج)" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full outline-none focus:ring-2 focus:ring-orange-500">
-        <input type="tel" id="prod-phone" required data-i18n-placeholder="market_prod_phone" placeholder="رقم الهاتف (واتساب)" dir="ltr" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full outline-none focus:ring-2 focus:ring-orange-500">
-        <input type="url" id="prod-image" data-i18n-placeholder="market_prod_image" placeholder="رابط الصورة (اختياري)" dir="ltr" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full outline-none focus:ring-2 focus:ring-orange-500">
-        <textarea id="prod-desc" required data-i18n-placeholder="market_prod_desc" placeholder="الوصف / الحالة..." rows="2" class="p-3 rounded-xl border dark:bg-slate-900 dark:border-slate-700 w-full md:col-span-2 outline-none focus:ring-2 focus:ring-orange-500"></textarea>
-        <button type="submit" id="submitBtn" class="md:col-span-2 bg-orange-500 text-white font-black text-lg py-3 rounded-xl shadow-lg hover:bg-orange-600 transition flex items-center justify-center gap-2">
+    <!-- Formulaire -->
+    <div class="form-card">
+      <h2><i class="fa-solid fa-plus-circle"></i> <span data-i18n="market_add_title">أضف منتجك للبيع</span></h2>
+      <form id="productForm" class="form-grid">
+        <input type="text" id="prod-title" required data-i18n-placeholder="market_prod_title" placeholder="اسم المنتج (مثال: آلة حاسبة Casio)">
+        <input type="number" id="prod-price" required data-i18n-placeholder="market_prod_price" placeholder="السعر (دج)">
+        <input type="tel" id="prod-phone" required data-i18n-placeholder="market_prod_phone" placeholder="رقم الهاتف (واتساب)" dir="ltr">
+        <input type="url" id="prod-image" data-i18n-placeholder="market_prod_image" placeholder="رابط الصورة (اختياري)" dir="ltr">
+        <textarea id="prod-desc" required data-i18n-placeholder="market_prod_desc" placeholder="الوصف / الحالة..." rows="2" class="full"></textarea>
+        <button type="submit" id="submitBtn" class="submit-btn">
           <i class="fa-solid fa-upload"></i> <span data-i18n="market_publish">نشر المنتج</span>
         </button>
       </form>
     </div>
 
-    <div>
-      <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-box-open text-orange-500"></i> <span data-i18n="market_products">المنتجات المعروضة</span></h2>
-      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- produits injectés -->
-      </div>
-      <div id="loading" class="text-center py-10 hidden">
-        <i class="fa-solid fa-spinner fa-spin text-3xl text-orange-500"></i>
-        <p class="text-gray-500 mt-2" data-i18n="market_loading">جاري تحميل المنتجات...</p>
-      </div>
+    <!-- Products -->
+    <div class="products-header">
+      <h2><i class="fa-solid fa-box-open"></i> <span data-i18n="market_products">المنتجات المعروضة</span></h2>
+      <span class="products-count" id="productsCount">0</span>
+    </div>
+
+    <div id="productsGrid">
+      <!-- injecté -->
+    </div>
+    <div id="loading" class="hidden" style="display:none;">
+      <div class="spinner"></div>
+      <p data-i18n="market_loading">جاري تحميل المنتجات...</p>
     </div>
 
   </main>
-    <footer class="glass-nav border-t border-gray-200 dark:border-slate-800 py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400">
-    <p>© 2026 ENSTP Kouba.</p>
+
+  <footer class="site-footer">
+    <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
   </footer>
 
-  <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;">
-    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+  <!-- KANGOUROU -->
+  <div class="mascot-container" id="kangarooContainer">
+    <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
       <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
       <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
@@ -130,36 +482,31 @@
     </svg>
   </div>
 
-  <div id="chatWindow" class="hidden">
-    <div style="background: linear-gradient(135deg, #f97316, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
-      <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span></span>
-      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+  <!-- CHAT -->
+  <div id="chatWindow">
+    <div class="chat-header">
+      <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد الافتراضي</span></span>
+      <button class="chat-close-btn" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
-      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #7c2d12;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
+    <div id="chatBody">
+      <div style="background:rgba(249,115,22,.12);padding:9px 13px;border-radius:12px;color:var(--orange-dark);font-weight:600;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
     </div>
-    <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
-      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
-      <button onclick="sendMessage()" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+    <div class="chat-input-wrap">
+      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك...">
+      <button class="chat-send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
 
+  <!-- ============================================================ -->
+  <!-- TRANSLATIONS                                                  -->
+  <!-- ============================================================ -->
   <script>
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    }
-
-    function t(key) {
-      const dict = window.MARKETPLACE_TRANSLATIONS[currentLang] || window.MARKETPLACE_TRANSLATIONS.ar;
-      return dict[key] || key;
-    }
-
     window.MARKETPLACE_TRANSLATIONS = {
       ar: {
         page_title: "سوق الطالب - ENSTP", nav_home: "الرئيسية",
+        menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي",
+        hero_1: "سوق", hero_2: "الطالب",
         market_title: "سوق الطالب", market_subtitle: "بيع وشراء بين طلبة ENSTP",
         market_add_title: "أضف منتجك للبيع",
         market_prod_title: "اسم المنتج (مثال: آلة حاسبة Casio)",
@@ -170,13 +517,17 @@
         market_publish: "نشر المنتج",
         market_products: "المنتجات المعروضة", market_loading: "جاري تحميل المنتجات...",
         market_contact: "تواصل", market_empty: "لا توجد منتجات معروضة حالياً.",
+        market_delete_confirm: "هل تريد حذف هذا المنتج؟",
         chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
         chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
         chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
-        chat_market: "تصفح المنتجات أو أضف منتجك في هذه الصفحة."
+        chat_market: "تصفح المنتجات أو أضف منتجك في هذه الصفحة.",
+        footer_rights: "جميع الحقوق محفوظة"
       },
       fr: {
         page_title: "Marché Étudiant - ENSTP", nav_home: "Accueil",
+        menu_lang: "Langue", menu_settings: "Paramètres", menu_dark: "Sombre",
+        hero_1: "Marché", hero_2: "Étudiant",
         market_title: "Marché Étudiant", market_subtitle: "Achat et vente entre étudiants ENSTP",
         market_add_title: "Ajouter votre produit",
         market_prod_title: "Nom du produit (ex : calculatrice Casio)",
@@ -187,13 +538,17 @@
         market_publish: "Publier le produit",
         market_products: "Produits en vente", market_loading: "Chargement...",
         market_contact: "Contacter", market_empty: "Aucun produit pour l'instant.",
+        market_delete_confirm: "Supprimer ce produit ?",
         chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
         chat_placeholder: "Votre question...", chat_default: "Merci !",
         chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
-        chat_market: "Parcourez les produits ou ajoutez le vôtre sur cette page."
+        chat_market: "Parcourez les produits ou ajoutez le vôtre sur cette page.",
+        footer_rights: "Tous droits réservés"
       },
       en: {
         page_title: "Student Market - ENSTP", nav_home: "Home",
+        menu_lang: "Language", menu_settings: "Settings", menu_dark: "Dark",
+        hero_1: "Student", hero_2: "Market",
         market_title: "Student Market", market_subtitle: "Buy and sell between ENSTP students",
         market_add_title: "Add your product",
         market_prod_title: "Product name (e.g. Casio calculator)",
@@ -204,102 +559,142 @@
         market_publish: "Publish product",
         market_products: "Products for sale", market_loading: "Loading...",
         market_contact: "Contact", market_empty: "No products yet.",
+        market_delete_confirm: "Delete this product?",
         chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
         chat_placeholder: "Your question...", chat_default: "Thanks!",
         chat_hello: "Welcome!", chat_thanks: "You're welcome!",
-        chat_market: "Browse products or add yours on this page."
+        chat_market: "Browse products or add yours on this page.",
+        footer_rights: "All rights reserved"
       }
     };
 
-    window.applyMarketplaceTranslation = function(lang) {
-      const dict = window.MARKETPLACE_TRANSLATIONS[lang] || window.MARKETPLACE_TRANSLATIONS.ar;
-      if (dict.page_title) document.title = dict.page_title;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
+    function t(key){
+      const d = window.MARKETPLACE_TRANSLATIONS[currentLang] || window.MARKETPLACE_TRANSLATIONS.ar;
+      return d[key] || key;
+    }
+    window.t = t;
+
+    window.applyMarketplaceTranslation = function(lang){
+      const d = window.MARKETPLACE_TRANSLATIONS[lang] || window.MARKETPLACE_TRANSLATIONS.ar;
+      if(d.page_title) document.title = d.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k = el.getAttribute('data-i18n');
+        if(d[k]){
           const icon = el.querySelector('i');
-          if (icon) { el.innerHTML = ''; el.appendChild(icon); el.appendChild(document.createTextNode(' ' + dict[key])); }
-          else el.innerText = dict[key];
+          if(icon){ el.innerHTML=''; el.appendChild(icon); el.appendChild(document.createTextNode(' '+d[k])); }
+          else el.innerText = d[k];
         }
       });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (dict[key]) el.placeholder = dict[key];
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-placeholder');
+        if(d[k]) el.placeholder = d[k];
       });
-      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.dir = (lang==='ar') ? 'rtl' : 'ltr';
       document.documentElement.lang = lang;
+      // Update theme button text
+      const tb = document.getElementById('themeBtn'); if(tb){
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        tb.innerHTML = isDark
+          ? '<i class="fa-solid fa-sun"></i> <span>'+d.menu_dark+'</span>'
+          : '<i class="fa-solid fa-moon"></i> <span>'+d.menu_dark+'</span>';
+      }
     };
 
-    window.setLanguage = function(lang) {
+    window.setLanguage = function(lang){
       currentLang = lang;
       localStorage.setItem('enstp_lang', lang);
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-' + lang);
-      if (activeBtn) activeBtn.classList.add('active');
-      window.applyMarketplaceTranslation(lang);
+      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
+      const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
+      applyMarketplaceTranslation(lang);
     };
 
-    function toggleChat() {
-      const chat = document.getElementById('chatWindow');
-      if (!chat) return;
-      chat.classList.toggle('hidden');
-      chat.classList.toggle('open');
+    /* ============= DARK MODE ============= */
+    const htmlEl = document.documentElement;
+    if(localStorage.getItem('theme')==='dark') htmlEl.setAttribute('data-theme','dark');
+    function toggleDarkMode(){
+      const isDark = htmlEl.getAttribute('data-theme')==='dark';
+      htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', htmlEl.getAttribute('data-theme'));
+      applyMarketplaceTranslation(currentLang);
     }
 
-    function sendMessage() {
+    /* ============= MENU ============= */
+    function toggleMenu(){
+      document.getElementById('navDropdown').classList.toggle('open');
+      document.getElementById('menuBtn').classList.toggle('active');
+    }
+    document.addEventListener('click', e=>{
+      const dd = document.getElementById('navDropdown');
+      const btn = document.getElementById('menuBtn');
+      if(!dd.contains(e.target) && !btn.contains(e.target)){
+        dd.classList.remove('open');
+        btn.classList.remove('active');
+      }
+    });
+
+    /* ============= CHAT ============= */
+    function toggleChat(){
+      const c = document.getElementById('chatWindow');
+      if(!c) return;
+      c.classList.toggle('open');
+    }
+    function sendMessage(){
       const input = document.getElementById('chatInput');
       const body = document.getElementById('chatBody');
-      if (!input || !body) return;
+      if(!input || !body) return;
       const msg = input.value.trim();
-      if (!msg) return;
-      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:#f97316;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div></div>`;
+      if(!msg) return;
+      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:9px 13px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:.82rem;font-weight:600;">${msg}</div></div>`;
       input.value = '';
       body.scrollTop = body.scrollHeight;
-      setTimeout(() => {
+      setTimeout(()=>{
         let reply = t('chat_default');
         const m = msg.toLowerCase();
-        if (m.includes("سوق") || m.includes("منتج") || m.includes("market") || m.includes("produit")) reply = "🛒 " + t('chat_market');
-        else if (m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
-        else if (m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
-        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:#ffedd5;color:#7c2d12;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div></div>`;
+        if(m.includes("سوق") || m.includes("منتج") || m.includes("market") || m.includes("produit")) reply = "🛒 " + t('chat_market');
+        else if(m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
+        else if(m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
+        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:rgba(249,115,22,.12);color:var(--orange-dark);padding:9px 13px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:.82rem;font-weight:600;">${reply}</div></div>`;
         body.scrollTop = body.scrollHeight;
       }, 500);
     }
 
+    /* ============= KANGOUROU ============= */
     const kangarooContainer = document.getElementById('kangarooContainer');
     const kangarooSvg = document.getElementById('kangarooSvg');
-    if (kangarooContainer) {
-      kangarooContainer.addEventListener('click', () => {
-        if (kangarooSvg) {
-          kangarooSvg.style.animation = 'none';
-          kangarooSvg.offsetHeight;
-          kangarooSvg.style.animation = 'kangarooJump 0.6s ease';
-          setTimeout(() => { kangarooSvg.style.animation = ''; }, 700);
+    if(kangarooContainer){
+      kangarooContainer.addEventListener('click', ()=>{
+        if(kangarooSvg){
+          kangarooSvg.classList.remove('jump');
+          void kangarooSvg.offsetHeight;
+          kangarooSvg.classList.add('jump');
+          setTimeout(()=>kangarooSvg.classList.remove('jump'), 700);
         }
         toggleChat();
       });
-      kangarooContainer.addEventListener('mouseenter', () => { if (kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
-      kangarooContainer.addEventListener('mouseleave', () => { if (kangarooSvg) kangarooSvg.style.transform = ''; });
+      kangarooContainer.addEventListener('mouseenter', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
+      kangarooContainer.addEventListener('mouseleave', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = ''; });
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-' + savedLang);
-      if (activeBtn) activeBtn.classList.add('active');
-      currentLang = savedLang;
-      window.applyMarketplaceTranslation(savedLang);
+    /* ============= INIT ============= */
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const saved = localStorage.getItem('enstp_lang') || 'ar';
+      currentLang = saved;
+      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
+      const b = document.getElementById('btn-'+saved); if(b) b.classList.add('active');
+      applyMarketplaceTranslation(saved);
+
       const chatInput = document.getElementById('chatInput');
-      if (chatInput) {
-        chatInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+      if(chatInput){
+        chatInput.addEventListener('keypress', (e)=>{
+          if(e.key === 'Enter'){ e.preventDefault(); sendMessage(); }
         });
       }
     });
   </script>
 
-  <!-- Firebase Marketplace -->
+  <!-- ============================================================ -->
+  <!-- FIREBASE MARKETPLACE                                          -->
+  <!-- ============================================================ -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -316,11 +711,17 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    function escHtml(s){
+      return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
     const form = document.getElementById('productForm');
     const grid = document.getElementById('productsGrid');
     const loading = document.getElementById('loading');
     const submitBtn = document.getElementById('submitBtn');
+    const productsCount = document.getElementById('productsCount');
 
+    // Submit
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
@@ -345,39 +746,47 @@
       }
     });
 
-    loading.classList.remove('hidden');
+    // Listen
+    loading.style.display = 'block';
     const q = query(collection(db, "marketplace"), orderBy("createdAt", "desc"));
-    
+
     onSnapshot(q, (snapshot) => {
-      loading.classList.add('hidden');
+      loading.style.display = 'none';
       grid.innerHTML = '';
-      
+      productsCount.textContent = snapshot.size;
+
       if (snapshot.empty) {
-        grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500 bg-white dark:bg-slate-800 rounded-2xl border dark:border-slate-700">${window.t('market_empty')}</div>`;
+        grid.innerHTML = `<div class="empty-state">
+          <i class="fa-solid fa-box-open"></i>
+          ${escHtml(window.t('market_empty'))}
+        </div>`;
         return;
       }
 
       snapshot.forEach((docSnap) => {
         const p = docSnap.data();
-        const waPhone = p.phone.replace(/^0/, '213');
-        let imgHtml = p.image 
-          ? `<img src="${p.image}" class="w-full h-48 object-cover" onerror="this.src='https://via.placeholder.com/400x300/f1f5f9/94a3b8?text=No+Image'">` 
-          : `<div class="w-full h-48 bg-gray-100 dark:bg-slate-700 flex items-center justify-center"><i class="fa-solid fa-image text-4xl text-gray-300"></i></div>`;
+        const waPhone = (p.phone || '').replace(/^0/, '213');
+        let imgHtml;
+        if (p.image) {
+          imgHtml = `<img src="${escHtml(p.image)}" alt="${escHtml(p.title)}" onerror="this.parentElement.innerHTML='<div class=\\'no-img\\'><i class=\\'fa-solid fa-image\\'></i></div>'">`;
+        } else {
+          imgHtml = `<div class="no-img"><i class="fa-solid fa-image"></i></div>`;
+        }
 
         grid.innerHTML += `
-          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
-            ${imgHtml}
-            <div class="p-4 flex-grow flex flex-col">
-              <div class="flex justify-between items-start mb-2">
-                <h3 class="font-bold text-lg text-gray-900 dark:text-white">${p.title}</h3>
-                <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 font-black text-sm px-2 py-1 rounded-lg whitespace-nowrap">${p.price} DA</span>
+          <div class="product-card">
+            <div class="product-img">${imgHtml}</div>
+            <div class="product-body">
+              <div class="product-head">
+                <h3 class="product-title">${escHtml(p.title)}</h3>
+                <span class="product-price">${escHtml(p.price)} DA</span>
               </div>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">${p.desc}</p>
-              <div class="flex gap-2 mt-auto">
-                <a href="https://wa.me/${waPhone}?text=Bonjour" target="_blank" class="flex-1 bg-green-500 text-white font-bold py-2 rounded-xl text-sm hover:bg-green-600 flex items-center justify-center gap-1">
-                  <i class="fa-brands fa-whatsapp"></i> <span>${window.t('market_contact')}</span>
+              <p class="product-desc">${escHtml(p.desc)}</p>
+              <div class="product-actions">
+                <a href="https://wa.me/${waPhone}?text=Bonjour" target="_blank" class="btn-contact">
+                  <i class="fa-brands fa-whatsapp"></i> <span>${escHtml(window.t('market_contact'))}</span>
                 </a>
-                <button onclick="deleteProduct('${docSnap.id}')" class="bg-red-50 dark:bg-red-900/30 text-red-500 px-3 py-2 rounded-xl hover:bg-red-100">
+                <button onclick="deleteProduct('${docSnap.id}')" class="btn-delete" title="Supprimer">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </div>
@@ -386,8 +795,9 @@
       });
     });
 
+    // Delete
     window.deleteProduct = async (id) => {
-      if (!confirm("Confirmer la suppression ?")) return;
+      if (!confirm(window.t('market_delete_confirm'))) return;
       try { await deleteDoc(doc(db, "marketplace", id)); }
       catch (e) { alert("Error: " + e.message); }
     };
