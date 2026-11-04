@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>دليل النقل - ENSTP</title>
+  <title data-i18n="page_title">دليل النقل - ENSTP</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -61,9 +61,11 @@
     .nav-dropdown.open { opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
     .dropdown-section { padding:10px 8px; border-bottom:1px solid var(--border-color); }
     .dropdown-section:last-child { border-bottom:none; }
+    .dropdown-label { font-size:.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; padding:0 4px; }
     .dropdown-row { display:flex; gap:5px; flex-wrap:wrap; }
     .dropdown-btn { padding:8px 12px; border-radius:10px; border:1px solid var(--border-color); background:var(--card-bg); color:var(--text-main); font-family:inherit; font-size:.75rem; font-weight:700; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:6px; flex:1; justify-content:center; min-width:fit-content; text-decoration:none; }
     .dropdown-btn:hover { background:var(--primary); color:#000; border-color:var(--primary); transform:translateY(-1px); }
+    .dropdown-btn.active { background:var(--orange); color:#fff; border-color:var(--orange); }
 
     .page-hero { max-width:1100px; margin:0 auto 20px; padding:0 20px; text-align:center; }
     .page-hero h1 { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:900; margin:0 0 8px; line-height:1.2; }
@@ -144,198 +146,47 @@
     [data-theme="dark"] .info-card h4 { color:#fdba74; }
     .info-card p { margin:0; font-size:.75rem; color:var(--text-muted); }
 
-    /* ============================================================ */
-    /* 💬 COMMENTAIRES OUVERTS (visible par tout le monde)          */
-    /* ============================================================ */
-    .comments-open {
-      background: var(--card-bg);
-      border: 1.5px solid var(--border-color);
-      border-radius: 22px;
-      padding: 20px;
-      margin-top: 16px;
-      box-shadow: var(--shadow-sm);
-    }
-    .comments-open .co-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
-    }
-    .comments-open .co-header h3 {
-      margin: 0;
-      font-size: 1.1rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-main);
-    }
-    .comments-open .co-header h3 i { color: var(--orange); }
-    .co-count {
-      background: rgba(249,115,22,.12);
-      color: var(--orange-dark);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: .75rem;
-      font-weight: 800;
-    }
-    [data-theme="dark"] .co-count { background: rgba(249,115,22,.2); color: #fdba74; }
-    .co-sub {
-      margin: 0 0 16px;
-      font-size: .82rem;
-      color: var(--text-muted);
-      font-weight: 600;
-      line-height: 1.5;
-    }
-    .co-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 14px;
-      background: rgba(249,115,22,.04);
-      border: 1.5px dashed rgba(249,115,22,.35);
-      border-radius: 14px;
-      margin-bottom: 18px;
-    }
-    [data-theme="dark"] .co-form { background: rgba(249,115,22,.08); }
-    .co-form-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .co-form input,
-    .co-form textarea {
-      padding: 11px 14px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border-color);
-      background: var(--card-bg);
-      color: var(--text-main);
-      font-family: inherit;
-      font-size: .88rem;
-      outline: none;
-      transition: all .2s;
-    }
-    .co-form input:focus,
-    .co-form textarea:focus {
-      border-color: var(--orange);
-      box-shadow: 0 0 0 3px rgba(249,115,22,.15);
-    }
-    .co-form input#coName { width: 180px; flex-shrink: 0; }
-    @media(max-width:640px){ .co-form input#coName { width: 100%; } }
-    .co-form textarea#coText {
-      width: 100%;
-      resize: vertical;
-      min-height: 80px;
-      max-height: 200px;
-      line-height: 1.6;
-    }
-    .co-form-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .co-form-actions .hint {
-      font-size: .72rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-    .co-submit {
-      padding: 11px 22px;
-      border-radius: 12px;
-      border: none;
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: white;
-      font-family: inherit;
-      font-weight: 800;
-      font-size: .88rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all .2s;
-      box-shadow: 0 6px 18px rgba(249,115,22,.35);
-    }
-    .co-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(249,115,22,.5); }
-    .co-submit:disabled { opacity: .6; cursor: wait; transform: none; }
+    .comments-open { background:var(--card-bg); border:1.5px solid var(--border-color); border-radius:22px; padding:20px; margin-top:16px; box-shadow:var(--shadow-sm); }
+    .comments-open .co-header { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+    .comments-open .co-header h3 { margin:0; font-size:1.1rem; font-weight:900; display:flex; align-items:center; gap:8px; color:var(--text-main); }
+    .comments-open .co-header h3 i { color:var(--orange); }
+    .co-count { background:rgba(249,115,22,.12); color:var(--orange-dark); padding:4px 12px; border-radius:20px; font-size:.75rem; font-weight:800; }
+    [data-theme="dark"] .co-count { background:rgba(249,115,22,.2); color:#fdba74; }
+    .co-sub { margin:0 0 16px; font-size:.82rem; color:var(--text-muted); font-weight:600; line-height:1.5; }
+    .co-form { display:flex; flex-direction:column; gap:10px; padding:14px; background:rgba(249,115,22,.04); border:1.5px dashed rgba(249,115,22,.35); border-radius:14px; margin-bottom:18px; }
+    [data-theme="dark"] .co-form { background:rgba(249,115,22,.08); }
+    .co-form-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .co-form input, .co-form textarea { padding:11px 14px; border-radius:12px; border:1.5px solid var(--border-color); background:var(--card-bg); color:var(--text-main); font-family:inherit; font-size:.88rem; outline:none; transition:all .2s; }
+    .co-form input:focus, .co-form textarea:focus { border-color:var(--orange); box-shadow:0 0 0 3px rgba(249,115,22,.15); }
+    .co-form input#coName { width:180px; flex-shrink:0; }
+    @media(max-width:640px){ .co-form input#coName { width:100%; } }
+    .co-form textarea#coText { width:100%; resize:vertical; min-height:80px; max-height:200px; line-height:1.6; }
+    .co-form-actions { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+    .co-form-actions .hint { font-size:.72rem; color:var(--text-muted); font-weight:600; }
+    .co-submit { padding:11px 22px; border-radius:12px; border:none; background:linear-gradient(135deg,#f97316,#ea580c); color:white; font-family:inherit; font-weight:800; font-size:.88rem; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s; box-shadow:0 6px 18px rgba(249,115,22,.35); }
+    .co-submit:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(249,115,22,.5); }
+    .co-submit:disabled { opacity:.6; cursor:wait; transform:none; }
 
-    #commentsList {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-height: 480px;
-      overflow-y: auto;
-      padding-right: 3px;
-    }
-    #commentsList::-webkit-scrollbar { width: 6px; }
-    #commentsList::-webkit-scrollbar-thumb { background: rgba(249,115,22,.4); border-radius: 10px; }
+    #commentsList { display:flex; flex-direction:column; gap:10px; max-height:480px; overflow-y:auto; padding-right:3px; }
+    #commentsList::-webkit-scrollbar { width:6px; }
+    #commentsList::-webkit-scrollbar-thumb { background:rgba(249,115,22,.4); border-radius:10px; }
 
-    .co-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(249,115,22,.05);
-      border: 1px solid rgba(249,115,22,.15);
-      animation: msgIn .35s cubic-bezier(.34,1.56,.64,1);
-    }
-    [data-theme="dark"] .co-item { background: rgba(249,115,22,.1); border-color: rgba(249,115,22,.25); }
+    .co-item { display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border-radius:14px; background:rgba(249,115,22,.05); border:1px solid rgba(249,115,22,.15); animation:msgIn .35s cubic-bezier(.34,1.56,.64,1); }
+    [data-theme="dark"] .co-item { background:rgba(249,115,22,.1); border-color:rgba(249,115,22,.25); }
     @keyframes msgIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-    .co-avatar {
-      width: 38px; height: 38px; border-radius: 50%;
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: white; display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: .95rem; flex-shrink: 0;
-      box-shadow: 0 3px 10px rgba(249,115,22,.35);
-    }
-    .co-body { flex: 1; min-width: 0; }
-    .co-head {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 8px; flex-wrap: wrap; margin-bottom: 5px;
-    }
-    .co-name { font-size: .85rem; font-weight: 800; color: var(--orange-dark); }
-    [data-theme="dark"] .co-name { color: #fdba74; }
-    .co-time { font-size: .68rem; color: var(--text-muted); font-weight: 600; }
-    .co-text {
-      font-size: .86rem;
-      color: var(--text-main);
-      line-height: 1.7;
-      word-wrap: break-word;
-      white-space: pre-wrap;
-    }
-    .co-delete {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 5px 7px;
-      font-size: .78rem;
-      border-radius: 7px;
-      transition: all .2s;
-      flex-shrink: 0;
-    }
-    .co-delete:hover { background: rgba(239,68,68,.12); color: #ef4444; }
-    .co-empty {
-      text-align: center;
-      padding: 30px 15px;
-      color: var(--text-muted);
-      font-size: .85rem;
-      font-weight: 600;
-    }
-    .co-empty i { font-size: 2rem; opacity: .3; display: block; margin-bottom: 10px; }
-    .co-loading {
-      text-align: center;
-      padding: 20px;
-      color: var(--text-muted);
-      font-size: .82rem;
-      font-weight: 600;
-    }
+    .co-avatar { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#f97316,#ea580c); color:white; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:.95rem; flex-shrink:0; box-shadow:0 3px 10px rgba(249,115,22,.35); }
+    .co-body { flex:1; min-width:0; }
+    .co-head { display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:5px; }
+    .co-name { font-size:.85rem; font-weight:800; color:var(--orange-dark); }
+    [data-theme="dark"] .co-name { color:#fdba74; }
+    .co-time { font-size:.68rem; color:var(--text-muted); font-weight:600; }
+    .co-text { font-size:.86rem; color:var(--text-main); line-height:1.7; word-wrap:break-word; white-space:pre-wrap; }
+    .co-delete { background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px 7px; font-size:.78rem; border-radius:7px; transition:all .2s; flex-shrink:0; }
+    .co-delete:hover { background:rgba(239,68,68,.12); color:#ef4444; }
+    .co-empty { text-align:center; padding:30px 15px; color:var(--text-muted); font-size:.85rem; font-weight:600; }
+    .co-empty i { font-size:2rem; opacity:.3; display:block; margin-bottom:10px; }
+    .co-loading { text-align:center; padding:20px; color:var(--text-muted); font-size:.82rem; font-weight:600; }
 
-    /* Carpool */
     .carpool-form { background:rgba(251,191,36,.08); border:1px solid rgba(251,191,36,.3); padding:18px; border-radius:16px; margin-bottom:20px; }
     .carpool-form h4 { margin:0 0 12px; font-size:.9rem; font-weight:800; display:flex; align-items:center; gap:6px; }
     .carpool-form .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
@@ -415,7 +266,7 @@
     <div class="nav-brand">
       <div>
         <div class="nav-title">ENSTP <span>Transport</span></div>
-        <div class="nav-subtitle">دليل النقل</div>
+        <div class="nav-subtitle" data-i18n="nav_subtitle">دليل النقل</div>
       </div>
     </div>
     <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة">
@@ -425,31 +276,40 @@
 
   <div class="nav-dropdown" id="navDropdown">
     <div class="dropdown-section">
+      <div class="dropdown-label">🌐 <span data-i18n="menu_lang">اللغة</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn active" onclick="setLang('ar')" id="btn-ar">🇩🇿 العربية</button>
+        <button class="dropdown-btn" onclick="setLang('fr')" id="btn-fr">🇫🇷 Français</button>
+        <button class="dropdown-btn" onclick="setLang('en')" id="btn-en">🇬🇧 English</button>
+      </div>
+    </div>
+    <div class="dropdown-section">
+      <div class="dropdown-label">⚙️ <span data-i18n="menu_settings">الإعدادات</span></div>
       <div class="dropdown-row">
         <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
-          <i class="fa-solid fa-moon"></i> <span>ليلي</span>
+          <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
         </button>
         <a href="index.html" class="dropdown-btn">
-          <i class="fa-solid fa-house"></i> <span>الرئيسية</span>
+          <i class="fa-solid fa-house"></i> <span data-i18n="nav_home">الرئيسية</span>
         </a>
       </div>
     </div>
   </div>
 
   <header class="page-hero">
-    <h1><span>دليل النقل</span> <span>والمواصلات</span></h1>
-    <p>كل ما تحتاجه للتنقل من وإلى المدرسة بسهولة.</p>
+    <h1><span data-i18n="hero_1">دليل النقل</span> <span data-i18n="hero_2">والمواصلات</span></h1>
+    <p data-i18n="hero_desc">كل ما تحتاجه للتنقل من وإلى المدرسة بسهولة.</p>
   </header>
 
   <div class="tabs-wrap">
     <button class="tab-btn active" onclick="switchTab('univ')" id="tab-univ">
-      <i class="fa-solid fa-graduation-cap"></i> <span>النقل الجامعي</span>
+      <i class="fa-solid fa-graduation-cap"></i> <span data-i18n="tab_univ">النقل الجامعي</span>
     </button>
     <button class="tab-btn" onclick="switchTab('public')" id="tab-public">
-      <i class="fa-solid fa-city"></i> <span>النقل العمومي</span>
+      <i class="fa-solid fa-city"></i> <span data-i18n="tab_public">النقل العمومي</span>
     </button>
     <button class="tab-btn" onclick="switchTab('carpool')" id="tab-carpool">
-      <i class="fa-solid fa-taxi"></i> <span>مشاركة التاكسي</span>
+      <i class="fa-solid fa-taxi"></i> <span data-i18n="tab_carpool">مشاركة التاكسي</span>
     </button>
   </div>
 
@@ -459,10 +319,11 @@
     <section class="panel active" id="panel-univ">
 
       <div class="glass-card selector-card">
-        <h2><i class="fa-solid fa-location-dot"></i> اختر وجهتك</h2>
+        <h2><i class="fa-solid fa-location-dot"></i> <span data-i18n="choose_dest_title">اختر وجهتك</span></h2>
 
         <div class="search-input-wrap">
           <input type="text" id="busSearchInput" autocomplete="off"
+                 data-i18n-placeholder="search_placeholder"
                  placeholder="ابحث عن وجهة... " />
           <i class="fa-solid fa-magnifying-glass"></i>
           <button type="button" class="clear-btn" onclick="clearBusSearch()"><i class="fa-solid fa-xmark"></i></button>
@@ -470,7 +331,7 @@
         <div class="search-counter" id="busSearchCounter"></div>
 
         <select id="destinationSelect" class="dest-select">
-          <option value="" disabled selected>-- اختر وجهتك --</option>
+          <option value="" disabled selected data-i18n="choose_dest">-- اختر وجهتك --</option>
         </select>
       </div>
 
@@ -479,7 +340,7 @@
         <div class="glass-card schedule-card">
           <div class="schedule-header">
             <h3 class="schedule-title" id="resultTitle"></h3>
-            <span class="univ-badge">حافلة</span>
+            <span class="univ-badge" data-i18n="bus_badge">حافلة</span>
           </div>
           <div class="schedule-days" id="daysSelector"></div>
           <div class="trips-grid" id="tripsContainer"></div>
@@ -488,26 +349,26 @@
         <!-- 💬 COMMENTAIRES OUVERTS — visibles par tout le monde -->
         <div class="comments-open" id="commentsSection">
           <div class="co-header">
-            <h3><i class="fa-solid fa-comments"></i> تعليقات الطلبة</h3>
-            <span class="co-count" id="commentsCount">0 تعليق</span>
+            <h3><i class="fa-solid fa-comments"></i> <span data-i18n="comments_title">تعليقات الطلبة</span></h3>
+            <span class="co-count" id="commentsCount" data-i18n="comments_count_zero">0 تعليق</span>
           </div>
-          <p class="co-sub">شارك .</p>
+          <p class="co-sub" data-i18n="comments_sub">شارك تجربتك مع هذا الخط — كل التعليقات مرئية لجميع الطلبة.</p>
 
           <div class="co-form">
             <div class="co-form-row">
-              <input type="text" id="coName" maxlength="30" placeholder="اسمك (اختياري)...">
+              <input type="text" id="coName" maxlength="30" data-i18n-placeholder="co_name_ph" placeholder="اسمك (اختياري)...">
             </div>
-            <textarea id="coText" maxlength="300" placeholder="اكتب تعليقك هنا..."></textarea>
+            <textarea id="coText" maxlength="300" data-i18n-placeholder="co_text_ph" placeholder="اكتب تعليقك هنا... (تجربة، نصيحة، وقت فعلي...)"></textarea>
             <div class="co-form-actions">
-              <span class="hint"><i class="fa-solid fa-eye"></i> </span>
+              <span class="hint"><i class="fa-solid fa-eye"></i> <span data-i18n="co_hint">مرئي للجميع</span></span>
               <button id="coSubmit" class="co-submit" onclick="submitCommentFirebase()">
-                <i class="fa-solid fa-paper-plane"></i> نشر التعليق
+                <i class="fa-solid fa-paper-plane"></i> <span data-i18n="co_submit">نشر التعليق</span>
               </button>
             </div>
           </div>
 
           <div id="commentsList">
-            <p class="co-empty"><i class="fa-solid fa-comment-slash"></i> لا توجد تعليقات بعد. كن أول من يشارك تجربته!</p>
+            <p class="co-empty"><i class="fa-solid fa-comment-slash"></i> <span data-i18n="co_empty">لا توجد تعليقات بعد. كن أول من يشارك تجربته!</span></p>
           </div>
         </div>
 
@@ -518,52 +379,52 @@
     <section class="panel" id="panel-public">
       <div class="glass-card acc-item" id="acc-proches">
         <button class="acc-btn" onclick="toggleAccordion('acc-proches')">
-          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-location-dot"></i></div><span>أقرب محطات النقل للمدرسة (ENSTP)</span></div>
+          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-location-dot"></i></div><span data-i18n="proches_title">أقرب محطات النقل للمدرسة (ENSTP)</span></div>
           <i class="fa-solid fa-chevron-down acc-chevron"></i>
         </button>
         <div class="acc-body"><div class="acc-inner">
-          <div class="info-card"><h4><i class="fa-solid fa-bus"></i> محطة الحافلات (أمام CNEP)</h4><p>350 متر (5 دقائق مشياً).</p></div>
-          <div class="info-card"><h4><i class="fa-solid fa-bus"></i> المحطة البرية القبة</h4><p>500 متر (7 دقائق مشياً).</p></div>
-          <div class="info-card"><h4><i class="fa-solid fa-train"></i> محطة القطار (ENS)</h4><p>950 متر (14 دقيقة مشياً).</p></div>
+          <div class="info-card"><h4><i class="fa-solid fa-bus"></i> <span data-i18n="proches_1_t">محطة الحافلات (أمام CNEP)</span></h4><p data-i18n="proches_1_p">350 متر (5 دقائق مشياً).</p></div>
+          <div class="info-card"><h4><i class="fa-solid fa-bus"></i> <span data-i18n="proches_2_t">المحطة البرية القبة</span></h4><p data-i18n="proches_2_p">500 متر (7 دقائق مشياً).</p></div>
+          <div class="info-card"><h4><i class="fa-solid fa-train"></i> <span data-i18n="proches_3_t">محطة القطار (ENS)</span></h4><p data-i18n="proches_3_p">950 متر (14 دقيقة مشياً).</p></div>
         </div></div>
       </div>
 
       <div class="glass-card acc-item" id="acc-metro">
         <button class="acc-btn" onclick="toggleAccordion('acc-metro')">
-          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-train-subway"></i></div><span>الميترو والترامواي</span></div>
+          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-train-subway"></i></div><span data-i18n="metro_title">الميترو والترامواي</span></div>
           <i class="fa-solid fa-chevron-down acc-chevron"></i>
         </button>
         <div class="acc-body"><div class="acc-inner">
-          <div class="info-card"><h4>أقرب محطة ميترو للمدرسة</h4><p>محطة حسيبة بوعلام.</p></div>
+          <div class="info-card"><h4 data-i18n="metro_near">أقرب محطة ميترو للمدرسة</h4><p data-i18n="metro_near_desc">محطة حسيبة بوعلام.</p></div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
-            <span class="univ-badge">مترو: 50 دج</span>
-            <span class="univ-badge">ترامواي: 40 دج</span>
-            <span class="univ-badge">eTWASSEL: 150 دج/سنة</span>
+            <span class="univ-badge" data-i18n="metro_ticket">مترو: 50 دج</span>
+            <span class="univ-badge" data-i18n="tram_ticket">ترامواي: 40 دج</span>
+            <span class="univ-badge" data-i18n="etwassel_ticket">eTWASSEL: 150 دج/سنة</span>
           </div>
         </div></div>
       </div>
 
       <div class="glass-card acc-item" id="acc-train">
         <button class="acc-btn" onclick="toggleAccordion('acc-train')">
-          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-train"></i></div><span>قطارات SNTF (الخطوط الطويلة)</span></div>
+          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-train"></i></div><span data-i18n="train_title">قطارات SNTF (الخطوط الطويلة)</span></div>
           <i class="fa-solid fa-chevron-down acc-chevron"></i>
         </button>
         <div class="acc-body"><div class="acc-inner">
-          <div class="info-card"><h4>الجزائر ↔ وهران</h4><p>الذهاب: 06:00 | 08:00 | 14:00 | 17:00</p></div>
-          <div class="info-card"><h4>الجزائر ↔ عنابة (ليلي)</h4><p>الذهاب: 18:40</p></div>
-          <div class="info-card"><h4>الجزائر ↔ بجاية</h4><p>06:30 | 14:33</p></div>
+          <div class="info-card"><h4 data-i18n="train_1_t">الجزائر ↔ وهران</h4><p data-i18n="train_1_p">الذهاب: 06:00 | 08:00 | 14:00 | 17:00</p></div>
+          <div class="info-card"><h4 data-i18n="train_2_t">الجزائر ↔ عنابة (ليلي)</h4><p data-i18n="train_2_p">الذهاب: 18:40</p></div>
+          <div class="info-card"><h4 data-i18n="train_3_t">الجزائر ↔ بجاية</h4><p data-i18n="train_3_p">06:30 | 14:33</p></div>
         </div></div>
       </div>
 
       <div class="glass-card acc-item" id="acc-apps">
         <button class="acc-btn" onclick="toggleAccordion('acc-apps')">
-          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-mobile-screen"></i></div><span>تطبيقات النقل الذكي (VTC)</span></div>
+          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-mobile-screen"></i></div><span data-i18n="apps_title">تطبيقات النقل الذكي (VTC)</span></div>
           <i class="fa-solid fa-chevron-down acc-chevron"></i>
         </button>
         <div class="acc-body"><div class="acc-inner">
-          <div class="info-card"><h4>Yassir</h4><p>الأكثر شعبية في الجزائر.</p><a href="https://yassir.com" target="_blank" class="btn-link btn-amber" style="margin-top:6px;display:inline-flex;padding:7px 12px;border-radius:8px;font-size:.75rem;font-weight:800;text-decoration:none;background:var(--primary-hover);color:#fff;"><i class="fa-solid fa-download"></i> تحميل</a></div>
-          <div class="info-card"><h4>Heetch</h4><p>تطبيق منتشر في العاصمة.</p></div>
-          <div class="info-card"><h4>InDrive</h4><p>اقترح السعر وتفاوض مع السائق.</p></div>
+          <div class="info-card"><h4>Yassir</h4><p data-i18n="yassir_desc">الأكثر شعبية في الجزائر.</p><a href="https://yassir.com" target="_blank" class="btn-link btn-amber" style="margin-top:6px;display:inline-flex;padding:7px 12px;border-radius:8px;font-size:.75rem;font-weight:800;text-decoration:none;background:var(--primary-hover);color:#fff;"><i class="fa-solid fa-download"></i> <span data-i18n="download">تحميل</span></a></div>
+          <div class="info-card"><h4>Heetch</h4><p data-i18n="heetch_desc">تطبيق منتشر في العاصمة.</p></div>
+          <div class="info-card"><h4>InDrive</h4><p data-i18n="indrive_desc">اقترح السعر وتفاوض مع السائق.</p></div>
         </div></div>
       </div>
     </section>
@@ -572,29 +433,29 @@
     <section class="panel" id="panel-carpool">
       <div class="glass-card" style="padding:22px;">
         <h2 style="margin:0 0 14px;font-size:1.2rem;font-weight:900;display:flex;align-items:center;gap:8px;">
-          <i class="fa-solid fa-taxi" style="color:var(--primary-hover);"></i> مشاركة سيارات الأجرة
+          <i class="fa-solid fa-taxi" style="color:var(--primary-hover);"></i> <span data-i18n="carpool_title">مشاركة سيارات الأجرة</span>
         </h2>
-        <p style="color:var(--text-muted);font-size:.85rem;margin:0 0 16px;">وفّر في التكاليف وتواصل مع زملائك.</p>
+        <p style="color:var(--text-muted);font-size:.85rem;margin:0 0 16px;" data-i18n="carpool_desc">وفّر في التكاليف وتواصل مع زملائك.</p>
 
         <div class="carpool-form">
-          <h4><i class="fa-solid fa-plus-circle" style="color:var(--primary-hover);"></i> أضف رحلتك</h4>
+          <h4><i class="fa-solid fa-plus-circle" style="color:var(--primary-hover);"></i> <span data-i18n="carpool_add">أضف رحلتك</span></h4>
           <div class="grid2">
-            <input type="text" id="carpool-name" placeholder="اسمك (مثلاً: أحمد)">
-            <input type="tel" id="carpool-phone" placeholder="رقم هاتفك (واتساب)" dir="ltr">
+            <input type="text" id="carpool-name" data-i18n-placeholder="carpool_name" placeholder="اسمك (مثلاً: أحمد)">
+            <input type="tel" id="carpool-phone" data-i18n-placeholder="carpool_phone" placeholder="رقم هاتفك (واتساب)" dir="ltr">
           </div>
           <div class="grid4">
-            <input type="text" id="carpool-from" placeholder="الانطلاق (القبة)">
-            <input type="text" id="carpool-to" placeholder="الوجهة (وهران)">
+            <input type="text" id="carpool-from" data-i18n-placeholder="carpool_from" placeholder="الانطلاق (القبة)">
+            <input type="text" id="carpool-to" data-i18n-placeholder="carpool_to" placeholder="الوجهة (وهران)">
             <input type="datetime-local" id="carpool-datetime" style="color:var(--text-muted);">
-            <button onclick="addCarpoolFirebase()">نشر الرحلة</button>
+            <button onclick="addCarpoolFirebase()" data-i18n="carpool_publish">نشر الرحلة</button>
           </div>
         </div>
 
         <h4 style="margin:0 0 12px;font-size:.95rem;font-weight:800;display:flex;align-items:center;gap:6px;">
-          <i class="fa-solid fa-list" style="color:var(--primary-hover);"></i> الرحلات المتاحة
+          <i class="fa-solid fa-list" style="color:var(--primary-hover);"></i> <span data-i18n="carpool_list">الرحلات المتاحة</span>
         </h4>
         <div id="carpool-list">
-          <p style="text-align:center;padding:20px;color:var(--text-muted);">جاري التحميل...</p>
+          <p style="text-align:center;padding:20px;color:var(--text-muted);" data-i18n="carpool_loading">جاري التحميل...</p>
         </div>
       </div>
     </section>
@@ -603,15 +464,15 @@
 
   <footer class="site-footer">
     <div class="footer-links">
-      <a href="index.html">الرئيسية</a>
-      <a href="transport.html">النقل الجامعي</a>
-      <a href="forum.html">ملتقى الطلبة</a>
+      <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+      <a href="transport.html" data-i18n="tab_univ">النقل الجامعي</a>
+      <a href="forum.html" data-i18n="sec_forum">ملتقى الطلبة</a>
     </div>
-    <div class="footer-copy">© 2026 ENSTP Kouba · جميع الحقوق محفوظة</div>
+    <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
   </footer>
 
   <div class="mascot-container" id="mascotContainer" title="المساعد الذكي">
-    <div class="mascot-bubble" id="mascotBubble">مرحبا! 👋</div>
+    <div class="mascot-bubble" id="mascotBubble" data-i18n="mascot_hello">مرحبا! 👋</div>
     <svg class="mascot-kangaroo" id="mascotKangaroo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="kBody" cx="40%" cy="30%"><stop offset="0%" stop-color="#fdba74"/><stop offset="100%" stop-color="#c2410c"/></radialGradient>
@@ -647,8 +508,8 @@
       <div class="ai-chat-header-left">
         <div class="ai-avatar"><i class="fa-solid fa-robot"></i></div>
         <div class="ai-chat-info">
-          <h3>المساعد الذكي</h3>
-          <p>متصل الآن · يرد فوراً</p>
+          <h3 data-i18n="ai_assistant_name">المساعد الذكي</h3>
+          <p data-i18n="ai_assistant_status">متصل الآن · يرد فوراً</p>
         </div>
       </div>
       <button class="ai-close-btn" onclick="closeAIChat()"><i class="fa-solid fa-xmark"></i></button>
@@ -656,14 +517,184 @@
     <div class="ai-chat-body" id="aiChatBody">
       <div class="ai-msg bot">
         <div class="ai-msg-avatar"><i class="fa-solid fa-robot"></i></div>
-        <div class="ai-msg-content">مرحباً! 👋 أنا المساعد الذكي للنقل في ENSTP. اسألني عن أي وجهة أو خط.</div>
+        <div class="ai-msg-content" data-i18n="ai_welcome">مرحباً! 👋 أنا المساعد الذكي للنقل في ENSTP. اسألني عن أي وجهة أو خط.</div>
       </div>
     </div>
     <div class="ai-chat-input-wrap">
-      <textarea class="ai-chat-input" id="aiChatInput" rows="1" placeholder="اكتب سؤالك..."></textarea>
+      <textarea class="ai-chat-input" id="aiChatInput" rows="1" data-i18n-placeholder="ai_input_ph" placeholder="اكتب سؤالك..."></textarea>
       <button class="ai-send-btn" id="aiSendBtn" onclick="sendAIMessage()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
+
+  <!-- ============================================================ -->
+  <!-- TRANSLATIONS                                                  -->
+  <!-- ============================================================ -->
+  <script>
+    window.TRANSPORT_TRANSLATIONS = {
+      ar: {
+        page_title:"دليل النقل - ENSTP",
+        nav_subtitle:"دليل النقل", nav_home:"الرئيسية",
+        menu_lang:"اللغة", menu_settings:"الإعدادات", menu_dark:"ليلي",
+        hero_1:"دليل النقل", hero_2:"والمواصلات", hero_desc:"كل ما تحتاجه للتنقل من وإلى المدرسة بسهولة.",
+        tab_univ:"النقل الجامعي", tab_public:"النقل العمومي", tab_carpool:"مشاركة التاكسي",
+        choose_dest_title:"اختر وجهتك", choose_dest:"-- اختر وجهتك --", search_placeholder:"ابحث عن وجهة... ",
+        bus_badge:"حافلة", bus_no_result:"لا توجد وجهة مطابقة", bus_results_count:"نتيجة",
+        comments_title:"تعليقات الطلبة", comments_sub:"شارك تجربتك مع هذا الخط — كل التعليقات مرئية لجميع الطلبة.",
+        comments_count_zero:"0 تعليق", comments_count_suffix:"تعليق",
+        co_name_ph:"اسمك (اختياري)...", co_text_ph:"اكتب تعليقك هنا... (تجربة، نصيحة، وقت فعلي...)",
+        co_hint:"مرئي للجميع", co_submit:"نشر التعليق",
+        co_empty:"لا توجد تعليقات بعد. كن أول من يشارك تجربته!",
+        co_loading:"جاري تحميل التعليقات...",
+        co_default_name:"زميل", co_delete_confirm:"هل تريد حذف هذا التعليق؟",
+        co_error:"خطأ أثناء النشر: ", co_too_long:"التعليق طويل جداً (الحد الأقصى 300 حرفاً).",
+        proches_title:"أقرب محطات النقل للمدرسة (ENSTP)",
+        proches_1_t:"محطة الحافلات (أمام CNEP)", proches_1_p:"350 متر (5 دقائق مشياً).",
+        proches_2_t:"المحطة البرية القبة", proches_2_p:"500 متر (7 دقائق مشياً).",
+        proches_3_t:"محطة القطار (ENS)", proches_3_p:"950 متر (14 دقيقة مشياً).",
+        metro_title:"الميترو والترامواي", metro_near:"أقرب محطة ميترو للمدرسة", metro_near_desc:"محطة حسيبة بوعلام.",
+        metro_ticket:"مترو: 50 دج", tram_ticket:"ترامواي: 40 دج", etwassel_ticket:"eTWASSEL: 150 دج/سنة",
+        train_title:"قطارات SNTF (الخطوط الطويلة)",
+        train_1_t:"الجزائر ↔ وهران", train_1_p:"الذهاب: 06:00 | 08:00 | 14:00 | 17:00",
+        train_2_t:"الجزائر ↔ عنابة (ليلي)", train_2_p:"الذهاب: 18:40",
+        train_3_t:"الجزائر ↔ بجاية", train_3_p:"06:30 | 14:33",
+        apps_title:"تطبيقات النقل الذكي (VTC)",
+        yassir_desc:"الأكثر شعبية في الجزائر.", heetch_desc:"تطبيق منتشر في العاصمة.", indrive_desc:"اقترح السعر وتفاوض مع السائق.",
+        download:"تحميل",
+        carpool_title:"مشاركة سيارات الأجرة", carpool_desc:"وفّر في التكاليف وتواصل مع زملائك.",
+        carpool_add:"أضف رحلتك", carpool_name:"اسمك (مثلاً: أحمد)", carpool_phone:"رقم هاتفك (واتساب)",
+        carpool_from:"الانطلاق (القبة)", carpool_to:"الوجهة (وهران)", carpool_publish:"نشر الرحلة",
+        carpool_list:"الرحلات المتاحة", carpool_loading:"جاري التحميل...", carpool_empty:"لا توجد رحلات.",
+        carpool_contact:"تواصل", carpool_fill_all:"الرجاء تعبئة جميع الحقول.",
+        mascot_hello:"مرحبا! 👋", ai_assistant_name:"المساعد الذكي", ai_assistant_status:"متصل الآن · يرد فوراً",
+        ai_welcome:"مرحباً! 👋 أنا المساعد الذكي للنقل في ENSTP. اسألني عن أي وجهة أو خط.",
+        ai_input_ph:"اكتب سؤالك...", ai_error:"عذراً، حدث خطأ.",
+        footer_rights:"جميع الحقوق محفوظة", sec_forum:"ملتقى الطلبة",
+        no_times:"لا توجد رحلات", today:"●",
+        day_sun:"الأحد", day_mon:"الاثنين", day_tue:"الثلاثاء", day_wed:"الأربعاء", day_thu:"الخميس", day_fri:"الجمعة", day_sat:"السبت",
+        ai_example_hint:"اسألني عن وجهة "
+      },
+      fr: {
+        page_title:"Guide Transport - ENSTP",
+        nav_subtitle:"Guide transport", nav_home:"Accueil",
+        menu_lang:"Langue", menu_settings:"Paramètres", menu_dark:"Sombre",
+        hero_1:"Guide de", hero_2:"Transport", hero_desc:"Tout ce qu'il vous faut pour vos déplacements.",
+        tab_univ:"Transport universitaire", tab_public:"Transport public", tab_carpool:"Covoiturage",
+        choose_dest_title:"Choisissez votre destination", choose_dest:"-- Choisissez --", search_placeholder:"Rechercher une destination... ",
+        bus_badge:"Bus", bus_no_result:"Aucune destination trouvée", bus_results_count:"résultat(s)",
+        comments_title:"Commentaires des étudiants", comments_sub:"Partagez votre expérience sur cette ligne — tous les commentaires sont visibles par tous.",
+        comments_count_zero:"0 commentaire", comments_count_suffix:"commentaire",
+        co_name_ph:"Votre nom (optionnel)...", co_text_ph:"Écrivez votre commentaire... (expérience, conseil, heure réelle...)",
+        co_hint:"Visible par tous", co_submit:"Publier le commentaire",
+        co_empty:"Aucun commentaire. Soyez le premier à partager !",
+        co_loading:"Chargement des commentaires...",
+        co_default_name:"Étudiant", co_delete_confirm:"Supprimer ce commentaire ?",
+        co_error:"Erreur : ", co_too_long:"Commentaire trop long (max 300 caractères).",
+        proches_title:"Arrêts proches de l'ENSTP",
+        proches_1_t:"Arrêt bus (face CNEP)", proches_1_p:"350 m (5 min à pied).",
+        proches_2_t:"Gare routière Kouba", proches_2_p:"500 m (7 min à pied).",
+        proches_3_t:"Gare SNTF (ENS)", proches_3_p:"950 m (14 min à pied).",
+        metro_title:"Métro et Tramway", metro_near:"Station métro la plus proche", metro_near_desc:"Station Hassiba Boualem.",
+        metro_ticket:"Métro : 50 DA", tram_ticket:"Tramway : 40 DA", etwassel_ticket:"eTWASSEL : 150 DA/an",
+        train_title:"Trains SNTF (longues distances)",
+        train_1_t:"Alger ↔ Oran", train_1_p:"Aller : 06:00 | 08:00 | 14:00 | 17:00",
+        train_2_t:"Alger ↔ Annaba (nuit)", train_2_p:"Aller : 18:40",
+        train_3_t:"Alger ↔ Béjaïa", train_3_p:"06:30 | 14:33",
+        apps_title:"Applications VTC",
+        yassir_desc:"Le plus populaire en Algérie.", heetch_desc:"App répandue à Alger.", indrive_desc:"Négociez le prix avec le chauffeur.",
+        download:"Télécharger",
+        carpool_title:"Covoiturage", carpool_desc:"Économisez et connectez-vous avec vos camarades.",
+        carpool_add:"Ajouter un trajet", carpool_name:"Votre nom (ex: Ahmed)", carpool_phone:"Téléphone (WhatsApp)",
+        carpool_from:"Départ (Kouba)", carpool_to:"Destination (Oran)", carpool_publish:"Publier le trajet",
+        carpool_list:"Trajets disponibles", carpool_loading:"Chargement...", carpool_empty:"Aucun trajet.",
+        carpool_contact:"Contacter", carpool_fill_all:"Veuillez remplir tous les champs.",
+        mascot_hello:"Bonjour ! 👋", ai_assistant_name:"Assistant intelligent", ai_assistant_status:"En ligne · Répond instantanément",
+        ai_welcome:"Bonjour ! 👋 Je suis l'assistant transport de l'ENSTP. Posez-moi vos questions.",
+        ai_input_ph:"Votre question...", ai_error:"Erreur, réessayez.",
+        footer_rights:"Tous droits réservés", sec_forum:"Forum étudiant",
+        no_times:"Aucun horaire", today:"●",
+        day_sun:"Dim", day_mon:"Lun", day_tue:"Mar", day_wed:"Mer", day_thu:"Jeu", day_fri:"Ven", day_sat:"Sam",
+        ai_example_hint:"Demandez une destination "
+      },
+      en: {
+        page_title:"Transport Guide - ENSTP",
+        nav_subtitle:"Transport guide", nav_home:"Home",
+        menu_lang:"Language", menu_settings:"Settings", menu_dark:"Dark",
+        hero_1:"Transport", hero_2:"Guide", hero_desc:"Everything you need for your trips.",
+        tab_univ:"University transport", tab_public:"Public transport", tab_carpool:"Ride sharing",
+        choose_dest_title:"Select your destination", choose_dest:"-- Choose --", search_placeholder:"Search a destination... ",
+        bus_badge:"Bus", bus_no_result:"No matching destination", bus_results_count:"result(s)",
+        comments_title:"Student comments", comments_sub:"Share your experience on this line — all comments are visible to everyone.",
+        comments_count_zero:"0 comments", comments_count_suffix:"comment(s)",
+        co_name_ph:"Your name (optional)...", co_text_ph:"Write your comment... (experience, tip, real time...)",
+        co_hint:"Visible to all", co_submit:"Post comment",
+        co_empty:"No comments yet. Be the first to share!",
+        co_loading:"Loading comments...",
+        co_default_name:"Student", co_delete_confirm:"Delete this comment?",
+        co_error:"Error: ", co_too_long:"Comment too long (max 300 chars).",
+        proches_title:"Nearby stops (ENSTP)",
+        proches_1_t:"Bus stop (facing CNEP)", proches_1_p:"350 m (5 min walk).",
+        proches_2_t:"Kouba bus station", proches_2_p:"500 m (7 min walk).",
+        proches_3_t:"SNTF station (ENS)", proches_3_p:"950 m (14 min walk).",
+        metro_title:"Metro & Tramway", metro_near:"Nearest metro station", metro_near_desc:"Hassiba Boualem station.",
+        metro_ticket:"Metro: 50 DA", tram_ticket:"Tram: 40 DA", etwassel_ticket:"eTWASSEL: 150 DA/year",
+        train_title:"SNTF trains (long distance)",
+        train_1_t:"Algiers ↔ Oran", train_1_p:"Outbound: 06:00 | 08:00 | 14:00 | 17:00",
+        train_2_t:"Algiers ↔ Annaba (night)", train_2_p:"Outbound: 18:40",
+        train_3_t:"Algiers ↔ Bejaia", train_3_p:"06:30 | 14:33",
+        apps_title:"VTC apps",
+        yassir_desc:"Most popular in Algeria.", heetch_desc:"Popular app in Algiers.", indrive_desc:"Negotiate price with driver.",
+        download:"Download",
+        carpool_title:"Ride sharing", carpool_desc:"Save money and connect with peers.",
+        carpool_add:"Add trip", carpool_name:"Your name (e.g. Ahmed)", carpool_phone:"Phone (WhatsApp)",
+        carpool_from:"From (Kouba)", carpool_to:"To (Oran)", carpool_publish:"Publish trip",
+        carpool_list:"Available trips", carpool_loading:"Loading...", carpool_empty:"No trips.",
+        carpool_contact:"Contact", carpool_fill_all:"Please fill all fields.",
+        mascot_hello:"Hello! 👋", ai_assistant_name:"Smart Assistant", ai_assistant_status:"Online · Replies instantly",
+        ai_welcome:"Hello! 👋 I'm the ENSTP transport assistant. Ask me anything.",
+        ai_input_ph:"Your question...", ai_error:"Error, try again.",
+        footer_rights:"All rights reserved", sec_forum:"Student forum",
+        no_times:"No trips", today:"●",
+        day_sun:"Sun", day_mon:"Mon", day_tue:"Tue", day_wed:"Wed", day_thu:"Thu", day_fri:"Fri", day_sat:"Sat",
+        ai_example_hint:"Ask me about a destination "
+      }
+    };
+
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+    function t(key){
+      const d = window.TRANSPORT_TRANSLATIONS[currentLang] || window.TRANSPORT_TRANSLATIONS.ar;
+      return d[key] || key;
+    }
+
+    function applyTranslation(lang){
+      const d = window.TRANSPORT_TRANSLATIONS[lang] || window.TRANSPORT_TRANSLATIONS.ar;
+      if(d.page_title) document.title = d.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k = el.getAttribute('data-i18n');
+        if(d[k]){
+          const icon = el.querySelector('i');
+          if(icon){ el.innerHTML=''; el.appendChild(icon); el.appendChild(document.createTextNode(' '+d[k])); }
+          else el.innerText = d[k];
+        }
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-placeholder');
+        if(d[k]) el.placeholder = d[k];
+      });
+      document.documentElement.dir = (lang==='ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+    }
+
+    function setLang(lang){
+      currentLang = lang;
+      localStorage.setItem('enstp_lang', lang);
+      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
+      const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
+      applyTranslation(lang);
+      // Rafraîchir les éléments dynamiques
+      if(typeof drawDestinations==='function') drawDestinations();
+      if(typeof zoneId!=='undefined' && zoneId) renderSchedule(zoneId);
+    }
+  </script>
 
   <!-- ============================================================ -->
   <!-- DONNÉES ZONES                                                -->
@@ -671,56 +702,57 @@
   <script>
     const WK = ['sun','mon','tue','wed','thu'];
     const R = (from,to,step)=>({rule:{from,to,step}});
-    const L_GO='الذهاب (صباحاً)', L_BACK='الرجوع / العودة';
+    const L_GO_AR='الذهاب (صباحاً)', L_BACK_AR='الرجوع / العودة';
+
+    // Labels jour par langue (utilisé dans renderSchedule)
+    const DAYS_ALL = ['sun','mon','tue','wed','thu','fri','sat'];
 
     const ZONES = [
-      { id:'revoil' , name:'الإقامة الجامعية رويسو (REVOIL ↔ ENSTP)', days:WK,
+      { id:'revoil', name:'الإقامة الجامعية رويسو (REVOIL ↔ ENSTP)', days:WK,
         trips:[ {k:'go',label:'الذهاب (Départ)',byDay:{sun:['07:40'],mon:['07:40'],tue:['07:40'],wed:['07:40'],thu:['07:40']}},
                 {k:'back',label:'الإياب (Retour)',byDay:{sun:['14:45','15:20','16:25','16:45','17:45'],mon:['11:20','13:00','15:20','16:25','17:00'],tue:['13:00','14:45','16:25','17:00'],wed:['15:20','16:25','17:00'],thu:['12:20','13:00','14:45','15:20','16:45']}} ] },
-      { id:'harrach',, name:'باش جراح - الحراش', buses:3, trips:[
-        {k:'go',label:L_GO,t:['07:00','07:30','08:00','08:30','09:00','10:00','11:30']},
-        {k:'back',label:L_BACK,t:['13:00','14:30','16:00','17:00','18:00']} ]},
-      { id:'meaalma-bm' , name:'الإقامة الجامعية 01-02 · المعالمة - بني مسوس', buses:7, trips:[
-        {k:'go',label:L_GO,...R('07:00','12:30',30)},{k:'back',label:L_BACK,t:['13:00','14:00','15:00','16:00','17:00','18:00']} ]},
-      { id:'ain-benian' , name:'عين البنيان - سطاوالي', buses:2, trips:[
-        {k:'go',label:L_GO,t:['07:00','07:15','09:00','10:00']},{k:'back',label:L_BACK,t:['14:15','15:30','17:00','18:00']} ]},
+      { id:'harrach', name:'باش جراح - الحراش', buses:3, trips:[
+        {k:'go',label:L_GO_AR,t:['07:00','07:30','08:00','08:30','09:00','10:00','11:30']},
+        {k:'back',label:L_BACK_AR,t:['13:00','14:30','16:00','17:00','18:00']} ]},
+      { id:'meaalma-bm', name:'الإقامة الجامعية 01-02 · المعالمة - بني مسوس', buses:7, trips:[
+        {k:'go',label:L_GO_AR,...R('07:00','12:30',30)},{k:'back',label:L_BACK_AR,t:['13:00','14:00','15:00','16:00','17:00','18:00']} ]},
+      { id:'ain-benian', name:'عين البنيان - سطاوالي', buses:2, trips:[
+        {k:'go',label:L_GO_AR,t:['07:00','07:15','09:00','10:00']},{k:'back',label:L_BACK_AR,t:['14:15','15:30','17:00','18:00']} ]},
       { id:'chatonaf', name:'شاطوناف', buses:2, trips:[
-        {k:'go',label:L_GO,t:['07:00','07:15','09:00','10:00']},{k:'back',label:L_BACK,t:['14:15','15:30','17:00','18:00']} ]},
-      { id:'kherouba' , name:'خروبة', buses:4, trips:[
-        {k:'go',label:L_GO,...R('07:15','12:00',30)},{k:'back',label:L_BACK,...R('13:30','17:00',30)} ]},
+        {k:'go',label:L_GO_AR,t:['07:00','07:15','09:00','10:00']},{k:'back',label:L_BACK_AR,t:['14:15','15:30','17:00','18:00']} ]},
+      { id:'kherouba', name:'خروبة', buses:4, trips:[
+        {k:'go',label:L_GO_AR,...R('07:15','12:00',30)},{k:'back',label:L_BACK_AR,...R('13:30','17:00',30)} ]},
       { id:'tessala', name:'تسالة المرجة', buses:1, trips:[
-        {k:'go',label:L_GO,t:['07:00']},{k:'back',label:L_BACK,t:['13:00','17:15']} ]},
+        {k:'go',label:L_GO_AR,t:['07:00']},{k:'back',label:L_BACK_AR,t:['13:00','17:15']} ]},
       { id:'1mai', name:'أول ماي', buses:1, trips:[
-        {k:'go',label:L_GO,t:['07:00','09:30']},{k:'back',label:L_BACK,t:['13:00','17:15']} ]},
+        {k:'go',label:L_GO_AR,t:['07:00','09:30']},{k:'back',label:L_BACK_AR,t:['13:00','17:15']} ]},
       { id:'dweira', name:'بابا حسن - الدويرة', buses:1, trips:[
-        {k:'go',label:L_GO,t:['07:00','09:30']},{k:'back',label:L_BACK,t:['13:00','17:15']} ]},
-      { id:'zeralda',  name:'زرالدة', buses:1, trips:[
-        {k:'go',label:L_GO,t:['07:00']},{k:'back',label:L_BACK,t:['14:30','17:15']} ]},
-      { id:'tafourah',  name:'تافورة', trips:[
+        {k:'go',label:L_GO_AR,t:['07:00','09:30']},{k:'back',label:L_BACK_AR,t:['13:00','17:15']} ]},
+      { id:'zeralda', name:'زرالدة', buses:1, trips:[
+        {k:'go',label:L_GO_AR,t:['07:00']},{k:'back',label:L_BACK_AR,t:['14:30','17:15']} ]},
+      { id:'tafourah', name:'تافورة', trips:[
         {k:'go',label:'الذهاب',t:['07:15','08:00','10:00','11:00']},{k:'back',label:'العودة',t:['14:00','14:30','15:00','15:30','17:15','18:00']} ]},
-      { id:'blida',  name:'البليدة (عبر الصومعة والأربعاء)', buses:1, trips:[
-        {k:'go',label:L_GO,t:['06:30','06:45']},{k:'back',label:L_BACK,t:['14:30','16:00']} ]},
-      { id:'boufarik',  name:'بوفاريك', buses:1, trips:[
-        {k:'go',label:L_GO,t:['07:00']},{k:'back',label:L_BACK,t:['14:30','16:00']} ]},
-      { id:'rouiba',  name:'رويبة - رغاية', buses:1, trips:[
-        {k:'go',label:L_GO,t:['07:00']},{k:'back',label:L_BACK,t:['16:00']} ]},
-      { id:'baraki',  name:'براقي - بن طلحة', buses:2, trips:[
-        {k:'go',label:L_GO,t:['07:00','07:30']},{k:'back',label:L_BACK,t:['15:30','17:30']} ]},
-      { id:'birtouta',  name:'بئر توتة', buses:2, trips:[
-        {k:'go',label:L_GO,t:['07:00','07:30']},{k:'back',label:L_BACK,t:['15:30','17:30']} ]},
-      { id:'tipaza',  name:'تيبازة / حجوط', buses:1, trips:[
-        {k:'go',label:L_GO,t:['06:30','06:45']},{k:'back',label:L_BACK,t:['16:00','17:30']} ]},
+      { id:'blida', name:'البليدة (عبر الصومعة والأربعاء)', buses:1, trips:[
+        {k:'go',label:L_GO_AR,t:['06:30','06:45']},{k:'back',label:L_BACK_AR,t:['14:30','16:00']} ]},
+      { id:'boufarik', name:'بوفاريك', buses:1, trips:[
+        {k:'go',label:L_GO_AR,t:['07:00']},{k:'back',label:L_BACK_AR,t:['14:30','16:00']} ]},
+      { id:'rouiba', name:'رويبة - رغاية', buses:1, trips:[
+        {k:'go',label:L_GO_AR,t:['07:00']},{k:'back',label:L_BACK_AR,t:['16:00']} ]},
+      { id:'baraki', name:'براقي - بن طلحة', buses:2, trips:[
+        {k:'go',label:L_GO_AR,t:['07:00','07:30']},{k:'back',label:L_BACK_AR,t:['15:30','17:30']} ]},
+      { id:'birtouta', name:'بئر توتة', buses:2, trips:[
+        {k:'go',label:L_GO_AR,t:['07:00','07:30']},{k:'back',label:L_BACK_AR,t:['15:30','17:30']} ]},
+      { id:'tipaza', name:'تيبازة / حجوط', buses:1, trips:[
+        {k:'go',label:L_GO_AR,t:['06:30','06:45']},{k:'back',label:L_BACK_AR,t:['16:00','17:30']} ]},
     ];
     ZONES.forEach(z=>{ if(!z.days) z.days=WK; });
 
-    const DAYS=['sun','mon','tue','wed','thu','fri','sat'];
-    const DAY_LABEL={sun:'الأحد',mon:'الاثنين',tue:'الثلاثاء',wed:'الأربعاء',thu:'الخميس',fri:'الجمعة',sat:'السبت'};
     const $=id=>document.getElementById(id);
     const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const toMin=s=>{const[h,m]=s.split(':').map(Number);return h*60+m};
     const fmt=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
     const nowMin=()=>{const d=new Date();return d.getHours()*60+d.getMinutes()};
-    const dayOf=()=>DAYS[new Date().getDay()];
+    const dayOf=()=>DAYS_ALL[new Date().getDay()];
 
     function expand(rule){const o=[];for(let x=toMin(rule.from);x<=toMin(rule.to);x+=rule.step)o.push(fmt(x));return o;}
     function tripTimes(z,tr,day){
@@ -730,6 +762,7 @@
       if(tr.rule) return expand(tr.rule);
       return [];
     }
+    function dayLabel(d){ return t('day_'+d); }
   </script>
 
   <!-- UI SCRIPT -->
@@ -737,7 +770,7 @@
     const html=document.documentElement;
     if(localStorage.getItem('theme')==='dark') html.setAttribute('data-theme','dark');
     function toggleDarkMode(){ html.setAttribute('data-theme',html.getAttribute('data-theme')==='dark'?'light':'dark'); localStorage.setItem('theme',html.getAttribute('data-theme')); updateThemeBtn(); }
-    function updateThemeBtn(){ const b=document.getElementById('themeBtn'); if(!b) return; const d=html.getAttribute('data-theme')==='dark'; b.innerHTML=d?'<i class="fa-solid fa-sun"></i> <span>نهاري</span>':'<i class="fa-solid fa-moon"></i> <span>ليلي</span>'; }
+    function updateThemeBtn(){ const b=document.getElementById('themeBtn'); if(!b) return; const d=html.getAttribute('data-theme')==='dark'; b.innerHTML=d?'<i class="fa-solid fa-sun"></i> <span>'+t('menu_dark')+'</span>':'<i class="fa-solid fa-moon"></i> <span>'+t('menu_dark')+'</span>'; }
 
     function toggleMenu(){ document.getElementById('navDropdown').classList.toggle('open'); document.getElementById('menuBtn').classList.toggle('active'); }
     document.addEventListener('click', e=>{ const dd=document.getElementById('navDropdown'),btn=document.getElementById('menuBtn'); if(!dd.contains(e.target)&&!btn.contains(e.target)){ dd.classList.remove('open'); btn.classList.remove('active'); } });
@@ -760,14 +793,8 @@
 
     function drawDestinations(){
       const sel=document.getElementById('destinationSelect');
-      let h='<option value="" disabled '+(zoneId?'':'selected')+'>-- اختر وجهتك --</option>';
-      Object.entries(GROUPS).forEach(([g,label])=>{
-        const list=ZONES.filter(z=>z.g===g);
-        if(!list.length) return;
-        h+='<optgroup label="'+esc(label)+'">';
-        list.forEach(z=>{ h+='<option value="'+z.id+'"'+(z.id===zoneId?' selected':'')+'>'+esc(z.name)+'</option>'; });
-        h+='</optgroup>';
-      });
+      let h='<option value="" disabled '+(zoneId?'':'selected')+'>'+esc(t('choose_dest'))+'</option>';
+      ZONES.forEach(z=>{ h+='<option value="'+z.id+'"'+(z.id===zoneId?' selected':'')+'>'+esc(z.name)+'</option>'; });
       sel.innerHTML=h;
     }
 
@@ -786,18 +813,13 @@
       if(!input||!sel) return;
       input.addEventListener('input', ()=>{
         const nq=norm(input.value);
-        let h='<option value="" disabled '+(zoneId?'':'selected')+'>-- اختر وجهتك --</option>';
+        let h='<option value="" disabled '+(zoneId?'':'selected')+'>'+esc(t('choose_dest'))+'</option>';
         let count=0;
-        Object.entries(GROUPS).forEach(([g,label])=>{
-          const list=ZONES.filter(z=>!nq || norm(z.name).includes(nq) || norm(z.id).includes(nq));
-          if(!list.length) return;
-          h+='<optgroup label="'+esc(label)+'">';
-          list.forEach(z=>{ h+='<option value="'+z.id+'"'+(z.id===zoneId?' selected':'')+'>'+esc(z.name)+'</option>'; count++; });
-          h+='</optgroup>';
-        });
+        ZONES.filter(z=>!nq || norm(z.name).includes(nq) || norm(z.id).includes(nq))
+          .forEach(z=>{ h+='<option value="'+z.id+'"'+(z.id===zoneId?' selected':'')+'>'+esc(z.name)+'</option>'; count++; });
         sel.innerHTML=h;
-        counter.textContent=nq?(count+' نتيجة'):'';
-        if(nq&&count===0){ sel.innerHTML='<option value="" selected disabled>لا توجد وجهة مطابقة</option>'; }
+        counter.textContent = nq ? (count+' '+t('bus_results_count')) : '';
+        if(nq && count===0){ sel.innerHTML='<option value="" selected disabled>'+esc(t('bus_no_result'))+'</option>'; }
       });
       input.addEventListener('keydown',e=>{ if(e.key==='Escape'){ input.value=''; input.dispatchEvent(new Event('input')); } });
     }
@@ -809,7 +831,7 @@
       document.getElementById('resultTitle').innerText=zone.name;
 
       const today=dayOf();
-      const daysHtml=zone.days.map(d=>`<button class="day-pill ${d===currentDay?'active':''} ${d===today?'today':''}" onclick="selectDay('${d}')">${DAY_LABEL[d]}${d===today?' ●':''}</button>`).join('');
+      const daysHtml=zone.days.map(d=>`<button class="day-pill ${d===currentDay?'active':''} ${d===today?'today':''}" onclick="selectDay('${d}')">${dayLabel(d)}${d===today?' ●':''}</button>`).join('');
       document.getElementById('daysSelector').innerHTML=daysHtml;
 
       const container=document.getElementById('tripsContainer');
@@ -818,14 +840,13 @@
       container.innerHTML=zone.trips.map(tr=>{
         const times=tripTimes(zone,tr,currentDay);
         const isGo=tr.k==='go';
-        if(!times.length) return `<div class="trip-box ${isGo?'go':'back'}"><h4><i class="fa-solid ${isGo?'fa-sun':'fa-moon'}"></i> ${esc(tr.label)}</h4><div class="no-times">لا توجد رحلات</div></div>`;
+        if(!times.length) return `<div class="trip-box ${isGo?'go':'back'}"><h4><i class="fa-solid ${isGo?'fa-sun':'fa-moon'}"></i> ${esc(tr.label)}</h4><div class="no-times">${esc(t('no_times'))}</div></div>`;
         let nextIdx=-1;
         if(isToday){ for(let i=0;i<times.length;i++){ if(toMin(times[i])>=nt){ nextIdx=i; break; } } }
         const chips=times.map((tm,i)=>{ let c='time-chip'; if(isToday&&toMin(tm)<nt) c+=' past'; if(isToday&&i===nextIdx) c+=' next'; return `<span class="${c}">${tm}</span>`; }).join('');
         return `<div class="trip-box ${isGo?'go':'back'}"><h4><i class="fa-solid ${isGo?'fa-sun':'fa-moon'}"></i> ${esc(tr.label)}</h4><div class="times-flex">${chips}</div></div>`;
       }).join('');
 
-      // Charger les commentaires ouverts
       if(window.loadComments) window.loadComments(zid);
     }
 
@@ -860,7 +881,7 @@
         if(found){
           const txt=found.trips.map(tr=>tr.label+': '+(tripTimes(found,tr,currentDay).join(', ')||'—')).join('\n');
           addMessage('🚌 '+found.name+'\n'+txt,'bot');
-        } else addMessage('اسألني عن وجهة مثل: تافورة، باب الزوار، البليدة...','bot');
+        } else addMessage(t('ai_example_hint'),'bot');
         aiChatBody.scrollTop=aiChatBody.scrollHeight;
       },400);
     }
@@ -868,6 +889,11 @@
 
     // ====== INIT ======
     document.addEventListener('DOMContentLoaded', ()=>{
+      const savedLang = localStorage.getItem('enstp_lang') || 'ar';
+      currentLang = savedLang;
+      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
+      const b=document.getElementById('btn-'+savedLang); if(b) b.classList.add('active');
+      applyTranslation(savedLang);
       updateThemeBtn();
       drawDestinations();
       initBusSearch();
@@ -895,9 +921,14 @@
     const app=initializeApp(firebaseConfig);
     const db=getFirestore(app);
 
-    // ===== 💬 Commentaires ouverts (visibles par tout le monde) =====
     let currentCommentDest=null;
     let unsubscribeComments=null;
+
+    function escHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function tr(key){
+      const d = window.TRANSPORT_TRANSLATIONS[localStorage.getItem('enstp_lang')||'ar'] || window.TRANSPORT_TRANSLATIONS.ar;
+      return d[key] || key;
+    }
 
     window.loadComments=function(destKey){
       currentCommentDest=destKey;
@@ -907,7 +938,7 @@
 
       if(unsubscribeComments){ unsubscribeComments(); unsubscribeComments=null; }
 
-      list.innerHTML='<p class="co-loading"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل التعليقات...</p>';
+      list.innerHTML='<p class="co-loading"><i class="fa-solid fa-spinner fa-spin"></i> '+escHtml(tr('co_loading'))+'</p>';
 
       const q=query(
         collection(db,"trip_comments"),
@@ -916,10 +947,10 @@
       );
 
       unsubscribeComments=onSnapshot(q, (snap)=>{
-        if(countEl) countEl.textContent = snap.size + ' تعليق';
+        if(countEl) countEl.textContent = snap.size + ' ' + tr('comments_count_suffix');
 
         if(snap.empty){
-          list.innerHTML='<p class="co-empty"><i class="fa-solid fa-comment-slash"></i> لا توجد تعليقات بعد. كن أول من يشارك تجربته!</p>';
+          list.innerHTML='<p class="co-empty"><i class="fa-solid fa-comment-slash"></i> '+escHtml(tr('co_empty'))+'</p>';
           return;
         }
 
@@ -927,16 +958,16 @@
         snap.forEach(d=>{
           const c=d.data();
           const id=d.id;
-          const name=(c.name||'زميل').trim()||'زميل';
+          const name=(c.name||tr('co_default_name')).trim()||tr('co_default_name');
           const initial=name.charAt(0).toUpperCase();
           const dateStr=c.time
             ? new Date(c.time.toDate()).toLocaleString('ar-DZ',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
             : '...';
-          const safeText=esc(c.text||'').replace(/\n/g,'<br>');
-          const safeName=esc(name);
+          const safeText=escHtml(c.text||'').replace(/\n/g,'<br>');
+          const safeName=escHtml(name);
 
           html+=`<div class="co-item" data-id="${id}">
-            <div class="co-avatar">${esc(initial)}</div>
+            <div class="co-avatar">${escHtml(initial)}</div>
             <div class="co-body">
               <div class="co-head">
                 <span class="co-name">${safeName}</span>
@@ -960,29 +991,28 @@
       const btn=document.getElementById('coSubmit');
       const text=textEl.value.trim();
       if(!text){ textEl.focus(); return; }
-      if(text.length>300) return alert("التعليق طويل جداً (الحد الأقصى 300 حرفاً).");
+      if(text.length>300) return alert(tr('co_too_long'));
 
       btn.disabled=true;
       try{
         await addDoc(collection(db,"trip_comments"), {
           dest: currentCommentDest,
-          name: (nameEl.value.trim()||'زميل'),
+          name: (nameEl.value.trim()||tr('co_default_name')),
           text: text,
           time: serverTimestamp()
         });
         textEl.value='';
-        // Garder le nom mémorisé pour le prochain commentaire
       }catch(e){
-        alert("خطأ أثناء النشر: "+e.message);
+        alert(tr('co_error')+e.message);
       }finally{
         btn.disabled=false;
       }
     };
 
     window.deleteCommentFirebase=async function(id){
-      if(!confirm("هل تريد حذف هذا التعليق؟")) return;
+      if(!confirm(tr('co_delete_confirm'))) return;
       try{ await deleteDoc(doc(db,"trip_comments",id)); }
-      catch(e){ alert("خطأ: "+e.message); }
+      catch(e){ alert(tr('co_error')+e.message); }
     };
 
     // ===== Carpooling =====
@@ -992,16 +1022,16 @@
       const from=document.getElementById('carpool-from').value.trim();
       const to=document.getElementById('carpool-to').value.trim();
       const datetime=document.getElementById('carpool-datetime').value;
-      if(!name||!phone||!from||!to||!datetime) return alert("الرجاء تعبئة جميع الحقول.");
+      if(!name||!phone||!from||!to||!datetime) return alert(tr('carpool_fill_all'));
       try{
         await addDoc(collection(db,"carpools"),{name,phone,from,to,datetime,createdAt:serverTimestamp()});
         ['carpool-name','carpool-phone','carpool-from','carpool-to','carpool-datetime'].forEach(i=>document.getElementById(i).value='');
-      }catch(e){ alert("خطأ: "+e.message); }
+      }catch(e){ alert(tr('co_error')+e.message); }
     };
 
     window.deleteCarpoolFirebase=async function(id){
       if(!confirm("هل أنت متأكد؟")) return;
-      try{ await deleteDoc(doc(db,"carpools",id)); }catch(e){ alert("خطأ: "+e.message); }
+      try{ await deleteDoc(doc(db,"carpools",id)); }catch(e){ alert(tr('co_error')+e.message); }
     };
 
     const carpoolList=document.getElementById('carpool-list');
@@ -1009,7 +1039,7 @@
       const q=query(collection(db,"carpools"), orderBy("createdAt","desc"));
       onSnapshot(q, snap=>{
         carpoolList.innerHTML='';
-        if(snap.empty){ carpoolList.innerHTML='<p style="text-align:center;padding:20px;color:var(--text-muted);">لا توجد رحلات.</p>'; return; }
+        if(snap.empty){ carpoolList.innerHTML='<p style="text-align:center;padding:20px;color:var(--text-muted);">'+escHtml(tr('carpool_empty'))+'</p>'; return; }
         snap.forEach(d=>{
           const c=d.data(), id=d.id;
           const wa=(c.phone||'').replace(/^0/,'213');
@@ -1017,14 +1047,14 @@
           const fDate=dObj.toLocaleDateString('ar-DZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
           const fTime=dObj.toLocaleTimeString('ar-DZ',{hour:'2-digit',minute:'2-digit'});
           carpoolList.innerHTML+=`<div class="carpool-item">
-            <div class="route"><span>${esc(c.from)}</span><i class="fa-solid fa-arrow-left"></i><span>${esc(c.to)}</span></div>
+            <div class="route"><span>${escHtml(c.from)}</span><i class="fa-solid fa-arrow-left"></i><span>${escHtml(c.to)}</span></div>
             <div class="meta">
-              <span><i class="fa-solid fa-user"></i> ${esc(c.name)}</span>
+              <span><i class="fa-solid fa-user"></i> ${escHtml(c.name)}</span>
               <span><i class="fa-regular fa-calendar"></i> ${fDate}</span>
               <span><i class="fa-regular fa-clock"></i> ${fTime}</span>
             </div>
             <div class="carpool-actions">
-              <a href="https://wa.me/${wa}?text=مرحباً" target="_blank" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> تواصل</a>
+              <a href="https://wa.me/${wa}?text=مرحباً" target="_blank" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> ${escHtml(tr('carpool_contact'))}</a>
               <button onclick="deleteCarpoolFirebase('${id}')" class="del-btn"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>`;
