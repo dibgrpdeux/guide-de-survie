@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -26,38 +26,40 @@
 
   <style>
     :root {
-      --primary: #fbbf24;
-      --primary-hover: #f59e0b;
-      --orange: #f97316;
-      --orange-dark: #ea580c;
-      --bg-color: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
+      --primary: #f97316;
+      --primary-hover: #ea580c;
+      --primary-light: #fdba74;
+      --primary-glow: rgba(249, 115, 22, 0.25);
+      --brown: #7c2d12;
+      --brown-dark: #431407;
+      --bg-color: #fffbf5;
+      --text-main: #431407;
+      --text-muted: #92400e;
       --card-bg: #ffffff;
-      --nav-bg: rgba(255, 255, 255, 0.95);
-      --border-color: #e2e8f0;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
-      --shadow-lg: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
+      --nav-bg: rgba(255, 251, 245, 0.92);
+      --border-color: #fde8d7;
+      --shadow-sm: 0 2px 10px rgba(124, 45, 18, 0.07);
+      --shadow-md: 0 12px 32px rgba(124, 45, 18, 0.12);
+      --shadow-lg: 0 28px 55px -12px rgba(249, 115, 22, 0.4);
     }
 
     [data-theme="dark"] {
-      --bg-color: #0a1128;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --card-bg: #0f1e41;
-      --nav-bg: rgba(10, 17, 40, 0.95);
-      --border-color: #1e3a8a;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
-      --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.6);
+      --bg-color: #1a0f08;
+      --text-main: #fef3c7;
+      --text-muted: #d6a97a;
+      --card-bg: #26160d;
+      --nav-bg: rgba(26, 15, 8, 0.95);
+      --border-color: #4a2a18;
+      --shadow-sm: 0 2px 10px rgba(0,0,0,0.4);
+      --shadow-md: 0 12px 32px rgba(0,0,0,0.5);
+      --shadow-lg: 0 28px 55px -12px rgba(249, 115, 22, 0.5);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Cairo', sans-serif;
+      font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
       transition: background-color 0.4s ease, color 0.4s ease;
@@ -68,9 +70,8 @@
       min-height: 100vh;
     }
 
-    /* ============================================
-       🎨 ARRIÈRE-PLAN SIMPLE : 3 BLOBS + 5 RONDS
-       ============================================ */
+    h1, h2, h3, .nav-title { font-family: 'Tajawal', sans-serif; font-weight: 800; }
+
     .animated-bg {
       position: fixed;
       inset: 0;
@@ -83,18 +84,18 @@
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.35;
+      filter: blur(90px);
+      opacity: 0.28;
       animation: blobFloat 25s ease-in-out infinite;
     }
 
-    .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; animation-delay: 0s; }
-    .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
-    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: 0.25; }
+    .blob-1 { width: 520px; height: 520px; background: #f97316; top: -12%; left: -10%; animation-delay: 0s; }
+    .blob-2 { width: 460px; height: 460px; background: #fdba74; bottom: -10%; right: -10%; animation-delay: -8s; }
+    .blob-3 { width: 360px; height: 360px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: 0.2; }
 
-    [data-theme="dark"] .blob-1 { background: #f97316; opacity: 0.2; }
-    [data-theme="dark"] .blob-2 { background: #3b82f6; opacity: 0.15; }
-    [data-theme="dark"] .blob-3 { background: #1e3a8a; opacity: 0.3; }
+    [data-theme="dark"] .blob-1 { background: #f97316; opacity: 0.15; }
+    [data-theme="dark"] .blob-2 { background: #7c2d12; opacity: 0.3; }
+    [data-theme="dark"] .blob-3 { background: #ea580c; opacity: 0.12; }
 
     @keyframes blobFloat {
       0%, 100% { transform: translate(0, 0) scale(1); }
@@ -102,31 +103,26 @@
       66% { transform: translate(-40px, 60px) scale(0.95); }
     }
 
-    .dot {
+    .jump-trail {
       position: absolute;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: #f97316;
-      opacity: 0.15;
-      animation: dotFloat 15s linear infinite;
+      opacity: 0.25;
+      animation: jumpTrail 12s linear infinite;
+    }
+    .jt-1 { top: 20%; left: 15%; animation-delay: 0s; }
+    .jt-2 { top: 45%; left: 80%; animation-delay: -3s; }
+    .jt-3 { top: 75%; left: 25%; animation-delay: -6s; }
+    .jt-4 { top: 35%; left: 60%; animation-delay: -9s; }
+
+    @keyframes jumpTrail {
+      0% { transform: translateY(0) scale(0.6); opacity: 0.1; }
+      50% { transform: translateY(-40px) scale(1.2); opacity: 0.35; }
+      100% { transform: translateY(0) scale(0.6); opacity: 0.1; }
     }
 
-    [data-theme="dark"] .dot { background: #60a5fa; opacity: 0.25; }
-
-    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; animation-delay: 0s; }
-    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
-    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
-    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
-    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
-
-    @keyframes dotFloat {
-      0% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-30px) translateX(20px); }
-      100% { transform: translateY(0) translateX(0); }
-    }
-
-    /* ============================================
-       NAVBAR
-       ============================================ */
     .top-navbar {
       position: fixed;
       top: 12px;
@@ -151,8 +147,19 @@
 
     .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
-    .nav-logo { height: 42px; width: auto; object-fit: contain; border-radius: 10px; transition: transform 0.3s ease; }
-    .nav-brand:hover .nav-logo { transform: rotate(-5deg) scale(1.05); }
+    .kangaroo-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+    .nav-brand:hover .kangaroo-logo { transform: rotate(-8deg) scale(1.05); }
+    .kangaroo-logo svg { width: 26px; height: 30px; }
 
     .nav-title { font-size: 1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; }
     .nav-title span {
@@ -181,10 +188,10 @@
       outline: none;
       transition: all 0.25s ease;
     }
-    .nav-search input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15); }
+    .nav-search input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
     .nav-search input::placeholder { color: var(--text-muted); font-weight: 500; }
     .nav-search i { position: absolute; left: 14px; color: var(--text-muted); font-size: 0.9rem; pointer-events: none; }
-    .nav-search input:focus + i { color: var(--orange); }
+    .nav-search input:focus + i { color: var(--primary); }
 
     .nav-menu-btn {
       width: 42px; height: 42px;
@@ -196,8 +203,8 @@
       cursor: pointer; transition: all 0.25s ease;
       flex-shrink: 0; font-size: 1rem;
     }
-    .nav-menu-btn:hover { background: var(--orange); color: white; border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.35); }
-    .nav-menu-btn.active { background: var(--orange); color: white; border-color: var(--orange); }
+    .nav-menu-btn:hover { background: var(--primary); color: white; border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
+    .nav-menu-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
     .nav-dropdown {
       position: fixed;
@@ -235,21 +242,15 @@
       flex: 1; justify-content: center;
       min-width: fit-content;
     }
-    .dropdown-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: translateY(-1px); }
-    .dropdown-btn.active { background: var(--orange); color: white; border-color: var(--orange); }
+    .dropdown-btn:hover { background: var(--primary-light); color: var(--brown-dark); border-color: var(--primary); transform: translateY(-1px); }
+    .dropdown-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    /* ============================================
-       CONTENU
-       ============================================ */
     .tab-content { display: none; animation: fadeIn 0.5s ease; }
     .tab-content.active { display: block; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
     .tab-btn { transition: all 0.3s ease; cursor: pointer; }
-    .tab-btn.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; box-shadow: 0 10px 20px -10px rgba(217, 119, 6, 0.5); border-color: transparent; }
+    .tab-btn.active { background: linear-gradient(135deg, #ea580c, #f97316); color: white; box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.5); border-color: transparent; }
     .tab-btn.active .tab-icon, .tab-btn.active .tab-label { color: white; }
     .tab-btn.active .tab-icon { background: rgba(255, 255, 255, 0.25); }
 
@@ -257,7 +258,7 @@
       width: 50px; height: 50px;
       border-radius: 14px;
       background: var(--card-bg);
-      color: #d97706;
+      color: var(--primary);
       display: flex; align-items: center; justify-content: center;
       font-size: 1.4rem;
       transition: all 0.3s ease;
@@ -274,26 +275,20 @@
       transition: all 0.3s ease;
     }
 
-    .glass-card:hover { box-shadow: var(--shadow-lg); border-color: var(--orange); }
+    .glass-card:hover { box-shadow: var(--shadow-lg); border-color: var(--primary); }
 
-    /* ============================================
-       HERO ÉCOLE
-       ============================================ */
     .school-hero {
       position: relative;
       border-radius: 2rem;
       overflow: hidden;
       min-height: 380px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       isolation: isolate;
       box-shadow: var(--shadow-lg);
     }
 
     .school-hero-bg {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background-image: url('image_5ab38fe5 (1).jpg');
       background-size: cover;
       background-position: center;
@@ -303,58 +298,69 @@
     @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
 
     .school-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(120, 53, 15, 0.85) 0%, rgba(120, 53, 15, 0.6) 50%, rgba(120, 53, 15, 0.4) 100%);
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(67, 20, 7, 0.85) 0%, rgba(67, 20, 7, 0.6) 50%, rgba(67, 20, 7, 0.4) 100%);
       z-index: -1;
     }
 
     [data-theme="dark"] .school-hero-overlay {
-      background: linear-gradient(135deg, rgba(10, 17, 40, 0.85) 0%, rgba(15, 30, 65, 0.7) 50%, rgba(30, 58, 138, 0.5) 100%);
+      background: linear-gradient(135deg, rgba(26, 15, 8, 0.85) 0%, rgba(42, 24, 16, 0.7) 50%, rgba(74, 42, 24, 0.5) 100%);
     }
 
     .school-content {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-      width: 100%;
+      position: relative; z-index: 1;
+      max-width: 900px; width: 100%;
       text-align: center;
       padding: 3rem 1.5rem;
       color: white;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
-    .school-content h1 {
-      font-size: 3.2rem;
+    .school-content h1 { font-size: 3.2rem; font-weight: 900; margin-bottom: 0.5rem; color: white; letter-spacing: -1px; }
+    .school-content p { font-size: 1.05rem; color: rgba(255, 255, 255, 0.9); font-weight: 600; }
+
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* بطاقات الأقسام في تبويب "نبذة عن المدرسة" */
+    .dept-card {
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border: 2px solid var(--border-color);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    [data-theme="dark"] .dept-card {
+      background: linear-gradient(135deg, #2a1810 0%, #3a2014 100%);
+    }
+    .dept-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+    .dept-card h3 {
+      font-size: 1.15rem;
       font-weight: 900;
+      color: var(--brown-dark);
       margin-bottom: 0.5rem;
-      color: white;
-      letter-spacing: -1px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    [data-theme="dark"] .dept-card h3 { color: var(--primary-light); }
+    .dept-card .dept-sub {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+    .dept-card p {
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--text-main);
     }
 
-    .school-content p {
-      font-size: 1.05rem;
-      color: rgba(255, 255, 255, 0.9);
-      font-weight: 600;
-    }
-
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 1rem;
-    }
-    .video-container iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: 0;
-    }
-
-    /* ============================================
-       KANGOUROU 3D
-       ============================================ */
     .mascot-container {
       position: fixed;
       bottom: 22px; right: 22px;
@@ -365,10 +371,7 @@
       perspective: 1000px;
     }
 
-    .mascot-3d-wrapper {
-      transform-style: preserve-3d;
-      animation: kangaroo3DRotate 8s ease-in-out infinite;
-    }
+    .mascot-3d-wrapper { transform-style: preserve-3d; animation: kangaroo3DRotate 8s ease-in-out infinite; }
 
     .mascot-kangaroo {
       width: 86px; height: 108px;
@@ -376,7 +379,7 @@
       animation: mascotFloat 3.5s ease-in-out infinite;
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       transform-origin: bottom center;
-      filter: drop-shadow(0 15px 25px rgba(249, 115, 22, 0.4)) drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 15px 25px var(--primary-glow)) drop-shadow(0 5px 10px rgba(0,0,0,0.2));
     }
     .mascot-container:hover .mascot-kangaroo { transform: scale(1.15) rotateY(-15deg) rotateX(5deg); }
 
@@ -407,7 +410,7 @@
       bottom: -8px; left: 50%;
       transform: translateX(-50%);
       width: 70px; height: 15px;
-      background: radial-gradient(ellipse at center, rgba(249, 115, 22, 0.5) 0%, transparent 70%);
+      background: radial-gradient(ellipse at center, var(--primary-glow) 0%, transparent 70%);
       animation: shadowPulse 3.5s ease-in-out infinite;
       z-index: -1;
     }
@@ -443,9 +446,6 @@
     }
     .mascot-bubble.visible { opacity: 1; transform: translateX(50%) translateY(0); }
 
-    /* ============================================
-       FENÊTRE AI
-       ============================================ */
     #aiChatWindow {
       position: fixed;
       bottom: 140px; right: 22px;
@@ -456,7 +456,7 @@
       max-height: calc(100vh - 170px);
       background: var(--card-bg);
       border-radius: 24px;
-      box-shadow: 0 30px 80px -10px rgba(0,0,0,0.4), 0 0 0 1px rgba(249, 115, 22, 0.2);
+      box-shadow: 0 30px 80px -10px rgba(0,0,0,0.4), 0 0 0 1px var(--primary-glow);
       display: none;
       flex-direction: column;
       overflow: hidden;
@@ -467,7 +467,7 @@
     #aiChatWindow.open { display: flex; transform: translateY(0) scale(1); opacity: 1; }
 
     .ai-chat-header {
-      background: linear-gradient(135deg, #f97316 0%, #ea580c 60%, #dc2626 100%);
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 60%, #c2410c 100%);
       padding: 16px 18px;
       color: white;
       display: flex; align-items: center; justify-content: space-between;
@@ -530,7 +530,7 @@
       background: var(--bg-color);
     }
     .ai-chat-body::-webkit-scrollbar { width: 6px; }
-    .ai-chat-body::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 10px; }
+    .ai-chat-body::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
 
     .ai-msg { display: flex; gap: 8px; max-width: 100%; animation: msgIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
     .ai-msg.user { flex-direction: row-reverse; }
@@ -545,7 +545,7 @@
       color: white;
     }
     .ai-msg.bot .ai-msg-avatar { background: linear-gradient(135deg, #f97316, #ea580c); }
-    .ai-msg.user .ai-msg-avatar { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .ai-msg.user .ai-msg-avatar { background: linear-gradient(135deg, #7c2d12, #431407); }
 
     .ai-msg-content {
       padding: 10px 14px;
@@ -569,7 +569,7 @@
       align-self: flex-start;
       margin-left: 40px;
     }
-    .ai-typing span { width: 8px; height: 8px; border-radius: 50%; background: #f97316; animation: typingBounce 1.4s infinite; }
+    .ai-typing span { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); animation: typingBounce 1.4s infinite; }
     .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
     .ai-typing span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-8px); opacity: 1; } }
@@ -580,7 +580,7 @@
       border-radius: 16px;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      color: var(--orange-dark);
+      color: var(--primary-hover);
       font-family: inherit;
       font-size: 0.72rem;
       font-weight: 700;
@@ -588,7 +588,7 @@
       transition: all 0.2s ease;
     }
     [data-theme="dark"] .ai-suggestion { color: #fdba74; }
-    .ai-suggestion:hover { background: var(--orange); color: white; border-color: var(--orange); transform: translateY(-1px); }
+    .ai-suggestion:hover { background: var(--primary); color: white; border-color: var(--primary); transform: translateY(-1px); }
 
     .ai-chat-input-wrap {
       padding: 10px 14px 14px;
@@ -611,7 +611,7 @@
       background: var(--bg-color);
       transition: all 0.2s;
     }
-    .ai-chat-input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15); background: var(--card-bg); }
+    .ai-chat-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); background: var(--card-bg); }
 
     .ai-send-btn {
       width: 44px; height: 44px;
@@ -623,21 +623,19 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 15px;
       transition: all 0.25s ease;
-      box-shadow: 0 6px 18px rgba(249, 115, 22, 0.45);
+      box-shadow: 0 6px 18px var(--primary-glow);
       flex-shrink: 0;
     }
-    .ai-send-btn:hover:not(:disabled) { transform: scale(1.08) rotate(-15deg); box-shadow: 0 8px 22px rgba(249, 115, 22, 0.65); }
+    .ai-send-btn:hover:not(:disabled) { transform: scale(1.08) rotate(-15deg); box-shadow: 0 8px 22px rgba(249, 115, 22, 0.55); }
     .ai-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* ============================================
-       RESPONSIVE
-       ============================================ */
     @media (max-width: 768px) {
       .top-navbar { flex-wrap: wrap; padding: 8px 10px; gap: 8px; border-radius: 16px; }
       .nav-search { order: 3; flex-basis: 100%; max-width: 100%; }
       .nav-title { font-size: 0.85rem; }
       .nav-subtitle { font-size: 0.6rem; }
-      .nav-logo { height: 34px; }
+      .kangaroo-logo { width: 34px; height: 34px; }
+      .kangaroo-logo svg { width: 20px; height: 24px; }
       .nav-menu-btn { width: 38px; height: 38px; font-size: 0.9rem; }
       .school-hero { min-height: 300px; border-radius: 1.5rem; }
       .school-content h1 { font-size: 2rem; }
@@ -664,17 +662,37 @@
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
-    <div class="dot dot-1"></div>
-    <div class="dot dot-2"></div>
-    <div class="dot dot-3"></div>
-    <div class="dot dot-4"></div>
-    <div class="dot dot-5"></div>
+    <div class="jump-trail jt-1"></div>
+    <div class="jump-trail jt-2"></div>
+    <div class="jump-trail jt-3"></div>
+    <div class="jump-trail jt-4"></div>
   </div>
 
   <!-- NAVBAR -->
   <nav class="top-navbar">
     <div class="nav-brand">
-      <img src="logo.png" alt="ENSTP" class="nav-logo" onerror="this.style.display='none'">
+      <div class="kangaroo-logo">
+        <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="kBodyNav" cx="40%" cy="30%">
+              <stop offset="0%" stop-color="#fef3c7"/>
+              <stop offset="100%" stop-color="#ffffff"/>
+            </radialGradient>
+          </defs>
+          <path d="M20 100 Q8 92 10 108 Q14 122 26 114 Z" fill="#7c2d12"/>
+          <ellipse cx="72" cy="112" rx="14" ry="6" fill="#7c2d12"/>
+          <ellipse cx="40" cy="102" rx="9" ry="4.5" fill="#7c2d12"/>
+          <ellipse cx="52" cy="82" rx="28" ry="26" fill="url(#kBodyNav)"/>
+          <ellipse cx="55" cy="88" rx="16" ry="16" fill="#fed7aa"/>
+          <ellipse cx="68" cy="44" rx="20" ry="18" fill="url(#kBodyNav)"/>
+          <ellipse cx="59" cy="20" rx="6" ry="14" fill="#ffffff" transform="rotate(-15 59 20)"/>
+          <ellipse cx="78" cy="20" rx="6" ry="14" fill="#ffffff" transform="rotate(15 78 20)"/>
+          <ellipse cx="75" cy="52" rx="11" ry="9" fill="#fed7aa"/>
+          <circle cx="66" cy="38" r="3.5" fill="#431407"/>
+          <circle cx="76" cy="38" r="3.5" fill="#431407"/>
+          <path d="M70 55 Q76 60 82 55" stroke="#431407" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
       <div>
         <div class="nav-title">ENSTP <span>Guide</span></div>
         <div class="nav-subtitle" data-i18n="nav_subtitle">مدرستي</div>
@@ -765,6 +783,32 @@
           <p data-i18n="about_p3">تضم المدرسة عدة أقسام علمية: قسم المنشآت والجسور، قسم الطرقات والمرور، قسم البناء، ومخابر بحثية متطورة.</p>
         </div>
 
+        <!-- بطاقات الأقسام العلمية -->
+        <div class="space-y-4 mt-2">
+
+          <!-- القسم التحضيري -->
+          <div class="dept-card">
+            <h3><i class="fa-solid fa-flask"></i> <span data-i18n="dept_prep_title">القسم التحضيري</span></h3>
+            <div class="dept-sub" data-i18n="dept_prep_sub">Classes Préparatoires</div>
+            <p data-i18n="dept_prep_desc">تُمثل الأقسام التحضيرية بالمدرسة الوطنية العليا للأشغال العمومية طوراً تعليمياً مكثفاً ونخبوياً يمتد على مدار سنتين، يهدف إلى تزويد الطلاب بقاعدة علمية وتقنية صلبة تؤهلهم لمهنة الهندسة. ويركز البرنامج البيداغوجي خلال هذه الفترة بشكل أساسي على العلوم الدقيقة والتطبيقية مثل الرياضيات (التحليل والجبر)، الفيزياء (الميكانيكا والترموديناميك)، الكيمياء، الإعلام الآلي، الرسم التقني، بالإضافة إلى اللغات الأجنبية. ويخضع الطلاب طوال هذين العامين لنظام تقييم مستمر وامتحانات سداسية تحدد انتقالهم، ليتوج المسار في نهاية السنة الثانية باجتياز المسابقة الوطنية الموحدة للالتحاق بالمدارس العليا؛ حيث تتيح هذه المسابقة للناجحين والمنتمين إلى طليعة الترتيب مواصلة طور المهندس (3 سنوات) بالمدرسة أو في مدارس عليا أخرى، في حين يتم إعادة توجيه الطلاب الذين لم يوفقوا في المسابقة ولكنهم استوفوا الشروط البيداغوجية نحو الجامعات العادية لمتابعة دراستهم في نظام "LMD" ضمن تخصصات الهندسة المدنية والعلوم والتكنولوجيا.</p>
+          </div>
+
+          <!-- قسم مواد وهياكل -->
+          <div class="dept-card">
+            <h3><i class="fa-solid fa-cubes"></i> <span data-i18n="dept_dms_title">قسم مواد وهياكل</span></h3>
+            <div class="dept-sub" data-i18n="dept_dms_sub">Matériaux & Structures</div>
+            <p data-i18n="dept_dms_desc">تكوين مهندسين متخصصين في دراسة سلوك المواد وتصميم الهياكل الحاملة لضمان سلامة واستدامة المنشآت. على عكس قسم المنشآت القاعدية الذي يركز على التخطيط الشبكي للبنى التحتية (كالطرق والمطارات)، يغوص هذا القسم في الجانب الفيزيائي والميكانيكي للهندسة؛ حيث يدرس الطلاب ميكانيكا المواد المتقدمة، ديناميكا الهياكل، مقاومة المواد (RDM)، والهندسة الزلزالية، بالإضافة إلى تكنولوجيا الخرسانة والمواد المبتكرة. ويهدف هذا التكوين إلى تمكين المهندس من حساب الأحمال، واختيار المواد المناسبة لكل مشروع، وتصميم منشآت قادرة على مقاومة العوامل الطبيعية والزلازل.</p>
+          </div>
+
+          <!-- قسم منشآت قاعدية -->
+          <div class="dept-card">
+            <h3><i class="fa-solid fa-bridge"></i> <span data-i18n="dept_dib_title">قسم منشآت قاعدية</span></h3>
+            <div class="dept-sub" data-i18n="dept_dib_sub">Infrastructures</div>
+            <p data-i18n="dept_dib_desc">يُعتبر قسم المنشآت القاعدية (DIB) أحد الركائز الأساسية في طور المهندس بالمدرسة الوطنية العليا للأشغال العمومية، حيث يلتحق به الطلاب مباشرة بعد نجاحهم في المسابقة الوطنية. يهدف هذا القسم إلى تكوين مهندسي دولة وباحثين ذوي كفاءة عالية في مجالات تصميم، دراسة، وإدارة مشاريع البنى التحتية الكبرى للبلاد. ويتمحور البرنامج البيداغوجي طوال سنوات الدراسة الثلاث حول تخصصات إستراتيجية تشمل الطرق، الطرق السيّارة، المنشآت الفنية (كالجسور والأنفاق)، السكك الحديدية، بالإضافة إلى المنشآت البحرية والمطارات. ويجمع التكوين بين الدروس النظرية والتطبيقية، حيث يتعلم الطلاب استخدام أحدث برمجيات المحاكاة الهندسية، إلى جانب خوض سلسلة من التربصات الميدانية الإلزامية والخرجات الدورية لورشات الإنجاز الكبرى بالتعاون مع كبرى الشركات الوطنية في قطاع الأشغال العمومية.</p>
+          </div>
+
+        </div>
+
         <!-- Site officiel -->
         <div class="bg-orange-50 dark:bg-slate-800 border-2 border-orange-200 dark:border-slate-700 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center gap-3">
@@ -776,7 +820,7 @@
               <p class="text-xs text-gray-600 dark:text-gray-400" data-i18n="about_website_desc">زيارة الموقع الرسمي</p>
             </div>
           </div>
-          <a href="https://www.enstp.edu.dz" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+          <a href="https://www.enstp.edu.dz" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition" style="background: linear-gradient(135deg, #ea580c, #f97316);">
             <span data-i18n="about_website_btn">زيارة الموقع</span>
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
@@ -819,26 +863,11 @@
 
         <p class="text-gray-700 dark:text-gray-300" data-i18n="teachers_desc">تضم المدرسة نخبة من الأساتذة والباحثين في مختلف التخصصات الهندسية.</p>
 
-        <a href="enseignants.html" class="inline-flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+        <a href="enseignants.html" class="inline-flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition" style="background: linear-gradient(135deg, #ea580c, #f97316);">
           <i class="fa-solid fa-users"></i>
           <span data-i18n="teachers_btn">عرض قائمة الأساتذة</span>
           <i class="fa-solid fa-arrow-left"></i>
         </a>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-          <div class="bg-orange-50 dark:bg-slate-800 p-5 rounded-2xl border border-orange-200 dark:border-slate-700">
-            <h3 class="font-bold mb-2"><i class="fa-solid fa-flask text-orange-500 ml-2"></i> <span data-i18n="dept_prep">القسم التحضيري</span></h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="dept_prep_desc">Classes Préparatoires</p>
-          </div>
-          <div class="bg-orange-50 dark:bg-slate-800 p-5 rounded-2xl border border-orange-200 dark:border-slate-700">
-            <h3 class="font-bold mb-2"><i class="fa-solid fa-cubes text-orange-500 ml-2"></i> <span data-i18n="dept_dms">قسم مواد وهياكل</span></h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="dept_dms_desc">Matériaux & Structures</p>
-          </div>
-          <div class="bg-orange-50 dark:bg-slate-800 p-5 rounded-2xl border border-orange-200 dark:border-slate-700">
-            <h3 class="font-bold mb-2"><i class="fa-solid fa-bridge text-orange-500 ml-2"></i> <span data-i18n="dept_dib">قسم منشآت قاعدية</span></h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="dept_dib_desc">Infrastructures</p>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -887,7 +916,7 @@
     <div id="tab-map" class="tab-content">
       <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl text-white flex items-center justify-center text-xl shadow-lg" style="background: linear-gradient(135deg, #b45309, #d97706);">
+          <div class="w-12 h-12 rounded-2xl text-white flex items-center justify-center text-xl shadow-lg" style="background: linear-gradient(135deg, #ea580c, #f97316);">
             <i class="fa-solid fa-cube"></i>
           </div>
           <h2 class="text-2xl font-black" data-i18n="map_title">الخريطة ثلاثية الأبعاد</h2>
@@ -895,7 +924,7 @@
 
         <p class="text-gray-700 dark:text-gray-300" data-i18n="map_desc">خريطة تفاعلية ثلاثية الأبعاد تتيح لك التنقل بين المباني، المدرجات، والمرافق داخل المدرسة بسهولة.</p>
 
-        <a href="https://quad-route-finder.lovable.app" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-white text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition" style="background: linear-gradient(135deg, #b45309, #d97706);">
+        <a href="https://quad-route-finder.lovable.app" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-white text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition" style="background: linear-gradient(135deg, #ea580c, #f97316);">
           <i class="fa-solid fa-map-location-dot"></i>
           <span data-i18n="map_btn">فتح الخريطة ثلاثية الأبعاد</span>
           <i class="fa-solid fa-arrow-up-right-from-square"></i>
@@ -1177,9 +1206,15 @@
         teachers_title: "هيئة التدريس",
         teachers_desc: "تضم المدرسة نخبة من الأساتذة والباحثين في مختلف التخصصات الهندسية.",
         teachers_btn: "عرض قائمة الأساتذة",
-        dept_prep: "القسم التحضيري", dept_prep_desc: "Classes Préparatoires",
-        dept_dms: "قسم مواد وهياكل", dept_dms_desc: "Matériaux & Structures",
-        dept_dib: "قسم منشآت قاعدية", dept_dib_desc: "Infrastructures",
+        dept_prep_title: "القسم التحضيري",
+        dept_prep_sub: "Classes Préparatoires",
+        dept_prep_desc: "تُمثل الأقسام التحضيرية بالمدرسة الوطنية العليا للأشغال العمومية طوراً تعليمياً مكثفاً ونخبوياً يمتد على مدار سنتين، يهدف إلى تزويد الطلاب بقاعدة علمية وتقنية صلبة تؤهلهم لمهنة الهندسة. ويركز البرنامج البيداغوجي خلال هذه الفترة بشكل أساسي على العلوم الدقيقة والتطبيقية مثل الرياضيات (التحليل والجبر)، الفيزياء (الميكانيكا والترموديناميك)، الكيمياء، الإعلام الآلي، الرسم التقني، بالإضافة إلى اللغات الأجنبية. ويخضع الطلاب طوال هذين العامين لنظام تقييم مستمر وامتحانات سداسية تحدد انتقالهم، ليتوج المسار في نهاية السنة الثانية باجتياز المسابقة الوطنية الموحدة للالتحاق بالمدارس العليا؛ حيث تتيح هذه المسابقة للناجحين والمنتمين إلى طليعة الترتيب مواصلة طور المهندس (3 سنوات) بالمدرسة أو في مدارس عليا أخرى، في حين يتم إعادة توجيه الطلاب الذين لم يوفقوا في المسابقة ولكنهم استوفوا الشروط البيداغوجية نحو الجامعات العادية لمتابعة دراستهم في نظام \"LMD\" ضمن تخصصات الهندسة المدنية والعلوم والتكنولوجيا.",
+        dept_dms_title: "قسم مواد وهياكل",
+        dept_dms_sub: "Matériaux & Structures",
+        dept_dms_desc: "تكوين مهندسين متخصصين في دراسة سلوك المواد وتصميم الهياكل الحاملة لضمان سلامة واستدامة المنشآت. على عكس قسم المنشآت القاعدية الذي يركز على التخطيط الشبكي للبنى التحتية (كالطرق والمطارات)، يغوص هذا القسم في الجانب الفيزيائي والميكانيكي للهندسة؛ حيث يدرس الطلاب ميكانيكا المواد المتقدمة، ديناميكا الهياكل، مقاومة المواد (RDM)، والهندسة الزلزالية، بالإضافة إلى تكنولوجيا الخرسانة والمواد المبتكرة. ويهدف هذا التكوين إلى تمكين المهندس من حساب الأحمال، واختيار المواد المناسبة لكل مشروع، وتصميم منشآت قادرة على مقاومة العوامل الطبيعية والزلازل.",
+        dept_dib_title: "قسم منشآت قاعدية",
+        dept_dib_sub: "Infrastructures",
+        dept_dib_desc: "يُعتبر قسم المنشآت القاعدية (DIB) أحد الركائز الأساسية في طور المهندس بالمدرسة الوطنية العليا للأشغال العمومية، حيث يلتحق به الطلاب مباشرة بعد نجاحهم في المسابقة الوطنية. يهدف هذا القسم إلى تكوين مهندسي دولة وباحثين ذوي كفاءة عالية في مجالات تصميم، دراسة، وإدارة مشاريع البنى التحتية الكبرى للبلاد. ويتمحور البرنامج البيداغوجي طوال سنوات الدراسة الثلاث حول تخصصات إستراتيجية تشمل الطرق، الطرق السيّارة، المنشآت الفنية (كالجسور والأنفاق)، السكك الحديدية، بالإضافة إلى المنشآت البحرية والمطارات. ويجمع التكوين بين الدروس النظرية والتطبيقية، حيث يتعلم الطلاب استخدام أحدث برمجيات المحاكاة الهندسية، إلى جانب خوض سلسلة من التربصات الميدانية الإلزامية والخرجات الدورية لورشات الإنجاز الكبرى بالتعاون مع كبرى الشركات الوطنية في قطاع الأشغال العمومية.",
         buildings_title: "مباني المدرسة",
         buildings_desc: "جولة بالفيديو داخل المدرجات، القاعات، المخابر العلمية، والمرافق المختلفة.",
         video_tour: "جولة عامة في المدرسة", video_prepa: "أقسام التحضيري",
@@ -1218,9 +1253,15 @@
         teachers_title: "Corps Enseignant",
         teachers_desc: "L'école réunit une élite d'enseignants et de chercheurs dans diverses disciplines d'ingénierie.",
         teachers_btn: "Voir la liste des enseignants",
-        dept_prep: "Classes Préparatoires", dept_prep_desc: "Classes Préparatoires",
-        dept_dms: "Matériaux & Structures", dept_dms_desc: "Matériaux & Structures",
-        dept_dib: "Infrastructures de Base", dept_dib_desc: "Infrastructures",
+        dept_prep_title: "Classes Préparatoires",
+        dept_prep_sub: "Classes Préparatoires",
+        dept_prep_desc: "Les Classes Préparatoires de l'ENSTP constituent un cycle intensif et sélectif de deux ans, visant à doter les étudiants d'une base scientifique et technique solide pour le métier d'ingénieur. Le programme se concentre sur les sciences exactes et appliquées : mathématiques (analyse et algèbre), physique (mécanique et thermodynamique), chimie, informatique, dessin technique, ainsi que les langues étrangères. Les étudiants sont soumis à une évaluation continue et à des examens semestriels. À la fin de la deuxième année, ils passent le concours national commun d'accès aux grandes écoles ; les mieux classés poursuivent le cycle d'ingénieur (3 ans) à l'ENSTP ou dans d'autres grandes écoles, tandis que les autres sont réorientés vers les universités en système LMD (Génie Civil, Sciences et Technologies).",
+        dept_dms_title: "Matériaux & Structures",
+        dept_dms_sub: "Matériaux & Structures",
+        dept_dms_desc: "Formation d'ingénieurs spécialisés dans l'étude du comportement des matériaux et la conception des structures porteuses pour garantir la sécurité et la durabilité des ouvrages. Contrairement au département DIB qui se concentre sur la planification des infrastructures (routes, aéroports), ce département plonge dans l'aspect physique et mécanique de l'ingénierie : mécanique des matériaux avancés, dynamique des structures, résistance des matériaux (RDM), génie parasismique, technologie du béton et matériaux innovants. L'objectif est de permettre à l'ingénieur de calculer les charges, choisir les matériaux adaptés et concevoir des ouvrages résistants aux aléas naturels et aux séismes.",
+        dept_dib_title: "Infrastructures de Base",
+        dept_dib_sub: "Infrastructures",
+        dept_dib_desc: "Le département des Infrastructures de Base (DIB) est l'un des piliers du cycle d'ingénieur à l'ENSTP. Les étudiants le rejoignent après réussite au concours national. Il vise à former des ingénieurs d'État et des chercheurs hautement qualifiés dans la conception, l'étude et la gestion des grands projets d'infrastructures du pays. Le programme s'articule autour de spécialités stratégiques : routes, autoroutes, ouvrages d'art (ponts et tunnels), voies ferrées, ouvrages maritimes et aéroports. La formation combine cours théoriques et pratiques, avec l'utilisation de logiciels de simulation de pointe, des stages de terrain obligatoires et des visites de grands chantiers en collaboration avec les principales entreprises nationales du secteur.",
         buildings_title: "Bâtiments de l'école",
         buildings_desc: "Visite vidéo des amphithéâtres, salles, laboratoires scientifiques et installations diverses.",
         video_tour: "Visite générale de l'école", video_prepa: "Classes préparatoires",
@@ -1259,9 +1300,15 @@
         teachers_title: "Faculty Members",
         teachers_desc: "The school brings together elite teachers and researchers in various engineering disciplines.",
         teachers_btn: "View list of teachers",
-        dept_prep: "Preparatory Classes", dept_prep_desc: "Classes Préparatoires",
-        dept_dms: "Materials & Structures", dept_dms_desc: "Matériaux & Structures",
-        dept_dib: "Basic Infrastructures", dept_dib_desc: "Infrastructures",
+        dept_prep_title: "Preparatory Classes",
+        dept_prep_sub: "Classes Préparatoires",
+        dept_prep_desc: "The Preparatory Classes at ENSTP constitute an intensive and selective two-year cycle, aimed at providing students with a solid scientific and technical base for the engineering profession. The program focuses on exact and applied sciences: mathematics (analysis and algebra), physics (mechanics and thermodynamics), chemistry, computer science, technical drawing, as well as foreign languages. Students undergo continuous assessment and semester exams. At the end of the second year, they take the national common competitive exam for access to higher schools; the best ranked continue the engineering cycle (3 years) at ENSTP or other higher schools, while others are redirected to universities in the LMD system (Civil Engineering, Science and Technology).",
+        dept_dms_title: "Materials & Structures",
+        dept_dms_sub: "Matériaux & Structures",
+        dept_dms_desc: "Training engineers specialized in studying the behavior of materials and designing load-bearing structures to ensure the safety and durability of constructions. Unlike the DIB department which focuses on infrastructure planning (roads, airports), this department delves into the physical and mechanical aspects of engineering: advanced mechanics of materials, structural dynamics, strength of materials (RDM), earthquake engineering, concrete technology and innovative materials. The objective is to enable the engineer to calculate loads, choose suitable materials and design structures resistant to natural hazards and earthquakes.",
+        dept_dib_title: "Basic Infrastructures",
+        dept_dib_sub: "Infrastructures",
+        dept_dib_desc: "The Department of Basic Infrastructures (DIB) is one of the pillars of the engineering cycle at ENSTP. Students join it after passing the national competitive exam. It aims to train state engineers and highly qualified researchers in the design, study and management of major infrastructure projects in the country. The program revolves around strategic specialties: roads, highways, engineering structures (bridges and tunnels), railways, as well as maritime structures and airports. The training combines theoretical and practical courses, with the use of advanced engineering simulation software, mandatory field internships and periodic visits to major construction sites in collaboration with leading national companies in the public works sector.",
         buildings_title: "School Buildings",
         buildings_desc: "Video tour of amphitheaters, classrooms, scientific labs and various facilities.",
         video_tour: "General school tour", video_prepa: "Preparatory classes",
@@ -1331,7 +1378,6 @@
       window.scrollTo({ top: 200, behavior: 'smooth' });
     }
 
-    // Sons sur les onglets
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('mouseenter', () => playSound('hover'));
     });
@@ -1426,11 +1472,10 @@
       aiChatInput.value = '';
       aiSendBtn.disabled = true;
 
-      // Base locale pour l'école
       const q = msg.toLowerCase();
       let knowledgeReply = null;
-      if (q.includes("تاريخ") || q.includes("histoire") || q.includes("history") || q.includes("1925")) {
-        knowledgeReply = "📜 تأسست المدرسة عام 1925 تحت اسم 'مدرسة الأشغال العمومية'. تُعدّ من أعرق المؤسسات التعليمية في الجزائر.";
+      if (q.includes("تاريخ") || q.includes("histoire") || q.includes("history") || q.includes("1967")) {
+        knowledgeReply = "📜 تأسست المدرسة عام 1967 تحت اسم 'المدرسة الوطنية العليا للأشغال العمومية'. تُعدّ من أعرق المؤسسات التعليمية في الجزائر.";
       } else if (q.includes("مديرة") || q.includes("directrice") || q.includes("director")) {
         knowledgeReply = "👩‍💼 السيدة المديرة هي الأستاذة الدكتورة فوزية شافة (مقيدش)، من الكفاءات القيادية في قطاع المدارس العليا بالجزائر.";
       } else if (q.includes("أقسام") || q.includes("départements") || q.includes("departments")) {
