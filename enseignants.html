@@ -4,52 +4,241 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="page_title">هيئة التدريس - ENSTP</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   
   <style>
-    body { font-family: 'Cairo', sans-serif; background-color: #ffffff; color: #1e293b; }
-    .ambient-bg { position: fixed; inset: 0; z-index: -1; background-color: #ffffff; background-image: radial-gradient(#fde68a 1px, transparent 1px); background-size: 40px 40px; opacity: 0.3; }
-    .glass-card { background: #ffffff; border: 1px solid #fef3c7; box-shadow: 0 4px 20px rgba(146, 64, 14, 0.05); }
-    .btn-year { background: white; border: 2px solid #fde68a; color: #92400e; font-weight: 700; cursor: pointer; transition: 0.3s; }
-    .btn-year:hover { border-color: #f59e0b; background: #fffbeb; }
-    .btn-year.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; border-color: transparent; box-shadow: 0 8px 20px -5px rgba(217, 119, 6, 0.4); }
-    .badge-subject { transition: all 0.3s ease; cursor: pointer; }
-    .badge-subject.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3); }
-    
-    .teacher-card { background: white; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(146, 64, 14, 0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; border: 1px solid #fef3c7; }
-    .teacher-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px -10px rgba(217, 119, 6, 0.2); }
-    .card-header-bg { height: 90px; background: linear-gradient(135deg, #b45309 0%, #d97706 100%); position: relative; }
-    .check-badge { position: absolute; top: 14px; left: 14px; width: 30px; height: 30px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.4); z-index: 2; }
-    .dept-badge { position: absolute; top: 14px; right: 14px; background: white; color: #92400e; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; z-index: 2; }
-    .photo-section { position: relative; display: flex; justify-content: center; margin-top: -50px; z-index: 10; }
-    .teacher-photo-wrap { width: 110px; height: 110px; border-radius: 50%; background: #ffffff; border: 5px solid #ffffff; box-shadow: 0 8px 20px rgba(146, 64, 14, 0.15); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; }
-    .teacher-card:hover .teacher-photo-wrap { transform: scale(1.05); }
-    .teacher-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-    .teacher-photo-initials { width: 100%; height: 100%; background: linear-gradient(135deg, #d97706, #f59e0b); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 2.5rem; }
-    .card-content { padding: 20px 24px 24px 24px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; }
-    .teacher-name { font-size: 1.3rem; font-weight: 900; color: #78350f; margin-bottom: 6px; }
-    .teacher-title { font-size: 0.8rem; color: #b45309; font-weight: 800; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 6px; background: #fffbeb; padding: 4px 12px; border-radius: 12px; align-self: center; border: 1px solid #fde68a; }
-    .divider { height: 2px; background: linear-gradient(90deg, transparent, #fde68a, transparent); margin-bottom: 16px; width: 80%; align-self: center; }
-    .teacher-desc { font-size: 0.85rem; color: #64748b; line-height: 1.7; margin-bottom: 24px; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .btn-card-primary { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; font-weight: 800; padding: 13px; border-radius: 14px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none; width: 100%; }
-    .btn-card-secondary { background: #ffffff; color: #92400e; font-weight: 700; padding: 12px; border-radius: 14px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px solid #fde68a; cursor: pointer; width: 100%; margin-top: 10px; text-decoration: none; font-size: 0.85rem; }
-    .modal-overlay { background: rgba(120, 53, 15, 0.6); backdrop-filter: blur(5px); }
-
-    .teacher-card, .btn-card-primary, .btn-card-secondary, .btn-year, .badge-subject {
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    :root {
+      --primary: #f97316;
+      --primary-hover: #ea580c;
+      --primary-light: #fdba74;
+      --primary-glow: rgba(249, 115, 22, 0.25);
+      --brown: #7c2d12;
+      --brown-dark: #431407;
+      --bg-color: #fffbf5;
+      --text-main: #431407;
+      --text-muted: #92400e;
+      --card-bg: #ffffff;
+      --border-color: #fde8d7;
+      --shadow-sm: 0 2px 10px rgba(124, 45, 18, 0.07);
+      --shadow-md: 0 12px 32px rgba(124, 45, 18, 0.12);
+      --shadow-lg: 0 28px 55px -12px rgba(249, 115, 22, 0.4);
     }
 
-    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1001; width: 320px; max-height: 420px; background: white; border-radius: 1rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); border: 1px solid #fed7aa; display: none; flex-direction: column; }
+    body {
+      font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3 { font-family: 'Tajawal', sans-serif; font-weight: 800; }
+
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-color: var(--bg-color);
+      background-image: radial-gradient(#fdba74 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.25;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      border-radius: 1.5rem;
+    }
+
+    .btn-year {
+      background: white;
+      border: 2px solid var(--border-color);
+      color: var(--brown);
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: inherit;
+    }
+    .btn-year:hover { border-color: var(--primary); background: #fff7ed; transform: translateY(-2px); }
+    .btn-year.active {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 8px 20px -5px var(--primary-glow);
+    }
+
+    .badge-subject {
+      transition: all 0.25s ease;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .badge-subject.active {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    /* ============================================
+       CARTES ENSEIGNANTS — SANS BADGE MATIÈRE
+       ============================================ */
+    .teacher-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1.5px solid var(--border-color);
+    }
+    .teacher-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .card-header-bg {
+      height: 70px;
+      background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+      position: relative;
+    }
+
+    .photo-section {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-top: -45px;
+      z-index: 10;
+    }
+    .teacher-photo-wrap {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 4px solid #ffffff;
+      box-shadow: 0 8px 20px rgba(124, 45, 18, 0.15);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    .teacher-card:hover .teacher-photo-wrap { transform: scale(1.06); }
+    .teacher-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .teacher-photo-initials {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 2rem;
+    }
+
+    .card-content {
+      padding: 14px 20px 20px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .teacher-name {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--brown-dark);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .teacher-title {
+      font-size: 0.75rem;
+      color: var(--brown);
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff7ed;
+      padding: 4px 12px;
+      border-radius: 12px;
+      align-self: center;
+      border: 1px solid var(--border-color);
+      margin-bottom: 16px;
+    }
+
+    .btn-card-primary {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: white;
+      font-weight: 800;
+      padding: 12px;
+      border-radius: 14px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.9rem;
+      margin-top: auto;
+      transition: all 0.3s ease;
+    }
+    .btn-card-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -5px var(--primary-glow);
+    }
+
+    .modal-overlay {
+      background: rgba(67, 20, 7, 0.65);
+      backdrop-filter: blur(6px);
+    }
+
+    .lang-btn {
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      transition: 0.2s;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .lang-btn:hover { background: #ffedd5; color: var(--brown); }
+    .lang-btn.active { background: var(--primary); color: white; }
+
+    #chatWindow {
+      position: fixed;
+      bottom: 110px;
+      right: 20px;
+      z-index: 1001;
+      width: 320px;
+      max-height: 420px;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      border: 1px solid var(--border-color);
+      display: none;
+      flex-direction: column;
+    }
     #chatWindow.open { display: flex; }
-    @media (max-width: 640px) { #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+    @media (max-width: 640px) {
+      #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; }
+    }
 
-    @keyframes kangarooJump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); } 60% { transform: translateY(-10px) scale(1) rotate(5deg); } }
-
-    .lang-btn { padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; transition: 0.2s; color: #64748b; background: transparent; border: none; cursor: pointer; }
-    .lang-btn:hover { background: #ffedd5; color: #9a3412; }
-    .lang-btn.active { background: #f97316; color: white; }
+    @keyframes kangarooJump {
+      0%, 100% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); }
+      60% { transform: translateY(-10px) scale(1) rotate(5deg); }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 lg:p-8">
@@ -57,64 +246,85 @@
 
   <div class="max-w-7xl mx-auto w-full space-y-8">
     <div class="text-center space-y-3">
-      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-50 text-amber-800 font-bold text-xs border border-amber-200"><i class="fa-solid fa-graduation-cap"></i> ENSTP Kouba</div>
+      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-orange-50 text-orange-800 font-bold text-xs border border-orange-200">
+        <i class="fa-solid fa-graduation-cap"></i> ENSTP Kouba
+      </div>
       <h1 class="text-4xl lg:text-5xl font-black text-amber-900" data-i18n="ens_title">هيئة التدريس</h1>
       <p class="text-sm lg:text-base text-amber-800 max-w-2xl mx-auto" data-i18n="ens_subtitle">اختر السنة الدراسية، ثم المادة، وانقر على الأستاذ لعرض بطاقته الكاملة.</p>
     </div>
 
     <div class="flex justify-center gap-2 flex-wrap">
-      <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-amber-200">
+      <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-orange-200">
         <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">🇩🇿 عربي</button>
         <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">🇫🇷 FR</button>
         <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
       </div>
-      <a href="index.html" class="px-4 py-2 rounded-xl bg-amber-100 text-amber-900 hover:bg-amber-200 text-xs font-bold transition flex items-center gap-2" data-i18n="nav_home">الرئيسية</a>
+      <a href="index.html" class="px-4 py-2 rounded-xl bg-orange-100 text-orange-900 hover:bg-orange-200 text-xs font-bold transition flex items-center gap-2" data-i18n="nav_home">الرئيسية</a>
     </div>
 
     <div class="flex flex-wrap items-center justify-center gap-4">
-      <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-8 py-4 rounded-2xl text-base flex items-center gap-3"><i class="fa-solid fa-1"></i> <span data-i18n="ens_year1">السنة الأولى (1CP)</span></button>
-      <button onclick="selectYear('2cp')" id="btn-2cp" class="btn-year px-8 py-4 rounded-2xl text-base flex items-center gap-3"><i class="fa-solid fa-2"></i> <span data-i18n="ens_year2">السنة الثانية (2CP)</span></button>
+      <button onclick="selectYear('1cp')" id="btn-1cp" class="btn-year active px-8 py-4 rounded-2xl text-base flex items-center gap-3">
+        <i class="fa-solid fa-1"></i> <span data-i18n="ens_year1">السنة الأولى (1CP)</span>
+      </button>
+      <button onclick="selectYear('2cp')" id="btn-2cp" class="btn-year px-8 py-4 rounded-2xl text-base flex items-center gap-3">
+        <i class="fa-solid fa-2"></i> <span data-i18n="ens_year2">السنة الثانية (2CP)</span>
+      </button>
     </div>
 
     <div class="glass-card p-6 rounded-3xl space-y-4">
-      <span class="text-xs font-black text-amber-800 block flex items-center gap-2"><i class="fa-solid fa-filter text-amber-600"></i> <span data-i18n="ens_select_subject">اختر المادة:</span></span>
+      <span class="text-xs font-black text-amber-800 block flex items-center gap-2">
+        <i class="fa-solid fa-filter text-orange-500"></i> <span data-i18n="ens_select_subject">اختر المادة:</span>
+      </span>
       <div id="subjects-container" class="flex flex-wrap gap-2"></div>
     </div>
 
-    <div id="teachers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-8"></div>
+    <div id="teachers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-4"></div>
   </div>
 
   <div id="teacher-modal" class="fixed inset-0 z-50 modal-overlay hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 lg:p-8 space-y-6 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="document.getElementById('teacher-modal').classList.add('hidden')" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center z-10"><i class="fa-solid fa-xmark"></i></button>
-      <div class="flex flex-col sm:flex-row items-center gap-5 border-b border-amber-100 pb-6">
-        <div id="modal-img-box" class="w-28 h-28 rounded-full bg-gray-50 text-amber-600 flex items-center justify-center text-3xl font-black overflow-hidden border-4 border-white"></div>
+      <button onclick="document.getElementById('teacher-modal').classList.add('hidden')" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-orange-50 text-orange-700 flex items-center justify-center z-10 hover:bg-orange-100 transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="flex flex-col sm:flex-row items-center gap-5 border-b border-orange-100 pb-6">
+        <div id="modal-img-box" class="w-28 h-28 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center text-3xl font-black overflow-hidden border-4 border-white shadow-lg"></div>
         <div class="space-y-1 text-center sm:text-right">
           <h2 id="modal-name" class="text-2xl font-black text-amber-900"></h2>
-          <p id="modal-grade" class="text-xs font-bold text-amber-700 bg-amber-50 inline-block px-3 py-1 rounded-lg"></p>
-          <p id="modal-email" class="text-xs font-semibold text-gray-500 flex items-center gap-1.5 pt-2" dir="ltr"><i class="fa-solid fa-envelope text-amber-500"></i><span></span></p>
+          <p id="modal-grade" class="text-xs font-bold text-orange-700 bg-orange-50 inline-block px-3 py-1 rounded-lg"></p>
+          <p id="modal-email" class="text-xs font-semibold text-gray-500 flex items-center gap-1.5 pt-2" dir="ltr">
+            <i class="fa-solid fa-envelope text-orange-500"></i><span></span>
+          </p>
         </div>
       </div>
       <div class="space-y-4 text-sm text-gray-700 text-right" dir="rtl">
-        <div><h4 class="font-bold text-amber-900 mb-2" data-i18n="ens_modules">المواد المدرّسة:</h4><p id="modal-modules" class="bg-amber-50 p-3 rounded-xl border border-amber-100 font-semibold text-amber-900"></p></div>
-        <div id="modal-advice-box"><h4 class="font-bold text-amber-900 mb-2" data-i18n="ens_advice">نصيحة للطلبة:</h4><p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border border-orange-100 italic text-orange-900"></p></div>
-        <div id="modal-research-box"><h4 class="font-bold text-amber-900 mb-2" data-i18n="ens_research">البحث العلمي:</h4><p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p></div>
+        <div>
+          <h4 class="font-bold text-amber-900 mb-2" data-i18n="ens_modules">المواد المدرّسة:</h4>
+          <p id="modal-modules" class="bg-orange-50 p-3 rounded-xl border border-orange-100 font-semibold text-amber-900"></p>
+        </div>
+        <div id="modal-advice-box">
+          <h4 class="font-bold text-amber-900 mb-2" data-i18n="ens_advice">نصيحة للطلبة:</h4>
+          <p id="modal-advice" class="bg-orange-50 p-3 rounded-xl border border-orange-100 italic text-orange-900"></p>
+        </div>
+        <div id="modal-research-box">
+          <h4 class="font-bold text-amber-900 mb-2" data-i18n="ens_research">البحث العلمي:</h4>
+          <p id="modal-research" class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900"></p>
+        </div>
       </div>
     </div>
   </div>
 
   <div id="kangarooContainer" style="position:fixed;bottom:20px;right:20px;z-index:1000;cursor:pointer;user-select:none;">
-    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(217,119,6,0.3)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+    <svg id="kangarooSvg" width="70" height="90" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 10px 15px rgba(249,115,22,0.35)); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
       <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#b45309"/>
       <ellipse cx="46" cy="68" rx="10" ry="5" fill="#b45309"/>
-      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#d97706"/>
+      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
       <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fef3c7"/>
       <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#b45309"/>
-      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#d97706"/>
-      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#d97706" transform="rotate(-15 38 12)"/>
+      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
+      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
       <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fef3c7" transform="rotate(-15 38 12)"/>
-      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#d97706" transform="rotate(15 50 12)"/>
+      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
       <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fef3c7" transform="rotate(15 50 12)"/>
       <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fef3c7"/>
       <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#78350f"/>
@@ -128,25 +338,30 @@
   </div>
 
   <div id="chatWindow" class="hidden">
-    <div style="background: linear-gradient(135deg, #d97706, #f59e0b); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
-      <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span></span>
-      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+    <div style="background: linear-gradient(135deg, #ea580c, #f97316); color: white; padding: 12px 16px; border-radius: 1rem 1rem 0 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+      <span style="display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-comments"></i><span data-i18n="chat_title">المساعد الافتراضي</span>
+      </span>
+      <button onclick="toggleChat()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
     <div id="chatBody" style="padding: 12px; overflow-y: auto; height: 300px; font-size: 14px; display: flex; flex-direction: column; gap: 8px;">
-      <div style="background: #fef3c7; padding: 8px 12px; border-radius: 12px; color: #78350f;" data-i18n="chat_welcome">مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟</div>
+      <div style="background: #ffedd5; padding: 8px 12px; border-radius: 12px; color: #78350f;" data-i18n="chat_welcome">مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟</div>
     </div>
     <div style="padding: 8px; border-top: 1px solid #fed7aa; display: flex; gap: 4px;">
       <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك..." style="flex: 1; padding: 8px 12px; border: 1px solid #fed7aa; border-radius: 8px; font-size: 13px; outline: none; font-family: inherit;">
-      <button onclick="sendMessage()" style="background: #d97706; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+      <button onclick="sendMessage()" style="background: #ea580c; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer;">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
     </div>
   </div>
 
-  <!-- data.js (données des enseignants — NE PAS MODIFIER) -->
   <script src="data.js"></script>
 
   <script>
     // ============================================================
-    // TRADUCTIONS
+    // TRADUCTIONS — COMPLET
     // ============================================================
     window.ENSEIGNANTS_TRANSLATIONS = {
       ar: {
@@ -165,6 +380,8 @@
         ens_modules: "المواد المدرّسة:",
         ens_advice: "نصيحة للطلبة:",
         ens_research: "البحث العلمي:",
+        ens_advice_default: "اجتهد في دراستك، واطرح الأسئلة دائماً. النجاح يأتي بالعمل المستمر.",
+        ens_research_default: "البحث العلمي في تخصص الهندسة المدنية والبنية التحتية.",
         chat_title: "المساعد الافتراضي",
         chat_welcome: "مرحباً! 👋 أنا مساعدك في ENSTP. كيف يمكنني مساعدتك؟",
         chat_placeholder: "اكتب سؤالك...",
@@ -189,6 +406,8 @@
         ens_modules: "Modules enseignés :",
         ens_advice: "Conseil aux étudiants :",
         ens_research: "Recherche :",
+        ens_advice_default: "Travaillez régulièrement et posez des questions. La réussite vient de la persévérance.",
+        ens_research_default: "Recherche scientifique en génie civil et infrastructures.",
         chat_title: "Assistant virtuel",
         chat_welcome: "Bonjour ! 👋 Je suis votre assistant ENSTP. Comment puis-je vous aider ?",
         chat_placeholder: "Écrivez votre question...",
@@ -213,6 +432,8 @@
         ens_modules: "Modules taught:",
         ens_advice: "Advice for students:",
         ens_research: "Research:",
+        ens_advice_default: "Work steadily and always ask questions. Success comes from persistence.",
+        ens_research_default: "Scientific research in civil engineering and infrastructure.",
         chat_title: "Virtual Assistant",
         chat_welcome: "Hello! 👋 I'm your ENSTP assistant. How can I help you?",
         chat_placeholder: "Type your question...",
@@ -223,9 +444,6 @@
       }
     };
 
-    // ============================================================
-    // t() : fonction de traduction
-    // ============================================================
     window.currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
     window.t = function(key) {
@@ -233,15 +451,9 @@
       return dict[key] || key;
     };
 
-    // ============================================================
-    // VARIABLES GLOBALES
-    // ============================================================
     let selectedYear = '1cp';
     let selectedSubject = 'all';
 
-    // ============================================================
-    // SÉLECTION ANNÉE
-    // ============================================================
     function selectYear(year) {
       selectedYear = year;
       document.getElementById('btn-1cp').className = `btn-year px-8 py-4 rounded-2xl text-base flex items-center gap-3 ${year === '1cp' ? 'active' : ''}`;
@@ -251,9 +463,6 @@
       renderTeachers();
     }
 
-    // ============================================================
-    // FILTRE MATIÈRES
-    // ============================================================
     function renderSubjects() {
       const subjectsBox = document.getElementById('subjects-container');
       const list = teachersData[selectedYear];
@@ -262,14 +471,14 @@
       subjectsBox.innerHTML = '';
       
       const allBtn = document.createElement('button');
-      allBtn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
+      allBtn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${selectedSubject === 'all' ? 'active' : 'bg-white text-amber-800 border-orange-200 hover:bg-orange-50'}`;
       allBtn.innerText = window.t('ens_all');
       allBtn.onclick = () => { selectedSubject = 'all'; renderSubjects(); renderTeachers(); };
       subjectsBox.appendChild(allBtn);
 
       uniqueSubjects.forEach(sub => {
         const btn = document.createElement('button');
-        btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-amber-800 border-amber-200 hover:bg-amber-50'}`;
+        btn.className = `badge-subject px-4 py-2 rounded-xl border text-xs font-bold ${sub === selectedSubject ? 'active' : 'bg-white text-amber-800 border-orange-200 hover:bg-orange-50'}`;
         btn.innerText = sub;
         btn.onclick = () => { selectedSubject = sub; renderSubjects(); renderTeachers(); };
         subjectsBox.appendChild(btn);
@@ -277,7 +486,7 @@
     }
 
     // ============================================================
-    // CARTES ENSEIGNANTS (utilise teacher au lieu de t)
+    // CARTES SANS BADGE MATIÈRE
     // ============================================================
     function renderTeachers() {
       const grid = document.getElementById('teachers-grid');
@@ -295,18 +504,14 @@
           : `<div class="teacher-photo-initials">${teacher.name.substring(0,2)}</div>`;
 
         card.innerHTML = `
-          <div class="card-header-bg">
-            <div class="check-badge"><i class="fa-solid fa-check"></i></div>
-            <div class="dept-badge">${teacher.dept || teacher.subject}</div>
-          </div>
+          <div class="card-header-bg"></div>
           <div class="photo-section"><div class="teacher-photo-wrap">${imgHtml}</div></div>
           <div class="card-content">
             <h3 class="teacher-name" dir="ltr">${teacher.name}</h3>
             <p class="teacher-title">${teacher.grade === 'prof' ? window.t('ens_grade_prof') : window.t('ens_grade_temp')}</p>
-            <div class="divider"></div>
-            <p class="teacher-desc">${teacher.advice || teacher.research || teacher.subject}</p>
-            <button class="btn-card-primary" onclick="openModal('${teacher.id}')">${window.t('ens_show_card')} <i class="fa-solid fa-arrow-left"></i></button>
-            <a href="mailto:${teacher.email}" class="btn-card-secondary"><i class="fa-solid fa-envelope"></i> ${window.t('ens_contact_email')}</a>
+            <button class="btn-card-primary" onclick="openModal('${teacher.id}')">
+              ${window.t('ens_show_card')} <i class="fa-solid fa-arrow-left"></i>
+            </button>
           </div>
         `;
         grid.appendChild(card);
@@ -314,7 +519,7 @@
     }
 
     // ============================================================
-    // MODAL
+    // MODAL — TRADUCTION DES CONSEILS PAR DÉFAUT
     // ============================================================
     function openModal(id) {
       let teacher = teachersData['1cp'].find(x => x.id === id) || teachersData['2cp'].find(x => x.id === id);
@@ -325,18 +530,22 @@
       document.getElementById('modal-email').querySelector('span').innerText = teacher.email;
       document.getElementById('modal-modules').innerText = teacher.modules || teacher.subject;
 
+      // النصائح: إن وُجدت في data.js نعرضها، وإلا نعرض الترجمة الافتراضية
       if (teacher.advice) { 
         document.getElementById('modal-advice-box').classList.remove('hidden'); 
         document.getElementById('modal-advice').innerText = teacher.advice; 
       } else {
-        document.getElementById('modal-advice-box').classList.add('hidden');
+        document.getElementById('modal-advice-box').classList.remove('hidden');
+        document.getElementById('modal-advice').innerText = window.t('ens_advice_default');
       }
 
+      // البحث: نفس المنطق
       if (teacher.research) { 
         document.getElementById('modal-research-box').classList.remove('hidden'); 
         document.getElementById('modal-research').innerText = teacher.research; 
       } else {
-        document.getElementById('modal-research-box').classList.add('hidden');
+        document.getElementById('modal-research-box').classList.remove('hidden');
+        document.getElementById('modal-research').innerText = window.t('ens_research_default');
       }
 
       const imgBox = document.getElementById('modal-img-box');
@@ -348,7 +557,7 @@
     }
 
     // ============================================================
-    // APPLIQUER LA TRADUCTION
+    // TRADUCTION
     // ============================================================
     window.applyEnseignantsTranslation = function(lang) {
       const dict = window.ENSEIGNANTS_TRANSLATIONS[lang] || window.ENSEIGNANTS_TRANSLATIONS.ar;
@@ -413,7 +622,7 @@
 
       body.innerHTML += `
         <div style="display:flex;justify-content:flex-end;">
-          <div style="background:#d97706;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div>
+          <div style="background:#ea580c;color:white;padding:8px 12px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:13px;">${msg}</div>
         </div>`;
       input.value = '';
       body.scrollTop = body.scrollHeight;
@@ -431,7 +640,7 @@
 
         body.innerHTML += `
           <div style="display:flex;justify-content:flex-start;">
-            <div style="background:#fef3c7;color:#78350f;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div>
+            <div style="background:#ffedd5;color:#78350f;padding:8px 12px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:13px;">${reply}</div>
           </div>`;
         body.scrollTop = body.scrollHeight;
       }, 500);
@@ -462,7 +671,7 @@
     }
 
     // ============================================================
-    // INITIALISATION
+    // INIT
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
