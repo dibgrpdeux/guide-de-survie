@@ -16,27 +16,29 @@
       --primary-glow: rgba(249, 115, 22, 0.25);
       --brown: #7c2d12;
       --brown-dark: #431407;
-      --bg-color: #fffbf5;
+      --bg-color: #ffffff;
+      --bg-soft: #fff7ed;
       --text-main: #431407;
       --text-muted: #92400e;
       --card-bg: #ffffff;
-      --nav-bg: rgba(255, 251, 245, 0.92);
+      --nav-bg: rgba(255, 255, 255, 0.95);
       --border-color: #fde8d7;
-      --shadow-sm: 0 2px 10px rgba(124, 45, 18, 0.07);
-      --shadow-md: 0 12px 32px rgba(124, 45, 18, 0.12);
-      --shadow-lg: 0 28px 55px -12px rgba(249, 115, 22, 0.4);
+      --shadow-sm: 0 2px 8px rgba(124, 45, 18, 0.05);
+      --shadow-md: 0 10px 30px rgba(124, 45, 18, 0.08);
+      --shadow-lg: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
     }
 
     [data-theme="dark"] {
       --bg-color: #1a0f08;
+      --bg-soft: #26160d;
       --text-main: #fef3c7;
       --text-muted: #d6a97a;
       --card-bg: #26160d;
       --nav-bg: rgba(26, 15, 8, 0.95);
       --border-color: #4a2a18;
-      --shadow-sm: 0 2px 10px rgba(0,0,0,0.4);
-      --shadow-md: 0 12px 32px rgba(0,0,0,0.5);
-      --shadow-lg: 0 28px 55px -12px rgba(249, 115, 22, 0.5);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.4);
+      --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.5);
     }
 
     * { box-sizing: border-box; }
@@ -58,44 +60,31 @@
 
     /* BLOBS */
     .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .28; animation: blobFloat 25s ease-in-out infinite; }
-    .blob-1 { width: 520px; height: 520px; background: #f97316; top: -12%; left: -10%; }
-    .blob-2 { width: 460px; height: 460px; background: #fdba74; bottom: -10%; right: -10%; animation-delay: -8s; }
-    .blob-3 { width: 360px; height: 360px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .2; }
-    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.15 }
-    [data-theme="dark"] .blob-2 { background:#7c2d12; opacity:.3 }
-    [data-theme="dark"] .blob-3 { background:#ea580c; opacity:.12 }
+    .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .25; animation: blobFloat 25s ease-in-out infinite; }
+    .blob-1 { width: 500px; height: 500px; background: #f97316; top: -12%; left: -10%; }
+    .blob-2 { width: 450px; height: 450px; background: #fdba74; bottom: -10%; right: -10%; animation-delay: -8s; }
+    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .18; }
+    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.12 }
+    [data-theme="dark"] .blob-2 { background:#7c2d12; opacity:.25 }
+    [data-theme="dark"] .blob-3 { background:#ea580c; opacity:.1 }
     @keyframes blobFloat {
       0%,100% { transform: translate(0,0) scale(1); }
       33% { transform: translate(60px,-40px) scale(1.1); }
       66% { transform: translate(-40px,60px) scale(.95); }
     }
-    .dot { position: absolute; border-radius: 50%; background: #f97316; opacity: .15; animation: dotFloat 15s linear infinite; }
-    [data-theme="dark"] .dot { background: #fdba74; opacity: .25; }
-    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; }
-    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
-    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
-    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
-    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
-    @keyframes dotFloat {
-      0% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-30px) translateX(20px); }
-      100% { transform: translateY(0) translateX(0); }
-    }
 
-    /* NAVBAR */
+    /* NAVBAR — جديد */
     .top-navbar {
       position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
       width: 96%; max-width: 1100px;
       background: var(--nav-bg);
       backdrop-filter: blur(20px) saturate(180%);
       border: 1.5px solid var(--border-color);
-      border-radius: 22px; padding: 10px 14px;
+      border-radius: 20px; padding: 10px 16px;
       display: flex; justify-content: space-between; align-items: center;
       gap: 12px; z-index: 1000; box-shadow: var(--shadow-md);
-      transition: all .3s;
     }
-    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
     .nav-title { font-size: 1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; }
     .nav-title span {
       background: linear-gradient(90deg,#f97316,#fdba74,#f97316);
@@ -107,13 +96,13 @@
     @keyframes shimmer { to { background-position: 200% center; } }
     .nav-subtitle { font-size: .65rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
     .nav-icon {
-      width: 42px; height: 42px; border-radius: 12px;
+      width: 44px; height: 44px; border-radius: 50%;
       background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.2rem; box-shadow: 0 6px 18px var(--primary-glow); flex-shrink: 0;
     }
     .nav-menu-btn {
-      width: 42px; height: 42px; border-radius: 14px;
+      width: 44px; height: 44px; border-radius: 12px;
       border: 1.5px solid var(--border-color); background: var(--card-bg);
       color: var(--text-main); display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: all .25s; font-size: 1rem; flex-shrink: 0;
@@ -143,9 +132,12 @@
     .dropdown-btn:hover { background: var(--primary-light); color: var(--brown-dark); border-color: var(--primary); transform: translateY(-1px); }
     .dropdown-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-    /* HERO */
-    .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
-    .page-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; margin: 0 0 8px; line-height: 1.2; }
+    /* HERO — جديد */
+    .page-hero { max-width: 1100px; margin: 0 auto 30px; padding: 0 20px; text-align: center; }
+    .page-hero h1 {
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem); font-weight: 900;
+      margin: 0 0 10px; line-height: 1.15; letter-spacing: -0.5px;
+    }
     .page-hero h1 span {
       background: linear-gradient(90deg,#fdba74,#f97316,#fdba74);
       background-size: 200% auto;
@@ -153,58 +145,77 @@
       -webkit-text-fill-color: transparent;
       animation: shimmer 3s linear infinite;
     }
-    .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
+    .page-hero p { color: var(--text-muted); font-size: 1rem; font-weight: 600; margin: 0; }
 
     /* CONTENT */
     .content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
 
-    .glass-card {
+    /* NOUVELLE CARTE — STACKED */
+    .info-card {
       background: var(--card-bg);
       border: 1.5px solid var(--border-color);
-      border-radius: 22px;
+      border-radius: 20px;
       box-shadow: var(--shadow-sm);
-      transition: all .3s;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: all .3s ease;
+      position: relative;
     }
-    .glass-card:hover { box-shadow: var(--shadow-md); }
+    .info-card:hover { box-shadow: var(--shadow-lg); border-color: var(--primary); transform: translateY(-2px); }
 
-    /* Accordion */
-    .acc-item { margin-bottom: 14px; overflow: hidden; }
-    .acc-btn {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 22px; cursor: pointer; background: var(--card-bg); border: none;
-      font-family: inherit; font-size: 1rem; font-weight: 800; color: var(--text-main);
-      text-align: right; gap: 12px;
+    /* Barre latérale orange */
+    .info-card::before {
+      content: "";
+      position: absolute;
+      right: 0; top: 20px; bottom: 20px;
+      width: 4px;
+      background: var(--primary);
+      border-radius: 4px 0 0 4px;
+      transition: all .3s ease;
     }
-    .acc-btn:hover { background: rgba(249,115,22,.04); }
-    .acc-btn .acc-left { display: flex; align-items: center; gap: 14px; flex: 1; }
-    .acc-icon {
-      width: 46px; height: 46px; border-radius: 14px;
+    .info-card:hover::before {
+      top: 0; bottom: 0;
+      width: 6px;
+      background: linear-gradient(180deg, var(--primary), var(--primary-hover));
+    }
+
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px;
+      cursor: pointer;
+      gap: 12px;
+    }
+    .card-header:hover { background: rgba(249,115,22,.03); }
+    .card-left { display: flex; align-items: center; gap: 14px; flex: 1; }
+    .card-icon {
+      width: 48px; height: 48px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0; color: #fff;
+      font-size: 1.15rem; flex-shrink: 0; color: #fff;
       box-shadow: 0 4px 12px var(--primary-glow);
     }
-    .acc-chevron { color: var(--primary); transition: transform .3s; font-size: .85rem; }
-    .acc-item.open .acc-chevron { transform: rotate(180deg); }
-    .acc-body { max-height: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.16,1,.3,1); }
-    .acc-item.open .acc-body { max-height: 5000px; }
-    .acc-inner { padding: 22px; border-top: 1.5px solid var(--border-color); font-size: .88rem; line-height: 1.7; }
+    .card-title { font-size: 1.05rem; font-weight: 900; color: var(--text-main); margin: 0; }
+    .card-chevron { color: var(--primary); transition: transform .3s; font-size: .9rem; }
+    .info-card.open .card-chevron { transform: rotate(180deg); }
+    .card-body { max-height: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.16,1,.3,1); }
+    .info-card.open .card-body { max-height: 5000px; }
+    .card-inner { padding: 24px; border-top: 1.5px solid var(--border-color); font-size: .88rem; line-height: 1.7; }
 
     /* Contact form */
     .contact-form input, .contact-form select, .contact-form textarea {
       width: 100%; padding: 12px 14px;
       border-radius: 12px; border: 1.5px solid var(--border-color);
-      background: var(--bg-color); color: var(--text-main);
+      background: var(--bg-soft); color: var(--text-main);
       font-family: inherit; font-size: .88rem; font-weight: 600; outline: none;
       transition: all .2s;
     }
     .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
-      border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow);
+      border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); background: var(--card-bg);
     }
     .contact-form label {
       display: block; font-size: .82rem; font-weight: 800;
       color: var(--text-main); margin-bottom: 6px;
     }
-    .contact-form textarea { resize: vertical; min-height: 110px; }
+    .contact-form textarea { resize: vertical; min-height: 100px; }
 
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media(max-width:640px){ .form-grid { grid-template-columns: 1fr; } }
@@ -223,10 +234,10 @@
     .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(249,115,22,.55); }
 
     .info-banner {
-      background: rgba(249,115,22,.08); border: 1.5px solid rgba(249,115,22,.25);
-      border-radius: 12px; padding: 12px 14px;
+      background: var(--bg-soft); border: 1.5px solid var(--border-color);
+      border-radius: 12px; padding: 14px 16px;
       font-size: .82rem; color: var(--text-main); font-weight: 600;
-      display: flex; align-items: flex-start; gap: 8px; margin-bottom: 16px;
+      display: flex; align-items: flex-start; gap: 8px; margin-bottom: 18px;
     }
     .info-banner i { color: var(--primary); margin-top: 2px; }
 
@@ -235,7 +246,7 @@
       position: relative; border-radius: 16px; overflow: hidden;
       min-height: 220px; display: flex; align-items: flex-end;
       background: linear-gradient(135deg, #f97316, #ea580c);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .cde-hero::before {
       content: ''; position: absolute; inset: 0;
@@ -248,31 +259,29 @@
     .cde-hero p { font-size: .88rem; color: rgba(255,255,255,.9); margin: 0; font-weight: 600; }
 
     /* Stats grid */
-    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0; }
     @media(max-width:640px){ .stats-grid { grid-template-columns: 1fr; } }
     .stat-card {
-      background: rgba(249,115,22,.08);
-      border: 1.5px solid rgba(249,115,22,.2);
-      border-radius: 14px; padding: 18px; text-align: center;
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border-color);
+      border-radius: 16px; padding: 20px; text-align: center;
       transition: all .3s;
     }
-    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(249,115,22,.25); border-color: var(--primary); }
-    [data-theme="dark"] .stat-card { background: rgba(249,115,22,.12); }
-    .stat-card .stat-num { font-size: 1.6rem; font-weight: 900; color: var(--primary); }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+    .stat-card .stat-num { font-size: 1.7rem; font-weight: 900; color: var(--primary); }
     .stat-card .stat-lbl { font-size: .72rem; font-weight: 700; color: var(--text-muted); margin-top: 4px; }
 
     /* Pillars */
     .pillar-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
     .pillar-item {
-      background: var(--bg-color);
+      background: var(--bg-soft);
       border: 1.5px solid var(--border-color);
       border-right: 4px solid var(--primary);
-      border-radius: 10px; padding: 14px 16px;
+      border-radius: 12px; padding: 14px 16px;
       font-size: .84rem; line-height: 1.6;
       transition: all .2s;
     }
-    .pillar-item:hover { border-color: var(--primary); background: rgba(249,115,22,.04); }
-    [data-theme="dark"] .pillar-item { background: rgba(38,22,13,.6); }
+    .pillar-item:hover { border-color: var(--primary); background: rgba(249,115,22,.06); transform: translateX(-3px); }
     .pillar-item strong { color: var(--primary-hover); font-weight: 900; }
     [data-theme="dark"] .pillar-item strong { color: var(--primary-light); }
 
@@ -281,24 +290,24 @@
     @media(max-width:640px){ .cde-gallery { grid-template-columns: repeat(2, 1fr); } }
     .cde-gallery img {
       width: 100%; height: 130px; object-fit: cover;
-      border-radius: 10px; cursor: pointer;
+      border-radius: 12px; cursor: pointer;
       border: 1.5px solid var(--border-color);
       transition: all .3s;
     }
     .cde-gallery img:hover {
       transform: scale(1.05);
       border-color: var(--primary);
-      box-shadow: 0 10px 25px -5px rgba(249,115,22,.35);
+      box-shadow: 0 10px 25px -5px var(--primary-glow);
     }
 
     /* Contact cards */
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media(max-width:640px){ .contact-grid { grid-template-columns: 1fr; } }
     .contact-tile {
-      background: var(--bg-color);
+      background: var(--bg-soft);
       border: 1.5px solid var(--border-color);
       border-radius: 12px; padding: 14px;
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: center; gap: 12px;
       text-decoration: none; transition: all .2s;
     }
     .contact-tile:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
@@ -318,43 +327,37 @@
     }
 
     /* Info cards */
-    .info-block { margin-bottom: 16px; }
-    .info-block .q { font-size: .88rem; font-weight: 900; color: var(--text-main); margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+    .info-block { margin-bottom: 18px; }
+    .info-block .q { font-size: .9rem; font-weight: 900; color: var(--text-main); margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
     .info-block .q i { color: var(--primary); }
     .info-block .a {
-      background: rgba(249,115,22,.06);
-      border: 1px solid rgba(249,115,22,.2);
-      border-radius: 10px; padding: 12px 16px;
-      font-size: .82rem; line-height: 1.7; color: var(--text-main); font-weight: 600;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 14px 16px;
+      font-size: .84rem; line-height: 1.7; color: var(--text-main); font-weight: 600;
     }
-    [data-theme="dark"] .info-block .a { background: rgba(249,115,22,.1); }
-    .info-block .a.blue { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.2); }
-    .info-block .a.amber { background: rgba(245,158,11,.08); border-color: rgba(245,158,11,.2); }
-    .info-block .a.green { background: rgba(16,185,129,.08); border-color: rgba(16,185,129,.2); }
-    .info-block .a.red { background: rgba(239,68,68,.08); border-color: rgba(239,68,68,.2); }
-    [data-theme="dark"] .info-block .a.blue { background: rgba(59,130,246,.12); }
-    [data-theme="dark"] .info-block .a.amber { background: rgba(245,158,11,.12); }
-    [data-theme="dark"] .info-block .a.green { background: rgba(16,185,129,.12); }
-    [data-theme="dark"] .info-block .a.red { background: rgba(239,68,68,.12); }
+    .info-block .a.blue { background: rgba(59,130,246,.06); border-color: rgba(59,130,246,.2); }
+    .info-block .a.amber { background: rgba(245,158,11,.06); border-color: rgba(245,158,11,.2); }
+    .info-block .a.green { background: rgba(16,185,129,.06); border-color: rgba(16,185,129,.2); }
+    .info-block .a.red { background: rgba(239,68,68,.06); border-color: rgba(239,68,68,.2); }
     .info-block ul { margin: 6px 0 0; padding-right: 20px; }
-    .info-block ul li { margin-bottom: 3px; }
+    .info-block ul li { margin-bottom: 4px; }
 
     /* Direction cards */
     .dir-card {
-      background: var(--bg-color);
+      background: var(--bg-soft);
       border: 1.5px solid var(--border-color);
-      border-radius: 14px; padding: 18px;
+      border-radius: 16px; padding: 18px;
       margin-bottom: 12px;
       transition: all .2s;
     }
     .dir-card:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
-    [data-theme="dark"] .dir-card { background: rgba(38,22,13,.6); }
     .dir-name { font-size: 1rem; font-weight: 900; color: var(--text-main); margin: 0 0 6px; }
     .dir-meta { font-size: .76rem; font-weight: 700; color: var(--primary-hover); margin: 0 0 8px; }
     [data-theme="dark"] .dir-meta { color: var(--primary-light); }
     .dir-email { font-size: .78rem; font-weight: 800; color: var(--primary); font-family: monospace; direction: ltr; margin-bottom: 8px; display: inline-block; }
     .dir-missions {
-      background: rgba(249,115,22,.06);
+      background: rgba(249,115,22,.05);
       border: 1px dashed rgba(249,115,22,.25);
       border-radius: 10px; padding: 12px 14px;
       font-size: .78rem;
@@ -366,7 +369,7 @@
     /* Link button */
     .btn-link {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px; border-radius: 10px;
+      padding: 10px 16px; border-radius: 10px;
       font-weight: 800; font-size: .82rem; text-decoration: none;
       transition: all .2s;
     }
@@ -374,10 +377,10 @@
     .btn-purple:hover { background: #6d28d9; transform: translateY(-1px); }
 
     /* Library images */
-    .library-imgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .library-imgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
     @media(max-width:640px){ .library-imgs { grid-template-columns: 1fr; } }
     .library-imgs img {
-      width: 100%; border-radius: 10px;
+      width: 100%; border-radius: 12px;
       border: 1.5px solid var(--border-color);
     }
 
@@ -407,7 +410,7 @@
     #chatBody {
       padding: 12px; overflow-y: auto; height: 320px;
       font-size: .85rem; display: flex; flex-direction: column; gap: 8px;
-      background: var(--bg-color);
+      background: var(--bg-soft);
     }
     .chat-input-wrap {
       padding: 8px; border-top: 1px solid var(--border-color);
@@ -417,7 +420,7 @@
       flex: 1; padding: 9px 12px;
       border: 1.5px solid var(--border-color); border-radius: 10px;
       font-size: .82rem; outline: none; font-family: inherit;
-      background: var(--bg-color); color: var(--text-main);
+      background: var(--bg-soft); color: var(--text-main);
     }
     #chatInput:focus { border-color: var(--primary); }
     .chat-send-btn {
@@ -443,8 +446,10 @@
       .top-navbar { padding: 8px 10px; border-radius: 16px; }
       .nav-title { font-size: .85rem; }
       .nav-subtitle { font-size: .6rem; }
-      .acc-btn { padding: 14px 16px; font-size: .9rem; }
-      .acc-inner { padding: 16px; }
+      .card-header { padding: 16px 18px; }
+      .card-inner { padding: 18px; }
+      .card-icon { width: 42px; height: 42px; font-size: 1rem; }
+      .card-title { font-size: .95rem; }
     }
   </style>
 </head>
@@ -452,9 +457,9 @@
 
   <div class="animated-bg">
     <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
-    <div class="dot dot-1"></div><div class="dot dot-2"></div><div class="dot dot-3"></div><div class="dot dot-4"></div><div class="dot dot-5"></div>
   </div>
 
+  <!-- NAVBAR -->
   <nav class="top-navbar">
     <div class="nav-brand">
       <div class="nav-icon"><i class="fa-solid fa-building-columns"></i></div>
@@ -490,6 +495,7 @@
     </div>
   </div>
 
+  <!-- HERO -->
   <header class="page-hero">
     <h1><span data-i18n="admin_page_title">دليل الإدارة</span> <span data-i18n="hero_suffix">والخدمات</span></h1>
     <p data-i18n="admin_page_subtitle">كل ما تحتاجه من وثائق وإجراءات إدارية في مكان واحد.</p>
@@ -498,15 +504,15 @@
   <main class="content-wrap">
 
     <!-- 1. CONTACT -->
-    <div class="glass-card acc-item" id="acc-contact">
-      <button class="acc-btn" onclick="toggleAccordion('acc-contact')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#f97316,#ea580c);"><i class="fa-solid fa-envelope"></i></div>
-          <span data-i18n="admin_contact">التواصل مع الإدارة</span>
+    <div class="info-card" id="acc-contact">
+      <div class="card-header" onclick="toggleAccordion('acc-contact')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#f97316,#ea580c);"><i class="fa-solid fa-envelope"></i></div>
+          <h3 class="card-title" data-i18n="admin_contact">التواصل مع الإدارة</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
         <div class="info-banner">
           <i class="fa-solid fa-info-circle"></i>
           <span data-i18n="admin_contact_info">يرجى تعبئة النموذج أدناه. عند الإرسال، سيفتح تطبيق البريد الإلكتروني الخاص بك وستكون الرسالة جاهزة للإنشاء. فقط اضغط "إرسال".</span>
@@ -573,15 +579,15 @@
     </div>
 
     <!-- 2. CDE -->
-    <div class="glass-card acc-item" id="acc-cde">
-      <button class="acc-btn" onclick="toggleAccordion('acc-cde')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#fdba74,#f97316);"><i class="fa-solid fa-lightbulb"></i></div>
-          <span data-i18n="cde_title">مركز تطوير المقاولاتية (CDE)</span>
+    <div class="info-card" id="acc-cde">
+      <div class="card-header" onclick="toggleAccordion('acc-cde')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#fdba74,#f97316);"><i class="fa-solid fa-lightbulb"></i></div>
+          <h3 class="card-title" data-i18n="cde_title">مركز تطوير المقاولاتية (CDE)</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
         <div class="cde-hero">
           <div class="cde-hero-content">
             <h4 data-i18n="cde_hero_title">المنصة الوطنية لمراكز تطوير المقاولاتية</h4>
@@ -681,15 +687,15 @@
     </div>
 
     <!-- 3. INCUBATEUR -->
-    <div class="glass-card acc-item" id="acc-incub">
-      <button class="acc-btn" onclick="toggleAccordion('acc-incub')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fa-solid fa-rocket"></i></div>
-          <span data-i18n="incub_title">حاضنة المدرسة</span>
+    <div class="info-card" id="acc-incub">
+      <div class="card-header" onclick="toggleAccordion('acc-incub')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fa-solid fa-rocket"></i></div>
+          <h3 class="card-title" data-i18n="incub_title">حاضنة المدرسة</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
         <div class="info-block">
           <div class="a green" data-i18n="incub_desc">تُعتبر حاضنة أعمال المدرسة الوطنية العليا للأشغال العمومية (ENSTP) فضاءً ديناميكياً...</div>
         </div>
@@ -708,17 +714,17 @@
     </div>
 
     <!-- 4. NESDA -->
-    <div class="glass-card acc-item" id="acc-nesda">
-      <button class="acc-btn" onclick="toggleAccordion('acc-nesda')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);"><i class="fa-solid fa-handshake"></i></div>
-          <span data-i18n="nesda_title">مركز تطوير المقاولاتية NESDA</span>
+    <div class="info-card" id="acc-nesda">
+      <div class="card-header" onclick="toggleAccordion('acc-nesda')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);"><i class="fa-solid fa-handshake"></i></div>
+          <h3 class="card-title" data-i18n="nesda_title">مركز تطوير المقاولاتية NESDA</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
         <div class="info-block">
-          <div class="a" style="background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);" data-i18n="nesda_desc">الوكالة الوطنية لدعم وتنمية المقاولاتية (NESDA)...</div>
+          <div class="a" style="background:rgba(124,58,237,.06);border-color:rgba(124,58,237,.25);" data-i18n="nesda_desc">الوكالة الوطنية لدعم وتنمية المقاولاتية (NESDA)...</div>
         </div>
         <div class="contact-grid">
           <div class="contact-tile">
@@ -740,15 +746,15 @@
     </div>
 
     <!-- 5. DIRECTION -->
-    <div class="glass-card acc-item" id="acc-direction">
-      <button class="acc-btn" onclick="toggleAccordion('acc-direction')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);"><i class="fa-solid fa-user-tie"></i></div>
-          <span data-i18n="admin_direction">الإدارة العامة والمسؤولين</span>
+    <div class="info-card" id="acc-direction">
+      <div class="card-header" onclick="toggleAccordion('acc-direction')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);"><i class="fa-solid fa-user-tie"></i></div>
+          <h3 class="card-title" data-i18n="admin_direction">الإدارة العامة والمسؤولين</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
 
         <div class="dir-card">
           <h4 class="dir-name">Meriem Tebani (مريم تيباني)</h4>
@@ -798,15 +804,15 @@
     </div>
 
     <!-- 6. CNAS -->
-    <div class="glass-card acc-item" id="acc-cnas">
-      <button class="acc-btn" onclick="toggleAccordion('acc-cnas')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#3b82f6,#2563eb);"><i class="fa-solid fa-shield-heart"></i></div>
-          <span data-i18n="admin_social">الضمان الاجتماعي (CNAS)</span>
+    <div class="info-card" id="acc-cnas">
+      <div class="card-header" onclick="toggleAccordion('acc-cnas')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#2563eb);"><i class="fa-solid fa-shield-heart"></i></div>
+          <h3 class="card-title" data-i18n="admin_social">الضمان الاجتماعي (CNAS)</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
 
         <div class="info-block">
           <div class="q"><i class="fa-solid fa-location-dot"></i> <span data-i18n="cnas_q1">أين يقع مكتب الضمان الاجتماعي؟</span></div>
@@ -843,15 +849,15 @@
     </div>
 
     <!-- 7. BIBLIOTHÈQUE -->
-    <div class="glass-card acc-item" id="acc-biblio">
-      <button class="acc-btn" onclick="toggleAccordion('acc-biblio')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);"><i class="fa-solid fa-book-open"></i></div>
-          <span data-i18n="admin_library">مكتبة المدرسة</span>
+    <div class="info-card" id="acc-biblio">
+      <div class="card-header" onclick="toggleAccordion('acc-biblio')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);"><i class="fa-solid fa-book-open"></i></div>
+          <h3 class="card-title" data-i18n="admin_library">مكتبة المدرسة</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
 
         <div class="library-imgs">
           <img src="library1.png" alt="إعلان التسجيل" onerror="this.style.display='none'">
@@ -890,15 +896,15 @@
     </div>
 
     <!-- 8. SERVICES UNIVERSITAIRES -->
-    <div class="glass-card acc-item" id="acc-univ">
-      <button class="acc-btn" onclick="toggleAccordion('acc-univ')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fa-solid fa-building"></i></div>
-          <span data-i18n="admin_university">الخدمات الجامعية</span>
+    <div class="info-card" id="acc-univ">
+      <div class="card-header" onclick="toggleAccordion('acc-univ')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fa-solid fa-building"></i></div>
+          <h3 class="card-title" data-i18n="admin_university">الخدمات الجامعية</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
 
         <div class="info-block">
           <div class="q"><span data-i18n="univ_q1">كيف يتم التسجيل في الإقامة الجامعية؟</span></div>
@@ -914,15 +920,15 @@
     </div>
 
     <!-- 9. SCOLARITE -->
-    <div class="glass-card acc-item" id="acc-scol">
-      <button class="acc-btn" onclick="toggleAccordion('acc-scol')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#3b82f6,#2563eb);"><i class="fa-solid fa-file-signature"></i></div>
-          <span data-i18n="admin_scolarite">مصلحة التمدرس والوثائق</span>
+    <div class="info-card" id="acc-scol">
+      <div class="card-header" onclick="toggleAccordion('acc-scol')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#2563eb);"><i class="fa-solid fa-file-signature"></i></div>
+          <h3 class="card-title" data-i18n="admin_scolarite">مصلحة التمدرس والوثائق</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
 
         <div class="info-block">
           <div class="q"><span data-i18n="scol_q1">ضاع مني بطاقة الطالب أو شهادة التسجيل؟</span></div>
@@ -938,15 +944,15 @@
     </div>
 
     <!-- 10. EXAMENS -->
-    <div class="glass-card acc-item" id="acc-exam">
-      <button class="acc-btn" onclick="toggleAccordion('acc-exam')">
-        <div class="acc-left">
-          <div class="acc-icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);"><i class="fa-solid fa-graduation-cap"></i></div>
-          <span data-i18n="admin_exams">الامتحانات والغيابات</span>
+    <div class="info-card" id="acc-exam">
+      <div class="card-header" onclick="toggleAccordion('acc-exam')">
+        <div class="card-left">
+          <div class="card-icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h3 class="card-title" data-i18n="admin_exams">الامتحانات والغيابات</h3>
         </div>
-        <i class="fa-solid fa-chevron-down acc-chevron"></i>
-      </button>
-      <div class="acc-body"><div class="acc-inner">
+        <i class="fa-solid fa-chevron-down card-chevron"></i>
+      </div>
+      <div class="card-body"><div class="card-inner">
 
         <div class="info-block">
           <div class="q"><span data-i18n="exam_q1">كيف أبرر الغيابات؟</span></div>
@@ -967,6 +973,7 @@
     <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
   </footer>
 
+  <!-- KANGOUROU -->
   <div class="mascot-container" id="kangarooContainer" title="المساعد الافتراضي">
     <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
@@ -991,6 +998,7 @@
     </svg>
   </div>
 
+  <!-- CHAT -->
   <div id="chatWindow">
     <div class="chat-header">
       <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد الافتراضي</span></span>
@@ -1033,7 +1041,7 @@
     function toggleAccordion(id){
       const el = document.getElementById(id);
       const wasOpen = el.classList.contains('open');
-      document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+      document.querySelectorAll('.info-card').forEach(i => i.classList.remove('open'));
       if(!wasOpen) el.classList.add('open');
     }
 
