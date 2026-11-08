@@ -322,23 +322,93 @@
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* بطاقات الأقسام في تبويب "نبذة عن المدرسة" */
-    .dept-card {
+    /* أيقونات الأقسام القابلة للنقر */
+    .dept-icons-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 640px) {
+      .dept-icons-row { grid-template-columns: 1fr; }
+    }
+
+    .dept-icon-btn {
       background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
       border: 2px solid var(--border-color);
       border-radius: 1.25rem;
-      padding: 1.5rem;
+      padding: 1.25rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
       transition: all 0.3s ease;
+      text-align: center;
+      font-family: inherit;
     }
-    [data-theme="dark"] .dept-card {
+    [data-theme="dark"] .dept-icon-btn {
       background: linear-gradient(135deg, #2a1810 0%, #3a2014 100%);
     }
-    .dept-card:hover {
+    .dept-icon-btn:hover {
       border-color: var(--primary);
       box-shadow: var(--shadow-lg);
       transform: translateY(-4px);
     }
-    .dept-card h3 {
+    .dept-icon-btn.active {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+    [data-theme="dark"] .dept-icon-btn.active {
+      background: linear-gradient(135deg, #3a2014 0%, #4a2a18 100%);
+    }
+
+    .dept-icon-btn .dept-icon-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 6px 18px var(--primary-glow);
+      transition: transform 0.3s ease;
+    }
+    .dept-icon-btn:hover .dept-icon-circle {
+      transform: scale(1.1) rotate(-8deg);
+    }
+
+    .dept-icon-btn .dept-icon-label {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+    .dept-icon-btn .dept-icon-sub {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--primary);
+      font-style: italic;
+    }
+
+    /* محتوى النص (accordion) */
+    .dept-text-panel {
+      display: none;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border: 2px solid var(--primary);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      margin-top: 0.5rem;
+      animation: fadeIn 0.4s ease;
+    }
+    [data-theme="dark"] .dept-text-panel {
+      background: linear-gradient(135deg, #2a1810 0%, #3a2014 100%);
+    }
+    .dept-text-panel.show { display: block; }
+
+    .dept-text-panel h3 {
       font-size: 1.15rem;
       font-weight: 900;
       color: var(--brown-dark);
@@ -347,17 +417,19 @@
       align-items: center;
       gap: 0.5rem;
     }
-    [data-theme="dark"] .dept-card h3 { color: var(--primary-light); }
-    .dept-card .dept-sub {
+    [data-theme="dark"] .dept-text-panel h3 { color: var(--primary-light); }
+
+    .dept-text-panel .dept-sub {
       font-size: 0.8rem;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 0.75rem;
       font-style: italic;
     }
-    .dept-card p {
-      font-size: 0.875rem;
-      line-height: 1.8;
+
+    .dept-text-panel p {
+      font-size: 0.9rem;
+      line-height: 1.9;
       color: var(--text-main);
     }
 
@@ -657,7 +729,6 @@
 </head>
 <body>
 
-  <!-- ARRIÈRE-PLAN -->
   <div class="animated-bg">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -668,7 +739,6 @@
     <div class="jump-trail jt-4"></div>
   </div>
 
-  <!-- NAVBAR -->
   <nav class="top-navbar">
     <div class="nav-brand">
       <div class="kangaroo-logo">
@@ -731,10 +801,8 @@
     </div>
   </div>
 
-  <!-- MAIN -->
   <main class="max-w-6xl mx-auto px-4 py-24 flex-grow w-full space-y-8">
 
-    <!-- HERO -->
     <section class="school-hero">
       <div class="school-hero-bg"></div>
       <div class="school-hero-overlay"></div>
@@ -747,7 +815,6 @@
       </div>
     </section>
 
-    <!-- ONGLETS -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
       <button class="tab-btn active glass-card p-4 rounded-2xl flex flex-col items-center gap-2 border-2 border-orange-200 dark:border-slate-700" onclick="showTab('about')" data-tab="about">
         <div class="tab-icon"><i class="fa-solid fa-book-open"></i></div>
@@ -767,7 +834,6 @@
       </button>
     </div>
 
-    <!-- TAB ABOUT -->
     <div id="tab-about" class="tab-content active">
       <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6">
         <div class="flex items-center gap-3">
@@ -783,33 +849,44 @@
           <p data-i18n="about_p3">تضم المدرسة عدة أقسام علمية: قسم المنشآت والجسور، قسم الطرقات والمرور، قسم البناء، ومخابر بحثية متطورة.</p>
         </div>
 
-        <!-- بطاقات الأقسام العلمية -->
-        <div class="space-y-4 mt-2">
-
-          <!-- القسم التحضيري -->
-          <div class="dept-card">
-            <h3><i class="fa-solid fa-flask"></i> <span data-i18n="dept_prep_title">القسم التحضيري</span></h3>
-            <div class="dept-sub" data-i18n="dept_prep_sub">Classes Préparatoires</div>
-            <p data-i18n="dept_prep_desc">تُمثل الأقسام التحضيرية بالمدرسة الوطنية العليا للأشغال العمومية طوراً تعليمياً مكثفاً ونخبوياً يمتد على مدار سنتين، يهدف إلى تزويد الطلاب بقاعدة علمية وتقنية صلبة تؤهلهم لمهنة الهندسة. ويركز البرنامج البيداغوجي خلال هذه الفترة بشكل أساسي على العلوم الدقيقة والتطبيقية مثل الرياضيات (التحليل والجبر)، الفيزياء (الميكانيكا والترموديناميك)، الكيمياء، الإعلام الآلي، الرسم التقني، بالإضافة إلى اللغات الأجنبية. ويخضع الطلاب طوال هذين العامين لنظام تقييم مستمر وامتحانات سداسية تحدد انتقالهم، ليتوج المسار في نهاية السنة الثانية باجتياز المسابقة الوطنية الموحدة للالتحاق بالمدارس العليا؛ حيث تتيح هذه المسابقة للناجحين والمنتمين إلى طليعة الترتيب مواصلة طور المهندس (3 سنوات) بالمدرسة أو في مدارس عليا أخرى، في حين يتم إعادة توجيه الطلاب الذين لم يوفقوا في المسابقة ولكنهم استوفوا الشروط البيداغوجية نحو الجامعات العادية لمتابعة دراستهم في نظام "LMD" ضمن تخصصات الهندسة المدنية والعلوم والتكنولوجيا.</p>
-          </div>
-
-          <!-- قسم مواد وهياكل -->
-          <div class="dept-card">
-            <h3><i class="fa-solid fa-cubes"></i> <span data-i18n="dept_dms_title">قسم مواد وهياكل</span></h3>
-            <div class="dept-sub" data-i18n="dept_dms_sub">Matériaux & Structures</div>
-            <p data-i18n="dept_dms_desc">تكوين مهندسين متخصصين في دراسة سلوك المواد وتصميم الهياكل الحاملة لضمان سلامة واستدامة المنشآت. على عكس قسم المنشآت القاعدية الذي يركز على التخطيط الشبكي للبنى التحتية (كالطرق والمطارات)، يغوص هذا القسم في الجانب الفيزيائي والميكانيكي للهندسة؛ حيث يدرس الطلاب ميكانيكا المواد المتقدمة، ديناميكا الهياكل، مقاومة المواد (RDM)، والهندسة الزلزالية، بالإضافة إلى تكنولوجيا الخرسانة والمواد المبتكرة. ويهدف هذا التكوين إلى تمكين المهندس من حساب الأحمال، واختيار المواد المناسبة لكل مشروع، وتصميم منشآت قادرة على مقاومة العوامل الطبيعية والزلازل.</p>
-          </div>
-
-          <!-- قسم منشآت قاعدية -->
-          <div class="dept-card">
-            <h3><i class="fa-solid fa-bridge"></i> <span data-i18n="dept_dib_title">قسم منشآت قاعدية</span></h3>
-            <div class="dept-sub" data-i18n="dept_dib_sub">Infrastructures</div>
-            <p data-i18n="dept_dib_desc">يُعتبر قسم المنشآت القاعدية (DIB) أحد الركائز الأساسية في طور المهندس بالمدرسة الوطنية العليا للأشغال العمومية، حيث يلتحق به الطلاب مباشرة بعد نجاحهم في المسابقة الوطنية. يهدف هذا القسم إلى تكوين مهندسي دولة وباحثين ذوي كفاءة عالية في مجالات تصميم، دراسة، وإدارة مشاريع البنى التحتية الكبرى للبلاد. ويتمحور البرنامج البيداغوجي طوال سنوات الدراسة الثلاث حول تخصصات إستراتيجية تشمل الطرق، الطرق السيّارة، المنشآت الفنية (كالجسور والأنفاق)، السكك الحديدية، بالإضافة إلى المنشآت البحرية والمطارات. ويجمع التكوين بين الدروس النظرية والتطبيقية، حيث يتعلم الطلاب استخدام أحدث برمجيات المحاكاة الهندسية، إلى جانب خوض سلسلة من التربصات الميدانية الإلزامية والخرجات الدورية لورشات الإنجاز الكبرى بالتعاون مع كبرى الشركات الوطنية في قطاع الأشغال العمومية.</p>
-          </div>
-
+        <!-- أيقونات الأقسام القابلة للنقر -->
+        <div class="dept-icons-row">
+          <button class="dept-icon-btn" onclick="toggleDept('prep')" data-dept="prep">
+            <div class="dept-icon-circle"><i class="fa-solid fa-flask"></i></div>
+            <div class="dept-icon-label" data-i18n="dept_prep_title">القسم التحضيري</div>
+            <div class="dept-icon-sub" data-i18n="dept_prep_sub">Classes Préparatoires</div>
+          </button>
+          <button class="dept-icon-btn" onclick="toggleDept('dms')" data-dept="dms">
+            <div class="dept-icon-circle"><i class="fa-solid fa-cubes"></i></div>
+            <div class="dept-icon-label" data-i18n="dept_dms_title">قسم مواد وهياكل</div>
+            <div class="dept-icon-sub" data-i18n="dept_dms_sub">Matériaux & Structures</div>
+          </button>
+          <button class="dept-icon-btn" onclick="toggleDept('dib')" data-dept="dib">
+            <div class="dept-icon-circle"><i class="fa-solid fa-bridge"></i></div>
+            <div class="dept-icon-label" data-i18n="dept_dib_title">قسم منشآت قاعدية</div>
+            <div class="dept-icon-sub" data-i18n="dept_dib_sub">Infrastructures</div>
+          </button>
         </div>
 
-        <!-- Site officiel -->
+        <!-- لوحات النص -->
+        <div id="dept-panel-prep" class="dept-text-panel">
+          <h3><i class="fa-solid fa-flask"></i> <span data-i18n="dept_prep_title">القسم التحضيري</span></h3>
+          <div class="dept-sub" data-i18n="dept_prep_sub">Classes Préparatoires</div>
+          <p data-i18n="dept_prep_desc">تُمثل الأقسام التحضيرية بالمدرسة الوطنية العليا للأشغال العمومية طوراً تعليمياً مكثفاً ونخبوياً يمتد على مدار سنتين، يهدف إلى تزويد الطلاب بقاعدة علمية وتقنية صلبة تؤهلهم لمهنة الهندسة. ويركز البرنامج البيداغوجي خلال هذه الفترة بشكل أساسي على العلوم الدقيقة والتطبيقية مثل الرياضيات (التحليل والجبر)، الفيزياء (الميكانيكا والترموديناميك)، الكيمياء، الإعلام الآلي، الرسم التقني، بالإضافة إلى اللغات الأجنبية. ويخضع الطلاب طوال هذين العامين لنظام تقييم مستمر وامتحانات سداسية تحدد انتقالهم، ليتوج المسار في نهاية السنة الثانية باجتياز المسابقة الوطنية الموحدة للالتحاق بالمدارس العليا؛ حيث تتيح هذه المسابقة للناجحين والمنتمين إلى طليعة الترتيب مواصلة طور المهندس (3 سنوات) بالمدرسة أو في مدارس عليا أخرى، في حين يتم إعادة توجيه الطلاب الذين لم يوفقوا في المسابقة ولكنهم استوفوا الشروط البيداغوجية نحو الجامعات العادية لمتابعة دراستهم في نظام "LMD" ضمن تخصصات الهندسة المدنية والعلوم والتكنولوجيا.</p>
+        </div>
+
+        <div id="dept-panel-dms" class="dept-text-panel">
+          <h3><i class="fa-solid fa-cubes"></i> <span data-i18n="dept_dms_title">قسم مواد وهياكل</span></h3>
+          <div class="dept-sub" data-i18n="dept_dms_sub">Matériaux & Structures</div>
+          <p data-i18n="dept_dms_desc">تكوين مهندسين متخصصين في دراسة سلوك المواد وتصميم الهياكل الحاملة لضمان سلامة واستدامة المنشآت. على عكس قسم المنشآت القاعدية الذي يركز على التخطيط الشبكي للبنى التحتية (كالطرق والمطارات)، يغوص هذا القسم في الجانب الفيزيائي والميكانيكي للهندسة؛ حيث يدرس الطلاب ميكانيكا المواد المتقدمة، ديناميكا الهياكل، مقاومة المواد (RDM)، والهندسة الزلزالية، بالإضافة إلى تكنولوجيا الخرسانة والمواد المبتكرة. ويهدف هذا التكوين إلى تمكين المهندس من حساب الأحمال، واختيار المواد المناسبة لكل مشروع، وتصميم منشآت قادرة على مقاومة العوامل الطبيعية والزلازل.</p>
+        </div>
+
+        <div id="dept-panel-dib" class="dept-text-panel">
+          <h3><i class="fa-solid fa-bridge"></i> <span data-i18n="dept_dib_title">قسم منشآت قاعدية</span></h3>
+          <div class="dept-sub" data-i18n="dept_dib_sub">Infrastructures</div>
+          <p data-i18n="dept_dib_desc">يُعتبر قسم المنشآت القاعدية (DIB) أحد الركائز الأساسية في طور المهندس بالمدرسة الوطنية العليا للأشغال العمومية، حيث يلتحق به الطلاب مباشرة بعد نجاحهم في المسابقة الوطنية. يهدف هذا القسم إلى تكوين مهندسي دولة وباحثين ذوي كفاءة عالية في مجالات تصميم، دراسة، وإدارة مشاريع البنى التحتية الكبرى للبلاد. ويتمحور البرنامج البيداغوجي طوال سنوات الدراسة الثلاث حول تخصصات إستراتيجية تشمل الطرق، الطرق السيّارة، المنشآت الفنية (كالجسور والأنفاق)، السكك الحديدية، بالإضافة إلى المنشآت البحرية والمطارات. ويجمع التكوين بين الدروس النظرية والتطبيقية، حيث يتعلم الطلاب استخدام أحدث برمجيات المحاكاة الهندسية، إلى جانب خوض سلسلة من التربصات الميدانية الإلزامية والخرجات الدورية لورشات الإنجاز الكبرى بالتعاون مع كبرى الشركات الوطنية في قطاع الأشغال العمومية.</p>
+        </div>
+
         <div class="bg-orange-50 dark:bg-slate-800 border-2 border-orange-200 dark:border-slate-700 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-xl bg-orange-500 text-white flex items-center justify-center text-xl shadow-lg">
@@ -826,7 +903,6 @@
           </a>
         </div>
 
-        <!-- Directrice -->
         <div class="bg-gradient-to-br from-amber-100 to-orange-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 border-2 border-orange-200 dark:border-slate-700 flex flex-col md:flex-row gap-6 mt-6">
           <img src="images (81).jpeg" alt="Directrice" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg mx-auto md:mx-0" onerror="this.src='https://via.placeholder.com/140x140/d97706/ffffff?text=D'">
           <div class="text-center md:text-right">
@@ -836,7 +912,6 @@
           </div>
         </div>
 
-        <!-- Vidéo directrice -->
         <div class="mt-6">
           <div class="flex items-center gap-2 mb-3">
             <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center text-lg shadow-md">
@@ -851,7 +926,6 @@
       </div>
     </div>
 
-    <!-- TAB TEACHERS -->
     <div id="tab-teachers" class="tab-content">
       <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6">
         <div class="flex items-center gap-3">
@@ -871,7 +945,6 @@
       </div>
     </div>
 
-    <!-- TAB BUILDINGS -->
     <div id="tab-buildings" class="tab-content">
       <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6">
         <div class="flex items-center gap-3">
@@ -912,7 +985,6 @@
       </div>
     </div>
 
-    <!-- TAB MAP -->
     <div id="tab-map" class="tab-content">
       <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6">
         <div class="flex items-center gap-3">
@@ -953,12 +1025,10 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="border-t border-orange-200 dark:border-slate-700 py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400">
     <p>© 2026 ENSTP Kouba · <a href="https://www.enstp.edu.dz" target="_blank" class="font-bold underline text-orange-500">www.enstp.edu.dz</a></p>
   </footer>
 
-  <!-- KANGOUROU 3D -->
   <div class="mascot-container" id="mascotContainer" title="المساعد الذكي">
     <div class="mascot-bubble" id="mascotBubble" data-i18n="mascot_hello">مرحبا! 👋</div>
     <div class="mascot-3d-wrapper">
@@ -998,7 +1068,6 @@
     <div class="mascot-shadow"></div>
   </div>
 
-  <!-- FENÊTRE AI -->
   <div id="aiChatWindow">
     <div class="ai-chat-header">
       <div class="ai-chat-header-left">
@@ -1028,11 +1097,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT -->
   <script>
-    // ============================================================
-    // DARK MODE
-    // ============================================================
     const html = document.documentElement;
     if (localStorage.getItem('theme') === 'dark') html.setAttribute('data-theme', 'dark');
 
@@ -1057,9 +1122,6 @@
         : '<i class="fa-solid fa-moon"></i> <span>ليلي</span>';
     }
 
-    // ============================================================
-    // SONS
-    // ============================================================
     let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
     let audioCtx = null;
     let ambientAudio = null;
@@ -1157,9 +1219,6 @@
         : '<i class="fa-solid fa-volume-xmark"></i> <span>صامت</span>';
     }
 
-    // ============================================================
-    // MENU
-    // ============================================================
     function toggleMenu() {
       const dropdown = document.getElementById('navDropdown');
       const btn = document.getElementById('menuBtn');
@@ -1177,9 +1236,6 @@
       }
     });
 
-    // ============================================================
-    // TRADUCTIONS
-    // ============================================================
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
     window.ECOLE_TRANSLATIONS = {
@@ -1365,9 +1421,6 @@
       playSound('click');
     }
 
-    // ============================================================
-    // TABS
-    // ============================================================
     function showTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -1382,9 +1435,27 @@
       btn.addEventListener('mouseenter', () => playSound('hover'));
     });
 
-    // ============================================================
-    // KANGOUROU → AI
-    // ============================================================
+    function toggleDept(dept) {
+      const panel = document.getElementById('dept-panel-' + dept);
+      const btn = document.querySelector(`.dept-icon-btn[data-dept="${dept}"]`);
+      const allPanels = document.querySelectorAll('.dept-text-panel');
+      const allBtns = document.querySelectorAll('.dept-icon-btn');
+
+      const isOpen = panel.classList.contains('show');
+
+      allPanels.forEach(p => p.classList.remove('show'));
+      allBtns.forEach(b => b.classList.remove('active'));
+
+      if (!isOpen) {
+        panel.classList.add('show');
+        btn.classList.add('active');
+        playSound('open');
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+      } else {
+        playSound('close');
+      }
+    }
+
     const mascotContainer = document.getElementById('mascotContainer');
     const mascotKangaroo = document.getElementById('mascotKangaroo');
     const mascotBubble = document.getElementById('mascotBubble');
@@ -1403,9 +1474,6 @@
       mascotBubble.classList.remove('visible');
     });
 
-    // ============================================================
-    // AI CHAT
-    // ============================================================
     const aiChatWindow = document.getElementById('aiChatWindow');
     const aiChatBody = document.getElementById('aiChatBody');
     const aiChatInput = document.getElementById('aiChatInput');
@@ -1550,9 +1618,6 @@
       document.removeEventListener('click', startAmbientOnce);
     });
 
-    // ============================================================
-    // INIT
-    // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
       document.querySelectorAll('.dropdown-btn').forEach(btn => btn.classList.remove('active'));
