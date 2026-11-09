@@ -146,6 +146,12 @@
     [data-theme="dark"] .info-card h4 { color:#fdba74; }
     .info-card p { margin:0; font-size:.75rem; color:var(--text-muted); }
 
+    .station-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(249,115,22,.08); border:1px solid rgba(249,115,22,.2); color:var(--orange-dark); padding:6px 10px; border-radius:8px; font-size:.72rem; font-weight:700; text-decoration:none; transition:all .2s; }
+    .station-badge:hover { background:var(--orange); color:#fff; border-color:var(--orange); transform:translateY(-2px); box-shadow:0 4px 12px rgba(249,115,22,.3); }
+    .station-badge i { font-size:.65rem; opacity:.8; }
+    [data-theme="dark"] .station-badge { color:#fdba74; }
+    [data-theme="dark"] .station-badge:hover { color:#fff; }
+
     .comments-open { background:var(--card-bg); border:1.5px solid var(--border-color); border-radius:22px; padding:20px; margin-top:16px; box-shadow:var(--shadow-sm); }
     .comments-open .co-header { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
     .comments-open .co-header h3 { margin:0; font-size:1.1rem; font-weight:900; display:flex; align-items:center; gap:8px; color:var(--text-main); }
@@ -409,48 +415,57 @@
             <span class="univ-badge" data-i18n="etwassel_ticket">eTWASSEL: 150 دج/سنة</span>
           </div>
 
+          <!-- 🗺️ CARTE INTERACTIVE -->
+          <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
+            <i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i>
+            <span data-i18n="metro_map_title">خريطة محطات المترو والترامواي</span>
+          </h4>
+          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:2px solid var(--border-color);margin-bottom:16px;">
+            <iframe src="https://maps.google.com/maps?q=Alger%20Metro%20Stations&t=&z=12&ie=UTF8&iwloc=&output=embed" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen loading="lazy"></iframe>
+          </div>
+
           <!-- محطات المترو -->
           <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
-            <i class="fa-solid fa-train-subway" style="color:var(--orange);"></i>
+            <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.2);"></span>
             <span data-i18n="metro_stations_title">محطات المترو (الخط 1)</span>
           </h4>
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-bottom:16px;">
-            <span class="univ-badge">Place des Martyrs</span>
-            <span class="univ-badge">Ali Boumendjel</span>
-            <span class="univ-badge">Tafourah - Grande Poste</span>
-            <span class="univ-badge">Khelifa Boukhalfa</span>
-            <span class="univ-badge">1er Mai</span>
-            <span class="univ-badge">Aïssat Idir</span>
-            <span class="univ-badge">Hamma</span>
-            <span class="univ-badge">Jardin d'Essais</span>
-            <span class="univ-badge">Les Fusillés</span>
-            <span class="univ-badge">Cité Amirouche</span>
-            <span class="univ-badge">Haï El Badr</span>
-            <span class="univ-badge">Bachdjerrah</span>
-            <span class="univ-badge">El Harrach Centre</span>
-            <span class="univ-badge">El Harrach Gare</span>
-            <span class="univ-badge">Ain Naadja</span>
-            <span class="univ-badge">Université des Sciences et de la Technologie</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Place+des+Martyrs+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Place des Martyrs</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Ali+Boumendjel+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Ali Boumendjel</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Tafourah+Grande+Poste+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Tafourah - Grande Poste</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Khelifa+Boukhalfa+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Khelifa Boukhalfa</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=1er+Mai+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> 1er Mai</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Aissat+Idir+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Aïssat Idir</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Hamma+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Hamma</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Jardin+d+Essais+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Jardin d'Essais</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Les+Fusilles+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Les Fusillés</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Cite+Amirouche+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Cité Amirouche</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Hai+El+Badr+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Haï El Badr</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Bachdjerrah+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Bachdjerrah</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=El+Harrach+Centre+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> El Harrach Centre</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=El+Harrach+Gare+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> El Harrach Gare</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Ain+Naadja+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Ain Naadja</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Universite+des+Sciences+et+de+la+Technologie+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> USTHB</a>
           </div>
 
           <!-- محطات الترامواي -->
           <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
-            <i class="fa-solid fa-tram" style="color:var(--orange);"></i>
+            <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.2);"></span>
             <span data-i18n="tram_stations_title">محطات الترامواي (المحور الشرقي)</span>
           </h4>
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-bottom:16px;">
-            <span class="univ-badge">Ruisseau</span>
-            <span class="univ-badge">Gué de Constantine</span>
-            <span class="univ-badge">Les Bananiers</span>
-            <span class="univ-badge">Bordj El Kiffan</span>
-            <span class="univ-badge">Bab Ezzouar</span>
-            <span class="univ-badge">Université Bab Ezzouar</span>
-            <span class="univ-badge">Dar El Beïda</span>
-            <span class="univ-badge">Cinq Maisons</span>
-            <span class="univ-badge">Rouiba</span>
-            <span class="univ-badge">Aïn Taya</span>
-            <span class="univ-badge">Dergana</span>
-            <span class="univ-badge">Centre des Affaires</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Ruisseau+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Ruisseau</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Gue+de+Constantine+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Gué de Constantine</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Les+Bananiers+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Les Bananiers</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Bordj+El+Kiffan+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Bordj El Kiffan</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Bab+Ezzouar+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Bab Ezzouar</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Universite+Bab+Ezzouar+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Université Bab Ezzouar</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Dar+El+Beida+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Dar El Beïda</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Cinq+Maisons+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Cinq Maisons</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Rouiba+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Rouiba</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Ain+Taya+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Aïn Taya</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Dergana+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Dergana</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Centre+des+Affaires+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Centre des Affaires</a>
           </div>
 
           <!-- فيديو المترو -->
@@ -614,6 +629,7 @@
         proches_3_t:"محطة  (etusa)", proches_3_p:"950 متر (14 دقيقة مشياً).",
         metro_title:"الميترو والترامواي", metro_near:"أقرب محطة ميترو للمدرسة", metro_near_desc:"محطة بدر.",
         metro_ticket:"مترو: 50 دج", tram_ticket:"ترامواي: 40 دج", etwassel_ticket:"eTWASSEL: 150 دج/سنة",
+        metro_map_title:"خريطة محطات المترو والترامواي",
         metro_stations_title:"محطات المترو (الخط 1)",
         tram_stations_title:"محطات الترامواي (المحور الشرقي)",
         metro_video_title:"فيديو تعريفي عن المترو",
@@ -659,6 +675,7 @@
         proches_3_t:"Gare kouba (Etusa)", proches_3_p:"950 m (14 min à pied).",
         metro_title:"Métro et Tramway", metro_near:"Station métro la plus proche", metro_near_desc:"Station Hassiba Boualem.",
         metro_ticket:"Métro : 50 DA", tram_ticket:"Tramway : 40 DA", etwassel_ticket:"eTWASSEL : 150 DA/an",
+        metro_map_title:"Carte des stations de métro et tramway",
         metro_stations_title:"Stations de métro (Ligne 1)",
         tram_stations_title:"Stations de tramway (Axe Est)",
         metro_video_title:"Vidéo de présentation du métro",
@@ -704,6 +721,7 @@
         proches_3_t:"SNTF station (ENS)", proches_3_p:"950 m (14 min walk).",
         metro_title:"Metro & Tramway", metro_near:"Nearest metro station", metro_near_desc:"Hassiba Boualem station.",
         metro_ticket:"Metro: 50 DA", tram_ticket:"Tram: 40 DA", etwassel_ticket:"eTWASSEL: 150 DA/year",
+        metro_map_title:"Map of metro and tramway stations",
         metro_stations_title:"Metro stations (Line 1)",
         tram_stations_title:"Tramway stations (East Axis)",
         metro_video_title:"Metro presentation video",
