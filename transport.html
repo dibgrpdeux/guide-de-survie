@@ -346,13 +346,13 @@
           <div class="trips-grid" id="tripsContainer"></div>
         </div>
 
-        <!-- 💬 COMMENTAIRES OUVERTS — visibles par tout le monde -->
+        <!-- 💬 COMMENTAIRES OUVERTS -->
         <div class="comments-open" id="commentsSection">
           <div class="co-header">
             <h3><i class="fa-solid fa-comments"></i> <span data-i18n="comments_title">تعليقات الطلبة</span></h3>
             <span class="co-count" id="commentsCount" data-i18n="comments_count_zero">0 تعليق</span>
           </div>
-          <p class="co-sub" data-i18n="comments_sub">شارك .</p>
+          <p class="co-sub" data-i18n="comments_sub">شارك.</p>
 
           <div class="co-form">
             <div class="co-form-row">
@@ -690,7 +690,6 @@
       document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
       const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
       applyTranslation(lang);
-      // Rafraîchir les éléments dynamiques
       if(typeof drawDestinations==='function') drawDestinations();
       if(typeof zoneId!=='undefined' && zoneId) renderSchedule(zoneId);
     }
@@ -704,7 +703,6 @@
     const R = (from,to,step)=>({rule:{from,to,step}});
     const L_GO_AR='الذهاب (صباحاً)', L_BACK_AR='الرجوع / العودة';
 
-    // Labels jour par langue (utilisé dans renderSchedule)
     const DAYS_ALL = ['sun','mon','tue','wed','thu','fri','sat'];
 
     const ZONES = [
@@ -746,6 +744,17 @@
         {k:'go',label:L_GO_AR,t:['06:30','06:45']},{k:'back',label:L_BACK_AR,t:['16:00','17:30']} ]},
     ];
     ZONES.forEach(z=>{ if(!z.days) z.days=WK; });
+
+    // ✅ Remplacer les libellés des trajets existants par "Kouba ↔ [destination]"
+    ZONES.forEach(z => {
+      z.trips.forEach(tr => {
+        if(tr.k === 'go'){
+          tr.label = 'من القبة إلى ' + z.name;
+        } else if(tr.k === 'back'){
+          tr.label = 'من ' + z.name + ' إلى القبة';
+        }
+      });
+    });
 
     const $=id=>document.getElementById(id);
     const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
