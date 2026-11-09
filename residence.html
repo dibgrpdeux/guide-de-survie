@@ -368,36 +368,6 @@
       line-height: 1.6;
     }
 
-    /* Emergency */
-    .emergency-card {
-      padding: 20px; border-radius: 18px;
-      text-align: center; text-decoration: none;
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      transition: all .3s;
-      border: 1.5px solid;
-    }
-    .emergency-card:hover { transform: translateY(-5px) scale(1.03); }
-    .emergency-card .e-icon {
-      width: 48px; height: 48px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-      transition: all .3s;
-    }
-    .emergency-card:hover .e-icon { transform: scale(1.15) rotate(-8deg); }
-    .emergency-card .e-number { font-size: 1.6rem; font-weight: 900; }
-    .emergency-card .e-label { font-size: .72rem; font-weight: 800; }
-    .emergency-card.red { background: rgba(239,68,68,.06); border-color: rgba(239,68,68,.25); color: #dc2626; }
-    .emergency-card.red .e-icon { background: rgba(239,68,68,.15); color: #dc2626; }
-    .emergency-card.blue { background: rgba(59,130,246,.06); border-color: rgba(59,130,246,.25); color: #2563eb; }
-    .emergency-card.blue .e-icon { background: rgba(59,130,246,.15); color: #2563eb; }
-    .emergency-card.amber { background: rgba(245,158,11,.06); border-color: rgba(245,158,11,.25); color: #d97706; }
-    .emergency-card.amber .e-icon { background: rgba(245,158,11,.15); color: #d97706; }
-    .emergency-card.emerald { background: rgba(16,185,129,.06); border-color: rgba(16,185,129,.25); color: #059669; }
-    .emergency-card.emerald .e-icon { background: rgba(16,185,129,.15); color: #059669; }
-    [data-theme="dark"] .emergency-card.red { background: rgba(239,68,68,.12); color: #fca5a5; }
-    [data-theme="dark"] .emergency-card.blue { background: rgba(59,130,246,.12); color: #93c5fd; }
-    [data-theme="dark"] .emergency-card.amber { background: rgba(245,158,11,.12); color: #fcd34d; }
-    [data-theme="dark"] .emergency-card.emerald { background: rgba(16,185,129,.12); color: #6ee7b7; }
-
     /* Sections */
     .section-card { padding: 24px; margin-top: 24px; }
     .section-header {
@@ -443,20 +413,6 @@
       box-shadow: var(--shadow-sm);
     }
     .btn-back:hover { border-color: var(--orange); color: var(--orange); transform: translateX(-3px); }
-
-    /* Facility cards */
-    .facility-card {
-      background: var(--card-bg); border: 1.5px solid var(--border-color);
-      border-radius: 16px; padding: 16px;
-      display: flex; flex-direction: column; gap: 10px;
-      transition: all .3s;
-    }
-    .facility-card:hover { border-color: var(--orange); transform: translateY(-3px); box-shadow: var(--shadow-md); }
-    .facility-head { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color); }
-    .facility-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-    .facility-name { font-size: .85rem; font-weight: 800; color: var(--text-main); margin: 0; }
-    .facility-type { font-size: .65rem; font-weight: 700; color: var(--text-muted); }
-    .facility-line { display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--text-muted); font-weight: 600; }
 
     /* Activity cards */
     .activity-card { padding: 16px; border-radius: 14px; border: 1.5px solid; }
@@ -614,7 +570,7 @@
           <div class="residence-icon orange"><i class="fa-solid fa-building-user"></i></div>
           <div>
             <h3 class="residence-title" data-i18n="res_hamdine">الإقامة الجامعية سعيد حمدين</h3>
-            <p class="residence-sub" data-i18n="res_hamdine_addr"> سعيد حمدين بئر خادم، الجزائر العاصمة </p>
+            <p class="residence-sub" data-i18n="res_hamdine_addr">بئر خادم، الجزائر العاصمة</p>
           </div>
           <span class="residence-badge">600 سرير</span>
         </button>
@@ -640,7 +596,7 @@
         </button>
       </div>
 
-      <!-- 🧭 QIBLA COMPASS AMÉLIORÉE -->
+      <!-- 🧭 QIBLA COMPASS -->
       <section class="qibla-section">
         <div class="qibla-header">
           <div class="qibla-header-icon"><i class="fa-solid fa-compass"></i></div>
@@ -683,8 +639,7 @@
           </div>
         </div>
       </section>
-
-      
+    </div>
 
     <!-- DETAILS SECTION -->
     <div id="detailsSection" style="display:none;">
@@ -725,30 +680,30 @@
         </div>
 
         <!-- Mosquée (affiché uniquement pour Gueridi) -->
-<div id="mosqueSection" class="glass-card" style="padding:22px;border:1.5px solid rgba(16,185,129,.25);display:none;">
-  <h3 style="font-size:1.1rem;font-weight:900;color:#059669;margin:0 0 6px;display:flex;align-items:center;gap:10px;">
-    <i class="fa-solid fa-mosque"></i>
-    <span data-i18n="mosque_title">المسجد القريب: مسجد عبد اللطيف سلطاني</span>
-  </h3>
-  <p style="font-size:.82rem;color:var(--text-muted);font-weight:600;margin:0 0 14px;" data-i18n="mosque_desc">مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
-    <div>
-      <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-video" style="color:#ef4444;"></i> <span data-i18n="mosque_video">فيديو تعريفي:</span></h4>
-      <div class="video-wrap">
-        <iframe src="https://www.youtube.com/embed/q9iK6P3XsYA" allowfullscreen loading="lazy"></iframe>
-      </div>
-    </div>
-    <div>
-      <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i> <span data-i18n="mosque_map">الموقع:</span></h4>
-      <div class="map-wrap">
-        <iframe src="https://maps.google.com/maps?q=36.7293464,3.0733515&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
-      </div>
-      <a href="https://www.google.com/maps/search/?api=1&query=36.7293464,3.0733515" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:#059669;font-weight:800;font-size:.78rem;text-decoration:none;">
-        <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="mosque_open_maps">فتح في خرائط جوجل</span>
-      </a>
-    </div>
-  </div>
-</div>
+        <div id="mosqueSection" class="glass-card" style="padding:22px;border:1.5px solid rgba(16,185,129,.25);display:none;">
+          <h3 style="font-size:1.1rem;font-weight:900;color:#059669;margin:0 0 6px;display:flex;align-items:center;gap:10px;">
+            <i class="fa-solid fa-mosque"></i>
+            <span data-i18n="mosque_title">المسجد القريب: مسجد عبد اللطيف سلطاني</span>
+          </h3>
+          <p style="font-size:.82rem;color:var(--text-muted);font-weight:600;margin:0 0 14px;" data-i18n="mosque_desc">مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+            <div>
+              <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-video" style="color:#ef4444;"></i> <span data-i18n="mosque_video">فيديو تعريفي:</span></h4>
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/q9iK6P3XsYA" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </div>
+            <div>
+              <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i> <span data-i18n="mosque_map">الموقع:</span></h4>
+              <div class="map-wrap">
+                <iframe src="https://maps.google.com/maps?q=36.7293464,3.0733515&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
+              </div>
+              <a href="https://www.google.com/maps/search/?api=1&query=36.7293464,3.0733515" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:#059669;font-weight:800;font-size:.78rem;text-decoration:none;">
+                <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="mosque_open_maps">فتح في خرائط جوجل</span>
+              </a>
+            </div>
+          </div>
+        </div>
 
         <!-- Meals -->
         <div class="glass-card" style="padding:22px;">
@@ -810,11 +765,6 @@
           </div>
         </div>
 
-        <!-- Facilities -->
-        <div>
-          <h3 style="font-size:1.1rem;font-weight:900;color:var(--text-main);margin:0 0 12px;border-right:4px solid var(--orange);padding-right:12px;" data-i18n="res_facilities_title">المحلات والمرافق القريبة</h3>
-          <div id="facilitiesGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;"></div>
-        </div>
       </div>
     </div>
 
@@ -865,9 +815,6 @@
   </div>
 
   <script>
-    /* ============================================================ */
-    /* TRADUCTIONS                                                   */
-    /* ============================================================ */
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
     window.RESIDENCE_TRANSLATIONS = {
@@ -893,18 +840,10 @@
         qibla_info: "يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.",
         qibla_found: "تم تحديد موقعك",
         qibla_error: "تعذر تحديد الموقع",
-        qibla_direction_n: "شمال",
-        qibla_direction_ne: "شمال شرق",
-        qibla_direction_e: "شرق",
-        qibla_direction_se: "جنوب شرق",
-        qibla_direction_s: "جنوب",
-        qibla_direction_sw: "جنوب غرب",
-        qibla_direction_w: "غرب",
-        qibla_direction_nw: "شمال غرب",
-        emergency_title: "حالة الطوارئ",
-        emergency_desc: "أرقام مهمة يجب أن تكون محفوظة في هاتفك",
-        emergency_civil: "الحماية المدنية", emergency_police: "الشرطة",
-        emergency_school: "أمن المدرسة", emergency_hospital: "مستشفى مصطفى",
+        qibla_direction_n: "شمال", qibla_direction_ne: "شمال شرق",
+        qibla_direction_e: "شرق", qibla_direction_se: "جنوب شرق",
+        qibla_direction_s: "جنوب", qibla_direction_sw: "جنوب غرب",
+        qibla_direction_w: "غرب", qibla_direction_nw: "شمال غرب",
         res_back: "العودة لقائمة الإقامات", res_map: "الموقع على الخريطة",
         res_distance: "المسافة إلى المدرسة", res_video: "فيديو تعريفي عن الإقامة",
         res_meals_title: "جدول الوجبات الأسبوعي (مشترك)",
@@ -916,7 +855,6 @@
         res_sport: "قاعة الرياضة", res_library: "المكتبة",
         res_game1: "قاعة الألعاب الأولى", res_game2: "قاعة الألعاب الثانية",
         res_activity_hall: "قاعة النشاطات",
-        res_facilities_title: "المحلات والمرافق القريبة",
         mosque_title: "المسجد القريب: مسجد عبد اللطيف سلطاني",
         mosque_desc: "مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.",
         mosque_video: "فيديو تعريفي:", mosque_map: "الموقع:",
@@ -949,17 +887,10 @@
         qibla_info: "Autorisez l'accès à la position et au gyroscope pour un résultat précis.",
         qibla_found: "Position détectée",
         qibla_error: "Impossible de localiser",
-        qibla_direction_n: "Nord",
-        qibla_direction_ne: "Nord-est",
-        qibla_direction_e: "Est",
-        qibla_direction_se: "Sud-est",
-        qibla_direction_s: "Sud",
-        qibla_direction_sw: "Sud-ouest",
-        qibla_direction_w: "Ouest",
-        qibla_direction_nw: "Nord-ouest",
-        emergency_title: "Urgences", emergency_desc: "Numéros importants à enregistrer",
-        emergency_civil: "Protection civile", emergency_police: "Police",
-        emergency_school: "Sécurité école", emergency_hospital: "Hôpital Mustapha",
+        qibla_direction_n: "Nord", qibla_direction_ne: "Nord-est",
+        qibla_direction_e: "Est", qibla_direction_se: "Sud-est",
+        qibla_direction_s: "Sud", qibla_direction_sw: "Sud-ouest",
+        qibla_direction_w: "Ouest", qibla_direction_nw: "Nord-ouest",
         res_back: "Retour aux résidences", res_map: "Emplacement sur la carte",
         res_distance: "Distance de l'école", res_video: "Vidéo de la résidence",
         res_meals_title: "Menu hebdomadaire (commun)",
@@ -971,7 +902,6 @@
         res_sport: "Salle de sport", res_library: "Bibliothèque",
         res_game1: "Salle de jeux 1", res_game2: "Salle de jeux 2",
         res_activity_hall: "Salle d'activités",
-        res_facilities_title: "Commerces à proximité",
         mosque_title: "Mosquée proche : Mosquée Abdellatif Soltani",
         mosque_desc: "Mosquée Abdellatif Soltani à Vieux Kouba, l'une des mosquées connues de la région.",
         mosque_video: "Vidéo :", mosque_map: "Emplacement :",
@@ -1004,17 +934,10 @@
         qibla_info: "Allow location and gyroscope access for accurate results.",
         qibla_found: "Location detected",
         qibla_error: "Unable to locate",
-        qibla_direction_n: "North",
-        qibla_direction_ne: "Northeast",
-        qibla_direction_e: "East",
-        qibla_direction_se: "Southeast",
-        qibla_direction_s: "South",
-        qibla_direction_sw: "Southwest",
-        qibla_direction_w: "West",
-        qibla_direction_nw: "Northwest",
-        emergency_title: "Emergency", emergency_desc: "Important numbers to save",
-        emergency_civil: "Civil Protection", emergency_police: "Police",
-        emergency_school: "School Security", emergency_hospital: "Mustapha Hospital",
+        qibla_direction_n: "North", qibla_direction_ne: "Northeast",
+        qibla_direction_e: "East", qibla_direction_se: "Southeast",
+        qibla_direction_s: "South", qibla_direction_sw: "Southwest",
+        qibla_direction_w: "West", qibla_direction_nw: "Northwest",
         res_back: "Back to residences", res_map: "Location on map",
         res_distance: "Distance from school", res_video: "Residence video",
         res_meals_title: "Weekly menu (common)",
@@ -1026,7 +949,6 @@
         res_sport: "Sports Hall", res_library: "Library",
         res_game1: "Game Room 1", res_game2: "Game Room 2",
         res_activity_hall: "Activity Hall",
-        res_facilities_title: "Nearby shops",
         mosque_title: "Nearby Mosque: Abdellatif Soltani Mosque",
         mosque_desc: "Abdellatif Soltani Mosque in Vieux Kouba, a well-known mosque in the area.",
         mosque_video: "Video:", mosque_map: "Location:",
@@ -1111,35 +1033,23 @@
       'hamdine': {
         title: 'الإقامة الجامعية سعيد حمدين (بنات)',
         address: '21, Rue des journalistes morts au Vietnam le 8 mars 1974, Birkhadem, Alger',
-        gender: 'girls',
         mapSrc: 'https://maps.google.com/maps?q=21%20Rue%20des%20journalistes%20morts%20au%20Vietnam%20le%208%20mars%201974%2C%20Birkhadem%2C%20Alger&t=&z=16&ie=UTF8&iwloc=&output=embed',
         videoSrc: 'https://www.youtube.com/embed/hZg4e6hpkns',
-        distance: 'تقع في بئر خادم، وتبعد حوالي 5 كم عن المدرسة (منطقة القبة). تحتاج لوسيلة نقل (حوالي 20 دقيقة بالحافلة).',
-        facilities: [
-         
-        ]
+        distance: 'تقع في بئر خادم، وتبعد حوالي 5 كم عن المدرسة (منطقة القبة). تحتاج لوسيلة نقل (حوالي 20 دقيقة بالحافلة).'
       },
       'youssefi': {
         title: 'الإقامة الجامعية امحمد يوسفي (بنات)',
         address: 'حسين داي، الجزائر العاصمة',
-        gender: 'girls',
         mapSrc: 'https://maps.google.com/maps?q=Cit%C3%A9%20Universitaire%20Mohamed%20Youssefi%20Hussein%20Dey%20Alger&t=&z=16&ie=UTF8&iwloc=&output=embed',
         videoSrc: 'https://www.youtube.com/embed/agTlVSQ8760',
-        distance: 'تقع في حسين داي (بالقرب من محطة الترامواي)، وتبعد حوالي 5 كم عن المدرسة.',
-        facilities: [
-         
-        ]
+        distance: 'تقع في حسين داي (بالقرب من محطة الترامواي)، وتبعد حوالي 5 كم عن المدرسة.'
       },
       'gueridi': {
         title: 'الإقامة الجامعية قاريدي (أولاد)',
         address: 'أ، أ القبة، 16006 Kouba, Alger, Algérie',
-        gender: 'boys',
         mapSrc: 'https://maps.google.com/maps?q=Cit%C3%A9%20Universitaire%20Gueridi%20Kouba%20Alger&t=&z=16&ie=UTF8&iwloc=&output=embed',
         videoSrc: 'https://www.youtube.com/embed/cxKbbBfWCCw',
-        distance: 'تقع في القبة، وتبعد حوالي 2 دقائق عن المدرسة الوطنية العليا للأشغال العمومية.',
-        facilities: [
-          
-        ]
+        distance: 'تقع في القبة، وتبعد حوالي 2 دقائق عن المدرسة الوطنية العليا للأشغال العمومية.'
       }
     };
 
@@ -1161,31 +1071,12 @@
 
       const ys = document.getElementById('youssefiActivities');
       ys.style.display = (id === 'youssefi') ? 'block' : 'none';
+
       const mosqueSection = document.getElementById('mosqueSection');
-       if(mosqueSection){
+      if(mosqueSection){
         mosqueSection.style.display = (id === 'gueridi') ? 'block' : 'none';
-        }
-      const grid = document.getElementById('facilitiesGrid');
-      grid.innerHTML = '';
-      data.facilities.forEach(fac => {
-        let colorClass = 'rgba(59,130,246,.15)', color = '#2563eb';
-        if(fac.type === 'مرفق صحي'){ colorClass = 'rgba(239,68,68,.15)'; color = '#dc2626'; }
-        if(fac.type === 'محل تجاري'){ colorClass = 'rgba(16,185,129,.15)'; color = '#059669'; }
-        if(fac.type === 'ترفيه'){ colorClass = 'rgba(139,92,246,.15)'; color = '#7c3aed'; }
-        grid.innerHTML += `
-          <div class="facility-card">
-            <div class="facility-head">
-              <div class="facility-icon" style="background:${colorClass};color:${color};"><i class="fa-solid ${fac.icon}"></i></div>
-              <div>
-                <div class="facility-name">${fac.name}</div>
-                <div class="facility-type">${fac.type}</div>
-              </div>
-            </div>
-            <div class="facility-line"><i class="fa-regular fa-clock" style="width:16px;color:var(--text-muted);"></i> <span dir="ltr">${fac.time}</span></div>
-            <div class="facility-line"><i class="fa-solid fa-person-walking" style="width:16px;color:var(--text-muted);"></i> ${fac.distance}</div>
-          </div>
-        `;
-      });
+      }
+
       window.scrollTo(0,0);
     }
 
