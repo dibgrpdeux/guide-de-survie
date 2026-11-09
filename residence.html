@@ -155,6 +155,7 @@
       display: flex; flex-direction: column; align-items: center; gap: 16px;
       box-shadow: var(--shadow-sm);
       transition: all .35s cubic-bezier(.34,1.56,.64,1);
+      position: relative;
     }
     .residence-card:hover {
       transform: translateY(-8px) scale(1.02);
@@ -182,6 +183,19 @@
       background: rgba(249,115,22,.12); color: var(--orange-dark);
     }
     [data-theme="dark"] .residence-badge { background: rgba(249,115,22,.2); color: #fdba74; }
+
+    /* Gender badge */
+    .gender-badge {
+      position: absolute; top: 12px; left: 12px;
+      padding: 4px 12px; border-radius: 20px;
+      font-size: .7rem; font-weight: 800;
+      display: inline-flex; align-items: center; gap: 4px;
+      z-index: 2;
+    }
+    .gender-badge.girls { background: rgba(236,72,153,.15); color: #be185d; }
+    .gender-badge.boys { background: rgba(59,130,246,.15); color: #2563eb; }
+    [data-theme="dark"] .gender-badge.girls { background: rgba(236,72,153,.25); color: #f9a8d4; }
+    [data-theme="dark"] .gender-badge.boys { background: rgba(59,130,246,.25); color: #93c5fd; }
 
     /* ============================================================ */
     /* 🧭 BOUSSOLE QIBLA AMÉLIORÉE                                   */
@@ -250,7 +264,6 @@
         inset 0 -10px 20px rgba(0,0,0,.4);
       border-color: #1e3a8a;
     }
-    /* Cadran gradué */
     .compass .tick {
       position: absolute; left: 50%; top: 6px;
       width: 2px; height: 10px; background: #7c2d12;
@@ -260,7 +273,6 @@
     [data-theme="dark"] .compass .tick { background: #60a5fa; opacity: .7; }
     .compass .tick.major { height: 16px; width: 3px; background: #7c2d12; opacity: .9; }
     [data-theme="dark"] .compass .tick.major { background: #93c5fd; }
-    /* Lettres N E S W */
     .compass .cardinal {
       position: absolute; font-weight: 900; font-size: .85rem; color: #7c2d12;
       font-family: 'Cairo', sans-serif;
@@ -272,7 +284,6 @@
     .compass .cardinal.e { right: 18px; top: 50%; transform: translateY(-50%); }
     .compass .cardinal.w { left: 18px; top: 50%; transform: translateY(-50%); }
 
-    /* Aiguille Kaaba */
     .compass-needle-wrap {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
@@ -320,10 +331,7 @@
       z-index: 20;
     }
 
-    /* Info panel */
-    .qibla-info-panel {
-      display: flex; flex-direction: column; gap: 14px;
-    }
+    .qibla-info-panel { display: flex; flex-direction: column; gap: 14px; }
     .angle-card {
       background: linear-gradient(135deg, #fbbf24, #f97316);
       color: #fff; padding: 18px 20px; border-radius: 18px;
@@ -368,9 +376,7 @@
       transition: all .3s;
       border: 1.5px solid;
     }
-    .emergency-card:hover {
-      transform: translateY(-5px) scale(1.03);
-    }
+    .emergency-card:hover { transform: translateY(-5px) scale(1.03); }
     .emergency-card .e-icon {
       width: 48px; height: 48px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
@@ -604,28 +610,31 @@
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
         <button onclick="showDetails('hamdine')" class="residence-card">
+          <span class="gender-badge girls"><i class="fa-solid fa-venus"></i> <span data-i18n="badge_girls">بنات</span></span>
           <div class="residence-icon orange"><i class="fa-solid fa-building-user"></i></div>
           <div>
             <h3 class="residence-title" data-i18n="res_hamdine">الإقامة الجامعية سعيد حمدين</h3>
-            <p class="residence-sub">حسين داي، الجزائر العاصمة</p>
+            <p class="residence-sub" data-i18n="res_hamdine_addr"> سعيد حمدين بئر خادم، الجزائر العاصمة </p>
           </div>
           <span class="residence-badge">600 سرير</span>
         </button>
 
         <button onclick="showDetails('youssefi')" class="residence-card">
+          <span class="gender-badge girls"><i class="fa-solid fa-venus"></i> <span data-i18n="badge_girls">بنات</span></span>
           <div class="residence-icon amber"><i class="fa-solid fa-building-user"></i></div>
           <div>
             <h3 class="residence-title" data-i18n="res_youssefi">الإقامة الجامعية امحمد يوسفي</h3>
-            <p class="residence-sub">حسين داي، الجزائر العاصمة</p>
+            <p class="residence-sub" data-i18n="res_youssefi_addr">حسين داي، الجزائر العاصمة</p>
           </div>
           <span class="residence-badge">500 سرير</span>
         </button>
 
         <button onclick="showDetails('gueridi')" class="residence-card">
+          <span class="gender-badge boys"><i class="fa-solid fa-mars"></i> <span data-i18n="badge_boys">أولاد</span></span>
           <div class="residence-icon red"><i class="fa-solid fa-building-user"></i></div>
           <div>
             <h3 class="residence-title" data-i18n="res_gueridi">الإقامة الجامعية قاريدي</h3>
-            <p class="residence-sub">بن عكنون، الجزائر العاصمة</p>
+            <p class="residence-sub" data-i18n="res_gueridi_addr">القبة، الجزائر العاصمة</p>
           </div>
           <span class="residence-badge">1200 سرير</span>
         </button>
@@ -642,27 +651,21 @@
         </div>
 
         <div class="qibla-body">
-          <!-- Compass -->
           <div class="compass-wrapper">
             <div class="compass" id="compass">
-              <!-- Cadran gradué (généré JS) -->
               <div id="compassTicks"></div>
-              <!-- Lettres cardinales -->
               <span class="cardinal n">N</span>
               <span class="cardinal s">S</span>
               <span class="cardinal e">E</span>
               <span class="cardinal w">W</span>
-              <!-- Aiguille -->
               <div class="compass-needle-wrap" id="needleWrap">
                 <div class="compass-needle-kaaba"><i class="fa-solid fa-kaaba"></i></div>
                 <div class="compass-needle-bar"></div>
               </div>
-              <!-- Centre -->
               <div class="compass-center-dot"></div>
             </div>
           </div>
 
-          <!-- Info -->
           <div class="qibla-info-panel">
             <div class="angle-card">
               <div class="label"><i class="fa-solid fa-location-crosshairs"></i> <span data-i18n="qibla_angle">زاوية القبلة من الشمال</span></div>
@@ -681,39 +684,7 @@
         </div>
       </section>
 
-      <!-- 🚨 EMERGENCY -->
-      <section class="section-card glass-card" style="border:1.5px solid rgba(239,68,68,.25);">
-        <div class="section-header">
-          <div class="section-header-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);"><i class="fa-solid fa-triangle-exclamation"></i></div>
-          <div>
-            <h3 data-i18n="emergency_title">حالة الطوارئ</h3>
-            <p data-i18n="emergency_desc">أرقام مهمة يجب أن تكون محفوظة في هاتفك</p>
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;">
-          <a href="tel:14" class="emergency-card red">
-            <div class="e-icon"><i class="fa-solid fa-fire-extinguisher"></i></div>
-            <div class="e-number">14</div>
-            <div class="e-label" data-i18n="emergency_civil">الحماية المدنية</div>
-          </a>
-          <a href="tel:17" class="emergency-card blue">
-            <div class="e-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <div class="e-number">17</div>
-            <div class="e-label" data-i18n="emergency_police">الشرطة</div>
-          </a>
-          <a href="tel:1548" class="emergency-card amber">
-            <div class="e-icon"><i class="fa-solid fa-building-shield"></i></div>
-            <div class="e-number" style="font-size:1.3rem;">1548</div>
-            <div class="e-label" data-i18n="emergency_school">أمن المدرسة</div>
-          </a>
-          <a href="tel:021710000" class="emergency-card emerald">
-            <div class="e-icon"><i class="fa-solid fa-hospital"></i></div>
-            <div class="e-number" style="font-size:.95rem;padding-top:6px;">021 71 00 00</div>
-            <div class="e-label" data-i18n="emergency_hospital">مستشفى مصطفى</div>
-          </a>
-        </div>
-      </section>
-    </div>
+      
 
     <!-- DETAILS SECTION -->
     <div id="detailsSection" style="display:none;">
@@ -723,7 +694,8 @@
       </button>
 
       <div style="padding-bottom:14px;border-bottom:1.5px solid var(--border-color);margin-bottom:20px;">
-        <h2 id="detailTitle" style="font-size:1.6rem;font-weight:900;color:var(--orange-dark);margin:0;"></h2>
+        <h2 id="detailTitle" style="font-size:1.6rem;font-weight:900;color:var(--orange-dark);margin:0 0 8px;"></h2>
+        <p id="detailAddress" style="font-size:.88rem;color:var(--text-muted);font-weight:600;margin:0;display:none;"></p>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr;gap:20px;">
@@ -752,31 +724,31 @@
           <div id="videoContainer" class="video-wrap" style="max-width:640px;margin:0 auto;"></div>
         </div>
 
-        <!-- Mosquée -->
-        <div class="glass-card" style="padding:22px;border:1.5px solid rgba(16,185,129,.25);">
-          <h3 style="font-size:1.1rem;font-weight:900;color:#059669;margin:0 0 6px;display:flex;align-items:center;gap:10px;">
-            <i class="fa-solid fa-mosque"></i>
-            <span data-i18n="mosque_title">المسجد القريب: مسجد عبد اللطيف سلطاني</span>
-          </h3>
-          <p style="font-size:.82rem;color:var(--text-muted);font-weight:600;margin:0 0 14px;" data-i18n="mosque_desc">مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.</p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
-            <div>
-              <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-video" style="color:#ef4444;"></i> <span data-i18n="mosque_video">فيديو تعريفي:</span></h4>
-              <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/q9iK6P3XsYA" allowfullscreen loading="lazy"></iframe>
-              </div>
-            </div>
-            <div>
-              <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i> <span data-i18n="mosque_map">الموقع:</span></h4>
-              <div class="map-wrap">
-                <iframe src="https://maps.google.com/maps?q=36.7293464,3.0733515&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
-              </div>
-              <a href="https://www.google.com/maps/search/?api=1&query=36.7293464,3.0733515" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:#059669;font-weight:800;font-size:.78rem;text-decoration:none;">
-                <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="mosque_open_maps">فتح في خرائط جوجل</span>
-              </a>
-            </div>
-          </div>
-        </div>
+        <!-- Mosquée (affiché uniquement pour Gueridi) -->
+<div id="mosqueSection" class="glass-card" style="padding:22px;border:1.5px solid rgba(16,185,129,.25);display:none;">
+  <h3 style="font-size:1.1rem;font-weight:900;color:#059669;margin:0 0 6px;display:flex;align-items:center;gap:10px;">
+    <i class="fa-solid fa-mosque"></i>
+    <span data-i18n="mosque_title">المسجد القريب: مسجد عبد اللطيف سلطاني</span>
+  </h3>
+  <p style="font-size:.82rem;color:var(--text-muted);font-weight:600;margin:0 0 14px;" data-i18n="mosque_desc">مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+    <div>
+      <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-video" style="color:#ef4444;"></i> <span data-i18n="mosque_video">فيديو تعريفي:</span></h4>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/q9iK6P3XsYA" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+    <div>
+      <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i> <span data-i18n="mosque_map">الموقع:</span></h4>
+      <div class="map-wrap">
+        <iframe src="https://maps.google.com/maps?q=36.7293464,3.0733515&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <a href="https://www.google.com/maps/search/?api=1&query=36.7293464,3.0733515" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:#059669;font-weight:800;font-size:.78rem;text-decoration:none;">
+        <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="mosque_open_maps">فتح في خرائط جوجل</span>
+      </a>
+    </div>
+  </div>
+</div>
 
         <!-- Meals -->
         <div class="glass-card" style="padding:22px;">
@@ -910,6 +882,10 @@
         res_hamdine: "الإقامة الجامعية سعيد حمدين",
         res_youssefi: "الإقامة الجامعية امحمد يوسفي",
         res_gueridi: "الإقامة الجامعية قاريدي",
+        res_hamdine_addr: "بئر خادم، الجزائر العاصمة",
+        res_youssefi_addr: "حسين داي، الجزائر العاصمة",
+        res_gueridi_addr: "القبة، الجزائر العاصمة",
+        badge_girls: "بنات", badge_boys: "أولاد",
         qibla_title: "بوصلة القبلة",
         qibla_desc: "حدد اتجاه القبلة بدقة من موقعك الحالي",
         qibla_angle: "زاوية القبلة من الشمال",
@@ -962,6 +938,10 @@
         res_hamdine: "Résidence Saïd Hamdine",
         res_youssefi: "Résidence Mohamed Youssefi",
         res_gueridi: "Résidence Gueridi",
+        res_hamdine_addr: "Birkhadem, Alger",
+        res_youssefi_addr: "Hussein Dey, Alger",
+        res_gueridi_addr: "Kouba, Alger",
+        badge_girls: "Filles", badge_boys: "Garçons",
         qibla_title: "Boussole Qibla",
         qibla_desc: "Déterminez la direction de la Qibla depuis votre position.",
         qibla_angle: "Angle depuis le Nord",
@@ -1013,6 +993,10 @@
         res_hamdine: "Saïd Hamdine Residence",
         res_youssefi: "Mohamed Youssefi Residence",
         res_gueridi: "Gueridi Residence",
+        res_hamdine_addr: "Birkhadem, Algiers",
+        res_youssefi_addr: "Hussein Dey, Algiers",
+        res_gueridi_addr: "Kouba, Algiers",
+        badge_girls: "Girls", badge_boys: "Boys",
         qibla_title: "Qibla Compass",
         qibla_desc: "Find the Qibla direction from your location.",
         qibla_angle: "Angle from North",
@@ -1077,14 +1061,12 @@
       });
       document.documentElement.dir = (lang==='ar') ? 'rtl' : 'ltr';
       document.documentElement.lang = lang;
-      // Update theme button text
       const tb = document.getElementById('themeBtn'); if(tb){
         const isDark = document.documentElement.getAttribute('data-theme')==='dark';
         tb.innerHTML = isDark
           ? '<i class="fa-solid fa-sun"></i> <span>'+d.menu_dark+'</span>'
           : '<i class="fa-solid fa-moon"></i> <span>'+d.menu_dark+'</span>';
       }
-      // Update qibla status if set
       if(userLat !== null){
         const sl = document.getElementById('qiblaStatus');
         if(sl) sl.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span>${d.qibla_found}</span>`;
@@ -1099,9 +1081,7 @@
       applyResidenceTranslation(lang);
     };
 
-    /* ============================================================ */
-    /* DARK MODE                                                     */
-    /* ============================================================ */
+    /* DARK MODE */
     const htmlEl = document.documentElement;
     if(localStorage.getItem('theme')==='dark') htmlEl.setAttribute('data-theme','dark');
 
@@ -1112,9 +1092,7 @@
       applyResidenceTranslation(currentLang);
     }
 
-    /* ============================================================ */
-    /* MENU                                                          */
-    /* ============================================================ */
+    /* MENU */
     function toggleMenu(){
       document.getElementById('navDropdown').classList.toggle('open');
       document.getElementById('menuBtn').classList.toggle('active');
@@ -1128,41 +1106,39 @@
       }
     });
 
-    /* ============================================================ */
-    /* RESIDENCES                                                    */
-    /* ============================================================ */
+    /* RESIDENCES */
     const residencesData = {
       'hamdine': {
-        title: 'الإقامة الجامعية سعيد حمدين',
-        mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.123456789!2d3.08949431529025!3d36.73356397995596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb20000000000%3A0x123456789abcdef!2sCit%C3%A9%20Universitaire%20Sa%C3%AFd%20Hamdine!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
+        title: 'الإقامة الجامعية سعيد حمدين (بنات)',
+        address: '21, Rue des journalistes morts au Vietnam le 8 mars 1974, Birkhadem, Alger',
+        gender: 'girls',
+        mapSrc: 'https://maps.google.com/maps?q=21%20Rue%20des%20journalistes%20morts%20au%20Vietnam%20le%208%20mars%201974%2C%20Birkhadem%2C%20Alger&t=&z=16&ie=UTF8&iwloc=&output=embed',
         videoSrc: 'https://www.youtube.com/embed/hZg4e6hpkns',
-        distance: 'تبعد حوالي 6 كم عن المدرسة (منطقة القبة)، وتحتاج لوسيلة نقل (حوالي 20 دقيقة بالحافلة).',
+        distance: 'تقع في بئر خادم، وتبعد حوالي 5 كم عن المدرسة (منطقة القبة). تحتاج لوسيلة نقل (حوالي 20 دقيقة بالحافلة).',
         facilities: [
-          { name: 'مطعم الإقامة', icon: 'fa-utensils', type: 'مرفق', time: '12:00 - 14:30', distance: 'داخل الإقامة' },
-          { name: 'صيدلية ليلية', icon: 'fa-prescription-bottle-medical', type: 'مرفق صحي', time: '24 ساعة', distance: '800 متر' },
-          { name: 'سوبرماركت', icon: 'fa-cart-shopping', type: 'محل تجاري', time: '08:00 - 22:00', distance: '300 متر' }
+         
         ]
       },
       'youssefi': {
-        title: 'الإقامة الجامعية امحمد يوسفي (حسين داي)',
-        mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.88915412985!2d3.07949431529025!3d36.75256397995596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fadec61ab4433%3A0x7a1f7a1f7a1f7a1f!2sCit%C3%A9%20Universitaire%20Mohamed%20Youssefi%20Kouba!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
+        title: 'الإقامة الجامعية امحمد يوسفي (بنات)',
+        address: 'حسين داي، الجزائر العاصمة',
+        gender: 'girls',
+        mapSrc: 'https://maps.google.com/maps?q=Cit%C3%A9%20Universitaire%20Mohamed%20Youssefi%20Hussein%20Dey%20Alger&t=&z=16&ie=UTF8&iwloc=&output=embed',
         videoSrc: 'https://www.youtube.com/embed/agTlVSQ8760',
         distance: 'تقع في حسين داي (بالقرب من محطة الترامواي)، وتبعد حوالي 5 كم عن المدرسة.',
         facilities: [
-          { name: 'مطعم الجامعة', icon: 'fa-utensils', type: 'مرفق', time: '11:30 - 14:30 / 18:30 - 21:00', distance: 'داخل الإقامة' },
-          { name: 'محلات المواد الغذائية', icon: 'fa-store', type: 'محل تجاري', time: '08:00 - 23:00', distance: '200 متر' },
-          { name: 'مقهى طلابي', icon: 'fa-mug-hot', type: 'ترفيه', time: '07:00 - 23:00', distance: '150 متر' }
+         
         ]
       },
       'gueridi': {
-        title: 'الإقامة الجامعية قاريدي',
-        mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.375506523222!2d3.0174753152907654!3d36.76112497995362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128faffa7b3dae89%3A0x6b3b6b3b6b3b6b3b!2sCit%C3%A9%20Universitaire%20Gueridi%20Ben%20Aknoun!5e0!3m2!1sen!2sdz!4v1620000000000!5m2!1sen!2sdz',
+        title: 'الإقامة الجامعية قاريدي (أولاد)',
+        address: 'أ، أ القبة، 16006 Kouba, Alger, Algérie',
+        gender: 'boys',
+        mapSrc: 'https://maps.google.com/maps?q=Cit%C3%A9%20Universitaire%20Gueridi%20Kouba%20Alger&t=&z=16&ie=UTF8&iwloc=&output=embed',
         videoSrc: 'https://www.youtube.com/embed/cxKbbBfWCCw',
-        distance: 'تبعد حوالي 5 دقائق عن المدرسة الوطنية العليا للأشغال العمومية (القبة).',
+        distance: 'تقع في القبة، وتبعد حوالي 2 دقائق عن المدرسة الوطنية العليا للأشغال العمومية.',
         facilities: [
-          { name: 'مطعم الإقامة الجامعية', icon: 'fa-utensils', type: 'مرفق', time: '12:00 - 14:00 / 19:00 - 21:00', distance: 'داخل الإقامة' },
-          { name: 'سوبرماركت (Ardis / UNO)', icon: 'fa-cart-shopping', type: 'محل تجاري', time: '09:00 - 22:00', distance: '500 متر (5 دقائق سيراً)' },
-          { name: 'صيدلية', icon: 'fa-prescription-bottle-medical', type: 'مرفق صحي', time: '08:00 - 20:00', distance: '400 متر' }
+          
         ]
       }
     };
@@ -1172,13 +1148,23 @@
       document.getElementById('mainMenu').style.display = 'none';
       document.getElementById('detailsSection').style.display = 'block';
       document.getElementById('detailTitle').innerText = data.title;
+
+      const addrEl = document.getElementById('detailAddress');
+      if(addrEl){
+        addrEl.innerHTML = `<i class="fa-solid fa-location-dot" style="color:var(--orange);"></i> ${data.address}`;
+        addrEl.style.display = 'block';
+      }
+
       document.getElementById('mapContainer').innerHTML = `<iframe src="${data.mapSrc}" allowfullscreen loading="lazy"></iframe>`;
       document.getElementById('distanceText').innerText = data.distance;
       document.getElementById('videoContainer').innerHTML = `<iframe src="${data.videoSrc}" allowfullscreen></iframe>`;
 
       const ys = document.getElementById('youssefiActivities');
       ys.style.display = (id === 'youssefi') ? 'block' : 'none';
-
+      const mosqueSection = document.getElementById('mosqueSection');
+       if(mosqueSection){
+        mosqueSection.style.display = (id === 'gueridi') ? 'block' : 'none';
+        }
       const grid = document.getElementById('facilitiesGrid');
       grid.innerHTML = '';
       data.facilities.forEach(fac => {
@@ -1211,18 +1197,15 @@
       window.scrollTo(0,0);
     }
 
-    /* ============================================================ */
-    /* 🧭 QIBLA COMPASS                                              */
-    /* ============================================================ */
+    /* QIBLA COMPASS */
     const KAABA_LAT = 21.4225;
     const KAABA_LNG = 39.8262;
     let userLat = null, userLng = null, deviceHeading = null;
 
-    // Génère les ticks du cadran
     (function buildTicks(){
       const cont = document.getElementById('compassTicks');
       if(!cont) return;
-      for(let i = 0; i < 72; i++){ // 72 ticks = 5° each
+      for(let i = 0; i < 72; i++){
         const t = document.createElement('div');
         t.className = 'tick' + (i % 6 === 0 ? ' major' : '');
         t.style.transform = `rotate(${i * 5}deg)`;
@@ -1258,7 +1241,6 @@
       if(dirEl) dirEl.innerText = directionLabel(qiblaAngle);
       const needleWrap = document.getElementById('needleWrap');
       if(needleWrap){
-        // Rotation relative à l'orientation de l'appareil
         const rotation = qiblaAngle - deviceHeading;
         needleWrap.style.transform = `rotate(${rotation}deg)`;
       }
@@ -1311,9 +1293,7 @@
       if(heading !== null){ deviceHeading = heading; updateCompass(); }
     }
 
-    /* ============================================================ */
-    /* CHAT                                                          */
-    /* ============================================================ */
+    /* CHAT */
     function toggleChat(){
       const c = document.getElementById('chatWindow');
       if(!c) return;
@@ -1340,9 +1320,7 @@
       }, 500);
     }
 
-    /* ============================================================ */
-    /* KANGOUROU                                                     */
-    /* ============================================================ */
+    /* KANGOUROU */
     const kangarooContainer = document.getElementById('kangarooContainer');
     const kangarooSvg = document.getElementById('kangarooSvg');
     if(kangarooContainer){
@@ -1359,9 +1337,7 @@
       kangarooContainer.addEventListener('mouseleave', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = ''; });
     }
 
-    /* ============================================================ */
-    /* INIT                                                          */
-    /* ============================================================ */
+    /* INIT */
     document.addEventListener('DOMContentLoaded', ()=>{
       const saved = localStorage.getItem('enstp_lang') || 'ar';
       currentLang = saved;
