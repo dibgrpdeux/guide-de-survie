@@ -86,6 +86,19 @@
     .glass-card { background:var(--card-bg); border:1.5px solid var(--border-color); border-radius:22px; box-shadow:var(--shadow-sm); transition:all .3s; }
     .glass-card:hover { box-shadow:var(--shadow-md); }
 
+    /* Section styling (used for accordion & static blocks) */
+    .acc-item { margin-bottom:10px; overflow:hidden; }
+    .acc-btn { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px; cursor:pointer; background:var(--card-bg); border:none; font-family:inherit; font-size:.95rem; font-weight:800; color:var(--text-main); text-align:right; gap:12px; }
+    .acc-btn:hover { background:rgba(249,115,22,.05); }
+    .acc-btn .acc-left { display:flex; align-items:center; gap:10px; flex:1; }
+    .acc-icon { width:36px; height:36px; border-radius:10px; background:rgba(249,115,22,.15); color:var(--orange); display:flex; align-items:center; justify-content:center; font-size:.95rem; flex-shrink:0; }
+    .acc-chevron { color:var(--orange); transition:transform .3s; font-size:.85rem; }
+    .acc-item.open .acc-chevron { transform:rotate(180deg); }
+    .acc-body { max-height:0; overflow:hidden; transition:max-height .4s cubic-bezier(.16,1,.3,1); }
+    .acc-item.open .acc-body { max-height:5000px; }
+    .acc-inner { padding:16px; border-top:1.5px solid var(--border-color); font-size:.85rem; line-height:1.7; }
+
+    /* Cards for search / schedule */
     .selector-card { padding:22px; margin-bottom:20px; }
     .selector-card h2 { font-size:1.15rem; font-weight:900; margin:0 0 14px; display:flex; align-items:center; gap:8px; }
     .selector-card h2 i { color:var(--orange); }
@@ -130,16 +143,6 @@
     .time-chip.past { opacity:.35; text-decoration:line-through; }
     .no-times { color:var(--text-muted); font-size:.8rem; font-style:italic; font-weight:600; }
 
-    .acc-item { margin-bottom:10px; overflow:hidden; }
-    .acc-btn { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px; cursor:pointer; background:var(--card-bg); border:none; font-family:inherit; font-size:.95rem; font-weight:800; color:var(--text-main); text-align:right; gap:12px; }
-    .acc-btn:hover { background:rgba(249,115,22,.05); }
-    .acc-btn .acc-left { display:flex; align-items:center; gap:10px; flex:1; }
-    .acc-icon { width:36px; height:36px; border-radius:10px; background:rgba(249,115,22,.15); color:var(--orange); display:flex; align-items:center; justify-content:center; font-size:.95rem; flex-shrink:0; }
-    .acc-chevron { color:var(--orange); transition:transform .3s; font-size:.85rem; }
-    .acc-item.open .acc-chevron { transform:rotate(180deg); }
-    .acc-body { max-height:0; overflow:hidden; transition:max-height .4s cubic-bezier(.16,1,.3,1); }
-    .acc-item.open .acc-body { max-height:3000px; }
-    .acc-inner { padding:16px; border-top:1.5px solid var(--border-color); font-size:.85rem; line-height:1.7; }
     .info-card { background:rgba(249,115,22,.06); border:1px solid rgba(249,115,22,.2); border-radius:12px; padding:12px; margin-bottom:10px; }
     [data-theme="dark"] .info-card { background:rgba(249,115,22,.1); }
     .info-card h4 { margin:0 0 4px; font-size:.85rem; color:var(--orange-dark); font-weight:800; }
@@ -152,6 +155,21 @@
     [data-theme="dark"] .station-badge { color:#fdba74; }
     [data-theme="dark"] .station-badge:hover { color:#fff; }
 
+    /* Train specific */
+    .train-table { width:100%; border-collapse:collapse; font-size:.8rem; margin-bottom:16px; }
+    .train-table th { background:rgba(249,115,22,.1); padding:10px; text-align:right; font-weight:800; color:var(--orange-dark); border-bottom:1.5px solid var(--border-color); }
+    .train-table td { padding:8px 10px; border-bottom:1px solid var(--border-color); font-weight:600; }
+    .train-table tr:hover { background:rgba(249,115,22,.04); }
+    [data-theme="dark"] .train-table th { color:#fdba74; background:rgba(249,115,22,.15); }
+    
+    .sncf-badge { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#1e3a8a,#2563eb); color:#fff; padding:6px 14px; border-radius:8px; font-size:.75rem; font-weight:800; margin-bottom:12px; }
+    
+    .btn-download { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#10b981,#059669); color:#fff; padding:10px 16px; border-radius:8px; font-size:.82rem; font-weight:800; text-decoration:none; transition:all .2s; margin-top:8px; }
+    .btn-download:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(16,185,129,.4); }
+    .btn-drive { background:linear-gradient(135deg,#3b82f6,#2563eb); }
+    .btn-drive:hover { box-shadow:0 6px 18px rgba(59,130,246,.4); }
+
+    /* Comments */
     .comments-open { background:var(--card-bg); border:1.5px solid var(--border-color); border-radius:22px; padding:20px; margin-top:16px; box-shadow:var(--shadow-sm); }
     .comments-open .co-header { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
     .comments-open .co-header h3 { margin:0; font-size:1.1rem; font-weight:900; display:flex; align-items:center; gap:8px; color:var(--text-main); }
@@ -173,9 +191,9 @@
     .co-submit:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(249,115,22,.5); }
     .co-submit:disabled { opacity:.6; cursor:wait; transform:none; }
 
-    #commentsList { display:flex; flex-direction:column; gap:10px; max-height:480px; overflow-y:auto; padding-right:3px; }
-    #commentsList::-webkit-scrollbar { width:6px; }
-    #commentsList::-webkit-scrollbar-thumb { background:rgba(249,115,22,.4); border-radius:10px; }
+    #commentsList, #etusaCommentsList { display:flex; flex-direction:column; gap:10px; max-height:480px; overflow-y:auto; padding-right:3px; }
+    #commentsList::-webkit-scrollbar, #etusaCommentsList::-webkit-scrollbar { width:6px; }
+    #commentsList::-webkit-scrollbar-thumb, #etusaCommentsList::-webkit-scrollbar-thumb { background:rgba(249,115,22,.4); border-radius:10px; }
 
     .co-item { display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border-radius:14px; background:rgba(249,115,22,.05); border:1px solid rgba(249,115,22,.15); animation:msgIn .35s cubic-bezier(.34,1.56,.64,1); }
     [data-theme="dark"] .co-item { background:rgba(249,115,22,.1); border-color:rgba(249,115,22,.25); }
@@ -321,28 +339,22 @@
 
   <main class="content-wrap">
 
-    <!-- PANEL 1 -->
+    <!-- PANEL 1 (UNIVERSITY) -->
     <section class="panel active" id="panel-univ">
-
       <div class="glass-card selector-card">
         <h2><i class="fa-solid fa-location-dot"></i> <span data-i18n="choose_dest_title">اختر وجهتك من القبة</span></h2>
-
         <div class="search-input-wrap">
-          <input type="text" id="busSearchInput" autocomplete="off"
-                 data-i18n-placeholder="search_placeholder"
-                 placeholder="ابحث عن وجهة... " />
+          <input type="text" id="busSearchInput" autocomplete="off" data-i18n-placeholder="search_placeholder" placeholder="ابحث عن وجهة... " />
           <i class="fa-solid fa-magnifying-glass"></i>
           <button type="button" class="clear-btn" onclick="clearBusSearch()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="search-counter" id="busSearchCounter"></div>
-
         <select id="destinationSelect" class="dest-select">
           <option value="" disabled selected data-i18n="choose_dest">-- اختر وجهتك --</option>
         </select>
       </div>
 
       <div id="scheduleResult" style="display:none;">
-
         <div class="glass-card schedule-card">
           <div class="schedule-header">
             <h3 class="schedule-title" id="resultTitle"></h3>
@@ -351,15 +363,12 @@
           <div class="schedule-days" id="daysSelector"></div>
           <div class="trips-grid" id="tripsContainer"></div>
         </div>
-
-        <!-- 💬 COMMENTAIRES OUVERTS -->
         <div class="comments-open" id="commentsSection">
           <div class="co-header">
             <h3><i class="fa-solid fa-comments"></i> <span data-i18n="comments_title">تعليقات الطلبة</span></h3>
             <span class="co-count" id="commentsCount" data-i18n="comments_count_zero">0 تعليق</span>
           </div>
           <p class="co-sub" data-i18n="comments_sub">شارك.</p>
-
           <div class="co-form">
             <div class="co-form-row">
               <input type="text" id="coName" maxlength="30" data-i18n-placeholder="co_name_ph" placeholder="اسمك (اختياري)...">
@@ -367,22 +376,18 @@
             <textarea id="coText" maxlength="300" data-i18n-placeholder="co_text_ph" placeholder="اكتب تعليقك هنا."></textarea>
             <div class="co-form-actions">
               <span class="hint"><i class="fa-solid fa-eye"></i> <span data-i18n="co_hint">مرئي </span></span>
-              <button id="coSubmit" class="co-submit" onclick="submitCommentFirebase()">
-                <i class="fa-solid fa-paper-plane"></i> <span data-i18n="co_submit">نشر التعليق</span>
-              </button>
+              <button id="coSubmit" class="co-submit" onclick="submitCommentFirebase()"><i class="fa-solid fa-paper-plane"></i> <span data-i18n="co_submit">نشر التعليق</span></button>
             </div>
           </div>
-
-          <div id="commentsList">
-            <p class="co-empty"><i class="fa-solid fa-comment-slash"></i> <span data-i18n="co_empty">لا توجد تعليقات بعد. كن أول من يشارك تجربته!</span></p>
-          </div>
+          <div id="commentsList"><p class="co-empty"><i class="fa-solid fa-comment-slash"></i> <span data-i18n="co_empty">لا توجد تعليقات بعد. كن أول من يشارك تجربته!</span></p></div>
         </div>
-
       </div>
     </section>
 
-    <!-- PANEL 2 -->
+    <!-- PANEL 2 (PUBLIC) -->
     <section class="panel" id="panel-public">
+      
+      <!-- Arrêts proches -->
       <div class="glass-card acc-item" id="acc-proches">
         <button class="acc-btn" onclick="toggleAccordion('acc-proches')">
           <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-location-dot"></i></div><span data-i18n="proches_title">أقرب محطات النقل للمدرسة (ENSTP)</span></div>
@@ -391,31 +396,69 @@
         <div class="acc-body"><div class="acc-inner">
           <div class="info-card"><h4><i class="fa-solid fa-bus"></i> <span data-i18n="proches_1_t">محطة الحافلات (أمام CNEP)</span></h4><p data-i18n="proches_1_p">350 متر (5 دقائق مشياً).</p></div>
           <div class="info-card"><h4><i class="fa-solid fa-bus"></i> <span data-i18n="proches_2_t">المحطة البرية القبة</span></h4><p data-i18n="proches_2_p">500 متر (7 دقائق مشياً).</p></div>
-          <div class="info-card"><h4><i class="fa-solid fa-train"></i> <span data-i18n="proches_3_t">محطة القطار (</span></h4><p data-i18n="proches_3_p">950 متر (14 دقيقة مشياً).</p></div>
+          <div class="info-card"><h4><i class="fa-solid fa-train"></i> <span data-i18n="proches_3_t">محطة القطار (الآغا)</span></h4><p data-i18n="proches_3_p">950 متر (14 دقيقة مشياً).</p></div>
+          <div class="info-card"><h4><i class="fa-solid fa-tram"></i> <span data-i18n="proches_4_t">محطة الترامواي (القبة)</span></h4><p data-i18n="proches_4_p">400 متر (6 دقائق مشياً).</p></div>
         </div></div>
       </div>
 
+      <!-- ETUSA Buses -->
+      <div class="glass-card acc-item" id="acc-etusa">
+        <button class="acc-btn" onclick="toggleAccordion('acc-etusa')">
+          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-bus"></i></div><span data-i18n="etusa_title">حافلات ETUSA - محطة القبة</span></div>
+          <i class="fa-solid fa-chevron-down acc-chevron"></i>
+        </button>
+        <div class="acc-body"><div class="acc-inner">
+          <div class="search-input-wrap" style="margin-bottom:12px;">
+            <input type="text" id="etusaSearchInput" autocomplete="off" placeholder="ابحث عن خط..." data-i18n-placeholder="etusa_search_ph" />
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <button type="button" class="clear-btn" onclick="clearEtusaSearch()"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="search-counter" id="etusaSearchCounter"></div>
+          <select id="etusaSelect" class="dest-select" style="margin-bottom:16px;">
+            <option value="" disabled selected data-i18n="etusa_choose">-- اختر الخط --</option>
+          </select>
+          <div id="etusaResult" style="display:none;">
+            <div class="schedule-header">
+              <h3 class="schedule-title" id="etusaResultTitle"></h3>
+              <span class="univ-badge" data-i18n="etusa_badge">ETUSA</span>
+            </div>
+            <div class="schedule-days" id="etusaDaysSelector"></div>
+            <div class="trips-grid" id="etusaTripsContainer"></div>
+          </div>
+          <div class="comments-open" id="etusaCommentsSection" style="display:none;">
+            <div class="co-header">
+              <h3><i class="fa-solid fa-comments"></i> <span data-i18n="comments_title">تعليقات الطلبة</span></h3>
+              <span class="co-count" id="etusaCommentsCount">0</span>
+            </div>
+            <p class="co-sub" data-i18n="comments_sub">شارك.</p>
+            <div class="co-form">
+              <div class="co-form-row">
+                <input type="text" id="etusaCoName" maxlength="30" placeholder="اسمك (اختياري)..." data-i18n-placeholder="co_name_ph">
+              </div>
+              <textarea id="etusaCoText" maxlength="300" placeholder="اكتب تعليقك هنا." data-i18n-placeholder="co_text_ph"></textarea>
+              <div class="co-form-actions">
+                <span class="hint"><i class="fa-solid fa-eye"></i> <span data-i18n="co_hint">مرئي </span></span>
+                <button id="etusaCoSubmit" class="co-submit" onclick="submitEtusaComment()"><i class="fa-solid fa-paper-plane"></i> <span data-i18n="co_submit">نشر التعليق</span></button>
+              </div>
+            </div>
+            <div id="etusaCommentsList"><p class="co-empty"><i class="fa-solid fa-comment-slash"></i> <span data-i18n="co_empty">لا توجد تعليقات بعد.</span></p></div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Metro & Tram -->
       <div class="glass-card acc-item" id="acc-metro">
         <button class="acc-btn" onclick="toggleAccordion('acc-metro')">
           <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-train-subway"></i></div><span data-i18n="metro_title">الميترو والترامواي</span></div>
           <i class="fa-solid fa-chevron-down acc-chevron"></i>
         </button>
         <div class="acc-body"><div class="acc-inner">
-
-          <!-- أقرب محطة -->
-          <div class="info-card">
-            <h4 data-i18n="metro_near">أقرب محطة ميترو للمدرسة</h4>
-            <p data-i18n="metro_near_desc">محطة حسيبة بوعلام.</p>
-          </div>
-
-          <!-- الأسعار -->
+          <div class="info-card"><h4 data-i18n="metro_near">أقرب محطة ميترو للمدرسة</h4><p data-i18n="metro_near_desc">محطة حسيبة بوعلام.</p></div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 16px;">
             <span class="univ-badge" data-i18n="metro_ticket">مترو: 50 دج</span>
             <span class="univ-badge" data-i18n="tram_ticket">ترامواي: 40 دج</span>
             <span class="univ-badge" data-i18n="etwassel_ticket">eTWASSEL: 150 دج/سنة</span>
           </div>
-
-          <!-- 🗺️ CARTE INTERACTIVE -->
           <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
             <i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i>
             <span data-i18n="metro_map_title">خريطة محطات المترو والترامواي</span>
@@ -423,8 +466,6 @@
           <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:2px solid var(--border-color);margin-bottom:16px;">
             <iframe src="https://maps.google.com/maps?q=Alger%20Metro%20Stations&t=&z=12&ie=UTF8&iwloc=&output=embed" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen loading="lazy"></iframe>
           </div>
-
-          <!-- محطات المترو -->
           <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
             <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.2);"></span>
             <span data-i18n="metro_stations_title">محطات المترو (الخط 1)</span>
@@ -447,8 +488,6 @@
             <a href="https://www.google.com/maps/search/?api=1&query=Ain+Naadja+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Ain Naadja</a>
             <a href="https://www.google.com/maps/search/?api=1&query=Universite+des+Sciences+et+de+la+Technologie+Metro+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> USTHB</a>
           </div>
-
-          <!-- محطات الترامواي -->
           <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
             <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.2);"></span>
             <span data-i18n="tram_stations_title">محطات الترامواي (المحور الشرقي)</span>
@@ -467,8 +506,6 @@
             <a href="https://www.google.com/maps/search/?api=1&query=Dergana+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Dergana</a>
             <a href="https://www.google.com/maps/search/?api=1&query=Centre+des+Affaires+Tramway+Alger" target="_blank" class="station-badge"><i class="fa-solid fa-location-dot"></i> Centre des Affaires</a>
           </div>
-
-          <!-- فيديو المترو -->
           <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
             <i class="fa-brands fa-youtube" style="color:#ef4444;"></i>
             <span data-i18n="metro_video_title">فيديو تعريفي عن المترو</span>
@@ -476,36 +513,179 @@
           <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:2px solid var(--border-color);">
             <iframe src="https://www.youtube.com/embed/VgahadPDf1I" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen loading="lazy"></iframe>
           </div>
-
         </div></div>
       </div>
 
-      <div class="glass-card acc-item" id="acc-train">
-        <button class="acc-btn" onclick="toggleAccordion('acc-train')">
-          <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-train"></i></div><span data-i18n="train_title">قطارات SNTF (الخطوط الطويلة)</span></div>
+      <!-- 🚆 SNTF TRAINS -->
+      <div class="glass-card acc-item" id="acc-sntf">
+        <button class="acc-btn" onclick="toggleAccordion('acc-sntf')">
+          <div class="acc-left"><div class="acc-icon" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);color:#fff;"><i class="fa-solid fa-train"></i></div><span data-i18n="sntf_title">قطارات SNTF (الخطوط الطويلة)</span></div>
           <i class="fa-solid fa-chevron-down acc-chevron"></i>
         </button>
         <div class="acc-body"><div class="acc-inner">
-          <div class="info-card"><h4 data-i18n="train_1_t">الجزائر ↔ وهران</h4><p data-i18n="train_1_p">الذهاب: 06:00 | 08:00 | 14:00 | 17:00</p></div>
-          <div class="info-card"><h4 data-i18n="train_2_t">الجزائر ↔ عنابة (ليلي)</h4><p data-i18n="train_2_p">الذهاب: 18:40</p></div>
-          <div class="info-card"><h4 data-i18n="train_3_t">الجزائر ↔ بجاية</h4><p data-i18n="train_3_p">06:30 | 14:33</p></div>
+
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+            <a href="https://drive.google.com/" target="_blank" class="btn-download"><i class="fa-brands fa-google-drive"></i> <span data-i18n="sntf_dl_drive">تحميل كل المواعيد (Drive)</span></a>
+            <a href="https://www.sntf.dz" target="_blank" class="btn-download btn-drive" style="background:linear-gradient(135deg,#f97316,#ea580c);"><i class="fa-solid fa-globe"></i> <span data-i18n="sntf_web">الموقع الرسمي</span></a>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+            <div class="info-card" style="border-left:4px solid #10b981;">
+              <h4 data-i18n="sntf_ticket_ar"><i class="fa-solid fa-ticket"></i> تذكرة ذهاب - إياب</h4>
+              <p data-i18n="sntf_ticket_desc">تخفيضات تصل إلى 20% لمن يقطع مسافة أكثر من 400 كم. صالحة لمدة شهرين من تاريخ الاقتطاع.</p>
+            </div>
+            <div class="info-card" style="border-left:4px solid #3b82f6;">
+              <h4 data-i18n="sntf_carte_ar"><i class="fa-solid fa-id-card"></i> البطاقة الخضراء</h4>
+              <p data-i18n="sntf_carte_desc">صالحة على متن القطارات الكهربائية لضاحية الجزائر. تخفيض 30% (أسبوعي)، 40% (شهري، فصلي، سنوي). عدد الرحلات غير محدود.</p>
+            </div>
+          </div>
+
+          <!-- الجزائر - تبسة -->
+          <div class="sncf-badge bg-green" style="background:linear-gradient(135deg,#059669,#10b981);"><i class="fa-solid fa-train"></i> الجزائر - تبسة - الجزائر (ليلي)</div>
+          <table class="train-table">
+            <thead><tr><th>المحطة</th><th>الانطلاق (السبت، الاثنين، الأربعاء)</th><th>الانطلاق (الأحد، الثلاثاء، الخميس)</th></tr></thead>
+            <tbody>
+              <tr><td>تبسة</td><td>17:30</td><td>06:51</td></tr>
+              <tr><td>مرسط</td><td>18:02</td><td>06:18</td></tr>
+              <tr><td>سيدي يحيى</td><td>18:18</td><td>06:02</td></tr>
+              <tr><td>عين البيضاء</td><td>19:33</td><td>04:43</td></tr>
+              <tr><td>أم البواقي</td><td>20:07</td><td>04:10</td></tr>
+              <tr><td>عين فكرون</td><td>20:45</td><td>03:33</td></tr>
+              <tr><td>عين مليلة</td><td>21:23</td><td>02:55</td></tr>
+              <tr><td>القرزي</td><td>21:35</td><td>02:26</td></tr>
+              <tr><td>تلاڤمة</td><td>22:18</td><td>02:03</td></tr>
+              <tr><td>تاجنات</td><td>22:49</td><td>01:30</td></tr>
+              <tr><td>الملمة</td><td>23:11</td><td>01:08</td></tr>
+              <tr><td>سطيف</td><td>23:39</td><td>00:39</td></tr>
+              <tr><td>برج بوعريريج</td><td>00:28</td><td>23:48</td></tr>
+              <tr><td>المنصورة</td><td>01:07</td><td>23:20</td></tr>
+              <tr><td>بني منصور</td><td>01:45</td><td>22:40</td></tr>
+              <tr><td>البويرة</td><td>02:37</td><td>21:53</td></tr>
+              <tr><td>الثنية</td><td>03:57</td><td>20:37</td></tr>
+              <tr><td>بومرداس</td><td>04:08</td><td>20:27</td></tr>
+              <tr><td>آغا (الجزائر)</td><td>05:50</td><td>19:40</td></tr>
+            </tbody>
+          </table>
+
+          <!-- الجزائر - عنابة -->
+          <div class="sncf-badge" style="background:linear-gradient(135deg,#dc2626,#ef4444);"><i class="fa-solid fa-train"></i> الجزائر - عنابة - الجزائر (ليلي)</div>
+          <table class="train-table">
+            <thead><tr><th>المحطة</th><th>الانطلاق (الأحد، الثلاثاء، الخميس)</th><th>الانطلاق (الاثنين، الأربعاء، الجمعة)</th></tr></thead>
+            <tbody>
+              <tr><td>عنابة</td><td>18:40</td><td>07:06</td></tr>
+              <tr><td>الثنية</td><td>19:35</td><td>06:48</td></tr>
+              <tr><td>البويرة</td><td>20:51</td><td>06:06</td></tr>
+              <tr><td>بني منصور</td><td>21:38</td><td>04:49</td></tr>
+              <tr><td>المنصورة</td><td>21:59</td><td>03:59</td></tr>
+              <tr><td>برج بوعريريج</td><td>22:46</td><td>03:20</td></tr>
+              <tr><td>سطيف</td><td>23:37</td><td>02:47</td></tr>
+              <tr><td>الملمة</td><td>00:06</td><td>01:57</td></tr>
+              <tr><td>تاجنات</td><td>00:29</td><td>01:26</td></tr>
+              <tr><td>تلاڤمة</td><td>01:02</td><td>01:05</td></tr>
+              <tr><td>القرزي</td><td>01:26</td><td>00:34</td></tr>
+              <tr><td>الخروب</td><td>02:00</td><td>00:14</td></tr>
+              <tr><td>قسنطينة</td><td>02:28</td><td>23:58</td></tr>
+              <tr><td>الحرش</td><td>03:44</td><td>23:34</td></tr>
+              <tr><td>رمضان جمال</td><td>04:00</td><td>22:37</td></tr>
+              <tr><td>عزابة</td><td>04:25</td><td>22:21</td></tr>
+              <tr><td>عنابة</td><td>05:28</td><td>21:00</td></tr>
+            </tbody>
+          </table>
+
+          <!-- الجزائر - قسنطينة -->
+          <div class="sncf-badge" style="background:linear-gradient(135deg,#7c3aed,#8b5cf6);"><i class="fa-solid fa-train"></i> الجزائر - قسنطينة - الجزائر (ليلي)</div>
+          <table class="train-table">
+            <thead><tr><th>المحطة</th><th>الانطلاق (الأحد، الثلاثاء، الخميس)</th><th>الانطلاق (السبت، الاثنين، الأربعاء)</th></tr></thead>
+            <tbody>
+              <tr><td>قسنطينة</td><td>18:13</td><td>17:30</td></tr>
+              <tr><td>الخروب</td><td>18:40</td><td>17:58</td></tr>
+              <tr><td>الثنية</td><td>18:50</td><td>18:25</td></tr>
+              <tr><td>البويرة</td><td>20:05</td><td>19:25</td></tr>
+              <tr><td>بني منصور</td><td>20:53</td><td>19:54</td></tr>
+              <tr><td>برج بوعريريج</td><td>21:59</td><td>20:24</td></tr>
+              <tr><td>المسيلة</td><td>22:50</td><td>21:03</td></tr>
+              <tr><td>بريكة</td><td>00:32</td><td>21:32</td></tr>
+              <tr><td>سڤانة</td><td>00:48</td><td>21:50</td></tr>
+              <tr><td>عين توتة</td><td>01:09</td><td>23:12</td></tr>
+              <tr><td>القطارة</td><td>02:41</td><td>00:17</td></tr>
+              <tr><td>لوطاية</td><td>02:31</td><td>01:42</td></tr>
+              <tr><td>بسكرة</td><td>03:00</td><td>02:34</td></tr>
+              <tr><td>المغير</td><td>04:02</td><td>03:53</td></tr>
+              <tr><td>جامعة</td><td>04:29</td><td>04:07</td></tr>
+              <tr><td>آغا</td><td>05:00</td><td>04:56</td></tr>
+            </tbody>
+          </table>
+
+          <!-- الجزائر - بجاية -->
+          <div class="sncf-badge" style="background:linear-gradient(135deg,#0f766e,#14b8a6);"><i class="fa-solid fa-train"></i> الجزائر - بجاية</div>
+          <table class="train-table">
+            <thead><tr><th>المحطة</th><th>الانطلاق (يومي)</th><th>الانطلاق (يومي)</th></tr></thead>
+            <tbody>
+              <tr><td>بجاية</td><td>06:30</td><td>14:33</td></tr>
+              <tr><td>وادي غير</td><td>06:42</td><td>15:03</td></tr>
+              <tr><td>القصر</td><td>06:54</td><td>15:30</td></tr>
+              <tr><td>سيدي عيش</td><td>07:11</td><td>15:51</td></tr>
+              <tr><td>تيفرتس</td><td>07:19</td><td>16:14</td></tr>
+              <tr><td>إيڤزر أ مقران</td><td>07:25</td><td>16:45</td></tr>
+              <tr><td>أقبو</td><td>07:35</td><td>16:59</td></tr>
+              <tr><td>الالاغن</td><td>07:48</td><td>17:13</td></tr>
+              <tr><td>تازمالت</td><td>07:54</td><td>17:20</td></tr>
+              <tr><td>بني منصور</td><td>08:03</td><td>17:33</td></tr>
+              <tr><td>أحفيظ</td><td>08:15</td><td>17:44</td></tr>
+              <tr><td>المجية</td><td>08:25</td><td>17:50</td></tr>
+              <tr><td>البويرة</td><td>08:53</td><td>17:56</td></tr>
+              <tr><td>ذراع الميزان</td><td>09:23</td><td>18:13</td></tr>
+              <tr><td>الأخضرية</td><td>09:41</td><td>18:26</td></tr>
+              <tr><td>بومرداس</td><td>10:08</td><td>18:38</td></tr>
+              <tr><td>آغا (الجزائر)</td><td>10:39</td><td>14:33</td></tr>
+            </tbody>
+          </table>
+
+          <!-- الجزائر - وهران -->
+          <div class="sncf-badge" style="background:linear-gradient(135deg,#be185d,#ec4899);"><i class="fa-solid fa-train"></i> الجزائر - وهران - الجزائر</div>
+          <table class="train-table">
+            <thead><tr><th>المحطة</th><th>1001</th><th>1003</th><th>1002</th><th>1004</th></tr></thead>
+            <tbody>
+              <tr><td>آغا (الجزائر)</td><td>05:50</td><td>08:00</td><td>14:00</td><td>17:00</td></tr>
+              <tr><td>بومرداس</td><td>-</td><td>-</td><td>14:17</td><td>-</td></tr>
+              <tr><td>الثنية</td><td>07:44</td><td>08:44</td><td>06:34</td><td>17:44</td></tr>
+              <tr><td>البويرة</td><td>06:26</td><td>14:36</td><td>14:35</td><td>-</td></tr>
+              <tr><td>المنصورة</td><td>07:21</td><td>-</td><td>-</td><td>-</td></tr>
+              <tr><td>برج بوعريريج</td><td>07:32</td><td>-</td><td>-</td><td>-</td></tr>
+              <tr><td>عين التوتة</td><td>07:40</td><td>09:58</td><td>07:58</td><td>18:32</td></tr>
+              <tr><td>شلف</td><td>07:40</td><td>09:58</td><td>08:44</td><td>18:55</td></tr>
+              <tr><td>واد الشفة</td><td>07:50</td><td>-</td><td>10:05</td><td>19:04</td></tr>
+              <tr><td>المطاق</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+              <tr><td>عين التوتة</td><td>08:10</td><td>16:27</td><td>-</td><td>-</td></tr>
+              <tr><td>بومرداس</td><td>-</td><td>17:19</td><td>-</td><td>-</td></tr>
+              <tr><td>واد أرهيو</td><td>08:46</td><td>-</td><td>-</td><td>-</td></tr>
+              <tr><td>بومرداس</td><td>-</td><td>17:19</td><td>-</td><td>-</td></tr>
+              <tr><td>غليزان</td><td>09:36</td><td>19:51</td><td>17:57</td><td>11:30</td></tr>
+              <tr><td>المحمدية</td><td>10:09</td><td>18:30</td><td>11:58</td><td>20:18</td></tr>
+              <tr><td>سيدي بلعباس</td><td>10:28</td><td>-</td><td>18:49</td><td>-</td></tr>
+              <tr><td>وادي تليلات</td><td>10:45</td><td>19:06</td><td>-</td><td>-</td></tr>
+              <tr><td>وهران</td><td>11:05</td><td>22:04</td><td>19:24</td><td>12:38</td></tr>
+            </tbody>
+          </table>
+
         </div></div>
       </div>
 
+      <!-- Apps VTC -->
       <div class="glass-card acc-item" id="acc-apps">
         <button class="acc-btn" onclick="toggleAccordion('acc-apps')">
           <div class="acc-left"><div class="acc-icon"><i class="fa-solid fa-mobile-screen"></i></div><span data-i18n="apps_title">تطبيقات النقل الذكي (VTC)</span></div>
           <i class="fa-solid fa-chevron-down acc-chevron"></i>
         </button>
         <div class="acc-body"><div class="acc-inner">
-          <div class="info-card"><h4>Yassir</h4><p data-i18n="yassir_desc">الأكثر شعبية في الجزائر.</p><a href="https://yassir.com" target="_blank" class="btn-link btn-amber" style="margin-top:6px;display:inline-flex;padding:7px 12px;border-radius:8px;font-size:.75rem;font-weight:800;text-decoration:none;background:var(--primary-hover);color:#fff;"><i class="fa-solid fa-download"></i> <span data-i18n="download">تحميل</span></a></div>
+          <div class="info-card"><h4>Yassir</h4><p data-i18n="yassir_desc">الأكثر شعبية في الجزائر.</p><a href="https://yassir.com" target="_blank" class="btn-download btn-amber" style="background:var(--primary-hover);"><i class="fa-solid fa-download"></i> <span data-i18n="download">تحميل</span></a></div>
           <div class="info-card"><h4>Heetch</h4><p data-i18n="heetch_desc">تطبيق منتشر في العاصمة.</p></div>
           <div class="info-card"><h4>InDrive</h4><p data-i18n="indrive_desc">اقترح السعر وتفاوض مع السائق.</p></div>
         </div></div>
       </div>
     </section>
 
-    <!-- PANEL 3 -->
+    <!-- PANEL 3 (CARPOOL) -->
     <section class="panel" id="panel-carpool">
       <div class="glass-card" style="padding:22px;">
         <h2 style="margin:0 0 14px;font-size:1.2rem;font-weight:900;display:flex;align-items:center;gap:8px;">
@@ -626,13 +806,25 @@
         proches_title:"أقرب محطات النقل للمدرسة (ENSTP)",
         proches_1_t:"محطة الحافلات (أمام CNEP)", proches_1_p:"350 متر (5 دقائق مشياً).",
         proches_2_t:"المحطة البرية القبة", proches_2_p:"500 متر (7 دقائق مشياً).",
-        proches_3_t:"محطة  (etusa)", proches_3_p:"950 متر (14 دقيقة مشياً).",
-        metro_title:"الميترو والترامواي", metro_near:"أقرب محطة ميترو للمدرسة", metro_near_desc:"محطة بدر.",
+        proches_3_t:"محطة القطار (الآغا)", proches_3_p:"950 متر (14 دقيقة مشياً).",
+        proches_4_t:"محطة الترامواي (القبة)", proches_4_p:"400 متر (6 دقائق مشياً).",
+        etusa_title:"حافلات ETUSA - محطة القبة",
+        etusa_search_ph:"ابحث عن خط...",
+        etusa_choose:"-- اختر الخط --",
+        etusa_badge:"ETUSA",
+        metro_title:"الميترو والترامواي", metro_near:"أقرب محطة ميترو للمدرسة", metro_near_desc:"محطة حسيبة بوعلام.",
         metro_ticket:"مترو: 50 دج", tram_ticket:"ترامواي: 40 دج", etwassel_ticket:"eTWASSEL: 150 دج/سنة",
         metro_map_title:"خريطة محطات المترو والترامواي",
         metro_stations_title:"محطات المترو (الخط 1)",
         tram_stations_title:"محطات الترامواي (المحور الشرقي)",
         metro_video_title:"فيديو تعريفي عن المترو",
+        sntf_title:"قطارات SNTF (الخطوط الطويلة)",
+        sntf_dl_drive:"تحميل كل المواعيد (Drive)",
+        sntf_web:"الموقع الرسمي",
+        sntf_ticket_ar:"تذكرة ذهاب - إياب",
+        sntf_ticket_desc:"تخفيضات تصل إلى 20% لمن يقطع مسافة أكثر من 400 كم. صالحة لمدة شهرين.",
+        sntf_carte_ar:"البطاقة الخضراء",
+        sntf_carte_desc:"صالحة على متن القطارات الكهربائية لضاحية الجزائر. تخفيض 30% (أسبوعي)، 40% (شهري، فصلي، سنوي).",
         train_title:"قطارات SNTF (الخطوط الطويلة)",
         train_1_t:"الجزائر ↔ وهران", train_1_p:"الذهاب: 06:00 | 08:00 | 14:00 | 17:00",
         train_2_t:"الجزائر ↔ عنابة (ليلي)", train_2_p:"الذهاب: 18:40",
@@ -672,13 +864,25 @@
         proches_title:"Arrêts proches de l'ENSTP",
         proches_1_t:"Arrêt bus (face CNEP)", proches_1_p:"350 m (5 min à pied).",
         proches_2_t:"Gare routière Kouba", proches_2_p:"500 m (7 min à pied).",
-        proches_3_t:"Gare kouba (Etusa)", proches_3_p:"950 m (14 min à pied).",
+        proches_3_t:"Gare SNTF Agha", proches_3_p:"950 m (14 min à pied).",
+        proches_4_t:"Tramway Kouba", proches_4_p:"400 m (6 min à pied).",
+        etusa_title:"Bus ETUSA - Station de Kouba",
+        etusa_search_ph:"Rechercher une ligne...",
+        etusa_choose:"-- Choisir la ligne --",
+        etusa_badge:"ETUSA",
         metro_title:"Métro et Tramway", metro_near:"Station métro la plus proche", metro_near_desc:"Station Hassiba Boualem.",
         metro_ticket:"Métro : 50 DA", tram_ticket:"Tramway : 40 DA", etwassel_ticket:"eTWASSEL : 150 DA/an",
         metro_map_title:"Carte des stations de métro et tramway",
         metro_stations_title:"Stations de métro (Ligne 1)",
         tram_stations_title:"Stations de tramway (Axe Est)",
         metro_video_title:"Vidéo de présentation du métro",
+        sntf_title:"Trains SNTF (longues distances)",
+        sntf_dl_drive:"Télécharger tous les horaires (Drive)",
+        sntf_web:"Site officiel",
+        sntf_ticket_ar:"Billet aller - retour",
+        sntf_ticket_desc:"Réductions jusqu'à 20% pour tout trajet de plus de 400 km. Valable 2 mois.",
+        sntf_carte_ar:"Carte Verte",
+        sntf_carte_desc:"Valable sur les automotrices de la banlieue d'Alger. -30% (hebdo), -40% (mensuel, trimestriel, annuel).",
         train_title:"Trains SNTF (longues distances)",
         train_1_t:"Alger ↔ Oran", train_1_p:"Aller : 06:00 | 08:00 | 14:00 | 17:00",
         train_2_t:"Alger ↔ Annaba (nuit)", train_2_p:"Aller : 18:40",
@@ -718,13 +922,25 @@
         proches_title:"Nearby stops (ENSTP)",
         proches_1_t:"Bus stop (facing CNEP)", proches_1_p:"350 m (5 min walk).",
         proches_2_t:"Kouba bus station", proches_2_p:"500 m (7 min walk).",
-        proches_3_t:"SNTF station (ENS)", proches_3_p:"950 m (14 min walk).",
+        proches_3_t:"Agha Train Station (SNTF)", proches_3_p:"950 m (14 min walk).",
+        proches_4_t:"Kouba Tram Station", proches_4_p:"400 m (6 min walk).",
+        etusa_title:"ETUSA Buses - Kouba Station",
+        etusa_search_ph:"Search a line...",
+        etusa_choose:"-- Choose line --",
+        etusa_badge:"ETUSA",
         metro_title:"Metro & Tramway", metro_near:"Nearest metro station", metro_near_desc:"Hassiba Boualem station.",
         metro_ticket:"Metro: 50 DA", tram_ticket:"Tram: 40 DA", etwassel_ticket:"eTWASSEL: 150 DA/year",
         metro_map_title:"Map of metro and tramway stations",
         metro_stations_title:"Metro stations (Line 1)",
         tram_stations_title:"Tramway stations (East Axis)",
         metro_video_title:"Metro presentation video",
+        sntf_title:"SNTF trains (long distance)",
+        sntf_dl_drive:"Download all schedules (Drive)",
+        sntf_web:"Official website",
+        sntf_ticket_ar:"Round-trip ticket",
+        sntf_ticket_desc:"Up to 20% discount for trips over 400 km. Valid 2 months.",
+        sntf_carte_ar:"Green Card",
+        sntf_carte_desc:"Valid on Algiers suburban trains. -30% (weekly), -40% (monthly, quarterly, yearly).",
         train_title:"SNTF trains (long distance)",
         train_1_t:"Algiers ↔ Oran", train_1_p:"Outbound: 06:00 | 08:00 | 14:00 | 17:00",
         train_2_t:"Algiers ↔ Annaba (night)", train_2_p:"Outbound: 18:40",
@@ -844,6 +1060,76 @@
       });
     });
 
+    // ===== ETUSA BUSES DATA =====
+    const ETUSA_LINES = [
+      {
+        id: 'etusa-189',
+        name: 'LIGNE 189 : Place du 1er Mai ↔ Station Intermédiaire de Kouba',
+        days: ['sun','mon','tue','wed','thu','fri','sat'],
+        trips: [
+          { k:'go', label:'Place du 1er Mai → Station Intermédiaire de Kouba',
+            byDay:{sun:['06:50','07:20','07:50','08:30','09:00','09:30','10:10','10:40','11:10','11:50','12:20','12:50','13:20','13:50','14:20','15:00','15:30','16:00','16:40','17:10','17:40','18:20','18:50','19:20']}},
+          { k:'back', label:'Station Intermédiaire de Kouba → Place du 1er Mai',
+            byDay:{sun:['06:00','06:30','07:00','07:40','08:10','08:40','09:20','09:50','10:20','11:00','11:30','12:00','12:30','13:00','13:30','14:10','14:40','15:10','15:50','16:20','16:50','17:30','18:00','18:30']}}
+        ]
+      },
+      {
+        id: 'etusa-l06-main',
+        name: 'LIGNE L06 (Principal) : Place des Martyrs ↔ Station Intermédiaire de Kouba',
+        days: ['sun','mon','tue','wed','thu','fri','sat'],
+        trips: [
+          { k:'go', label:'Place des Martyrs → Station Intermédiaire de Kouba',
+            byDay:{sun:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']}},
+          { k:'back', label:'Station Intermédiaire de Kouba → Place des Martyrs',
+            byDay:{sun:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']}}
+        ]
+      },
+      {
+        id: 'etusa-l06-sec',
+        name: 'LIGNE L06 (Secondaire) : Place des Martyrs ↔ Station Intermédiaire de Kouba',
+        days: ['sun','mon','tue','wed','thu','fri','sat'],
+        trips: [
+          { k:'go', label:'Place des Martyrs → Station Intermédiaire de Kouba',
+            byDay:{sun:['06:45','08:20','10:00','11:40','13:20','15:00','16:40']}},
+          { k:'back', label:'Station Intermédiaire de Kouba → Place des Martyrs',
+            byDay:{sun:['05:45','07:30','09:10','10:50','12:10','14:10','15:50','17:30']}}
+        ]
+      },
+      {
+        id: 'etusa-l18',
+        name: 'LIGNE L18 : Bachdjarab ↔ Hôpital Militaire',
+        days: ['sun','mon','tue','wed','thu','fri','sat'],
+        trips: [
+          { k:'go', label:'Bachdjarab → Hôpital Militaire',
+            byDay:{sun:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']}},
+          { k:'back', label:'Hôpital Militaire → Bachdjarab',
+            byDay:{sun:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']}}
+        ]
+      },
+      {
+        id: 'etusa-l33',
+        name: 'LIGNE L33 : Place Audin ↔ Station Intermédiaire de Kouba',
+        days: ['sun','mon','tue','wed','thu','fri','sat'],
+        trips: [
+          { k:'go', label:'Place Audin → Station Intermédiaire de Kouba',
+            byDay:{sun:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']}},
+          { k:'back', label:'Station Intermédiaire de Kouba → Place Audin',
+            byDay:{sun:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']}}
+        ]
+      },
+      {
+        id: 'etusa-l82',
+        name: 'LIGNE L82 : El Harrach ↔ Station Intermédiaire de Kouba',
+        days: ['sun','mon','tue','wed','thu','fri','sat'],
+        trips: [
+          { k:'go', label:'El Harrach → Station Intermédiaire de Kouba',
+            byDay:{sun:['06:00','06:40','08:00','08:40','10:10','10:50','12:10','12:50','13:50','14:30','15:50','16:30','17:50','18:30']}},
+          { k:'back', label:'Station Intermédiaire de Kouba → El Harrach',
+            byDay:{sun:['06:50','07:30','09:10','09:50','11:10','11:50','13:00','13:40','14:50','15:30','16:50','17:30']}}
+        ]
+      }
+    ];
+
     const $=id=>document.getElementById(id);
     const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const toMin=s=>{const[h,m]=s.split(':').map(Number);return h*60+m};
@@ -949,6 +1235,84 @@
 
     function selectDay(d){ currentDay=d; renderSchedule(zoneId); }
 
+    // ===== ETUSA UI =====
+    let etusaLineId = null;
+    let etusaCurrentDay = dayOf();
+
+    function drawEtusaDestinations(){
+      const sel = document.getElementById('etusaSelect');
+      if(!sel) return;
+      let h = '<option value="" disabled '+(etusaLineId?'':'selected')+'>'+esc(t('etusa_choose'))+'</option>';
+      ETUSA_LINES.forEach(l => {
+        h += '<option value="'+l.id+'"'+(l.id===etusaLineId?' selected':'')+'>'+esc(l.name)+'</option>';
+      });
+      sel.innerHTML = h;
+    }
+
+    function clearEtusaSearch(){
+      const i = document.getElementById('etusaSearchInput');
+      i.value='';
+      i.dispatchEvent(new Event('input'));
+      i.focus();
+    }
+
+    function initEtusaSearch(){
+      const input = document.getElementById('etusaSearchInput');
+      const counter = document.getElementById('etusaSearchCounter');
+      const sel = document.getElementById('etusaSelect');
+      if(!input||!sel) return;
+      input.addEventListener('input', ()=>{
+        const nq = norm(input.value);
+        let h = '<option value="" disabled '+(etusaLineId?'':'selected')+'>'+esc(t('etusa_choose'))+'</option>';
+        let count = 0;
+        ETUSA_LINES.filter(l => !nq || norm(l.name).includes(nq) || norm(l.id).includes(nq))
+          .forEach(l => { h += '<option value="'+l.id+'"'+(l.id===etusaLineId?' selected':'')+'>'+esc(l.name)+'</option>'; count++; });
+        sel.innerHTML = h;
+        counter.textContent = nq ? (count+' '+t('bus_results_count')) : '';
+      });
+    }
+
+    function renderEtusaSchedule(lineId){
+      etusaLineId = lineId;
+      const line = ETUSA_LINES.find(l => l.id === lineId);
+      if(!line) return;
+
+      document.getElementById('etusaResult').style.display = 'block';
+      document.getElementById('etusaResultTitle').innerText = line.name;
+
+      const today = dayOf();
+      document.getElementById('etusaDaysSelector').innerHTML = line.days.map(d =>
+        `<button class="day-pill ${d===etusaCurrentDay?'active':''} ${d===today?'today':''}" onclick="selectEtusaDay('${d}')">${dayLabel(d)}${d===today?' ●':''}</button>`
+      ).join('');
+
+      const container = document.getElementById('etusaTripsContainer');
+      const nt = nowMin();
+      const isToday = etusaCurrentDay === today;
+
+      container.innerHTML = line.trips.map(tr => {
+        const times = tripTimes(line, tr, etusaCurrentDay);
+        const isGo = tr.k === 'go';
+        if(!times.length) return `<div class="trip-box ${isGo?'go':'back'}"><h4><i class="fa-solid ${isGo?'fa-sun':'fa-moon'}"></i> ${esc(tr.label)}</h4><div class="no-times">${esc(t('no_times'))}</div></div>`;
+        let nextIdx = -1;
+        if(isToday){ for(let i=0;i<times.length;i++){ if(toMin(times[i]) >= nt){ nextIdx = i; break; } } }
+        const chips = times.map((tm,i)=>{
+          let c = 'time-chip';
+          if(isToday && toMin(tm) < nt) c += ' past';
+          if(isToday && i === nextIdx) c += ' next';
+          return `<span class="${c}">${tm}</span>`;
+        }).join('');
+        return `<div class="trip-box ${isGo?'go':'back'}"><h4><i class="fa-solid ${isGo?'fa-sun':'fa-moon'}"></i> ${esc(tr.label)}</h4><div class="times-flex">${chips}</div></div>`;
+      }).join('');
+
+      document.getElementById('etusaCommentsSection').style.display = 'block';
+      if(window.loadEtusaComments) window.loadEtusaComments(lineId);
+    }
+
+    function selectEtusaDay(d){
+      etusaCurrentDay = d;
+      renderEtusaSchedule(etusaLineId);
+    }
+
     // ====== AI CHAT ======
     const aiChatWindow=document.getElementById('aiChatWindow');
     const aiChatBody=document.getElementById('aiChatBody');
@@ -992,10 +1356,19 @@
       const b=document.getElementById('btn-'+savedLang); if(b) b.classList.add('active');
       applyTranslation(savedLang);
       updateThemeBtn();
+      
+      // Init Univ
       drawDestinations();
       initBusSearch();
       document.getElementById('destinationSelect').addEventListener('change', function(){
         if(this.value) renderSchedule(this.value);
+      });
+
+      // Init ETUSA
+      drawEtusaDestinations();
+      initEtusaSearch();
+      document.getElementById('etusaSelect').addEventListener('change', function(){
+        if(this.value) renderEtusaSchedule(this.value);
       });
     });
   </script>
@@ -1021,12 +1394,16 @@
     let currentCommentDest=null;
     let unsubscribeComments=null;
 
+    let etusaCurrentCommentDest = null;
+    let etusaUnsubscribeComments = null;
+
     function escHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
     function tr(key){
       const d = window.TRANSPORT_TRANSLATIONS[localStorage.getItem('enstp_lang')||'ar'] || window.TRANSPORT_TRANSLATIONS.ar;
       return d[key] || key;
     }
 
+    // ===== Univ Comments =====
     window.loadComments=function(destKey){
       currentCommentDest=destKey;
       const list=document.getElementById('commentsList');
@@ -1110,6 +1487,89 @@
       if(!confirm(tr('co_delete_confirm'))) return;
       try{ await deleteDoc(doc(db,"trip_comments",id)); }
       catch(e){ alert(tr('co_error')+e.message); }
+    };
+
+    // ===== ETUSA Comments =====
+    window.loadEtusaComments = function(destKey){
+      etusaCurrentCommentDest = destKey;
+      const list = document.getElementById('etusaCommentsList');
+      const countEl = document.getElementById('etusaCommentsCount');
+      if(!list) return;
+
+      if(etusaUnsubscribeComments){ etusaUnsubscribeComments(); etusaUnsubscribeComments = null; }
+
+      list.innerHTML = '<p class="co-loading"><i class="fa-solid fa-spinner fa-spin"></i> '+escHtml(tr('co_loading'))+'</p>';
+
+      const q = query(
+        collection(db, "etusa_comments"),
+        where("dest", "==", destKey),
+        orderBy("time", "desc")
+      );
+
+      etusaUnsubscribeComments = onSnapshot(q, (snap)=>{
+        if(countEl) countEl.textContent = snap.size + ' ' + tr('comments_count_suffix');
+        if(snap.empty){
+          list.innerHTML = '<p class="co-empty"><i class="fa-solid fa-comment-slash"></i> '+escHtml(tr('co_empty'))+'</p>';
+          return;
+        }
+        let html = '';
+        snap.forEach(d=>{
+          const c = d.data();
+          const id = d.id;
+          const name = (c.name || tr('co_default_name')).trim() || tr('co_default_name');
+          const initial = name.charAt(0).toUpperCase();
+          const dateStr = c.time
+            ? new Date(c.time.toDate()).toLocaleString('ar-DZ',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
+            : '...';
+          const safeText = escHtml(c.text || '').replace(/\n/g,'<br>');
+          const safeName = escHtml(name);
+          html += `<div class="co-item" data-id="${id}">
+            <div class="co-avatar">${escHtml(initial)}</div>
+            <div class="co-body">
+              <div class="co-head">
+                <span class="co-name">${safeName}</span>
+                <span class="co-time">${dateStr}</span>
+              </div>
+              <div class="co-text">${safeText}</div>
+            </div>
+            <button class="co-delete" onclick="deleteEtusaCommentFirebase('${id}')" title="حذف">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>`;
+        });
+        list.innerHTML = html;
+      });
+    };
+
+    window.submitEtusaComment = async function(){
+      if(!etusaCurrentCommentDest) return;
+      const nameEl = document.getElementById('etusaCoName');
+      const textEl = document.getElementById('etusaCoText');
+      const btn = document.getElementById('etusaCoSubmit');
+      const text = textEl.value.trim();
+      if(!text){ textEl.focus(); return; }
+      if(text.length > 300) return alert(tr('co_too_long'));
+
+      btn.disabled = true;
+      try{
+        await addDoc(collection(db, "etusa_comments"), {
+          dest: etusaCurrentCommentDest,
+          name: (nameEl.value.trim() || tr('co_default_name')),
+          text: text,
+          time: serverTimestamp()
+        });
+        textEl.value = '';
+      }catch(e){
+        alert(tr('co_error') + e.message);
+      }finally{
+        btn.disabled = false;
+      }
+    };
+
+    window.deleteEtusaCommentFirebase = async function(id){
+      if(!confirm(tr('co_delete_confirm'))) return;
+      try{ await deleteDoc(doc(db, "etusa_comments", id)); }
+      catch(e){ alert(tr('co_error') + e.message); }
     };
 
     // ===== Carpooling =====
