@@ -41,9 +41,7 @@
     .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
     .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
     .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .25; }
-    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.2 }
-    [data-theme="dark"] .blob-2 { background:#3b82f6; opacity:.15 }
-    [data-theme="dark"] .blob-3 { background:#1e3a8a; opacity:.3 }
+    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.2 } [data-theme="dark"] .blob-2 { background:#3b82f6; opacity:.15 } [data-theme="dark"] .blob-3 { background:#1e3a8a; opacity:.3 }
     @keyframes blobFloat {
       0%,100% { transform: translate(0,0) scale(1); }
       33% { transform: translate(60px,-40px) scale(1.1); }
@@ -123,50 +121,19 @@
 
     /* HERO */
     .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
-    .page-hero h1 {
-      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
-      margin: 0 0 8px; line-height: 1.2;
-    }
-    .page-hero h1 span {
-      background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24);
-      background-size: 200% auto;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-    }
+    .page-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; margin: 0 0 8px; line-height: 1.2; }
+    .page-hero h1 span { background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; }
     .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
 
     /* CONTENT */
     .content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
-
-    .glass-card {
-      background: var(--card-bg);
-      border: 1.5px solid var(--border-color);
-      border-radius: 22px;
-      box-shadow: var(--shadow-sm);
-      transition: all .3s;
-    }
+    .glass-card { background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 22px; box-shadow: var(--shadow-sm); transition: all .3s; }
     .glass-card:hover { box-shadow: var(--shadow-md); }
 
-    .residence-card {
-      background: var(--card-bg); border: 1.5px solid var(--border-color);
-      border-radius: 22px; padding: 24px;
-      cursor: pointer; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-      box-shadow: var(--shadow-sm);
-      transition: all .35s cubic-bezier(.34,1.56,.64,1);
-      position: relative;
-    }
-    .residence-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: var(--orange);
-      box-shadow: 0 25px 50px -12px rgba(249,115,22,.25);
-    }
-    .residence-icon {
-      width: 80px; height: 80px; border-radius: 22px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; transition: all .3s;
-    }
+    /* RESIDENCE CARDS */
+    .residence-card { background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 22px; padding: 24px; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; box-shadow: var(--shadow-sm); transition: all .35s cubic-bezier(.34,1.56,.64,1); position: relative; }
+    .residence-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--orange); box-shadow: 0 25px 50px -12px rgba(249,115,22,.25); }
+    .residence-icon { width: 80px; height: 80px; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: all .3s; }
     .residence-card:hover .residence-icon { transform: rotate(-8deg) scale(1.1); }
     .residence-icon.orange { background: rgba(249,115,22,.15); color: var(--orange); }
     .residence-card:hover .residence-icon.orange { background: var(--orange); color: #fff; }
@@ -174,307 +141,65 @@
     .residence-card:hover .residence-icon.amber { background: var(--primary-hover); color: #fff; }
     .residence-icon.red { background: rgba(239,68,68,.15); color: #ef4444; }
     .residence-card:hover .residence-icon.red { background: #ef4444; color: #fff; }
-    .residence-title {
-      font-size: 1.15rem; font-weight: 900; color: var(--text-main); margin: 0 0 4px;
-    }
+    .residence-title { font-size: 1.15rem; font-weight: 900; color: var(--text-main); margin: 0 0 4px; }
     .residence-sub { font-size: .78rem; color: var(--text-muted); font-weight: 600; margin: 0; }
-    .residence-badge {
-      font-size: .7rem; font-weight: 800; padding: 5px 12px; border-radius: 20px;
-      background: rgba(249,115,22,.12); color: var(--orange-dark);
-    }
+    .residence-badge { font-size: .7rem; font-weight: 800; padding: 5px 12px; border-radius: 20px; background: rgba(249,115,22,.12); color: var(--orange-dark); }
     [data-theme="dark"] .residence-badge { background: rgba(249,115,22,.2); color: #fdba74; }
 
     /* Gender badge */
-    .gender-badge {
-      position: absolute; top: 12px; left: 12px;
-      padding: 4px 12px; border-radius: 20px;
-      font-size: .7rem; font-weight: 800;
-      display: inline-flex; align-items: center; gap: 4px;
-      z-index: 2;
-    }
+    .gender-badge { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: .7rem; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; z-index: 2; }
     .gender-badge.girls { background: rgba(236,72,153,.15); color: #be185d; }
     .gender-badge.boys { background: rgba(59,130,246,.15); color: #2563eb; }
     [data-theme="dark"] .gender-badge.girls { background: rgba(236,72,153,.25); color: #f9a8d4; }
     [data-theme="dark"] .gender-badge.boys { background: rgba(59,130,246,.25); color: #93c5fd; }
 
-    /* ============================================================ */
-    /* 🧭 BOUSSOLE QIBLA AMÉLIORÉE                                   */
-    /* ============================================================ */
-    .qibla-section {
-      background: linear-gradient(135deg, rgba(251,191,36,.08), rgba(249,115,22,.05));
-      border: 1.5px solid rgba(249,115,22,.25);
-      border-radius: 22px;
-      padding: 28px;
-      margin-top: 30px;
-      position: relative;
-      overflow: hidden;
-    }
-    .qibla-section::before {
-      content: ''; position: absolute; top: -50%; right: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(251,191,36,.15) 0%, transparent 60%);
-      animation: qiblaGlow 8s ease-in-out infinite; pointer-events: none;
-    }
-    [data-theme="dark"] .qibla-section { background: linear-gradient(135deg, rgba(251,191,36,.1), rgba(249,115,22,.08)); }
-    @keyframes qiblaGlow {
-      0%,100% { transform: scale(1); opacity: .5; }
-      50% { transform: scale(1.1); opacity: .8; }
-    }
-    .qibla-header { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border-color); margin-bottom: 24px; position: relative; z-index: 1; }
-    .qibla-header-icon {
-      width: 48px; height: 48px; border-radius: 14px;
-      background: linear-gradient(135deg,#fbbf24,#f97316);
-      color: #fff; display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; box-shadow: 0 6px 18px rgba(249,115,22,.35);
-    }
-    .qibla-header h3 { margin: 0 0 2px; font-size: 1.2rem; font-weight: 900; color: var(--text-main); }
-    .qibla-header p { margin: 0; font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+    /* SECTIONS */
+    .sec-head { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border-color); margin-bottom: 20px; }
+    .sec-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; flex-shrink: 0; }
+    .sec-head h2 { margin: 0 0 2px; font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
+    .sec-head p { margin: 0; font-size: .78rem; color: var(--text-muted); font-weight: 600; }
 
-    .qibla-body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-    @media(max-width:768px){ .qibla-body { grid-template-columns: 1fr; } }
-
-    /* Compass */
-    .compass-wrapper {
-      display: flex; justify-content: center; align-items: center;
-      position: relative;
-    }
-    .compass {
-      width: 260px; height: 260px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 25%, #fff7ed, #fed7aa 60%, #fbbf24 100%);
-      position: relative;
-      box-shadow:
-        0 25px 50px rgba(249,115,22,.35),
-        inset 0 0 30px rgba(255,255,255,.6),
-        inset 0 -10px 20px rgba(249,115,22,.2);
-      border: 4px solid #fff;
-      display: flex; align-items: center; justify-content: center;
-    }
-    [data-theme="dark"] .compass {
-      background: radial-gradient(circle at 30% 25%, #1e3a8a, #0f1e41 60%, #0a1128 100%);
-      box-shadow:
-        0 25px 50px rgba(0,0,0,.5),
-        inset 0 0 30px rgba(59,130,246,.3),
-        inset 0 -10px 20px rgba(0,0,0,.4);
-      border-color: #1e3a8a;
-    }
-    .compass .tick {
-      position: absolute; left: 50%; top: 6px;
-      width: 2px; height: 10px; background: #7c2d12;
-      transform-origin: center 124px;
-      border-radius: 2px; opacity: .6;
-    }
-    [data-theme="dark"] .compass .tick { background: #60a5fa; opacity: .7; }
-    .compass .tick.major { height: 16px; width: 3px; background: #7c2d12; opacity: .9; }
-    [data-theme="dark"] .compass .tick.major { background: #93c5fd; }
-    .compass .cardinal {
-      position: absolute; font-weight: 900; font-size: .85rem; color: #7c2d12;
-      font-family: 'Cairo', sans-serif;
-    }
-    [data-theme="dark"] .compass .cardinal { color: #93c5fd; }
-    .compass .cardinal.n { top: 18px; left: 50%; transform: translateX(-50%); color: #dc2626; font-size: 1rem; }
-    [data-theme="dark"] .compass .cardinal.n { color: #f87171; }
-    .compass .cardinal.s { bottom: 18px; left: 50%; transform: translateX(-50%); }
-    .compass .cardinal.e { right: 18px; top: 50%; transform: translateY(-50%); }
-    .compass .cardinal.w { left: 18px; top: 50%; transform: translateY(-50%); }
-
-    .compass-needle-wrap {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      transform-origin: center center;
-      transition: transform .35s cubic-bezier(.34,1.56,.64,1);
-      z-index: 15;
-      pointer-events: none;
-    }
-    .compass-needle-kaaba {
-      position: absolute; top: 14px; left: 50%;
-      transform: translateX(-50%);
-      width: 34px; height: 34px; border-radius: 50%;
-      background: linear-gradient(135deg,#10b981,#059669);
-      color: #fff; display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; box-shadow: 0 6px 18px rgba(16,185,129,.6);
-      animation: kaabaPulse 2s ease-in-out infinite;
-    }
-    @keyframes kaabaPulse {
-      0%,100% { box-shadow: 0 6px 18px rgba(16,185,129,.6); transform: translateX(-50%) scale(1); }
-      50% { box-shadow: 0 6px 28px rgba(16,185,129,.9); transform: translateX(-50%) scale(1.08); }
-    }
-    .compass-needle-bar {
-      position: absolute; top: 40px; left: 50%;
-      width: 4px; height: 78px;
-      background: linear-gradient(to bottom, #10b981, #059669);
-      transform: translateX(-50%);
-      border-radius: 2px;
-      box-shadow: 0 0 12px rgba(16,185,129,.7);
-    }
-    .compass-needle-bar::after {
-      content: ''; position: absolute; bottom: -6px; left: 50%;
-      transform: translateX(-50%);
-      width: 0; height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-top: 10px solid #059669;
-    }
-    .compass-center-dot {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 20px; height: 20px; border-radius: 50%;
-      background: radial-gradient(circle, #ea580c, #7c2d12);
-      border: 3px solid #fff;
-      box-shadow: 0 3px 10px rgba(0,0,0,.3);
-      z-index: 20;
-    }
-
-    .qibla-info-panel { display: flex; flex-direction: column; gap: 14px; }
-    .angle-card {
-      background: linear-gradient(135deg, #fbbf24, #f97316);
-      color: #fff; padding: 18px 20px; border-radius: 18px;
-      box-shadow: 0 12px 30px rgba(249,115,22,.35);
-      text-align: center;
-    }
-    .angle-card .label {
-      font-size: .72rem; font-weight: 800; opacity: .95;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    .angle-card .value {
-      font-size: 2.4rem; font-weight: 900; margin-top: 4px;
-      font-variant-numeric: tabular-nums; letter-spacing: -1px;
-    }
-    .angle-card .direction {
-      font-size: .78rem; font-weight: 700; opacity: .9; margin-top: 2px;
-    }
-    .status-line {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 12px; border-radius: 12px;
-      background: var(--card-bg); border: 1.5px solid var(--border-color);
-      font-size: .85rem; font-weight: 700;
-    }
-    .status-line.success { color: #059669; border-color: rgba(16,185,129,.3); background: rgba(16,185,129,.08); }
-    .status-line.error { color: #dc2626; border-color: rgba(239,68,68,.3); background: rgba(239,68,68,.08); }
-    .status-line.loading { color: var(--orange-dark); border-color: rgba(249,115,22,.3); background: rgba(249,115,22,.08); }
-    [data-theme="dark"] .status-line.success { background: rgba(16,185,129,.15); color: #6ee7b7; }
-    [data-theme="dark"] .status-line.error { background: rgba(239,68,68,.15); color: #fca5a5; }
-    [data-theme="dark"] .status-line.loading { background: rgba(249,115,22,.15); color: #fdba74; }
-    .info-hint {
-      font-size: .75rem; color: var(--text-muted); font-weight: 600;
-      padding: 12px 14px; border-radius: 12px;
-      background: var(--card-bg); border: 1.5px dashed var(--border-color);
-      line-height: 1.6;
-    }
-
-    /* Sections */
-    .section-card { padding: 24px; margin-top: 24px; }
-    .section-header {
-      display: flex; align-items: center; gap: 12px;
-      padding-bottom: 16px; border-bottom: 1.5px solid var(--border-color);
-      margin-bottom: 20px;
-    }
-    .section-header-icon {
-      width: 48px; height: 48px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; color: #fff; flex-shrink: 0;
-    }
-    .section-header h3 { margin: 0 0 2px; font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
-    .section-header p { margin: 0; font-size: .78rem; color: var(--text-muted); font-weight: 600; }
-
-    /* Tables */
-    .table-wrap { overflow-x: auto; border-radius: 14px; border: 1.5px solid var(--border-color); }
-    table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    /* TABLES (Meals) */
+    .table-wrap { overflow-x: auto; border-radius: 14px; border: 1.5px solid var(--border-color); margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; font-size: .8rem; text-align: right; }
     thead { background: rgba(249,115,22,.1); }
     [data-theme="dark"] thead { background: rgba(249,115,22,.15); }
-    th { padding: 12px; text-align: right; font-weight: 900; color: var(--orange-dark); border-bottom: 1.5px solid var(--border-color); }
+    th { padding: 12px; font-weight: 900; color: var(--orange-dark); border-bottom: 1.5px solid var(--border-color); border-left: 1px solid var(--border-color); }
+    th:last-child { border-left: none; }
     [data-theme="dark"] th { color: #fdba74; }
-    td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); color: var(--text-main); }
+    td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); color: var(--text-main); line-height: 1.6; vertical-align: top; }
+    td:last-child { border-left: none; }
     tr:last-child td { border-bottom: none; }
     tr:hover { background: rgba(249,115,22,.04); }
     [data-theme="dark"] tr:hover { background: rgba(249,115,22,.08); }
-    td:first-child { font-weight: 800; color: var(--orange-dark); }
+    td:first-child { font-weight: 800; color: var(--orange-dark); white-space: nowrap; }
     [data-theme="dark"] td:first-child { color: #fdba74; }
 
-    /* Videos & maps */
+    /* MAPS & VIDEOS */
     .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; border: 2px solid var(--border-color); }
     .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .map-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; border: 2px solid var(--border-color); }
     .map-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* Buttons */
-    .btn-back {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 18px; border-radius: 12px;
-      background: var(--card-bg); border: 1.5px solid var(--border-color);
-      color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .85rem;
-      cursor: pointer; transition: all .2s; text-decoration: none;
-      box-shadow: var(--shadow-sm);
-    }
+    /* BUTTONS */
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 12px; background: var(--card-bg); border: 1.5px solid var(--border-color); color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .85rem; cursor: pointer; transition: all .2s; text-decoration: none; box-shadow: var(--shadow-sm); }
     .btn-back:hover { border-color: var(--orange); color: var(--orange); transform: translateX(-3px); }
 
-    /* Activity cards */
-    .activity-card { padding: 16px; border-radius: 14px; border: 1.5px solid; }
-    .activity-card h4 { margin: 0 0 6px; font-size: .9rem; font-weight: 900; }
-    .activity-card p { margin: 0; font-size: .78rem; font-weight: 600; line-height: 1.6; }
-    .activity-card.pink { background: rgba(236,72,153,.06); border-color: rgba(236,72,153,.25); color: #be185d; }
-    [data-theme="dark"] .activity-card.pink { background: rgba(236,72,153,.12); color: #f9a8d4; }
-    .activity-card.amber { background: rgba(245,158,11,.06); border-color: rgba(245,158,11,.25); color: #d97706; }
-    [data-theme="dark"] .activity-card.amber { background: rgba(245,158,11,.12); color: #fcd34d; }
-    .activity-card.purple { background: rgba(139,92,246,.06); border-color: rgba(139,92,246,.25); color: #7c3aed; }
-    [data-theme="dark"] .activity-card.purple { background: rgba(139,92,246,.12); color: #c4b5fd; }
-    .activity-card.blue { background: rgba(59,130,246,.06); border-color: rgba(59,130,246,.25); color: #2563eb; }
-    [data-theme="dark"] .activity-card.blue { background: rgba(59,130,246,.12); color: #93c5fd; }
-    .activity-card.gray { background: rgba(100,116,139,.06); border-color: rgba(100,116,139,.25); color: var(--text-main); }
-    [data-theme="dark"] .activity-card.gray { background: rgba(100,116,139,.12); }
-
     /* CHAT */
-    #chatWindow {
-      position: fixed; bottom: 110px; right: 20px; z-index: 1500;
-      width: 340px; max-height: 480px;
-      background: var(--card-bg); border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.25);
-      border: 1.5px solid var(--border-color);
-      display: none; flex-direction: column; overflow: hidden;
-    }
+    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1500; width: 340px; max-height: 480px; background: var(--card-bg); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,.25); border: 1.5px solid var(--border-color); display: none; flex-direction: column; overflow: hidden; }
     #chatWindow.open { display: flex; }
     @media(max-width:640px){ #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
-    .chat-header {
-      background: linear-gradient(135deg,#f97316,#f59e0b);
-      color: #fff; padding: 14px 16px;
-      display: flex; align-items: center; justify-content: space-between;
-      font-weight: 800;
-    }
+    .chat-header { background: linear-gradient(135deg,#f97316,#f59e0b); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; font-weight: 800; }
     .chat-header span { display: flex; align-items: center; gap: 8px; }
-    .chat-close-btn {
-      width: 28px; height: 28px; border-radius: 8px;
-      background: rgba(255,255,255,.25); border: none; color: #fff;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-    }
-    #chatBody {
-      padding: 12px; overflow-y: auto; height: 320px;
-      font-size: .85rem; display: flex; flex-direction: column; gap: 8px;
-      background: var(--bg-color);
-    }
-    .chat-input-wrap {
-      padding: 8px; border-top: 1px solid var(--border-color);
-      display: flex; gap: 6px; background: var(--card-bg);
-    }
-    #chatInput {
-      flex: 1; padding: 9px 12px;
-      border: 1.5px solid var(--border-color); border-radius: 10px;
-      font-size: .82rem; outline: none; font-family: inherit;
-      background: var(--bg-color); color: var(--text-main);
-    }
+    .chat-close-btn { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,255,255,.25); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    #chatBody { padding: 12px; overflow-y: auto; height: 320px; font-size: .85rem; display: flex; flex-direction: column; gap: 8px; background: var(--bg-color); }
+    .chat-input-wrap { padding: 8px; border-top: 1px solid var(--border-color); display: flex; gap: 6px; background: var(--card-bg); }
+    #chatInput { flex: 1; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: .82rem; outline: none; font-family: inherit; background: var(--bg-color); color: var(--text-main); }
     #chatInput:focus { border-color: var(--orange); }
-    .chat-send-btn {
-      background: var(--orange); color: #fff; border: none;
-      padding: 9px 14px; border-radius: 10px; cursor: pointer;
-    }
+    .chat-send-btn { background: var(--orange); color: #fff; border: none; padding: 9px 14px; border-radius: 10px; cursor: pointer; }
     .chat-send-btn:hover { background: var(--orange-dark); }
 
-    /* Kangourou */
+    /* KANGOUROU */
     .mascot-container { position: fixed; bottom: 22px; right: 22px; z-index: 1000; cursor: pointer; user-select: none; }
     .mascot-kangaroo { width: 70px; height: 90px; filter: drop-shadow(0 10px 15px rgba(249,115,22,.3)); transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
     .mascot-kangaroo.jump { animation: kangarooJump .6s ease; }
@@ -491,16 +216,6 @@
       .top-navbar { padding: 8px 10px; border-radius: 16px; }
       .nav-title { font-size: .85rem; }
       .nav-subtitle { font-size: .6rem; }
-      .compass { width: 220px; height: 220px; }
-      .compass .tick { transform-origin: center 104px; }
-      .qibla-section { padding: 20px; }
-      .angle-card .value { font-size: 2rem; }
-    }
-    @media(max-width:400px){
-      .compass { width: 190px; height: 190px; }
-      .compass .tick { transform-origin: center 89px; }
-      .compass .cardinal { font-size: .72rem; }
-      .compass .cardinal.n { font-size: .85rem; }
     }
   </style>
 </head>
@@ -511,7 +226,6 @@
     <div class="dot dot-1"></div><div class="dot dot-2"></div><div class="dot dot-3"></div><div class="dot dot-4"></div><div class="dot dot-5"></div>
   </div>
 
-  <!-- NAVBAR -->
   <nav class="top-navbar">
     <div class="nav-brand">
       <div class="nav-icon"><i class="fa-solid fa-bed"></i></div>
@@ -547,7 +261,6 @@
     </div>
   </div>
 
-  <!-- HERO -->
   <header class="page-hero">
     <h1><span data-i18n="res_hero_1">دليل</span> <span data-i18n="res_hero_2">الإقامة الجامعية</span></h1>
     <p data-i18n="res_hero_desc">كل ما تحتاجه عن إقامتك الجامعية.</p>
@@ -557,14 +270,13 @@
 
     <!-- MAIN MENU -->
     <div id="mainMenu">
-
-      <!-- Choix résidence -->
       <div style="text-align:center;margin-bottom:24px;">
         <h2 style="font-size:1.5rem;font-weight:900;color:var(--text-main);margin:0 0 6px;" data-i18n="res_subtitle">اختر إقامتك الجامعية</h2>
         <p style="color:var(--text-muted);font-size:.88rem;font-weight:600;margin:0;" data-i18n="res_desc">تعرف على موقع إقامتك، المسافة، المرافق، وجدول الوجبات.</p>
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+        <!-- Said Hamdine -->
         <button onclick="showDetails('hamdine')" class="residence-card">
           <span class="gender-badge girls"><i class="fa-solid fa-venus"></i> <span data-i18n="badge_girls">بنات</span></span>
           <div class="residence-icon orange"><i class="fa-solid fa-building-user"></i></div>
@@ -575,6 +287,7 @@
           <span class="residence-badge">600 سرير</span>
         </button>
 
+        <!-- Youssefi -->
         <button onclick="showDetails('youssefi')" class="residence-card">
           <span class="gender-badge girls"><i class="fa-solid fa-venus"></i> <span data-i18n="badge_girls">بنات</span></span>
           <div class="residence-icon amber"><i class="fa-solid fa-building-user"></i></div>
@@ -585,6 +298,7 @@
           <span class="residence-badge">500 سرير</span>
         </button>
 
+        <!-- Gueridi -->
         <button onclick="showDetails('gueridi')" class="residence-card">
           <span class="gender-badge boys"><i class="fa-solid fa-mars"></i> <span data-i18n="badge_boys">أولاد</span></span>
           <div class="residence-icon red"><i class="fa-solid fa-building-user"></i></div>
@@ -595,55 +309,10 @@
           <span class="residence-badge">1200 سرير</span>
         </button>
       </div>
-
-      <!-- 🧭 QIBLA COMPASS -->
-      <section class="qibla-section">
-        <div class="qibla-header">
-          <div class="qibla-header-icon"><i class="fa-solid fa-compass"></i></div>
-          <div>
-            <h3 data-i18n="qibla_title">بوصلة القبلة</h3>
-            <p data-i18n="qibla_desc">حدد اتجاه القبلة بدقة من موقعك الحالي</p>
-          </div>
-        </div>
-
-        <div class="qibla-body">
-          <div class="compass-wrapper">
-            <div class="compass" id="compass">
-              <div id="compassTicks"></div>
-              <span class="cardinal n">N</span>
-              <span class="cardinal s">S</span>
-              <span class="cardinal e">E</span>
-              <span class="cardinal w">W</span>
-              <div class="compass-needle-wrap" id="needleWrap">
-                <div class="compass-needle-kaaba"><i class="fa-solid fa-kaaba"></i></div>
-                <div class="compass-needle-bar"></div>
-              </div>
-              <div class="compass-center-dot"></div>
-            </div>
-          </div>
-
-          <div class="qibla-info-panel">
-            <div class="angle-card">
-              <div class="label"><i class="fa-solid fa-location-crosshairs"></i> <span data-i18n="qibla_angle">زاوية القبلة من الشمال</span></div>
-              <div class="value" id="qiblaAngle">--°</div>
-              <div class="direction" id="qiblaDirection"></div>
-            </div>
-            <div class="status-line loading" id="qiblaStatus">
-              <i class="fa-solid fa-spinner fa-spin"></i>
-              <span data-i18n="qibla_locating">جاري تحديد موقعك...</span>
-            </div>
-            <div class="info-hint">
-              <i class="fa-solid fa-circle-info" style="color:var(--orange);"></i>
-              <span data-i18n="qibla_info">يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.</span>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
 
     <!-- DETAILS SECTION -->
     <div id="detailsSection" style="display:none;">
-
       <button onclick="hideDetails()" class="btn-back" style="margin-bottom:20px;">
         <i class="fa-solid fa-arrow-right"></i> <span data-i18n="res_back">العودة لقائمة الإقامات</span>
       </button>
@@ -654,6 +323,8 @@
       </div>
 
       <div style="display:grid;grid-template-columns:1fr;gap:20px;">
+        
+        <!-- Map & Distance -->
         <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;" id="mapAndDistance">
           <div class="glass-card" style="padding:16px;">
             <h3 style="font-size:1rem;font-weight:800;color:var(--text-main);margin:0 0 10px;display:flex;align-items:center;gap:8px;">
@@ -671,6 +342,7 @@
           </div>
         </div>
 
+        <!-- Video -->
         <div class="glass-card" style="padding:16px;">
           <h3 style="font-size:1rem;font-weight:800;color:var(--text-main);margin:0 0 10px;display:flex;align-items:center;gap:8px;">
             <i class="fa-brands fa-youtube" style="color:#ef4444;"></i>
@@ -679,7 +351,7 @@
           <div id="videoContainer" class="video-wrap" style="max-width:640px;margin:0 auto;"></div>
         </div>
 
-        <!-- Mosquée (affiché uniquement pour Gueridi) -->
+        <!-- Mosquée (Gueridi only) -->
         <div id="mosqueSection" class="glass-card" style="padding:22px;border:1.5px solid rgba(16,185,129,.25);display:none;">
           <h3 style="font-size:1.1rem;font-weight:900;color:#059669;margin:0 0 6px;display:flex;align-items:center;gap:10px;">
             <i class="fa-solid fa-mosque"></i>
@@ -689,52 +361,117 @@
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
             <div>
               <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-video" style="color:#ef4444;"></i> <span data-i18n="mosque_video">فيديو تعريفي:</span></h4>
-              <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/q9iK6P3XsYA" allowfullscreen loading="lazy"></iframe>
-              </div>
+              <div class="video-wrap"><iframe src="https://www.youtube.com/embed/q9iK6P3XsYA" allowfullscreen loading="lazy"></iframe></div>
             </div>
             <div>
               <h4 style="font-size:.82rem;font-weight:800;color:var(--text-main);margin:0 0 8px;"><i class="fa-solid fa-map-location-dot" style="color:var(--orange);"></i> <span data-i18n="mosque_map">الموقع:</span></h4>
-              <div class="map-wrap">
-                <iframe src="https://maps.google.com/maps?q=36.7293464,3.0733515&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
-              </div>
-              <a href="https://www.google.com/maps/search/?api=1&query=36.7293464,3.0733515" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:#059669;font-weight:800;font-size:.78rem;text-decoration:none;">
-                <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="mosque_open_maps">فتح في خرائط جوجل</span>
-              </a>
+              <div class="map-wrap"><iframe src="https://maps.google.com/maps?q=36.7293464,3.0733515&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe></div>
             </div>
           </div>
         </div>
 
-        <!-- Meals -->
+        <!-- 🍽️ MEALS TABLE -->
         <div class="glass-card" style="padding:22px;">
-          <h3 style="font-size:1.1rem;font-weight:900;color:var(--text-main);margin:0 0 14px;display:flex;align-items:center;gap:10px;">
-            <i class="fa-solid fa-utensils" style="color:var(--orange);"></i>
-            <span data-i18n="res_meals_title">جدول الوجبات الأسبوعي (مشترك)</span>
-          </h3>
+          <div class="sec-head" style="border-bottom:none;padding-bottom:0;margin-bottom:16px;">
+            <div class="sec-icon" style="background:linear-gradient(135deg,#f97316,#ea580c);"><i class="fa-solid fa-utensils"></i></div>
+            <div>
+              <h2 data-i18n="res_meals_title">جدول الوجبات الأسبوعي</h2>
+              <p data-i18n="res_meals_desc">الوجبات مقدمة من الديوان الوطني للخدمات الجامعية.</p>
+            </div>
+          </div>
+          
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th data-i18n="res_day">اليوم</th>
-                  <th data-i18n="res_breakfast">الفطور</th>
-                  <th data-i18n="res_lunch">الغداء</th>
-                  <th data-i18n="res_dinner">العشاء</th>
+                  <th rowspan="2" data-i18n="th_day">اليوم</th>
+                  <th colspan="2" data-i18n="th_breakfast">الفطور</th>
+                  <th colspan="2" data-i18n="th_lunch">الغداء</th>
+                  <th colspan="2" data-i18n="th_dinner">العشاء</th>
+                </tr>
+                <tr>
+                  <th data-i18n="th_qty">الكمية</th><th data-i18n="th_item">المحتوى</th>
+                  <th data-i18n="th_qty">الكمية</th><th data-i18n="th_item">المحتوى</th>
+                  <th data-i18n="th_qty">الكمية</th><th data-i18n="th_item">المحتوى</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td data-i18n="day_sun">الأحد</td><td>حليب، شوكولاطة، خبز، زبدة، مربى، حلويات</td><td>سلطة، عدس، تونة، خبز، فاكهة</td><td>خبز، جبن، تليتلي، فاكهة</td></tr>
-                <tr><td data-i18n="day_mon">الإثنين</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات، جبن</td><td>معكرونة، لحم، صلصة، فاكهة</td><td>خبز، شطيطحة لحم، سلطة، فاكهة</td></tr>
-                <tr><td data-i18n="day_tue">الثلاثاء</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>أرز، دجاج، صلصة، فاكهة</td><td>خبز، أرز بالدجاج، سلطة، فاكهة</td></tr>
-                <tr><td data-i18n="day_wed">الأربعاء</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>كسكس، لحم، خضر، فاكهة</td><td>خبز، كباب باللحم، سلطة، فاكهة</td></tr>
-                <tr><td data-i18n="day_thu">الخميس</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>شربة، لحم، خضر، فاكهة</td><td>خبز، كسكس بالدجاج، سلطة، فاكهة</td></tr>
-                <tr><td data-i18n="day_fri">الجمعة</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>كسكس، دجاج، خضر، فاكهة</td><td>خبز، طاجين زيتون باللحم، سلطة، فاكهة</td></tr>
-                <tr><td data-i18n="day_sat">السبت</td><td>حليب، شوكولاطة، خبز، زبدة، حلويات</td><td>شربة، لحم، خضر، فاكهة</td><td>خبز، مثوم، سلطة، فاكهة</td></tr>
+                <!-- الأحد -->
+                <tr>
+                  <td data-i18n="day_sun">الأحد</td>
+                  <td>وحدتين</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>مربى<br>حلويات</td>
+                  <td>واحدة</td>
+                  <td>سلطة متنوعة<br>عدس<br>بيض<br>لفتة الموسم<br>فاكهة<br>خبز</td>
+                  <td>واحدة</td>
+                  <td>مرقة بالدجاج<br>مقرونة<br>سلطة متنوعة<br>خبز<br>فاكهة</td>
+                </tr>
+                <!-- الاثنين -->
+                <tr>
+                  <td data-i18n="day_mon">الإثنين</td>
+                  <td>وحدتين</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>حلويات جافة<br>عصير فواكه</td>
+                  <td>واحدة</td>
+                  <td>سلطة متنوعة<br>مقرونة بالصلصة<br>تونة<br>عصير فواكه<br>خبز</td>
+                  <td>واحدة</td>
+                  <td>شطيطحة لحم (فلفل)<br>أرز<br>خضر الموسم<br>خبز<br>فاكهة</td>
+                </tr>
+                <!-- الثلاثاء -->
+                <tr>
+                  <td data-i18n="day_tue">الثلاثاء</td>
+                  <td>وحدتين</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>مقان<br>لفتة</td>
+                  <td>واحدة</td>
+                  <td>سلطة متنوعة<br>كسكس<br>لحم<br>خضر الموسم<br>خبز<br>فاكهة</td>
+                  <td>واحدة</td>
+                  <td>شربة<br>شخشوخة<br>طبق ثاني<br>خبز<br>فاكهة</td>
+                </tr>
+                <!-- الأربعاء -->
+                <tr>
+                  <td data-i18n="day_wed">الأربعاء</td>
+                  <td>وحدتين</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>بيتزا بالخضار<br>فواكه</td>
+                  <td>واحدة</td>
+                  <td>سلطة متنوعة<br>حساء<br>لحم حلو<br>خضر الموسم<br>خبز<br>فاكهة</td>
+                  <td>واحدة</td>
+                  <td>مرقة بالخضر<br>لحم<br>بطاطا<br>خبز<br>فاكهة</td>
+                </tr>
+                <!-- الخميس -->
+                <tr>
+                  <td data-i18n="day_thu">الخميس</td>
+                  <td>وحدتين</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>مقان<br>جبن</td>
+                  <td>واحدة</td>
+                  <td>سلطة متنوعة<br>جلبانة<br>لحم<br>أرز<br>خضر الموسم<br>خبز</td>
+                  <td>واحدة</td>
+                  <td>شربة<br>كسكس بالدجاج<br>طبق ثاني<br>خبز<br>فاكهة</td>
+                </tr>
+                <!-- الجمعة -->
+                <tr>
+                  <td data-i18n="day_fri">الجمعة</td>
+                  <td>وحدتين</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>حلويات جافة<br>عصير فواكه</td>
+                  <td>واحدة</td>
+                  <td>سلطة متنوعة<br>طاجين الزيتون<br>لحم<br>جلبانة<br>خبز<br>فاكهة</td>
+                  <td>واحدة</td>
+                  <td>مرقة بالدجاج<br>مقرونة<br>سلطة متنوعة<br>خبز<br>فاكهة</td>
+                </tr>
+                <!-- السبت -->
+                <tr>
+                  <td data-i18n="day_sat">السبت</td>
+                  <td>وحدتين</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبري<br>مربى<br>بيتزا</td>
+                  <td>واحدة</td>
+                  <td>شربة<br>لحم<br>بطاطا<br>خضر الموسم<br>خبز<br>فاكهة</td>
+                  <td>واحدة</td>
+                  <td>شربة<br>سلطة جزائرية<br>مثوم<br>بطاطا مقلية<br>فاكهة</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- Activités Youssefi -->
+        <!-- Activities (Youssefi only) -->
         <div id="youssefiActivities" class="glass-card" style="padding:22px;border:1.5px solid rgba(16,185,129,.25);display:none;">
           <h3 style="font-size:1.1rem;font-weight:900;color:#059669;margin:0 0 6px;display:flex;align-items:center;gap:10px;">
             <i class="fa-solid fa-calendar-check"></i>
@@ -742,25 +479,25 @@
           </h3>
           <p style="font-size:.82rem;color:var(--text-muted);font-weight:600;margin:0 0 14px;" data-i18n="res_activities_desc">تعلن مصلحة النشاطات كافة الطالبات عن افتتاح مختلف المرافق حسب الجدول التالي:</p>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
-            <div class="activity-card pink">
-              <h4 data-i18n="res_sport">قاعة الرياضة</h4>
-              <p>من الأحد إلى الأربعاء (الفترتين الصباحية والمسائية).</p>
+            <div class="activity-card pink" style="padding:16px; border-radius:14px; background:rgba(236,72,153,.06); border:1.5px solid rgba(236,72,153,.25);">
+              <h4 style="margin:0 0 6px; font-size:.9rem; font-weight:900; color:#be185d;">قاعة الرياضة</h4>
+              <p style="margin:0; font-size:.78rem; font-weight:600; color:#be185d;">من الأحد إلى الأربعاء (الفترتين الصباحية والمسائية).</p>
             </div>
-            <div class="activity-card amber">
-              <h4 data-i18n="res_library">المكتبة</h4>
-              <p>من الأحد إلى الخميس (الفترتين الصباحية والمسائية).</p>
+            <div class="activity-card amber" style="padding:16px; border-radius:14px; background:rgba(245,158,11,.06); border:1.5px solid rgba(245,158,11,.25);">
+              <h4 style="margin:0 0 6px; font-size:.9rem; font-weight:900; color:#d97706;">المكتبة</h4>
+              <p style="margin:0; font-size:.78rem; font-weight:600; color:#d97706;">من الأحد إلى الخميس (الفترتين الصباحية والمسائية).</p>
             </div>
-            <div class="activity-card purple">
-              <h4 data-i18n="res_game1">قاعة الألعاب الأولى</h4>
-              <p>صباحاً: الأحد إلى الخميس. مساءً: الأحد والثلاثاء.</p>
+            <div class="activity-card purple" style="padding:16px; border-radius:14px; background:rgba(139,92,246,.06); border:1.5px solid rgba(139,92,246,.25);">
+              <h4 style="margin:0 0 6px; font-size:.9rem; font-weight:900; color:#7c3aed;">قاعة الألعاب الأولى</h4>
+              <p style="margin:0; font-size:.78rem; font-weight:600; color:#7c3aed;">صباحاً: الأحد إلى الخميس. مساءً: الأحد والثلاثاء.</p>
             </div>
-            <div class="activity-card blue">
-              <h4 data-i18n="res_game2">قاعة الألعاب الثانية</h4>
-              <p>صباحاً: الأحد إلى الخميس. مساءً: الإثنين والأربعاء.</p>
+            <div class="activity-card blue" style="padding:16px; border-radius:14px; background:rgba(59,130,246,.06); border:1.5px solid rgba(59,130,246,.25);">
+              <h4 style="margin:0 0 6px; font-size:.9rem; font-weight:900; color:#2563eb;">قاعة الألعاب الثانية</h4>
+              <p style="margin:0; font-size:.78rem; font-weight:600; color:#2563eb;">صباحاً: الأحد إلى الخميس. مساءً: الإثنين والأربعاء.</p>
             </div>
-            <div class="activity-card gray" style="grid-column:1/-1;">
-              <h4 data-i18n="res_activity_hall">قاعة النشاطات</h4>
-              <p>يوم الخميس: 13:30 (بعد وجبة الغداء) و 20:00 (بعد وجبة العشاء).</p>
+            <div class="activity-card gray" style="padding:16px; border-radius:14px; background:rgba(100,116,139,.06); border:1.5px solid rgba(100,116,139,.25); grid-column:1/-1;">
+              <h4 style="margin:0 0 6px; font-size:.9rem; font-weight:900; color:var(--text-main);">قاعة النشاطات</h4>
+              <p style="margin:0; font-size:.78rem; font-weight:600; color:var(--text-main);">يوم الخميس: 13:30 (بعد وجبة الغداء) و 20:00 (بعد وجبة العشاء).</p>
             </div>
           </div>
         </div>
@@ -774,8 +511,7 @@
     <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
   </footer>
 
-  <!-- KANGOUROU -->
-  <div class="mascot-container" id="kangarooContainer">
+  <div class="mascot-container" id="kangarooContainer" title="المساعد الافتراضي">
     <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
       <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
@@ -799,7 +535,6 @@
     </svg>
   </div>
 
-  <!-- CHAT -->
   <div id="chatWindow">
     <div class="chat-header">
       <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد الافتراضي</span></span>
@@ -815,6 +550,9 @@
   </div>
 
   <script>
+    /* ============================================================ */
+    /* TRADUCTIONS                                                   */
+    /* ============================================================ */
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
     window.RESIDENCE_TRANSLATIONS = {
@@ -833,32 +571,18 @@
         res_youssefi_addr: "حسين داي، الجزائر العاصمة",
         res_gueridi_addr: "القبة، الجزائر العاصمة",
         badge_girls: "بنات", badge_boys: "أولاد",
-        qibla_title: "بوصلة القبلة",
-        qibla_desc: "حدد اتجاه القبلة بدقة من موقعك الحالي",
-        qibla_angle: "زاوية القبلة من الشمال",
-        qibla_locating: "جاري تحديد موقعك...",
-        qibla_info: "يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.",
-        qibla_found: "تم تحديد موقعك",
-        qibla_error: "تعذر تحديد الموقع",
-        qibla_direction_n: "شمال", qibla_direction_ne: "شمال شرق",
-        qibla_direction_e: "شرق", qibla_direction_se: "جنوب شرق",
-        qibla_direction_s: "جنوب", qibla_direction_sw: "جنوب غرب",
-        qibla_direction_w: "غرب", qibla_direction_nw: "شمال غرب",
         res_back: "العودة لقائمة الإقامات", res_map: "الموقع على الخريطة",
         res_distance: "المسافة إلى المدرسة", res_video: "فيديو تعريفي عن الإقامة",
-        res_meals_title: "جدول الوجبات الأسبوعي (مشترك)",
-        res_day: "اليوم", res_breakfast: "الفطور", res_lunch: "الغداء", res_dinner: "العشاء",
-        day_sun: "الأحد", day_mon: "الإثنين", day_tue: "الثلاثاء",
-        day_wed: "الأربعاء", day_thu: "الخميس", day_fri: "الجمعة", day_sat: "السبت",
+        res_meals_title: "جدول الوجبات الأسبوعي",
+        res_meals_desc: "الوجبات مقدمة من الديوان الوطني للخدمات الجامعية.",
+        th_day: "اليوم", th_breakfast: "الفطور", th_lunch: "الغداء", th_dinner: "العشاء",
+        th_qty: "الكمية", th_item: "المحتوى",
+        day_sun: "الأحد", day_mon: "الإثنين", day_tue: "الثلاثاء", day_wed: "الأربعاء", day_thu: "الخميس", day_fri: "الجمعة", day_sat: "السبت",
         res_activities_title: "إعلان هام: أنشطة ومرافق إقامة امحمد يوسفي",
         res_activities_desc: "تعلن مصلحة النشاطات كافة الطالبات عن افتتاح مختلف المرافق حسب الجدول التالي:",
-        res_sport: "قاعة الرياضة", res_library: "المكتبة",
-        res_game1: "قاعة الألعاب الأولى", res_game2: "قاعة الألعاب الثانية",
-        res_activity_hall: "قاعة النشاطات",
         mosque_title: "المسجد القريب: مسجد عبد اللطيف سلطاني",
         mosque_desc: "مسجد عبد اللطيف سلطاني بالقبة القديمة، من المساجد المعروفة في المنطقة.",
         mosque_video: "فيديو تعريفي:", mosque_map: "الموقع:",
-        mosque_open_maps: "فتح في خرائط جوجل",
         chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
         chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
         chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
@@ -880,32 +604,18 @@
         res_youssefi_addr: "Hussein Dey, Alger",
         res_gueridi_addr: "Kouba, Alger",
         badge_girls: "Filles", badge_boys: "Garçons",
-        qibla_title: "Boussole Qibla",
-        qibla_desc: "Déterminez la direction de la Qibla depuis votre position.",
-        qibla_angle: "Angle depuis le Nord",
-        qibla_locating: "Localisation...",
-        qibla_info: "Autorisez l'accès à la position et au gyroscope pour un résultat précis.",
-        qibla_found: "Position détectée",
-        qibla_error: "Impossible de localiser",
-        qibla_direction_n: "Nord", qibla_direction_ne: "Nord-est",
-        qibla_direction_e: "Est", qibla_direction_se: "Sud-est",
-        qibla_direction_s: "Sud", qibla_direction_sw: "Sud-ouest",
-        qibla_direction_w: "Ouest", qibla_direction_nw: "Nord-ouest",
         res_back: "Retour aux résidences", res_map: "Emplacement sur la carte",
         res_distance: "Distance de l'école", res_video: "Vidéo de la résidence",
-        res_meals_title: "Menu hebdomadaire (commun)",
-        res_day: "Jour", res_breakfast: "Petit-déjeuner", res_lunch: "Déjeuner", res_dinner: "Dîner",
-        day_sun: "Dimanche", day_mon: "Lundi", day_tue: "Mardi",
-        day_wed: "Mercredi", day_thu: "Jeudi", day_fri: "Vendredi", day_sat: "Samedi",
+        res_meals_title: "Menu de la cantine",
+        res_meals_desc: "Repas fournis par l'ONOU.",
+        th_day: "Jour", th_breakfast: "Petit-déjeuner", th_lunch: "Déjeuner", th_dinner: "Dîner",
+        th_qty: "Qté", th_item: "Contenu",
+        day_sun: "Dimanche", day_mon: "Lundi", day_tue: "Mardi", day_wed: "Mercredi", day_thu: "Jeudi", day_fri: "Vendredi", day_sat: "Samedi",
         res_activities_title: "Activités Résidence Youssefi",
         res_activities_desc: "Ouverture des installations selon le calendrier:",
-        res_sport: "Salle de sport", res_library: "Bibliothèque",
-        res_game1: "Salle de jeux 1", res_game2: "Salle de jeux 2",
-        res_activity_hall: "Salle d'activités",
         mosque_title: "Mosquée proche : Mosquée Abdellatif Soltani",
         mosque_desc: "Mosquée Abdellatif Soltani à Vieux Kouba, l'une des mosquées connues de la région.",
         mosque_video: "Vidéo :", mosque_map: "Emplacement :",
-        mosque_open_maps: "Ouvrir dans Google Maps",
         chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
         chat_placeholder: "Votre question...", chat_default: "Merci !",
         chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
@@ -927,32 +637,18 @@
         res_youssefi_addr: "Hussein Dey, Algiers",
         res_gueridi_addr: "Kouba, Algiers",
         badge_girls: "Girls", badge_boys: "Boys",
-        qibla_title: "Qibla Compass",
-        qibla_desc: "Find the Qibla direction from your location.",
-        qibla_angle: "Angle from North",
-        qibla_locating: "Locating...",
-        qibla_info: "Allow location and gyroscope access for accurate results.",
-        qibla_found: "Location detected",
-        qibla_error: "Unable to locate",
-        qibla_direction_n: "North", qibla_direction_ne: "Northeast",
-        qibla_direction_e: "East", qibla_direction_se: "Southeast",
-        qibla_direction_s: "South", qibla_direction_sw: "Southwest",
-        qibla_direction_w: "West", qibla_direction_nw: "Northwest",
         res_back: "Back to residences", res_map: "Location on map",
         res_distance: "Distance from school", res_video: "Residence video",
-        res_meals_title: "Weekly menu (common)",
-        res_day: "Day", res_breakfast: "Breakfast", res_lunch: "Lunch", res_dinner: "Dinner",
-        day_sun: "Sunday", day_mon: "Monday", day_tue: "Tuesday",
-        day_wed: "Wednesday", day_thu: "Thursday", day_fri: "Friday", day_sat: "Saturday",
+        res_meals_title: "Canteen Menu",
+        res_meals_desc: "Meals provided by ONOU.",
+        th_day: "Day", th_breakfast: "Breakfast", th_lunch: "Lunch", th_dinner: "Dinner",
+        th_qty: "Qty", th_item: "Content",
+        day_sun: "Sunday", day_mon: "Monday", day_tue: "Tuesday", day_wed: "Wednesday", day_thu: "Thursday", day_fri: "Friday", day_sat: "Saturday",
         res_activities_title: "Youssefi Residence Activities",
         res_activities_desc: "Opening of facilities according to schedule:",
-        res_sport: "Sports Hall", res_library: "Library",
-        res_game1: "Game Room 1", res_game2: "Game Room 2",
-        res_activity_hall: "Activity Hall",
         mosque_title: "Nearby Mosque: Abdellatif Soltani Mosque",
         mosque_desc: "Abdellatif Soltani Mosque in Vieux Kouba, a well-known mosque in the area.",
         mosque_video: "Video:", mosque_map: "Location:",
-        mosque_open_maps: "Open in Google Maps",
         chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
         chat_placeholder: "Your question...", chat_default: "Thanks!",
         chat_hello: "Welcome!", chat_thanks: "You're welcome!",
@@ -989,10 +685,6 @@
           ? '<i class="fa-solid fa-sun"></i> <span>'+d.menu_dark+'</span>'
           : '<i class="fa-solid fa-moon"></i> <span>'+d.menu_dark+'</span>';
       }
-      if(userLat !== null){
-        const sl = document.getElementById('qiblaStatus');
-        if(sl) sl.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span>${d.qibla_found}</span>`;
-      }
     };
 
     window.setLanguage = function(lang){
@@ -1028,7 +720,7 @@
       }
     });
 
-    /* RESIDENCES */
+    /* RESIDENCES DATA */
     const residencesData = {
       'hamdine': {
         title: 'الإقامة الجامعية سعيد حمدين (بنات)',
@@ -1088,102 +780,6 @@
       window.scrollTo(0,0);
     }
 
-    /* QIBLA COMPASS */
-    const KAABA_LAT = 21.4225;
-    const KAABA_LNG = 39.8262;
-    let userLat = null, userLng = null, deviceHeading = null;
-
-    (function buildTicks(){
-      const cont = document.getElementById('compassTicks');
-      if(!cont) return;
-      for(let i = 0; i < 72; i++){
-        const t = document.createElement('div');
-        t.className = 'tick' + (i % 6 === 0 ? ' major' : '');
-        t.style.transform = `rotate(${i * 5}deg)`;
-        cont.appendChild(t);
-      }
-    })();
-
-    function calculateQiblaAngle(lat, lng){
-      const phiK = KAABA_LAT * Math.PI / 180;
-      const lambdaK = KAABA_LNG * Math.PI / 180;
-      const phi = lat * Math.PI / 180;
-      const lambda = lng * Math.PI / 180;
-      const deltaLambda = lambdaK - lambda;
-      const y = Math.sin(deltaLambda);
-      const x = Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(deltaLambda);
-      let qibla = Math.atan2(y, x) * 180 / Math.PI;
-      return (qibla + 360) % 360;
-    }
-
-    function directionLabel(deg){
-      const dirs = ['n','ne','e','se','s','sw','w','nw'];
-      const idx = Math.round(((deg % 360) + 360) % 360 / 45) % 8;
-      const key = 'qibla_direction_' + dirs[idx];
-      return t(key);
-    }
-
-    function updateCompass(){
-      if(deviceHeading === null || userLat === null) return;
-      const qiblaAngle = calculateQiblaAngle(userLat, userLng);
-      const qiblaEl = document.getElementById('qiblaAngle');
-      if(qiblaEl) qiblaEl.innerText = Math.round(qiblaAngle) + '°';
-      const dirEl = document.getElementById('qiblaDirection');
-      if(dirEl) dirEl.innerText = directionLabel(qiblaAngle);
-      const needleWrap = document.getElementById('needleWrap');
-      if(needleWrap){
-        const rotation = qiblaAngle - deviceHeading;
-        needleWrap.style.transform = `rotate(${rotation}deg)`;
-      }
-    }
-
-    if(navigator.geolocation){
-      navigator.geolocation.watchPosition(
-        (pos)=>{
-          userLat = pos.coords.latitude;
-          userLng = pos.coords.longitude;
-          const sl = document.getElementById('qiblaStatus');
-          if(sl){
-            sl.className = 'status-line success';
-            sl.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span>${t('qibla_found')}</span>`;
-          }
-          updateCompass();
-        },
-        (err)=>{
-          const sl = document.getElementById('qiblaStatus');
-          if(sl){
-            sl.className = 'status-line error';
-            sl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>${t('qibla_error')}</span>`;
-          }
-        },
-        { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 }
-      );
-    }
-
-    if(window.DeviceOrientationEvent){
-      if(typeof DeviceOrientationEvent.requestPermission === 'function'){
-        document.body.addEventListener('click', function requestAccess(){
-          DeviceOrientationEvent.requestPermission().then(state=>{
-            if(state === 'granted'){
-              window.addEventListener('deviceorientationabsolute', handleOrientation);
-              window.addEventListener('deviceorientation', handleOrientation);
-              document.body.removeEventListener('click', requestAccess);
-            }
-          }).catch(console.error);
-        });
-      } else {
-        window.addEventListener('deviceorientationabsolute', handleOrientation);
-        window.addEventListener('deviceorientation', handleOrientation);
-      }
-    }
-
-    function handleOrientation(event){
-      let heading = null;
-      if(event.webkitCompassHeading) heading = event.webkitCompassHeading;
-      else if(event.alpha !== null) heading = 360 - event.alpha;
-      if(heading !== null){ deviceHeading = heading; updateCompass(); }
-    }
-
     /* CHAT */
     function toggleChat(){
       const c = document.getElementById('chatWindow');
@@ -1238,7 +834,7 @@
 
       const chatInput = document.getElementById('chatInput');
       if(chatInput){
-        chatInput.addEventListener('keypress', (e)=>{
+        chatInput.addEventListener('keypress', e=>{
           if(e.key === 'Enter'){ e.preventDefault(); sendMessage(); }
         });
       }
