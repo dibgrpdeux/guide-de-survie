@@ -395,12 +395,73 @@
           <i class="fa-solid fa-chevron-down acc-chevron"></i>
         </button>
         <div class="acc-body"><div class="acc-inner">
-          <div class="info-card"><h4 data-i18n="metro_near">أقرب محطة ميترو للمدرسة</h4><p data-i18n="metro_near_desc">محطة حسيبة بوعلام.</p></div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
+
+          <!-- أقرب محطة -->
+          <div class="info-card">
+            <h4 data-i18n="metro_near">أقرب محطة ميترو للمدرسة</h4>
+            <p data-i18n="metro_near_desc">محطة حسيبة بوعلام.</p>
+          </div>
+
+          <!-- الأسعار -->
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 16px;">
             <span class="univ-badge" data-i18n="metro_ticket">مترو: 50 دج</span>
             <span class="univ-badge" data-i18n="tram_ticket">ترامواي: 40 دج</span>
             <span class="univ-badge" data-i18n="etwassel_ticket">eTWASSEL: 150 دج/سنة</span>
           </div>
+
+          <!-- محطات المترو -->
+          <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
+            <i class="fa-solid fa-train-subway" style="color:var(--orange);"></i>
+            <span data-i18n="metro_stations_title">محطات المترو (الخط 1)</span>
+          </h4>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-bottom:16px;">
+            <span class="univ-badge">Place des Martyrs</span>
+            <span class="univ-badge">Ali Boumendjel</span>
+            <span class="univ-badge">Tafourah - Grande Poste</span>
+            <span class="univ-badge">Khelifa Boukhalfa</span>
+            <span class="univ-badge">1er Mai</span>
+            <span class="univ-badge">Aïssat Idir</span>
+            <span class="univ-badge">Hamma</span>
+            <span class="univ-badge">Jardin d'Essais</span>
+            <span class="univ-badge">Les Fusillés</span>
+            <span class="univ-badge">Cité Amirouche</span>
+            <span class="univ-badge">Haï El Badr</span>
+            <span class="univ-badge">Bachdjerrah</span>
+            <span class="univ-badge">El Harrach Centre</span>
+            <span class="univ-badge">El Harrach Gare</span>
+            <span class="univ-badge">Ain Naadja</span>
+            <span class="univ-badge">Université des Sciences et de la Technologie</span>
+          </div>
+
+          <!-- محطات الترامواي -->
+          <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
+            <i class="fa-solid fa-tram" style="color:var(--orange);"></i>
+            <span data-i18n="tram_stations_title">محطات الترامواي (المحور الشرقي)</span>
+          </h4>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-bottom:16px;">
+            <span class="univ-badge">Ruisseau</span>
+            <span class="univ-badge">Gué de Constantine</span>
+            <span class="univ-badge">Les Bananiers</span>
+            <span class="univ-badge">Bordj El Kiffan</span>
+            <span class="univ-badge">Bab Ezzouar</span>
+            <span class="univ-badge">Université Bab Ezzouar</span>
+            <span class="univ-badge">Dar El Beïda</span>
+            <span class="univ-badge">Cinq Maisons</span>
+            <span class="univ-badge">Rouiba</span>
+            <span class="univ-badge">Aïn Taya</span>
+            <span class="univ-badge">Dergana</span>
+            <span class="univ-badge">Centre des Affaires</span>
+          </div>
+
+          <!-- فيديو المترو -->
+          <h4 style="margin:0 0 8px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:6px;">
+            <i class="fa-brands fa-youtube" style="color:#ef4444;"></i>
+            <span data-i18n="metro_video_title">فيديو تعريفي عن المترو</span>
+          </h4>
+          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:2px solid var(--border-color);">
+            <iframe src="https://www.youtube.com/embed/VgahadPDf1I" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen loading="lazy"></iframe>
+          </div>
+
         </div></div>
       </div>
 
@@ -553,6 +614,9 @@
         proches_3_t:"محطة  (etusa)", proches_3_p:"950 متر (14 دقيقة مشياً).",
         metro_title:"الميترو والترامواي", metro_near:"أقرب محطة ميترو للمدرسة", metro_near_desc:"محطة بدر.",
         metro_ticket:"مترو: 50 دج", tram_ticket:"ترامواي: 40 دج", etwassel_ticket:"eTWASSEL: 150 دج/سنة",
+        metro_stations_title:"محطات المترو (الخط 1)",
+        tram_stations_title:"محطات الترامواي (المحور الشرقي)",
+        metro_video_title:"فيديو تعريفي عن المترو",
         train_title:"قطارات SNTF (الخطوط الطويلة)",
         train_1_t:"الجزائر ↔ وهران", train_1_p:"الذهاب: 06:00 | 08:00 | 14:00 | 17:00",
         train_2_t:"الجزائر ↔ عنابة (ليلي)", train_2_p:"الذهاب: 18:40",
@@ -595,6 +659,9 @@
         proches_3_t:"Gare kouba (Etusa)", proches_3_p:"950 m (14 min à pied).",
         metro_title:"Métro et Tramway", metro_near:"Station métro la plus proche", metro_near_desc:"Station Hassiba Boualem.",
         metro_ticket:"Métro : 50 DA", tram_ticket:"Tramway : 40 DA", etwassel_ticket:"eTWASSEL : 150 DA/an",
+        metro_stations_title:"Stations de métro (Ligne 1)",
+        tram_stations_title:"Stations de tramway (Axe Est)",
+        metro_video_title:"Vidéo de présentation du métro",
         train_title:"Trains SNTF (longues distances)",
         train_1_t:"Alger ↔ Oran", train_1_p:"Aller : 06:00 | 08:00 | 14:00 | 17:00",
         train_2_t:"Alger ↔ Annaba (nuit)", train_2_p:"Aller : 18:40",
@@ -637,6 +704,9 @@
         proches_3_t:"SNTF station (ENS)", proches_3_p:"950 m (14 min walk).",
         metro_title:"Metro & Tramway", metro_near:"Nearest metro station", metro_near_desc:"Hassiba Boualem station.",
         metro_ticket:"Metro: 50 DA", tram_ticket:"Tram: 40 DA", etwassel_ticket:"eTWASSEL: 150 DA/year",
+        metro_stations_title:"Metro stations (Line 1)",
+        tram_stations_title:"Tramway stations (East Axis)",
+        metro_video_title:"Metro presentation video",
         train_title:"SNTF trains (long distance)",
         train_1_t:"Algiers ↔ Oran", train_1_p:"Outbound: 06:00 | 08:00 | 14:00 | 17:00",
         train_2_t:"Algiers ↔ Annaba (night)", train_2_p:"Outbound: 18:40",
