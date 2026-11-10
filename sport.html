@@ -561,7 +561,7 @@
     window.SPORT_DATA = {
       items: [
         /* ============================================
-           🏋️ SPORT — ملعب المدرسة + كل الصالات + الفيديوهات
+           🏋️ SPORT — ملعب المدرسة + 7 صالات + 3 فيديوهات
            ============================================ */
 
         // ملعب المدرسة
@@ -634,7 +634,7 @@
           video: "", mapCoords: [36.7330, 3.0805]
         },
 
-        // 3 فيديوهات من sport.js
+        // 3 فيديوهات
         {
           id: "video-complexe", section: "sport", category: "video", icon: "🏟️",
           title: { fr: "Complexe Sportif de Kouba", ar: "المركب الرياضي القبة", en: "Kouba Sports Complex" },
@@ -661,10 +661,10 @@
         },
 
         /* ============================================
-           🏥 SANTE — الأطباء + الأسنان + الصيدليات + طبيب المدرسة
+           🏥 SANTE — الأطباء (بصور) + الأسنان + الصيدليات
            ============================================ */
 
-        // طبيب المدرسة
+        // طبيب المدرسة — صورة طبيب عام
         {
           id: "medecin-ecole", section: "sante", category: "medecin", icon: "🩺",
           title: { ar: "طبيب المدرسة", fr: "Médecin de l'école", en: "School Doctor" },
@@ -672,10 +672,11 @@
           desc: { ar: "طبيب عام في المدرسة، متاح للطلبة والموظفين.", fr: "Médecin généraliste à l'école, disponible pour étudiants et personnel.", en: "General practitioner at school, available to students and staff." },
           address: "داخل ENSTP", phone: "",
           schedule: { ar: "كل يوم ما عدا الجمعة والسبت: 8:00 - 16:00", fr: "Tous les jours sauf vendredi et samedi : 8h00 - 16h00", en: "Every day except Friday and Saturday: 8:00 - 16:00" },
-          images: [], video: "", mapCoords: [36.7290, 3.0745]
+          images: ["https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80"],
+          video: "", mapCoords: [36.7290, 3.0745]
         },
 
-        // طبيب إقامة قريدي
+        // طبيب إقامة قريدي — صورة طبيب عام
         {
           id: "medecin-garidi", section: "sante", category: "medecin", icon: "🩺",
           title: { ar: "طبيب إقامة قريدي", fr: "Médecin résidence Garidi", en: "Garidi Residence Doctor" },
@@ -683,17 +684,19 @@
           desc: { ar: "طبيب في الإقامة الجامعية قريدي، بجانب المدرسة.", fr: "Médecin à la résidence universitaire de Garidi, à côté de l'école.", en: "Doctor at Garidi university residence, next to the school." },
           address: "الإقامة الجامعية قريدي", phone: "",
           schedule: { ar: "كل يوم ما عدا الجمعة والسبت: 8:00 - 16:00", fr: "Tous les jours sauf vendredi et samedi : 8h00 - 16h00", en: "Every day except Friday and Saturday: 8:00 - 16:00" },
-          images: [], video: "", mapCoords: [36.7320, 3.0790]
+          images: ["https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80"],
+          video: "", mapCoords: [36.7320, 3.0790]
         },
 
-        // 9 أطباء من sport.js
+        // 9 أطباء من sport.js — بصور
         {
           id: "dr-aissani", section: "sante", category: "medecin", icon: "❤️",
           title: { fr: "Dr Farid Aissani", ar: "د. فريد عيساني", en: "Dr Farid Aissani" },
           specialty: { fr: "Cardiologie", ar: "أمراض القلب", en: "Cardiology" },
           desc: null, address: "Coopemad Sud, Bt 71/4, Kouba",
           phone: "023 70 54 57", schedule: null,
-          images: [], video: "", mapCoords: [36.7260, 3.0750]
+          images: ["https://images.unsplash.com/photo-1628348070889-cb656235b4eb?w=400&q=80"],
+          video: "", mapCoords: [36.7260, 3.0750]
         },
         {
           id: "dr-bendali", section: "sante", category: "medecin", icon: "👶",
@@ -701,7 +704,8 @@
           specialty: { fr: "Gynécologie-Obstétrique", ar: "أمراض النساء والتوليد", en: "Gynecology-Obstetrics" },
           desc: null, address: "Route des Annassers, Kouba",
           phone: "0553 24 07 60", schedule: null,
-          images: [], video: "", mapCoords: [36.7275, 3.0765]
+          images: ["https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&q=80"],
+          video: "", mapCoords: [36.7275, 3.0765]
         },
         {
           id: "dr-ouabdesselam", section: "sante", category: "medecin", icon: "🧒",
@@ -709,7 +713,8 @@
           specialty: { fr: "Pédiatrie", ar: "طب الأطفال", en: "Pediatrics" },
           desc: null, address: "Jolie Vue 2, 1216 logements, Bt 12, Kouba",
           phone: "0697 28 58 17", schedule: null,
-          images: [], video: "", mapCoords: [36.7285, 3.0780]
+          images: ["https://images.unsplash.com/photo-1632053002928-1919f5a2f8b4?w=400&q=80"],
+          video: "", mapCoords: [36.7285, 3.0780]
         },
         {
           id: "dr-bengherbi", section: "sante", category: "medecin", icon: "👁️",
@@ -717,7 +722,8 @@
           specialty: { fr: "Ophtalmologie", ar: "طب العيون", en: "Ophthalmology" },
           desc: null, address: "70 avenue des Frères Abdeslami, Kouba",
           phone: "023 60 16 78", schedule: null,
-          images: [], video: "", mapCoords: [36.7290, 3.0800]
+          images: ["https://images.unsplash.com/photo-1583912086124-8b5e5a4d93c2?w=400&q=80"],
+          video: "", mapCoords: [36.7290, 3.0800]
         },
         {
           id: "dr-debba", section: "sante", category: "medecin", icon: "👁️",
@@ -725,7 +731,8 @@
           specialty: { fr: "Ophtalmologie", ar: "طب العيون", en: "Ophthalmology" },
           desc: null, address: "75 avenue des Frères Abdeslami, Vieux Kouba",
           phone: "0660 39 29 22", schedule: null,
-          images: [], video: "", mapCoords: [36.7300, 3.0820]
+          images: ["https://images.unsplash.com/photo-1583912086124-8b5e5a4d93c2?w=400&q=80"],
+          video: "", mapCoords: [36.7300, 3.0820]
         },
         {
           id: "dr-ait-allaoua", section: "sante", category: "medecin", icon: "👁️",
@@ -733,7 +740,8 @@
           specialty: { fr: "Ophtalmologie", ar: "طب العيون", en: "Ophthalmology" },
           desc: null, address: "43 rue des Frères Abdeslami, Kouba",
           phone: "0696 57 94 94", schedule: null,
-          images: [], video: "", mapCoords: [36.7310, 3.0830]
+          images: ["https://images.unsplash.com/photo-1583912086124-8b5e5a4d93c2?w=400&q=80"],
+          video: "", mapCoords: [36.7310, 3.0830]
         },
         {
           id: "dr-benantar", section: "sante", category: "medecin", icon: "🧒",
@@ -741,7 +749,8 @@
           specialty: { fr: "Pédiatrie", ar: "طب الأطفال", en: "Pediatrics" },
           desc: null, address: "Cité Sastra / Jolie Vue 2, Kouba",
           phone: "021 68 89 13", schedule: null,
-          images: [], video: "", mapCoords: [36.7320, 3.0840]
+          images: ["https://images.unsplash.com/photo-1632053002928-1919f5a2f8b4?w=400&q=80"],
+          video: "", mapCoords: [36.7320, 3.0840]
         },
         {
           id: "dr-belhadj", section: "sante", category: "medecin", icon: "👶",
@@ -749,7 +758,8 @@
           specialty: { fr: "Gynécologie-Obstétrique", ar: "أمراض النساء والتوليد", en: "Gynecology-Obstetrics" },
           desc: null, address: "12 avenue des Frères Abdeslami, 1er étage, Kouba",
           phone: "0559 67 11 71", schedule: null,
-          images: [], video: "", mapCoords: [36.7255, 3.0735]
+          images: ["https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&q=80"],
+          video: "", mapCoords: [36.7255, 3.0735]
         },
         {
           id: "pr-bouferrouk", section: "sante", category: "medecin", icon: "❤️",
@@ -757,10 +767,11 @@
           specialty: { fr: "Cardiologie", ar: "أمراض القلب", en: "Cardiology" },
           desc: null, address: "Cité Garidi 1, Bt 8 n°1, Kouba",
           phone: "0551 26 84 36", schedule: null,
-          images: [], video: "", mapCoords: [36.7295, 3.0775]
+          images: ["https://images.unsplash.com/photo-1628348070889-cb656235b4eb?w=400&q=80"],
+          video: "", mapCoords: [36.7295, 3.0775]
         },
 
-        // 4 عيادات أسنان من sport.js
+        // 4 عيادات أسنان (بدون تغيير)
         {
           id: "dent-gr", section: "sante", category: "dentiste", icon: "🦷",
           title: { fr: "Cabinet Dental GR", ar: "عيادة الأسنان GR", en: "Cabinet Dental GR" },
@@ -794,7 +805,7 @@
           video: "", mapCoords: [36.7310, 3.0780]
         },
 
-        // 8 صيدليات
+        // 8 صيدليات (بدون تغيير)
         {
           id: "pharma-attoui", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية عطوي", fr: "Pharmacie Attoui", en: "Pharmacie Attoui" },
