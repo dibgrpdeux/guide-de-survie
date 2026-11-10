@@ -556,81 +556,117 @@
     </div>
   </div>
 
-  <!-- ============ البيانات ============ -->
+  <!-- ============ البيانات الكاملة ============ -->
   <script>
     window.SPORT_DATA = {
       items: [
         /* ============================================
-           🏋️ SPORT — ملعب المدرسة + كل الصالات الرياضية
+           🏋️ SPORT — ملعب المدرسة + كل الصالات + الفيديوهات
            ============================================ */
 
-        // ملعب المدرسة مع الصور
+        // ملعب المدرسة
         {
           id: "stade-ecole", section: "sport", category: "salle",
           icon: "🏟️",
           title: { ar: "ملعب المدرسة", fr: "Stade de l'école", en: "School Stadium" },
           specialty: { ar: "ملعب متعدد الرياضات", fr: "Terrain multisports", en: "Multisport field" },
           desc: { ar: "ملعب متعدد الرياضات داخل حرم المدرسة.", fr: "Terrain multisports dans l'enceinte de l'école.", en: "Multisport field on school campus." },
-          address: "داخل ENSTP",
-          phone: "",
-          schedule: null,
+          address: "داخل ENSTP", phone: "", schedule: null,
           images: ["s.HEIC", "s1.HEIC", "s2.HEIC", "s3.HEIC", "s4.HEIC", "s5.HEIC"],
-          video: "",
-          mapCoords: [36.7290, 3.0745]
+          video: "", mapCoords: [36.7290, 3.0745]
         },
 
-        // صالة رياضية 1
+        // 7 صالات من sport.js
         {
-          id: "sport-1", section: "sport", category: "salle",
-          icon: "🏋️",
-          title: { ar: "صالة رياضية", fr: "Salle de sport", en: "Gym" },
-          specialty: { ar: "قاعة مجهزة", fr: "Salle équipée", en: "Equipped gym" },
-          desc: { ar: "قاعة رياضية قريبة من المدرسة.", fr: "Salle de sport près de l'école.", en: "Gym near school." },
-          address: "Kouba, Alger", phone: "", schedule: null,
-          images: [], video: "", mapCoords: [36.7300, 3.0760]
+          id: "salle-ares", section: "sport", category: "salle", icon: "🏋️",
+          title: { fr: "Ares Sport", ar: "Ares Sport", en: "Ares Sport" },
+          specialty: { fr: "Salle de sport", ar: "صالة رياضية", en: "Gym" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["ares 1.jpg","ares 2.jpg","ares 3.jpg","ares 4.jpg"],
+          video: "", mapCoords: [36.7270, 3.0740]
+        },
+        {
+          id: "salle-femmes", section: "sport", category: "salle", icon: "💃",
+          title: { fr: "Club des Femmes", ar: "نادي النساء", en: "Club des Femmes" },
+          specialty: { fr: "Salle pour femmes", ar: "صالة رياضية للنساء", en: "Women's gym" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["bas 1.jpg","bas 3.jpg","bas 4.jpg"],
+          video: "", mapCoords: [36.7280, 3.0755]
+        },
+        {
+          id: "salle-fitness-club", section: "sport", category: "salle", icon: "💪",
+          title: { fr: "Fitness Club", ar: "Fitness Club", en: "Fitness Club" },
+          specialty: { fr: "Salle de fitness", ar: "صالة لياقة", en: "Fitness gym" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["club 1.jpg","club 2.jpg"],
+          video: "", mapCoords: [36.7290, 3.0765]
+        },
+        {
+          id: "salle-bouzid", section: "sport", category: "salle", icon: "🏋️",
+          title: { fr: "Bouzid Club", ar: "Bouzid Club", en: "Bouzid Club" },
+          specialty: { fr: "Salle de sport", ar: "صالة رياضية", en: "Gym" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["bouzid 1.jpg","bouzid 2.jpg"],
+          video: "", mapCoords: [36.7300, 3.0775]
+        },
+        {
+          id: "salle-olympic", section: "sport", category: "salle", icon: "🏊",
+          title: { fr: "Kouba Olympic", ar: "Kouba Olympic", en: "Kouba Olympic" },
+          specialty: { fr: "Piscine et salle de sport", ar: "مسبح وصالة رياضية", en: "Pool and gym" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["swiming 1.jpg","swiming 2.jpg"],
+          video: "", mapCoords: [36.7310, 3.0785]
+        },
+        {
+          id: "salle-fitness-city", section: "sport", category: "salle", icon: "💪",
+          title: { fr: "Fitness City", ar: "Fitness City", en: "Fitness City" },
+          specialty: { fr: "Salle de fitness", ar: "صالة لياقة", en: "Fitness gym" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["city 1.jpg","city 2.jpg","city 3.jpg"],
+          video: "", mapCoords: [36.7320, 3.0795]
+        },
+        {
+          id: "salle-body-boost", section: "sport", category: "salle", icon: "💪",
+          title: { fr: "Body Boost Gym", ar: "Body Boost Gym", en: "Body Boost Gym" },
+          specialty: { fr: "Salle de musculation", ar: "صالة كمال أجسام", en: "Bodybuilding gym" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["gym 1.jpg","gym 2.jpg","gym 3.jpg","gym 4.jpg","gym 5.jpg"],
+          video: "", mapCoords: [36.7330, 3.0805]
         },
 
-        // صالة Iron Gym
+        // 3 فيديوهات من sport.js
         {
-          id: "sport-2", section: "sport", category: "salle",
-          icon: "🏋️",
-          title: { ar: "صالة Iron Gym", fr: "Salle Iron Gym", en: "Iron Gym" },
-          specialty: { ar: "كمال الأجسام", fr: "Musculation", en: "Bodybuilding" },
-          desc: { ar: "قاعة متخصصة في كمال الأجسام.", fr: "Salle spécialisée en musculation.", en: "Gym specialized in bodybuilding." },
+          id: "video-complexe", section: "sport", category: "video", icon: "🏟️",
+          title: { fr: "Complexe Sportif de Kouba", ar: "المركب الرياضي القبة", en: "Kouba Sports Complex" },
+          specialty: null,
+          desc: { fr: "Découvrez le complexe sportif de Kouba en vidéo.", ar: "اكتشف المركب الرياضي القبة من خلال الفيديو.", en: "Discover the Kouba sports complex in video." },
           address: "Kouba, Alger", phone: "", schedule: null,
-          images: [], video: "", mapCoords: [36.7285, 3.0770]
+          images: [], video: "aqPng7nyFZU", mapCoords: null
         },
-
-        // صالة Fitness
         {
-          id: "sport-3", section: "sport", category: "salle",
-          icon: "🤸",
-          title: { ar: "قاعة Fitness", fr: "Salle Fitness", en: "Fitness Gym" },
-          specialty: { ar: "لياقة ويوجا", fr: "Fitness et yoga", en: "Fitness and yoga" },
-          desc: { ar: "قاعة لياقة مع حصص يوجا.", fr: "Salle de fitness avec cours de yoga.", en: "Fitness gym with yoga classes." },
-          address: "Kouba, Alger", phone: "", schedule: null,
-          images: [], video: "", mapCoords: [36.7305, 3.0785]
+          id: "video-garidi", section: "sport", category: "video", icon: "💪",
+          title: { fr: "Vidéo motivante (Garidi)", ar: "فيديو تحفيزي (قاريدي)", en: "Motivating video (Garidi)" },
+          specialty: null,
+          desc: { fr: "Une vidéo motivante tournée à Garidi.", ar: "فيديو تحفيزي تم تصويره في قاريدي.", en: "A motivating video filmed in Garidi." },
+          address: "", phone: "", schedule: null,
+          images: [], video: "byDM5wQ3wcc", mapCoords: null
         },
-
-        // صالة اللياقة النسائية
         {
-          id: "sport-4", section: "sport", category: "salle",
-          icon: "🤸",
-          title: { ar: "قاعة اللياقة النسائية", fr: "Fitness Femme", en: "Women Fitness" },
-          specialty: { ar: "مخصصة للنساء", fr: "Réservée aux femmes", en: "Women only" },
-          desc: { ar: "قاعة مخصصة للنساء فقط.", fr: "Salle réservée aux femmes.", en: "Women-only gym." },
-          address: "Kouba, Alger", phone: "", schedule: null,
-          images: [], video: "", mapCoords: [36.7275, 3.0740]
+          id: "video-short", section: "sport", category: "video", icon: "🔥",
+          title: { fr: "Short motivant", ar: "فيديو قصير ملهم", en: "Inspiring Short" },
+          specialty: null,
+          desc: { fr: "Un short inspirant pour te dépasser.", ar: "فيديو قصير ملهم لتجاوز نفسك.", en: "An inspiring short to push your limits." },
+          address: "", phone: "", schedule: null,
+          images: [], video: "https://youtube.com/shorts/s4IcvPRD5dY", mapCoords: null
         },
 
         /* ============================================
-           🏥 SANTE — الأطباء + الصيدليات
+           🏥 SANTE — الأطباء + الأسنان + الصيدليات + طبيب المدرسة
            ============================================ */
 
         // طبيب المدرسة
         {
-          id: "medecin-ecole", section: "sante", category: "medecin",
-          icon: "🩺",
+          id: "medecin-ecole", section: "sante", category: "medecin", icon: "🩺",
           title: { ar: "طبيب المدرسة", fr: "Médecin de l'école", en: "School Doctor" },
           specialty: { ar: "طب عام", fr: "Médecine générale", en: "General medicine" },
           desc: { ar: "طبيب عام في المدرسة، متاح للطلبة والموظفين.", fr: "Médecin généraliste à l'école, disponible pour étudiants et personnel.", en: "General practitioner at school, available to students and staff." },
@@ -641,8 +677,7 @@
 
         // طبيب إقامة قريدي
         {
-          id: "medecin-garidi", section: "sante", category: "medecin",
-          icon: "🩺",
+          id: "medecin-garidi", section: "sante", category: "medecin", icon: "🩺",
           title: { ar: "طبيب إقامة قريدي", fr: "Médecin résidence Garidi", en: "Garidi Residence Doctor" },
           specialty: { ar: "طب عام", fr: "Médecine générale", en: "General medicine" },
           desc: { ar: "طبيب في الإقامة الجامعية قريدي، بجانب المدرسة.", fr: "Médecin à la résidence universitaire de Garidi, à côté de l'école.", en: "Doctor at Garidi university residence, next to the school." },
@@ -651,105 +686,183 @@
           images: [], video: "", mapCoords: [36.7320, 3.0790]
         },
 
-        // صيدلية عطوي
+        // 9 أطباء من sport.js
         {
-          id: "pharma-attoui", section: "sante", category: "pharma",
-          icon: "💊",
+          id: "dr-aissani", section: "sante", category: "medecin", icon: "❤️",
+          title: { fr: "Dr Farid Aissani", ar: "د. فريد عيساني", en: "Dr Farid Aissani" },
+          specialty: { fr: "Cardiologie", ar: "أمراض القلب", en: "Cardiology" },
+          desc: null, address: "Coopemad Sud, Bt 71/4, Kouba",
+          phone: "023 70 54 57", schedule: null,
+          images: [], video: "", mapCoords: [36.7260, 3.0750]
+        },
+        {
+          id: "dr-bendali", section: "sante", category: "medecin", icon: "👶",
+          title: { fr: "Dr Amina Bendali", ar: "د. أمينة بن دالي", en: "Dr Amina Bendali" },
+          specialty: { fr: "Gynécologie-Obstétrique", ar: "أمراض النساء والتوليد", en: "Gynecology-Obstetrics" },
+          desc: null, address: "Route des Annassers, Kouba",
+          phone: "0553 24 07 60", schedule: null,
+          images: [], video: "", mapCoords: [36.7275, 3.0765]
+        },
+        {
+          id: "dr-ouabdesselam", section: "sante", category: "medecin", icon: "🧒",
+          title: { fr: "Dr Houria Ouabdesselam", ar: "د. حورية وعباد السلام", en: "Dr Houria Ouabdesselam" },
+          specialty: { fr: "Pédiatrie", ar: "طب الأطفال", en: "Pediatrics" },
+          desc: null, address: "Jolie Vue 2, 1216 logements, Bt 12, Kouba",
+          phone: "0697 28 58 17", schedule: null,
+          images: [], video: "", mapCoords: [36.7285, 3.0780]
+        },
+        {
+          id: "dr-bengherbi", section: "sante", category: "medecin", icon: "👁️",
+          title: { fr: "Dr Mokhtar Bengherbi", ar: "د. مختار بن غربي", en: "Dr Mokhtar Bengherbi" },
+          specialty: { fr: "Ophtalmologie", ar: "طب العيون", en: "Ophthalmology" },
+          desc: null, address: "70 avenue des Frères Abdeslami, Kouba",
+          phone: "023 60 16 78", schedule: null,
+          images: [], video: "", mapCoords: [36.7290, 3.0800]
+        },
+        {
+          id: "dr-debba", section: "sante", category: "medecin", icon: "👁️",
+          title: { fr: "Dr Abdelghani Debba", ar: "د. عبد الغني دبة", en: "Dr Abdelghani Debba" },
+          specialty: { fr: "Ophtalmologie", ar: "طب العيون", en: "Ophthalmology" },
+          desc: null, address: "75 avenue des Frères Abdeslami, Vieux Kouba",
+          phone: "0660 39 29 22", schedule: null,
+          images: [], video: "", mapCoords: [36.7300, 3.0820]
+        },
+        {
+          id: "dr-ait-allaoua", section: "sante", category: "medecin", icon: "👁️",
+          title: { fr: "Dr Farid Ait Allaoua", ar: "د. فريد آيت علاوة", en: "Dr Farid Ait Allaoua" },
+          specialty: { fr: "Ophtalmologie", ar: "طب العيون", en: "Ophthalmology" },
+          desc: null, address: "43 rue des Frères Abdeslami, Kouba",
+          phone: "0696 57 94 94", schedule: null,
+          images: [], video: "", mapCoords: [36.7310, 3.0830]
+        },
+        {
+          id: "dr-benantar", section: "sante", category: "medecin", icon: "🧒",
+          title: { fr: "Dr Widad Benantar", ar: "د. وداد بن نتر", en: "Dr Widad Benantar" },
+          specialty: { fr: "Pédiatrie", ar: "طب الأطفال", en: "Pediatrics" },
+          desc: null, address: "Cité Sastra / Jolie Vue 2, Kouba",
+          phone: "021 68 89 13", schedule: null,
+          images: [], video: "", mapCoords: [36.7320, 3.0840]
+        },
+        {
+          id: "dr-belhadj", section: "sante", category: "medecin", icon: "👶",
+          title: { fr: "Dr Zineb Belhadj", ar: "د. زينب بلحاج", en: "Dr Zineb Belhadj" },
+          specialty: { fr: "Gynécologie-Obstétrique", ar: "أمراض النساء والتوليد", en: "Gynecology-Obstetrics" },
+          desc: null, address: "12 avenue des Frères Abdeslami, 1er étage, Kouba",
+          phone: "0559 67 11 71", schedule: null,
+          images: [], video: "", mapCoords: [36.7255, 3.0735]
+        },
+        {
+          id: "pr-bouferrouk", section: "sante", category: "medecin", icon: "❤️",
+          title: { fr: "Pr Bouferrouk", ar: "أ.د. بوفرق", en: "Pr Bouferrouk" },
+          specialty: { fr: "Cardiologie", ar: "أمراض القلب", en: "Cardiology" },
+          desc: null, address: "Cité Garidi 1, Bt 8 n°1, Kouba",
+          phone: "0551 26 84 36", schedule: null,
+          images: [], video: "", mapCoords: [36.7295, 3.0775]
+        },
+
+        // 4 عيادات أسنان من sport.js
+        {
+          id: "dent-gr", section: "sante", category: "dentiste", icon: "🦷",
+          title: { fr: "Cabinet Dental GR", ar: "عيادة الأسنان GR", en: "Cabinet Dental GR" },
+          specialty: { fr: "Dentiste", ar: "عيادة أسنان", en: "Dentist" },
+          desc: null, address: "Kouba, Alger", phone: "0558 58 11 07", schedule: null,
+          images: ["gr 1.jpg","gr 2.jpg","gr 3.jpg","gr 4.jpg","gr 5.jpg","gr6.jpg"],
+          video: "", mapCoords: [36.7280, 3.0750]
+        },
+        {
+          id: "dent-kouba", section: "sante", category: "dentiste", icon: "🦷",
+          title: { fr: "Cabinet Dentaire Kouba", ar: "عيادة الأسنان القبة", en: "Cabinet Dentaire Kouba" },
+          specialty: { fr: "Dentiste", ar: "عيادة أسنان", en: "Dentist" },
+          desc: null, address: "Kouba, Alger", phone: "0666 42 12 72", schedule: null,
+          images: ["cabinet1.jpg"],
+          video: "", mapCoords: [36.7290, 3.0760]
+        },
+        {
+          id: "dent-nn", section: "sante", category: "dentiste", icon: "🦷",
+          title: { fr: "NN Cabinet Dentaire", ar: "عيادة الأسنان NN", en: "NN Cabinet Dentaire" },
+          specialty: { fr: "Dentiste", ar: "عيادة أسنان", en: "Dentist" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["nn1.jpg","nn2.jpg","nn3.jpg","nn4.jpg"],
+          video: "", mapCoords: [36.7300, 3.0770]
+        },
+        {
+          id: "dent-noui", section: "sante", category: "dentiste", icon: "🦷",
+          title: { fr: "Cabinet Dentaire Dr Noui", ar: "عيادة الأسنان د. نوي", en: "Cabinet Dentaire Dr Noui" },
+          specialty: { fr: "Dentiste", ar: "عيادة أسنان", en: "Dentist" },
+          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          images: ["noui 1.jpg","noui 2.jpg","noui 3.jpg","noui 4.jpg","noui 5.jpg"],
+          video: "", mapCoords: [36.7310, 3.0780]
+        },
+
+        // 8 صيدليات
+        {
+          id: "pharma-attoui", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية عطوي", fr: "Pharmacie Attoui", en: "Pharmacie Attoui" },
           specialty: { ar: "صيدلية عامة", fr: "Pharmacie générale", en: "General pharmacy" },
-          desc: { ar: "صيدلية عامة، أدوية ومستلزمات طبية.", fr: "Pharmacie générale, médicaments et matériel médical.", en: "General pharmacy, medicines and medical supplies." },
-          address: "Kouba, Alger", phone: "",
+          desc: null, address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:00 - 20:00", fr: "8h00 - 20h00", en: "8:00 - 20:00" },
           images: ["attoui 1.jpg","attoui 2.jpg","attoui 3.jpg","attoui 4.jpg","attoui 5.jpg"],
           video: "", mapCoords: [36.7260, 3.0750]
         },
-
-        // صيدلية جرار
         {
-          id: "pharma-djarar", section: "sante", category: "pharma",
-          icon: "💊",
+          id: "pharma-djarar", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية جرار", fr: "Pharmacie Djarar", en: "Pharmacie Djarar" },
           specialty: { ar: "صيدلية، مستحضرات تجميل طبية", fr: "Pharmacie, cosmétiques médicaux", en: "Pharmacy, medical cosmetics" },
-          desc: { ar: "صيدلية ومستحضرات تجميل طبية.", fr: "Pharmacie et cosmétiques médicaux.", en: "Pharmacy and medical cosmetics." },
-          address: "Kouba, Alger", phone: "",
+          desc: null, address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:30 - 21:00", fr: "8h30 - 21h00", en: "8:30 - 21:00" },
           images: ["djerar 1.jpg","djerar 3.jpg","djerar 4.jpg","djerar 5.jpg","djrar 2.jpg"],
           video: "", mapCoords: [36.7275, 3.0765]
         },
-
-        // صيدلية حساني
         {
-          id: "pharma-hassani", section: "sante", category: "pharma",
-          icon: "💊",
+          id: "pharma-hassani", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية حساني", fr: "Pharmacie Hassani", en: "Pharmacie Hassani" },
           specialty: { ar: "صيدلية، أدوية مزمنة", fr: "Pharmacie, médicaments chroniques", en: "Pharmacy, chronic medicines" },
-          desc: { ar: "صيدلية، أدوية الأمراض المزمنة.", fr: "Pharmacie, médicaments chroniques.", en: "Pharmacy, chronic medicines." },
-          address: "Kouba, Alger", phone: "",
+          desc: null, address: "Kouba, Alger", phone: "",
           schedule: { ar: "9:00 - 19:30", fr: "9h00 - 19h30", en: "9:00 - 19:30" },
           images: ["hassani 1.jpg","hassani 2.jpg","hassani 3.jpg","hassani 4.jpg","hassani 5.jpg"],
           video: "", mapCoords: [36.7285, 3.0780]
         },
-
-        // صيدلية هديبي
         {
-          id: "pharma-hadibi", section: "sante", category: "pharma",
-          icon: "💊",
+          id: "pharma-hadibi", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية هديبي", fr: "Pharmacie Hadibi", en: "Pharmacie Hadibi" },
           specialty: { ar: "صيدلية، مستلزمات الأطفال", fr: "Pharmacie, articles pour bébés", en: "Pharmacy, baby supplies" },
-          desc: { ar: "صيدلية ومستلزمات الأطفال.", fr: "Pharmacie et articles pour bébés.", en: "Pharmacy and baby supplies." },
-          address: "Kouba, Alger", phone: "",
+          desc: null, address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:00 - 20:00", fr: "8h00 - 20h00", en: "8:00 - 20:00" },
           images: ["hadibi 1.jpg","hadibi 2.jpg","hadibi 3.jpg"],
           video: "", mapCoords: [36.7290, 3.0800]
         },
-
-        // صيدلية تورشيش
         {
-          id: "pharma-torkiche", section: "sante", category: "pharma",
-          icon: "💊",
+          id: "pharma-torkiche", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية تورشيش", fr: "Pharmacie Torkiche", en: "Pharmacie Torkiche" },
           specialty: { ar: "صيدلية، فحص ضغط وسكري", fr: "Pharmacie, tension et diabète", en: "Pharmacy, BP and diabetes check" },
-          desc: { ar: "صيدلية مع فحص الضغط والسكري.", fr: "Pharmacie avec contrôle tension et diabète.", en: "Pharmacy with BP and diabetes check." },
-          address: "Kouba, Alger", phone: "",
+          desc: null, address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:00 - 21:00", fr: "8h00 - 21h00", en: "8:00 - 21:00" },
           images: ["torkich 1.jpg","torkich 2.jpg"],
           video: "", mapCoords: [36.7300, 3.0820]
         },
-
-        // صيدلية حاركيت
         {
-          id: "pharma-harket", section: "sante", category: "pharma",
-          icon: "💊",
+          id: "pharma-harket", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية حاركيت", fr: "Pharmacie Harket", en: "Pharmacie Harket" },
           specialty: { ar: "صيدلية، عناية بالبشرة", fr: "Pharmacie, soins de la peau", en: "Pharmacy, skin care" },
-          desc: { ar: "صيدلية وعناية بالبشرة.", fr: "Pharmacie et soins de la peau.", en: "Pharmacy and skin care." },
-          address: "Kouba, Alger", phone: "",
+          desc: null, address: "Kouba, Alger", phone: "",
           schedule: { ar: "9:00 - 20:00", fr: "9h00 - 20h00", en: "9:00 - 20:00" },
           images: ["harkat 1.jpg","harkat 2.jpg"],
           video: "", mapCoords: [36.7310, 3.0830]
         },
-
-        // صيدلية بازيز
         {
-          id: "pharma-baziz", section: "sante", category: "pharma",
-          icon: "💊",
+          id: "pharma-baziz", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية بازيز", fr: "Pharmacie Baziz", en: "Pharmacie Baziz" },
           specialty: { ar: "صيدلية، مكملات غذائية", fr: "Pharmacie, compléments alimentaires", en: "Pharmacy, food supplements" },
-          desc: { ar: "صيدلية ومكملات غذائية.", fr: "Pharmacie et compléments alimentaires.", en: "Pharmacy and food supplements." },
-          address: "Kouba, Alger", phone: "",
+          desc: null, address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:30 - 20:30", fr: "8h30 - 20h30", en: "8:30 - 20:30" },
           images: ["baziz 1.jpg","baziz 2.jpg"],
           video: "", mapCoords: [36.7320, 3.0840]
         },
-
-        // صيدلية شيخي
         {
-          id: "pharma-chikhi", section: "sante", category: "pharma",
-          icon: "💊",
+          id: "pharma-chikhi", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية شيخي", fr: "Pharmacie Chikhi", en: "Pharmacie Chikhi" },
           specialty: { ar: "صيدلية مناوبة", fr: "Pharmacie de garde", en: "On-call pharmacy" },
-          desc: { ar: "صيدلية مناوبة، أدوية نادرة.", fr: "Pharmacie de garde, médicaments rares.", en: "On-call pharmacy, rare medicines." },
-          address: "Kouba, Alger", phone: "",
+          desc: null, address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:00 - 22:00", fr: "8h00 - 22h00", en: "8:00 - 22:00" },
           images: ["chikhi 1.jpg","chikhi 2.jpg","chikhi 3.jpg"],
           video: "", mapCoords: [36.7255, 3.0735]
@@ -928,6 +1041,7 @@
         filters = [
           { key: 'all', label: t('filter_all'), icon: 'fa-list' },
           { key: 'medecin', label: t('filter_medecin'), icon: 'fa-stethoscope' },
+          { key: 'dentiste', label: t('filter_dentiste'), icon: 'fa-tooth' },
           { key: 'pharma', label: t('filter_pharma'), icon: 'fa-pills' }
         ];
       }
@@ -970,11 +1084,10 @@
       if(currentSection === 'sport'){
         items = items.filter(i => i.section==='sport');
         if(currentFilter === 'salle') items = items.filter(i => i.category === 'salle');
-        else if(currentFilter === 'video') items = items.filter(i => i.video && i.video.trim() !== '');
+        else if(currentFilter === 'video') items = items.filter(i => i.category === 'video');
       } else {
         items = items.filter(i => i.section==='sante');
-        if(currentFilter === 'medecin') items = items.filter(i => i.category === 'medecin' || i.category === 'dentiste');
-        else if(currentFilter === 'pharma') items = items.filter(i => i.category === 'pharma');
+        if(currentFilter !== 'all') items = items.filter(i => i.category === currentFilter);
       }
 
       if(items.length === 0){
@@ -989,7 +1102,14 @@
         const catLabel = t('group_' + item.category);
 
         let mediaHTML = '';
-        if(item.images && item.images.length > 0){
+        if(item.video && item.video.trim() !== ''){
+          const videoId = extractYoutubeId(item.video);
+          if(videoId){
+            mediaHTML = `<div class="sport-card-cover"><div class="video-wrap" style="border-radius:0;border:none;height:100%;padding-bottom:0;"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen loading="lazy" style="position:relative;height:190px;"></iframe></div><span class="sport-card-cat">${item.icon} ${catLabel}</span></div>`;
+          } else {
+            mediaHTML = `<div class="sport-card-cover"><div class="no-img">${item.icon}</div><span class="sport-card-cat">${item.icon} ${catLabel}</span></div>`;
+          }
+        } else if(item.images && item.images.length > 0){
           const imgs = item.images.map(src=>`<img src="${src}" alt="${title}" onerror="this.style.display='none'">`).join('');
           const dots = item.images.map((_,i)=>`<span class="${i===0?'active':''}"></span>`).join('');
           mediaHTML = `
@@ -1014,8 +1134,8 @@
         card.innerHTML = `
           ${mediaHTML}
           <div class="sport-card-body">
-            <h3 class="sport-card-title">${title}</h3>
-            ${specialty ? `<p class="sport-card-specialty">${specialty}</p>` : ''}
+            <h3 class="sport-card-title">${title || specialty}</h3>
+            ${specialty && title ? `<p class="sport-card-specialty">${specialty}</p>` : ''}
             ${desc ? `<p class="sport-card-desc">${desc}</p>` : ''}
             ${item.address ? `<div class="sport-card-meta"><span><i class="fa-solid fa-location-dot"></i>${item.address}</span></div>` : ''}
             ${item.phone ? `<div class="sport-card-meta"><span dir="ltr"><i class="fa-solid fa-phone"></i>${item.phone}</span></div>` : ''}
@@ -1058,6 +1178,7 @@
 
     function extractYoutubeId(url){
       if(!url) return null;
+      if(url.length === 11 && !url.includes('/') && !url.includes('.')) return url;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
       const match = url.match(regExp);
       return (match && match[2].length === 11) ? match[2] : null;
@@ -1070,8 +1191,8 @@
 
       const title = item.title[currentLang] || item.title.ar;
       const specialty = item.specialty ? (item.specialty[currentLang] || item.specialty.ar) : '';
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalSubtitle').innerText = specialty;
+      document.getElementById('modalTitle').innerText = title || specialty;
+      document.getElementById('modalSubtitle').innerText = (title && specialty) ? specialty : '';
 
       // Video
       const vc = document.getElementById('modalVideoContainer');
