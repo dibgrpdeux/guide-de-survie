@@ -20,7 +20,7 @@
       --card-bg: #ffffff;
       --nav-bg: rgba(255, 255, 255, 0.95);
       --border-color: #e2e8f0;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-sm: 0 4px 15px rgba(0,0,0,0.05);
       --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
     }
     [data-theme="dark"] {
@@ -30,7 +30,7 @@
       --card-bg: #0f1e41;
       --nav-bg: rgba(10, 17, 40, 0.95);
       --border-color: #1e3a8a;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+      --shadow-sm: 0 4px 15px rgba(0,0,0,0.3);
       --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
     }
     * { box-sizing: border-box; }
@@ -47,7 +47,7 @@
       padding-top: 90px;
     }
 
-    /* ===== BLOBS (identique à index) ===== */
+    /* BLOBS */
     .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
     .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: blobFloat 25s ease-in-out infinite; }
     .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
@@ -61,20 +61,8 @@
       33% { transform: translate(60px,-40px) scale(1.1); }
       66% { transform: translate(-40px,60px) scale(.95); }
     }
-    .dot { position: absolute; border-radius: 50%; background: #f97316; opacity: .15; animation: dotFloat 15s linear infinite; }
-    [data-theme="dark"] .dot { background: #60a5fa; opacity: .25; }
-    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; }
-    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
-    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
-    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
-    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
-    @keyframes dotFloat {
-      0% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-30px) translateX(20px); }
-      100% { transform: translateY(0) translateX(0); }
-    }
 
-    /* ===== NAVBAR (identique à index) ===== */
+    /* NAVBAR */
     .top-navbar {
       position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
       width: 96%; max-width: 1100px;
@@ -144,7 +132,7 @@
     }
     .dropdown-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
 
-    /* ===== HERO ===== */
+    /* HERO */
     .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
     .page-hero h1 {
       font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
@@ -159,10 +147,10 @@
     }
     .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
 
-    /* ===== CONTENT ===== */
+    /* CONTENT */
     .content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
 
-    /* Filter chips */
+    /* Search & Filters */
     .filters-bar {
       display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
       margin-bottom: 20px;
@@ -172,350 +160,225 @@
       padding: 11px 20px; border-radius: 16px;
       background: var(--card-bg); border: 1.5px solid var(--border-color);
       color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .88rem;
-      cursor: pointer; transition: all .3s cubic-bezier(.34,1.56,.64,1);
-      box-shadow: var(--shadow-sm);
+      cursor: pointer; transition: all .3s;
     }
-    .filter-chip i {
-      font-size: 1rem; color: var(--orange); transition: all .2s;
-    }
-    .filter-chip:hover {
-      transform: translateY(-3px); border-color: var(--orange);
-      box-shadow: 0 10px 25px rgba(249,115,22,.2);
-    }
-    .filter-chip:hover i { transform: rotate(-8deg) scale(1.15); }
     .filter-chip.active {
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #fff; border-color: transparent;
-      box-shadow: 0 12px 30px rgba(249,115,22,.4);
-    }
-    .filter-chip.active i { color: #fff; }
-
-    /* Sort bar */
-    .sort-bar {
-      background: var(--card-bg);
-      border: 1.5px solid var(--border-color);
-      border-radius: 18px;
-      padding: 14px 16px;
-      margin-bottom: 22px;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 10px;
-      box-shadow: var(--shadow-sm);
-    }
-    .sort-label {
-      font-size: .85rem; font-weight: 800; color: var(--text-main);
-      display: inline-flex; align-items: center; gap: 6px;
-    }
-    .sort-label i { color: var(--orange); }
-    .sort-btns { display: flex; flex-wrap: wrap; gap: 6px; }
-    .sort-btn {
-      padding: 8px 14px; border-radius: 10px;
-      background: var(--card-bg); border: 1.5px solid var(--border-color);
-      color: var(--text-muted); font-family: inherit; font-weight: 700; font-size: .78rem;
-      cursor: pointer; transition: all .2s;
-    }
-    .sort-btn:hover {
-      background: rgba(249,115,22,.08); color: var(--orange-dark); border-color: var(--orange);
-    }
-    .sort-btn.active {
       background: var(--orange); color: #fff; border-color: var(--orange);
-      box-shadow: 0 6px 18px rgba(249,115,22,.35);
     }
 
-    /* Items grid */
+    /* Cards Grid */
     #itemsGrid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
     }
 
-    .resto-card {
+    /* NOUVELLE CARTE DE RESTO (Style Image) */
+    .resto-card-new {
       background: var(--card-bg);
-      border: 1.5px solid var(--border-color);
+      border: 1px solid var(--border-color);
       border-radius: 20px;
       overflow: hidden;
       cursor: pointer;
       display: flex; flex-direction: column;
       box-shadow: var(--shadow-sm);
-      transition: all .35s cubic-bezier(.34,1.56,.64,1);
+      transition: all .3s ease;
     }
-    .resto-card:hover {
-      transform: translateY(-6px) scale(1.01);
-      border-color: var(--orange);
-      box-shadow: 0 25px 50px -12px rgba(249,115,22,.25);
+    .resto-card-new:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
     }
-    .resto-card-cover {
-      width: 100%; height: 180px; overflow: hidden;
-      background: linear-gradient(135deg, #fed7aa, #fbbf24);
+
+    /* Image de couverture + Badges */
+    .cover-wrap {
       position: relative;
+      width: 100%; height: 200px;
+      background: #e2e8f0;
     }
-    .resto-card-cover img {
+    .cover-wrap img {
       width: 100%; height: 100%; object-fit: cover;
-      transition: transform .5s ease;
     }
-    .resto-card:hover .resto-card-cover img { transform: scale(1.08); }
-    .resto-card-cover .no-img {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem; color: rgba(249,115,22,.35);
+    .badge-top-right {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(255,255,255,0.85); backdrop-filter: blur(5px);
+      padding: 4px 10px; border-radius: 8px;
+      font-size: 0.75rem; font-weight: 800; color: #1e293b;
+      display: flex; align-items: center; gap: 4px;
     }
-    .card-type-badge {
-      position: absolute; top: 10px; right: 10px;
-      padding: 4px 10px; border-radius: 8px; font-size: .68rem; font-weight: 900;
-      display: inline-flex; align-items: center; gap: 4px;
-      color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2);
-    }
-    .card-type-badge.resto { background: linear-gradient(135deg,#f97316,#ea580c); }
-    .card-type-badge.cafe { background: linear-gradient(135deg,#f59e0b,#d97706); }
-
-    .resto-card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
-    .resto-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
-    .resto-card-title {
-      font-size: 1.05rem; font-weight: 900; color: var(--text-main);
-      line-height: 1.25; transition: color .25s; margin: 0;
-    }
-    .resto-card:hover .resto-card-title { color: var(--orange); }
-    .rating-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      background: linear-gradient(135deg,#fef3c7,#fde68a);
-      color: #92400e; padding: 4px 9px; border-radius: 8px;
-      font-size: .72rem; font-weight: 900; flex-shrink: 0;
-    }
-    [data-theme="dark"] .rating-badge { background: rgba(251,191,36,.2); color: #fcd34d; }
-    .rating-badge i { font-size: .65rem; }
-
-    .resto-meta-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
-    .meta-chip {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 4px 9px; border-radius: 8px; font-size: .7rem; font-weight: 800;
-      background: rgba(249,115,22,.08); color: var(--orange-dark);
-    }
-    [data-theme="dark"] .meta-chip { background: rgba(249,115,22,.15); color: #fdba74; }
-    .meta-chip.green { background: rgba(16,185,129,.1); color: #047857; }
-    [data-theme="dark"] .meta-chip.green { background: rgba(16,185,129,.15); color: #6ee7b7; }
-    .meta-chip i { font-size: .65rem; }
-
-    .resto-card-desc {
-      font-size: .8rem; color: var(--text-muted); font-weight: 600;
-      line-height: 1.55; margin: 0 0 12px;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .resto-card-footer {
-      margin-top: auto; padding-top: 12px;
-      border-top: 1px dashed var(--border-color);
-      display: flex; align-items: center; justify-content: center;
-      gap: 6px; font-size: .78rem; font-weight: 800; color: var(--orange);
+    
+    /* Body de la carte */
+    .card-body-new {
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 12px;
     }
 
-    /* ===== MODAL ===== */
+    /* Titre */
+    .place-title-new {
+      font-size: 1.25rem; font-weight: 900; color: var(--text-main);
+      margin: 0;
+    }
+
+    /* Tags (Pizza, etc.) */
+    .category-tag {
+      display: inline-block;
+      background: #f1f5f9; color: #475569;
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 700;
+      width: fit-content;
+    }
+    [data-theme="dark"] .category-tag { background: #1e293b; color: #cbd5e1; }
+
+    /* Prix */
+    .price-tag {
+      display: inline-block;
+      background: #e0f2fe; color: #0369a1;
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.85rem; font-weight: 800;
+      width: fit-content;
+    }
+    [data-theme="dark"] .price-tag { background: rgba(3,105,161,0.2); color: #38bdf8; }
+
+    /* Description */
+    .desc-new {
+      font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Note étoiles */
+    .rating-row {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; font-weight: 800; color: var(--text-main);
+    }
+    .stars-display {
+      color: #fbbf24; display: flex; gap: 2px; font-size: 0.95rem;
+    }
+    .rating-count {
+      color: var(--text-muted); font-weight: 600; font-size: 0.8rem;
+    }
+
+    /* Téléphone */
+    .phone-row {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.95rem; font-weight: 800; color: #047857;
+      text-decoration: none;
+    }
+    .phone-row i { color: #10b981; }
+
+    /* Bouton Bon Marché */
+    .badge-cheap {
+      display: inline-block;
+      background: #e0f2fe; color: #0369a1;
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 800;
+      width: fit-content;
+    }
+    [data-theme="dark"] .badge-cheap { background: rgba(3,105,161,0.2); color: #38bdf8; }
+
+    /* Horaires */
+    .hours-row {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; color: var(--text-muted); font-weight: 700;
+    }
+
+    /* Avis des clients (Box grise) */
+    .reviews-box {
+      background: #f8fafc; border-radius: 16px; padding: 16px;
+      border: 1px solid #e2e8f0; margin-top: 6px;
+    }
+    [data-theme="dark"] .reviews-box { background: #1e293b; border-color: #334155; }
+    
+    .reviews-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .reviews-title {
+      font-size: 0.9rem; font-weight: 900; color: var(--text-main);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .reviews-link {
+      font-size: 0.8rem; color: #047857; font-weight: 800; cursor: pointer; text-decoration: none;
+    }
+    [data-theme="dark"] .reviews-link { color: #34d399; }
+
+    .review-text {
+      font-size: 0.88rem; color: #475569; font-style: italic; line-height: 1.6;
+      margin: 0;
+    }
+    [data-theme="dark"] .review-text { color: #cbd5e1; }
+
+    /* Modal details (when clicking) */
     #itemModal {
       position: fixed; inset: 0; z-index: 2000;
       background: rgba(15,23,42,.8); backdrop-filter: blur(4px);
       display: flex; align-items: center; justify-content: center;
-      padding: 16px;
-      opacity: 0; pointer-events: none; transition: opacity .3s;
+      padding: 16px; opacity: 0; pointer-events: none; transition: opacity .3s;
     }
     #itemModal.open { opacity: 1; pointer-events: auto; }
     .modal-card {
       background: var(--card-bg); border-radius: 24px;
-      max-width: 800px; width: 100%; max-height: 92vh;
-      overflow-y: auto; padding: 28px;
-      box-shadow: 0 30px 80px -10px rgba(0,0,0,.5);
-      position: relative;
-      transform: scale(.95); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+      max-width: 600px; width: 100%; max-height: 90vh;
+      overflow-y: auto; padding: 24px;
+      position: relative; transform: scale(.95); transition: transform .3s;
     }
     #itemModal.open .modal-card { transform: scale(1); }
     .modal-close {
       position: absolute; top: 16px; left: 16px;
-      width: 40px; height: 40px; border-radius: 50%;
-      background: rgba(249,115,22,.12); border: none;
-      color: var(--orange); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; transition: all .2s; z-index: 5;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bg-color); border: 1px solid var(--border-color);
+      color: var(--text-main); cursor: pointer; z-index: 5;
     }
-    .modal-close:hover { background: var(--orange); color: #fff; transform: rotate(90deg); }
-
-    .modal-header {
-      padding-bottom: 16px; margin-bottom: 20px;
-      border-bottom: 1.5px solid var(--border-color);
-      padding-left: 50px;
+    
+    /* Comments Section */
+    .comments-section { margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 20px; }
+    .comment-form { display: flex; gap: 8px; margin-bottom: 16px; }
+    .comment-form input {
+      flex: 1; padding: 10px 14px; border-radius: 10px;
+      border: 1.5px solid var(--border-color); background: var(--bg-color); color: var(--text-main);
+      font-family: inherit; font-size: .85rem; outline: none;
     }
-    .modal-title {
-      font-size: 1.5rem; font-weight: 900; color: var(--text-main); margin: 0 0 6px;
+    .comment-form input:focus { border-color: var(--orange); }
+    .comment-form button {
+      padding: 10px 16px; border-radius: 10px; border: none;
+      background: var(--orange); color: #fff; font-weight: 800; cursor: pointer;
     }
-    .modal-subtitle {
-      font-size: .85rem; color: var(--orange-dark); font-weight: 800;
-      display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    .comments-list { display: flex; flex-direction: column; gap: 10px; }
+    .comment-item {
+      background: var(--bg-color); padding: 10px 14px; border-radius: 10px;
+      border: 1px solid var(--border-color); font-size: .85rem;
     }
-    [data-theme="dark"] .modal-subtitle { color: #fdba74; }
-    .modal-subtitle .rating-badge { font-size: .75rem; }
-
-    .modal-section { margin-bottom: 20px; }
-    .modal-section h4 {
-      margin: 0 0 8px; font-size: .9rem; font-weight: 900;
-      color: var(--text-main);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .modal-section h4 i { color: var(--orange); font-size: .95rem; }
-    .modal-section .section-content {
-      background: rgba(249,115,22,.06);
-      border: 1px solid rgba(249,115,22,.2);
-      border-radius: 12px; padding: 12px 14px;
-      font-size: .86rem; line-height: 1.7;
-      color: var(--text-main);
-    }
-    [data-theme="dark"] .modal-section .section-content { background: rgba(249,115,22,.1); }
-    .section-content.green { background: rgba(16,185,129,.08); border-color: rgba(16,185,129,.2); }
-    [data-theme="dark"] .section-content.green { background: rgba(16,185,129,.12); }
-
-    /* Gallery */
-    .gallery-scroll {
-      display: flex; overflow-x: auto; gap: 10px;
-      padding-bottom: 8px; scroll-snap-type: x mandatory;
-    }
-    .gallery-scroll::-webkit-scrollbar { height: 6px; }
-    .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(249,115,22,.4); border-radius: 10px; }
-    .gallery-item {
-      flex: 0 0 auto; width: 200px; height: 140px;
-      scroll-snap-align: start; border-radius: 12px; overflow: hidden;
-      border: 2px solid var(--border-color);
-      background: var(--bg-color); cursor: pointer;
-      transition: all .3s ease;
-    }
-    .gallery-item:hover {
-      transform: scale(1.05); border-color: var(--orange);
-      box-shadow: 0 10px 25px -5px rgba(249,115,22,.35);
-    }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-
-    /* Video */
-    .video-wrap {
-      width: 100%; aspect-ratio: 16/9; border-radius: 14px;
-      overflow: hidden; background: var(--bg-color);
-      border: 2px solid var(--border-color);
-    }
-    .video-wrap iframe { width: 100%; height: 100%; border: 0; }
-
-    /* Map */
-    .map-wrap {
-      width: 100%; height: 260px; border-radius: 14px;
-      overflow: hidden; background: var(--bg-color);
-      border: 2px solid var(--border-color);
-    }
-    .map-wrap iframe { width: 100%; height: 100%; border: 0; }
-
-    /* Modal actions */
-    .modal-actions {
-      display: flex; gap: 8px; flex-wrap: wrap;
-      padding-top: 16px; border-top: 1.5px solid var(--border-color);
-      margin-top: 6px;
-    }
-    .modal-actions a {
-      flex: 1; min-width: 140px;
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 8px; padding: 12px 16px;
-      border-radius: 12px; font-weight: 800; font-size: .85rem;
-      text-decoration: none; transition: all .2s;
-    }
-    .modal-actions a.call {
-      background: rgba(249,115,22,.1); color: var(--orange-dark);
-      border: 1.5px solid rgba(249,115,22,.3);
-    }
-    [data-theme="dark"] .modal-actions a.call { color: #fdba74; background: rgba(249,115,22,.15); }
-    .modal-actions a.call:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
-    .modal-actions a.map-btn {
-      background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
-      box-shadow: 0 6px 18px rgba(249,115,22,.35);
-    }
-    .modal-actions a.map-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(249,115,22,.5); }
-
-    /* ===== CHAT ===== */
+    
+    /* Chat & Kangourou */
     #chatWindow {
       position: fixed; bottom: 110px; right: 20px; z-index: 1500;
-      width: 340px; max-height: 480px;
-      background: var(--card-bg);
-      border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.25);
-      border: 1.5px solid var(--border-color);
-      display: none; flex-direction: column;
-      overflow: hidden;
+      width: 340px; max-height: 480px; background: var(--card-bg); border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25); border: 1.5px solid var(--border-color);
+      display: none; flex-direction: column; overflow: hidden;
     }
     #chatWindow.open { display: flex; }
-    @media(max-width:640px){ #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
-    .chat-header {
-      background: linear-gradient(135deg,#f97316,#f59e0b);
-      color: #fff; padding: 14px 16px;
-      display: flex; align-items: center; justify-content: space-between;
-      font-weight: 800;
-    }
-    .chat-header span { display: flex; align-items: center; gap: 8px; }
-    .chat-close-btn {
-      width: 28px; height: 28px; border-radius: 8px;
-      background: rgba(255,255,255,.25); border: none; color: #fff;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-    }
-    #chatBody {
-      padding: 12px; overflow-y: auto; height: 320px;
-      font-size: .85rem; display: flex; flex-direction: column; gap: 8px;
-      background: var(--bg-color);
-    }
-    .chat-input-wrap {
-      padding: 8px; border-top: 1px solid var(--border-color);
-      display: flex; gap: 6px; background: var(--card-bg);
-    }
-    #chatInput {
-      flex: 1; padding: 9px 12px;
-      border: 1.5px solid var(--border-color); border-radius: 10px;
-      font-size: .82rem; outline: none; font-family: inherit;
-      background: var(--bg-color); color: var(--text-main);
-    }
-    #chatInput:focus { border-color: var(--orange); }
-    .chat-send-btn {
-      background: var(--orange); color: #fff; border: none;
-      padding: 9px 14px; border-radius: 10px; cursor: pointer;
-      transition: all .2s;
-    }
-    .chat-send-btn:hover { background: var(--orange-dark); transform: scale(1.05); }
-
-    /* ===== KANGOUROU ===== */
-    .mascot-container {
-      position: fixed; bottom: 22px; right: 22px; z-index: 1000;
-      cursor: pointer; user-select: none;
-    }
-    .mascot-kangaroo {
-      width: 70px; height: 90px;
-      filter: drop-shadow(0 10px 15px rgba(249,115,22,.3));
-      transition: transform .3s cubic-bezier(.34,1.56,.64,1);
-    }
+    .chat-header { background: linear-gradient(135deg,#f97316,#f59e0b); color: #fff; padding: 14px 16px; display: flex; justify-content: space-between; }
+    #chatBody { padding: 12px; overflow-y: auto; height: 320px; display: flex; flex-direction: column; gap: 8px; }
+    .chat-input-wrap { padding: 8px; border-top: 1px solid var(--border-color); display: flex; gap: 6px; }
+    #chatInput { flex: 1; padding: 9px 12px; border-radius: 10px; border: 1.5px solid var(--border-color); outline: none; font-family: inherit; }
+    
+    .mascot-container { position: fixed; bottom: 22px; right: 22px; z-index: 1000; cursor: pointer; }
+    .mascot-kangaroo { width: 70px; height: 90px; filter: drop-shadow(0 10px 15px rgba(249,115,22,.3)); transition: transform .3s; }
     .mascot-kangaroo.jump { animation: kangarooJump .6s ease; }
-    @keyframes kangarooJump {
-      0%,100% { transform: translateY(0) scale(1); }
-      30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); }
-      60% { transform: translateY(-10px) scale(1) rotate(5deg); }
-    }
+    @keyframes kangarooJump { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-20px) scale(1.1)} 60%{transform:translateY(-10px) scale(1) rotate(5deg)} }
 
     @media(max-width:768px){
       .top-navbar { padding: 8px 10px; border-radius: 16px; }
       .nav-title { font-size: .85rem; }
-      .nav-subtitle { font-size: .6rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- BLOBS -->
   <div class="animated-bg">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
-    <div class="dot dot-1"></div>
-    <div class="dot dot-2"></div>
-    <div class="dot dot-3"></div>
-    <div class="dot dot-4"></div>
-    <div class="dot dot-5"></div>
   </div>
 
-  <!-- NAVBAR -->
   <nav class="top-navbar">
     <div class="nav-brand">
       <div class="nav-icon"><i class="fa-solid fa-utensils"></i></div>
@@ -551,18 +414,16 @@
     </div>
   </div>
 
-  <!-- HERO -->
   <header class="page-hero">
     <h1><span data-i18n="hero_1">المطاعم</span> <span data-i18n="hero_2">والمقاهي</span></h1>
     <p data-i18n="hero_desc">اكتشف أفضل المطاعم والمقاهي القريبة من المدرسة.</p>
   </header>
 
   <main class="content-wrap">
-
     <!-- Filters -->
     <div class="filters-bar">
-      <button onclick="setFilter('all')" id="filter-all" class="filter-chip active" data-i18n="filter_all">
-        <i class="fa-solid fa-list"></i> <span>الكل</span>
+      <button onclick="setFilter('all')" id="filter-all" class="filter-chip active">
+        <i class="fa-solid fa-list"></i> <span data-i18n="filter_all">الكل</span>
       </button>
       <button onclick="setFilter('resto')" id="filter-resto" class="filter-chip">
         <i class="fa-solid fa-utensils"></i> <span data-i18n="filter_resto">مطاعم</span>
@@ -572,18 +433,6 @@
       </button>
     </div>
 
-    <!-- Sort bar -->
-    <div class="sort-bar">
-      <span class="sort-label"><i class="fa-solid fa-arrow-down-short-wide"></i> <span data-i18n="sort_by">فرز حسب:</span></span>
-      <div class="sort-btns">
-        <button onclick="setSort('default')" id="sort-default" class="sort-btn active" data-i18n="sort_default">الافتراضي</button>
-        <button onclick="setSort('dist')" id="sort-dist" class="sort-btn" data-i18n="sort_dist">المسافة</button>
-        <button onclick="setSort('price')" id="sort-price" class="sort-btn" data-i18n="sort_price">السعر</button>
-        <button onclick="setSort('rating')" id="sort-rating" class="sort-btn" data-i18n="sort_rating">التقييم</button>
-      </div>
-    </div>
-
-    <!-- Items -->
     <div id="itemsGrid"></div>
   </main>
 
@@ -591,51 +440,12 @@
   <div id="itemModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-
-      <div class="modal-header">
-        <h2 class="modal-title" id="modalTitle"></h2>
-        <div class="modal-subtitle" id="modalSubtitle"></div>
-      </div>
-
-      <div id="modalVideoContainer" class="modal-section" style="display:none;">
-        <h4><i class="fa-brands fa-youtube" style="color:#ef4444;"></i> <span data-i18n="modal_video">فيديو تعريفي:</span></h4>
-        <div id="modalVideo" class="video-wrap"></div>
-      </div>
-
-      <div id="modalMenuContainer" class="modal-section" style="display:none;">
-        <h4><i class="fa-solid fa-images"></i> <span data-i18n="modal_gallery">معرض الصور:</span></h4>
-        <div id="modalMenuGallery" class="gallery-scroll"></div>
-      </div>
-
-      <div class="modal-section">
-        <h4><i class="fa-regular fa-clock" style="color:#3b82f6;"></i> <span data-i18n="label_hours">أوقات العمل:</span></h4>
-        <div class="section-content" id="modalHours"></div>
-      </div>
-
-      <div id="modalDeliveryContainer" class="modal-section">
-        <h4><i class="fa-solid fa-truck-fast" style="color:#10b981;"></i> <span data-i18n="label_delivery">خدمة التوصيل:</span></h4>
-        <div class="section-content green" id="modalDelivery"></div>
-      </div>
-
-      <div id="modalTextMenuContainer" class="modal-section">
-        <h4><i class="fa-solid fa-book-open" style="color:#10b981;"></i> <span data-i18n="label_menu">القائمة:</span></h4>
-        <div class="section-content green" id="modalTextMenu"></div>
-      </div>
-
-      <div id="modalMapContainer" class="modal-section" style="display:none;">
-        <h4><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="label_map">الموقع على الخريطة:</span></h4>
-        <div id="modalMap" class="map-wrap"></div>
-      </div>
-
-      <div class="modal-actions">
-        <a id="modalPhoneBtn" href="#" class="call" style="display:none;"><i class="fa-solid fa-phone"></i> <span data-i18n="btn_call">اتصل</span></a>
-        <a id="modalMapBtn" href="#" target="_blank" class="map-btn" style="display:none;"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="btn_map">فتح الخريطة</span></a>
-      </div>
+      <div id="modalContent"></div>
     </div>
   </div>
 
   <!-- KANGOUROU -->
-  <div class="mascot-container" id="kangarooContainer" title="المساعد">
+  <div class="mascot-container" id="kangarooContainer">
     <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
       <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
@@ -662,11 +472,11 @@
   <!-- CHAT -->
   <div id="chatWindow">
     <div class="chat-header">
-      <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد الافتراضي</span></span>
-      <button class="chat-close-btn" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
+      <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد</span></span>
+      <button onclick="toggleChat()" style="background:none;border:none;color:white;"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div id="chatBody">
-      <div style="background:rgba(249,115,22,.12);padding:9px 13px;border-radius:12px;color:var(--orange-dark);font-weight:600;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
+      <div style="background:rgba(249,115,22,.12);padding:9px 13px;border-radius:12px;color:var(--orange-dark);font-weight:600;" data-i18n="chat_welcome">مرحباً! 👋</div>
     </div>
     <div class="chat-input-wrap">
       <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك...">
@@ -674,241 +484,135 @@
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- RESTO_DATA (inchangé — NE PAS MODIFIER)                       -->
-  <!-- ============================================================ -->
   <script>
-    window.RESTO_DATA = {
+    // ============================================
+    // DATA (Mise à jour avec les champs de l'image)
+    // ============================================
+    const data = {
       items: [
-        { category: 'resto', n: "Mega Pizza Kouba", r: 4.5, p: 2, dist: 0.8, h: [["11:00", "23:00"]], t: "", g: [36.7294389, 3.0743456], video: "", delivery: true, deliveryInfo: "توصيل عبر Yassir / Heetch", menu: { ar: "بيتزا، باستا، مشروبات", fr: "Pizza, Pâtes, Boissons", en: "Pizza, Pasta, Drinks" }, menuImages: ["MEGA 1.jpg", "MEGA 2.jpg"] },
-        { category: 'resto', n: "On Est La", r: 4.8, p: 2, dist: 1.1, h: [["11:00", "01:00"]], t: "", g: [36.7220684, 3.076564], video: "", delivery: true, deliveryInfo: "توصيل مجاني للطلبة (الحد الأدنى 1500 دج)", menu: { ar: "أطباق متنوعة، مشاوي، سلطات", fr: "Plats variés, Grillades, Salades", en: "Various dishes, Grills, Salads" }, menuImages: ["ON EST LA 1.jpg", "ON EST LA 2.jpg"] },
-        { category: 'resto', n: "American Berger", r: 4.1, p: 1, dist: 0.9, h: [["11:00", "23:00"]], t: "", g: [36.7274727, 3.0651558], video: "", delivery: false, deliveryInfo: "", menu: { ar: "برغر، بطاطا مقلية", fr: "Burgers, Frites", en: "Burgers, Fries" }, menuImages: ["american1.jpg", "american2.jpg", "american3.jpg"] },
-        { category: 'resto', n: "KGB (Kouba Gourmet Burger)", r: 3.8, p: 1, dist: 1.3, h: [["10:30", "02:00"]], t: "+213541041085", g: [36.7296152, 3.0765289], video: "tTcA4WxMmYU", delivery: true, deliveryInfo: "توصيل عبر تطبيق Yassir", menu: { ar: "برغر KGB: 700 دج", fr: "KGB Burger: 700 DA", en: "KGB Burger: 700 DA" }, menuImages: ["kgb.png", "kgb1.jpeg", "kgb2.jpeg"] },
-        { category: 'resto', n: "Cheese Kou", r: 4.2, p: 1, dist: 1.0, h: [["10:30", "01:00"]], t: "+213562656809", g: [36.7226875, 3.0739069], video: "", delivery: true, deliveryInfo: "توصيل عبر Heetch Food", menu: { ar: "تاكتوز، بيتزا، برغر", fr: "Tacos, Pizza, Burgers", en: "Tacos, Pizza, Burgers" }, menuImages: ["cheese.jpg", "cheese3.jpg", "cheese4.jpg"] },
-        { category: 'resto', n: "So Pizza", r: 4.4, p: 2, dist: 0.9, h: [["11:00", "23:30"]], t: "", g: [36.7285, 3.0750], video: "Fd-Xfzggt4A", delivery: true, deliveryInfo: "توصيل عبر Yassir", menu: { ar: "بيتزا إيطالية، مشروبات", fr: "Pizza italienne, Boissons", en: "Italian pizza, Drinks" }, menuImages: ["SO PIZZA 1.jpg", "SO PIZZA 2.jpg"] },
-        { category: 'cafe', n: "Nafess Café", r: 4.6, p: 2, dist: 0.8, h: [["07:30", "23:30"]], t: "", g: [36.7280, 3.0780], video: "", delivery: true, deliveryInfo: "توصيل عبر Yassir / Heetch", menu: { ar: "قهوة، مشروبات ساخنة وباردة، حلويات، ساندويتشات", fr: "Café, boissons chaudes et froides, pâtisseries, sandwichs", en: "Coffee, hot & cold drinks, pastries, sandwiches" }, menuImages: ["nafess 1.jpg", "nafess 2.jpg", "nafess 3.jpg", "nafess 4.jpg", "nafess 5.jpg", "nafess5.jpg", "nafess6.jpg", "nafess7.jpg", "nafess8.jpg"] },
-        { category: 'cafe', n: "Brioch Cafétéria", r: 4.4, p: 1, dist: 1.2, h: [["06:00", "22:00"]], t: "", g: [36.7250, 3.0750], video: "", delivery: true, deliveryInfo: "توصيل مجاني للطلبة (خلال أوقات العمل)", menu: { ar: "بريوش، كرواسون، قهوة، عصائر طازجة", fr: "Brioches, Croissants, Café, Jus frais", en: "Brioches, Croissants, Coffee, Fresh juices" }, menuImages: ["brioch 1.jpg", "brioch 3.jpg", "brioch 5.jpg", "brioch 6.jpg", "brioch4.jpg", "brioch7.jpg", "brioche 2.jpg"] },
-        { category: 'cafe', n: "Cafétéria Provence", r: 4.3, p: 2, dist: 1.8, h: [["08:00", "23:00"]], t: "", g: [36.7300, 3.0850], video: "", delivery: false, deliveryInfo: "", menu: { ar: "قهوة فرنسية، حلويات فرنسية، كريب", fr: "Café français, Pâtisseries françaises, Crêpes", en: "French coffee, French pastries, Crepes" }, menuImages: ["provence 1.jpg", "provence 2.jpg", "provence 3.jpg", "provence 4.jpg", "provence 5.jpg", "provence 6.jpg"] },
-        { category: 'cafe', n: "The Brunch Terrasse", r: 4.7, p: 3, dist: 2.5, h: [["09:00", "01:00"]], t: "", g: [36.7350, 3.0700], video: "", delivery: true, deliveryInfo: "توصيل عبر تطبيقات التوصيل (Glovo/Yassir)", menu: { ar: "برانش، أطباق رئيسية، عصائر، حلويات", fr: "Brunch, Plats principaux, Jus, Desserts", en: "Brunch, Main dishes, Juices, Desserts" }, menuImages: ["brunch 1.jpg", "brunch 2.jpg", "brunch 3.jpg", "brunch 4.jpg", "brunch 6.jpg", "brunch 7.jpg", "brunch 8.jpg", "brunch 9.jpg"] },
-        { category: 'cafe', n: "Green Caffee", r: 4.5, p: 2, dist: 0.6, h: [["07:30", "22:00"]], t: "+213770203542", g: [36.7297067, 3.0745479], video: "", delivery: true, deliveryInfo: "توصيل عبر Yassir", menu: { ar: "قهوة، مشروبات باردة", fr: "Café, Boissons froides", en: "Coffee, Cold drinks" }, menuImages: ["green1.jpg", "green2.jpg", "green3.jpg"] },
-        { category: 'cafe', n: "César Patisserie", r: 4.2, p: 2, dist: 1.5, h: [["08:00", "23:00"]], t: "+213669846909", g: [36.7303142, 3.0840737], video: "", delivery: false, deliveryInfo: "", menu: { ar: "حلويات، قهوة", fr: "Gâteaux, Café", en: "Cakes, Coffee" }, menuImages: ["cesar1.jpg", "cesar2.jpg", "cesar3.jpg"] },
-        { category: 'cafe', n: "Boulangerie et pâtisserie soumma", r: 4.5, p: 1, dist: 1.0, h: [["06:00", "21:00"]], t: "", g: [36.7275, 3.0730], video: "kPLMeh9niw4", delivery: true, deliveryInfo: "توصيل عبر Yassir", menu: { ar: "خبز طازج، حلويات تقليدية، قهوة", fr: "Pain frais, Pâtisseries traditionnelles, Café", en: "Fresh bread, Traditional pastries, Coffee" }, menuImages: ["soumma 1.jpg", "soumma 2.jpg"] },
-        { category: 'cafe', n: "Celtic Coffee", r: 4.6, p: 2, dist: 1.4, h: [["08:00", "23:00"]], t: "", g: [36.7310, 3.0800], video: "8VGVnonAnIg", delivery: true, deliveryInfo: "توصيل عبر Heetch", menu: { ar: "قهوة إيرلندية، حلويات", fr: "Café irlandais, Pâtisseries", en: "Irish coffee, Pastries" }, menuImages: ["celtic 1.jpg", "celtic 2.jpg"] }
+        { category: 'resto', n: "Pizza On Est Là", price: "500 - 800 DA", r: 4.0, revs: 481, dist: 0.8, loc: "Vieux Kouba", desc: "Pizza carrée populaire aux garnitures traditionnelles.", phone: "+213 558 27 70 92", cheap: true, hours: "11:00 - 23:00", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80", review: "Excellente pâte, bien sablée et croustillante, pizza carré à l'ancienne avec garniture classique pour les puristes..." },
+        { category: 'resto', n: "Mega Pizza Kouba", price: "600 - 1200 DA", r: 4.5, revs: 320, dist: 1.2, loc: "Kouba", desc: "Grande variété de pizzas et pâtes fraîches.", phone: "+213 550 12 34 56", cheap: false, hours: "11:00 - 23:30", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80", review: "Toujours un régal, les ingrédients sont frais et le service est rapide." },
+        { category: 'cafe', n: "Nafess Café", price: "200 - 500 DA", r: 4.6, revs: 150, dist: 0.5, loc: "Kouba Centre", desc: "Café moderne avec de délicieuses pâtisseries.", phone: "+213 770 11 22 33", cheap: true, hours: "07:30 - 23:00", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80", review: "Ambiance très calme, idéal pour réviser tout en sirotant un bon café." },
+        { category: 'cafe', n: "Brioch Cafétéria", price: "150 - 400 DA", r: 4.4, revs: 210, dist: 1.0, loc: "Kouba", desc: "Spécialités de brioches et cafés gourmands.", phone: "", cheap: true, hours: "06:00 - 22:00", img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80", review: "Les meilleures brioches du quartier, prix très abordables." },
       ]
     };
-  </script>
 
-  <!-- ============================================================ -->
-  <!-- TRANSLATIONS                                                  -->
-  <!-- ============================================================ -->
-  <script>
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-    window.RESTO_TRANSLATIONS = {
+    let currentFilter = 'all';
+    let currentLang = 'ar';
+
+    // ============================================
+    // TRADUCTIONS
+    // ============================================
+    const translations = {
       ar: {
-        page_title: "المطاعم والمقاهي - ENSTP", nav_home: "الرئيسية",
-        menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي",
-        resto_title: "المطاعم والمقاهي",
-        hero_1: "المطاعم", hero_2: "والمقاهي", hero_desc: "اكتشف أفضل المطاعم والمقاهي القريبة من المدرسة.",
+        title: "المطاعم والمقاهي",
+        subtitle: "دليل شامل لأفضل الأماكن",
         filter_all: "الكل", filter_resto: "مطاعم", filter_cafe: "مقاهي",
-        sort_by: "فرز حسب:", sort_default: "الافتراضي", sort_dist: "المسافة", sort_price: "السعر", sort_rating: "التقييم",
-        label_hours: "أوقات العمل:", label_delivery: "خدمة التوصيل:", label_menu: "القائمة:", label_map: "الموقع على الخريطة:",
-        modal_video: "فيديو تعريفي:", modal_gallery: "معرض الصور:",
-        btn_call: "اتصل", btn_map: "فتح الخريطة", btn_details: "عرض التفاصيل",
-        delivery_yes: "متوفرة", no_items: "لا توجد عناصر.",
-        chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
-        chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
-        chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
-        chat_resto: "تصفح المطاعم والمقاهي في هذه الصفحة."
+        loc: "الموقع", reviews: "آراء الزبائن", other_reviews: "المزيد", cheap: "اقتصادي",
+        hours: "أوقات العمل", reviews_count: "تقييم"
       },
       fr: {
-        page_title: "Restaurants et Cafés - ENSTP", nav_home: "Accueil",
-        menu_lang: "Langue", menu_settings: "Paramètres", menu_dark: "Sombre",
-        resto_title: "Restaurants et Cafés",
-        hero_1: "Restaurants", hero_2: "& Cafés", hero_desc: "Découvrez les meilleurs restaurants et cafés près de l'école.",
+        title: "Restaurants & Cafés",
+        subtitle: "Guide complet des meilleurs endroits",
         filter_all: "Tous", filter_resto: "Restaurants", filter_cafe: "Cafés",
-        sort_by: "Trier par :", sort_default: "Par défaut", sort_dist: "Distance", sort_price: "Prix", sort_rating: "Note",
-        label_hours: "Horaires :", label_delivery: "Livraison :", label_menu: "Menu :", label_map: "Emplacement :",
-        modal_video: "Vidéo :", modal_gallery: "Galerie :",
-        btn_call: "Appeler", btn_map: "Ouvrir la carte", btn_details: "Voir détails",
-        delivery_yes: "Disponible", no_items: "Aucun élément.",
-        chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
-        chat_placeholder: "Votre question...", chat_default: "Merci !",
-        chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
-        chat_resto: "Parcourez les restaurants et cafés sur cette page."
-      },
-      en: {
-        page_title: "Restaurants & Cafés - ENSTP", nav_home: "Home",
-        menu_lang: "Language", menu_settings: "Settings", menu_dark: "Dark",
-        resto_title: "Restaurants & Cafés",
-        hero_1: "Restaurants", hero_2: "& Cafés", hero_desc: "Discover the best restaurants and cafés near school.",
-        filter_all: "All", filter_resto: "Restaurants", filter_cafe: "Cafés",
-        sort_by: "Sort by:", sort_default: "Default", sort_dist: "Distance", sort_price: "Price", sort_rating: "Rating",
-        label_hours: "Hours:", label_delivery: "Delivery:", label_menu: "Menu:", label_map: "Location:",
-        modal_video: "Video:", modal_gallery: "Gallery:",
-        btn_call: "Call", btn_map: "Open map", btn_details: "View details",
-        delivery_yes: "Available", no_items: "No items.",
-        chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
-        chat_placeholder: "Your question...", chat_default: "Thanks!",
-        chat_hello: "Welcome!", chat_thanks: "You're welcome!",
-        chat_resto: "Browse restaurants and cafés on this page."
+        loc: "Localisation", reviews: "Avis des clients", other_reviews: "Autres avis", cheap: "Bon marché",
+        hours: "Horaires", reviews_count: "avis"
       }
     };
 
-    function t(key){
-      const d = window.RESTO_TRANSLATIONS[currentLang] || window.RESTO_TRANSLATIONS.ar;
-      return d[key] || key;
+    function t(key) {
+      return translations[currentLang][key] || key;
     }
 
-    window.applyRestoTranslation = function(lang){
-      const d = window.RESTO_TRANSLATIONS[lang] || window.RESTO_TRANSLATIONS.ar;
-      if(d.page_title) document.title = d.page_title;
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const k = el.getAttribute('data-i18n');
-        if(d[k]){
-          const icon = el.querySelector('i');
-          if(icon){ el.innerHTML=''; el.appendChild(icon); el.appendChild(document.createTextNode(' '+d[k])); }
-          else el.innerText = d[k];
-        }
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
-        const k = el.getAttribute('data-i18n-placeholder');
-        if(d[k]) el.placeholder = d[k];
-      });
-      document.documentElement.dir = (lang==='ar') ? 'rtl' : 'ltr';
-      document.documentElement.lang = lang;
-      if(typeof renderItems === 'function') renderItems();
-    };
-
-    window.setLanguage = function(lang){
-      currentLang = lang;
-      localStorage.setItem('enstp_lang', lang);
-      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
-      const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
-      window.applyRestoTranslation(lang);
-    };
-  </script>
-
-  <!-- ============================================================ -->
-  <!-- UI LOGIC                                                      -->
-  <!-- ============================================================ -->
-  <script>
-    const data = window.RESTO_DATA;
-    let currentFilter = 'all';
-    let currentSort = 'default';
-
-    // ===== DARK MODE =====
-    const html = document.documentElement;
-    if(localStorage.getItem('theme')==='dark') html.setAttribute('data-theme','dark');
-    function toggleDarkMode(){
-      html.setAttribute('data-theme', html.getAttribute('data-theme')==='dark'?'light':'dark');
-      localStorage.setItem('theme', html.getAttribute('data-theme'));
-      updateThemeBtn();
-    }
-    function updateThemeBtn(){
-      const b = document.getElementById('themeBtn'); if(!b) return;
-      const isDark = html.getAttribute('data-theme')==='dark';
-      b.innerHTML = isDark
-        ? '<i class="fa-solid fa-sun"></i> <span>'+t('menu_dark')+'</span>'
-        : '<i class="fa-solid fa-moon"></i> <span>'+t('menu_dark')+'</span>';
-    }
-
-    // ===== MENU =====
-    function toggleMenu(){
-      document.getElementById('navDropdown').classList.toggle('open');
-      document.getElementById('menuBtn').classList.toggle('active');
-    }
-    document.addEventListener('click', e=>{
-      const dd = document.getElementById('navDropdown');
-      const btn = document.getElementById('menuBtn');
-      if(!dd.contains(e.target) && !btn.contains(e.target)){
-        dd.classList.remove('open');
-        btn.classList.remove('active');
-      }
+    // ============================================
+    // INITIALISATION
+    // ============================================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Dark mode
+      if(localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      
+      // Render
+      renderItems();
     });
 
-    // ===== FILTER =====
-    function setFilter(filter){
-      currentFilter = filter;
-      ['all','resto','cafe'].forEach(f=>{
-        const b = document.getElementById('filter-'+f);
-        if(b) b.classList.toggle('active', f === filter);
+    // ============================================
+    // FILTRES
+    // ============================================
+    function setFilter(f) {
+      currentFilter = f;
+      ['all', 'resto', 'cafe'].forEach(fId => {
+        const b = document.getElementById('filter-' + fId);
+        if(b) b.classList.toggle('active', fId === f);
       });
       renderItems();
     }
 
-    // ===== SORT =====
-    function setSort(type){
-      currentSort = type;
-      ['default','dist','price','rating'].forEach(tp=>{
-        const b = document.getElementById('sort-'+tp);
-        if(b) b.classList.toggle('active', tp === type);
-      });
-      renderItems();
-    }
-
-    // ===== RENDER ITEMS =====
-    function renderItems(){
+    // ============================================
+    // RENDER ITEMS
+    // ============================================
+    function renderItems() {
       const grid = document.getElementById('itemsGrid');
       grid.innerHTML = '';
 
       let items = [...data.items];
-      if(currentFilter !== 'all') items = items.filter(i => i.category === currentFilter);
+      if (currentFilter !== 'all') items = items.filter(i => i.category === currentFilter);
 
-      if(currentSort === 'dist') items.sort((a,b) => (a.dist||999) - (b.dist||999));
-      else if(currentSort === 'price') items.sort((a,b) => a.p - b.p);
-      else if(currentSort === 'rating') items.sort((a,b) => b.r - a.r);
-
-      if(items.length === 0){
-        grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--text-muted);font-weight:700;">${t('no_items')}</p>`;
-        return;
-      }
-
-      items.forEach(item=>{
-        let priceStr = item.p === 1 ? '$' : item.p === 2 ? '$$' : item.p === 3 ? '$$$' : '';
-        const distStr = item.dist !== null ? `${item.dist} km` : '';
-        const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
-        const coverImage = item.menuImages && item.menuImages.length > 0 ? item.menuImages[0] : null;
-
-        let imageHTML;
-        if(coverImage){
-          imageHTML = `<div class="resto-card-cover">
-            <img src="${coverImage}" alt="${item.n}" onerror="this.parentElement.innerHTML='<div class=\\'no-img\\'><i class=\\'fa-solid fa-image\\'></i></div>'">
-            <div class="card-type-badge ${item.category}">
-              <i class="fa-solid ${item.category==='resto'?'fa-utensils':'fa-mug-hot'}"></i>
-              ${item.category==='resto'?t('filter_resto'):t('filter_cafe')}
-            </div>
-          </div>`;
-        } else {
-          imageHTML = `<div class="resto-card-cover">
-            <div class="no-img"><i class="fa-solid ${item.category==='resto'?'fa-utensils':'fa-mug-hot'}"></i></div>
-            <div class="card-type-badge ${item.category}">
-              <i class="fa-solid ${item.category==='resto'?'fa-utensils':'fa-mug-hot'}"></i>
-              ${item.category==='resto'?t('filter_resto'):t('filter_cafe')}
-            </div>
-          </div>`;
+      items.forEach(item => {
+        // Étoiles
+        let starsHTML = '';
+        for(let i=1; i<=5; i++) {
+          starsHTML += i <= Math.round(item.r) ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
         }
 
-        const deliveryBadge = item.delivery ? `<span class="meta-chip green"><i class="fa-solid fa-truck-fast"></i> ${t('delivery_yes')}</span>` : '';
+        // Badge category
+        const catBadge = item.category === 'resto' ? 'Pizza' : 'Café';
 
         const card = document.createElement('div');
-        card.className = 'resto-card';
+        card.className = 'resto-card-new';
         card.onclick = () => openModal(item);
         card.innerHTML = `
-          ${imageHTML}
-          <div class="resto-card-body">
-            <div class="resto-card-header">
-              <h3 class="resto-card-title">${item.n}</h3>
-              <div class="rating-badge"><i class="fa-solid fa-star"></i> ${item.r}</div>
+          <div class="cover-wrap">
+            <img src="${item.img}" alt="${item.n}" onerror="this.src='https://via.placeholder.com/400x200?text=Image'">
+            <div class="badge-top-right">
+              <i class="fa-solid fa-camera"></i> 3 / 5
             </div>
-            <div class="resto-meta-chips">
-              ${distStr ? `<span class="meta-chip"><i class="fa-solid fa-location-dot"></i> ${distStr}</span>` : ''}
-              ${priceStr ? `<span class="meta-chip green"><i class="fa-solid fa-money-bill"></i> ${priceStr}</span>` : ''}
-              ${deliveryBadge}
+          </div>
+          
+          <div class="card-body-new">
+            <h3 class="place-title-new">${item.n}</h3>
+            
+            <div class="category-tag">${catBadge}</div>
+            
+            <div class="price-tag">${item.price}</div>
+            
+            <div style="display:flex; align-items:center; gap:6px; color:var(--text-muted); font-size:0.9rem; font-weight:700;">
+              <i class="fa-solid fa-location-dot"></i> ${item.loc}
             </div>
-            ${menuText ? `<p class="resto-card-desc">${menuText}</p>` : ''}
-            <div class="resto-card-footer">
-              <i class="fa-solid fa-eye"></i>
-              <span>${t('btn_details')}</span>
+            
+            <p class="desc-new">${item.desc}</p>
+            
+            <div class="rating-row">
+              <div class="stars-display">${starsHTML}</div>
+              <span>${item.r}/5</span>
+              <span class="rating-count">(${item.revs} ${t('reviews_count')})</span>
+            </div>
+            
+            <a href="tel:${item.phone}" class="phone-row" onclick="event.stopPropagation();">
+              <i class="fa-solid fa-phone"></i> ${item.phone}
+            </a>
+            
+            ${item.cheap ? `<div class="badge-cheap">${t('cheap')}</div>` : ''}
+            
+            <div class="hours-row">
+              <i class="fa-regular fa-clock"></i> ${t('hours')} : ${item.hours}
+            </div>
+            
+            <div class="reviews-box">
+              <div class="reviews-header">
+                <div class="reviews-title"><i class="fa-solid fa-quote-left"></i> ${t('reviews')}</div>
+                <span class="reviews-link">${t('other_reviews')} <i class="fa-solid fa-rotate-right"></i></span>
+              </div>
+              <p class="review-text">"${item.review}"</p>
             </div>
           </div>
         `;
@@ -916,114 +620,94 @@
       });
     }
 
-    // ===== MODAL =====
-    function openModal(item){
+    // ============================================
+    // MODAL
+    // ============================================
+    function openModal(item) {
       const modal = document.getElementById('itemModal');
-      modal.classList.add('open');
-
-      document.getElementById('modalTitle').innerText = item.n;
-      document.getElementById('modalSubtitle').innerHTML = `
-        <span>${item.category==='resto'?t('filter_resto'):t('filter_cafe')}</span>
-        <span class="rating-badge"><i class="fa-solid fa-star"></i> ${item.r}</span>
+      const content = document.getElementById('modalContent');
+      
+      content.innerHTML = `
+        <h2 style="margin:0 0 10px; font-size:1.5rem; font-weight:900;">${item.n}</h2>
+        <img src="${item.img}" style="width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:16px;">
+        <p style="font-size:1rem; font-weight:700; color:var(--text-muted);">${item.desc}</p>
+        <hr style="border:0; border-top:1px solid var(--border-color); margin:16px 0;">
+        <a href="tel:${item.phone}" style="display:inline-block; background:var(--orange); color:white; padding:10px 20px; border-radius:10px; text-decoration:none; font-weight:800;"><i class="fa-solid fa-phone"></i> ${item.phone}</a>
+        
+        <div class="comments-section">
+          <h4 style="margin:0 0 10px;"><i class="fa-solid fa-comments"></i> Commentaires</h4>
+          <div class="comment-form">
+            <input type="text" id="commentInput" placeholder="Écrire un commentaire...">
+            <button onclick="addComment('${item.n}')">Envoyer</button>
+          </div>
+          <div class="comments-list" id="commentsList"></div>
+        </div>
       `;
 
-      document.getElementById('modalHours').innerText =
-        item.h && item.h.length > 0 ? item.h.map(h => `${h[0]} - ${h[1]}`).join(' | ') : '-';
-
-      // Delivery
-      const dc = document.getElementById('modalDeliveryContainer');
-      if(item.delivery){
-        dc.style.display = 'block';
-        document.getElementById('modalDelivery').innerHTML = `<span style="color:#10b981;font-weight:800;"><i class="fa-solid fa-check-circle"></i> ${t('delivery_yes')}</span>${item.deliveryInfo ? ' — ' + item.deliveryInfo : ''}`;
-      } else { dc.style.display = 'none'; }
-
-      // Text menu
-      const tmc = document.getElementById('modalTextMenuContainer');
-      const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
-      if(menuText){
-        tmc.style.display = 'block';
-        document.getElementById('modalTextMenu').innerText = menuText;
-      } else { tmc.style.display = 'none'; }
-
-      // Video
-      const vc = document.getElementById('modalVideoContainer');
-      const vd = document.getElementById('modalVideo');
-      if(item.video){
-        vc.style.display = 'block';
-        vd.innerHTML = `<iframe src="https://www.youtube.com/embed/${item.video}" allowfullscreen></iframe>`;
-      } else { vc.style.display = 'none'; }
-
-      // Gallery
-      const mc = document.getElementById('modalMenuContainer');
-      const mg = document.getElementById('modalMenuGallery');
-      mg.innerHTML = '';
-      if(item.menuImages && item.menuImages.length > 0){
-        mc.style.display = 'block';
-        item.menuImages.forEach(img=>{
-          mg.innerHTML += `<div class="gallery-item" onclick="window.open('${img}','_blank')">
-            <img src="${img}" onerror="this.parentElement.innerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:.75rem;\\'>Image N/A</div>'">
-          </div>`;
-        });
-      } else { mc.style.display = 'none'; }
-
-      // Map
-      const mapc = document.getElementById('modalMapContainer');
-      const mapd = document.getElementById('modalMap');
-      if(item.g){
-        mapc.style.display = 'block';
-        mapd.innerHTML = `<iframe src="https://www.google.com/maps?q=${item.g[0]},${item.g[1]}&output=embed" allowfullscreen loading="lazy"></iframe>`;
-      } else { mapc.style.display = 'none'; }
-
-      // Buttons
-      const pb = document.getElementById('modalPhoneBtn');
-      if(item.t){ pb.href = `tel:${item.t}`; pb.style.display = 'flex'; } else pb.style.display = 'none';
-
-      const mb = document.getElementById('modalMapBtn');
-      if(item.g){ mb.href = `https://www.google.com/maps/search/?api=1&query=${item.g[0]},${item.g[1]}`; mb.style.display = 'flex'; } else mb.style.display = 'none';
-
-      document.querySelector('.modal-card').scrollTop = 0;
+      modal.classList.add('open');
+      loadComments(item.n);
     }
 
-    function closeModal(){
+    function closeModal() {
       document.getElementById('itemModal').classList.remove('open');
     }
 
-    document.getElementById('itemModal').addEventListener('click', function(e){
+    document.getElementById('itemModal').addEventListener('click', function(e) {
       if(e.target === this) closeModal();
     });
-    document.addEventListener('keydown', e=>{
-      if(e.key === 'Escape') closeModal();
-    });
 
-    // ===== CHAT =====
-    function toggleChat(){
-      const chat = document.getElementById('chatWindow');
-      if(!chat) return;
-      chat.classList.toggle('open');
+    // ============================================
+    // COMMENTAIRES
+    // ============================================
+    function loadComments(id) {
+      const list = document.getElementById('commentsList');
+      if(!list) return;
+      const saved = JSON.parse(localStorage.getItem('comments_' + id) || '[]');
+      
+      if(saved.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:0.85rem;">Aucun commentaire.</p>';
+        return;
+      }
+
+      saved.forEach(c => {
+        list.innerHTML += `<div class="comment-item"><strong>${c.name}:</strong> ${c.text}</div>`;
+      });
     }
 
-    function sendMessage(){
-      const input = document.getElementById('chatInput');
-      const body = document.getElementById('chatBody');
-      if(!input || !body) return;
-      const msg = input.value.trim();
-      if(!msg) return;
-      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:9px 13px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:.82rem;font-weight:600;">${msg}</div></div>`;
+    function addComment(id) {
+      const input = document.getElementById('commentInput');
+      if(!input || !input.value.trim()) return;
+      
+      const saved = JSON.parse(localStorage.getItem('comments_' + id) || '[]');
+      saved.push({ name: "Étudiant", text: input.value.trim() });
+      localStorage.setItem('comments_' + id, JSON.stringify(saved));
+      
       input.value = '';
-      body.scrollTop = body.scrollHeight;
-
-      setTimeout(()=>{
-        let reply = t('chat_default');
-        const m = msg.toLowerCase();
-        if(m.includes("مطعم") || m.includes("مقهى") || m.includes("resto") || m.includes("cafe") || m.includes("eat")) reply = "🍽️ " + t('chat_resto');
-        else if(m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
-        else if(m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
-        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:rgba(249,115,22,.12);color:var(--orange-dark);padding:9px 13px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:.82rem;font-weight:600;">${reply}</div></div>`;
-        body.scrollTop = body.scrollHeight;
-      }, 500);
+      loadComments(id);
     }
 
-    // ===== KANGOUROU =====
+    // ============================================
+    // INTERFACE
+    // ============================================
+    function toggleMenu() {
+      document.getElementById('navDropdown').classList.toggle('open');
+      document.getElementById('menuBtn').classList.toggle('active');
+    }
+
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', html.getAttribute('data-theme'));
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      // (Ici vous pouvez mettre à jour les textes dynamiquement si nécessaire)
+      renderItems();
+    }
+
+    // Kangourou / Chat
     const kangarooContainer = document.getElementById('kangarooContainer');
     const kangarooSvg = document.getElementById('kangarooSvg');
     if(kangarooContainer){
@@ -1036,32 +720,26 @@
         }
         toggleChat();
       });
-      kangarooContainer.addEventListener('mouseenter', ()=>{
-        if(kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)';
-      });
-      kangarooContainer.addEventListener('mouseleave', ()=>{
-        if(kangarooSvg) kangarooSvg.style.transform = '';
-      });
     }
 
-    // ===== INIT =====
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const saved = localStorage.getItem('enstp_lang') || 'ar';
-      currentLang = saved;
-      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
-      const b = document.getElementById('btn-'+saved); if(b) b.classList.add('active');
-      applyRestoTranslation(saved);
+    function toggleChat() {
+      document.getElementById('chatWindow').classList.toggle('open');
+    }
 
-      updateThemeBtn();
-      renderItems();
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      if(!input || !body || !input.value.trim()) return;
 
-      const chatInput = document.getElementById('chatInput');
-      if(chatInput){
-        chatInput.addEventListener('keypress', e=>{
-          if(e.key === 'Enter'){ e.preventDefault(); sendMessage(); }
-        });
-      }
-    });
+      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:var(--orange);color:white;padding:8px 12px;border-radius:12px;max-width:80%;font-size:.85rem;">${input.value}</div></div>`;
+      const msg = input.value; input.value = '';
+      body.scrollTop = body.scrollHeight;
+
+      setTimeout(() => {
+        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:var(--bg-color);border:1px solid var(--border-color);color:var(--text-main);padding:8px 12px;border-radius:12px;max-width:80%;font-size:.85rem;">Je suis un assistant virtuel. Je vous invite à consulter les restaurants ci-dessus.</div></div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 600);
+    }
   </script>
 </body>
 </html>
