@@ -224,6 +224,12 @@
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
       overflow: hidden;
     }
+    
+    /* Stars in Card */
+    .place-stars {
+      display: flex; gap: 2px; margin-bottom: 8px; color: #fbbf24; font-size: 0.8rem;
+    }
+
     .place-footer {
       margin-top: auto; padding-top: 10px;
       border-top: 1px dashed var(--border-color);
@@ -277,6 +283,16 @@
       font-size: .85rem; color: var(--text-muted); font-weight: 600;
       display: flex; align-items: center; gap: 6px;
     }
+
+    /* Rating in Modal */
+    .rating-box {
+      display: flex; align-items: center; gap: 10px; margin-top: 10px;
+      padding: 10px 14px; background: rgba(249,115,22,.06); border-radius: 12px; border: 1px dashed var(--border-color);
+    }
+    .rating-stars { display: flex; gap: 5px; font-size: 1.2rem; color: #fbbf24; cursor: pointer; }
+    .rating-stars i { transition: transform 0.2s; }
+    .rating-stars i:hover { transform: scale(1.2); }
+    .rating-text { font-size: 0.85rem; font-weight: 800; color: var(--text-main); }
 
     .modal-section { margin-bottom: 20px; }
     .modal-section h4 {
@@ -512,6 +528,18 @@
         <h2 class="modal-title" id="modalTitle"></h2>
         <div class="modal-subtitle" id="modalSubtitle"></div>
         <div class="modal-loc" id="modalLocationText"><i class="fa-solid fa-location-dot"></i> <span></span></div>
+        
+        <!-- RATING SECTION (MODAL) -->
+        <div class="rating-box">
+          <span class="rating-text" data-i18n="modal_rate_title">قيم هذا المكان:</span>
+          <div class="rating-stars" id="modalRatingStars">
+            <i class="fa-regular fa-star" onclick="ratePlace(1)"></i>
+            <i class="fa-regular fa-star" onclick="ratePlace(2)"></i>
+            <i class="fa-regular fa-star" onclick="ratePlace(3)"></i>
+            <i class="fa-regular fa-star" onclick="ratePlace(4)"></i>
+            <i class="fa-regular fa-star" onclick="ratePlace(5)"></i>
+          </div>
+        </div>
       </div>
 
       <div id="modalGalleryContainer" class="modal-section">
@@ -639,6 +667,7 @@
         view_details: "عرض التفاصيل",
         modal_comments_title: "تعليقات وآراء الطلبة:",
         comment_placeholder: "اكتب رأيك هنا...",
+        modal_rate_title: "قيم هذا المكان:",
         chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
         chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
         chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
@@ -656,6 +685,7 @@
         view_details: "Voir détails",
         modal_comments_title: "Avis des étudiants :",
         comment_placeholder: "Écrivez votre avis ici...",
+        modal_rate_title: "Notez ce lieu :",
         chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
         chat_placeholder: "Votre question...", chat_default: "Merci !",
         chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
@@ -673,6 +703,7 @@
         view_details: "View details",
         modal_comments_title: "Student Reviews:",
         comment_placeholder: "Write your review here...",
+        modal_rate_title: "Rate this place:",
         chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
         chat_placeholder: "Your question...", chat_default: "Thanks!",
         chat_hello: "Welcome!", chat_thanks: "You're welcome!",
@@ -712,7 +743,6 @@
       }
       renderCategories();
       renderCards();
-      // If modal is open, re-render its comments in correct language if needed
     };
 
     window.setLanguage = function(lang){
@@ -784,6 +814,13 @@
         const title = place.title[currentLang] || place.title.ar;
         const catName = t('cat_'+place.category);
         const histPreview = (place.history[currentLang] || place.history.ar || '').slice(0, 90) + '...';
+        
+        // Get rating from local storage
+        const savedRating = localStorage.getItem('alger_rating_' + place.id) || 0;
+        let starsHtml = '';
+        for(let i=1; i<=5; i++){
+          starsHtml += i <= savedRating ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
+        }
 
         const coverHTML = img
           ? `<img src="${img}" alt="${title}" onerror="this.parentElement.innerHTML='<div class=\\'emoji-fallback\\'>${place.icon}</div>'">`
@@ -799,6 +836,7 @@
           </div>
           <div class="place-body">
             <h3 class="place-title">${title}</h3>
+            <div class="place-stars">${starsHtml}</div>
             <p class="place-sub">${histPreview}</p>
             <div class="place-footer">
               <i class="fa-solid fa-eye"></i>
@@ -810,7 +848,7 @@
       });
     }
 
-    /* ========== MODAL & COMMENTS ========== */
+    /* ========== MODAL & COMMENTS & RATINGS ========== */
     let currentModalPlaceId = null;
 
     function openModal(place){
@@ -828,6 +866,10 @@
       document.getElementById('modalLocationText').querySelector('span').innerText = loc;
       document.getElementById('modalHistory').innerText = hist;
       document.getElementById('modalTransport').innerText = trans;
+
+      // Rating setup
+      const savedRating = parseInt(localStorage.getItem('alger_rating_' + place.id) || 0);
+      updateModalStars(savedRating);
 
       const mapQuery = encodeURIComponent(place.map);
       document.getElementById('modalMap').innerHTML = `<iframe src="https://www.google.com/maps?q=${mapQuery}&output=embed" allowfullscreen loading="lazy"></iframe>`;
@@ -879,6 +921,25 @@
     document.addEventListener('keydown', e=>{
       if(e.key === 'Escape') closeModal();
     });
+
+    /* ========== RATINGS ========== */
+    function updateModalStars(rating){
+      const stars = document.querySelectorAll('#modalRatingStars i');
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.className = 'fa-solid fa-star';
+        } else {
+          star.className = 'fa-regular fa-star';
+        }
+      });
+    }
+
+    function ratePlace(rating){
+      if(!currentModalPlaceId) return;
+      localStorage.setItem('alger_rating_' + currentModalPlaceId, rating);
+      updateModalStars(rating);
+      renderCards(); // Refresh cards to show the new average
+    }
 
     /* ========== LOCAL STORAGE COMMENTS ========== */
     function loadComments(placeId){
