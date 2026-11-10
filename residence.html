@@ -153,6 +153,72 @@
     [data-theme="dark"] .gender-badge.girls { background: rgba(236,72,153,.25); color: #f9a8d4; }
     [data-theme="dark"] .gender-badge.boys { background: rgba(59,130,246,.25); color: #93c5fd; }
 
+    /* ============================================================ */
+    /* 🧭 BOUSSOLE QIBLA                                            */
+    /* ============================================================ */
+    .qibla-section {
+      background: linear-gradient(135deg, rgba(251,191,36,.08), rgba(249,115,22,.05));
+      border: 1.5px solid rgba(249,115,22,.25);
+      border-radius: 22px;
+      padding: 28px;
+      margin-top: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .qibla-section::before {
+      content: ''; position: absolute; top: -50%; right: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(251,191,36,.15) 0%, transparent 60%);
+      animation: qiblaGlow 8s ease-in-out infinite; pointer-events: none;
+    }
+    [data-theme="dark"] .qibla-section { background: linear-gradient(135deg, rgba(251,191,36,.1), rgba(249,115,22,.08)); }
+    @keyframes qiblaGlow { 0%,100% { transform: scale(1); opacity: .5; } 50% { transform: scale(1.1); opacity: .8; } }
+    .qibla-header { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border-color); margin-bottom: 24px; position: relative; z-index: 1; }
+    .qibla-header-icon { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg,#fbbf24,#f97316); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 6px 18px rgba(249,115,22,.35); }
+    .qibla-header h3 { margin: 0 0 2px; font-size: 1.2rem; font-weight: 900; color: var(--text-main); }
+    .qibla-header p { margin: 0; font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+    .qibla-body { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; position: relative; z-index: 1; }
+    @media(max-width:768px){ .qibla-body { grid-template-columns: 1fr; } }
+    .compass-wrapper { display: flex; justify-content: center; align-items: center; position: relative; }
+    .compass {
+      width: 260px; height: 260px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #fff7ed, #fed7aa 60%, #fbbf24 100%);
+      position: relative;
+      box-shadow: 0 25px 50px rgba(249,115,22,.35), inset 0 0 30px rgba(255,255,255,.6), inset 0 -10px 20px rgba(249,115,22,.2);
+      border: 4px solid #fff; display: flex; align-items: center; justify-content: center;
+    }
+    [data-theme="dark"] .compass { background: radial-gradient(circle at 30% 25%, #1e3a8a, #0f1e41 60%, #0a1128 100%); box-shadow: 0 25px 50px rgba(0,0,0,.5), inset 0 0 30px rgba(59,130,246,.3), inset 0 -10px 20px rgba(0,0,0,.4); border-color: #1e3a8a; }
+    .compass .tick { position: absolute; left: 50%; top: 6px; width: 2px; height: 10px; background: #7c2d12; transform-origin: center 124px; border-radius: 2px; opacity: .6; }
+    [data-theme="dark"] .compass .tick { background: #60a5fa; opacity: .7; }
+    .compass .tick.major { height: 16px; width: 3px; background: #7c2d12; opacity: .9; }
+    [data-theme="dark"] .compass .tick.major { background: #93c5fd; }
+    .compass .cardinal { position: absolute; font-weight: 900; font-size: .85rem; color: #7c2d12; font-family: 'Cairo', sans-serif; }
+    [data-theme="dark"] .compass .cardinal { color: #93c5fd; }
+    .compass .cardinal.n { top: 18px; left: 50%; transform: translateX(-50%); color: #dc2626; font-size: 1rem; }
+    [data-theme="dark"] .compass .cardinal.n { color: #f87171; }
+    .compass .cardinal.s { bottom: 18px; left: 50%; transform: translateX(-50%); }
+    .compass .cardinal.e { right: 18px; top: 50%; transform: translateY(-50%); }
+    .compass .cardinal.w { left: 18px; top: 50%; transform: translateY(-50%); }
+    .compass-needle-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform-origin: center center; transition: transform .35s cubic-bezier(.34,1.56,.64,1); z-index: 15; pointer-events: none; }
+    .compass-needle-kaaba { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#10b981,#059669); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1rem; box-shadow: 0 6px 18px rgba(16,185,129,.6); animation: kaabaPulse 2s ease-in-out infinite; }
+    @keyframes kaabaPulse { 0%,100% { box-shadow: 0 6px 18px rgba(16,185,129,.6); transform: translateX(-50%) scale(1); } 50% { box-shadow: 0 6px 28px rgba(16,185,129,.9); transform: translateX(-50%) scale(1.08); } }
+    .compass-needle-bar { position: absolute; top: 40px; left: 50%; width: 4px; height: 78px; background: linear-gradient(to bottom, #10b981, #059669); transform: translateX(-50%); border-radius: 2px; box-shadow: 0 0 12px rgba(16,185,129,.7); }
+    .compass-needle-bar::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid #059669; }
+    .compass-center-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle, #ea580c, #7c2d12); border: 3px solid #fff; box-shadow: 0 3px 10px rgba(0,0,0,.3); z-index: 20; }
+    .qibla-info-panel { display: flex; flex-direction: column; gap: 14px; }
+    .angle-card { background: linear-gradient(135deg, #fbbf24, #f97316); color: #fff; padding: 18px 20px; border-radius: 18px; box-shadow: 0 12px 30px rgba(249,115,22,.35); text-align: center; }
+    .angle-card .label { font-size: .72rem; font-weight: 800; opacity: .95; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .angle-card .value { font-size: 2.4rem; font-weight: 900; margin-top: 4px; font-variant-numeric: tabular-nums; letter-spacing: -1px; }
+    .angle-card .direction { font-size: .78rem; font-weight: 700; opacity: .9; margin-top: 2px; }
+    .status-line { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; background: var(--card-bg); border: 1.5px solid var(--border-color); font-size: .85rem; font-weight: 700; }
+    .status-line.success { color: #059669; border-color: rgba(16,185,129,.3); background: rgba(16,185,129,.08); }
+    .status-line.error { color: #dc2626; border-color: rgba(239,68,68,.3); background: rgba(239,68,68,.08); }
+    .status-line.loading { color: var(--orange-dark); border-color: rgba(249,115,22,.3); background: rgba(249,115,22,.08); }
+    [data-theme="dark"] .status-line.success { background: rgba(16,185,129,.15); color: #6ee7b7; }
+    [data-theme="dark"] .status-line.error { background: rgba(239,68,68,.15); color: #fca5a5; }
+    [data-theme="dark"] .status-line.loading { background: rgba(249,115,22,.15); color: #fdba74; }
+    .info-hint { font-size: .75rem; color: var(--text-muted); font-weight: 600; padding: 12px 14px; border-radius: 12px; background: var(--card-bg); border: 1.5px dashed var(--border-color); line-height: 1.6; }
+
     /* SECTIONS */
     .sec-head { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border-color); margin-bottom: 20px; }
     .sec-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; flex-shrink: 0; }
@@ -164,10 +230,10 @@
     table { width: 100%; border-collapse: collapse; font-size: .8rem; text-align: right; }
     thead { background: rgba(249,115,22,.1); }
     [data-theme="dark"] thead { background: rgba(249,115,22,.15); }
-    th { padding: 12px; font-weight: 900; color: var(--orange-dark); border-bottom: 1.5px solid var(--border-color); border-left: 1px solid var(--border-color); }
+    th { padding: 12px; font-weight: 900; color: var(--orange-dark); border-bottom: 1.5px solid var(--border-color); border-left: 1px solid var(--border-color); text-align: center; }
     th:last-child { border-left: none; }
     [data-theme="dark"] th { color: #fdba74; }
-    td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); color: var(--text-main); line-height: 1.6; vertical-align: top; }
+    td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); color: var(--text-main); line-height: 1.6; vertical-align: top; text-align: center; }
     td:last-child { border-left: none; }
     tr:last-child td { border-bottom: none; }
     tr:hover { background: rgba(249,115,22,.04); }
@@ -216,6 +282,16 @@
       .top-navbar { padding: 8px 10px; border-radius: 16px; }
       .nav-title { font-size: .85rem; }
       .nav-subtitle { font-size: .6rem; }
+      .compass { width: 220px; height: 220px; }
+      .compass .tick { transform-origin: center 104px; }
+      .qibla-section { padding: 20px; }
+      .angle-card .value { font-size: 2rem; }
+    }
+    @media(max-width:400px){
+      .compass { width: 190px; height: 190px; }
+      .compass .tick { transform-origin: center 89px; }
+      .compass .cardinal { font-size: .72rem; }
+      .compass .cardinal.n { font-size: .85rem; }
     }
   </style>
 </head>
@@ -309,6 +385,50 @@
           <span class="residence-badge">1200 سرير</span>
         </button>
       </div>
+
+      <!-- 🧭 QIBLA COMPASS -->
+      <section class="qibla-section">
+        <div class="qibla-header">
+          <div class="qibla-header-icon"><i class="fa-solid fa-compass"></i></div>
+          <div>
+            <h3 data-i18n="qibla_title">بوصلة القبلة</h3>
+            <p data-i18n="qibla_desc">حدد اتجاه القبلة بدقة من موقعك الحالي</p>
+          </div>
+        </div>
+
+        <div class="qibla-body">
+          <div class="compass-wrapper">
+            <div class="compass" id="compass">
+              <div id="compassTicks"></div>
+              <span class="cardinal n">N</span>
+              <span class="cardinal s">S</span>
+              <span class="cardinal e">E</span>
+              <span class="cardinal w">W</span>
+              <div class="compass-needle-wrap" id="needleWrap">
+                <div class="compass-needle-kaaba"><i class="fa-solid fa-kaaba"></i></div>
+                <div class="compass-needle-bar"></div>
+              </div>
+              <div class="compass-center-dot"></div>
+            </div>
+          </div>
+
+          <div class="qibla-info-panel">
+            <div class="angle-card">
+              <div class="label"><i class="fa-solid fa-location-crosshairs"></i> <span data-i18n="qibla_angle">زاوية القبلة من الشمال</span></div>
+              <div class="value" id="qiblaAngle">--°</div>
+              <div class="direction" id="qiblaDirection"></div>
+            </div>
+            <div class="status-line loading" id="qiblaStatus">
+              <i class="fa-solid fa-spinner fa-spin"></i>
+              <span data-i18n="qibla_locating">جاري تحديد موقعك...</span>
+            </div>
+            <div class="info-hint">
+              <i class="fa-solid fa-circle-info" style="color:var(--orange);"></i>
+              <span data-i18n="qibla_info">يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- DETAILS SECTION -->
@@ -400,7 +520,7 @@
                 <tr>
                   <td data-i18n="day_sun">الأحد</td>
                   <td>وحدتين</td>
-                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>مربى<br>حلويات</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>مربى<br>حلويات جافة<br>عصير فواكه</td>
                   <td>واحدة</td>
                   <td>سلطة متنوعة<br>عدس<br>بيض<br>لفتة الموسم<br>فاكهة<br>خبز</td>
                   <td>واحدة</td>
@@ -460,7 +580,7 @@
                 <tr>
                   <td data-i18n="day_sat">السبت</td>
                   <td>وحدتين</td>
-                  <td>حليب + شوكولاطة<br>خبز بالزبري<br>مربى<br>بيتزا</td>
+                  <td>حليب + شوكولاطة<br>خبز بالزبدة<br>مربى<br>بيتزا</td>
                   <td>واحدة</td>
                   <td>شربة<br>لحم<br>بطاطا<br>خضر الموسم<br>خبز<br>فاكهة</td>
                   <td>واحدة</td>
@@ -571,6 +691,17 @@
         res_youssefi_addr: "حسين داي، الجزائر العاصمة",
         res_gueridi_addr: "القبة، الجزائر العاصمة",
         badge_girls: "بنات", badge_boys: "أولاد",
+        qibla_title: "بوصلة القبلة",
+        qibla_desc: "حدد اتجاه القبلة بدقة من موقعك الحالي",
+        qibla_angle: "زاوية القبلة من الشمال",
+        qibla_locating: "جاري تحديد موقعك...",
+        qibla_info: "يرجى السماح بالوصول إلى الموقع والحساسات (Gyroscope) في هاتفك للحصول على أدق نتيجة.",
+        qibla_found: "تم تحديد موقعك",
+        qibla_error: "تعذر تحديد الموقع",
+        qibla_direction_n: "شمال", qibla_direction_ne: "شمال شرق",
+        qibla_direction_e: "شرق", qibla_direction_se: "جنوب شرق",
+        qibla_direction_s: "جنوب", qibla_direction_sw: "جنوب غرب",
+        qibla_direction_w: "غرب", qibla_direction_nw: "شمال غرب",
         res_back: "العودة لقائمة الإقامات", res_map: "الموقع على الخريطة",
         res_distance: "المسافة إلى المدرسة", res_video: "فيديو تعريفي عن الإقامة",
         res_meals_title: "جدول الوجبات الأسبوعي",
@@ -604,6 +735,17 @@
         res_youssefi_addr: "Hussein Dey, Alger",
         res_gueridi_addr: "Kouba, Alger",
         badge_girls: "Filles", badge_boys: "Garçons",
+        qibla_title: "Boussole Qibla",
+        qibla_desc: "Déterminez la direction de la Qibla depuis votre position.",
+        qibla_angle: "Angle depuis le Nord",
+        qibla_locating: "Localisation...",
+        qibla_info: "Autorisez l'accès à la position et au gyroscope pour un résultat précis.",
+        qibla_found: "Position détectée",
+        qibla_error: "Impossible de localiser",
+        qibla_direction_n: "Nord", qibla_direction_ne: "Nord-est",
+        qibla_direction_e: "Est", qibla_direction_se: "Sud-est",
+        qibla_direction_s: "Sud", qibla_direction_sw: "Sud-ouest",
+        qibla_direction_w: "Ouest", qibla_direction_nw: "Nord-ouest",
         res_back: "Retour aux résidences", res_map: "Emplacement sur la carte",
         res_distance: "Distance de l'école", res_video: "Vidéo de la résidence",
         res_meals_title: "Menu de la cantine",
@@ -637,6 +779,17 @@
         res_youssefi_addr: "Hussein Dey, Algiers",
         res_gueridi_addr: "Kouba, Algiers",
         badge_girls: "Girls", badge_boys: "Boys",
+        qibla_title: "Qibla Compass",
+        qibla_desc: "Find the Qibla direction from your location.",
+        qibla_angle: "Angle from North",
+        qibla_locating: "Locating...",
+        qibla_info: "Allow location and gyroscope access for accurate results.",
+        qibla_found: "Location detected",
+        qibla_error: "Unable to locate",
+        qibla_direction_n: "North", qibla_direction_ne: "Northeast",
+        qibla_direction_e: "East", qibla_direction_se: "Southeast",
+        qibla_direction_s: "South", qibla_direction_sw: "Southwest",
+        qibla_direction_w: "West", qibla_direction_nw: "Northwest",
         res_back: "Back to residences", res_map: "Location on map",
         res_distance: "Distance from school", res_video: "Residence video",
         res_meals_title: "Canteen Menu",
@@ -778,6 +931,104 @@
       document.getElementById('mapContainer').innerHTML = '';
       document.getElementById('videoContainer').innerHTML = '';
       window.scrollTo(0,0);
+    }
+
+    /* ============================================================ */
+    /* QIBLA COMPASS                                                */
+    /* ============================================================ */
+    const KAABA_LAT = 21.4225;
+    const KAABA_LNG = 39.8262;
+    let userLat = null, userLng = null, deviceHeading = null;
+
+    (function buildTicks(){
+      const cont = document.getElementById('compassTicks');
+      if(!cont) return;
+      for(let i = 0; i < 72; i++){
+        const t = document.createElement('div');
+        t.className = 'tick' + (i % 6 === 0 ? ' major' : '');
+        t.style.transform = `rotate(${i * 5}deg)`;
+        cont.appendChild(t);
+      }
+    })();
+
+    function calculateQiblaAngle(lat, lng){
+      const phiK = KAABA_LAT * Math.PI / 180;
+      const lambdaK = KAABA_LNG * Math.PI / 180;
+      const phi = lat * Math.PI / 180;
+      const lambda = lng * Math.PI / 180;
+      const deltaLambda = lambdaK - lambda;
+      const y = Math.sin(deltaLambda);
+      const x = Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(deltaLambda);
+      let qibla = Math.atan2(y, x) * 180 / Math.PI;
+      return (qibla + 360) % 360;
+    }
+
+    function directionLabel(deg){
+      const dirs = ['n','ne','e','se','s','sw','w','nw'];
+      const idx = Math.round(((deg % 360) + 360) % 360 / 45) % 8;
+      const key = 'qibla_direction_' + dirs[idx];
+      return t(key);
+    }
+
+    function updateCompass(){
+      if(deviceHeading === null || userLat === null) return;
+      const qiblaAngle = calculateQiblaAngle(userLat, userLng);
+      const qiblaEl = document.getElementById('qiblaAngle');
+      if(qiblaEl) qiblaEl.innerText = Math.round(qiblaAngle) + '°';
+      const dirEl = document.getElementById('qiblaDirection');
+      if(dirEl) dirEl.innerText = directionLabel(qiblaAngle);
+      const needleWrap = document.getElementById('needleWrap');
+      if(needleWrap){
+        const rotation = qiblaAngle - deviceHeading;
+        needleWrap.style.transform = `rotate(${rotation}deg)`;
+      }
+    }
+
+    if(navigator.geolocation){
+      navigator.geolocation.watchPosition(
+        (pos)=>{
+          userLat = pos.coords.latitude;
+          userLng = pos.coords.longitude;
+          const sl = document.getElementById('qiblaStatus');
+          if(sl){
+            sl.className = 'status-line success';
+            sl.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span>${t('qibla_found')}</span>`;
+          }
+          updateCompass();
+        },
+        (err)=>{
+          const sl = document.getElementById('qiblaStatus');
+          if(sl){
+            sl.className = 'status-line error';
+            sl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>${t('qibla_error')}</span>`;
+          }
+        },
+        { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 }
+      );
+    }
+
+    if(window.DeviceOrientationEvent){
+      if(typeof DeviceOrientationEvent.requestPermission === 'function'){
+        document.body.addEventListener('click', function requestAccess(){
+          DeviceOrientationEvent.requestPermission().then(state=>{
+            if(state === 'granted'){
+              window.addEventListener('deviceorientationabsolute', handleOrientation);
+              window.addEventListener('deviceorientation', handleOrientation);
+              document.body.removeEventListener('click', requestAccess);
+            }
+          }).catch(console.error);
+        });
+      } else {
+        window.addEventListener('deviceorientationabsolute', handleOrientation);
+        window.addEventListener('deviceorientation', handleOrientation);
+      }
+    }
+
+    function handleOrientation(event){
+      let heading = null;
+      if(event.webkitCompassHeading) heading = event.webkitCompassHeading;
+      else if(event.alpha !== null) heading = 360 - event.alpha;
+      if(heading !== null){ deviceHeading = heading; updateCompass(); }
     }
 
     /* CHAT */
