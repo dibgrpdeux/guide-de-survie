@@ -345,22 +345,20 @@
     <!-- SPORT SECTION -->
     <div id="section-sport">
       <div class="sub-tabs">
-        <button class="sub-tab active" onclick="setSportSub('inside')" id="sport-sub-inside">
-          <i class="fa-solid fa-school"></i> <span data-i18n="sub_inside_school">داخل المدرسة</span>
+        <button class="sub-tab active" onclick="setFilterSport('all')" id="sport-filter-all">
+          <i class="fa-solid fa-list"></i> <span data-i18n="filter_all">الكل</span>
         </button>
-        <button class="sub-tab" onclick="setSportSub('outside')" id="sport-sub-outside">
-          <i class="fa-solid fa-location-dot"></i> <span data-i18n="sub_outside_school">قاعات قريبة</span>
+        <button class="sub-tab" onclick="setFilterSport('medecin')" id="sport-filter-medecin">
+          <i class="fa-solid fa-stethoscope"></i> <span data-i18n="filter_medecin">الأطباء</span>
         </button>
-      </div>
-      <div class="sub-tabs" id="sportGenderTabs" style="display:none;">
-        <button class="sub-tab active" onclick="setSportGender('all')" id="sport-gender-all">
-          <i class="fa-solid fa-users"></i> <span data-i18n="gender_all">الكل</span>
+        <button class="sub-tab" onclick="setFilterSport('dentiste')" id="sport-filter-dentiste">
+          <i class="fa-solid fa-tooth"></i> <span data-i18n="filter_dentiste">الأسنان</span>
         </button>
-        <button class="sub-tab" onclick="setSportGender('women')" id="sport-gender-women">
-          <i class="fa-solid fa-venus"></i> <span data-i18n="gender_women">نساء</span>
+        <button class="sub-tab" onclick="setFilterSport('salle')" id="sport-filter-salle">
+          <i class="fa-solid fa-dumbbell"></i> <span data-i18n="filter_salle">الصالات</span>
         </button>
-        <button class="sub-tab" onclick="setSportGender('men')" id="sport-gender-men">
-          <i class="fa-solid fa-mars"></i> <span data-i18n="gender_men">رجال</span>
+        <button class="sub-tab" onclick="setFilterSport('video')" id="sport-filter-video">
+          <i class="fa-solid fa-video"></i> <span data-i18n="filter_video">الفيديوهات</span>
         </button>
       </div>
     </div>
@@ -368,11 +366,14 @@
     <!-- SANTE SECTION -->
     <div id="section-sante" style="display:none;">
       <div class="sub-tabs">
-        <button class="sub-tab active" onclick="setSanteSub('school')" id="sante-sub-school">
-          <i class="fa-solid fa-school"></i> <span data-i18n="sub_school_doctor">أطباء المدرسة</span>
+        <button class="sub-tab active" onclick="setFilterSante('all')" id="sante-filter-all">
+          <i class="fa-solid fa-list"></i> <span data-i18n="filter_all">الكل</span>
         </button>
-        <button class="sub-tab" onclick="setSanteSub('nearby')" id="sante-sub-nearby">
-          <i class="fa-solid fa-location-dot"></i> <span data-i18n="sub_nearby">قريب من المدرسة</span>
+        <button class="sub-tab" onclick="setFilterSante('doctor')" id="sante-filter-doctor">
+          <i class="fa-solid fa-user-doctor"></i> <span data-i18n="filter_doctor">الأطباء</span>
+        </button>
+        <button class="sub-tab" onclick="setFilterSante('pharma')" id="sante-filter-pharma">
+          <i class="fa-solid fa-pills"></i> <span data-i18n="filter_pharma">الصيدليات</span>
         </button>
       </div>
     </div>
@@ -480,84 +481,63 @@
   <script>
     window.SPORT_DATA = {
       items: [
-        // ===== داخل المدرسة (ملعب + صور s.HEIC و s1-s5) =====
+        // ===== SPORT — نفس الملف الأول =====
         {
-          id: "stade-ecole",
-          section: "sport",
-          sub: "inside",
-          gender: null,
-          icon: "🏟️",
-          title: { ar: "ملعب المدرسة", fr: "Stade de l'école", en: "School Stadium" },
-          specialty: { ar: "ملعب رياضي داخل المدرسة", fr: "Terrain de sport dans l'école", en: "Sports field inside the school" },
-          desc: { ar: "ملعب متعدد الرياضات داخل حرم المدرسة، متاح للطلبة في أوقات محددة.", fr: "Terrain multisports dans l'enceinte de l'école, disponible pour les étudiants.", en: "Multisport field on school campus, available to students." },
-          address: "ENSTP Kouba",
-          images: ["s.HEIC", "s1.HEIC", "s2.HEIC", "s3.HEIC", "s4.HEIC", "s5.HEIC"],
-          video: "",
-          mapCoords: [36.7290, 3.0745]
-        },
-        // ===== قاعات قريبة — رجال =====
-        {
-          id: "salle-homme-1",
-          section: "sport",
-          sub: "outside",
-          gender: "men",
+          id: "sport-1", section: "sport", category: "salle",
           icon: "🏋️",
-          title: { ar: "قاعة رياضية للرجال", fr: "Salle de sport Hommes", en: "Men's Gym" },
-          specialty: { ar: "قاعة مجهزة للرجال", fr: "Salle équipée pour hommes", en: "Fully equipped gym for men" },
-          desc: { ar: "قاعة رياضية قريبة من المدرسة، تجهيزات حديثة للرجال.", fr: "Salle de sport près de l'école, équipements modernes pour hommes.", en: "Gym near school, modern equipment for men." },
+          title: { ar: "صالة رياضية", fr: "Salle de sport", en: "Gym" },
+          specialty: { ar: "قاعة مجهزة", fr: "Salle équipée", en: "Equipped gym" },
+          desc: { ar: "قاعة رياضية قريبة من المدرسة.", fr: "Salle de sport près de l'école.", en: "Gym near school." },
           address: "Kouba, Alger",
-          images: ["ta.jpg"],
+          phone: "",
+          schedule: null,
+          images: [],
           video: "",
           mapCoords: [36.7300, 3.0760]
         },
         {
-          id: "salle-homme-2",
-          section: "sport",
-          sub: "outside",
-          gender: "men",
+          id: "sport-2", section: "sport", category: "salle",
           icon: "🏋️",
-          title: { ar: "قاعة Iron Gym", fr: "Salle Iron Gym", en: "Iron Gym" },
-          specialty: { ar: "حديد وبناء عضلات", fr: "Musculation & musculation", en: "Weights & bodybuilding" },
-          desc: { ar: "قاعة متخصصة في كمال الأجسام ورفع الأثقال للرجال.", fr: "Salle spécialisée en bodybuilding et haltérophilie pour hommes.", en: "Gym specialized in bodybuilding and weightlifting for men." },
+          title: { ar: "صالة Iron Gym", fr: "Salle Iron Gym", en: "Iron Gym" },
+          specialty: { ar: "كمال الأجسام", fr: "Musculation", en: "Bodybuilding" },
+          desc: { ar: "قاعة متخصصة في كمال الأجسام.", fr: "Salle spécialisée en musculation.", en: "Gym specialized in bodybuilding." },
           address: "Kouba, Alger",
+          phone: "",
+          schedule: null,
           images: [],
           video: "",
           mapCoords: [36.7285, 3.0770]
         },
-        // ===== قاعات قريبة — نساء =====
         {
-          id: "salle-femme-1",
-          section: "sport",
-          sub: "outside",
-          gender: "women",
+          id: "sport-3", section: "sport", category: "salle",
           icon: "🤸",
-          title: { ar: "قاعة رياضية للنساء", fr: "Salle de sport Femmes", en: "Women's Gym" },
-          specialty: { ar: "قاعة مخصصة للنساء", fr: "Salle réservée aux femmes", en: "Women-only gym" },
-          desc: { ar: "قاعة مجهزة خصيصاً للنساء، خصوصية كاملة.", fr: "Salle dédiée aux femmes, intimité complète.", en: "Gym dedicated to women, full privacy." },
+          title: { ar: "قاعة Fitness", fr: "Salle Fitness", en: "Fitness Gym" },
+          specialty: { ar: "لياقة ويوجا", fr: "Fitness et yoga", en: "Fitness and yoga" },
+          desc: { ar: "قاعة لياقة مع حصص يوجا.", fr: "Salle de fitness avec cours de yoga.", en: "Fitness gym with yoga classes." },
           address: "Kouba, Alger",
-          images: ["ta.jpg"],
+          phone: "",
+          schedule: null,
+          images: [],
           video: "",
           mapCoords: [36.7305, 3.0785]
         },
         {
-          id: "salle-femme-2",
-          section: "sport",
-          sub: "outside",
-          gender: "women",
+          id: "sport-4", section: "sport", category: "salle",
           icon: "🤸",
-          title: { ar: "قاعة Fitness Femme", fr: "Fitness Femme", en: "Women Fitness" },
-          specialty: { ar: "لياقة، يوجا، زومبا", fr: "Fitness, yoga, zumba", en: "Fitness, yoga, zumba" },
-          desc: { ar: "قاعة لياقة للنساء مع حصص يوجا وزومبا.", fr: "Salle de fitness pour femmes avec cours de yoga et zumba.", en: "Women's fitness gym with yoga and zumba classes." },
+          title: { ar: "قاعة اللياقة النسائية", fr: "Fitness Femme", en: "Women Fitness" },
+          specialty: { ar: "مخصصة للنساء", fr: "Réservée aux femmes", en: "Women only" },
+          desc: { ar: "قاعة مخصصة للنساء فقط.", fr: "Salle réservée aux femmes.", en: "Women-only gym." },
           address: "Kouba, Alger",
+          phone: "",
+          schedule: null,
           images: [],
           video: "",
           mapCoords: [36.7275, 3.0740]
         },
-        // ===== الصحة — أطباء المدرسة =====
+
+        // ===== SANTE — أطباء الملف الأول =====
         {
-          id: "medecin-ecole",
-          section: "sante",
-          sub: "school",
+          id: "medecin-ecole", section: "sante", category: "doctor",
           icon: "🩺",
           title: { ar: "طبيب المدرسة", fr: "Médecin de l'école", en: "School Doctor" },
           specialty: { ar: "طب عام", fr: "Médecine générale", en: "General medicine" },
@@ -570,9 +550,7 @@
           mapCoords: [36.7290, 3.0745]
         },
         {
-          id: "medecin-garidi",
-          section: "sante",
-          sub: "school",
+          id: "medecin-garidi", section: "sante", category: "doctor",
           icon: "🩺",
           title: { ar: "طبيب إقامة قريدي", fr: "Médecin résidence Garidi", en: "Garidi Residence Doctor" },
           specialty: { ar: "طب عام", fr: "Médecine générale", en: "General medicine" },
@@ -584,126 +562,95 @@
           video: "",
           mapCoords: [36.7320, 3.0790]
         },
-        // ===== الصحة — أطباء وصيدليات قريبة =====
+
+        // ===== SANTE — الصيدليات =====
         {
-          id: "pharma-attoui",
-          section: "sante",
-          sub: "nearby",
+          id: "pharma-attoui", section: "sante", category: "pharma",
           icon: "💊",
           title: { ar: "صيدلية عطوي", fr: "Pharmacie Attoui", en: "Pharmacie Attoui" },
           specialty: { ar: "صيدلية عامة", fr: "Pharmacie générale", en: "General pharmacy" },
           desc: { ar: "صيدلية عامة، أدوية ومستلزمات طبية.", fr: "Pharmacie générale, médicaments et matériel médical.", en: "General pharmacy, medicines and medical supplies." },
-          address: "Kouba, Alger",
-          phone: "",
+          address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:00 - 20:00", fr: "8h00 - 20h00", en: "8:00 - 20:00" },
-          images: ["attoui 1.jpg", "attoui 2.jpg", "attoui 3.jpg", "attoui 4.jpg", "attoui 5.jpg"],
-          video: "",
-          mapCoords: [36.7260, 3.0750]
+          images: ["attoui 1.jpg","attoui 2.jpg","attoui 3.jpg","attoui 4.jpg","attoui 5.jpg"],
+          video: "", mapCoords: [36.7260, 3.0750]
         },
         {
-          id: "pharma-djarar",
-          section: "sante",
-          sub: "nearby",
+          id: "pharma-djarar", section: "sante", category: "pharma",
           icon: "💊",
           title: { ar: "صيدلية جرار", fr: "Pharmacie Djarar", en: "Pharmacie Djarar" },
           specialty: { ar: "صيدلية، مستحضرات تجميل طبية", fr: "Pharmacie, cosmétiques médicaux", en: "Pharmacy, medical cosmetics" },
           desc: { ar: "صيدلية ومستحضرات تجميل طبية.", fr: "Pharmacie et cosmétiques médicaux.", en: "Pharmacy and medical cosmetics." },
-          address: "Kouba, Alger",
-          phone: "",
+          address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:30 - 21:00", fr: "8h30 - 21h00", en: "8:30 - 21:00" },
-          images: ["djerar 1.jpg", "djerar 3.jpg", "djerar 4.jpg", "djerar 5.jpg", "djrar 2.jpg"],
-          video: "",
-          mapCoords: [36.7275, 3.0765]
+          images: ["djerar 1.jpg","djerar 3.jpg","djerar 4.jpg","djerar 5.jpg","djrar 2.jpg"],
+          video: "", mapCoords: [36.7275, 3.0765]
         },
         {
-          id: "pharma-hassani",
-          section: "sante",
-          sub: "nearby",
+          id: "pharma-hassani", section: "sante", category: "pharma",
           icon: "💊",
           title: { ar: "صيدلية حساني", fr: "Pharmacie Hassani", en: "Pharmacie Hassani" },
           specialty: { ar: "صيدلية، أدوية مزمنة", fr: "Pharmacie, médicaments chroniques", en: "Pharmacy, chronic medicines" },
           desc: { ar: "صيدلية، أدوية الأمراض المزمنة.", fr: "Pharmacie, médicaments chroniques.", en: "Pharmacy, chronic medicines." },
-          address: "Kouba, Alger",
-          phone: "",
+          address: "Kouba, Alger", phone: "",
           schedule: { ar: "9:00 - 19:30", fr: "9h00 - 19h30", en: "9:00 - 19:30" },
-          images: ["hassani 1.jpg", "hassani 2.jpg", "hassani 3.jpg", "hassani 4.jpg", "hassani 5.jpg"],
-          video: "",
-          mapCoords: [36.7285, 3.0780]
+          images: ["hassani 1.jpg","hassani 2.jpg","hassani 3.jpg","hassani 4.jpg","hassani 5.jpg"],
+          video: "", mapCoords: [36.7285, 3.0780]
         },
         {
-          id: "pharma-hadibi",
-          section: "sante",
-          sub: "nearby",
+          id: "pharma-hadibi", section: "sante", category: "pharma",
           icon: "💊",
           title: { ar: "صيدلية هديبي", fr: "Pharmacie Hadibi", en: "Pharmacie Hadibi" },
           specialty: { ar: "صيدلية، مستلزمات الأطفال", fr: "Pharmacie, articles pour bébés", en: "Pharmacy, baby supplies" },
           desc: { ar: "صيدلية ومستلزمات الأطفال.", fr: "Pharmacie et articles pour bébés.", en: "Pharmacy and baby supplies." },
-          address: "Kouba, Alger",
-          phone: "",
+          address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:00 - 20:00", fr: "8h00 - 20h00", en: "8:00 - 20:00" },
-          images: ["hadibi 1.jpg", "hadibi 2.jpg", "hadibi 3.jpg"],
-          video: "",
-          mapCoords: [36.7290, 3.0800]
+          images: ["hadibi 1.jpg","hadibi 2.jpg","hadibi 3.jpg"],
+          video: "", mapCoords: [36.7290, 3.0800]
         },
         {
-          id: "pharma-torkiche",
-          section: "sante",
-          sub: "nearby",
+          id: "pharma-torkiche", section: "sante", category: "pharma",
           icon: "💊",
           title: { ar: "صيدلية تورشيش", fr: "Pharmacie Torkiche", en: "Pharmacie Torkiche" },
           specialty: { ar: "صيدلية، فحص ضغط وسكري", fr: "Pharmacie, tension et diabète", en: "Pharmacy, BP and diabetes check" },
           desc: { ar: "صيدلية مع فحص الضغط والسكري.", fr: "Pharmacie avec contrôle tension et diabète.", en: "Pharmacy with BP and diabetes check." },
-          address: "Kouba, Alger",
-          phone: "",
+          address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:00 - 21:00", fr: "8h00 - 21h00", en: "8:00 - 21:00" },
-          images: ["torkich 1.jpg", "torkich 2.jpg"],
-          video: "",
-          mapCoords: [36.7300, 3.0820]
+          images: ["torkich 1.jpg","torkich 2.jpg"],
+          video: "", mapCoords: [36.7300, 3.0820]
         },
         {
-          id: "pharma-harket",
-          section: "sante",
-          sub: "nearby",
+          id: "pharma-harket", section: "sante", category: "pharma",
           icon: "💊",
           title: { ar: "صيدلية حاركيت", fr: "Pharmacie Harket", en: "Pharmacie Harket" },
           specialty: { ar: "صيدلية، عناية بالبشرة", fr: "Pharmacie, soins de la peau", en: "Pharmacy, skin care" },
           desc: { ar: "صيدلية وعناية بالبشرة.", fr: "Pharmacie et soins de la peau.", en: "Pharmacy and skin care." },
-          address: "Kouba, Alger",
-          phone: "",
+          address: "Kouba, Alger", phone: "",
           schedule: { ar: "9:00 - 20:00", fr: "9h00 - 20h00", en: "9:00 - 20:00" },
-          images: ["harkat 1.jpg", "harkat 2.jpg"],
-          video: "",
-          mapCoords: [36.7310, 3.0830]
+          images: ["harkat 1.jpg","harkat 2.jpg"],
+          video: "", mapCoords: [36.7310, 3.0830]
         },
         {
-          id: "pharma-baziz",
-          section: "sante",
-          sub: "nearby",
+          id: "pharma-baziz", section: "sante", category: "pharma",
           icon: "💊",
           title: { ar: "صيدلية بازيز", fr: "Pharmacie Baziz", en: "Pharmacie Baziz" },
           specialty: { ar: "صيدلية، مكملات غذائية", fr: "Pharmacie, compléments alimentaires", en: "Pharmacy, food supplements" },
           desc: { ar: "صيدلية ومكملات غذائية.", fr: "Pharmacie et compléments alimentaires.", en: "Pharmacy and food supplements." },
-          address: "Kouba, Alger",
-          phone: "",
+          address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:30 - 20:30", fr: "8h30 - 20h30", en: "8:30 - 20:30" },
-          images: ["baziz 1.jpg", "baziz 2.jpg"],
-          video: "",
-          mapCoords: [36.7320, 3.0840]
+          images: ["baziz 1.jpg","baziz 2.jpg"],
+          video: "", mapCoords: [36.7320, 3.0840]
         },
         {
-          id: "pharma-chikhi",
-          section: "sante",
-          sub: "nearby",
+          id: "pharma-chikhi", section: "sante", category: "pharma",
           icon: "💊",
           title: { ar: "صيدلية شيخي", fr: "Pharmacie Chikhi", en: "Pharmacie Chikhi" },
           specialty: { ar: "صيدلية مناوبة", fr: "Pharmacie de garde", en: "On-call pharmacy" },
           desc: { ar: "صيدلية مناوبة، أدوية نادرة.", fr: "Pharmacie de garde, médicaments rares.", en: "On-call pharmacy, rare medicines." },
-          address: "Kouba, Alger",
-          phone: "",
+          address: "Kouba, Alger", phone: "",
           schedule: { ar: "8:00 - 22:00", fr: "8h00 - 22h00", en: "8:00 - 22:00" },
-          images: ["chikhi 1.jpg", "chikhi 2.jpg", "chikhi 3.jpg"],
-          video: "",
-          mapCoords: [36.7255, 3.0735]
+          images: ["chikhi 1.jpg","chikhi 2.jpg","chikhi 3.jpg"],
+          video: "", mapCoords: [36.7255, 3.0735]
         }
       ]
     };
@@ -720,21 +667,19 @@
         hero_1: "صحتي", hero_2: "ورياضتي",
         sport_desc: "الرياضة والصحة في المدرسة وحولها.",
         tab_sport: "الرياضة", tab_sante: "الصحة",
-        sub_inside_school: "داخل المدرسة", sub_outside_school: "قاعات قريبة",
-        gender_all: "الكل", gender_women: "نساء", gender_men: "رجال",
-        sub_school_doctor: "أطباء المدرسة", sub_nearby: "قريب من المدرسة",
+        filter_all: "الكل", filter_medecin: "الأطباء", filter_dentiste: "الأسنان",
+        filter_salle: "الصالات", filter_video: "الفيديوهات",
+        filter_doctor: "الأطباء", filter_pharma: "الصيدليات",
         modal_video: "فيديو:", modal_gallery: "معرض الصور:",
         modal_address: "العنوان:", modal_phone: "الهاتف:", modal_schedule: "أوقات العمل:", modal_map: "الموقع:",
         open_in_maps: "فتح في خرائط جوجل", view_details: "عرض التفاصيل",
         reviews: "آراء الزبائن", add_comment: "أضف تعليقك...", your_name: "اسمك (اختياري)", send: "إرسال",
         no_comments: "لا توجد تعليقات بعد.", no_items: "لا توجد عناصر.",
-        group_inside: "داخل المدرسة", group_outside: "قاعة قريبة",
-        group_women: "للنساء", group_men: "للرجال",
+        group_medecin: "طبيب", group_dentiste: "عيادة أسنان", group_salle: "صالة رياضية", group_video: "فيديو",
         group_doctor: "طبيب", group_pharma: "صيدلية",
         chat_title: "المساعد", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
         chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
-        chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
-        footer_rights: "جميع الحقوق محفوظة"
+        chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!"
       },
       fr: {
         page_title: "Santé & Sport - ENSTP",
@@ -743,21 +688,19 @@
         hero_1: "Santé", hero_2: "& Sport",
         sport_desc: "Sport et santé à l'école et alentours.",
         tab_sport: "Sport", tab_sante: "Santé",
-        sub_inside_school: "Dans l'école", sub_outside_school: "Salles proches",
-        gender_all: "Tous", gender_women: "Femmes", gender_men: "Hommes",
-        sub_school_doctor: "Médecins de l'école", sub_nearby: "Près de l'école",
+        filter_all: "Tous", filter_medecin: "Médecins", filter_dentiste: "Dentistes",
+        filter_salle: "Salles", filter_video: "Vidéos",
+        filter_doctor: "Médecins", filter_pharma: "Pharmacies",
         modal_video: "Vidéo :", modal_gallery: "Galerie :",
         modal_address: "Adresse :", modal_phone: "Téléphone :", modal_schedule: "Horaires :", modal_map: "Emplacement :",
         open_in_maps: "Ouvrir dans Google Maps", view_details: "Voir détails",
         reviews: "Avis des clients", add_comment: "Ajoutez un commentaire...", your_name: "Votre nom (optionnel)", send: "Envoyer",
         no_comments: "Aucun commentaire.", no_items: "Aucun élément.",
-        group_inside: "Dans l'école", group_outside: "Salle proche",
-        group_women: "Femmes", group_men: "Hommes",
+        group_medecin: "Médecin", group_dentiste: "Dentiste", group_salle: "Salle de sport", group_video: "Vidéo",
         group_doctor: "Médecin", group_pharma: "Pharmacie",
         chat_title: "Assistant", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
         chat_placeholder: "Votre question...", chat_default: "Merci !",
-        chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
-        footer_rights: "Tous droits réservés"
+        chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !"
       },
       en: {
         page_title: "Health & Sport - ENSTP",
@@ -766,21 +709,19 @@
         hero_1: "Health", hero_2: "& Sport",
         sport_desc: "Sport and health at school and nearby.",
         tab_sport: "Sport", tab_sante: "Health",
-        sub_inside_school: "Inside school", sub_outside_school: "Nearby gyms",
-        gender_all: "All", gender_women: "Women", gender_men: "Men",
-        sub_school_doctor: "School doctors", sub_nearby: "Near school",
+        filter_all: "All", filter_medecin: "Doctors", filter_dentiste: "Dentists",
+        filter_salle: "Gyms", filter_video: "Videos",
+        filter_doctor: "Doctors", filter_pharma: "Pharmacies",
         modal_video: "Video:", modal_gallery: "Gallery:",
         modal_address: "Address:", modal_phone: "Phone:", modal_schedule: "Hours:", modal_map: "Location:",
         open_in_maps: "Open in Google Maps", view_details: "View details",
         reviews: "Customer reviews", add_comment: "Add your comment...", your_name: "Your name (optional)", send: "Send",
         no_comments: "No comments yet.", no_items: "No items.",
-        group_inside: "Inside school", group_outside: "Nearby gym",
-        group_women: "Women", group_men: "Men",
+        group_medecin: "Doctor", group_dentiste: "Dentist", group_salle: "Gym", group_video: "Video",
         group_doctor: "Doctor", group_pharma: "Pharmacy",
         chat_title: "Assistant", chat_welcome: "Hello! 👋 How can I help you?",
         chat_placeholder: "Your question...", chat_default: "Thanks!",
-        chat_hello: "Welcome!", chat_thanks: "You're welcome!",
-        footer_rights: "All rights reserved"
+        chat_hello: "Welcome!", chat_thanks: "You're welcome!"
       }
     };
 
@@ -827,9 +768,8 @@
     if(localStorage.getItem('theme')==='dark') html.setAttribute('data-theme','dark');
 
     let currentSection = 'sport';
-    let sportSub = 'inside';
-    let sportGender = 'all';
-    let santeSub = 'school';
+    let sportFilter = 'all';
+    let santeFilter = 'all';
     let currentOpenItem = null;
 
     function toggleDarkMode(){
@@ -866,27 +806,21 @@
       renderItems();
     }
 
-    function setSportSub(sub){
-      sportSub = sub;
-      document.getElementById('sport-sub-inside').classList.toggle('active', sub==='inside');
-      document.getElementById('sport-sub-outside').classList.toggle('active', sub==='outside');
-      document.getElementById('sportGenderTabs').style.display = sub==='outside'?'flex':'none';
-      renderItems();
-    }
-
-    function setSportGender(g){
-      sportGender = g;
-      ['all','women','men'].forEach(x=>{
-        const b = document.getElementById('sport-gender-'+x);
-        if(b) b.classList.toggle('active', x===g);
+    function setFilterSport(f){
+      sportFilter = f;
+      ['all','medecin','dentiste','salle','video'].forEach(x=>{
+        const b = document.getElementById('sport-filter-'+x);
+        if(b) b.classList.toggle('active', x===f);
       });
       renderItems();
     }
 
-    function setSanteSub(sub){
-      santeSub = sub;
-      document.getElementById('sante-sub-school').classList.toggle('active', sub==='school');
-      document.getElementById('sante-sub-nearby').classList.toggle('active', sub==='nearby');
+    function setFilterSante(f){
+      santeFilter = f;
+      ['all','doctor','pharma'].forEach(x=>{
+        const b = document.getElementById('sante-filter-'+x);
+        if(b) b.classList.toggle('active', x===f);
+      });
       renderItems();
     }
 
@@ -917,12 +851,15 @@
       let items = window.SPORT_DATA.items;
 
       if(currentSection === 'sport'){
-        items = items.filter(i => i.section==='sport' && i.sub===sportSub);
-        if(sportSub==='outside' && sportGender!=='all'){
-          items = items.filter(i => i.gender===sportGender);
+        items = items.filter(i => i.section==='sport');
+        if(sportFilter !== 'all'){
+          items = items.filter(i => i.category === sportFilter);
         }
       } else {
-        items = items.filter(i => i.section==='sante' && i.sub===santeSub);
+        items = items.filter(i => i.section==='sante');
+        if(santeFilter !== 'all'){
+          items = items.filter(i => i.category === santeFilter);
+        }
       }
 
       if(items.length === 0){
@@ -934,11 +871,8 @@
         const title = item.title[currentLang] || item.title.ar;
         const specialty = item.specialty ? (item.specialty[currentLang] || item.specialty.ar) : '';
         const desc = item.desc ? (item.desc[currentLang] || item.desc.ar) : '';
-        const catLabel = item.section==='sport'
-          ? (item.sub==='inside' ? t('group_inside') : (item.gender==='women'?t('group_women'):(item.gender==='men'?t('group_men'):t('group_outside'))))
-          : (item.sub==='school'?t('group_doctor'):t('group_pharma'));
+        const catLabel = t('group_' + item.category);
 
-        // Carrousel images
         let mediaHTML = '';
         if(item.images && item.images.length > 0){
           const imgs = item.images.map(src=>`<img src="${src}" alt="${title}" onerror="this.style.display='none'">`).join('');
@@ -981,7 +915,6 @@
       startCarousels();
     }
 
-    // ===== التعليقات =====
     function loadComments(itemId){
       const saved = JSON.parse(localStorage.getItem('comments_sport_'+safeId(itemId)) || '[]');
       const list = document.getElementById('modalCommentsList');
@@ -1075,9 +1008,7 @@
         mb.href = `https://www.google.com/maps/search/?api=1&query=${q}`;
       } else mc.style.display='none';
 
-      // Comments
       loadComments(item.id);
-
       document.querySelector('.modal-card').scrollTop = 0;
     }
 
@@ -1090,7 +1021,6 @@
     document.getElementById('itemModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
-    // ===== Chat =====
     function toggleChat(){ document.getElementById('chatWindow').classList.toggle('open'); }
     function sendMessage(){
       const input = document.getElementById('chatInput');
