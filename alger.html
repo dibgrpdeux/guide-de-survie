@@ -270,8 +270,13 @@
     .modal-subtitle {
       font-size: .85rem; color: var(--orange-dark); font-weight: 800;
       display: inline-flex; align-items: center; gap: 8px;
+      margin-bottom: 8px;
     }
     [data-theme="dark"] .modal-subtitle { color: #fdba74; }
+    .modal-loc {
+      font-size: .85rem; color: var(--text-muted); font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+    }
 
     .modal-section { margin-bottom: 20px; }
     .modal-section h4 {
@@ -334,6 +339,42 @@
       position: absolute; top: 0; left: 0;
       width: 100%; height: 100%; border: 0;
     }
+
+    /* Comments */
+    .comments-section {
+      margin-top: 24px; padding-top: 20px; border-top: 1.5px dashed var(--border-color);
+    }
+    .comments-section h4 {
+      margin: 0 0 12px; font-size: 1rem; font-weight: 900; color: var(--text-main);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .comments-section h4 i { color: var(--orange); }
+    .comment-form {
+      display: flex; gap: 8px; margin-bottom: 16px;
+    }
+    .comment-form input {
+      flex: 1; padding: 10px 14px; border-radius: 10px;
+      border: 1.5px solid var(--border-color); background: var(--bg-color);
+      font-family: inherit; font-size: .85rem; outline: none; color: var(--text-main);
+    }
+    .comment-form input:focus { border-color: var(--orange); }
+    .comment-form button {
+      padding: 10px 16px; border-radius: 10px; border: none;
+      background: var(--orange); color: #fff; font-family: inherit; font-weight: 800;
+      cursor: pointer; transition: all .2s;
+    }
+    .comment-form button:hover { background: var(--orange-dark); }
+    
+    .comments-list { display: flex; flex-direction: column; gap: 10px; }
+    .comment-item {
+      background: var(--bg-color); padding: 12px 14px; border-radius: 12px;
+      border: 1px solid var(--border-color); font-size: .85rem; animation: msgIn .3s ease;
+    }
+    .comment-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .comment-name { font-weight: 800; color: var(--orange-dark); font-size: .8rem; }
+    .comment-time { font-size: .7rem; color: var(--text-muted); }
+    .comment-text { color: var(--text-main); line-height: 1.6; }
+    @keyframes msgIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
 
     /* CHAT */
     #chatWindow {
@@ -470,6 +511,7 @@
       <div class="modal-header">
         <h2 class="modal-title" id="modalTitle"></h2>
         <div class="modal-subtitle" id="modalSubtitle"></div>
+        <div class="modal-loc" id="modalLocationText"><i class="fa-solid fa-location-dot"></i> <span></span></div>
       </div>
 
       <div id="modalGalleryContainer" class="modal-section">
@@ -495,6 +537,17 @@
         <h4><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="modal_map">الموقع على الخريطة:</span></h4>
         <div id="modalMap" class="map-wrap"></div>
       </div>
+
+      <!-- COMMENTS SECTION -->
+      <div class="comments-section" id="modalCommentsSection">
+        <h4><i class="fa-solid fa-comments"></i> <span data-i18n="modal_comments_title">تعليقات وآراء الطلبة:</span></h4>
+        <div class="comment-form">
+          <input type="text" id="commentInput" placeholder="اكتب رأيك..." data-i18n-placeholder="comment_placeholder" maxlength="200">
+          <button onclick="addComment()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+        <div id="commentsList" class="comments-list"></div>
+      </div>
+
     </div>
   </div>
 
@@ -543,29 +596,29 @@
   <!-- ============================================================ -->
   <script>
     const placesData = [
-      { id: 'sidi_fredj', category: 'beaches', title: { ar: "سيدي فرج (Sidi Fredj)", fr: "Sidi Fredj", en: "Sidi Fredj" }, icon: '🏖️', history: { ar: "يبعد 25 كم عن وسط العاصمة. يتميز بمرسى ترفيهي ومطاعم أسماك. الدخول مجاني.", fr: "À 25 km du centre. Marina et restaurants de poisson. Entrée gratuite.", en: "25 km from center. Marina and fish restaurants. Free entry." }, transport: { ar: "الطريق السيار A1.", fr: "Autoroute A1.", en: "Highway A1." }, map: 'Sidi Fredj Alger', images: ['SIDI-FREDJ.png', 'images (9).jpeg', 'images (10).jpeg'], videos: [] },
-      { id: 'zeralda', category: 'beaches', title: { ar: "زرالدة (Zeralda)", fr: "Zeralda", en: "Zeralda" }, icon: '🏖️', history: { ar: "يبعد 35 كم. الخيار الآمن للعائلات، به منتجعات ومرافق.", fr: "À 35 km. Idéal pour les familles, avec resorts et équipements.", en: "35 km. Safe for families, with resorts." }, transport: { ar: "الطريق السيار A1.", fr: "Autoroute A1.", en: "Highway A1." }, map: 'Zeralda plage Alger', images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], videos: [] },
-      { id: 'ain_taya', category: 'beaches', title: { ar: "عين طاية (Ain Taya)", fr: "Ain Taya", en: "Ain Taya" }, icon: '🏖️', history: { ar: "يبعد 22 كم فقط. شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع.", fr: "À 22 km. Plage populaire et bondée le week-end.", en: "22 km. Popular beach, crowded on weekends." }, transport: { ar: "الاتجاه شرقاً.", fr: "Direction est.", en: "East direction." }, map: 'Ain Taya plage Alger', images: ['images (22).jpeg','images (23).jpeg', 'images (24).jpeg','images (25).jpeg' ], videos: [] },
-      { id: 'club_pins', category: 'beaches', title: { ar: "نادي الصنوبر (Club des Pins)", fr: "Club des Pins", en: "Club des Pins" }, icon: '🏖️', history: { ar: "يبعد 28 كم. أقل ازدحاماً، مثالي للأطفال الصغار.", fr: "À 28 km. Moins fréquenté, idéal pour enfants.", en: "28 km. Less crowded, ideal for kids." }, transport: { ar: "الطريق السيار A1 باتجاه الغرب.", fr: "A1 vers l'ouest.", en: "A1 west." }, map: 'Club des Pins Alger', images: [ 'images (26).jpeg', 'images (27).jpeg','images (28).jpeg' ], videos: [] },
-      { id: 'jardin_essai', category: 'parks', title: { ar: "حديقة التجارب بالحامة", fr: "Jardin d'Essai El Hamma", en: "Jardin d'Essai El Hamma" }, icon: '🌳', history: { ar: "تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم.", fr: "Fondé en 1832, l'un des jardins botaniques les plus importants au monde.", en: "Founded in 1832, one of the world's most important botanical gardens." }, transport: { ar: "مترو الأنفاق (محطة الحامة).", fr: "Métro (station El Hamma).", en: "Metro (El Hamma station)." }, map: 'Jardin d\'Essai El Hamma Alger', images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], videos: [{ id: 'DOHY1JVqmDU', title: 'Jardin d\'Essai' }] },
-      { id: 'parc_ben_aknoun', category: 'parks', title: { ar: "حديقة بن عكنون", fr: "Parc Ben Aknoun", en: "Parc Ben Aknoun" }, icon: '🌳', history: { ar: "حديقة ترفيهية شهيرة تضم حديقة حيوانات كبيرة.", fr: "Parc de loisirs célèbre avec un grand zoo.", en: "Famous amusement park with a large zoo." }, transport: { ar: "حافلات أو طاكسي.", fr: "Bus ou taxi.", en: "Bus or taxi." }, map: 'Parc Ben Aknoun Alger', images: ['images (11).jpeg', 'images (12).jpeg'], videos: [] },
-      { id: 'bois_arcades', category: 'parks', title: { ar: "غابة الأركاد (حيدرة)", fr: "Bois des Arcades (Hydra)", en: "Bois des Arcades (Hydra)" }, icon: '🌳', history: { ar: "غابة حضرية هادئة تحتوي على مسارات للمشي والجري.", fr: "Forêt urbaine calme avec sentiers de marche.", en: "Quiet urban forest with walking trails." }, transport: { ar: "سيارة أو حافلة إلى حيدرة.", fr: "Voiture ou bus vers Hydra.", en: "Car or bus to Hydra." }, map: 'Bois des Arcades Hydra Alger', images: ['images (13).jpeg', 'images (14).jpeg', 'images (15).jpeg'], videos: [] },
-      { id: 'dream_park', category: 'parks', title: { ar: "دريم بارك (Dream Park)", fr: "Dream Park", en: "Dream Park" }, icon: '🎢', history: { ar: "مدينة ألعاب ترفيهية كبيرة، مناسبة للعائلات.", fr: "Grand parc d'attractions pour familles.", en: "Large amusement park for families." }, transport: { ar: "سيارة أو حافلة (باب الزوار).", fr: "Voiture ou bus (Bab Ezzouar).", en: "Car or bus (Bab Ezzouar)." }, map: 'Dream Park Alger', images: ['OIP (9).webp', 'OIP (10).webp', 'OIP (11).webp'], videos: [{ id: 'tiDBo1RUS0o', title: 'Dream Park' }] },
-      { id: 'marsy_splash', category: 'parks', title: { ar: "مارسي (Marsy Studio)", fr: "Marsy Studio", en: "Marsy Studio" }, icon: '🌊', history: { ar: "مدينة ألعاب مائية شهيرة، مثالية للصيف.", fr: "Parc aquatique célèbre, idéal en été.", en: "Famous water park, ideal in summer." }, transport: { ar: "سيارة أو حافلة (زرالدة).", fr: "Voiture ou bus (Zeralda).", en: "Car or bus (Zeralda)." }, map: 'Marsy Splash Alger', images: ['marsy 1.PNG', 'marsy 2.PNG', 'marsy 3.PNG', 'marsy 4.PNG'], videos: [] },
-      { id: 'jump_ouled_fayet', category: 'parks', title: { ar: "جامب أولاد فايت", fr: "Jump Ouled Fayet", en: "Jump Ouled Fayet" }, icon: '🤸', history: { ar: "فضاء ترفيهي رياضي (Trampoline Park).", fr: "Trampoline Park pour enfants et adultes.", en: "Trampoline Park for kids and adults." }, transport: { ar: "سيارة أو حافلة إلى أولاد فايت.", fr: "Voiture ou bus vers Ouled Fayet.", en: "Car or bus to Ouled Fayet." }, map: 'Jump Ouled Fayet Alger', images: ['teri 1.JPEG', 'teri 2.JPEG', 'teri 3.JPEG', 'teri 4.JPEG', 'teri 5.JPEG', 'teri 6.JPEG'], videos: [] },
-      { id: 'rageroom', category: 'parks', title: { ar: "راج روم باب الزوار", fr: "Rage Room Bab Ezzouar", en: "Rage Room Bab Ezzouar" }, icon: '💥', history: { ar: "غرفة تفريغ نفسي (تكسير الأشياء).", fr: "Salle de défoulement (casser des objets).", en: "Rage room (smashing objects)." }, transport: { ar: "سيارة أو حافلة إلى باب الزوار.", fr: "Voiture ou bus vers Bab Ezzouar.", en: "Car or bus to Bab Ezzouar." }, map: 'Rage Room Bab Ezzouar Alger', images: ['rage 1.PNG', 'rage 2.PNG', 'rage 3.PNG', 'rage 4.PNG', 'rage 5.PNG', 'rage 6.PNG', 'rage 7.PNG'], videos: [] },
-      { id: 'casbah', category: 'culture', title: { ar: "قصبة الجزائر", fr: "Casbah d'Alger", en: "Casbah of Algiers" }, icon: '🏛️', history: { ar: "موقع تراثي عالمي منذ 1992، المدينة القديمة للجزائر.", fr: "Site du patrimoine mondial depuis 1992, vieille ville d'Alger.", en: "World Heritage site since 1992, old city of Algiers." }, transport: { ar: "محطة مترو ساحة الشهداء.", fr: "Métro Place des Martyrs.", en: "Metro Place des Martyrs." }, map: 'Casbah Alger', images: ['images (29).jpeg', 'images (35).jpeg', 'images (36).jpeg', 'images (37).jpeg', 'images (38).jpeg'], videos: [{ id: 'K7f2zx0UFsg', title: 'Casbah' }] },
-      { id: 'martyrs_memorial', category: 'culture', title: { ar: "مقام الشهيد", fr: "Mémorial du Martyr", en: "Martyrs' Memorial" }, icon: '🗼', history: { ar: "نصب تذكاري ضخم يخلد ذكرى شهداء حرب الاستقلال.", fr: "Monument commémorant les martyrs de la guerre d'indépendance.", en: "Monument commemorating independence war martyrs." }, transport: { ar: "سيارة أو حافلة إلى رياض الفتح.", fr: "Voiture ou bus vers Riad El Feth.", en: "Car or bus to Riad El Feth." }, map: 'Maqam Echahid Alger', images: ['images (45).jpeg', 'images (43).jpeg', 'images (44).jpeg' ], videos: [{ id: 'URc2i9CWkxk', title: 'Mémorial' }] },
-      { id: 'bardo_museum', category: 'culture', title: { ar: "المتحف الوطني باردو", fr: "Musée national du Bardo", en: "Bardo National Museum" }, icon: '🏛️', history: { ar: "يقع في قصر يعود للقرن الثامن عشر، يضم مجموعات أثرية.", fr: "Dans un palais du XVIIIe siècle, collections archéologiques.", en: "In an 18th-century palace, archaeological collections." }, transport: { ar: "حافلات أو طاكسي (الحامة).", fr: "Bus ou taxi (El Hamma).", en: "Bus or taxi (El Hamma)." }, map: 'Musée du Bardo Alger', images: ['images (51).jpeg', 'images (52).jpeg', 'images (53).jpeg', 'images (54).jpeg'], videos: [{ id: 'Bx-EhrdmjbA', title: 'Bardo' }] },
-      { id: 'notre_dame', category: 'culture', title: { ar: "كنيسة سيدة إفريقيا", fr: "Notre-Dame d'Afrique", en: "Notre-Dame d'Afrique" }, icon: '⛪', history: { ar: "كنيسة كاثوليكية على تلة تطل على خليج الجزائر.", fr: "Église catholique sur une colline surplombant la baie.", en: "Catholic church on a hill overlooking the bay." }, transport: { ar: "الترامواي أو الحافلات.", fr: "Tramway ou bus.", en: "Tramway or bus." }, map: 'Notre-Dame d\'Afrique Alger', images: ['images (17).jpeg', 'images (18).jpeg', 'images (19).jpeg'], videos: [] },
-      { id: 'grande_poste', category: 'culture', title: { ar: "البريد المركزي", fr: "Grande Poste", en: "Grande Poste" }, icon: '🏛️', history: { ar: "مبنى تاريخي في قلب العاصمة، بمعمار موريسكي.", fr: "Bâtiment historique au cœur d'Alger, architecture mauresque.", en: "Historic building in central Algiers, Moorish architecture." }, transport: { ar: "مترو الأنفاق (البريد المركزي).", fr: "Métro (Grande Poste).", en: "Metro (Grande Poste)." }, map: 'Grande Poste Alger', images: [ 'images (58).jpeg', 'images (59).jpeg' ], videos: [{ id: 'QQbkX8MeCWI', title: 'Grande Poste' }] },
-      { id: 'kasser_el_rayes', category: 'culture', title: { ar: "قصر الرياس", fr: "Palais des Raïs", en: "Palais des Raïs" }, icon: '🏰', history: { ar: "قصر عثماني تاريخي في القصبة يعود للقرن السادس عشر.", fr: "Palais ottoman du XVIe siècle dans la Casbah.", en: "16th-century Ottoman palace in the Casbah." }, transport: { ar: "محطة مترو ساحة الشهداء ثم مشياً.", fr: "Métro Place des Martyrs puis à pied.", en: "Metro Place des Martyrs then walk." }, map: 'Palais des Raïs Alger', images: ['kasser 1.jpg', 'kasser 2.jpg', 'kasser 3.jpg', 'kasser 4.jpg'], videos: [] },
-      { id: 'palais_arts', category: 'culture', title: { ar: "قصر الفنون الجميلة", fr: "Musée des Beaux-Arts", en: "Museum of Fine Arts" }, icon: '🎨', history: { ar: "متحف الفنون الجميلة في الجزائر العاصمة.", fr: "Musée des Beaux-Arts à Alger.", en: "Museum of Fine Arts in Algiers." }, transport: { ar: "حي الحامة، قرب حديقة التجارب.", fr: "El Hamma, près du Jardin d'Essai.", en: "El Hamma, near Jardin d'Essai." }, map: 'Musée des Beaux-Arts Alger', images: ['fonon 1.JPEG', 'fonon 2.JPEG', 'fonon 3.JPEG', 'fonon 4.JPEG'], videos: [] },
-      { id: 'dar_el_soltan', category: 'culture', title: { ar: "دار السلطان", fr: "Dar El Soltan", en: "Dar El Soltan" }, icon: '🏛️', history: { ar: "منزل عثماني تقليدي في القصبة.", fr: "Maison ottomane traditionnelle dans la Casbah.", en: "Traditional Ottoman house in the Casbah." }, transport: { ar: "القصبة، محطة مترو ساحة الشهداء.", fr: "Casbah, métro Place des Martyrs.", en: "Casbah, metro Place des Martyrs." }, map: 'Dar El Soltan Alger', images: ['OIP (12).webp', 'OIP (13).webp', 'OIP (14).webp', 'OIP (15).webp'], videos: [{ id: 'RGcjn0WhOeI', title: 'Dar El Soltan' }] },
-      { id: 'garden_city', category: 'parks', title: { ar: "جاردن سيتي", fr: "Garden City", en: "Garden City" }, icon: '🌺', history: { ar: "حديقة ومساحة ترفيهية جديدة، مناسبة للعائلات.", fr: "Parc et espace de loisirs récent.", en: "New park and leisure space." }, transport: { ar: "سيارة أو حافلة.", fr: "Voiture ou bus.", en: "Car or bus." }, map: 'Garden City Alger', images: [], videos: [{ id: 'CWeCAiqxtL4', title: 'Garden City' }] },
-      { id: 'hamma_park', category: 'parks', title: { ar: "حديقة الحامة", fr: "Hamma Park", en: "Hamma Park" }, icon: '🌲', history: { ar: "حديقة عامة كبيرة في قلب العاصمة.", fr: "Grand parc public au cœur d'Alger.", en: "Large public park in central Algiers." }, transport: { ar: "مترو الأنفاق (محطة الحامة).", fr: "Métro (station El Hamma).", en: "Metro (El Hamma station)." }, map: 'Hamma Park Alger', images: [], videos: [{ id: 'NNHh_lcMfPo', title: 'Hamma Park' }] },
-      { id: 'djamaa_djazair', category: 'mosques', title: { ar: "جامع الجزائر الأعظم", fr: "Djamaa El Djazair", en: "Djamaa El Djazair" }, icon: '🕌', history: { ar: "ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً).", fr: "3e plus grande mosquée au monde, minaret le plus haut (265 m).", en: "3rd largest mosque in the world, tallest minaret (265 m)." }, transport: { ar: "مترو الأنفاق أو الحافلات، المحمدية.", fr: "Métro ou bus, Mohammadia.", en: "Metro or bus, Mohammadia." }, map: 'Djamaa El Djazair Alger', images: ['images (60).jpeg','images (61).jpeg','images (62).jpeg','images (63).jpeg'], videos: [{ id: 'jLedHzZuxE4', title: 'Djamaa El Djazair' }] },
-      { id: 'ketchaoua', category: 'mosques', title: { ar: "مسجد كتشاوة", fr: "Mosquée Ketchaoua", en: "Ketchaoua Mosque" }, icon: '🕌', history: { ar: "من أقدم مساجد الجزائر (العهد العثماني).", fr: "L'une des plus anciennes mosquées d'Alger (époque ottomane).", en: "One of the oldest mosques in Algiers (Ottoman era)." }, transport: { ar: "محطة مترو ساحة الشهداء ثم مشياً.", fr: "Métro Place des Martyrs puis à pied.", en: "Metro Place des Martyrs then walk." }, map: 'Ketchaoua Mosque Alger', images: ['images (68).jpeg','images (69).jpeg','images (70).jpeg','images (71).jpeg','images (72).jpeg'], videos: [] }
+      { id: 'sidi_fredj', category: 'beaches', title: { ar: "سيدي فرج (Sidi Fredj)", fr: "Sidi Fredj", en: "Sidi Fredj" }, loc: {ar: "سيدي فرج، الجزائر العاصمة", fr: "Sidi Fredj, Alger", en: "Sidi Fredj, Algiers"}, icon: '🏖️', history: { ar: "يبعد 25 كم عن وسط العاصمة. يتميز بمرسى ترفيهي ومطاعم أسماك. الدخول مجاني.", fr: "À 25 km du centre. Marina et restaurants de poisson. Entrée gratuite.", en: "25 km from center. Marina and fish restaurants. Free entry." }, transport: { ar: "الطريق السيار A1.", fr: "Autoroute A1.", en: "Highway A1." }, map: 'Sidi Fredj Alger', images: ['SIDI-FREDJ.png', 'images (9).jpeg', 'images (10).jpeg'], videos: [] },
+      { id: 'zeralda', category: 'beaches', title: { ar: "زرالدة (Zeralda)", fr: "Zeralda", en: "Zeralda" }, loc: {ar: "زرالدة، الجزائر العاصمة", fr: "Zeralda, Alger", en: "Zeralda, Algiers"}, icon: '🏖️', history: { ar: "يبعد 35 كم. الخيار الآمن للعائلات، به منتجعات ومرافق.", fr: "À 35 km. Idéal pour les familles, avec resorts et équipements.", en: "35 km. Safe for families, with resorts." }, transport: { ar: "الطريق السيار A1.", fr: "Autoroute A1.", en: "Highway A1." }, map: 'Zeralda plage Alger', images: ['images (3).jpeg', 'images (4).jpeg', 'images (5).jpeg'], videos: [] },
+      { id: 'ain_taya', category: 'beaches', title: { ar: "عين طاية (Ain Taya)", fr: "Ain Taya", en: "Ain Taya" }, loc: {ar: "عين طاية، الجزائر العاصمة", fr: "Ain Taya, Alger", en: "Ain Taya, Algiers"}, icon: '🏖️', history: { ar: "يبعد 22 كم فقط. شاطئ شعبي ومزدحم في عطلات نهاية الأسبوع.", fr: "À 22 km. Plage populaire et bondée le week-end.", en: "22 km. Popular beach, crowded on weekends." }, transport: { ar: "الاتجاه شرقاً.", fr: "Direction est.", en: "East direction." }, map: 'Ain Taya plage Alger', images: ['images (22).jpeg','images (23).jpeg', 'images (24).jpeg','images (25).jpeg' ], videos: [] },
+      { id: 'club_pins', category: 'beaches', title: { ar: "نادي الصنوبر (Club des Pins)", fr: "Club des Pins", en: "Club des Pins" }, loc: {ar: "نادي الصنوبر، الجزائر العاصمة", fr: "Club des Pins, Alger", en: "Club des Pins, Algiers"}, icon: '🏖️', history: { ar: "يبعد 28 كم. أقل ازدحاماً، مثالي للأطفال الصغار.", fr: "À 28 km. Moins fréquenté, idéal pour enfants.", en: "28 km. Less crowded, ideal for kids." }, transport: { ar: "الطريق السيار A1 باتجاه الغرب.", fr: "A1 vers l'ouest.", en: "A1 west." }, map: 'Club des Pins Alger', images: [ 'images (26).jpeg', 'images (27).jpeg','images (28).jpeg' ], videos: [] },
+      { id: 'jardin_essai', category: 'parks', title: { ar: "حديقة التجارب بالحامة", fr: "Jardin d'Essai El Hamma", en: "Jardin d'Essai El Hamma" }, loc: {ar: "الحامة، الجزائر العاصمة", fr: "El Hamma, Alger", en: "El Hamma, Algiers"}, icon: '🌳', history: { ar: "تأسست عام 1832، وهي إحدى أهم الحدائق النباتية في العالم.", fr: "Fondé en 1832, l'un des jardins botaniques les plus importants au monde.", en: "Founded in 1832, one of the world's most important botanical gardens." }, transport: { ar: "مترو الأنفاق (محطة الحامة).", fr: "Métro (station El Hamma).", en: "Metro (El Hamma station)." }, map: 'Jardin d\'Essai El Hamma Alger', images: ['images (30).jpeg', 'images (31).jpeg', 'images (32).jpeg', 'images (33).jpeg', 'images (34).jpeg' ], videos: [{ id: 'DOHY1JVqmDU', title: 'Jardin d\'Essai' }] },
+      { id: 'parc_ben_aknoun', category: 'parks', title: { ar: "حديقة بن عكنون", fr: "Parc Ben Aknoun", en: "Parc Ben Aknoun" }, loc: {ar: "بن عكنون، الجزائر العاصمة", fr: "Ben Aknoun, Alger", en: "Ben Aknoun, Algiers"}, icon: '🌳', history: { ar: "حديقة ترفيهية شهيرة تضم حديقة حيوانات كبيرة.", fr: "Parc de loisirs célèbre avec un grand zoo.", en: "Famous amusement park with a large zoo." }, transport: { ar: "حافلات أو طاكسي.", fr: "Bus ou taxi.", en: "Bus or taxi." }, map: 'Parc Ben Aknoun Alger', images: ['images (11).jpeg', 'images (12).jpeg'], videos: [] },
+      { id: 'bois_arcades', category: 'parks', title: { ar: "غابة الأركاد (حيدرة)", fr: "Bois des Arcades (Hydra)", en: "Bois des Arcades (Hydra)" }, loc: {ar: "حيدرة، الجزائر العاصمة", fr: "Hydra, Alger", en: "Hydra, Algiers"}, icon: '🌳', history: { ar: "غابة حضرية هادئة تحتوي على مسارات للمشي والجري.", fr: "Forêt urbaine calme avec sentiers de marche.", en: "Quiet urban forest with walking trails." }, transport: { ar: "سيارة أو حافلة إلى حيدرة.", fr: "Voiture ou bus vers Hydra.", en: "Car or bus to Hydra." }, map: 'Bois des Arcades Hydra Alger', images: ['images (13).jpeg', 'images (14).jpeg', 'images (15).jpeg'], videos: [] },
+      { id: 'dream_park', category: 'parks', title: { ar: "دريم بارك (Dream Park)", fr: "Dream Park", en: "Dream Park" }, loc: {ar: "بن عكنون، الجزائر العاصمة", fr: "Ben Aknoun, Alger", en: "Ben Aknoun, Algiers"}, icon: '🎢', history: { ar: "مدينة ألعاب ترفيهية كبيرة، مناسبة للعائلات.", fr: "Grand parc d'attractions pour familles.", en: "Large amusement park for families." }, transport: { ar: "سيارة أو حافلة (باب الزوار).", fr: "Voiture ou bus (Bab Ezzouar).", en: "Car or bus (Bab Ezzouar)." }, map: 'Dream Park Alger', images: ['OIP (9).webp', 'OIP (10).webp', 'OIP (11).webp'], videos: [{ id: 'tiDBo1RUS0o', title: 'Dream Park' }] },
+      { id: 'marsy_splash', category: 'parks', title: { ar: "مارسي (Marsy Studio)", fr: "Marsy Studio", en: "Marsy Studio" }, loc: {ar: "زرالدة، الجزائر العاصمة", fr: "Zeralda, Alger", en: "Zeralda, Algiers"}, icon: '🌊', history: { ar: "مدينة ألعاب مائية شهيرة، مثالية للصيف.", fr: "Parc aquatique célèbre, idéal en été.", en: "Famous water park, ideal in summer." }, transport: { ar: "سيارة أو حافلة (زرالدة).", fr: "Voiture ou bus (Zeralda).", en: "Car or bus (Zeralda)." }, map: 'Marsy Splash Alger', images: ['marsy 1.PNG', 'marsy 2.PNG', 'marsy 3.PNG', 'marsy 4.PNG'], videos: [] },
+      { id: 'jump_ouled_fayet', category: 'parks', title: { ar: "جامب أولاد فايت", fr: "Jump Ouled Fayet", en: "Jump Ouled Fayet" }, loc: {ar: "أولاد فايت، الجزائر العاصمة", fr: "Ouled Fayet, Alger", en: "Ouled Fayet, Algiers"}, icon: '🤸', history: { ar: "فضاء ترفيهي رياضي (Trampoline Park).", fr: "Trampoline Park pour enfants et adultes.", en: "Trampoline Park for kids and adults." }, transport: { ar: "سيارة أو حافلة إلى أولاد فايت.", fr: "Voiture ou bus vers Ouled Fayet.", en: "Car or bus to Ouled Fayet." }, map: 'Jump Ouled Fayet Alger', images: ['teri 1.JPEG', 'teri 2.JPEG', 'teri 3.JPEG', 'teri 4.JPEG', 'teri 5.JPEG', 'teri 6.JPEG'], videos: [] },
+      { id: 'rageroom', category: 'parks', title: { ar: "راج روم باب الزوار", fr: "Rage Room Bab Ezzouar", en: "Rage Room Bab Ezzouar" }, loc: {ar: "باب الزوار، الجزائر العاصمة", fr: "Bab Ezzouar, Alger", en: "Bab Ezzouar, Algiers"}, icon: '💥', history: { ar: "غرفة تفريغ نفسي (تكسير الأشياء).", fr: "Salle de défoulement (casser des objets).", en: "Rage room (smashing objects)." }, transport: { ar: "سيارة أو حافلة إلى باب الزوار.", fr: "Voiture ou bus vers Bab Ezzouar.", en: "Car or bus to Bab Ezzouar." }, map: 'Rage Room Bab Ezzouar Alger', images: ['rage 1.PNG', 'rage 2.PNG', 'rage 3.PNG', 'rage 4.PNG', 'rage 5.PNG', 'rage 6.PNG', 'rage 7.PNG'], videos: [] },
+      { id: 'casbah', category: 'culture', title: { ar: "قصبة الجزائر", fr: "Casbah d'Alger", en: "Casbah of Algiers" }, loc: {ar: "القصبة، الجزائر العاصمة", fr: "Casbah, Alger", en: "Casbah, Algiers"}, icon: '🏛️', history: { ar: "موقع تراثي عالمي منذ 1992، المدينة القديمة للجزائر.", fr: "Site du patrimoine mondial depuis 1992, vieille ville d'Alger.", en: "World Heritage site since 1992, old city of Algiers." }, transport: { ar: "محطة مترو ساحة الشهداء.", fr: "Métro Place des Martyrs.", en: "Metro Place des Martyrs." }, map: 'Casbah Alger', images: ['images (29).jpeg', 'images (35).jpeg', 'images (36).jpeg', 'images (37).jpeg', 'images (38).jpeg'], videos: [{ id: 'K7f2zx0UFsg', title: 'Casbah' }] },
+      { id: 'martyrs_memorial', category: 'culture', title: { ar: "مقام الشهيد", fr: "Mémorial du Martyr", en: "Martyrs' Memorial" }, loc: {ar: "رياض الفتح، الجزائر العاصمة", fr: "Riad El Feth, Alger", en: "Riad El Feth, Algiers"}, icon: '🗼', history: { ar: "نصب تذكاري ضخم يخلد ذكرى شهداء حرب الاستقلال.", fr: "Monument commémorant les martyrs de la guerre d'indépendance.", en: "Monument commemorating independence war martyrs." }, transport: { ar: "سيارة أو حافلة إلى رياض الفتح.", fr: "Voiture ou bus vers Riad El Feth.", en: "Car or bus to Riad El Feth." }, map: 'Maqam Echahid Alger', images: ['images (45).jpeg', 'images (43).jpeg', 'images (44).jpeg' ], videos: [{ id: 'URc2i9CWkxk', title: 'Mémorial' }] },
+      { id: 'bardo_museum', category: 'culture', title: { ar: "المتحف الوطني باردو", fr: "Musée national du Bardo", en: "Bardo National Museum" }, loc: {ar: "الحامة، الجزائر العاصمة", fr: "El Hamma, Alger", en: "El Hamma, Algiers"}, icon: '🏛️', history: { ar: "يقع في قصر يعود للقرن الثامن عشر، يضم مجموعات أثرية.", fr: "Dans un palais du XVIIIe siècle, collections archéologiques.", en: "In an 18th-century palace, archaeological collections." }, transport: { ar: "حافلات أو طاكسي (الحامة).", fr: "Bus ou taxi (El Hamma).", en: "Bus or taxi (El Hamma)." }, map: 'Musée du Bardo Alger', images: ['images (51).jpeg', 'images (52).jpeg', 'images (53).jpeg', 'images (54).jpeg'], videos: [{ id: 'Bx-EhrdmjbA', title: 'Bardo' }] },
+      { id: 'notre_dame', category: 'culture', title: { ar: "كنيسة سيدة إفريقيا", fr: "Notre-Dame d'Afrique", en: "Notre-Dame d'Afrique" }, loc: {ar: "بولوغين، الجزائر العاصمة", fr: "Bologhine, Alger", en: "Bologhine, Algiers"}, icon: '⛪', history: { ar: "كنيسة كاثوليكية على تلة تطل على خليج الجزائر.", fr: "Église catholique sur une colline surplombant la baie.", en: "Catholic church on a hill overlooking the bay." }, transport: { ar: "الترامواي أو الحافلات.", fr: "Tramway ou bus.", en: "Tramway or bus." }, map: 'Notre-Dame d\'Afrique Alger', images: ['images (17).jpeg', 'images (18).jpeg', 'images (19).jpeg'], videos: [] },
+      { id: 'grande_poste', category: 'culture', title: { ar: "البريد المركزي", fr: "Grande Poste", en: "Grande Poste" }, loc: {ar: "وسط العاصمة، الجزائر", fr: "Centre-ville, Alger", en: "Downtown, Algiers"}, icon: '🏛️', history: { ar: "مبنى تاريخي في قلب العاصمة، بمعمار موريسكي.", fr: "Bâtiment historique au cœur d'Alger, architecture mauresque.", en: "Historic building in central Algiers, Moorish architecture." }, transport: { ar: "مترو الأنفاق (البريد المركزي).", fr: "Métro (Grande Poste).", en: "Metro (Grande Poste)." }, map: 'Grande Poste Alger', images: [ 'images (58).jpeg', 'images (59).jpeg' ], videos: [{ id: 'QQbkX8MeCWI', title: 'Grande Poste' }] },
+      { id: 'kasser_el_rayes', category: 'culture', title: { ar: "قصر الرياس", fr: "Palais des Raïs", en: "Palais des Raïs" }, loc: {ar: "القصبة، الجزائر العاصمة", fr: "Casbah, Alger", en: "Casbah, Algiers"}, icon: '🏰', history: { ar: "قصر عثماني تاريخي في القصبة يعود للقرن السادس عشر.", fr: "Palais ottoman du XVIe siècle dans la Casbah.", en: "16th-century Ottoman palace in the Casbah." }, transport: { ar: "محطة مترو ساحة الشهداء ثم مشياً.", fr: "Métro Place des Martyrs puis à pied.", en: "Metro Place des Martyrs then walk." }, map: 'Palais des Raïs Alger', images: ['kasser 1.jpg', 'kasser 2.jpg', 'kasser 3.jpg', 'kasser 4.jpg'], videos: [] },
+      { id: 'palais_arts', category: 'culture', title: { ar: "قصر الفنون الجميلة", fr: "Musée des Beaux-Arts", en: "Museum of Fine Arts" }, loc: {ar: "الحامة، الجزائر العاصمة", fr: "El Hamma, Alger", en: "El Hamma, Algiers"}, icon: '🎨', history: { ar: "متحف الفنون الجميلة في الجزائر العاصمة.", fr: "Musée des Beaux-Arts à Alger.", en: "Museum of Fine Arts in Algiers." }, transport: { ar: "حي الحامة، قرب حديقة التجارب.", fr: "El Hamma, près du Jardin d'Essai.", en: "El Hamma, near Jardin d'Essai." }, map: 'Musée des Beaux-Arts Alger', images: ['fonon 1.JPEG', 'fonon 2.JPEG', 'fonon 3.JPEG', 'fonon 4.JPEG'], videos: [] },
+      { id: 'dar_el_soltan', category: 'culture', title: { ar: "دار السلطان", fr: "Dar El Soltan", en: "Dar El Soltan" }, loc: {ar: "القصبة، الجزائر العاصمة", fr: "Casbah, Alger", en: "Casbah, Algiers"}, icon: '🏛️', history: { ar: "منزل عثماني تقليدي في القصبة.", fr: "Maison ottomane traditionnelle dans la Casbah.", en: "Traditional Ottoman house in the Casbah." }, transport: { ar: "القصبة، محطة مترو ساحة الشهداء.", fr: "Casbah, métro Place des Martyrs.", en: "Casbah, metro Place des Martyrs." }, map: 'Dar El Soltan Alger', images: ['OIP (12).webp', 'OIP (13).webp', 'OIP (14).webp', 'OIP (15).webp'], videos: [{ id: 'RGcjn0WhOeI', title: 'Dar El Soltan' }] },
+      { id: 'garden_city', category: 'parks', title: { ar: "جاردن سيتي", fr: "Garden City", en: "Garden City" }, loc: {ar: "حيدرة، الجزائر العاصمة", fr: "Hydra, Alger", en: "Hydra, Algiers"}, icon: '🌺', history: { ar: "حديقة ومساحة ترفيهية جديدة، مناسبة للعائلات.", fr: "Parc et espace de loisirs récent.", en: "New park and leisure space." }, transport: { ar: "سيارة أو حافلة.", fr: "Voiture ou bus.", en: "Car or bus." }, map: 'Garden City Alger', images: [], videos: [{ id: 'CWeCAiqxtL4', title: 'Garden City' }] },
+      { id: 'hamma_park', category: 'parks', title: { ar: "حديقة الحامة", fr: "Hamma Park", en: "Hamma Park" }, loc: {ar: "الحامة، الجزائر العاصمة", fr: "El Hamma, Alger", en: "El Hamma, Algiers"}, icon: '🌲', history: { ar: "حديقة عامة كبيرة في قلب العاصمة.", fr: "Grand parc public au cœur d'Alger.", en: "Large public park in central Algiers." }, transport: { ar: "مترو الأنفاق (محطة الحامة).", fr: "Métro (station El Hamma).", en: "Metro (El Hamma station)." }, map: 'Hamma Park Alger', images: [], videos: [{ id: 'NNHh_lcMfPo', title: 'Hamma Park' }] },
+      { id: 'djamaa_djazair', category: 'mosques', title: { ar: "جامع الجزائر الأعظم", fr: "Djamaa El Djazair", en: "Djamaa El Djazair" }, loc: {ar: "المحمدية، الجزائر العاصمة", fr: "Mohammadia, Alger", en: "Mohammadia, Algiers"}, icon: '🕌', history: { ar: "ثالث أكبر مسجد في العالم، يضم أعلى مئذنة في العالم (265 متراً).", fr: "3e plus grande mosquée au monde, minaret le plus haut (265 m).", en: "3rd largest mosque in the world, tallest minaret (265 m)." }, transport: { ar: "مترو الأنفاق أو الحافلات، المحمدية.", fr: "Métro ou bus, Mohammadia.", en: "Metro or bus, Mohammadia." }, map: 'Djamaa El Djazair Alger', images: ['images (60).jpeg','images (61).jpeg','images (62).jpeg','images (63).jpeg'], videos: [{ id: 'jLedHzZuxE4', title: 'Djamaa El Djazair' }] },
+      { id: 'ketchaoua', category: 'mosques', title: { ar: "مسجد كتشاوة", fr: "Mosquée Ketchaoua", en: "Ketchaoua Mosque" }, loc: {ar: "القصبة، الجزائر العاصمة", fr: "Casbah, Alger", en: "Casbah, Algiers"}, icon: '🕌', history: { ar: "من أقدم مساجد الجزائر (العهد العثماني).", fr: "L'une des plus anciennes mosquées d'Alger (époque ottomane).", en: "One of the oldest mosques in Algiers (Ottoman era)." }, transport: { ar: "محطة مترو ساحة الشهداء ثم مشياً.", fr: "Métro Place des Martyrs puis à pied.", en: "Metro Place des Martyrs then walk." }, map: 'Ketchaoua Mosque Alger', images: ['images (68).jpeg','images (69).jpeg','images (70).jpeg','images (71).jpeg','images (72).jpeg'], videos: [] }
     ];
 
     /* ============================================================ */
@@ -584,6 +637,8 @@
         modal_category: "الفئة:", modal_gallery: "معرض الصور:", modal_history: "لمحة تاريخية:",
         modal_transport: "كيفية الوصول:", modal_map: "الموقع على الخريطة:",
         view_details: "عرض التفاصيل",
+        modal_comments_title: "تعليقات وآراء الطلبة:",
+        comment_placeholder: "اكتب رأيك هنا...",
         chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
         chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
         chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
@@ -599,6 +654,8 @@
         modal_category: "Catégorie :", modal_gallery: "Galerie :", modal_history: "Aperçu historique :",
         modal_transport: "Comment s'y rendre :", modal_map: "Emplacement :",
         view_details: "Voir détails",
+        modal_comments_title: "Avis des étudiants :",
+        comment_placeholder: "Écrivez votre avis ici...",
         chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
         chat_placeholder: "Votre question...", chat_default: "Merci !",
         chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
@@ -614,6 +671,8 @@
         modal_category: "Category:", modal_gallery: "Gallery:", modal_history: "Historical overview:",
         modal_transport: "How to get there:", modal_map: "Location:",
         view_details: "View details",
+        modal_comments_title: "Student Reviews:",
+        comment_placeholder: "Write your review here...",
         chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
         chat_placeholder: "Your question...", chat_default: "Thanks!",
         chat_hello: "Welcome!", chat_thanks: "You're welcome!",
@@ -653,6 +712,7 @@
       }
       renderCategories();
       renderCards();
+      // If modal is open, re-render its comments in correct language if needed
     };
 
     window.setLanguage = function(lang){
@@ -750,17 +810,22 @@
       });
     }
 
-    /* ========== MODAL ========== */
+    /* ========== MODAL & COMMENTS ========== */
+    let currentModalPlaceId = null;
+
     function openModal(place){
+      currentModalPlaceId = place.id;
       const modal = document.getElementById('placeModal');
       modal.classList.add('open');
 
       const title = place.title[currentLang] || place.title.ar;
       const hist = place.history[currentLang] || place.history.ar;
       const trans = place.transport[currentLang] || place.transport.ar;
+      const loc = place.loc ? (place.loc[currentLang] || place.loc.ar) : '';
 
       document.getElementById('modalTitle').innerText = title;
       document.getElementById('modalSubtitle').innerText = `${t('modal_category')} ${t('cat_'+place.category)}`;
+      document.getElementById('modalLocationText').querySelector('span').innerText = loc;
       document.getElementById('modalHistory').innerText = hist;
       document.getElementById('modalTransport').innerText = trans;
 
@@ -795,6 +860,9 @@
         });
       } else { vc.style.display = 'none'; }
 
+      // Load comments
+      loadComments(place.id);
+
       document.querySelector('.modal-card').scrollTop = 0;
     }
 
@@ -802,6 +870,7 @@
       document.getElementById('placeModal').classList.remove('open');
       document.getElementById('modalMap').innerHTML = '';
       document.getElementById('modalVideosContainer').innerHTML = '';
+      currentModalPlaceId = null;
     }
 
     document.getElementById('placeModal').addEventListener('click', function(e){
@@ -810,6 +879,48 @@
     document.addEventListener('keydown', e=>{
       if(e.key === 'Escape') closeModal();
     });
+
+    /* ========== LOCAL STORAGE COMMENTS ========== */
+    function loadComments(placeId){
+      const list = document.getElementById('commentsList');
+      if(!list) return;
+      list.innerHTML = '';
+      
+      const saved = JSON.parse(localStorage.getItem('alger_comments_' + placeId) || '[]');
+      if(saved.length === 0){
+        list.innerHTML = `<p style="font-size:.8rem;color:var(--text-muted);text-align:center;">لا توجد تعليقات بعد. كن أول من يشارك!</p>`;
+        return;
+      }
+      
+      saved.forEach(c=>{
+        list.innerHTML += `
+          <div class="comment-item">
+            <div class="comment-header">
+              <span class="comment-name">${c.name}</span>
+              <span class="comment-time">${c.date}</span>
+            </div>
+            <div class="comment-text">${c.text}</div>
+          </div>
+        `;
+      });
+    }
+
+    function addComment(){
+      if(!currentModalPlaceId) return;
+      const input = document.getElementById('commentInput');
+      const text = input.value.trim();
+      if(!text) return;
+
+      const saved = JSON.parse(localStorage.getItem('alger_comments_' + currentModalPlaceId) || '[]');
+      const now = new Date();
+      const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      
+      saved.push({ text: text, name: "طالب", date: dateStr });
+      localStorage.setItem('alger_comments_' + currentModalPlaceId, JSON.stringify(saved));
+      
+      input.value = '';
+      loadComments(currentModalPlaceId);
+    }
 
     /* ========== CHAT ========== */
     function toggleChat(){
@@ -869,6 +980,13 @@
       if(chatInput){
         chatInput.addEventListener('keypress', e=>{
           if(e.key === 'Enter'){ e.preventDefault(); sendMessage(); }
+        });
+      }
+      
+      const commentInput = document.getElementById('commentInput');
+      if(commentInput){
+        commentInput.addEventListener('keypress', e=>{
+          if(e.key === 'Enter'){ e.preventDefault(); addComment(); }
         });
       }
     });
