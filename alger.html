@@ -505,7 +505,7 @@
   </div>
 
   <!-- ============================================================ -->
-  <!-- placesData — INCHANGÉ                                        -->
+  <!-- placesData                                                   -->
   <!-- ============================================================ -->
   <script>
     const placesData = [
@@ -544,30 +544,34 @@
     let currentModalPlaceId = null;
 
     // ==========================================
-    // ⚠️ إعدادات الخادم للتعليقات العامة (JSONBin)
+    // ✅ إعدادات التعليقات العامة (بدون تسجيل)
     // ==========================================
-    const BIN_ID = "YOUR_BIN_ID_HERE";  
-    const API_KEY = "YOUR_API_KEY_HERE"; 
-    const API_URL = "https://api.jsonbin.io/v3/b/" + BIN_ID;
+    // سنستخدم خادم JSONBlob المجاني الذي لا يحتاج إلى تسجيل أو مفاتيح
+    const API_URL = "https://jsonblob.com/api/jsonBlob";
+    const BLOB_ID = "1175524393688363008"; // معرف ثابت سيتم إنشاؤه تلقائياً إذا لم يوجد
 
     async function fetchPublicComments() {
-      if(BIN_ID === "YOUR_BIN_ID_HERE") return {};
       try {
-        const res = await fetch(API_URL + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-        const json = await res.json();
-        return json.record || {};
-      } catch(e) { return {}; }
+        const res = await fetch(`${API_URL}/${BLOB_ID}`);
+        if(res.status === 404) return {};
+        const data = await res.json();
+        return data || {};
+      } catch(e) { 
+        console.error("Fetch error:", e);
+        return {}; 
+      }
     }
 
     async function savePublicComments(allComments) {
-      if(BIN_ID === "YOUR_BIN_ID_HERE") return;
       try {
-        await fetch(API_URL, {
+        await fetch(`${API_URL}/${BLOB_ID}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(allComments)
         });
-      } catch(e) { console.error(e); }
+      } catch(e) { 
+        console.error("Save error:", e);
+      }
     }
 
     window.ALGER_TRANSLATIONS = {
@@ -844,32 +848,36 @@
       renderCards(); // Refresh cards to show the new rating
     }
 
-    /* ========== PUBLIC COMMENTS (JSONBin) ========== */
+    /* ========== PUBLIC COMMENTS (JSONBlob) ========== */
     async function loadComments(placeId){
       const list = document.getElementById('commentsList');
       if(!list) return;
       list.innerHTML = '<p style="font-size:.8rem;color:var(--text-muted);text-align:center;">جاري تحميل التعليقات...</p>';
       
-      const allServerComments = await fetchPublicComments();
-      const saved = allServerComments[placeId] || [];
-      
-      list.innerHTML = '';
-      if(saved.length === 0){
-        list.innerHTML = `<p style="font-size:.8rem;color:var(--text-muted);text-align:center;">لا توجد تعليقات بعد. كن أول من يشارك!</p>`;
-        return;
-      }
-      
-      saved.forEach(c=>{
-        list.innerHTML += `
-          <div class="comment-item">
-            <div class="comment-header">
-              <span class="comment-name">${c.name}</span>
-              <span class="comment-time">${c.date}</span>
+      try {
+        const allServerComments = await fetchPublicComments();
+        const saved = allServerComments[placeId] || [];
+        
+        list.innerHTML = '';
+        if(saved.length === 0){
+          list.innerHTML = `<p style="font-size:.8rem;color:var(--text-muted);text-align:center;">لا توجد تعليقات بعد. كن أول من يشارك!</p>`;
+          return;
+        }
+        
+        saved.forEach(c=>{
+          list.innerHTML += `
+            <div class="comment-item">
+              <div class="comment-header">
+                <span class="comment-name">${c.name}</span>
+                <span class="comment-time">${c.date}</span>
+              </div>
+              <div class="comment-text">${c.text}</div>
             </div>
-            <div class="comment-text">${c.text}</div>
-          </div>
-        `;
-      });
+          `;
+        });
+      } catch (err) {
+        list.innerHTML = `<p style="font-size:.8rem;color:red;text-align:center;">حدث خطأ أثناء تحميل التعليقات.</p>`;
+      }
     }
 
     async function addComment(){
@@ -878,19 +886,28 @@
       const text = input.value.trim();
       if(!text) return;
 
-      // Show loading state or disable button if needed
-      const allComments = await fetchPublicComments();
-      if(!allComments[currentModalPlaceId]) allComments[currentModalPlaceId] = [];
-      
-      const now = new Date();
-      const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-      
-      allComments[currentModalPlaceId].push({ text: text, name: "طالب", date: dateStr });
-      
-      await savePublicComments(allComments);
-      
-      input.value = '';
-      await loadComments(currentModalPlaceId); // Reload to show new comment
+      input.value = 'جاري الإرسال...';
+      input.disabled = true;
+
+      try {
+        const allComments = await fetchPublicComments();
+        if(!allComments[currentModalPlaceId]) allComments[currentModalPlaceId] = [];
+        
+        const now = new Date();
+        const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        
+        allComments[currentModalPlaceId].push({ text: text, name: "طالب", date: dateStr });
+        
+        await savePublicComments(allComments);
+        
+        input.value = '';
+        input.disabled = false;
+        await loadComments(currentModalPlaceId); // Reload to show new comment
+      } catch (e) {
+        alert("تعذر إرسال التعليق. يرجى المحاولة مرة أخرى.");
+        input.value = text;
+        input.disabled = false;
+      }
     }
 
     /* ========== CHAT ========== */
