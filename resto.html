@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>المطاعم والمقاهي - ENSTP</title>
+  <title data-i18n="page_title">المطاعم والمقاهي - ENSTP</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
@@ -15,218 +15,149 @@
       --shadow-sm:0 4px 15px rgba(0,0,0,.05);
       --shadow-md:0 10px 30px rgba(0,0,0,.1);
     }
-    [data-theme="dark"]{
+    [data-theme="dark"] {
       --bg-color:#0a1128; --text-main:#f8fafc; --text-muted:#94a3b8;
       --card-bg:#0f1e41; --nav-bg:rgba(10,17,40,.95);
       --border-color:#1e3a8a;
       --shadow-sm:0 4px 15px rgba(0,0,0,.3);
       --shadow-md:0 10px 30px rgba(0,0,0,.5);
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{font-family:'Cairo',sans-serif;background:var(--bg-color);color:var(--text-main);
-      margin:0;overflow-x:hidden;min-height:100vh;padding-top:90px;
-      transition:background .4s,color .4s;-webkit-font-smoothing:antialiased}
-    .animated-bg{position:fixed;inset:0;z-index:-3;overflow:hidden;background:var(--bg-color)}
-    .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;animation:blobFloat 25s ease-in-out infinite}
-    .blob-1{width:500px;height:500px;background:#f97316;top:-10%;left:-10%}
-    .blob-2{width:450px;height:450px;background:#fbbf24;bottom:-10%;right:-10%;animation-delay:-8s}
-    .blob-3{width:350px;height:350px;background:#ea580c;top:50%;left:40%;animation-delay:-15s;opacity:.25}
-    [data-theme="dark"] .blob-1{opacity:.2}
-    [data-theme="dark"] .blob-2{background:#3b82f6;opacity:.15}
-    [data-theme="dark"] .blob-3{background:#1e3a8a;opacity:.3}
-    @keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.1)}66%{transform:translate(-40px,60px) scale(.95)}}
-
-    .top-navbar{position:fixed;top:12px;left:50%;transform:translateX(-50%);
-      width:96%;max-width:1100px;background:var(--nav-bg);backdrop-filter:blur(20px) saturate(180%);
-      border:1.5px solid var(--border-color);border-radius:22px;padding:10px 14px;
-      display:flex;justify-content:space-between;align-items:center;gap:12px;
-      z-index:1000;box-shadow:var(--shadow-md)}
-    .nav-brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
-    .nav-title{font-size:1rem;font-weight:900;color:var(--text-main);line-height:1.1}
-    .nav-title span{background:linear-gradient(90deg,#f97316,#fbbf24,#f97316);background-size:200% auto;
-      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-      animation:shimmer 3s linear infinite}
-    @keyframes shimmer{to{background-position:200% center}}
-    .nav-subtitle{font-size:.65rem;color:var(--text-muted);font-weight:600;margin-top:1px}
-    .nav-icon{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#f97316,#ea580c);
-      color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;
-      box-shadow:0 6px 18px rgba(249,115,22,.35);flex-shrink:0}
-    .nav-menu-btn{width:42px;height:42px;border-radius:14px;border:1.5px solid var(--border-color);
-      background:var(--card-bg);color:var(--text-main);display:flex;align-items:center;justify-content:center;
-      cursor:pointer;transition:all .25s;font-size:1rem;flex-shrink:0}
-    .nav-menu-btn:hover,.nav-menu-btn.active{background:var(--orange);color:#fff;border-color:var(--orange)}
-    .nav-dropdown{position:fixed;top:72px;left:50%;transform:translateX(-50%) translateY(-10px);
-      width:290px;max-width:92%;background:var(--nav-bg);backdrop-filter:blur(20px);
-      border:1px solid var(--border-color);border-radius:20px;padding:8px;box-shadow:var(--shadow-md);
-      z-index:1001;opacity:0;pointer-events:none;transition:all .25s cubic-bezier(.34,1.56,.64,1)}
-    .nav-dropdown.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
-    .dropdown-section{padding:10px 8px;border-bottom:1px solid var(--border-color)}
-    .dropdown-section:last-child{border-bottom:none}
-    .dropdown-label{font-size:.65rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;
-      letter-spacing:.5px;margin-bottom:8px;padding:0 4px}
-    .dropdown-row{display:flex;gap:5px;flex-wrap:wrap}
-    .dropdown-btn{padding:8px 12px;border-radius:10px;border:1px solid var(--border-color);
-      background:var(--card-bg);color:var(--text-main);font-family:inherit;font-size:.75rem;font-weight:700;
-      cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;flex:1;
-      justify-content:center;min-width:fit-content;text-decoration:none}
-    .dropdown-btn:hover{background:var(--primary);color:#000;border-color:var(--primary)}
-    .dropdown-btn.active{background:var(--orange);color:#fff;border-color:var(--orange)}
-
-    .page-hero{max-width:1100px;margin:0 auto 24px;padding:0 20px;text-align:center}
-    .page-hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;margin:0 0 8px;line-height:1.2}
-    .page-hero h1 span{background:linear-gradient(90deg,#fbbf24,#f97316,#fbbf24);background-size:200% auto;
-      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-      animation:shimmer 3s linear infinite}
-    .page-hero p{color:var(--text-muted);font-size:.95rem;font-weight:600;margin:0}
-    .content-wrap{max-width:1100px;margin:0 auto;padding:0 20px 60px}
-
-    .filters-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:20px}
-    .filter-chip{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:16px;
-      background:var(--card-bg);border:1.5px solid var(--border-color);color:var(--text-main);
-      font-family:inherit;font-weight:800;font-size:.88rem;cursor:pointer;transition:all .3s}
-    .filter-chip.active{background:var(--orange);color:#fff;border-color:var(--orange)}
-
-    #itemsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
-    .resto-card-new{background:var(--card-bg);border:1px solid var(--border-color);border-radius:20px;
-      overflow:hidden;cursor:pointer;display:flex;flex-direction:column;
-      box-shadow:var(--shadow-sm);transition:all .3s ease}
-    .resto-card-new:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
-
-    .cover-wrap{position:relative;width:100%;height:200px;background:#e2e8f0;overflow:hidden}
-    .carousel-track{display:flex;width:100%;height:100%;transition:transform .7s cubic-bezier(.4,0,.2,1)}
-    .carousel-track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover}
-    .carousel-noimg{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;
-      justify-content:center;background:linear-gradient(135deg,#fed7aa,#fbbf24);
-      font-size:3rem;color:rgba(249,115,22,.35)}
-    .carousel-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-      display:flex;gap:5px;z-index:3}
-    .carousel-dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);
-      transition:all .3s}
-    .carousel-dots span.active{background:#fff;width:16px;border-radius:3px}
-
-    .badge-top-right{position:absolute;top:12px;right:12px;z-index:3;
-      background:rgba(255,255,255,.85);backdrop-filter:blur(5px);
-      padding:4px 10px;border-radius:8px;font-size:.75rem;font-weight:800;color:#1e293b;
-      display:flex;align-items:center;gap:4px}
-
-    .card-body-new{padding:20px;display:flex;flex-direction:column;gap:12px}
-    .place-title-new{font-size:1.25rem;font-weight:900;color:var(--text-main);margin:0}
-    .category-tag{display:inline-block;background:#f1f5f9;color:#475569;padding:6px 14px;
-      border-radius:20px;font-size:.8rem;font-weight:700;width:fit-content}
-    [data-theme="dark"] .category-tag{background:#1e293b;color:#cbd5e1}
-    .price-tag{display:inline-block;background:#e0f2fe;color:#0369a1;padding:6px 14px;
-      border-radius:20px;font-size:.85rem;font-weight:800;width:fit-content}
-    [data-theme="dark"] .price-tag{background:rgba(3,105,161,.2);color:#38bdf8}
-    .desc-new{font-size:.9rem;color:var(--text-muted);line-height:1.6;margin:0}
-    .rating-row{display:flex;align-items:center;gap:8px;font-size:.9rem;font-weight:800;color:var(--text-main)}
-    .stars-display{color:#fbbf24;display:flex;gap:2px;font-size:.95rem}
-    .rating-count{color:var(--text-muted);font-weight:600;font-size:.8rem}
-    .phone-row{display:flex;align-items:center;gap:8px;font-size:.95rem;font-weight:800;color:#047857;text-decoration:none}
-    .phone-row i{color:#10b981}
-    .badge-cheap{display:inline-block;background:#e0f2fe;color:#0369a1;padding:6px 14px;
-      border-radius:20px;font-size:.8rem;font-weight:800;width:fit-content}
-    [data-theme="dark"] .badge-cheap{background:rgba(3,105,161,.2);color:#38bdf8}
-    .hours-row{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text-muted);font-weight:700}
-
-    .reviews-box{background:#f8fafc;border-radius:16px;padding:16px;
-      border:1px solid #e2e8f0;margin-top:6px}
-    [data-theme="dark"] .reviews-box{background:#1e293b;border-color:#334155}
-    .reviews-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-    .reviews-title{font-size:.9rem;font-weight:900;color:var(--text-main);
-      display:flex;align-items:center;gap:6px}
-    .reviews-count-badge{background:var(--orange);color:#fff;padding:2px 8px;
-      border-radius:10px;font-size:.7rem;font-weight:800}
-    .comment-form-inline{display:flex;gap:6px;margin-top:10px;flex-direction:column}
-    .comment-form-inline .input-row{display:flex;gap:6px}
-    .comment-form-inline input{flex:1;padding:8px 12px;border-radius:10px;
-      border:1.5px solid var(--border-color);background:var(--bg-color);
-      color:var(--text-main);font-family:inherit;font-size:.82rem;outline:none}
-    .comment-form-inline input:focus{border-color:var(--orange)}
-    .comment-form-inline button{padding:8px 14px;border-radius:10px;border:none;
-      background:var(--orange);color:#fff;font-weight:800;cursor:pointer;
-      font-family:inherit;font-size:.8rem;transition:all .2s}
-    .comment-form-inline button:hover{background:var(--orange-dark);transform:scale(1.05)}
-    .comment-form-inline button:disabled{opacity:.5;cursor:wait}
-    .comments-list-inline{display:flex;flex-direction:column;gap:6px;margin-top:10px;
-      max-height:180px;overflow-y:auto}
-    .comment-item{background:var(--bg-color);padding:8px 12px;border-radius:10px;
-      border:1px solid var(--border-color);font-size:.82rem;color:var(--text-main)}
-    .comment-item strong{color:var(--orange-dark)}
-    [data-theme="dark"] .comment-item strong{color:#fdba74}
-    .no-comments{text-align:center;color:var(--text-muted);font-size:.8rem;margin:6px 0 0}
-
-    #itemModal{position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,.8);
-      backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;
-      padding:16px;opacity:0;pointer-events:none;transition:opacity .3s}
-    #itemModal.open{opacity:1;pointer-events:auto}
-    .modal-card{background:var(--card-bg);border-radius:24px;max-width:700px;width:100%;
-      max-height:90vh;overflow-y:auto;padding:24px;position:relative;
-      transform:scale(.95);transition:transform .3s}
-    #itemModal.open .modal-card{transform:scale(1)}
-    .modal-close{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;
-      background:var(--bg-color);border:1px solid var(--border-color);color:var(--text-main);
-      cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center}
-    .modal-section{margin-bottom:18px}
-    .modal-section h4{margin:0 0 8px;font-size:.9rem;font-weight:900;color:var(--text-main);
-      display:flex;align-items:center;gap:8px}
-    .modal-section h4 i{color:var(--orange)}
-    .section-content{background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.2);
-      border-radius:12px;padding:12px 14px;font-size:.86rem;line-height:1.7;color:var(--text-main)}
-    .section-content.green{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.2)}
-    .gallery-scroll{display:flex;overflow-x:auto;gap:10px;padding-bottom:8px}
-    .gallery-scroll::-webkit-scrollbar{height:6px}
-    .gallery-scroll::-webkit-scrollbar-thumb{background:rgba(249,115,22,.4);border-radius:10px}
-    .gallery-item{flex:0 0 auto;width:200px;height:140px;border-radius:12px;overflow:hidden;
-      border:2px solid var(--border-color);background:var(--bg-color);cursor:pointer;transition:all .3s}
-    .gallery-item:hover{transform:scale(1.05);border-color:var(--orange)}
-    .gallery-item img{width:100%;height:100%;object-fit:cover}
-    .video-wrap{width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
-      background:var(--bg-color);border:2px solid var(--border-color)}
-    .video-wrap iframe{width:100%;height:100%;border:0}
-    .map-wrap{width:100%;height:260px;border-radius:14px;overflow:hidden;
-      background:var(--bg-color);border:2px solid var(--border-color)}
-    .map-wrap iframe{width:100%;height:100%;border:0}
-    .modal-actions{display:flex;gap:8px;flex-wrap:wrap;padding-top:16px;
-      border-top:1.5px solid var(--border-color);margin-top:6px}
-    .modal-actions a{flex:1;min-width:140px;display:inline-flex;align-items:center;
-      justify-content:center;gap:8px;padding:12px 16px;border-radius:12px;
-      font-weight:800;font-size:.85rem;text-decoration:none;transition:all .2s}
-    .modal-actions a.call{background:rgba(249,115,22,.1);color:var(--orange-dark);
-      border:1.5px solid rgba(249,115,22,.3)}
-    .modal-actions a.call:hover{background:var(--orange);color:#fff}
-    .modal-actions a.map-btn{background:linear-gradient(135deg,#f97316,#ea580c);
-      color:#fff;box-shadow:0 6px 18px rgba(249,115,22,.35)}
-    .modal-actions a.map-btn:hover{transform:translateY(-2px)}
-
-    #chatWindow{position:fixed;bottom:110px;right:20px;z-index:1500;width:340px;
-      max-height:480px;background:var(--card-bg);border-radius:18px;
-      box-shadow:0 20px 50px rgba(0,0,0,.25);border:1.5px solid var(--border-color);
-      display:none;flex-direction:column;overflow:hidden}
-    #chatWindow.open{display:flex}
-    @media(max-width:640px){#chatWindow{width:calc(100vw - 2rem);right:1rem;left:1rem}}
-    .chat-header{background:linear-gradient(135deg,#f97316,#f59e0b);color:#fff;
-      padding:14px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:800}
-    .chat-close-btn{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.25);
-      border:none;color:#fff;cursor:pointer}
-    #chatBody{padding:12px;overflow-y:auto;height:320px;display:flex;
-      flex-direction:column;gap:8px;background:var(--bg-color)}
-    .chat-input-wrap{padding:8px;border-top:1px solid var(--border-color);
-      display:flex;gap:6px;background:var(--card-bg)}
-    #chatInput{flex:1;padding:9px 12px;border:1.5px solid var(--border-color);
-      border-radius:10px;outline:none;font-family:inherit;
-      background:var(--bg-color);color:var(--text-main)}
-    .chat-send-btn{background:var(--orange);color:#fff;border:none;padding:9px 14px;
-      border-radius:10px;cursor:pointer}
-    .mascot-container{position:fixed;bottom:22px;right:22px;z-index:1000;cursor:pointer}
-    .mascot-kangaroo{width:70px;height:90px;
-      filter:drop-shadow(0 10px 15px rgba(249,115,22,.3));transition:transform .3s}
-    .mascot-kangaroo.jump{animation:kangarooJump .6s ease}
-    @keyframes kangarooJump{0%,100%{transform:translateY(0)}30%{transform:translateY(-20px) scale(1.1) rotate(-8deg)}60%{transform:translateY(-10px) scale(1) rotate(5deg)}}
-    @media(max-width:768px){
-      .top-navbar{padding:8px 10px;border-radius:16px}
-      .nav-title{font-size:.85rem}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Cairo', sans-serif; background-color: var(--bg-color);
+      color: var(--text-main); transition: background-color .4s, color .4s;
+      margin: 0; overflow-x: hidden; min-height: 100vh; padding-top: 90px;
     }
+    .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: blobFloat 25s ease-in-out infinite; }
+    .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
+    .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
+    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .25; }
+    [data-theme="dark"] .blob-1 { opacity:.2 }
+    [data-theme="dark"] .blob-2 { background:#3b82f6; opacity:.15 }
+    [data-theme="dark"] .blob-3 { background:#1e3a8a; opacity:.3 }
+    @keyframes blobFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(60px,-40px) scale(1.1); } 66% { transform: translate(-40px,60px) scale(.95); } }
+
+    .top-navbar { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); width: 96%; max-width: 1100px; background: var(--nav-bg); backdrop-filter: blur(20px) saturate(180%); border: 1.5px solid var(--border-color); border-radius: 22px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; z-index: 1000; box-shadow: var(--shadow-md); }
+    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-title { font-size: 1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; }
+    .nav-title span { background: linear-gradient(90deg,#f97316,#fbbf24,#f97316); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; }
+    @keyframes shimmer { to { background-position: 200% center; } }
+    .nav-subtitle { font-size: .65rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
+    .nav-icon { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg,#f97316,#ea580c); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 6px 18px rgba(249,115,22,.35); flex-shrink: 0; }
+    .nav-menu-btn { width: 42px; height: 42px; border-radius: 14px; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-main); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .25s; font-size: 1rem; flex-shrink: 0; }
+    .nav-menu-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,.35); }
+    .nav-menu-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    
+    .nav-dropdown { position: fixed; top: 72px; left: 50%; transform: translateX(-50%) translateY(-10px); width: 290px; max-width: 92%; background: var(--nav-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 20px; padding: 8px; box-shadow: var(--shadow-md); z-index: 1001; opacity: 0; pointer-events: none; transition: all .25s cubic-bezier(.34,1.56,.64,1); }
+    .nav-dropdown.open { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid var(--border-color); }
+    .dropdown-section:last-child { border-bottom: none; }
+    .dropdown-label { font-size: .65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; padding: 0 4px; }
+    .dropdown-row { display: flex; gap: 5px; flex-wrap: wrap; }
+    .dropdown-btn { padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-family: inherit; font-size: .75rem; font-weight: 700; cursor: pointer; transition: all .2s; display: inline-flex; align-items: center; gap: 6px; flex: 1; justify-content: center; min-width: fit-content; text-decoration: none; }
+    .dropdown-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+    .dropdown-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+    .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
+    .page-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; margin: 0 0 8px; line-height: 1.2; }
+    .page-hero h1 span { background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; }
+    .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
+    .content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+
+    .filters-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px; }
+    .filter-chip { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 16px; background: var(--card-bg); border: 1.5px solid var(--border-color); color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .88rem; cursor: pointer; transition: all .3s; }
+    .filter-chip.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+    #itemsGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+    .resto-card-new { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); transition: all .3s ease; }
+    .resto-card-new:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+    .cover-wrap { position: relative; width: 100%; height: 200px; background: #e2e8f0; overflow: hidden; }
+    .carousel-track { display: flex; width: 100%; height: 100%; transition: transform .7s cubic-bezier(.4,0,.2,1); }
+    .carousel-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; }
+    .carousel-noimg { flex: 0 0 100%; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#fed7aa,#fbbf24); font-size: 3rem; color: rgba(249,115,22,.35); }
+    .carousel-dots { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 3; }
+    .carousel-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); transition: all .3s; }
+    .carousel-dots span.active { background: #fff; width: 16px; border-radius: 3px; }
+    .badge-top-right { position: absolute; top: 12px; right: 12px; z-index: 3; background: rgba(255,255,255,.85); backdrop-filter: blur(5px); padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 4px; }
+
+    .card-body-new { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .place-title-new { font-size: 1.25rem; font-weight: 900; color: var(--text-main); margin: 0; }
+    .category-tag { display: inline-block; background: #f1f5f9; color: #475569; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; width: fit-content; }
+    [data-theme="dark"] .category-tag { background: #1e293b; color: #cbd5e1; }
+    .price-tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; width: fit-content; }
+    [data-theme="dark"] .price-tag { background: rgba(3,105,161,.2); color: #38bdf8; }
+    .desc-new { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+    .rating-row { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 800; color: var(--text-main); }
+    .stars-display { color: #fbbf24; display: flex; gap: 2px; font-size: 0.95rem; }
+    .rating-count { color: var(--text-muted); font-weight: 600; font-size: 0.8rem; }
+    .phone-row { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; font-weight: 800; color: #047857; text-decoration: none; }
+    .phone-row i { color: #10b981; }
+    .badge-cheap { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; width: fit-content; }
+    [data-theme="dark"] .badge-cheap { background: rgba(3,105,161,.2); color: #38bdf8; }
+    .hours-row { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-muted); font-weight: 700; }
+
+    .reviews-box { background: #f8fafc; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-top: 6px; }
+    [data-theme="dark"] .reviews-box { background: #1e293b; border-color: #334155; }
+    .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .reviews-title { font-size: 0.9rem; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
+    .reviews-count-badge { background: var(--orange); color: #fff; padding: 2px 8px; border-radius: 10px; font-size: .7rem; font-weight: 800; }
+    .comment-form-inline { display: flex; gap: 6px; margin-top: 10px; flex-direction: column; }
+    .comment-form-inline .input-row { display: flex; gap: 6px; }
+    .comment-form-inline input { flex: 1; padding: 8px 12px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--bg-color); color: var(--text-main); font-family: inherit; font-size: .82rem; outline: none; }
+    .comment-form-inline input:focus { border-color: var(--orange); }
+    .comment-form-inline button { padding: 8px 14px; border-radius: 10px; border: none; background: var(--orange); color: #fff; font-weight: 800; cursor: pointer; font-family: inherit; font-size: .8rem; transition: all .2s; }
+    .comment-form-inline button:hover { background: var(--orange-dark); transform: scale(1.05); }
+    .comments-list-inline { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; max-height: 180px; overflow-y: auto; }
+    .comment-item { background: var(--bg-color); padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color); font-size: .82rem; color: var(--text-main); }
+    .comment-item strong { color: var(--orange-dark); }
+    [data-theme="dark"] .comment-item strong { color: #fdba74; }
+    .no-comments { text-align: center; color: var(--text-muted); font-size: .8rem; margin: 6px 0 0; }
+
+    #itemModal { position: fixed; inset: 0; z-index: 2000; background: rgba(15,23,42,.8); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 16px; opacity: 0; pointer-events: none; transition: opacity .3s; }
+    #itemModal.open { opacity: 1; pointer-events: auto; }
+    .modal-card { background: var(--card-bg); border-radius: 24px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px; position: relative; transform: scale(.95); transition: transform .3s; }
+    #itemModal.open .modal-card { transform: scale(1); }
+    .modal-close { position: absolute; top: 16px; left: 16px; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-main); cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; }
+
+    .modal-section { margin-bottom: 18px; }
+    .modal-section h4 { margin: 0 0 8px; font-size: .9rem; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+    .modal-section h4 i { color: var(--orange); }
+    .section-content { background: rgba(249,115,22,.06); border: 1px solid rgba(249,115,22,.2); border-radius: 12px; padding: 12px 14px; font-size: .86rem; line-height: 1.7; color: var(--text-main); }
+    .section-content.green { background: rgba(16,185,129,.08); border-color: rgba(16,185,129,.2); }
+    .gallery-scroll { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 8px; }
+    .gallery-scroll::-webkit-scrollbar { height: 6px; }
+    .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(249,115,22,.4); border-radius: 10px; }
+    .gallery-item { flex: 0 0 auto; width: 200px; height: 140px; border-radius: 12px; overflow: hidden; border: 2px solid var(--border-color); background: var(--bg-color); cursor: pointer; transition: all .3s; }
+    .gallery-item:hover { transform: scale(1.05); border-color: var(--orange); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .video-wrap { width: 100%; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; background: var(--bg-color); border: 2px solid var(--border-color); }
+    .video-wrap iframe { width: 100%; height: 100%; border: 0; }
+    .map-wrap { width: 100%; height: 260px; border-radius: 14px; overflow: hidden; background: var(--bg-color); border: 2px solid var(--border-color); }
+    .map-wrap iframe { width: 100%; height: 100%; border: 0; }
+    .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 16px; border-top: 1.5px solid var(--border-color); margin-top: 6px; }
+    .modal-actions a { flex: 1; min-width: 140px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 16px; border-radius: 12px; font-weight: 800; font-size: .85rem; text-decoration: none; transition: all .2s; }
+    .modal-actions a.call { background: rgba(249,115,22,.1); color: var(--orange-dark); border: 1.5px solid rgba(249,115,22,.3); }
+    .modal-actions a.call:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .modal-actions a.map-btn { background: linear-gradient(135deg,#f97316,#ea580c); color: #fff; box-shadow: 0 6px 18px rgba(249,115,22,.35); }
+    .modal-actions a.map-btn:hover { transform: translateY(-2px); }
+
+    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1500; width: 340px; max-height: 480px; background: var(--card-bg); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,.25); border: 1.5px solid var(--border-color); display: none; flex-direction: column; overflow: hidden; }
+    #chatWindow.open { display: flex; }
+    @media(max-width:640px){ #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
+    .chat-header { background: linear-gradient(135deg,#f97316,#f59e0b); color: #fff; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
+    .chat-close-btn { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,255,255,.25); border: none; color: #fff; cursor: pointer; }
+    #chatBody { padding: 12px; overflow-y: auto; height: 320px; display: flex; flex-direction: column; gap: 8px; background: var(--bg-color); }
+    .chat-input-wrap { padding: 8px; border-top: 1px solid var(--border-color); display: flex; gap: 6px; background: var(--card-bg); }
+    #chatInput { flex: 1; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 10px; outline: none; font-family: inherit; background: var(--bg-color); color: var(--text-main); }
+    .chat-send-btn { background: var(--orange); color: #fff; border: none; padding: 9px 14px; border-radius: 10px; cursor: pointer; }
+    .mascot-container { position: fixed; bottom: 22px; right: 22px; z-index: 1000; cursor: pointer; }
+    .mascot-kangaroo { width: 70px; height: 90px; filter: drop-shadow(0 10px 15px rgba(249,115,22,.3)); transition: transform .3s; }
+    .mascot-kangaroo.jump { animation: kangarooJump .6s ease; }
+    @keyframes kangarooJump { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-20px) scale(1.1)} 60%{transform:translateY(-10px) scale(1) rotate(5deg)} }
+    @media(max-width:768px){ .top-navbar { padding: 8px 10px; border-radius: 16px; } .nav-title { font-size: .85rem; } }
   </style>
 </head>
 <body>
@@ -263,7 +194,9 @@
         <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
           <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
         </button>
-        <a href="index.html" class="dropdown-btn"><i class="fa-solid fa-house"></i> <span data-i18n="nav_home">الرئيسية</span></a>
+        <a href="index.html" class="dropdown-btn">
+          <i class="fa-solid fa-house"></i> <span data-i18n="nav_home">الرئيسية</span>
+        </a>
       </div>
     </div>
   </div>
@@ -318,10 +251,12 @@
       <div id="modalMapContainer" class="modal-section" style="display:none;">
         <h4><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="label_map">الموقع على الخريطة:</span></h4>
         <div id="modalMap" class="map-wrap"></div>
+        <a id="modalMapBtn" href="#" target="_blank" class="map-btn">
+          <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="btn_map">فتح الخريطة</span>
+        </a>
       </div>
       <div class="modal-actions">
         <a id="modalPhoneBtn" href="#" class="call" style="display:none;"><i class="fa-solid fa-phone"></i> <span data-i18n="btn_call">اتصل</span></a>
-        <a id="modalMapBtn" href="#" target="_blank" class="map-btn" style="display:none;"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="btn_map">فتح الخريطة</span></a>
       </div>
     </div>
   </div>
@@ -391,65 +326,32 @@
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
     window.RESTO_TRANSLATIONS = {
       ar: {
-        page_title:"المطاعم والمقاهي - ENSTP", nav_home:"الرئيسية",
-        menu_lang:"اللغة", menu_settings:"الإعدادات", menu_dark:"ليلي",
-        resto_title:"المطاعم والمقاهي",
-        hero_1:"المطاعم", hero_2:"والمقاهي", hero_desc:"اكتشف أفضل المطاعم والمقاهي القريبة من المدرسة.",
-        filter_all:"الكل", filter_resto:"مطاعم", filter_cafe:"مقاهي",
-        label_hours:"أوقات العمل:", label_delivery:"خدمة التوصيل:", label_menu:"القائمة:", label_map:"الموقع على الخريطة:",
-        modal_video:"فيديو تعريفي:", modal_gallery:"معرض الصور:",
-        btn_call:"اتصل", btn_map:"فتح الخريطة", btn_details:"عرض التفاصيل",
-        delivery_yes:"متوفرة", no_items:"لا توجد عناصر.",
-        chat_title:"المساعد", chat_welcome:"مرحباً! 👋 كيف يمكنني مساعدتك؟",
-        chat_placeholder:"اكتب سؤالك...", chat_default:"شكراً!",
-        chat_hello:"أهلاً!", chat_thanks:"على الرحب والسعة!",
-        chat_resto:"تصفح المطاعم والمقاهي في هذه الصفحة.",
-        reviews:"آراء الزبائن", other_reviews:"المزيد", cheap:"اقتصادي",
-        reviews_count:"تقييم", loc:"الموقع", hours:"أوقات العمل",
-        add_comment:"أضف تعليقك...", your_name:"اسمك (اختياري)",
-        send:"إرسال", no_comments:"لا توجد تعليقات بعد. كن أول من يعلّق!"
+        page_title:"المطاعم والمقاهي - ENSTP", nav_home:"الرئيسية", menu_lang:"اللغة", menu_settings:"الإعدادات", menu_dark:"ليلي", resto_title:"المطاعم والمقاهي", hero_1:"المطاعم", hero_2:"والمقاهي", hero_desc:"اكتشف أفضل المطاعم والمقاهي القريبة من المدرسة.",
+        filter_all:"الكل", filter_resto:"مطاعم", filter_cafe:"مقاهي", label_hours:"أوقات العمل:", label_delivery:"خدمة التوصيل:", label_menu:"القائمة:", label_map:"الموقع على الخريطة:",
+        modal_video:"فيديو تعريفي:", modal_gallery:"معرض الصور:", btn_call:"اتصل", btn_map:"فتح الخريطة", btn_details:"عرض التفاصيل", delivery_yes:"متوفرة", no_items:"لا توجد عناصر.",
+        chat_title:"المساعد", chat_welcome:"مرحباً! 👋 كيف يمكنني مساعدتك؟", chat_placeholder:"اكتب سؤالك...", chat_default:"شكراً!", chat_hello:"أهلاً!", chat_thanks:"على الرحب والسعة!", chat_resto:"تصفح المطاعم والمقاهي في هذه الصفحة.",
+        reviews:"آراء الزبائن", other_reviews:"المزيد", cheap:"اقتصادي", reviews_count:"تقييم", loc:"الموقع", hours:"أوقات العمل",
+        add_comment:"أضف تعليقك...", your_name:"اسمك (اختياري)", send:"إرسال", no_comments:"لا توجد تعليقات بعد. كن أول من يعلّق!"
       },
       fr: {
-        page_title:"Restaurants et Cafés - ENSTP", nav_home:"Accueil",
-        menu_lang:"Langue", menu_settings:"Paramètres", menu_dark:"Sombre",
-        resto_title:"Restaurants et Cafés",
-        hero_1:"Restaurants", hero_2:"& Cafés", hero_desc:"Découvrez les meilleurs restaurants et cafés près de l'école.",
-        filter_all:"Tous", filter_resto:"Restaurants", filter_cafe:"Cafés",
-        label_hours:"Horaires :", label_delivery:"Livraison :", label_menu:"Menu :", label_map:"Emplacement :",
-        modal_video:"Vidéo :", modal_gallery:"Galerie :",
-        btn_call:"Appeler", btn_map:"Ouvrir la carte", btn_details:"Voir détails",
-        delivery_yes:"Disponible", no_items:"Aucun élément.",
-        chat_title:"Assistant virtuel", chat_welcome:"Bonjour ! 👋 Comment puis-je vous aider ?",
-        chat_placeholder:"Votre question...", chat_default:"Merci !",
-        chat_hello:"Bienvenue !", chat_thanks:"Avec plaisir !",
-        chat_resto:"Parcourez les restaurants et cafés sur cette page.",
-        reviews:"Avis des clients", other_reviews:"Autres avis", cheap:"Bon marché",
-        reviews_count:"avis", loc:"Localisation", hours:"Horaires",
-        add_comment:"Ajoutez votre commentaire...", your_name:"Votre nom (optionnel)",
-        send:"Envoyer", no_comments:"Aucun commentaire. Soyez le premier !"
+        page_title:"Restaurants et Cafés - ENSTP", nav_home:"Accueil", menu_lang:"Langue", menu_settings:"Paramètres", menu_dark:"Sombre", resto_title:"Restaurants et Cafés", hero_1:"Restaurants", hero_2:"& Cafés", hero_desc:"Découvrez les meilleurs restaurants et cafés près de l'école.",
+        filter_all:"Tous", filter_resto:"Restaurants", filter_cafe:"Cafés", label_hours:"Horaires :", label_delivery:"Livraison :", label_menu:"Menu :", label_map:"Emplacement :",
+        modal_video:"Vidéo :", modal_gallery:"Galerie :", btn_call:"Appeler", btn_map:"Ouvrir la carte", btn_details:"Voir détails", delivery_yes:"Disponible", no_items:"Aucun élément.",
+        chat_title:"Assistant virtuel", chat_welcome:"Bonjour ! 👋 Comment puis-je vous aider ?", chat_placeholder:"Votre question...", chat_default:"Merci !", chat_hello:"Bienvenue !", chat_thanks:"Avec plaisir !", chat_resto:"Parcourez les restaurants et cafés sur cette page.",
+        reviews:"Avis des clients", other_reviews:"Autres avis", cheap:"Bon marché", reviews_count:"avis", loc:"Localisation", hours:"Horaires",
+        add_comment:"Ajoutez votre commentaire...", your_name:"Votre nom (optionnel)", send:"Envoyer", no_comments:"Aucun commentaire. Soyez le premier !"
       },
       en: {
-        page_title:"Restaurants & Cafés - ENSTP", nav_home:"Home",
-        menu_lang:"Language", menu_settings:"Settings", menu_dark:"Dark",
-        resto_title:"Restaurants & Cafés",
-        hero_1:"Restaurants", hero_2:"& Cafés", hero_desc:"Discover the best restaurants and cafés near school.",
-        filter_all:"All", filter_resto:"Restaurants", filter_cafe:"Cafés",
-        label_hours:"Hours:", label_delivery:"Delivery:", label_menu:"Menu:", label_map:"Location:",
-        modal_video:"Video:", modal_gallery:"Gallery:",
-        btn_call:"Call", btn_map:"Open map", btn_details:"View details",
-        delivery_yes:"Available", no_items:"No items.",
-        chat_title:"Virtual Assistant", chat_welcome:"Hello! 👋 How can I help you?",
-        chat_placeholder:"Your question...", chat_default:"Thanks!",
-        chat_hello:"Welcome!", chat_thanks:"You're welcome!",
-        chat_resto:"Browse restaurants and cafés on this page.",
-        reviews:"Customer reviews", other_reviews:"More", cheap:"Cheap",
-        reviews_count:"reviews", loc:"Location", hours:"Hours",
-        add_comment:"Add your comment...", your_name:"Your name (optional)",
-        send:"Send", no_comments:"No comments yet. Be the first!"
+        page_title:"Restaurants & Cafés - ENSTP", nav_home:"Home", menu_lang:"Language", menu_settings:"Settings", menu_dark:"Dark", resto_title:"Restaurants & Cafés", hero_1:"Restaurants", hero_2:"& Cafés", hero_desc:"Discover the best restaurants and cafés near school.",
+        filter_all:"All", filter_resto:"Restaurants", filter_cafe:"Cafés", label_hours:"Hours:", label_delivery:"Delivery:", label_menu:"Menu:", label_map:"Location:",
+        modal_video:"Video:", modal_gallery:"Gallery:", btn_call:"Call", btn_map:"Open map", btn_details:"View details", delivery_yes:"Available", no_items:"No items.",
+        chat_title:"Virtual Assistant", chat_welcome:"Hello! 👋 How can I help you?", chat_placeholder:"Your question...", chat_default:"Thanks!", chat_hello:"Welcome!", chat_thanks:"You're welcome!", chat_resto:"Browse restaurants and cafés on this page.",
+        reviews:"Customer reviews", other_reviews:"More", cheap:"Cheap", reviews_count:"reviews", loc:"Location", hours:"Hours",
+        add_comment:"Add your comment...", your_name:"Your name (optional)", send:"Send", no_comments:"No comments yet. Be the first!"
       }
     };
+
     function t(key){ return (window.RESTO_TRANSLATIONS[currentLang]||window.RESTO_TRANSLATIONS.ar)[key] || key; }
-    window.t = t;
 
     window.applyRestoTranslation = function(lang){
       const d = window.RESTO_TRANSLATIONS[lang] || window.RESTO_TRANSLATIONS.ar;
@@ -531,6 +433,9 @@
       });
     }
 
+    function safeId(name){ return name.replace(/[^a-zA-Z0-9]/g,'_'); }
+    function escapeAttr(s){ return s.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+
     function renderItems(){
       const grid = document.getElementById('itemsGrid');
       grid.innerHTML = '';
@@ -573,7 +478,6 @@
         const distStr = item.dist!==null ? `${item.dist} km` : '';
         const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
         const hoursStr = item.h && item.h.length>0 ? item.h.map(h=>`${h[0]} - ${h[1]}`).join(' | ') : '';
-        const sid = safeId(item.n);
 
         const card = document.createElement('div');
         card.className = 'resto-card-new';
@@ -582,7 +486,7 @@
           <div class="card-body-new">
             <h3 class="place-title-new">${item.n}</h3>
             <div class="category-tag">${catLabel}</div>
-            ${priceStr?`<div class="price-tag">${priceStr} ${item.price||''}</div>`:''}
+            ${priceStr?`<div class="price-tag">${priceStr}</div>`:''}
             ${distStr?`<div style="display:flex;align-items:center;gap:6px;color:var(--text-muted);font-size:.9rem;font-weight:700;"><i class="fa-solid fa-location-dot"></i> ${distStr}</div>`:''}
             ${menuText?`<p class="desc-new">${menuText}</p>`:''}
             <div class="rating-row">
@@ -597,16 +501,16 @@
               <div class="reviews-header">
                 <div class="reviews-title">
                   <i class="fa-solid fa-comments"></i> ${t('reviews')}
-                  <span class="reviews-count-badge" id="count-${sid}">0</span>
+                  <span class="reviews-count-badge" id="count-${safeId(item.n)}">0</span>
                 </div>
               </div>
-              <div class="comments-list-inline" id="list-${sid}"></div>
+              <div class="comments-list-inline" id="list-${safeId(item.n)}"></div>
               <div class="comment-form-inline">
                 <div class="input-row">
-                  <input type="text" id="name-${sid}" placeholder="${t('your_name')}" maxlength="30">
+                  <input type="text" id="name-${safeId(item.n)}" placeholder="${t('your_name')}" maxlength="30">
                 </div>
                 <div class="input-row">
-                  <input type="text" id="cmt-${sid}" placeholder="${t('add_comment')}" maxlength="200">
+                  <input type="text" id="cmt-${safeId(item.n)}" placeholder="${t('add_comment')}" maxlength="200">
                   <button onclick="addComment(event,'${escapeAttr(item.n)}')">${t('send')}</button>
                 </div>
               </div>
@@ -626,11 +530,80 @@
       startCarousels();
     }
 
-    function safeId(name){ return name.replace(/[^a-zA-Z0-9]/g,'_'); }
-    window.safeId = safeId;
-    function escapeAttr(s){ return s.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
     function openModalByIndex(i){ openModal(data.items[i]); }
 
+    // ==========================================
+    // ✅ التعليقات العامة (بدون تسجيل)
+    // ==========================================
+    const API_URL = "https://jsonblob.com/api/jsonBlob";
+    const BLOB_ID_RESTO = "1175524393688363009"; 
+
+    async function fetchPublicComments() {
+      try {
+        const res = await fetch(`${API_URL}/${BLOB_ID_RESTO}`);
+        if(res.status === 404) return {};
+        return await res.json() || {};
+      } catch(e) { return {}; }
+    }
+
+    async function savePublicComments(allComments) {
+      try {
+        await fetch(`${API_URL}/${BLOB_ID_RESTO}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(allComments)
+        });
+      } catch(e) { console.error("Save error:", e); }
+    }
+
+    async function loadComments(itemName) {
+      const sid = safeId(itemName);
+      const list = document.getElementById('list-'+sid);
+      const badge = document.getElementById('count-'+sid);
+      if(!list) return;
+
+      list.innerHTML = '<p class="no-comments">جاري التحميل...</p>';
+      
+      const allServerComments = await fetchPublicComments();
+      const saved = allServerComments[sid] || [];
+
+      if(badge) badge.innerText = saved.length;
+      if(saved.length === 0){
+        list.innerHTML = `<p class="no-comments">${t('no_comments')}</p>`;
+        return;
+      }
+      list.innerHTML = saved.map(c=>`<div class="comment-item"><strong>${c.name||'👤'}:</strong> ${c.text}</div>`).join('');
+    }
+
+    async function addComment(e, itemName) {
+      if(e) e.stopPropagation();
+      const sid = safeId(itemName);
+      const nameEl = document.getElementById('name-'+sid);
+      const cmtEl = document.getElementById('cmt-'+sid);
+      if(!cmtEl || !cmtEl.value.trim()) return;
+
+      cmtEl.disabled = true;
+      
+      const allComments = await fetchPublicComments();
+      if(!allComments[sid]) allComments[sid] = [];
+      
+      allComments[sid].push({
+        name: (nameEl && nameEl.value.trim()) || '👤',
+        text: cmtEl.value.trim(),
+        date: new Date().toISOString()
+      });
+
+      await savePublicComments(allComments);
+
+      if(cmtEl) { cmtEl.value = ''; cmtEl.disabled = false; }
+      if(nameEl) nameEl.value = '';
+      
+      await loadComments(itemName);
+    }
+
+    // ==========================================
+    // MODAL
+    // ==========================================
     function openModal(item){
       const modal = document.getElementById('itemModal');
       modal.classList.add('open');
@@ -681,6 +654,7 @@
 
       const pb = document.getElementById('modalPhoneBtn');
       if(item.t){ pb.href = `tel:${item.t}`; pb.style.display='flex'; } else pb.style.display='none';
+
       const mb = document.getElementById('modalMapBtn');
       if(item.g){ mb.href = `https://www.google.com/maps/search/?api=1&query=${item.g[0]},${item.g[1]}`; mb.style.display='flex'; } else mb.style.display='none';
 
@@ -698,7 +672,7 @@
       if(!input || !body) return;
       const msg = input.value.trim(); if(!msg) return;
       body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:9px 13px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:.82rem;font-weight:600;">${msg}</div></div>`;
-      input.value='';
+      input.value = '';
       body.scrollTop = body.scrollHeight;
       setTimeout(()=>{
         let reply = t('chat_default');
@@ -716,8 +690,7 @@
     if(kangarooContainer){
       kangarooContainer.addEventListener('click', ()=>{
         if(kangarooSvg){
-          kangarooSvg.classList.remove('jump');
-          void kangarooSvg.offsetHeight;
+          kangarooSvg.classList.remove('jump'); void kangarooSvg.offsetHeight;
           kangarooSvg.classList.add('jump');
           setTimeout(()=>kangarooSvg.classList.remove('jump'), 700);
         }
@@ -735,149 +708,6 @@
       const ci = document.getElementById('chatInput');
       if(ci) ci.addEventListener('keypress', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendMessage(); } });
     });
-  </script>
-
-  <!-- ============================================ -->
-  <!-- 🔥 Firebase — التعليقات المشتركة (real-time)  -->
-  <!-- ============================================ -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import {
-      getFirestore, collection, addDoc, onSnapshot,
-      query, orderBy, serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-
-    // ⬇️⬇️⬇️ استبدل هذه القيم بإعدادات مشروعك من Firebase Console ⬇️⬇️⬇️
-    const firebaseConfig = {
-      apiKey: "VOTRE_API_KEY",
-      authDomain: "VOTRE_PROJECT.firebaseapp.com",
-      projectId: "VOTRE_PROJECT_ID",
-      storageBucket: "VOTRE_PROJECT.appspot.com",
-      messagingSenderId: "VOTRE_MESSAGING_ID",
-      appId: "VOTRE_APP_ID"
-    };
-    // ⬆️⬆️⬆️ استبدل هذه القيم ⬆️⬆️⬆️
-
-    let db = null;
-    try {
-      initializeApp(firebaseConfig);
-      db = getFirestore();
-      console.log('✅ Firebase initialisé');
-    } catch(err){
-      console.error('❌ Firebase init error:', err);
-    }
-
-    const COMMENTS_COL = "resto_comments";
-    const listeners = new Map();
-
-    // ===== تحميل التعليقات (real-time) =====
-    window.loadComments = function(itemName){
-      const sid = safeId(itemName);
-      const list = document.getElementById('list-'+sid);
-      const badge = document.getElementById('count-'+sid);
-      if(!list) return;
-
-      // fallback: si Firebase pas chargé, utilise localStorage
-      if(!db){
-        const saved = JSON.parse(localStorage.getItem('comments_'+sid) || '[]');
-        if(badge) badge.innerText = saved.length;
-        if(saved.length === 0){
-          list.innerHTML = `<p class="no-comments">${t('no_comments')}</p>`;
-          return;
-        }
-        list.innerHTML = saved.map(c=>`<div class="comment-item"><strong>${c.name||'👤'}:</strong> ${c.text}</div>`).join('');
-        return;
-      }
-
-      // Annule l'ancien listener
-      if(listeners.has(sid)){
-        listeners.get(sid)();
-        listeners.delete(sid);
-      }
-
-      const q = query(
-        collection(db, COMMENTS_COL, sid, 'comments'),
-        orderBy('date', 'desc')
-      );
-
-      const unsub = onSnapshot(q, snap => {
-        // Vérifie que l'élément existe encore dans le DOM
-        if(!document.getElementById('list-'+sid)){
-          unsub();
-          listeners.delete(sid);
-          return;
-        }
-
-        if(badge) badge.innerText = snap.size;
-
-        if(snap.size === 0){
-          list.innerHTML = `<p class="no-comments">${t('no_comments')}</p>`;
-          return;
-        }
-
-        list.innerHTML = snap.docs.map(doc => {
-          const c = doc.data();
-          const name = (c.name || '👤').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-          const text = (c.text || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-          return `<div class="comment-item"><strong>${name}:</strong> ${text}</div>`;
-        }).join('');
-      }, err => {
-        console.error('Firebase onSnapshot error:', err);
-        list.innerHTML = `<p class="no-comments" style="color:#ef4444;">خطأ في تحميل التعليقات</p>`;
-      });
-
-      listeners.set(sid, unsub);
-    };
-
-    // ===== إضافة تعليق =====
-    window.addComment = async function(e, itemName){
-      if(e) e.stopPropagation();
-      const sid = safeId(itemName);
-      const nameEl = document.getElementById('name-'+sid);
-      const cmtEl = document.getElementById('cmt-'+sid);
-      if(!cmtEl || !cmtEl.value.trim()) return;
-
-      const text = cmtEl.value.trim();
-      const name = (nameEl && nameEl.value.trim()) || '👤';
-
-      const btn = cmtEl.closest('.comment-form-inline')?.querySelector('button');
-      if(btn){ btn.disabled = true; btn.innerText = '...'; }
-
-      // fallback: si Firebase pas chargé, localStorage
-      if(!db){
-        const saved = JSON.parse(localStorage.getItem('comments_'+sid) || '[]');
-        saved.push({ name, text, date: new Date().toISOString() });
-        localStorage.setItem('comments_'+sid, JSON.stringify(saved));
-        cmtEl.value = ''; if(nameEl) nameEl.value = '';
-        loadComments(itemName);
-        if(btn){ btn.disabled = false; btn.innerText = t('send'); }
-        return;
-      }
-
-      try {
-        await addDoc(
-          collection(db, COMMENTS_COL, sid, 'comments'),
-          {
-            name: name,
-            text: text,
-            date: serverTimestamp()
-          }
-        );
-        cmtEl.value = '';
-        if(nameEl) nameEl.value = '';
-        // onSnapshot met à jour automatiquement
-      } catch(err){
-        console.error('Erreur ajout commentaire:', err);
-        alert('خطأ في إرسال التعليق. حاول مرة أخرى.');
-      } finally {
-        if(btn){ btn.disabled = false; btn.innerText = t('send'); }
-      }
-    };
-
-    // Force refresh après Firebase chargé (les listeners vont se créer)
-    if(typeof renderItems === 'function'){
-      renderItems();
-    }
   </script>
 </body>
 </html>
