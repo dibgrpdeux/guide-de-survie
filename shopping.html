@@ -63,6 +63,12 @@
     }
     @keyframes shimmer { to { background-position: 200% center; } }
     .nav-subtitle { font-size: .65rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
+    .nav-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; box-shadow: 0 6px 18px rgba(249,115,22,.35); flex-shrink: 0;
+    }
     .nav-menu-btn {
       width: 42px; height: 42px; border-radius: 14px;
       border: 1.5px solid var(--border-color); background: var(--card-bg);
@@ -151,18 +157,12 @@
     }
     .shop-card:hover { transform: translateY(-6px) scale(1.01); border-color: var(--orange); box-shadow: 0 25px 50px -12px rgba(249,115,22,.25); }
 
-    /* ====== الكاروسيل التلقائي ====== */
     .shop-card-cover {
       width: 100%; height: 180px; overflow: hidden;
       background: linear-gradient(135deg, #fed7aa, #fbbf24); position: relative;
     }
-    .carousel-track {
-      display: flex; width: 100%; height: 100%;
-      transition: transform .7s cubic-bezier(.4,0,.2,1);
-    }
-    .carousel-track img {
-      flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover;
-    }
+    .carousel-track { display: flex; width: 100%; height: 100%; transition: transform .7s cubic-bezier(.4,0,.2,1); }
+    .carousel-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; }
     .carousel-noimg {
       flex: 0 0 100%; width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
@@ -207,7 +207,7 @@
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
 
-    /* ====== التعليقات الحرة ====== */
+    /* ====== التعليقات العامة ====== */
     .reviews-box {
       background: rgba(249,115,22,.04); border-radius: 12px; padding: 12px;
       border: 1px solid rgba(249,115,22,.15); margin-top: 6px;
@@ -361,7 +361,7 @@
 
   <nav class="top-navbar">
     <div class="nav-brand">
-      <div class="nav-icon" style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 6px 18px rgba(249,115,22,.35);">
+      <div class="nav-icon">
         <i class="fa-solid fa-cart-shopping"></i>
       </div>
       <div>
@@ -496,7 +496,7 @@
     </div>
   </div>
 
-  <!-- ============ البيانات (بدون صيدليات) ============ -->
+  <!-- ============ البيانات ============ -->
   <script>
     window.SHOP_DATA = {
       cats: {
@@ -506,7 +506,6 @@
         beaute:   { icon: "💈", title: { ar: "الحلاقة", fr: "Beauté", en: "Beauty" } }
       },
       items: [
-        // ===== محلات الهواتف =====
         { c: "tel", n: "Progress Phone", r: 4.3, p: 2, dist: 0.7, h: [["09:00", "20:00"]], t: "", g: [36.7265, 3.0760], video: "", menu: { ar: "هواتف ذكية، إكسسوارات", fr: "Smartphones, accessoires", en: "Smartphones, accessories" }, menuImages: ["rogres 1.jpg", "rogres 2.jpg", "rogres 3.jpg"] },
         { c: "tel", n: "Prestige Mobile", r: 4.5, p: 3, dist: 1.1, h: [["09:30", "21:00"]], t: "", g: [36.7280, 3.0780], video: "", menu: { ar: "هواتف رائدة، أجهزة لوحية", fr: "Téléphones haut de gamme, tablettes", en: "High-end phones, tablets" }, menuImages: ["prestige 1.jpg", "prestige 2.jpg", "prestige 3.jpg", "prestige 4.jpg"] },
         { c: "tel", n: "Brothers Phone Kouba", r: 4.2, p: 2, dist: 1.0, h: [["09:00", "20:30"]], t: "", g: [36.7270, 3.0755], video: "1-eKHcz31Oc", menu: { ar: "إصلاح هواتف، بيع مستعمل", fr: "Réparation de téléphones, vente d'occasion", en: "Phone repair, used sales" }, menuImages: ["brother 2.jpg", "brother 3.jpg", "brother 4.jpg", "brothers 1.jpg"] },
@@ -515,8 +514,6 @@
         { c: "tel", n: "Theme Phone", r: 4.1, p: 1, dist: 1.8, h: [["09:30", "20:00"]], t: "", g: [36.7310, 3.0825], video: "", menu: { ar: "إكسسوارات، سماعات", fr: "Accessoires, écouteurs", en: "Accessories, headphones" }, menuImages: ["theme 1.jpg", "theme 2.jpg", "theme 3.jpg", "theme 4.jpg", "theme 5.jpg"] },
         { c: "tel", n: "Hamia Phone", r: 4.3, p: 2, dist: 2.0, h: [["08:30", "21:30"]], t: "", g: [36.7320, 3.0840], video: "", menu: { ar: "هواتف، بطاقات شحن", fr: "Téléphones, cartes de recharge", en: "Phones, recharge cards" }, menuImages: ["hamia 1.jpg", "hamia 2.jpg", "hamia 3.jpg", "hamia 4.jpg", "hamia 5.jpg", "hamia 6.jpg"] },
         { c: "tel", n: "Fiane Phone", r: 4.6, p: 3, dist: 1.4, h: [["09:00", "22:00"]], t: "", g: [36.7295, 3.0775], video: "", menu: { ar: "أحدث الهواتف، ضمان رسمي", fr: "Derniers téléphones, garantie officielle", en: "Latest phones, official warranty" }, menuImages: ["fiane 1.jpg", "fiane 2.jpg", "fiane 3.jpg", "fiane 4.jpg", "fiane 5.jpg", "chikhi 4.jpg"] },
-
-        // ===== التسوق والخدمات =====
         { c: "courses", n: "Supérette El-Benna", r: 3.8, p: 1, dist: 0.5, h: [["07:00", "22:30"]], t: "", g: [36.7246946, 3.0744576], video: "_bspquujzqg", menu: { ar: "مواد غذائية، تنظيف", fr: "Alimentation, Nettoyage", en: "Food, Cleaning" }, menuImages: [] },
         { c: "copie", n: "مكتبة عمي داوود", r: 4.2, p: 1, dist: 0.3, h: [["08:00", "19:00"]], t: "", g: [36.7255, 3.0710], video: "0TiwKh8Bc2g", menu: { ar: "طباعة، نسخ، تجليد", fr: "Impression, Photocopie, Reliure", en: "Printing, Copy, Binding" }, menuImages: [] },
         { c: "copie", n: "Maktabet El-Nour", r: 4.2, p: 1, dist: 0.4, h: [["08:00", "19:00"]], t: "", g: [36.7255, 3.0710], video: "", menu: { ar: "طباعة، نسخ، تجليد", fr: "Impression, Photocopie, Reliure", en: "Printing, Copy, Binding" }, menuImages: [] },
@@ -620,11 +617,40 @@
     };
   </script>
 
-  <!-- ============ المنطق ============ -->
+  <!-- ============ المنطق (مع التعليقات العامة) ============ -->
   <script>
     const data = window.SHOP_DATA;
     let currentCat = 'tel';
     let currentSort = 'default';
+
+    // ==========================================
+    // ⚠️ ضع هنا معرف الخادم الخاص بك (JSONBin)
+    // ==========================================
+    const BIN_ID = "YOUR_BIN_ID_HERE";  // استبدله بـ Bin ID
+    const API_KEY = "YOUR_API_KEY_HERE"; // استبدله بـ API Key
+    const API_URL = "https://api.jsonbin.io/v3/b/" + BIN_ID;
+
+    // دالة لجلب التعليقات من الخادم
+    async function fetchPublicComments() {
+      if(BIN_ID === "YOUR_BIN_ID_HERE") return {}; // إذا لم يتم الإعداد، لا تفعل شيئاً
+      try {
+        const res = await fetch(API_URL + '/latest', { headers: { 'X-Master-Key': API_KEY } });
+        const json = await res.json();
+        return json.record || {};
+      } catch(e) { console.error("Error fetching comments:", e); return {}; }
+    }
+
+    // دالة لحفظ التعليقات في الخادم
+    async function savePublicComments(allComments) {
+      if(BIN_ID === "YOUR_BIN_ID_HERE") return;
+      try {
+        await fetch(API_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+          body: JSON.stringify(allComments)
+        });
+      } catch(e) { console.error("Error saving comments:", e); }
+    }
 
     const CAT_ICONS = {
       courses: 'fa-cart-shopping',
@@ -717,15 +743,20 @@
       });
     }
 
-    function renderItems(){
+    async function renderItems(){
       const grid = document.getElementById('itemsGrid');
-      grid.innerHTML = '';
+      grid.innerHTML = '<div style="text-align:center; width:100%; padding:20px;">جاري تحميل التعليقات...</div>';
+      
+      // جلب التعليقات من الخادم أولاً
+      const allServerComments = await fetchPublicComments();
+
       let items = data.items.filter(i => i.c === currentCat);
 
       if(currentSort === 'dist') items.sort((a,b) => (a.dist||999) - (b.dist||999));
       else if(currentSort === 'price') items.sort((a,b) => a.p - b.p);
       else if(currentSort === 'rating') items.sort((a,b) => b.r - a.r);
 
+      grid.innerHTML = '';
       if(items.length === 0){
         grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--text-muted);font-weight:700;">${t('no_items')}</p>`;
         return;
@@ -737,7 +768,6 @@
         const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
         const hoursStr = item.h && item.h.length>0 ? item.h.map(h=>`${h[0]} - ${h[1]}`).join(' | ') : '';
 
-        // ===== Carrousel =====
         let imageHTML = '';
         if(item.menuImages && item.menuImages.length > 0){
           const imgs = item.menuImages.map(src=>`<img src="${src}" alt="${item.n}" onerror="this.style.display='none'">`).join('');
@@ -769,7 +799,7 @@
             </div>
             ${menuText ? `<p class="shop-card-desc">${menuText}</p>` : ''}
 
-            <!-- التعليقات الحرة -->
+            <!-- التعليقات العامة -->
             <div class="reviews-box">
               <div class="reviews-header">
                 <div class="reviews-title">
@@ -798,7 +828,8 @@
         grid.appendChild(card);
       });
 
-      items.forEach(item=>loadComments(item.n));
+      // تحميل التعليقات في البطاقات
+      items.forEach(item=>loadComments(item.n, allServerComments));
       startCarousels();
     }
 
@@ -806,12 +837,14 @@
     function escapeAttr(s){ return s.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
     function openModalByIndex(i){ openModal(data.items[i]); }
 
-    function loadComments(itemName){
+    function loadComments(itemName, allServerComments){
       const sid = safeId(itemName);
       const list = document.getElementById('list-'+sid);
       const badge = document.getElementById('count-'+sid);
       if(!list) return;
-      const saved = JSON.parse(localStorage.getItem('comments_'+sid) || '[]');
+
+      const saved = allServerComments[sid] || [];
+      
       if(badge) badge.innerText = saved.length;
       if(saved.length === 0){
         list.innerHTML = `<p class="no-comments">${t('no_comments')}</p>`;
@@ -820,22 +853,32 @@
       list.innerHTML = saved.map(c=>`<div class="comment-item"><strong>${c.name||'👤'}:</strong> ${c.text}</div>`).join('');
     }
 
-    function addComment(e, itemName){
+    async function addComment(e, itemName){
       if(e) e.stopPropagation();
       const sid = safeId(itemName);
       const nameEl = document.getElementById('name-'+sid);
       const cmtEl = document.getElementById('cmt-'+sid);
       if(!cmtEl || !cmtEl.value.trim()) return;
-      const saved = JSON.parse(localStorage.getItem('comments_'+sid) || '[]');
-      saved.push({
+
+      // جلب التعليقات الحالية من الخادم
+      const allComments = await fetchPublicComments();
+      if(!allComments[sid]) allComments[sid] = [];
+
+      // إضافة التعليق الجديد
+      allComments[sid].push({
         name: (nameEl && nameEl.value.trim()) || '👤',
         text: cmtEl.value.trim(),
         date: new Date().toISOString()
       });
-      localStorage.setItem('comments_'+sid, JSON.stringify(saved));
+
+      // حفظ في الخادم
+      await savePublicComments(allComments);
+
+      // تحديث الواجهة
       if(cmtEl) cmtEl.value = '';
       if(nameEl) nameEl.value = '';
-      loadComments(itemName);
+      
+      loadComments(itemName, allComments);
     }
 
     function openModal(item){
