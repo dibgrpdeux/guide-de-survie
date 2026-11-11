@@ -231,6 +231,18 @@
     .health-mode .sport-card-cat { color: var(--health); }
     [data-theme="dark"] .health-mode .sport-card-cat { color: #6ee7b7; }
 
+    /* ⭐ PRICE BADGE sur la carte */
+    .sport-card-price {
+      position: absolute; top: 10px; left: 10px;
+      padding: 6px 14px; border-radius: 10px;
+      font-size: .78rem; font-weight: 900;
+      background: linear-gradient(135deg, #10b981, #059669); color: #fff;
+      box-shadow: 0 6px 18px rgba(16,185,129,.45);
+      z-index: 3;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .sport-card-price i { font-size: .7rem; }
+
     .sport-card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
     .sport-card-title {
       font-size: 1.05rem; font-weight: 900; color: var(--text-main);
@@ -293,6 +305,24 @@
     }
     [data-theme="dark"] .modal-section .section-content { background: rgba(249,115,22,.1); }
 
+    /* Section prix dans modal */
+    .price-section .section-content {
+      background: linear-gradient(135deg, rgba(16,185,129,.12), rgba(5,150,105,.08));
+      border: 2px solid rgba(16,185,129,.35);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .price-big {
+      font-size: 1.5rem; font-weight: 900; color: #059669;
+      display: flex; align-items: center; gap: 8px;
+    }
+    [data-theme="dark"] .price-big { color: #34d399; }
+    .price-big i { font-size: 1.2rem; }
+    .price-label {
+      font-size: .75rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+
     .gallery-scroll { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 8px; }
     .gallery-scroll::-webkit-scrollbar { height: 6px; }
     .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(249,115,22,.4); border-radius: 10px; }
@@ -339,6 +369,7 @@
     }
     .health-mode .comment-form-inline button { background: var(--health); }
     .comment-form-inline button:hover { transform: scale(1.05); }
+    .comment-form-inline button:disabled { opacity: .5; cursor: wait; }
     .comments-list-inline { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; max-height: 160px; overflow-y: auto; }
     .comment-item {
       background: var(--bg-color); padding: 8px 11px; border-radius: 9px;
@@ -470,6 +501,17 @@
         <h2 class="modal-title" id="modalTitle"></h2>
         <div class="modal-subtitle" id="modalSubtitle"></div>
       </div>
+      <div id="modalPriceContainer" class="modal-section price-section" style="display:none;">
+        <h4><i class="fa-solid fa-money-bill-wave"></i> <span data-i18n="modal_price">السعر:</span></h4>
+        <div class="section-content">
+          <div class="price-big"><i class="fa-solid fa-coins"></i> <span id="modalPriceValue"></span></div>
+          <div class="price-label" id="modalPriceLabel"></div>
+        </div>
+      </div>
+      <div id="modalLocationContainer" class="modal-section" style="display:none;">
+        <h4><i class="fa-solid fa-map-pin"></i> <span data-i18n="modal_location">الموقع:</span></h4>
+        <div class="section-content" id="modalLocation"></div>
+      </div>
       <div id="modalVideoContainer" class="modal-section" style="display:none;">
         <h4><i class="fa-brands fa-youtube" style="color:#ef4444;"></i> <span data-i18n="modal_video">فيديو:</span></h4>
         <div id="modalVideo" class="video-wrap"></div>
@@ -556,7 +598,7 @@
     </div>
   </div>
 
-  <!-- ============ البيانات الكاملة ============ -->
+  <!-- ============ البيانات الكاملة مع الأسعار والمواقع ============ -->
   <script>
     window.SPORT_DATA = {
       items: [
@@ -564,72 +606,108 @@
            🏋️ SPORT — ملعب المدرسة + 7 صالات + 3 فيديوهات
            ============================================ */
 
-        // ملعب المدرسة
+        // ملعب المدرسة — مجاني
         {
           id: "stade-ecole", section: "sport", category: "salle",
           icon: "🏟️",
           title: { ar: "ملعب المدرسة", fr: "Stade de l'école", en: "School Stadium" },
           specialty: { ar: "ملعب متعدد الرياضات", fr: "Terrain multisports", en: "Multisport field" },
           desc: { ar: "ملعب متعدد الرياضات داخل حرم المدرسة.", fr: "Terrain multisports dans l'enceinte de l'école.", en: "Multisport field on school campus." },
-          address: "داخل ENSTP", phone: "", schedule: null,
+          address: "داخل ENSTP",
+          location: { ar: "داخل ENSTP", fr: "Dans l'ENSTP", en: "Inside ENSTP" },
+          pricePerSession: 0,
+          phone: "", schedule: null,
           images: ["s.HEIC", "s1.HEIC", "s2.HEIC", "s3.HEIC", "s4.HEIC", "s5.HEIC"],
           video: "", mapCoords: [36.7290, 3.0745]
         },
 
-        // 7 صالات من sport.js
+        // Ares Sport — 400 DA
         {
           id: "salle-ares", section: "sport", category: "salle", icon: "🏋️",
           title: { fr: "Ares Sport", ar: "Ares Sport", en: "Ares Sport" },
           specialty: { fr: "Salle de sport", ar: "صالة رياضية", en: "Gym" },
-          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          desc: null, address: "Kouba, Alger",
+          location: { ar: "القبة (Kouba)", fr: "Kouba", en: "Kouba" },
+          pricePerSession: 400,
+          phone: "", schedule: null,
           images: ["ares 1.jpg","ares 2.jpg","ares 3.jpg","ares 4.jpg"],
           video: "", mapCoords: [36.7270, 3.0740]
         },
+
+        // Club des Femmes — 300 DA
         {
           id: "salle-femmes", section: "sport", category: "salle", icon: "💃",
           title: { fr: "Club des Femmes", ar: "نادي النساء", en: "Club des Femmes" },
           specialty: { fr: "Salle pour femmes", ar: "صالة رياضية للنساء", en: "Women's gym" },
-          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          desc: null, address: "Jolie Vue, Kouba",
+          location: { ar: "Jolie Vue، القبة", fr: "Jolie Vue, Kouba", en: "Jolie Vue, Kouba" },
+          pricePerSession: 300,
+          phone: "", schedule: null,
           images: ["bas 1.jpg","bas 3.jpg","bas 4.jpg"],
           video: "", mapCoords: [36.7280, 3.0755]
         },
+
+        // Fitness Club — 400 DA
         {
           id: "salle-fitness-club", section: "sport", category: "salle", icon: "💪",
           title: { fr: "Fitness Club", ar: "Fitness Club", en: "Fitness Club" },
           specialty: { fr: "Salle de fitness", ar: "صالة لياقة", en: "Fitness gym" },
-          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          desc: null, address: "Kouba Centre, Alger",
+          location: { ar: "وسط القبة", fr: "Kouba Centre", en: "Kouba Centre" },
+          pricePerSession: 400,
+          phone: "", schedule: null,
           images: ["club 1.jpg","club 2.jpg"],
           video: "", mapCoords: [36.7290, 3.0765]
         },
+
+        // Bouzid Club — 200 DA
         {
           id: "salle-bouzid", section: "sport", category: "salle", icon: "🏋️",
           title: { fr: "Bouzid Club", ar: "Bouzid Club", en: "Bouzid Club" },
           specialty: { fr: "Salle de sport", ar: "صالة رياضية", en: "Gym" },
-          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          desc: null, address: "Kouba, Alger",
+          location: { ar: "القبة (Kouba)", fr: "Kouba", en: "Kouba" },
+          pricePerSession: 200,
+          phone: "", schedule: null,
           images: ["bouzid 1.jpg","bouzid 2.jpg"],
           video: "", mapCoords: [36.7300, 3.0775]
         },
+
+        // Kouba Olympic — 400 DA
         {
           id: "salle-olympic", section: "sport", category: "salle", icon: "🏊",
           title: { fr: "Kouba Olympic", ar: "Kouba Olympic", en: "Kouba Olympic" },
           specialty: { fr: "Piscine et salle de sport", ar: "مسبح وصالة رياضية", en: "Pool and gym" },
-          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          desc: null, address: "Garidi, Kouba",
+          location: { ar: "قريدي (Garidi)، القبة", fr: "Garidi, Kouba", en: "Garidi, Kouba" },
+          pricePerSession: 400,
+          phone: "", schedule: null,
           images: ["swiming 1.jpg","swiming 2.jpg"],
           video: "", mapCoords: [36.7310, 3.0785]
         },
+
+        // Fitness City — 300 DA
         {
           id: "salle-fitness-city", section: "sport", category: "salle", icon: "💪",
           title: { fr: "Fitness City", ar: "Fitness City", en: "Fitness City" },
           specialty: { fr: "Salle de fitness", ar: "صالة لياقة", en: "Fitness gym" },
-          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          desc: null, address: "Kouba, Alger",
+          location: { ar: "القبة (Kouba)", fr: "Kouba", en: "Kouba" },
+          pricePerSession: 300,
+          phone: "", schedule: null,
           images: ["city 1.jpg","city 2.jpg","city 3.jpg"],
           video: "", mapCoords: [36.7320, 3.0795]
         },
+
+        // Body Boost Gym — 200 DA
         {
           id: "salle-body-boost", section: "sport", category: "salle", icon: "💪",
           title: { fr: "Body Boost Gym", ar: "Body Boost Gym", en: "Body Boost Gym" },
           specialty: { fr: "Salle de musculation", ar: "صالة كمال أجسام", en: "Bodybuilding gym" },
-          desc: null, address: "Kouba, Alger", phone: "", schedule: null,
+          desc: null, address: "Garidi, Kouba",
+          location: { ar: "قريدي (Garidi)، القبة", fr: "Garidi, Kouba", en: "Garidi, Kouba" },
+          pricePerSession: 200,
+          phone: "", schedule: null,
           images: ["gym 1.jpg","gym 2.jpg","gym 3.jpg","gym 4.jpg","gym 5.jpg"],
           video: "", mapCoords: [36.7330, 3.0805]
         },
@@ -661,10 +739,10 @@
         },
 
         /* ============================================
-           🏥 SANTE — الأطباء (بصور) + الأسنان + الصيدليات
+           🏥 SANTE — الأطباء + الأسنان + الصيدليات
            ============================================ */
 
-        // طبيب المدرسة — صورة طبيب عام
+        // طبيب المدرسة
         {
           id: "medecin-ecole", section: "sante", category: "medecin", icon: "🩺",
           title: { ar: "طبيب المدرسة", fr: "Médecin de l'école", en: "School Doctor" },
@@ -676,7 +754,7 @@
           video: "", mapCoords: [36.7290, 3.0745]
         },
 
-        // طبيب إقامة قريدي — صورة طبيب عام
+        // طبيب إقامة قريدي
         {
           id: "medecin-garidi", section: "sante", category: "medecin", icon: "🩺",
           title: { ar: "طبيب إقامة قريدي", fr: "Médecin résidence Garidi", en: "Garidi Residence Doctor" },
@@ -688,7 +766,7 @@
           video: "", mapCoords: [36.7320, 3.0790]
         },
 
-        // 9 أطباء من sport.js — بصور
+        // 9 أطباء
         {
           id: "dr-aissani", section: "sante", category: "medecin", icon: "❤️",
           title: { fr: "Dr Farid Aissani", ar: "د. فريد عيساني", en: "Dr Farid Aissani" },
@@ -771,7 +849,7 @@
           video: "", mapCoords: [36.7295, 3.0775]
         },
 
-        // 4 عيادات أسنان (بدون تغيير)
+        // 4 عيادات أسنان
         {
           id: "dent-gr", section: "sante", category: "dentiste", icon: "🦷",
           title: { fr: "Cabinet Dental GR", ar: "عيادة الأسنان GR", en: "Cabinet Dental GR" },
@@ -805,7 +883,7 @@
           video: "", mapCoords: [36.7310, 3.0780]
         },
 
-        // 8 صيدليات (بدون تغيير)
+        // 8 صيدليات
         {
           id: "pharma-attoui", section: "sante", category: "pharma", icon: "💊",
           title: { ar: "صيدلية عطوي", fr: "Pharmacie Attoui", en: "Pharmacie Attoui" },
@@ -897,6 +975,9 @@
         filter_salle: "الصالات الرياضية", filter_video: "الفيديوهات", filter_pharma: "الصيدليات",
         modal_video: "فيديو:", modal_gallery: "معرض الصور:",
         modal_address: "العنوان:", modal_phone: "الهاتف:", modal_schedule: "أوقات العمل:", modal_map: "الموقع:",
+        modal_price: "السعر:", modal_location: "الموقع:",
+        price_per_session: "للحصة",
+        price_free: "مجاني",
         open_in_maps: "فتح في خرائط جوجل", view_details: "عرض التفاصيل",
         reviews: "آراء الزبائن", add_comment: "أضف تعليقك...", your_name: "اسمك (اختياري)", send: "إرسال",
         no_comments: "لا توجد تعليقات بعد.", no_items: "لا توجد عناصر.",
@@ -917,6 +998,9 @@
         filter_salle: "Salles de sport", filter_video: "Vidéos", filter_pharma: "Pharmacies",
         modal_video: "Vidéo :", modal_gallery: "Galerie :",
         modal_address: "Adresse :", modal_phone: "Téléphone :", modal_schedule: "Horaires :", modal_map: "Emplacement :",
+        modal_price: "Prix :", modal_location: "Emplacement :",
+        price_per_session: "par séance",
+        price_free: "Gratuit",
         open_in_maps: "Ouvrir dans Google Maps", view_details: "Voir détails",
         reviews: "Avis des clients", add_comment: "Ajoutez un commentaire...", your_name: "Votre nom (optionnel)", send: "Envoyer",
         no_comments: "Aucun commentaire.", no_items: "Aucun élément.",
@@ -937,6 +1021,9 @@
         filter_salle: "Gyms", filter_video: "Videos", filter_pharma: "Pharmacies",
         modal_video: "Video:", modal_gallery: "Gallery:",
         modal_address: "Address:", modal_phone: "Phone:", modal_schedule: "Hours:", modal_map: "Location:",
+        modal_price: "Price:", modal_location: "Location:",
+        price_per_session: "per session",
+        price_free: "Free",
         open_in_maps: "Open in Google Maps", view_details: "View details",
         reviews: "Customer reviews", add_comment: "Add your comment...", your_name: "Your name (optional)", send: "Send",
         no_comments: "No comments yet.", no_items: "No items.",
@@ -1112,6 +1199,7 @@
         const desc = item.desc ? (item.desc[currentLang] || item.desc.ar) : '';
         const catLabel = t('group_' + item.category);
 
+        // Media
         let mediaHTML = '';
         if(item.video && item.video.trim() !== ''){
           const videoId = extractYoutubeId(item.video);
@@ -1139,15 +1227,29 @@
           `;
         }
 
+        // ⭐ PRICE BADGE — يظهر فقط للصالات
+        let priceBadgeHTML = '';
+        if(item.category === 'salle' && item.pricePerSession !== undefined){
+          const priceText = item.pricePerSession === 0
+            ? t('price_free')
+            : `${item.pricePerSession} DA`;
+          priceBadgeHTML = `<div class="sport-card-price"><i class="fa-solid fa-coins"></i> ${priceText}</div>`;
+        }
+
+        // 📍 Location dans le body
+        const locText = item.location ? (item.location[currentLang] || item.location.ar) : '';
+
         const card = document.createElement('div');
         card.className = 'sport-card';
         card.onclick = ()=> openModal(item);
         card.innerHTML = `
           ${mediaHTML}
+          ${priceBadgeHTML}
           <div class="sport-card-body">
             <h3 class="sport-card-title">${title || specialty}</h3>
             ${specialty && title ? `<p class="sport-card-specialty">${specialty}</p>` : ''}
             ${desc ? `<p class="sport-card-desc">${desc}</p>` : ''}
+            ${locText ? `<div class="sport-card-meta"><span><i class="fa-solid fa-map-pin"></i>${locText}</span></div>` : ''}
             ${item.address ? `<div class="sport-card-meta"><span><i class="fa-solid fa-location-dot"></i>${item.address}</span></div>` : ''}
             ${item.phone ? `<div class="sport-card-meta"><span dir="ltr"><i class="fa-solid fa-phone"></i>${item.phone}</span></div>` : ''}
             <div class="sport-card-footer">
@@ -1204,6 +1306,33 @@
       const specialty = item.specialty ? (item.specialty[currentLang] || item.specialty.ar) : '';
       document.getElementById('modalTitle').innerText = title || specialty;
       document.getElementById('modalSubtitle').innerText = (title && specialty) ? specialty : '';
+
+      // ⭐ PRICE — يظهر فقط للصالات
+      const priceContainer = document.getElementById('modalPriceContainer');
+      if(item.category === 'salle' && item.pricePerSession !== undefined){
+        priceContainer.style.display = 'block';
+        const priceValue = document.getElementById('modalPriceValue');
+        const priceLabel = document.getElementById('modalPriceLabel');
+        if(item.pricePerSession === 0){
+          priceValue.innerText = t('price_free');
+          priceLabel.innerText = '';
+        } else {
+          priceValue.innerText = `${item.pricePerSession} DA`;
+          priceLabel.innerText = t('price_per_session');
+        }
+      } else {
+        priceContainer.style.display = 'none';
+      }
+
+      // 📍 LOCATION
+      const locContainer = document.getElementById('modalLocationContainer');
+      const locText = item.location ? (item.location[currentLang] || item.location.ar) : '';
+      if(locText){
+        locContainer.style.display = 'block';
+        document.getElementById('modalLocation').innerText = locText;
+      } else {
+        locContainer.style.display = 'none';
+      }
 
       // Video
       const vc = document.getElementById('modalVideoContainer');
