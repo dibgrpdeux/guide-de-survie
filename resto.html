@@ -87,14 +87,12 @@
       font-family:inherit;font-weight:800;font-size:.88rem;cursor:pointer;transition:all .3s}
     .filter-chip.active{background:var(--orange);color:#fff;border-color:var(--orange)}
 
-    /* ====== البطاقة (نفس شكل الملف الأول) ====== */
     #itemsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
     .resto-card-new{background:var(--card-bg);border:1px solid var(--border-color);border-radius:20px;
       overflow:hidden;cursor:pointer;display:flex;flex-direction:column;
       box-shadow:var(--shadow-sm);transition:all .3s ease}
     .resto-card-new:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 
-    /* ====== الكاروسيل التلقائي ====== */
     .cover-wrap{position:relative;width:100%;height:200px;background:#e2e8f0;overflow:hidden}
     .carousel-track{display:flex;width:100%;height:100%;transition:transform .7s cubic-bezier(.4,0,.2,1)}
     .carousel-track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover}
@@ -131,7 +129,6 @@
     [data-theme="dark"] .badge-cheap{background:rgba(3,105,161,.2);color:#38bdf8}
     .hours-row{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text-muted);font-weight:700}
 
-    /* ====== التعليقات الحرة داخل البطاقة ====== */
     .reviews-box{background:#f8fafc;border-radius:16px;padding:16px;
       border:1px solid #e2e8f0;margin-top:6px}
     [data-theme="dark"] .reviews-box{background:#1e293b;border-color:#334155}
@@ -150,6 +147,7 @@
       background:var(--orange);color:#fff;font-weight:800;cursor:pointer;
       font-family:inherit;font-size:.8rem;transition:all .2s}
     .comment-form-inline button:hover{background:var(--orange-dark);transform:scale(1.05)}
+    .comment-form-inline button:disabled{opacity:.5;cursor:wait}
     .comments-list-inline{display:flex;flex-direction:column;gap:6px;margin-top:10px;
       max-height:180px;overflow-y:auto}
     .comment-item{background:var(--bg-color);padding:8px 12px;border-radius:10px;
@@ -158,7 +156,6 @@
     [data-theme="dark"] .comment-item strong{color:#fdba74}
     .no-comments{text-align:center;color:var(--text-muted);font-size:.8rem;margin:6px 0 0}
 
-    /* ====== MODAL ====== */
     #itemModal{position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,.8);
       backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;
       padding:16px;opacity:0;pointer-events:none;transition:opacity .3s}
@@ -202,7 +199,6 @@
       color:#fff;box-shadow:0 6px 18px rgba(249,115,22,.35)}
     .modal-actions a.map-btn:hover{transform:translateY(-2px)}
 
-    /* ====== CHAT & KANGOUROU ====== */
     #chatWindow{position:fixed;bottom:110px;right:20px;z-index:1500;width:340px;
       max-height:480px;background:var(--card-bg);border-radius:18px;
       box-shadow:0 20px 50px rgba(0,0,0,.25);border:1.5px solid var(--border-color);
@@ -292,7 +288,6 @@
     <div id="itemsGrid"></div>
   </main>
 
-  <!-- MODAL -->
   <div id="itemModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -331,7 +326,6 @@
     </div>
   </div>
 
-  <!-- KANGOUROU -->
   <div class="mascot-container" id="kangarooContainer" title="المساعد">
     <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
@@ -356,7 +350,6 @@
     </svg>
   </div>
 
-  <!-- CHAT -->
   <div id="chatWindow">
     <div class="chat-header">
       <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد</span></span>
@@ -371,7 +364,7 @@
     </div>
   </div>
 
-  <!-- ============ البيانات (نفس الملف الثاني) ============ -->
+  <!-- ============ البيانات ============ -->
   <script>
     window.RESTO_DATA = {
       items: [
@@ -456,6 +449,7 @@
       }
     };
     function t(key){ return (window.RESTO_TRANSLATIONS[currentLang]||window.RESTO_TRANSLATIONS.ar)[key] || key; }
+    window.t = t;
 
     window.applyRestoTranslation = function(lang){
       const d = window.RESTO_TRANSLATIONS[lang] || window.RESTO_TRANSLATIONS.ar;
@@ -491,7 +485,6 @@
     const data = window.RESTO_DATA;
     let currentFilter = 'all';
 
-    // Dark mode
     const html = document.documentElement;
     if(localStorage.getItem('theme')==='dark') html.setAttribute('data-theme','dark');
     function toggleDarkMode(){
@@ -519,7 +512,6 @@
       renderItems();
     }
 
-    // ============ الكاروسيل التلقائي ============
     let carouselIntervals = [];
     function startCarousels(){
       carouselIntervals.forEach(i=>clearInterval(i));
@@ -539,7 +531,6 @@
       });
     }
 
-    // ============ عرض البطاقات ============
     function renderItems(){
       const grid = document.getElementById('itemsGrid');
       grid.innerHTML = '';
@@ -552,13 +543,11 @@
       }
 
       items.forEach(item=>{
-        // étoiles
         let starsHTML = '';
         for(let i=1;i<=5;i++){
           starsHTML += i<=Math.round(item.r) ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
         }
 
-        // carrousel images
         let carouselHTML = '';
         if(item.menuImages && item.menuImages.length > 0){
           const imgs = item.menuImages.map(src=>`<img src="${src}" alt="${item.n}" onerror="this.style.display='none'">`).join('');
@@ -579,12 +568,12 @@
           `;
         }
 
-        // catégorie + prix
         const catLabel = item.category==='resto' ? t('filter_resto') : t('filter_cafe');
         const priceStr = item.p===1?'$':item.p===2?'$$':item.p===3?'$$$':'';
         const distStr = item.dist!==null ? `${item.dist} km` : '';
         const menuText = item.menu && item.menu[currentLang] ? item.menu[currentLang] : '';
         const hoursStr = item.h && item.h.length>0 ? item.h.map(h=>`${h[0]} - ${h[1]}`).join(' | ') : '';
+        const sid = safeId(item.n);
 
         const card = document.createElement('div');
         card.className = 'resto-card-new';
@@ -604,21 +593,20 @@
             ${item.delivery?`<div class="badge-cheap"><i class="fa-solid fa-truck-fast"></i> ${t('delivery_yes')}</div>`:''}
             ${hoursStr?`<div class="hours-row"><i class="fa-regular fa-clock"></i> ${t('hours')} : ${hoursStr}</div>`:''}
 
-            <!-- التعليقات الحرة -->
             <div class="reviews-box">
               <div class="reviews-header">
                 <div class="reviews-title">
                   <i class="fa-solid fa-comments"></i> ${t('reviews')}
-                  <span class="reviews-count-badge" id="count-${safeId(item.n)}">0</span>
+                  <span class="reviews-count-badge" id="count-${sid}">0</span>
                 </div>
               </div>
-              <div class="comments-list-inline" id="list-${safeId(item.n)}"></div>
+              <div class="comments-list-inline" id="list-${sid}"></div>
               <div class="comment-form-inline">
                 <div class="input-row">
-                  <input type="text" id="name-${safeId(item.n)}" placeholder="${t('your_name')}" maxlength="30">
+                  <input type="text" id="name-${sid}" placeholder="${t('your_name')}" maxlength="30">
                 </div>
                 <div class="input-row">
-                  <input type="text" id="cmt-${safeId(item.n)}" placeholder="${t('add_comment')}" maxlength="200">
+                  <input type="text" id="cmt-${sid}" placeholder="${t('add_comment')}" maxlength="200">
                   <button onclick="addComment(event,'${escapeAttr(item.n)}')">${t('send')}</button>
                 </div>
               </div>
@@ -634,49 +622,15 @@
         grid.appendChild(card);
       });
 
-      // charger les commentaires + démarrer carrousels
       items.forEach(item=>loadComments(item.n));
       startCarousels();
     }
 
     function safeId(name){ return name.replace(/[^a-zA-Z0-9]/g,'_'); }
+    window.safeId = safeId;
     function escapeAttr(s){ return s.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
     function openModalByIndex(i){ openModal(data.items[i]); }
 
-    // ============ التعليقات الحرة ============
-    function loadComments(itemName){
-      const sid = safeId(itemName);
-      const list = document.getElementById('list-'+sid);
-      const badge = document.getElementById('count-'+sid);
-      if(!list) return;
-      const saved = JSON.parse(localStorage.getItem('comments_'+sid) || '[]');
-      if(badge) badge.innerText = saved.length;
-      if(saved.length === 0){
-        list.innerHTML = `<p class="no-comments">${t('no_comments')}</p>`;
-        return;
-      }
-      list.innerHTML = saved.map(c=>`<div class="comment-item"><strong>${c.name||'👤'}:</strong> ${c.text}</div>`).join('');
-    }
-
-    function addComment(e, itemName){
-      if(e) e.stopPropagation();
-      const sid = safeId(itemName);
-      const nameEl = document.getElementById('name-'+sid);
-      const cmtEl = document.getElementById('cmt-'+sid);
-      if(!cmtEl || !cmtEl.value.trim()) return;
-      const saved = JSON.parse(localStorage.getItem('comments_'+sid) || '[]');
-      saved.push({
-        name: (nameEl && nameEl.value.trim()) || '👤',
-        text: cmtEl.value.trim(),
-        date: new Date().toISOString()
-      });
-      localStorage.setItem('comments_'+sid, JSON.stringify(saved));
-      if(cmtEl) cmtEl.value = '';
-      if(nameEl) nameEl.value = '';
-      loadComments(itemName);
-    }
-
-    // ============ MODAL ============
     function openModal(item){
       const modal = document.getElementById('itemModal');
       modal.classList.add('open');
@@ -737,7 +691,6 @@
     document.getElementById('itemModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
-    // ============ CHAT ============
     function toggleChat(){ document.getElementById('chatWindow').classList.toggle('open'); }
     function sendMessage(){
       const input = document.getElementById('chatInput');
@@ -758,7 +711,6 @@
       }, 500);
     }
 
-    // ============ KANGOUROU ============
     const kangarooContainer = document.getElementById('kangarooContainer');
     const kangarooSvg = document.getElementById('kangarooSvg');
     if(kangarooContainer){
@@ -773,7 +725,6 @@
       });
     }
 
-    // ============ INIT ============
     document.addEventListener('DOMContentLoaded', ()=>{
       const saved = localStorage.getItem('enstp_lang') || 'ar';
       currentLang = saved;
@@ -784,6 +735,149 @@
       const ci = document.getElementById('chatInput');
       if(ci) ci.addEventListener('keypress', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendMessage(); } });
     });
+  </script>
+
+  <!-- ============================================ -->
+  <!-- 🔥 Firebase — التعليقات المشتركة (real-time)  -->
+  <!-- ============================================ -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, onSnapshot,
+      query, orderBy, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    // ⬇️⬇️⬇️ استبدل هذه القيم بإعدادات مشروعك من Firebase Console ⬇️⬇️⬇️
+    const firebaseConfig = {
+      apiKey: "VOTRE_API_KEY",
+      authDomain: "VOTRE_PROJECT.firebaseapp.com",
+      projectId: "VOTRE_PROJECT_ID",
+      storageBucket: "VOTRE_PROJECT.appspot.com",
+      messagingSenderId: "VOTRE_MESSAGING_ID",
+      appId: "VOTRE_APP_ID"
+    };
+    // ⬆️⬆️⬆️ استبدل هذه القيم ⬆️⬆️⬆️
+
+    let db = null;
+    try {
+      initializeApp(firebaseConfig);
+      db = getFirestore();
+      console.log('✅ Firebase initialisé');
+    } catch(err){
+      console.error('❌ Firebase init error:', err);
+    }
+
+    const COMMENTS_COL = "resto_comments";
+    const listeners = new Map();
+
+    // ===== تحميل التعليقات (real-time) =====
+    window.loadComments = function(itemName){
+      const sid = safeId(itemName);
+      const list = document.getElementById('list-'+sid);
+      const badge = document.getElementById('count-'+sid);
+      if(!list) return;
+
+      // fallback: si Firebase pas chargé, utilise localStorage
+      if(!db){
+        const saved = JSON.parse(localStorage.getItem('comments_'+sid) || '[]');
+        if(badge) badge.innerText = saved.length;
+        if(saved.length === 0){
+          list.innerHTML = `<p class="no-comments">${t('no_comments')}</p>`;
+          return;
+        }
+        list.innerHTML = saved.map(c=>`<div class="comment-item"><strong>${c.name||'👤'}:</strong> ${c.text}</div>`).join('');
+        return;
+      }
+
+      // Annule l'ancien listener
+      if(listeners.has(sid)){
+        listeners.get(sid)();
+        listeners.delete(sid);
+      }
+
+      const q = query(
+        collection(db, COMMENTS_COL, sid, 'comments'),
+        orderBy('date', 'desc')
+      );
+
+      const unsub = onSnapshot(q, snap => {
+        // Vérifie que l'élément existe encore dans le DOM
+        if(!document.getElementById('list-'+sid)){
+          unsub();
+          listeners.delete(sid);
+          return;
+        }
+
+        if(badge) badge.innerText = snap.size;
+
+        if(snap.size === 0){
+          list.innerHTML = `<p class="no-comments">${t('no_comments')}</p>`;
+          return;
+        }
+
+        list.innerHTML = snap.docs.map(doc => {
+          const c = doc.data();
+          const name = (c.name || '👤').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          const text = (c.text || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          return `<div class="comment-item"><strong>${name}:</strong> ${text}</div>`;
+        }).join('');
+      }, err => {
+        console.error('Firebase onSnapshot error:', err);
+        list.innerHTML = `<p class="no-comments" style="color:#ef4444;">خطأ في تحميل التعليقات</p>`;
+      });
+
+      listeners.set(sid, unsub);
+    };
+
+    // ===== إضافة تعليق =====
+    window.addComment = async function(e, itemName){
+      if(e) e.stopPropagation();
+      const sid = safeId(itemName);
+      const nameEl = document.getElementById('name-'+sid);
+      const cmtEl = document.getElementById('cmt-'+sid);
+      if(!cmtEl || !cmtEl.value.trim()) return;
+
+      const text = cmtEl.value.trim();
+      const name = (nameEl && nameEl.value.trim()) || '👤';
+
+      const btn = cmtEl.closest('.comment-form-inline')?.querySelector('button');
+      if(btn){ btn.disabled = true; btn.innerText = '...'; }
+
+      // fallback: si Firebase pas chargé, localStorage
+      if(!db){
+        const saved = JSON.parse(localStorage.getItem('comments_'+sid) || '[]');
+        saved.push({ name, text, date: new Date().toISOString() });
+        localStorage.setItem('comments_'+sid, JSON.stringify(saved));
+        cmtEl.value = ''; if(nameEl) nameEl.value = '';
+        loadComments(itemName);
+        if(btn){ btn.disabled = false; btn.innerText = t('send'); }
+        return;
+      }
+
+      try {
+        await addDoc(
+          collection(db, COMMENTS_COL, sid, 'comments'),
+          {
+            name: name,
+            text: text,
+            date: serverTimestamp()
+          }
+        );
+        cmtEl.value = '';
+        if(nameEl) nameEl.value = '';
+        // onSnapshot met à jour automatiquement
+      } catch(err){
+        console.error('Erreur ajout commentaire:', err);
+        alert('خطأ في إرسال التعليق. حاول مرة أخرى.');
+      } finally {
+        if(btn){ btn.disabled = false; btn.innerText = t('send'); }
+      }
+    };
+
+    // Force refresh après Firebase chargé (les listeners vont se créer)
+    if(typeof renderItems === 'function'){
+      renderItems();
+    }
   </script>
 </body>
 </html>
