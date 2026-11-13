@@ -338,7 +338,7 @@
     }
 
     /* ============================================
-       HERO (Conservé à 100% avec image de fond)
+       HERO (Image de fond conservée, sans kangourou)
        ============================================ */
     .hero {
       position: relative;
@@ -378,86 +378,6 @@
     [data-theme="dark"] .hero-overlay {
       background: linear-gradient(180deg, rgba(26, 15, 8, 0.6) 0%, rgba(26, 15, 8, 0.95) 100%);
     }
-
-    /* 🦘 Nouveau design du Kangourou (3D SVG avec couleurs assorties) */
-    .kangaroo-3d-container {
-      position: relative;
-      width: 100%;
-      max-width: 280px;
-      margin-bottom: 30px;
-      perspective: 1000px;
-    }
-
-    .kangaroo-3d-svg {
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6)) drop-shadow(0 5px 15px rgba(249,115,22,0.4));
-      animation: float3D 4s ease-in-out infinite;
-      transform-style: preserve-3d;
-      transition: transform 0.5s ease;
-    }
-
-    .kangaroo-3d-container:hover .kangaroo-3d-svg {
-      transform: rotateY(15deg) rotateX(5deg) scale(1.05);
-    }
-
-    @keyframes float3D {
-      0%, 100% { transform: translateY(0) rotateZ(0deg); }
-      50% { transform: translateY(-20px) rotateZ(3deg); }
-    }
-
-    .kangaroo-3d-shadow {
-      position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
-      width: 120px; height: 20px; background: rgba(0, 0, 0, 0.4);
-      border-radius: 50%; filter: blur(8px);
-      animation: shadowPulse 4s ease-in-out infinite;
-      z-index: -1;
-    }
-
-    @keyframes shadowPulse {
-      0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
-      50% { transform: translateX(-50%) scale(0.8); opacity: 0.3; }
-    }
-
-    /* فقاعة الحوار */
-    .hero-speech-bubble {
-      background: #fff;
-      border: 3px solid #f97316;
-      border-radius: 25px;
-      padding: 22px 28px;
-      position: relative;
-      box-shadow: 0 15px 35px rgba(249, 115, 22, 0.2);
-      max-width: 520px;
-      margin: 0 auto 30px;
-      text-align: center;
-    }
-    [data-theme="dark"] .hero-speech-bubble { background: #26160d; border-color: #fdba74; }
-
-    .hero-speech-bubble::before {
-      content: ""; position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-      border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 20px solid #f97316;
-    }
-    .hero-speech-bubble::after {
-      content: ""; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      border-left: 16px solid transparent; border-right: 16px solid transparent; border-bottom: 16px solid #fff;
-    }
-    [data-theme="dark"] .hero-speech-bubble::after { border-bottom-color: #26160d; }
-
-    .hero-speech-bubble h3 {
-      color: #ea580c;
-      font-size: 1.4rem;
-      font-weight: 900;
-      margin: 0 0 12px;
-    }
-    .hero-speech-bubble p {
-      color: #431407;
-      font-size: 1.05rem;
-      font-weight: 600;
-      line-height: 1.7;
-      margin: 0;
-    }
-    [data-theme="dark"] .hero-speech-bubble p { color: #fef3c7; }
-    .hero-speech-bubble strong { color: #ea580c; font-weight: 900; }
 
     .hero-badge {
       background: rgba(249, 115, 22, 0.2);
@@ -1309,9 +1229,6 @@
       .blob-1 { width: 300px; height: 300px; }
       .blob-2 { width: 280px; height: 280px; }
       .blob-3 { width: 200px; height: 200px; }
-      .hero-speech-bubble { padding: 16px; border-radius: 20px; }
-      .hero-speech-bubble h3 { font-size: 1.1rem; }
-      .hero-speech-bubble p { font-size: 0.85rem; }
     }
 
     @media (max-width: 480px) {
@@ -1397,65 +1314,11 @@
     </div>
   </div>
 
-  <!-- ============================================
-       HERO (Image de fond conservée + Nouveau Kangourou 3D + Texte)
-       ============================================ -->
+  <!-- HERO (Image de fond conservée, sans kangourou) -->
   <header class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     
-    <!-- Nouveau Kangourou 3D (SVG) avec couleurs assorties -->
-    <div class="kangaroo-3d-container">
-      <div class="kangaroo-3d-shadow"></div>
-      <svg class="kangaroo-3d-svg" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="bodyGrad" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" stop-color="#fdba74"/>
-            <stop offset="60%" stop-color="#f97316"/>
-            <stop offset="100%" stop-color="#c2410c"/>
-          </radialGradient>
-          <radialGradient id="headGrad" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" stop-color="#fdba74"/>
-            <stop offset="60%" stop-color="#f97316"/>
-            <stop offset="100%" stop-color="#9a3412"/>
-          </radialGradient>
-          <radialGradient id="bellyGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#fff7ed"/>
-            <stop offset="100%" stop-color="#fed7aa"/>
-          </radialGradient>
-          <linearGradient id="tailGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#c2410c"/>
-            <stop offset="100%" stop-color="#7c2d12"/>
-          </linearGradient>
-        </defs>
-        <path d="M 40 200 Q 10 180 15 220 Q 25 240 60 220 Z" fill="url(#tailGrad)"/>
-        <ellipse cx="140" cy="215" rx="35" ry="15" fill="#9a3412"/>
-        <ellipse cx="140" cy="215" rx="25" ry="10" fill="#ea580c"/>
-        <ellipse cx="75" cy="195" rx="20" ry="10" fill="#9a3412"/>
-        <ellipse cx="100" cy="150" rx="60" ry="65" fill="url(#bodyGrad)" stroke="#7c2d12" stroke-width="3"/>
-        <ellipse cx="105" cy="160" rx="35" ry="40" fill="url(#bellyGrad)"/>
-        <ellipse cx="130" cy="70" rx="45" ry="40" fill="url(#headGrad)" stroke="#7c2d12" stroke-width="3"/>
-        <ellipse cx="110" cy="20" rx="12" ry="30" fill="#f97316" stroke="#7c2d12" stroke-width="2" transform="rotate(-15 110 20)"/>
-        <ellipse cx="110" cy="22" rx="6" ry="20" fill="#fed7aa" transform="rotate(-15 110 20)"/>
-        <ellipse cx="150" cy="20" rx="12" ry="30" fill="#f97316" stroke="#7c2d12" stroke-width="2" transform="rotate(15 150 20)"/>
-        <ellipse cx="150" cy="22" rx="6" ry="20" fill="#fed7aa" transform="rotate(15 150 20)"/>
-        <ellipse cx="160" cy="85" rx="8" ry="6" fill="#431407"/>
-        <circle cx="140" cy="60" r="7" fill="#1a1410"/>
-        <circle cx="142" cy="58" r="2.5" fill="#ffffff"/>
-        <circle cx="115" cy="60" r="7" fill="#1a1410"/>
-        <circle cx="117" cy="58" r="2.5" fill="#ffffff"/>
-        <path d="M 125 90 Q 135 100 150 90" stroke="#431407" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <ellipse cx="60" cy="130" rx="15" ry="30" fill="url(#bodyGrad)" stroke="#7c2d12" stroke-width="2" transform="rotate(-20 60 130)"/>
-        <ellipse cx="85" cy="120" rx="15" ry="25" fill="rgba(255,255,255,0.3)" transform="rotate(-30 85 120)"/>
-      </svg>
-    </div>
-
-    <!-- Bulle de dialogue avec le texte demandé -->
-    <div class="hero-speech-bubble">
-      <h3 data-i18n="bubble_hello">مرحباً،</h3>
-      <p data-i18n="bubble_text">أنا الكنغر، دليلك الجديد! لدي جيب يمكنه أن يرافقك ويعتني بك حتى تتعرف على المكان جيداً!</p>
-    </div>
-
     <div class="hero-badge">
       <i class="fa-solid fa-location-dot"></i> <span data-i18n="home_badge">الدليل الشامل للطلبة</span>
     </div>
@@ -1655,6 +1518,7 @@
     <div class="mascot-shadow"></div>
   </div>
 
+  <!-- المساعد الذكي (رسالة الترحيب الجديدة) -->
   <div id="aiChatWindow">
     <div class="ai-chat-header">
       <div class="ai-chat-header-left">
@@ -1669,7 +1533,7 @@
     <div class="ai-chat-body" id="aiChatBody">
       <div class="ai-msg bot">
         <div class="ai-msg-avatar"><i class="fa-solid fa-robot"></i></div>
-        <div class="ai-msg-content" data-i18n="ai_welcome">مرحباً! 👋 أنا المساعد الذكي لـ ENSTP. اسألني عن أي شيء: الدروس، الجدول، النصائح الدراسية، الرياضيات، الفيزياء...</div>
+        <div class="ai-msg-content" data-i18n="ai_welcome">أنا الكنغر، دليلك الجديد! لدي جيب يمكنه أن يرافقك ويعتني بك حتى تتعرف على المكان جيداً!</div>
       </div>
     </div>
     <div class="ai-suggestions" id="aiSuggestions">
@@ -1835,8 +1699,6 @@
         home_title_1: "المدرسة العليا", home_title_2: "للأشغال العمومية",
         home_desc: "منصة رقمية متكاملة تجمع كل ما يحتاجه طالب ENSTP: التوجيه، التواصل، الخدمات اليومية، النقل، الإقامة الجامعية، السياحة، التسوق، المطاعم...",
         home_start: "ابدأ", mascot_hello: "مرحبا! 👋",
-        bubble_hello: "مرحباً،",
-        bubble_text: "أنا الكنغر، دليلك الجديد! لدي جيب يمكنه أن يرافقك ويعتني بك حتى تتعرف على المكان جيداً!",
         sec_school: "مدرستي", sec_school_desc: "الأساتذة، المباني، والتاريخ",
         sec_admin: "إدارتي", sec_admin_desc: "الوثائق، الشهادات، والخدمات",
         sec_success: "نجاحي", sec_success_desc: "الدروس، الامتحانات، والتوقيت",
@@ -1851,7 +1713,7 @@
         sec_qr: "QR Codes", sec_qr_desc: "رموز سريعة للوصول المباشر",
         nav_home: "الرئيسية", footer_rights: "جميع الحقوق محفوظة",
         ai_assistant_name: "المساعد الذكي", ai_assistant_status: "متصل الآن · يرد فوراً",
-        ai_welcome: "مرحباً! 👋 أنا المساعد الذكي لـ ENSTP. اسألني عن أي شيء: الدروس، الجدول، النصائح الدراسية، الرياضيات، الفيزياء...",
+        ai_welcome: "أنا الكنغر، دليلك الجديد! لدي جيب يمكنه أن يرافقك ويعتني بك حتى تتعرف على المكان جيداً!",
         ai_input_placeholder: "اكتب سؤالك...", ai_error: "عذراً، حدث خطأ. حاول مرة أخرى.",
         sugg_1: "جدول التوقيت", sugg_2: "المطاعم", sugg_3: "أرقام الطوارئ", sugg_4: "الإقامة"
       },
@@ -1863,8 +1725,6 @@
         home_title_1: "École Nationale Supérieure", home_title_2: "des Travaux Publics",
         home_desc: "Une plateforme numérique complète qui rassemble tout ce dont un étudiant ENSTP a besoin : orientation, communication, services quotidiens, transport, résidence, tourisme, shopping, restaurants...",
         home_start: "Commencer", mascot_hello: "Bonjour ! 👋",
-        bubble_hello: "Bonjour,",
-        bubble_text: "Je suis le kangourou, votre nouveau guide ! J'ai une poche qui peut vous accompagner et prendre soin de vous jusqu'à ce que vous connaissiez bien les lieux !",
         sec_school: "Mon École", sec_school_desc: "Enseignants, bâtiments et histoire",
         sec_admin: "Mon Administration", sec_admin_desc: "Documents, certificats et services",
         sec_success: "Ma Réussite", sec_success_desc: "Cours, examens et emploi du temps",
@@ -1879,7 +1739,7 @@
         sec_qr: "QR Codes", sec_qr_desc: "Accès rapide par codes",
         nav_home: "Accueil", footer_rights: "Tous droits réservés",
         ai_assistant_name: "Assistant Intelligent", ai_assistant_status: "Connecté · Répond instantanément",
-        ai_welcome: "Bonjour ! 👋 Je suis l'assistant intelligent de l'ENSTP. Posez-moi des questions : cours, emploi du temps, conseils d'études, maths, physique...",
+        ai_welcome: "Je suis le kangourou, votre nouveau guide ! J'ai une poche qui peut vous accompagner et prendre soin de vous jusqu'à ce que vous connaissiez bien les lieux !",
         ai_input_placeholder: "Écrivez votre question...", ai_error: "Désolé, une erreur. Réessayez.",
         sugg_1: "Emploi du temps", sugg_2: "Restaurants", sugg_3: "Urgences", sugg_4: "Résidence"
       },
@@ -1891,8 +1751,6 @@
         home_title_1: "National Higher School", home_title_2: "of Public Works",
         home_desc: "A complete digital platform gathering everything an ENSTP student needs: guidance, communication, daily services, transport, residence, tourism, shopping, restaurants...",
         home_start: "Start", mascot_hello: "Hello! 👋",
-        bubble_hello: "Hello,",
-        bubble_text: "I am the kangaroo, your new guide! I have a pouch that can accompany you and take care of you until you know the place well!",
         sec_school: "My School", sec_school_desc: "Teachers, buildings and history",
         sec_admin: "My Administration", sec_admin_desc: "Documents, certificates and services",
         sec_success: "My Success", sec_success_desc: "Courses, exams and schedule",
@@ -1907,7 +1765,7 @@
         sec_qr: "QR Codes", sec_qr_desc: "Quick access codes",
         nav_home: "Home", footer_rights: "All rights reserved",
         ai_assistant_name: "Smart Assistant", ai_assistant_status: "Online · Replies instantly",
-        ai_welcome: "Hello! 👋 I'm the ENSTP smart assistant. Ask me anything: courses, schedule, study tips, math, physics...",
+        ai_welcome: "I am the kangaroo, your new guide! I have a pouch that can accompany you and take care of you until you know the place well!",
         ai_input_placeholder: "Type your question...", ai_error: "Sorry, an error. Please retry.",
         sugg_1: "Schedule", sugg_2: "Restaurants", sugg_3: "Emergency", sugg_4: "Residence"
       }
