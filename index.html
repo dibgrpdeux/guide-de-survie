@@ -338,7 +338,7 @@
     }
 
     /* ============================================
-       ANCIEN HERO (Conservé à 100%)
+       HERO (Conservé à 100% avec image de fond)
        ============================================ */
     .hero {
       position: relative;
@@ -379,17 +379,20 @@
       background: linear-gradient(180deg, rgba(26, 15, 8, 0.6) 0%, rgba(26, 15, 8, 0.95) 100%);
     }
 
-    .hero-kangaroo {
-      width: 140px;
-      height: 160px;
+    /* ✅ REMPLACEMENT : Image du Kangourou au lieu du SVG */
+    .hero-kangaroo-img {
+      width: 280px;
+      max-width: 90%;
+      height: auto;
       margin-bottom: 24px;
       filter: drop-shadow(0 15px 35px rgba(0,0,0,0.6));
-      animation: kangarooJump 4s ease-in-out infinite;
+      animation: floatKangarooHero 4s ease-in-out infinite;
+      border-radius: 20px;
     }
 
-    @keyframes kangarooJump {
-      0%, 100% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-18px) rotate(2deg); }
+    @keyframes floatKangarooHero {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
     }
 
     .hero-badge {
@@ -524,70 +527,10 @@
       50% { transform: translateX(-50%) translateY(8px); }
     }
 
-    /* ============================================
-       AJOUT : SECTION KANGAROO 3D & BULLE (En haut, après le Hero)
-       ============================================ */
-    .kangaroo-hero-section {
-      padding: 40px 20px; max-width: 1100px; margin: 0 auto;
-      display: flex; flex-direction: column; align-items: center; text-align: center; position: relative;
-    }
-
-    .kangaroo-3d-container {
-      position: relative; width: 100%; max-width: 260px; margin-bottom: 30px; perspective: 1000px;
-    }
-
-    .kangaroo-3d-svg {
-      width: 100%; height: auto;
-      filter: drop-shadow(0 25px 35px rgba(249, 115, 22, 0.4)) drop-shadow(0 5px 15px rgba(0,0,0,0.2));
-      animation: float3D 4s ease-in-out infinite; transform-style: preserve-3d; transition: transform 0.5s ease;
-    }
-
-    .kangaroo-3d-container:hover .kangaroo-3d-svg { transform: rotateY(15deg) rotateX(5deg) scale(1.05); }
-
-    @keyframes float3D {
-      0%, 100% { transform: translateY(0) rotateZ(0deg); }
-      50% { transform: translateY(-20px) rotateZ(3deg); }
-    }
-
-    .kangaroo-3d-shadow {
-      position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
-      width: 120px; height: 20px; background: rgba(249, 115, 22, 0.3);
-      border-radius: 50%; filter: blur(8px); animation: shadowPulse 4s ease-in-out infinite; z-index: -1;
-    }
-
-    .hero-speech-bubble {
-      background: #fff; border: 3px solid #f97316; border-radius: 30px;
-      padding: 22px 28px; position: relative; box-shadow: 0 15px 35px rgba(249, 115, 22, 0.15);
-      max-width: 520px; margin: 0 auto 30px; text-align: right;
-    }
-    [data-theme="dark"] .hero-speech-bubble { background: #26160d; border-color: #fdba74; }
-
-    .hero-speech-bubble::before {
-      content: ""; position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-      border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 20px solid #f97316;
-    }
-    .hero-speech-bubble::after {
-      content: ""; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      border-left: 16px solid transparent; border-right: 16px solid transparent; border-bottom: 16px solid #fff;
-    }
-    [data-theme="dark"] .hero-speech-bubble::after { border-bottom-color: #26160d; }
-
-    .hero-speech-bubble h3 { color: #ea580c; font-size: 1.4rem; font-weight: 900; margin: 0 0 10px; }
-    .hero-speech-bubble p { color: #431407; font-size: 1rem; font-weight: 600; line-height: 1.7; margin: 0 0 12px; }
-    [data-theme="dark"] .hero-speech-bubble p { color: #fef3c7; }
-
-    .hero-speech-bubble .highlight-why {
-      color: #ea580c; font-weight: 900; display: block;
-      border-top: 1px dashed #fdba74; padding-top: 12px; margin-top: 8px; font-size: 1.05rem;
-    }
-
-    /* ============================================
-       SECTIONS SLIDER & CARDS GRID (Ancien design)
-       ============================================ */
     .sections-slider-container {
       width: 100%;
       max-width: 1200px;
-      margin: -20px auto 30px;
+      margin: -50px auto 30px;
       position: relative;
       z-index: 10;
       padding: 0 20px;
@@ -1293,7 +1236,7 @@
       .kangaroo-logo { width: 34px; height: 34px; }
       .kangaroo-logo svg { width: 20px; height: 24px; }
       .nav-menu-btn { width: 38px; height: 38px; font-size: 0.9rem; }
-      .hero-kangaroo { width: 110px; height: 125px; }
+      .hero-kangaroo-img { width: 220px; }
       .hero-title { font-size: 2rem; }
       .cards-grid { grid-template-columns: 1fr; gap: 18px; padding: 0 15px; }
       .card-img-wrap { height: 190px; }
@@ -1303,10 +1246,6 @@
       .blob-1 { width: 300px; height: 300px; }
       .blob-2 { width: 280px; height: 280px; }
       .blob-3 { width: 200px; height: 200px; }
-      .kangaroo-hero-section { padding: 20px 15px; }
-      .hero-speech-bubble { padding: 16px; border-radius: 20px; }
-      .hero-speech-bubble h3 { font-size: 1.1rem; }
-      .hero-speech-bubble p { font-size: 0.85rem; }
     }
 
     @media (max-width: 480px) {
@@ -1392,45 +1331,22 @@
     </div>
   </div>
 
-  <!-- القسم القديم (Hero) محفوظ بالكامل -->
+  <!-- ✅ HERO : Image de fond + Image du kangourou (remplace le SVG) + Texte -->
   <header class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
-    <svg class="hero-kangaroo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="kBodyHero" cx="40%" cy="30%">
-          <stop offset="0%" stop-color="#fdba74"/>
-          <stop offset="100%" stop-color="#c2410c"/>
-        </radialGradient>
-        <radialGradient id="kHeadHero" cx="40%" cy="30%">
-          <stop offset="0%" stop-color="#fdba74"/>
-          <stop offset="100%" stop-color="#9a3412"/>
-        </radialGradient>
-      </defs>
-      <path d="M20 100 Q8 92 10 108 Q14 122 26 114 Z" fill="#7c2d12"/>
-      <ellipse cx="72" cy="112" rx="14" ry="6" fill="#7c2d12"/>
-      <ellipse cx="72" cy="112" rx="11" ry="4" fill="#c2410c"/>
-      <ellipse cx="40" cy="102" rx="9" ry="4.5" fill="#7c2d12"/>
-      <ellipse cx="52" cy="82" rx="28" ry="26" fill="url(#kBodyHero)" stroke="#7c2d12" stroke-width="1.5"/>
-      <ellipse cx="55" cy="88" rx="16" ry="16" fill="#fef3c7"/>
-      <ellipse cx="55" cy="85" rx="8" ry="5" fill="rgba(255,255,255,0.4)"/>
-      <ellipse cx="68" cy="44" rx="20" ry="18" fill="url(#kHeadHero)" stroke="#7c2d12" stroke-width="1.5"/>
-      <ellipse cx="60" cy="36" rx="6" ry="4" fill="rgba(255,255,255,0.35)"/>
-      <ellipse cx="59" cy="20" rx="6" ry="14" fill="#f97316" stroke="#7c2d12" stroke-width="1.5" transform="rotate(-15 59 20)"/>
-      <ellipse cx="59" cy="21" rx="3" ry="9" fill="#fed7aa" transform="rotate(-15 59 20)"/>
-      <ellipse cx="78" cy="20" rx="6" ry="14" fill="#f97316" stroke="#7c2d12" stroke-width="1.5" transform="rotate(15 78 20)"/>
-      <ellipse cx="78" cy="21" rx="3" ry="9" fill="#fed7aa" transform="rotate(15 78 20)"/>
-      <ellipse cx="75" cy="52" rx="11" ry="9" fill="#fed7aa"/>
-      <ellipse cx="82" cy="49" rx="2.5" ry="2" fill="#7c2d12"/>
-      <circle cx="66" cy="38" r="3.5" fill="#1a1410"/>
-      <circle cx="67" cy="37" r="1.2" fill="#ffffff"/>
-      <circle cx="76" cy="38" r="3.5" fill="#1a1410"/>
-      <circle cx="77" cy="37" r="1.2" fill="#ffffff"/>
-      <path d="M70 55 Q76 60 82 55" stroke="#7c2d12" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <ellipse cx="46" cy="68" rx="7" ry="4" fill="#ea580c" transform="rotate(-30 46 68)"/>
-      <circle cx="42" cy="72" r="4" fill="#fed7aa" stroke="#c2410c" stroke-width="1"/>
-      <circle cx="62" cy="32" r="1.5" fill="rgba(255,255,255,0.7)"/>
-    </svg>
+    
+    <!-- L'image que vous avez fournie (avec la bulle et le texte) -->
+    <img src="kangaroo-guide.png" alt="Kangaroo Guide" class="hero-kangaroo-img" onerror="this.src='https://via.placeholder.com/280x280/f97316/ffffff?text=Kangaroo+Guide'">
+
+    <!-- Le texte traduit qui accompagne l'image -->
+    <div style="background: rgba(255, 255, 255, 0.9); border: 3px solid #f97316; border-radius: 20px; padding: 20px; max-width: 520px; margin-bottom: 30px; text-align: right; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+      <h3 style="color: #ea580c; font-size: 1.3rem; font-weight: 900; margin: 0 0 10px;" data-i18n="bubble_hello">مرحباً،</h3>
+      <p style="color: #431407; font-size: 1rem; font-weight: 600; margin: 0 0 10px;" data-i18n="bubble_intro">أنا دليلك الجديد في المدرسة الوطنية العليا للأشغال العمومية!</p>
+      <span style="color: #ea580c; font-weight: 900; display: block; border-top: 1px dashed #fdba74; padding-top: 10px;" data-i18n="bubble_why_title">ولماذا أنا بالتحديد؟</span>
+      <p style="color: #431407; font-size: 0.95rem; font-weight: 600; margin: 8px 0 0;" data-i18n="bubble_why_text">أنا الكنغر، لدي جيب يمكنه أن يرافقك ويعتني بك حتى تتعرف على المكان جيداً!</p>
+    </div>
+
     <div class="hero-badge">
       <i class="fa-solid fa-location-dot"></i> <span data-i18n="home_badge">الدليل الشامل للطلبة</span>
     </div>
@@ -1447,42 +1363,6 @@
       <i class="fa-solid fa-chevron-down"></i>
     </div>
   </header>
-
-  <!-- ✅ AJOUT DU KANGOUROU 3D & BULLE (Sans toucher au reste) -->
-  <section class="kangaroo-hero-section">
-    <div class="kangaroo-3d-container">
-      <div class="kangaroo-3d-shadow"></div>
-      <svg class="kangaroo-3d-svg" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="bodyGrad" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fdba74"/><stop offset="60%" stop-color="#f97316"/><stop offset="100%" stop-color="#c2410c"/></radialGradient>
-          <radialGradient id="headGrad" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fdba74"/><stop offset="60%" stop-color="#f97316"/><stop offset="100%" stop-color="#9a3412"/></radialGradient>
-          <radialGradient id="bellyGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff7ed"/><stop offset="100%" stop-color="#fed7aa"/></radialGradient>
-          <linearGradient id="tailGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c2410c"/><stop offset="100%" stop-color="#7c2d12"/></linearGradient>
-        </defs>
-        <path d="M 40 200 Q 10 180 15 220 Q 25 240 60 220 Z" fill="url(#tailGrad)"/>
-        <ellipse cx="140" cy="215" rx="35" ry="15" fill="#9a3412"/><ellipse cx="140" cy="215" rx="25" ry="10" fill="#ea580c"/>
-        <ellipse cx="75" cy="195" rx="20" ry="10" fill="#9a3412"/>
-        <ellipse cx="100" cy="150" rx="60" ry="65" fill="url(#bodyGrad)" stroke="#7c2d12" stroke-width="3"/>
-        <ellipse cx="105" cy="160" rx="35" ry="40" fill="url(#bellyGrad)"/>
-        <ellipse cx="130" cy="70" rx="45" ry="40" fill="url(#headGrad)" stroke="#7c2d12" stroke-width="3"/>
-        <ellipse cx="110" cy="20" rx="12" ry="30" fill="#f97316" stroke="#7c2d12" stroke-width="2" transform="rotate(-15 110 20)"/><ellipse cx="110" cy="22" rx="6" ry="20" fill="#fed7aa" transform="rotate(-15 110 20)"/>
-        <ellipse cx="150" cy="20" rx="12" ry="30" fill="#f97316" stroke="#7c2d12" stroke-width="2" transform="rotate(15 150 20)"/><ellipse cx="150" cy="22" rx="6" ry="20" fill="#fed7aa" transform="rotate(15 150 20)"/>
-        <ellipse cx="160" cy="85" rx="8" ry="6" fill="#431407"/>
-        <circle cx="140" cy="60" r="7" fill="#1a1410"/><circle cx="142" cy="58" r="2.5" fill="#ffffff"/>
-        <circle cx="115" cy="60" r="7" fill="#1a1410"/><circle cx="117" cy="58" r="2.5" fill="#ffffff"/>
-        <path d="M 125 90 Q 135 100 150 90" stroke="#431407" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <ellipse cx="60" cy="130" rx="15" ry="30" fill="url(#bodyGrad)" stroke="#7c2d12" stroke-width="2" transform="rotate(-20 60 130)"/>
-        <ellipse cx="85" cy="120" rx="15" ry="25" fill="rgba(255,255,255,0.3)" transform="rotate(-30 85 120)"/>
-      </svg>
-    </div>
-
-    <div class="hero-speech-bubble">
-      <h3 data-i18n="bubble_hello">مرحباً،</h3>
-      <p data-i18n="bubble_intro">أنا دليلك الجديد في المدرسة الوطنية العليا للأشغال العمومية!</p>
-      <span class="highlight-why" data-i18n="bubble_why_title">ولماذا أنا بالتحديد؟</span>
-      <p style="margin-top: 8px;" data-i18n="bubble_why_text">أنا الكنغر، لدي جيب يمكنه أن يرافقك ويعتني بك حتى تتعرف على المكان جيداً!</p>
-    </div>
-  </section>
 
   <div class="sections-slider-container" id="sections">
     <div class="sections-slider">
