@@ -143,8 +143,6 @@
     .residence-card:hover .residence-icon.red { background: #ef4444; color: #fff; }
     .residence-title { font-size: 1.15rem; font-weight: 900; color: var(--text-main); margin: 0 0 4px; }
     .residence-sub { font-size: .78rem; color: var(--text-muted); font-weight: 600; margin: 0; }
-    .residence-badge { font-size: .7rem; font-weight: 800; padding: 5px 12px; border-radius: 20px; background: rgba(249,115,22,.12); color: var(--orange-dark); }
-    [data-theme="dark"] .residence-badge { background: rgba(249,115,22,.2); color: #fdba74; }
 
     /* Gender badge */
     .gender-badge { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: .7rem; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; z-index: 2; }
@@ -250,6 +248,26 @@
     /* BUTTONS */
     .btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 12px; background: var(--card-bg); border: 1.5px solid var(--border-color); color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .85rem; cursor: pointer; transition: all .2s; text-decoration: none; box-shadow: var(--shadow-sm); }
     .btn-back:hover { border-color: var(--orange); color: var(--orange); transform: translateX(-3px); }
+
+    /* MODAL SEARCH MEALS */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(10, 17, 40, 0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+    .modal-overlay.open { display: flex; opacity: 1; }
+    .modal-content { background: var(--card-bg); border-radius: 24px; width: 100%; max-width: 500px; padding: 24px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); transform: translateY(20px); transition: transform 0.3s; }
+    .modal-overlay.open .modal-content { transform: translateY(0); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 12px; }
+    .modal-header h3 { margin: 0; font-size: 1.2rem; font-weight: 900; color: var(--orange-dark); }
+    .modal-close { background: transparent; border: none; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; transition: 0.2s; }
+    .modal-close:hover { color: #ef4444; transform: scale(1.1); }
+    
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; color: var(--text-main); }
+    .form-select { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid var(--border-color); background: var(--bg-color); color: var(--text-main); font-family: inherit; font-weight: 600; outline: none; }
+    .form-select:focus { border-color: var(--orange); }
+    
+    .meal-result { background: rgba(249,115,22,.08); border: 1.5px solid rgba(249,115,22,.3); border-radius: 16px; padding: 16px; margin-top: 20px; display: none; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .meal-result h4 { margin: 0 0 8px; font-size: 1rem; font-weight: 900; color: var(--orange-dark); display: flex; align-items: center; gap: 8px; }
+    .meal-result p { margin: 0; font-size: 0.9rem; font-weight: 600; color: var(--text-main); line-height: 1.6; }
 
     /* CHAT */
     #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1500; width: 340px; max-height: 480px; background: var(--card-bg); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,.25); border: 1.5px solid var(--border-color); display: none; flex-direction: column; overflow: hidden; }
@@ -360,7 +378,6 @@
             <h3 class="residence-title" data-i18n="res_hamdine">الإقامة الجامعية سعيد حمدين</h3>
             <p class="residence-sub" data-i18n="res_hamdine_addr">سعيد حمدين، الجزائر العاصمة</p>
           </div>
-          <span class="residence-badge">600 سرير</span>
         </button>
 
         <!-- Youssefi -->
@@ -371,7 +388,6 @@
             <h3 class="residence-title" data-i18n="res_youssefi">الإقامة الجامعية امحمد يوسفي</h3>
             <p class="residence-sub" data-i18n="res_youssefi_addr">حسين داي، الجزائر العاصمة</p>
           </div>
-          <span class="residence-badge">500 سرير</span>
         </button>
 
         <!-- Gueridi -->
@@ -382,7 +398,6 @@
             <h3 class="residence-title" data-i18n="res_gueridi">الإقامة الجامعية قاريدي</h3>
             <p class="residence-sub" data-i18n="res_gueridi_addr">القبة، الجزائر العاصمة</p>
           </div>
-          <span class="residence-badge">1200 سرير</span>
         </button>
       </div>
 
@@ -492,12 +507,18 @@
 
         <!-- 🍽️ MEALS TABLE -->
         <div class="glass-card" style="padding:22px;">
-          <div class="sec-head" style="border-bottom:none;padding-bottom:0;margin-bottom:16px;">
-            <div class="sec-icon" style="background:linear-gradient(135deg,#f97316,#ea580c);"><i class="fa-solid fa-utensils"></i></div>
-            <div>
-              <h2 data-i18n="res_meals_title">جدول الوجبات الأسبوعي</h2>
-              <p data-i18n="res_meals_desc">الوجبات مقدمة من الديوان الوطني للخدمات الجامعية.</p>
+          <div class="sec-head" style="border-bottom:none;padding-bottom:0;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="sec-icon" style="background:linear-gradient(135deg,#f97316,#ea580c);"><i class="fa-solid fa-utensils"></i></div>
+              <div>
+                <h2 data-i18n="res_meals_title">جدول الوجبات الأسبوعي</h2>
+                <p data-i18n="res_meals_desc">الوجبات مقدمة من الديوان الوطني للخدمات الجامعية.</p>
+              </div>
             </div>
+            <!-- زر البحث في الوجبات -->
+            <button onclick="openSearchModal()" style="padding:10px 18px;border-radius:12px;background:var(--orange);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:.85rem;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 4px 15px rgba(249,115,22,.3);">
+              <i class="fa-solid fa-magnifying-glass"></i> بحث في الوجبات
+            </button>
           </div>
           
           <div class="table-wrap">
@@ -627,6 +648,45 @@
 
   </main>
 
+  <!-- 🍽️ MODAL RECHERCHE REPAS -->
+  <div id="mealSearchModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-utensils" style="color:var(--orange);"></i> البحث في الوجبات</h3>
+        <button class="modal-close" onclick="closeSearchModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      
+      <div class="form-group">
+        <label for="searchDay">اختر اليوم:</label>
+        <select id="searchDay" class="form-select" onchange="searchMeal()">
+          <option value="" disabled selected>-- اختر اليوم --</option>
+          <option value="sun">الأحد</option>
+          <option value="mon">الإثنين</option>
+          <option value="tue">الثلاثاء</option>
+          <option value="wed">الأربعاء</option>
+          <option value="thu">الخميس</option>
+          <option value="fri">الجمعة</option>
+          <option value="sat">السبت</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="searchMealType">اختر الوجبة:</label>
+        <select id="searchMealType" class="form-select" onchange="searchMeal()">
+          <option value="" disabled selected>-- اختر الوجبة --</option>
+          <option value="b">الفطور</option>
+          <option value="l">الغداء</option>
+          <option value="d">العشاء</option>
+        </select>
+      </div>
+
+      <div id="mealSearchResult" class="meal-result">
+        <h4><i class="fa-solid fa-bowl-food"></i> <span id="resultTitle"></span></h4>
+        <p id="resultContent"></p>
+      </div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
   </footer>
@@ -671,7 +731,7 @@
 
   <script>
     /* ============================================================ */
-    /* TRANSLATIONS (Traduction 100% complète)                       */
+    /* TRANSLATIONS                                                  */
     /* ============================================================ */
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
 
@@ -1013,6 +1073,54 @@
       document.getElementById('videoContainer').innerHTML = '';
       window.scrollTo(0,0);
     }
+
+    /* ============================================================ */
+    /* MODAL SEARCH MEALS                                           */
+    /* ============================================================ */
+    function openSearchModal() {
+      document.getElementById('mealSearchModal').classList.add('open');
+      document.getElementById('mealSearchResult').style.display = 'none';
+      document.getElementById('searchDay').value = '';
+      document.getElementById('searchMealType').value = '';
+    }
+
+    function closeSearchModal() {
+      document.getElementById('mealSearchModal').classList.remove('open');
+    }
+
+    function searchMeal() {
+      const day = document.getElementById('searchDay').value;
+      const mealType = document.getElementById('searchMealType').value;
+      const resultBox = document.getElementById('mealSearchResult');
+      const resultTitle = document.getElementById('resultTitle');
+      const resultContent = document.getElementById('resultContent');
+
+      if (!day || !mealType) {
+        resultBox.style.display = 'none';
+        return;
+      }
+
+      const dayNames = {
+        sun: 'الأحد', mon: 'الإثنين', tue: 'الثلاثاء', wed: 'الأربعاء', 
+        thu: 'الخميس', fri: 'الجمعة', sat: 'السبت'
+      };
+      
+      const mealNames = { b: 'الفطور', l: 'الغداء', d: 'العشاء' };
+
+      // جلب النص المترجم من كائن الترجمات
+      const mealKey = mealType + '_' + day;
+      const mealText = t(mealKey); // مثل b_sun أو l_mon
+      
+      resultTitle.innerText = `وجبة ${mealNames[mealType]} ليوم ${dayNames[day]}`;
+      resultContent.innerHTML = mealText; // يحتوي على <br> لعرض الأسطر
+      
+      resultBox.style.display = 'block';
+    }
+
+    // إغلاق النافذة عند النقر خارجها
+    document.getElementById('mealSearchModal').addEventListener('click', function(e) {
+      if (e.target === this) closeSearchModal();
+    });
 
     /* ============================================================ */
     /* QIBLA COMPASS                                                */
