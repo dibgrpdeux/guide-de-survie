@@ -331,6 +331,18 @@
         </div>
       </div>
 
+      <!-- ✅ الجزء الخاص بمعلومات المستخدم (Profile) -->
+      <div class="p-4 border-b border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 flex items-center justify-between">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div id="userAvatar" class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
+          <div class="overflow-hidden">
+            <p id="userName" class="text-sm font-bold truncate text-gray-900 dark:text-white">طالب</p>
+            <p id="userInfo" class="text-[10px] text-gray-500 dark:text-gray-400 truncate" dir="ltr">info</p>
+          </div>
+        </div>
+        <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition text-lg p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fa-solid fa-power-off"></i></button>
+      </div>
+
       <div class="flex-1 overflow-y-auto p-3 space-y-6">
         <div>
           <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">ساحة المنشورات</p>
@@ -372,13 +384,13 @@
 
       <div class="p-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 flex items-center justify-between">
         <div class="flex items-center gap-3 overflow-hidden">
-          <div id="userAvatar" class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
+          <div id="userAvatarFooter" class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
           <div class="overflow-hidden">
-            <p id="userName" class="text-sm font-bold truncate text-gray-900 dark:text-white">طالب</p>
-            <p id="userInfo" class="text-[10px] text-gray-500 dark:text-gray-400 truncate" dir="ltr">info</p>
+            <p id="userNameFooter" class="text-sm font-bold truncate text-gray-900 dark:text-white">طالب</p>
+            <p id="userInfoFooter" class="text-[10px] text-gray-500 dark:text-gray-400 truncate" dir="ltr">info</p>
           </div>
         </div>
-        <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition text-lg p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fa-solid fa-power-off"></i></button>
+        <button id="logoutBtnFooter" class="text-gray-400 hover:text-red-500 transition text-lg p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fa-solid fa-power-off"></i></button>
       </div>
     </aside>
 
