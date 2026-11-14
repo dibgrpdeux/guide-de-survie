@@ -299,7 +299,6 @@
     </div>
   </div>
 
-  <!-- ============ البيانات ============ -->
   <script>
     window.RESTO_DATA = {
       items: [
@@ -321,7 +320,6 @@
     };
   </script>
 
-  <!-- ============ الترجمة ============ -->
   <script>
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
     window.RESTO_TRANSLATIONS = {
@@ -382,7 +380,6 @@
     };
   </script>
 
-  <!-- ============ المنطق ============ -->
   <script>
     const data = window.RESTO_DATA;
     let currentFilter = 'all';
@@ -532,78 +529,6 @@
 
     function openModalByIndex(i){ openModal(data.items[i]); }
 
-    // ==========================================
-    // ✅ التعليقات العامة (بدون تسجيل)
-    // ==========================================
-    const API_URL = "https://jsonblob.com/api/jsonBlob";
-    const BLOB_ID_RESTO = "1175524393688363009"; 
-
-    async function fetchPublicComments() {
-      try {
-        const res = await fetch(`${API_URL}/${BLOB_ID_RESTO}`);
-        if(res.status === 404) return {};
-        return await res.json() || {};
-      } catch(e) { return {}; }
-    }
-
-    async function savePublicComments(allComments) {
-      try {
-        await fetch(`${API_URL}/${BLOB_ID_RESTO}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(allComments)
-        });
-      } catch(e) { console.error("Save error:", e); }
-    }
-
-    async function loadComments(itemName) {
-      const sid = safeId(itemName);
-      const list = document.getElementById('list-'+sid);
-      const badge = document.getElementById('count-'+sid);
-      if(!list) return;
-
-      list.innerHTML = '<p class="no-comments">جاري التحميل...</p>';
-      
-      const allServerComments = await fetchPublicComments();
-      const saved = allServerComments[sid] || [];
-
-      if(badge) badge.innerText = saved.length;
-      if(saved.length === 0){
-        list.innerHTML = `<p class="no-comments">${t('no_comments')}</p>`;
-        return;
-      }
-      list.innerHTML = saved.map(c=>`<div class="comment-item"><strong>${c.name||'👤'}:</strong> ${c.text}</div>`).join('');
-    }
-
-    async function addComment(e, itemName) {
-      if(e) e.stopPropagation();
-      const sid = safeId(itemName);
-      const nameEl = document.getElementById('name-'+sid);
-      const cmtEl = document.getElementById('cmt-'+sid);
-      if(!cmtEl || !cmtEl.value.trim()) return;
-
-      cmtEl.disabled = true;
-      
-      const allComments = await fetchPublicComments();
-      if(!allComments[sid]) allComments[sid] = [];
-      
-      allComments[sid].push({
-        name: (nameEl && nameEl.value.trim()) || '👤',
-        text: cmtEl.value.trim(),
-        date: new Date().toISOString()
-      });
-
-      await savePublicComments(allComments);
-
-      if(cmtEl) { cmtEl.value = ''; cmtEl.disabled = false; }
-      if(nameEl) nameEl.value = '';
-      
-      await loadComments(itemName);
-    }
-
-    // ==========================================
-    // MODAL
-    // ==========================================
     function openModal(item){
       const modal = document.getElementById('itemModal');
       modal.classList.add('open');
@@ -709,5 +634,92 @@
       if(ci) ci.addEventListener('keypress', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendMessage(); } });
     });
   </script>
+
+  <!-- Firebase Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
+      authDomain: "enstp-forum-c5a28.firebaseapp.com",
+      projectId: "enstp-forum-c5a28",
+      storageBucket: "enstp-forum-c5a28.firebasestorage.app",
+      messagingSenderId: "129732313908",
+      appId: "1:129732313908:web:c06215b2fde653b76c9b61"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let unsubscribeComments = null;
+    function safeId(name){ return name.replace(/[^a-zA-Z0-9]/g,'_'); }
+
+    window.loadComments = function(itemName) {
+      const sid = safeId(itemName);
+      const list = document.getElementById('list-' + sid);
+      const badge = document.getElementById('count-' + sid);
+      if (!list) return;
+
+      if (unsubscribeComments) unsubscribeComments();
+
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:.8rem;">جاري التحميل...</p>';
+
+      const q = query(
+        collection(db, "resto_comments", itemName, "comments"),
+        orderBy("time", "desc")
+      );
+
+      unsubscribeComments = onSnapshot(q, (snap) => {
+        if (badge) badge.innerText = snap.size;
+        if (snap.empty) {
+          list.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:.8rem;">لا توجد تعليقات بعد. كن أول من يعلق!</p>';
+          return;
+        }
+        let html = '';
+        snap.forEach(docSnap => {
+          const data = docSnap.data();
+          const id = docSnap.id;
+          const name = data.name || '👤';
+          const text = data.text || '';
+          const date = data.time ? new Date(data.time.toDate()).toLocaleString('ar-DZ') : '...';
+          html += `
+            <div class="comment-item" style="position:relative;">
+              <strong>${name}:</strong> ${text}
+              <span style="font-size:.7rem;color:#94a3b8;margin-right:8px;">${date}</span>
+              <button onclick="deleteComment('${itemName}', '${id}')" style="position:absolute;left:0;top:0;background:transparent;border:none;color:#ef4444;cursor:pointer;font-size:.8rem;"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          `;
+        });
+        list.innerHTML = html;
+      });
+    };
+
+    window.addComment = async function(e, itemName) {
+      if (e) e.stopPropagation();
+      const sid = safeId(itemName);
+      const nameEl = document.getElementById('name-' + sid);
+      const cmtEl = document.getElementById('cmt-' + sid);
+      if (!cmtEl || !cmtEl.value.trim()) return;
+      cmtEl.disabled = true;
+      try {
+        await addDoc(collection(db, "resto_comments", itemName, "comments"), {
+          name: (nameEl && nameEl.value.trim()) || '👤',
+          text: cmtEl.value.trim(),
+          time: serverTimestamp()
+        });
+        cmtEl.value = ''; if (nameEl) nameEl.value = '';
+      } catch (err) { alert("خطأ في إضافة التعليق: " + err.message); }
+      finally { cmtEl.disabled = false; }
+    };
+
+    window.deleteComment = async function(itemName, commentId) {
+      if (!confirm("هل أنت متأكد من حذف هذا التعليق؟")) return;
+      try { await deleteDoc(doc(db, "resto_comments", itemName, "comments", commentId)); }
+      catch (err) { alert("خطأ في الحذف: " + err.message); }
+    };
+  </script>
 </body>
 </html>
+
+
