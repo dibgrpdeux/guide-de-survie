@@ -225,10 +225,15 @@
       cursor: pointer; font-family: inherit; font-size: .75rem; transition: all .2s;
     }
     .comment-form-inline button:hover { background: var(--orange-dark); transform: scale(1.05); }
+    
+    /* ✅ إضافة خاصية التمرير (Scroll) للتعليقات */
     .comments-list-inline {
       display: flex; flex-direction: column; gap: 5px; margin-top: 8px;
-      max-height: 160px; overflow-y: auto;
+      max-height: 160px; overflow-y: auto; padding-right: 4px;
     }
+    .comments-list-inline::-webkit-scrollbar { width: 4px; }
+    .comments-list-inline::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 4px; }
+    
     .comment-item {
       background: var(--bg-color); padding: 7px 10px; border-radius: 8px;
       border: 1px solid var(--border-color); font-size: .78rem; color: var(--text-main);
@@ -915,7 +920,7 @@
     });
   </script>
 
-  <!-- Firebase Integration -->
+  <!-- Firebase Integration (مع إصلاح مشكلة التحديث الفوري) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -932,7 +937,8 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    let unsubscribeComments = null;
+    // ✅ استخدام Map لتخزين دوال الإلغاء لكل عنصر على حدة
+    const unsubscribers = new Map();
     function safeId(name){ return name.replace(/[^a-zA-Z0-9]/g,'_'); }
 
     window.loadComments = function(itemName) {
@@ -941,7 +947,11 @@
       const badge = document.getElementById('count-' + sid);
       if (!list) return;
 
-      if (unsubscribeComments) unsubscribeComments();
+      // إلغاء الاستماع السابق لنفس العنصر (إن وجد)
+      if (unsubscribers.has(sid)) {
+        unsubscribers.get(sid)();
+        unsubscribers.delete(sid);
+      }
 
       list.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:.8rem;">جاري التحميل...</p>';
 
@@ -950,7 +960,7 @@
         orderBy("time", "desc")
       );
 
-      unsubscribeComments = onSnapshot(q, (snap) => {
+      const unsub = onSnapshot(q, (snap) => {
         if (badge) badge.innerText = snap.size;
         if (snap.empty) {
           list.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:.8rem;">لا توجد تعليقات بعد. كن أول من يعلق!</p>';
@@ -972,7 +982,11 @@
           `;
         });
         list.innerHTML = html;
+        // التمرير التلقائي لأسفل لرؤية أحدث تعليق
+        list.scrollTop = list.scrollHeight;
       });
+
+      unsubscribers.set(sid, unsub);
     };
 
     window.addComment = async function(e, itemName) {
@@ -981,6 +995,7 @@
       const nameEl = document.getElementById('name-' + sid);
       const cmtEl = document.getElementById('cmt-' + sid);
       if (!cmtEl || !cmtEl.value.trim()) return;
+      
       cmtEl.disabled = true;
       try {
         await addDoc(collection(db, "shopping_comments", itemName, "comments"), {
