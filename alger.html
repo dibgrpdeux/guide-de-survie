@@ -35,8 +35,6 @@
       margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased;
       min-height: 100vh; padding-top: 90px;
     }
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #f97316, #ea580c); border-radius: 10px; }
 
     /* BLOBS */
     .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
@@ -126,17 +124,8 @@
 
     /* HERO */
     .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
-    .page-hero h1 {
-      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
-      margin: 0 0 8px; line-height: 1.2;
-    }
-    .page-hero h1 span {
-      background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24);
-      background-size: 200% auto;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-    }
+    .page-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; margin: 0 0 8px; line-height: 1.2; }
+    .page-hero h1 span { background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; }
     .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
 
     /* CONTENT */
@@ -195,20 +184,11 @@
     .place-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
     .place-title { font-size: 1.05rem; font-weight: 900; color: var(--text-main); line-height: 1.25; margin: 0 0 8px; transition: color .25s; }
     .place-card:hover .place-title { color: var(--orange); }
-    .place-sub {
-      font-size: .78rem; color: var(--text-muted); font-weight: 600;
-      line-height: 1.5; margin: 0 0 10px;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-    }
+    .place-sub { font-size: .78rem; color: var(--text-muted); font-weight: 600; line-height: 1.5; margin: 0 0 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     
     .place-stars { display: flex; gap: 2px; margin-bottom: 8px; color: #fbbf24; font-size: 0.8rem; }
 
-    .place-footer {
-      margin-top: auto; padding-top: 10px;
-      border-top: 1px dashed var(--border-color);
-      display: flex; align-items: center; justify-content: center;
-      gap: 6px; font-size: .78rem; font-weight: 800; color: var(--orange);
-    }
+    .place-footer { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--border-color); display: flex; align-items: center; justify-content: center; gap: 6px; font-size: .78rem; font-weight: 800; color: var(--orange); }
 
     /* MODAL */
     #placeModal {
@@ -237,20 +217,14 @@
     }
     .modal-close:hover { background: var(--orange); color: #fff; transform: rotate(90deg); }
 
-    .modal-header {
-      padding-bottom: 16px; margin-bottom: 20px;
-      border-bottom: 1.5px solid var(--border-color); padding-left: 50px;
-    }
+    .modal-header { padding-bottom: 16px; margin-bottom: 20px; border-bottom: 1.5px solid var(--border-color); padding-left: 50px; }
     .modal-title { font-size: 1.5rem; font-weight: 900; color: var(--text-main); margin: 0 0 6px; }
     .modal-subtitle { font-size: .85rem; color: var(--orange-dark); font-weight: 800; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     [data-theme="dark"] .modal-subtitle { color: #fdba74; }
     .modal-loc { font-size: .85rem; color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
     /* Rating in Modal */
-    .rating-box {
-      display: flex; align-items: center; gap: 10px; margin-top: 10px;
-      padding: 10px 14px; background: rgba(249,115,22,.06); border-radius: 12px; border: 1px dashed var(--border-color);
-    }
+    .rating-box { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 10px 14px; background: rgba(249,115,22,.06); border-radius: 12px; border: 1px dashed var(--border-color); }
     .rating-stars { display: flex; gap: 5px; font-size: 1.2rem; color: #fbbf24; cursor: pointer; }
     .rating-stars i { transition: transform 0.2s; }
     .rating-stars i:hover { transform: scale(1.2); }
@@ -259,10 +233,7 @@
     .modal-section { margin-bottom: 20px; }
     .modal-section h4 { margin: 0 0 8px; font-size: .9rem; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
     .modal-section h4 i { color: var(--orange); font-size: .95rem; }
-    .modal-section .section-content {
-      background: rgba(249,115,22,.06); border: 1px solid rgba(249,115,22,.2);
-      border-radius: 12px; padding: 12px 14px; font-size: .86rem; line-height: 1.7; color: var(--text-main);
-    }
+    .modal-section .section-content { background: rgba(249,115,22,.06); border: 1px solid rgba(249,115,22,.2); border-radius: 12px; padding: 12px 14px; font-size: .86rem; line-height: 1.7; color: var(--text-main); }
     [data-theme="dark"] .modal-section .section-content { background: rgba(249,115,22,.1); }
     .section-content.blue { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.2); }
     .section-content.amber { background: rgba(245,158,11,.08); border-color: rgba(245,158,11,.2); }
@@ -271,10 +242,7 @@
     .gallery-scroll { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 8px; }
     .gallery-scroll::-webkit-scrollbar { height: 6px; }
     .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(249,115,22,.4); border-radius: 10px; }
-    .gallery-item {
-      flex: 0 0 auto; width: 200px; height: 140px; border-radius: 12px; overflow: hidden;
-      border: 2px solid var(--border-color); background: var(--bg-color); cursor: pointer; transition: all .3s ease;
-    }
+    .gallery-item { flex: 0 0 auto; width: 200px; height: 140px; border-radius: 12px; overflow: hidden; border: 2px solid var(--border-color); background: var(--bg-color); cursor: pointer; transition: all .3s ease; }
     .gallery-item:hover { transform: scale(1.05); border-color: var(--orange); box-shadow: 0 10px 25px -5px rgba(249,115,22,.35); }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -288,16 +256,9 @@
     .comments-section h4 { margin: 0 0 12px; font-size: 1rem; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
     .comments-section h4 i { color: var(--orange); }
     .comment-form { display: flex; gap: 8px; margin-bottom: 16px; }
-    .comment-form input {
-      flex: 1; padding: 10px 14px; border-radius: 10px;
-      border: 1.5px solid var(--border-color); background: var(--bg-color);
-      font-family: inherit; font-size: .85rem; outline: none; color: var(--text-main);
-    }
+    .comment-form input { flex: 1; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--bg-color); font-family: inherit; font-size: .85rem; outline: none; color: var(--text-main); }
     .comment-form input:focus { border-color: var(--orange); }
-    .comment-form button {
-      padding: 10px 16px; border-radius: 10px; border: none;
-      background: var(--orange); color: #fff; font-family: inherit; font-weight: 800; cursor: pointer; transition: all .2s;
-    }
+    .comment-form button { padding: 10px 16px; border-radius: 10px; border: none; background: var(--orange); color: #fff; font-family: inherit; font-weight: 800; cursor: pointer; transition: all .2s; }
     .comment-form button:hover { background: var(--orange-dark); }
     .comments-list { display: flex; flex-direction: column; gap: 10px; }
     .comment-item { background: var(--bg-color); padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border-color); font-size: .85rem; animation: msgIn .3s ease; }
@@ -308,12 +269,7 @@
     @keyframes msgIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
 
     /* CHAT */
-    #chatWindow {
-      position: fixed; bottom: 110px; right: 20px; z-index: 1500;
-      width: 340px; max-height: 480px; background: var(--card-bg); border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.25); border: 1.5px solid var(--border-color);
-      display: none; flex-direction: column; overflow: hidden;
-    }
+    #chatWindow { position: fixed; bottom: 110px; right: 20px; z-index: 1500; width: 340px; max-height: 480px; background: var(--card-bg); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,.25); border: 1.5px solid var(--border-color); display: none; flex-direction: column; overflow: hidden; }
     #chatWindow.open { display: flex; }
     @media(max-width:640px){ #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
     .chat-header { background: linear-gradient(135deg,#f97316,#f59e0b); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; font-weight: 800; }
@@ -353,7 +309,6 @@
     <div class="dot dot-1"></div><div class="dot dot-2"></div><div class="dot dot-3"></div><div class="dot dot-4"></div><div class="dot dot-5"></div>
   </div>
 
-  <!-- NAVBAR -->
   <nav class="top-navbar">
     <div class="nav-brand">
       <div class="nav-icon"><i class="fa-solid fa-map-location-dot"></i></div>
@@ -389,7 +344,6 @@
     </div>
   </div>
 
-  <!-- HERO -->
   <header class="page-hero">
     <h1><span data-i18n="hero_1">الترفيه والرحلات</span> <span data-i18n="hero_2">في العاصمة</span></h1>
     <p data-i18n="hero_desc">اكتشف أجمل الأماكن السياحية والترفيهية في الجزائر العاصمة.</p>
@@ -404,17 +358,14 @@
     <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
   </footer>
 
-  <!-- MODAL -->
   <div id="placeModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-
       <div class="modal-header">
         <h2 class="modal-title" id="modalTitle"></h2>
         <div class="modal-subtitle" id="modalSubtitle"></div>
         <div class="modal-loc" id="modalLocationText"><i class="fa-solid fa-location-dot"></i> <span></span></div>
         
-        <!-- RATING SECTION (MODAL) -->
         <div class="rating-box">
           <span class="rating-text" data-i18n="modal_rate_title">قيم هذا المكان:</span>
           <div class="rating-stars" id="modalRatingStars">
@@ -451,7 +402,6 @@
         <div id="modalMap" class="map-wrap"></div>
       </div>
 
-      <!-- COMMENTS SECTION -->
       <div class="comments-section" id="modalCommentsSection">
         <h4><i class="fa-solid fa-comments"></i> <span data-i18n="modal_comments_title">تعليقات وآراء الطلبة:</span></h4>
         <div class="comment-form">
@@ -460,11 +410,9 @@
         </div>
         <div id="commentsList" class="comments-list"></div>
       </div>
-
     </div>
   </div>
 
-  <!-- KANGOUROU -->
   <div class="mascot-container" id="kangarooContainer">
     <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
@@ -489,7 +437,6 @@
     </svg>
   </div>
 
-  <!-- CHAT -->
   <div id="chatWindow">
     <div class="chat-header">
       <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد الافتراضي</span></span>
@@ -504,9 +451,6 @@
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- placesData                                                   -->
-  <!-- ============================================================ -->
   <script>
     const placesData = [
       { id: 'sidi_fredj', category: 'beaches', title: { ar: "سيدي فرج (Sidi Fredj)", fr: "Sidi Fredj", en: "Sidi Fredj" }, loc: {ar: "سيدي فرج، الجزائر العاصمة", fr: "Sidi Fredj, Alger", en: "Sidi Fredj, Algiers"}, icon: '🏖️', history: { ar: "يبعد 25 كم عن وسط العاصمة. يتميز بمرسى ترفيهي ومطاعم أسماك. الدخول مجاني.", fr: "À 25 km du centre. Marina et restaurants de poisson. Entrée gratuite.", en: "25 km from center. Marina and fish restaurants. Free entry." }, transport: { ar: "الطريق السيار A1.", fr: "Autoroute A1.", en: "Highway A1." }, map: 'Sidi Fredj Alger', images: ['SIDI-FREDJ.png', 'images (9).jpeg', 'images (10).jpeg'], videos: [] },
@@ -535,44 +479,10 @@
     ];
   </script>
 
-  <!-- ============================================================ -->
-  <!-- TRANSLATIONS & LOGIC                                       -->
-  <!-- ============================================================ -->
   <script>
     let currentLang = localStorage.getItem('enstp_lang') || 'ar';
     let currentCategory = 'all';
     let currentModalPlaceId = null;
-
-    // ==========================================
-    // ✅ إعدادات التعليقات العامة (بدون تسجيل)
-    // ==========================================
-    // سنستخدم خادم JSONBlob المجاني الذي لا يحتاج إلى تسجيل أو مفاتيح
-    const API_URL = "https://jsonblob.com/api/jsonBlob";
-    const BLOB_ID = "1175524393688363008"; // معرف ثابت سيتم إنشاؤه تلقائياً إذا لم يوجد
-
-    async function fetchPublicComments() {
-      try {
-        const res = await fetch(`${API_URL}/${BLOB_ID}`);
-        if(res.status === 404) return {};
-        const data = await res.json();
-        return data || {};
-      } catch(e) { 
-        console.error("Fetch error:", e);
-        return {}; 
-      }
-    }
-
-    async function savePublicComments(allComments) {
-      try {
-        await fetch(`${API_URL}/${BLOB_ID}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(allComments)
-        });
-      } catch(e) { 
-        console.error("Save error:", e);
-      }
-    }
 
     window.ALGER_TRANSLATIONS = {
       ar: {
@@ -727,7 +637,6 @@
         const catName = t('cat_'+place.category);
         const histPreview = (place.history[currentLang] || place.history.ar || '').slice(0, 90) + '...';
         
-        // Note locale (stockée en local)
         const savedRating = localStorage.getItem('alger_rating_' + place.id) || 0;
         let starsHtml = '';
         for(let i=1; i<=5; i++){
@@ -777,11 +686,9 @@
       document.getElementById('modalHistory').innerText = hist;
       document.getElementById('modalTransport').innerText = trans;
 
-      // Rating
       const savedRating = parseInt(localStorage.getItem('alger_rating_' + place.id) || 0);
       updateModalStars(savedRating);
 
-      // Map & Media
       const mapQuery = encodeURIComponent(place.map);
       document.getElementById('modalMap').innerHTML = `<iframe src="https://www.google.com/maps?q=${mapQuery}&output=embed" allowfullscreen loading="lazy"></iframe>`;
 
@@ -809,7 +716,6 @@
         });
       } else { vc.style.display = 'none'; }
 
-      // Load comments from server
       await loadComments(place.id);
 
       document.querySelector('.modal-card').scrollTop = 0;
@@ -845,69 +751,7 @@
       if(!currentModalPlaceId) return;
       localStorage.setItem('alger_rating_' + currentModalPlaceId, rating);
       updateModalStars(rating);
-      renderCards(); // Refresh cards to show the new rating
-    }
-
-    /* ========== PUBLIC COMMENTS (JSONBlob) ========== */
-    async function loadComments(placeId){
-      const list = document.getElementById('commentsList');
-      if(!list) return;
-      list.innerHTML = '<p style="font-size:.8rem;color:var(--text-muted);text-align:center;">جاري تحميل التعليقات...</p>';
-      
-      try {
-        const allServerComments = await fetchPublicComments();
-        const saved = allServerComments[placeId] || [];
-        
-        list.innerHTML = '';
-        if(saved.length === 0){
-          list.innerHTML = `<p style="font-size:.8rem;color:var(--text-muted);text-align:center;">لا توجد تعليقات بعد. كن أول من يشارك!</p>`;
-          return;
-        }
-        
-        saved.forEach(c=>{
-          list.innerHTML += `
-            <div class="comment-item">
-              <div class="comment-header">
-                <span class="comment-name">${c.name}</span>
-                <span class="comment-time">${c.date}</span>
-              </div>
-              <div class="comment-text">${c.text}</div>
-            </div>
-          `;
-        });
-      } catch (err) {
-        list.innerHTML = `<p style="font-size:.8rem;color:red;text-align:center;">حدث خطأ أثناء تحميل التعليقات.</p>`;
-      }
-    }
-
-    async function addComment(){
-      if(!currentModalPlaceId) return;
-      const input = document.getElementById('commentInput');
-      const text = input.value.trim();
-      if(!text) return;
-
-      input.value = 'جاري الإرسال...';
-      input.disabled = true;
-
-      try {
-        const allComments = await fetchPublicComments();
-        if(!allComments[currentModalPlaceId]) allComments[currentModalPlaceId] = [];
-        
-        const now = new Date();
-        const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        
-        allComments[currentModalPlaceId].push({ text: text, name: "طالب", date: dateStr });
-        
-        await savePublicComments(allComments);
-        
-        input.value = '';
-        input.disabled = false;
-        await loadComments(currentModalPlaceId); // Reload to show new comment
-      } catch (e) {
-        alert("تعذر إرسال التعليق. يرجى المحاولة مرة أخرى.");
-        input.value = text;
-        input.disabled = false;
-      }
+      renderCards();
     }
 
     /* ========== CHAT ========== */
@@ -978,6 +822,102 @@
         });
       }
     });
+  </script>
+
+  <!-- Firebase Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
+      authDomain: "enstp-forum-c5a28.firebaseapp.com",
+      projectId: "enstp-forum-c5a28",
+      storageBucket: "enstp-forum-c5a28.firebasestorage.app",
+      messagingSenderId: "129732313908",
+      appId: "1:129732313908:web:c06215b2fde653b76c9b61"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let currentCommentPlaceId = null;
+    let unsubscribeComments = null;
+
+    window.loadComments = function(placeId) {
+      currentCommentPlaceId = placeId;
+      const list = document.getElementById('commentsList');
+      if (!list) return;
+
+      if (unsubscribeComments) unsubscribeComments();
+
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);">جاري التحميل...</p>';
+
+      const q = query(
+        collection(db, "loisirs_comments", placeId, "comments"),
+        orderBy("time", "desc")
+      );
+
+      unsubscribeComments = onSnapshot(q, (snap) => {
+        if (snap.empty) {
+          list.innerHTML = '<p style="text-align:center;color:var(--text-muted);">لا توجد تعليقات بعد. كن أول من يعلق!</p>';
+          return;
+        }
+
+        let html = '';
+        snap.forEach(docSnap => {
+          const data = docSnap.data();
+          const id = docSnap.id;
+          const name = data.name || '👤';
+          const text = data.text || '';
+          const date = data.time ? new Date(data.time.toDate()).toLocaleString('ar-DZ') : '...';
+          
+          html += `
+            <div class="comment-item" style="position:relative;">
+              <div class="comment-header">
+                <span class="comment-name">${name}</span>
+                <span class="comment-time">${date}</span>
+              </div>
+              <div class="comment-text">${text}</div>
+              <button onclick="deleteComment('${placeId}', '${id}')" style="position:absolute;left:10px;top:10px;background:transparent;border:none;color:#ef4444;cursor:pointer;font-size:.8rem;">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          `;
+        });
+        list.innerHTML = html;
+      });
+    };
+
+    window.addComment = async function() {
+      if (!currentCommentPlaceId) return;
+      const input = document.getElementById('commentInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.disabled = true;
+      try {
+        await addDoc(collection(db, "loisirs_comments", currentCommentPlaceId, "comments"), {
+          name: "طالب", // اسم افتراضي
+          text: text,
+          time: serverTimestamp()
+        });
+        input.value = '';
+      } catch (err) {
+        alert("خطأ في إضافة التعليق: " + err.message);
+      } finally {
+        input.disabled = false;
+      }
+    };
+
+    window.deleteComment = async function(placeId, commentId) {
+      if (!confirm("هل أنت متأكد من حذف هذا التعليق؟")) return;
+      try {
+        await deleteDoc(doc(db, "loisirs_comments", placeId, "comments", commentId));
+      } catch (err) {
+        alert("خطأ في الحذف: " + err.message);
+      }
+    };
   </script>
 </body>
 </html>
