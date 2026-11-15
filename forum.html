@@ -25,19 +25,33 @@
 
   <style>
     body { background-color: var(--bg); font-family: 'Cairo', sans-serif; }
+    
+    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* Card Hover Effect */
     .post-card { transition: all 0.3s ease; }
     .post-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+
+    /* Chat Sidebar Item Hover */
     .chat-item { transition: background 0.2s; cursor: pointer; }
     .chat-item:hover { background: #fff7ed; }
     .chat-item.active { background: #ffedd5; border-right: 4px solid #f97316; }
+
+    /* Hide scrollbar for category chips */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Fade In Animation */
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+
+    /* Chat bubble styles */
+    .chat-bubble-me { background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-radius: 18px 18px 4px 18px; }
+    .chat-bubble-other { background: #ffffff; color: #1e293b; border-radius: 18px 18px 18px 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #f1f5f9; }
   </style>
 </head>
 <body class="text-gray-800 h-screen overflow-hidden flex flex-col">
@@ -54,14 +68,20 @@
       </div>
     </div>
     
+    <!-- Language & Auth Area -->
     <div class="flex items-center gap-3">
+      <!-- Language Selector -->
       <div class="flex bg-gray-100 rounded-xl p-1">
         <button onclick="setLanguage('ar')" id="lang-ar" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white shadow-sm text-brand-600">🇩🇿 عربي</button>
         <button onclick="setLanguage('fr')" id="lang-fr" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-500 hover:text-brand-600">🇫🇷 FR</button>
         <button onclick="setLanguage('en')" id="lang-en" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-500 hover:text-brand-600">🇬🇧 EN</button>
       </div>
+
       <div id="headerAuthArea">
-        <button id="loginBtn" onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md" data-i18n="btn_login">تسجيل الدخول</button>
+        <!-- سيتم تعبئتها بواسطة JS -->
+        <button id="loginBtn" onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md" data-i18n="btn_login">
+          تسجيل الدخول
+        </button>
       </div>
     </div>
   </header>
@@ -71,34 +91,55 @@
 
     <!-- ================= RIGHT SIDEBAR (Chats) ================= -->
     <aside class="w-80 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden shrink-0 hidden lg:flex">
-      <div class="p-4 border-b border-gray-100 flex items-center justify-between">
-        <h2 class="font-black text-gray-800 text-lg" data-i18n="chat_sidebar_title">الرسائل المباشرة والدردشة</h2>
-        <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="w-8 h-8 rounded-full bg-brand-50 text-brand-500 hover:bg-brand-100 flex items-center justify-center transition" title="إنشاء غرفة جديدة">
+      
+      <!-- Sidebar Header -->
+      <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-brand-50/50">
+        <div class="flex items-center gap-2">
+          <button onclick="closeChatArea()" id="backToChatListBtn" class="hidden text-gray-500 hover:text-brand-500 transition"><i class="fa-solid fa-arrow-right"></i></button>
+          <h2 id="chatSidebarTitle" class="font-black text-gray-800 text-lg" data-i18n="chat_sidebar_title">الرسائل المباشرة والدردشة</h2>
+        </div>
+        <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="w-8 h-8 rounded-full bg-white text-brand-500 hover:bg-brand-100 flex items-center justify-center transition shadow-sm border border-brand-100" title="إنشاء غرفة جديدة">
           <i class="fa-solid fa-plus"></i>
         </button>
       </div>
+
+      <!-- Chat List Container -->
       <div class="flex-1 overflow-y-auto" id="chatListContainer">
-        <!-- Default Chat items (لن يتم حذفها للحفاظ على التصميم) -->
-        <div class="chat-item active p-3 flex gap-3">
-          <div class="relative"><img src="https://i.pravatar.cc/100?img=1" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"><span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span></div>
-          <div class="flex-1 min-w-0"><div class="flex justify-between items-center mb-1"><h3 class="font-bold text-sm text-gray-900 truncate">نادي الهندسة المعمارية</h3><span class="text-[10px] text-gray-400">10 من</span></div><p class="text-xs text-gray-500 truncate">نادي الهندسة المعمارية المسلة ...</p></div>
-          <div class="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold mt-2">3</div>
-        </div>
-        <div class="chat-item p-3 flex gap-3 border-b border-gray-50">
-          <div class="relative"><img src="https://i.pravatar.cc/100?img=5" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"></div>
-          <div class="flex-1 min-w-0"><div class="flex justify-between items-center mb-1"><h3 class="font-bold text-sm text-gray-900 truncate">مجموعة فيزياء 1</h3><span class="text-[10px] text-gray-400">10 من</span></div><p class="text-xs text-gray-500 truncate">مجموعة فيزياء 1 بادي الدسوقية ...</p></div>
-          <div class="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold mt-2">1</div>
-        </div>
+        <!-- سيتم إدراج الغرف هنا ديناميكياً -->
+        <div class="p-4 text-center text-gray-400 text-sm">جاري تحميل الغرف...</div>
       </div>
-      <div class="p-3 border-t border-gray-100 bg-gray-50">
-        <div class="flex flex-col border border-gray-200 rounded-xl bg-white overflow-hidden">
-          <input type="text" placeholder="Message input..." class="w-full px-3 py-2 text-sm outline-none bg-transparent" disabled>
-          <div class="flex items-center justify-between px-2 py-1 border-t border-gray-100">
-            <div class="flex gap-2 text-gray-400"><i class="fa-regular fa-image"></i><i class="fa-solid fa-paperclip"></i><i class="fa-solid fa-microphone"></i></div>
-            <button class="bg-brand-500 text-white text-xs font-bold px-4 py-1.5 rounded-lg opacity-50 cursor-not-allowed" data-i18n="btn_send">إرسال</button>
+
+      <!-- Chat Area Container (Hidden by default) -->
+      <div id="activeChatArea" class="hidden flex-1 flex flex-col h-full bg-gray-50 absolute inset-0 z-30 transform translate-x-full transition-transform duration-300">
+        
+        <!-- Active Chat Header -->
+        <div class="p-3 border-b border-gray-200 flex items-center gap-3 bg-white shrink-0">
+          <button onclick="closeChatArea()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition"><i class="fa-solid fa-arrow-right"></i></button>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold"><i class="fa-solid fa-hashtag"></i></div>
+            <div>
+              <h3 id="activeChatName" class="font-bold text-sm text-gray-900">اسم الغرفة</h3>
+              <p class="text-[10px] text-green-500 font-bold">متصل الآن</p>
+            </div>
           </div>
         </div>
+
+        <!-- Messages Container -->
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col">
+          <!-- سيتم إدراج الرسائل هنا -->
+        </div>
+
+        <!-- Chat Input -->
+        <div class="p-3 border-t border-gray-200 bg-white shrink-0">
+          <form id="chatForm" class="flex items-center gap-2 bg-gray-100 rounded-xl p-1 border border-transparent focus-within:border-brand-300 transition">
+            <input type="text" id="chatInput" placeholder="اكتب رسالة..." class="flex-1 bg-transparent border-none outline-none px-3 py-2 text-sm text-gray-800" required autocomplete="off">
+            <button type="submit" class="w-9 h-9 rounded-lg bg-brand-500 hover:bg-brand-600 text-white flex items-center justify-center transition shadow-sm shrink-0">
+              <i class="fa-solid fa-paper-plane text-sm"></i>
+            </button>
+          </form>
+        </div>
       </div>
+
     </aside>
 
     <!-- ================= MAIN CONTENT (Posts) ================= -->
@@ -106,29 +147,29 @@
       
       <!-- Top Controls -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-4 flex flex-wrap items-center justify-between gap-4 shrink-0">
+        <!-- Categories -->
         <div class="flex gap-2 overflow-x-auto no-scrollbar">
           <button class="bg-brand-500 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md shadow-brand-500/30 whitespace-nowrap" data-i18n="cat_all">الكل</button>
           <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap" data-i18n="cat_discussions">نقاشات ودروس</button>
           <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap" data-i18n="cat_clubs">النوادي</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap" data-i18n="cat_events">فعاليات</button>
         </div>
+
+        <!-- Search & Create Post Button -->
         <div class="flex items-center gap-2 w-full md:w-auto">
           <div class="relative w-full md:w-64">
             <input type="text" placeholder="ابحث..." data-i18n-placeholder="search_placeholder" class="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:border-brand-500 transition">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
           </div>
-          <!-- ✅ زر نشر منشور -->
           <button onclick="document.getElementById('createPostModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-xl font-bold text-sm transition shadow-md flex items-center gap-2 whitespace-nowrap">
             <i class="fa-solid fa-plus"></i> <span data-i18n="btn_create_post">نشر</span>
           </button>
         </div>
       </div>
 
-      <!-- Posts Grid (سيتم توليد المنشورات هنا ديناميكياً) -->
+      <!-- Posts Grid -->
       <div class="flex-1 overflow-y-auto pb-4" id="postsGridContainer">
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" id="postsGrid">
-          <!-- سيتم إدراج المنشورات هنا بواسطة JavaScript -->
-        </div>
-        <!-- No posts message -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" id="postsGrid"></div>
         <div id="noPostsMessage" class="hidden text-center py-20 text-gray-400">
           <i class="fa-regular fa-folder-open text-6xl mb-4 opacity-50"></i>
           <p class="text-lg font-bold" data-i18n="no_posts_yet">لا توجد منشورات بعد. كن أول من ينشر!</p>
@@ -290,26 +331,21 @@
         cat_all: "الكل",
         cat_discussions: "نقاشات ودروس",
         cat_clubs: "النوادي",
+        cat_events: "فعاليات",
         search_placeholder: "ابحث...",
         btn_create_post: "نشر",
         no_posts_yet: "لا توجد منشورات بعد. كن أول من ينشر!",
-        
-        // Post Modal
         create_post_title: "نشر منشور جديد",
         create_post_subtitle: "شارك أفكارك مع زملائك في الملتقى",
         post_title_label: "عنوان المنشور",
         post_content_label: "محتوى المنشور",
         post_tags_label: "الوسوم (اختياري)",
         btn_publish: "نشر الآن",
-
-        // Room Modal
         create_room_title: "إنشاء غرفة دردشة",
         create_room_subtitle: "أنشئ مساحة خاصة للنقاش",
         room_name_label: "اسم الغرفة",
         room_pass_label: "كلمة المرور (اختياري)",
         btn_create: "إنشاء",
-
-        // Auth
         login_title: "تسجيل الدخول",
         login_subtitle: "مرحباً بك مجدداً",
         email_label: "البريد الإلكتروني",
@@ -338,23 +374,21 @@
         cat_all: "Tous",
         cat_discussions: "Discussions et Cours",
         cat_clubs: "Clubs",
+        cat_events: "Événements",
         search_placeholder: "Rechercher...",
         btn_create_post: "Publier",
         no_posts_yet: "Aucun post pour le moment. Soyez le premier !",
-        
         create_post_title: "Créer un post",
         create_post_subtitle: "Partagez vos idées avec vos camarades",
         post_title_label: "Titre du post",
         post_content_label: "Contenu du post",
         post_tags_label: "Tags (optionnel)",
         btn_publish: "Publier maintenant",
-
         create_room_title: "Créer un salon",
         create_room_subtitle: "Créez un espace privé pour discuter",
         room_name_label: "Nom du salon",
         room_pass_label: "Mot de passe (optionnel)",
         btn_create: "Créer",
-
         login_title: "Connexion",
         login_subtitle: "Bon retour parmi nous",
         email_label: "Email",
@@ -383,23 +417,21 @@
         cat_all: "All",
         cat_discussions: "Discussions & Lessons",
         cat_clubs: "Clubs",
+        cat_events: "Events",
         search_placeholder: "Search...",
         btn_create_post: "Post",
         no_posts_yet: "No posts yet. Be the first to post!",
-        
         create_post_title: "Create a Post",
         create_post_subtitle: "Share your thoughts with your peers",
         post_title_label: "Post Title",
         post_content_label: "Post Content",
         post_tags_label: "Tags (optional)",
         btn_publish: "Publish Now",
-
         create_room_title: "Create Chat Room",
         create_room_subtitle: "Create a private space for discussion",
         room_name_label: "Room Name",
         room_pass_label: "Password (optional)",
         btn_create: "Create",
-
         login_title: "Login",
         login_subtitle: "Welcome back",
         email_label: "Email",
@@ -440,7 +472,6 @@
       document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
       document.documentElement.lang = lang;
       
-      // Update lang buttons
       document.querySelectorAll('#lang-ar, #lang-fr, #lang-en').forEach(b => {
         b.classList.remove('bg-white', 'shadow-sm', 'text-brand-600');
         b.classList.add('text-gray-500');
@@ -463,7 +494,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
@@ -483,7 +514,6 @@
     
     // ====== UI Logic ======
     window.closeAuthModal = () => authModal.classList.add('hidden');
-
     window.showLogin = () => {
       document.getElementById('loginForm').classList.remove('hidden');
       document.getElementById('registerForm').classList.add('hidden');
@@ -571,18 +601,16 @@
             تسجيل الدخول
           </button>
         `;
-        applyTranslation(currentLang); // Re-apply translation for new button
+        applyTranslation(currentLang);
       }
     });
 
     // ====== Posts (Firestore) ======
     const postsGrid = document.getElementById('postsGrid');
     const noPostsMsg = document.getElementById('noPostsMessage');
-
-    // Listen to posts collection
-    const q = query(collection(db, "forum_posts"), orderBy("createdAt", "desc"));
+    const qPosts = query(collection(db, "forum_posts"), orderBy("createdAt", "desc"));
     
-    onSnapshot(q, (snapshot) => {
+    onSnapshot(qPosts, (snapshot) => {
       postsGrid.innerHTML = '';
       if (snapshot.empty) {
         noPostsMsg.classList.remove('hidden');
@@ -593,8 +621,6 @@
       snapshot.forEach((doc) => {
         const post = doc.data();
         const dateStr = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleDateString('ar-DZ') : 'الآن';
-        
-        // Parse tags
         const tagsHtml = post.tags ? post.tags.split(' ').map(tag => 
           `<span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">${tag}</span>`
         ).join('') : '';
@@ -611,15 +637,12 @@
                   <p class="text-[10px] text-gray-400">${dateStr}</p>
                 </div>
               </div>
-              <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
             </div>
             <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">${post.title}</h2>
             <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">${post.content}</p>
           </div>
           <div>
-            <div class="flex flex-wrap gap-2 justify-center mb-4">
-              ${tagsHtml}
-            </div>
+            <div class="flex flex-wrap gap-2 justify-center mb-4">${tagsHtml}</div>
             <div class="flex justify-between items-center pt-3 border-t border-gray-50">
               <div class="flex gap-3 text-gray-400">
                 <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
@@ -632,7 +655,6 @@
       });
     });
 
-    // Create Post Submit
     document.getElementById('createPostForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       if(!auth.currentUser) {
@@ -641,34 +663,176 @@
         authModal.classList.remove('hidden');
         return;
       }
-      
       const title = document.getElementById('postTitle').value;
       const content = document.getElementById('postContent').value;
       const tags = document.getElementById('postTags').value;
       const btn = document.getElementById('publishBtn');
       const err = document.getElementById('postError');
       
-      btn.disabled = true;
-      btn.innerText = 'جاري النشر...';
-      err.classList.add('hidden');
+      btn.disabled = true; btn.innerText = 'جاري النشر...'; err.classList.add('hidden');
       
       try {
         await addDoc(collection(db, "forum_posts"), {
-          title: title,
-          content: content,
-          tags: tags,
+          title: title, content: content, tags: tags,
           authorName: auth.currentUser.displayName || auth.currentUser.email,
-          authorId: auth.currentUser.uid,
-          createdAt: serverTimestamp()
+          authorId: auth.currentUser.uid, createdAt: serverTimestamp()
         });
         document.getElementById('createPostForm').reset();
         document.getElementById('createPostModal').classList.add('hidden');
       } catch (error) {
-        err.innerText = "خطأ: " + error.message;
-        err.classList.remove('hidden');
+        err.innerText = "خطأ: " + error.message; err.classList.remove('hidden');
+      } finally { btn.disabled = false; btn.innerText = 'نشر الآن'; }
+    });
+
+    // ====== Chat Rooms (Firestore) ======
+    const chatListContainer = document.getElementById('chatListContainer');
+    const activeChatArea = document.getElementById('activeChatArea');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatForm = document.getElementById('chatForm');
+    const activeChatName = document.getElementById('activeChatName');
+    const chatSidebarTitle = document.getElementById('chatSidebarTitle');
+    const backToChatListBtn = document.getElementById('backToChatListBtn');
+    const createRoomBtn = document.querySelector('#chatSidebarTitle + button');
+
+    let currentRoomId = null;
+    let unsubMessages = null;
+
+    window.closeChatArea = () => {
+      activeChatArea.classList.add('hidden', 'translate-x-full');
+      activeChatArea.classList.remove('translate-x-0');
+      chatListContainer.classList.remove('hidden');
+      chatSidebarTitle.classList.remove('hidden');
+      backToChatListBtn.classList.add('hidden');
+      if(createRoomBtn) createRoomBtn.classList.remove('hidden');
+      currentRoomId = null;
+      if(unsubMessages) unsubMessages();
+    };
+
+    const qRooms = query(collection(db, "forum_rooms"), orderBy("createdAt", "desc"));
+    onSnapshot(qRooms, (snapshot) => {
+      chatListContainer.innerHTML = '';
+      if(snapshot.empty) {
+        chatListContainer.innerHTML = '<div class="p-4 text-center text-gray-400 text-sm">لا توجد غرف. أنشئ واحدة!</div>';
+        return;
+      }
+      snapshot.forEach((docSnap) => {
+        const room = docSnap.data();
+        const roomId = docSnap.id;
+        
+        const div = document.createElement('div');
+        div.className = 'chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition';
+        div.innerHTML = `
+          <div class="w-12 h-12 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-lg shrink-0">
+            <i class="fa-solid fa-hashtag"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-bold text-sm text-gray-900 truncate">${room.name}</h3>
+            </div>
+            <p class="text-xs text-gray-500 truncate">انقر للدخول...</p>
+          </div>
+        `;
+        div.onclick = () => joinRoom(roomId, room.name);
+        chatListContainer.appendChild(div);
+      });
+    });
+
+    function joinRoom(roomId, roomName) {
+      currentRoomId = roomId;
+      activeChatName.innerText = roomName;
+      
+      chatListContainer.classList.add('hidden');
+      chatSidebarTitle.classList.add('hidden');
+      backToChatListBtn.classList.remove('hidden');
+      if(createRoomBtn) createRoomBtn.classList.add('hidden');
+      
+      activeChatArea.classList.remove('hidden');
+      setTimeout(() => activeChatArea.classList.remove('translate-x-full'), 10);
+      
+      loadMessages(roomId);
+    }
+
+    function loadMessages(roomId) {
+      if(unsubMessages) unsubMessages();
+      chatMessages.innerHTML = '<p class="text-center text-gray-400 text-sm py-4">جاري التحميل...</p>';
+      
+      const qMsgs = query(collection(db, "forum_rooms", roomId, "messages"), orderBy("createdAt", "asc"));
+      unsubMessages = onSnapshot(qMsgs, (snap) => {
+        chatMessages.innerHTML = '';
+        if(snap.empty) {
+          chatMessages.innerHTML = '<p class="text-center text-gray-400 text-sm py-4">لا توجد رسائل بعد. ابدأ النقاش!</p>';
+          return;
+        }
+        snap.forEach((msgDoc) => {
+          const msg = msgDoc.data();
+          const isMe = auth.currentUser && msg.senderId === auth.currentUser.uid;
+          
+          const div = document.createElement('div');
+          div.className = `flex ${isMe ? 'justify-end' : 'justify-start'}`;
+          div.innerHTML = `
+            <div class="max-w-[80%] px-3 py-2 text-sm ${isMe ? 'chat-bubble-me' : 'chat-bubble-other'}">
+              ${!isMe ? `<p class="text-[10px] font-bold text-brand-600 mb-1">${msg.senderName}</p>` : ''}
+              <p>${msg.text}</p>
+            </div>
+          `;
+          chatMessages.appendChild(div);
+        });
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      });
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if(!currentRoomId) return;
+      if(!auth.currentUser) {
+        alert("يرجى تسجيل الدخول أولاً لإرسال رسالة.");
+        return;
+      }
+      const text = chatInput.value.trim();
+      if(!text) return;
+      
+      chatInput.value = '';
+      try {
+        await addDoc(collection(db, "forum_rooms", currentRoomId, "messages"), {
+          text: text,
+          senderId: auth.currentUser.uid,
+          senderName: auth.currentUser.displayName || auth.currentUser.email,
+          createdAt: serverTimestamp()
+        });
+      } catch (error) {
+        console.error("Error sending message: ", error);
+      }
+    });
+
+    document.getElementById('createRoomForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('roomName').value;
+      const pass = document.getElementById('roomPassword').value;
+      const btn = e.target.querySelector('button[type="submit"]');
+      
+      if(!auth.currentUser) {
+        alert("يرجى تسجيل الدخول أولاً لإنشاء غرفة.");
+        document.getElementById('createRoomModal').classList.add('hidden');
+        authModal.classList.remove('hidden');
+        return;
+      }
+      
+      btn.disabled = true; btn.innerText = 'جاري الإنشاء...';
+      try {
+        const newRoomRef = await addDoc(collection(db, "forum_rooms"), {
+          name: name,
+          password: pass,
+          creatorId: auth.currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+        document.getElementById('createRoomForm').reset();
+        document.getElementById('createRoomModal').classList.add('hidden');
+        joinRoom(newRoomRef.id, name);
+      } catch (error) {
+        alert("خطأ: " + error.message);
       } finally {
-        btn.disabled = false;
-        btn.innerText = 'نشر الآن';
+        btn.disabled = false; btn.innerText = 'إنشاء';
       }
     });
 
