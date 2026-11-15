@@ -76,7 +76,7 @@
         </button>
       </div>
 
-      <!-- ✅ مربع البحث -->
+      <!-- مربع البحث -->
       <div class="p-3 border-b border-gray-100 bg-white">
         <div class="relative">
           <input type="text" id="chatSearchInput" placeholder="ابحث عن غرفة أو طالب..." class="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:border-brand-500 transition">
@@ -488,12 +488,24 @@
     function loadMessages(roomId) {
       if(unsubMessages) unsubMessages();
       chatMessages.innerHTML = '<p class="text-center text-gray-400 text-sm py-4">جاري التحميل...</p>';
-      const qMsgs = query(collection(db, "forum_chats", roomId, "messages"), orderBy("createdAt", "asc"));
+      
+      // ✅ إصلاح الدردشة الخاصة: استخدام مسار منفصل ومعزول
+      const isPrivate = roomId.includes('_') && !roomId.startsWith('general_');
+      const collectionPath = isPrivate ? `private_messages` : `forum_chats/${roomId}/messages`;
+      
+      const qMsgs = isPrivate 
+        ? query(collection(db, collectionPath), orderBy("createdAt", "asc"))
+        : query(collection(db, "forum_chats", roomId, "messages"), orderBy("createdAt", "asc"));
+
       unsubMessages = onSnapshot(qMsgs, (snap) => {
         chatMessages.innerHTML = '';
         if(snap.empty) { chatMessages.innerHTML = '<p class="text-center text-gray-400 text-sm py-4">لا توجد رسائل بعد.</p>'; return; }
         snap.forEach((msgDoc) => {
           const msg = msgDoc.data();
+          
+          // فلترة الرسائل الخاصة: نعرض فقط الرسائل التي تخص الغرفة الحالية
+          if (isPrivate && msg.roomId !== roomId) return;
+
           const isMe = currentUser && msg.senderId === currentUser.uid;
           const div = document.createElement('div');
           div.className = `flex ${isMe ? 'justify-end' : 'justify-start'}`;
@@ -510,9 +522,27 @@
       const text = document.getElementById('chatInput').value.trim();
       if(!text) return;
       document.getElementById('chatInput').value = '';
-      await addDoc(collection(db, "forum_chats", currentRoomId, "messages"), {
-        text: text, senderId: currentUser.uid, senderName: currentUser.displayName, createdAt: serverTimestamp()
-      });
+      
+      const isPrivate = currentRoomId.includes('_') && !currentRoomId.startsWith('general_');
+      
+      if (isPrivate) {
+        // ✅ إرسال الرسالة الخاصة في المسار المعزول
+        await addDoc(collection(db, "private_messages"), {
+          roomId: currentRoomId,
+          text: text, 
+          senderId: currentUser.uid, 
+          senderName: currentUser.displayName, 
+          createdAt: serverTimestamp()
+        });
+      } else {
+        // إرسال رسالة عادية في الغرفة
+        await addDoc(collection(db, "forum_chats", currentRoomId, "messages"), {
+          text: text, 
+          senderId: currentUser.uid, 
+          senderName: currentUser.displayName, 
+          createdAt: serverTimestamp()
+        });
+      }
     });
 
     document.getElementById('createRoomForm').addEventListener('submit', async (e) => {
