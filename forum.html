@@ -405,13 +405,21 @@
 
     document.getElementById('commentForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      if(!currentUser || !currentPostId) return;
+      if(!currentUser || !currentPostId) { alert("يجب تسجيل الدخول أولاً للتعليق"); return; }
       const text = document.getElementById('commentInput').value;
-      await addDoc(collection(db, "forum_posts", currentPostId, "comments"), {
-        text: text, authorName: currentUser.displayName, authorId: currentUser.uid, createdAt: serverTimestamp()
-      });
-      await updateDoc(doc(db, "forum_posts", currentPostId), { commentCount: increment(1) });
-      document.getElementById('commentInput').value = '';
+      
+      try {
+        await addDoc(collection(db, "forum_posts", currentPostId, "comments"), {
+          text: text, 
+          authorName: currentUser.displayName, 
+          authorId: currentUser.uid, 
+          createdAt: serverTimestamp()
+        });
+        await updateDoc(doc(db, "forum_posts", currentPostId), { commentCount: increment(1) });
+        document.getElementById('commentInput').value = '';
+      } catch (error) {
+        alert("فشل إرسال التعليق: " + error.message);
+      }
     });
 
     // Chat System
@@ -439,26 +447,21 @@
       if(unsubMessages) unsubMessages();
     };
 
-    // ✅ التحقق من كلمة المرور مع الحفظ في localStorage
     window.joinRoom = async function(roomId, roomName, password = null) {
       if (password && password.trim() !== '') {
-        // هل المستخدم قد أدخل كلمة المرور سابقاً بنجاح؟
         const savedPassword = localStorage.getItem('room_pass_' + roomId);
-        
         if (savedPassword === password) {
-          // نعم، ادخل مباشرة
           enterChat(roomId, roomName);
           return;
         }
 
-        // لا، اطلب كلمة المرور
         document.getElementById('enterPasswordModal').classList.remove('hidden');
         document.getElementById('passwordError').classList.add('hidden');
         document.getElementById('enterPasswordForm').onsubmit = (e) => {
           e.preventDefault();
           const enteredPass = document.getElementById('joinRoomPassword').value;
           if (enteredPass === password) {
-            localStorage.setItem('room_pass_' + roomId, password); // ✅ حفظ كلمة المرور للمرة القادمة
+            localStorage.setItem('room_pass_' + roomId, password);
             document.getElementById('enterPasswordModal').classList.add('hidden');
             document.getElementById('joinRoomPassword').value = '';
             enterChat(roomId, roomName);
@@ -525,7 +528,6 @@
         createdAt: serverTimestamp() 
       });
       
-      // حفظ كلمة المرور مباشرة للغرفة الجديدة التي أنشأتها
       if (password.trim() !== '') {
         localStorage.setItem('room_pass_' + newRoom.id, password);
       }
@@ -562,7 +564,6 @@
         enterChat("general_room", "القاعة العامة");
       };
 
-      // جلب الغرف
       const qGroups = query(collection(db, "forum_chats"), orderBy("createdAt", "desc"));
       onSnapshot(qGroups, (snap) => {
         allChatRooms = [];
@@ -575,7 +576,6 @@
         applySearch();
       });
 
-      // جلب المستخدمين
       const qUsers = query(collection(db, "users"));
       onSnapshot(qUsers, (snap) => {
         allUsers = [];
@@ -589,11 +589,9 @@
       });
     }
 
-    // ✅ دالة البحث
     function applySearch() {
       const term = searchInput.value.toLowerCase().trim();
       
-      // تصفية الغرف
       const gList = document.getElementById('groupsList');
       gList.innerHTML = '';
       const filteredRooms = allChatRooms.filter(r => r.name.toLowerCase().includes(term) || term === '');
@@ -601,7 +599,6 @@
         gList.innerHTML += `<div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="joinRoom('${room.id}', '${room.name}', '${room.password || ''}')"><div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold shrink-0"><i class="fa-solid fa-users"></i></div><div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${room.name} ${room.password ? '<i class="fa-solid fa-lock text-xs text-gray-400 mr-1"></i>' : ''}</h3></div></div>`;
       });
 
-      // تصفية المستخدمين
       const pList = document.getElementById('privateList');
       pList.innerHTML = '';
       const filteredUsers = allUsers.filter(u => u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term) || term === '');
@@ -610,7 +607,6 @@
       });
     }
 
-    // الاستماع لحدث البحث
     searchInput.addEventListener('input', applySearch);
 
     window.startPrivateChat = async (otherUserId, otherUserName) => {
