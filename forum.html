@@ -76,6 +76,14 @@
         </button>
       </div>
 
+      <!-- ✅ مربع البحث -->
+      <div class="p-3 border-b border-gray-100 bg-white">
+        <div class="relative">
+          <input type="text" id="chatSearchInput" placeholder="ابحث عن غرفة أو طالب..." class="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:border-brand-500 transition">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+      </div>
+
       <div class="flex-1 overflow-y-auto" id="chatListContainer">
         <div class="p-4 text-center text-gray-400 text-sm">جاري التحميل...</div>
       </div>
@@ -414,9 +422,12 @@
     const activeChatName = document.getElementById('activeChatName');
     const chatSidebarTitle = document.getElementById('chatSidebarTitle');
     const backToChatListBtn = document.getElementById('backToChatListBtn');
+    const searchInput = document.getElementById('chatSearchInput');
 
     let currentRoomId = null;
     let unsubMessages = null;
+    let allChatRooms = [];
+    let allUsers = [];
 
     window.closeChatArea = () => {
       activeChatArea.classList.add('hidden', 'translate-x-full');
@@ -428,14 +439,26 @@
       if(unsubMessages) unsubMessages();
     };
 
+    // ✅ التحقق من كلمة المرور مع الحفظ في localStorage
     window.joinRoom = async function(roomId, roomName, password = null) {
       if (password && password.trim() !== '') {
+        // هل المستخدم قد أدخل كلمة المرور سابقاً بنجاح؟
+        const savedPassword = localStorage.getItem('room_pass_' + roomId);
+        
+        if (savedPassword === password) {
+          // نعم، ادخل مباشرة
+          enterChat(roomId, roomName);
+          return;
+        }
+
+        // لا، اطلب كلمة المرور
         document.getElementById('enterPasswordModal').classList.remove('hidden');
         document.getElementById('passwordError').classList.add('hidden');
         document.getElementById('enterPasswordForm').onsubmit = (e) => {
           e.preventDefault();
           const enteredPass = document.getElementById('joinRoomPassword').value;
           if (enteredPass === password) {
+            localStorage.setItem('room_pass_' + roomId, password); // ✅ حفظ كلمة المرور للمرة القادمة
             document.getElementById('enterPasswordModal').classList.add('hidden');
             document.getElementById('joinRoomPassword').value = '';
             enterChat(roomId, roomName);
@@ -502,6 +525,11 @@
         createdAt: serverTimestamp() 
       });
       
+      // حفظ كلمة المرور مباشرة للغرفة الجديدة التي أنشأتها
+      if (password.trim() !== '') {
+        localStorage.setItem('room_pass_' + newRoom.id, password);
+      }
+      
       document.getElementById('createRoomForm').reset();
       document.getElementById('createRoomModal').classList.add('hidden');
       
@@ -520,13 +548,11 @@
         <div id="privateList"></div>
       `;
 
-      // ✅ إصلاح مشكلة القاعة العامة: يتم التحقق من وجودها، وإن لم تكن موجودة يتم إنشاؤها تلقائياً
       document.getElementById('generalRoomBtn').onclick = async () => {
         const generalRoomRef = doc(db, "forum_chats", "general_room");
         const docSnap = await getDoc(generalRoomRef);
         
         if (!docSnap.exists()) {
-          // إذا لم تكن القاعة موجودة، أنشئها
           await setDoc(generalRoomRef, {
             name: "القاعة العامة",
             type: "group",
@@ -536,30 +562,56 @@
         enterChat("general_room", "القاعة العامة");
       };
 
+      // جلب الغرف
       const qGroups = query(collection(db, "forum_chats"), orderBy("createdAt", "desc"));
       onSnapshot(qGroups, (snap) => {
-        const gList = document.getElementById('groupsList');
-        gList.innerHTML = '';
+        allChatRooms = [];
         snap.forEach((docSnap) => {
           const room = docSnap.data();
-          if(room.type === 'group' && docSnap.id !== 'general_room') { // نستبعد القاعة العامة لأنها موجودة فوق
-            gList.innerHTML += `<div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="joinRoom('${docSnap.id}', '${room.name}', '${room.password || ''}')"><div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold shrink-0"><i class="fa-solid fa-users"></i></div><div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${room.name} ${room.password ? '<i class="fa-solid fa-lock text-xs text-gray-400 mr-1"></i>' : ''}</h3></div></div>`;
+          if(room.type === 'group' && docSnap.id !== 'general_room') {
+            allChatRooms.push({ id: docSnap.id, name: room.name, password: room.password, type: 'group' });
           }
         });
+        applySearch();
       });
 
+      // جلب المستخدمين
       const qUsers = query(collection(db, "users"));
       onSnapshot(qUsers, (snap) => {
-        const pList = document.getElementById('privateList');
-        pList.innerHTML = '';
+        allUsers = [];
         snap.forEach((doc) => {
           const u = doc.data();
           if(u.uid !== currentUser.uid) {
-            pList.innerHTML += `<div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="startPrivateChat('${u.uid}', '${u.name}')"><div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold shrink-0">${u.name.charAt(0).toUpperCase()}</div><div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${u.name}</h3></div></div>`;
+            allUsers.push({ id: u.uid, name: u.name, email: u.email });
           }
         });
+        applySearch();
       });
     }
+
+    // ✅ دالة البحث
+    function applySearch() {
+      const term = searchInput.value.toLowerCase().trim();
+      
+      // تصفية الغرف
+      const gList = document.getElementById('groupsList');
+      gList.innerHTML = '';
+      const filteredRooms = allChatRooms.filter(r => r.name.toLowerCase().includes(term) || term === '');
+      filteredRooms.forEach(room => {
+        gList.innerHTML += `<div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="joinRoom('${room.id}', '${room.name}', '${room.password || ''}')"><div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold shrink-0"><i class="fa-solid fa-users"></i></div><div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${room.name} ${room.password ? '<i class="fa-solid fa-lock text-xs text-gray-400 mr-1"></i>' : ''}</h3></div></div>`;
+      });
+
+      // تصفية المستخدمين
+      const pList = document.getElementById('privateList');
+      pList.innerHTML = '';
+      const filteredUsers = allUsers.filter(u => u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term) || term === '');
+      filteredUsers.forEach(u => {
+        pList.innerHTML += `<div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="startPrivateChat('${u.id}', '${u.name}')"><div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold shrink-0">${u.name.charAt(0).toUpperCase()}</div><div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${u.name}</h3><p class="text-[10px] text-gray-400 truncate" dir="ltr">${u.email}</p></div></div>`;
+      });
+    }
+
+    // الاستماع لحدث البحث
+    searchInput.addEventListener('input', applySearch);
 
     window.startPrivateChat = async (otherUserId, otherUserName) => {
       if(!currentUser) return;
