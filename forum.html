@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ملتقى الطلبة - ENSTP</title>
+  <title data-i18n="page_title">ملتقى الطلبة - ENSTP</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -25,47 +25,44 @@
 
   <style>
     body { background-color: var(--bg); font-family: 'Cairo', sans-serif; }
-    
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-    /* Card Hover Effect */
     .post-card { transition: all 0.3s ease; }
     .post-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
-
-    /* Chat Sidebar Item Hover */
-    .chat-item { transition: background 0.2s; }
+    .chat-item { transition: background 0.2s; cursor: pointer; }
     .chat-item:hover { background: #fff7ed; }
     .chat-item.active { background: #ffedd5; border-right: 4px solid #f97316; }
-
-    /* Hide scrollbar for category chips */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
   </style>
 </head>
 <body class="text-gray-800 h-screen overflow-hidden flex flex-col">
 
   <!-- ================= HEADER ================= -->
-  <header class="bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center shrink-0 z-20">
+  <header class="bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center shrink-0 z-20 shadow-sm">
     <div class="flex items-center gap-3">
       <div class="w-10 h-10 bg-brand-500 text-white rounded-xl flex items-center justify-center text-xl shadow-md">
         <i class="fa-solid fa-users-rays"></i>
       </div>
       <div>
-        <h1 class="text-xl font-black text-gray-900 leading-tight">ملتقى الطلبة</h1>
-        <p class="text-[11px] text-gray-500 font-semibold">ملتقى الطلبة للنادي ونادي الجميع أن من الجمعية الفرعية الجاحة الجامعية.</p>
+        <h1 class="text-xl font-black text-gray-900 leading-tight" data-i18n="forum_title">ملتقى الطلبة</h1>
+        <p class="text-[11px] text-gray-500 font-semibold" data-i18n="forum_subtitle">ملتقى الطلبة للنادي ونادي الجميع أن من الجمعية الفرعية الجاحة الجامعية.</p>
       </div>
     </div>
     
-    <!-- User Profile & Auth Buttons -->
-    <div class="flex items-center gap-4" id="headerAuthArea">
-      <!-- سيتم تعبئتها بواسطة JS -->
-      <button id="loginBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md">
-        تسجيل الدخول
-      </button>
+    <div class="flex items-center gap-3">
+      <div class="flex bg-gray-100 rounded-xl p-1">
+        <button onclick="setLanguage('ar')" id="lang-ar" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white shadow-sm text-brand-600">🇩🇿 عربي</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-500 hover:text-brand-600">🇫🇷 FR</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-500 hover:text-brand-600">🇬🇧 EN</button>
+      </div>
+      <div id="headerAuthArea">
+        <button id="loginBtn" onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md" data-i18n="btn_login">تسجيل الدخول</button>
+      </div>
     </div>
   </header>
 
@@ -74,75 +71,31 @@
 
     <!-- ================= RIGHT SIDEBAR (Chats) ================= -->
     <aside class="w-80 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden shrink-0 hidden lg:flex">
-      
-      <!-- Sidebar Header -->
       <div class="p-4 border-b border-gray-100 flex items-center justify-between">
-        <h2 class="font-black text-gray-800 text-lg">الرسائل المباشرة والدردشة</h2>
-        <div class="w-8 h-8 rounded-full bg-brand-50 text-brand-500 flex items-center justify-center">
-          <i class="fa-solid fa-comment-dots"></i>
-        </div>
+        <h2 class="font-black text-gray-800 text-lg" data-i18n="chat_sidebar_title">الرسائل المباشرة والدردشة</h2>
+        <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="w-8 h-8 rounded-full bg-brand-50 text-brand-500 hover:bg-brand-100 flex items-center justify-center transition" title="إنشاء غرفة جديدة">
+          <i class="fa-solid fa-plus"></i>
+        </button>
       </div>
-
-      <!-- Chat List -->
-      <div class="flex-1 overflow-y-auto">
-        <!-- Chat Item 1 -->
-        <div class="chat-item active p-3 flex gap-3 cursor-pointer">
-          <div class="relative">
-            <img src="https://i.pravatar.cc/100?img=1" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
-            <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex justify-between items-center mb-1">
-              <h3 class="font-bold text-sm text-gray-900 truncate">نادي الهندسة المعمارية</h3>
-              <span class="text-[10px] text-gray-400">10 من</span>
-            </div>
-            <p class="text-xs text-gray-500 truncate">نادي الهندسة المعمارية المسلة ...</p>
-          </div>
+      <div class="flex-1 overflow-y-auto" id="chatListContainer">
+        <!-- Default Chat items (لن يتم حذفها للحفاظ على التصميم) -->
+        <div class="chat-item active p-3 flex gap-3">
+          <div class="relative"><img src="https://i.pravatar.cc/100?img=1" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"><span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span></div>
+          <div class="flex-1 min-w-0"><div class="flex justify-between items-center mb-1"><h3 class="font-bold text-sm text-gray-900 truncate">نادي الهندسة المعمارية</h3><span class="text-[10px] text-gray-400">10 من</span></div><p class="text-xs text-gray-500 truncate">نادي الهندسة المعمارية المسلة ...</p></div>
           <div class="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold mt-2">3</div>
         </div>
-
-        <!-- Chat Item 2 -->
-        <div class="chat-item p-3 flex gap-3 cursor-pointer border-b border-gray-50">
-          <div class="relative">
-            <img src="https://i.pravatar.cc/100?img=5" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex justify-between items-center mb-1">
-              <h3 class="font-bold text-sm text-gray-900 truncate">مجموعة فيزياء 1</h3>
-              <span class="text-[10px] text-gray-400">10 من</span>
-            </div>
-            <p class="text-xs text-gray-500 truncate">مجموعة فيزياء 1 بادي الدسوقية ...</p>
-          </div>
-          <div class="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold mt-2">1</div>
-        </div>
-
-        <!-- Chat Item 3 -->
-        <div class="chat-item p-3 flex gap-3 cursor-pointer border-b border-gray-50">
-          <div class="relative">
-            <img src="https://i.pravatar.cc/100?img=12" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex justify-between items-center mb-1">
-              <h3 class="font-bold text-sm text-gray-900 truncate">نادي البيئة المعمارية</h3>
-              <span class="text-[10px] text-gray-400">10 من</span>
-            </div>
-            <p class="text-xs text-gray-500 truncate">نادي الهندسة المعمارية في مبنى ...</p>
-          </div>
+        <div class="chat-item p-3 flex gap-3 border-b border-gray-50">
+          <div class="relative"><img src="https://i.pravatar.cc/100?img=5" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"></div>
+          <div class="flex-1 min-w-0"><div class="flex justify-between items-center mb-1"><h3 class="font-bold text-sm text-gray-900 truncate">مجموعة فيزياء 1</h3><span class="text-[10px] text-gray-400">10 من</span></div><p class="text-xs text-gray-500 truncate">مجموعة فيزياء 1 بادي الدسوقية ...</p></div>
           <div class="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold mt-2">1</div>
         </div>
       </div>
-
-      <!-- Chat Input (Mockup) -->
       <div class="p-3 border-t border-gray-100 bg-gray-50">
-        <div class="flex flex-col border border-gray-200 rounded-xl bg-white overflow-hidden focus-within:border-brand-500 transition">
+        <div class="flex flex-col border border-gray-200 rounded-xl bg-white overflow-hidden">
           <input type="text" placeholder="Message input..." class="w-full px-3 py-2 text-sm outline-none bg-transparent" disabled>
           <div class="flex items-center justify-between px-2 py-1 border-t border-gray-100">
-            <div class="flex gap-2 text-gray-400">
-              <i class="fa-regular fa-image cursor-pointer hover:text-brand-500"></i>
-              <i class="fa-solid fa-paperclip cursor-pointer hover:text-brand-500"></i>
-              <i class="fa-solid fa-microphone cursor-pointer hover:text-brand-500"></i>
-            </div>
-            <button class="bg-brand-500 text-white text-xs font-bold px-4 py-1.5 rounded-lg opacity-50 cursor-not-allowed">إرسال</button>
+            <div class="flex gap-2 text-gray-400"><i class="fa-regular fa-image"></i><i class="fa-solid fa-paperclip"></i><i class="fa-solid fa-microphone"></i></div>
+            <button class="bg-brand-500 text-white text-xs font-bold px-4 py-1.5 rounded-lg opacity-50 cursor-not-allowed" data-i18n="btn_send">إرسال</button>
           </div>
         </div>
       </div>
@@ -153,266 +106,364 @@
       
       <!-- Top Controls -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-4 flex flex-wrap items-center justify-between gap-4 shrink-0">
-        <!-- Categories -->
         <div class="flex gap-2 overflow-x-auto no-scrollbar">
-          <button class="bg-brand-500 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md shadow-brand-500/30 whitespace-nowrap">الكل</button>
-          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap">نقاشات ودروس</button>
-          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap">النوادي</button>
-          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap">فعاليات</button>
+          <button class="bg-brand-500 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md shadow-brand-500/30 whitespace-nowrap" data-i18n="cat_all">الكل</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap" data-i18n="cat_discussions">نقاشات ودروس</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap" data-i18n="cat_clubs">النوادي</button>
         </div>
-
-        <!-- Search -->
-        <div class="relative w-full md:w-64">
-          <input type="text" placeholder="ابحث..." class="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:border-brand-500 transition">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <div class="flex items-center gap-2 w-full md:w-auto">
+          <div class="relative w-full md:w-64">
+            <input type="text" placeholder="ابحث..." data-i18n-placeholder="search_placeholder" class="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:border-brand-500 transition">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          </div>
+          <!-- ✅ زر نشر منشور -->
+          <button onclick="document.getElementById('createPostModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-xl font-bold text-sm transition shadow-md flex items-center gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-plus"></i> <span data-i18n="btn_create_post">نشر</span>
+          </button>
         </div>
       </div>
 
-      <!-- Posts Grid -->
-      <div class="flex-1 overflow-y-auto pb-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          
-          <!-- Post Card 1 -->
-          <div class="post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-3">
-                <div class="flex items-center gap-2">
-                  <img src="https://i.pravatar.cc/100?img=11" class="w-10 h-10 rounded-full object-cover">
-                  <div>
-                    <h3 class="font-bold text-sm text-gray-900">سارة محمود</h3>
-                    <p class="text-[10px] text-gray-400">10 من</p>
-                  </div>
-                </div>
-                <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
-              </div>
-              <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">إعلان نادي - حدث النوادي</h2>
-              <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">نادي الهندسة المعمارية عليك بالإنشاء نادي المفرش في محاب و دعوة قيام الخطية الطبية ...</p>
-            </div>
-            <div>
-              <div class="flex flex-wrap gap-2 justify-center mb-4">
-                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#إدارة</span>
-                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#دروس</span>
-              </div>
-              <div class="flex justify-between items-center pt-3 border-t border-gray-50">
-                <div class="flex gap-3 text-gray-400">
-                  <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
-                  <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 16</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Post Card 2 -->
-          <div class="post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-3">
-                <div class="flex items-center gap-2">
-                  <img src="https://i.pravatar.cc/100?img=11" class="w-10 h-10 rounded-full object-cover">
-                  <div>
-                    <h3 class="font-bold text-sm text-gray-900">سارة محمود</h3>
-                    <p class="text-[10px] text-gray-400">10 من</p>
-                  </div>
-                </div>
-                <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
-              </div>
-              <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">طلب وضعية السة مجموعة الدراسة</h2>
-              <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">نادي الدي الديسة وله التلبية، الذي تثقيل اليد ادربس الدرس على النوادس وسناسة الفيواء ...</p>
-            </div>
-            <div>
-              <div class="flex flex-wrap gap-2 justify-center mb-4">
-                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#دروس</span>
-                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#فيزياء</span>
-              </div>
-              <div class="flex justify-between items-center pt-3 border-t border-gray-50">
-                <div class="flex gap-3 text-gray-400">
-                  <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
-                  <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 16</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Post Card 3 -->
-          <div class="post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-3">
-                <div class="flex items-center gap-2">
-                  <img src="https://i.pravatar.cc/100?img=11" class="w-10 h-10 rounded-full object-cover">
-                  <div>
-                    <h3 class="font-bold text-sm text-gray-900">سارة محمود</h3>
-                    <p class="text-[10px] text-gray-400">10 من</p>
-                  </div>
-                </div>
-                <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
-              </div>
-              <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">إعلان النادي الهندسة المعمارية</h2>
-              <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">إعلان نادي الهندسة النادي لبانسي طنطلك على الحمسة في أحداث حدث النب المعالية ...</p>
-            </div>
-            <div>
-              <div class="flex flex-wrap gap-2 justify-center mb-4">
-                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#تكوين</span>
-                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#تكوين</span>
-              </div>
-              <div class="flex justify-between items-center pt-3 border-t border-gray-50">
-                <div class="flex gap-3 text-gray-400">
-                  <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
-                  <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 14</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Post Card 4 -->
-          <div class="post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-3">
-                <div class="flex items-center gap-2">
-                  <img src="https://i.pravatar.cc/100?img=11" class="w-10 h-10 rounded-full object-cover">
-                  <div>
-                    <h3 class="font-bold text-sm text-gray-900">سارة محمود</h3>
-                    <p class="text-[10px] text-gray-400">10 من</p>
-                  </div>
-                </div>
-                <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
-              </div>
-              <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">أحجى كاشي المياس أدكاسي</h2>
-              <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">اعلان ملتقى الطلبة المتمثلة ! ستفاعاجات النياشة النارز الصية؟</p>
-            </div>
-            <div>
-              <div class="flex flex-wrap gap-2 justify-center mb-4">
-                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#تكوين</span>
-                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#إدارة</span>
-              </div>
-              <div class="flex justify-between items-center pt-3 border-t border-gray-50">
-                <div class="flex gap-3 text-gray-400">
-                  <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
-                  <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 2</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
+      <!-- Posts Grid (سيتم توليد المنشورات هنا ديناميكياً) -->
+      <div class="flex-1 overflow-y-auto pb-4" id="postsGridContainer">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" id="postsGrid">
+          <!-- سيتم إدراج المنشورات هنا بواسطة JavaScript -->
+        </div>
+        <!-- No posts message -->
+        <div id="noPostsMessage" class="hidden text-center py-20 text-gray-400">
+          <i class="fa-regular fa-folder-open text-6xl mb-4 opacity-50"></i>
+          <p class="text-lg font-bold" data-i18n="no_posts_yet">لا توجد منشورات بعد. كن أول من ينشر!</p>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- ================= MODALS (Auth & Reset Password) ================= -->
+  <!-- ================= MODALS ================= -->
 
-  <!-- شاشة تسجيل الدخول / إنشاء حساب / نسيت كلمة المرور -->
-  <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl relative animate-pop">
-      
-      <!-- Close Button -->
-      <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <!-- Login Form -->
-      <div id="loginForm">
-        <div class="text-center mb-8">
-          <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
-            <i class="fa-solid fa-user-lock"></i>
-          </div>
-          <h2 class="text-2xl font-black text-gray-900">تسجيل الدخول</h2>
-          <p class="text-sm text-gray-500 mt-1">مرحباً بك مجدداً في ملتقى الطلبة</p>
-        </div>
-
-        <form id="loginFormElement" class="space-y-4">
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني</label>
-            <input type="email" id="loginEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">كلمة المرور</label>
-            <input type="password" id="loginPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="********">
-          </div>
-          
-          <!-- Forgot Password Link -->
-          <div class="text-left">
-            <button type="button" onclick="showResetPassword()" class="text-sm font-bold text-brand-500 hover:text-brand-600 hover:underline">نسيت كلمة المرور؟</button>
-          </div>
-
-          <p id="loginError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
-
-          <button type="submit" id="loginSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">دخول</button>
-        </form>
-
-        <div class="text-center mt-6 text-sm">
-          <span class="text-gray-500">ليس لديك حساب؟</span>
-          <button onclick="showRegister()" class="text-brand-500 font-bold hover:underline mr-1">إنشاء حساب جديد</button>
-        </div>
+  <!-- Create Post Modal -->
+  <div id="createPostModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-8 w-full max-w-lg shadow-2xl relative animate-fade-in">
+      <button onclick="document.getElementById('createPostModal').classList.add('hidden')" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-pen-nib"></i></div>
+        <h2 class="text-2xl font-black text-gray-900" data-i18n="create_post_title">نشر منشور جديد</h2>
+        <p class="text-sm text-gray-500 mt-1" data-i18n="create_post_subtitle">شارك أفكارك مع زملائك في الملتقى</p>
       </div>
-
-      <!-- Register Form -->
-      <div id="registerForm" class="hidden">
-        <div class="text-center mb-8">
-          <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
-            <i class="fa-solid fa-user-plus"></i>
-          </div>
-          <h2 class="text-2xl font-black text-gray-900">إنشاء حساب</h2>
-          <p class="text-sm text-gray-500 mt-1">انضم إلى مجتمع ENSTP</p>
+      <form id="createPostForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="post_title_label">عنوان المنشور</label>
+          <input type="text" id="postTitle" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" placeholder="مثال: إعلان نادي الهندسة">
         </div>
-
-        <form id="registerFormElement" class="space-y-4">
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">الاسم واللقب</label>
-            <input type="text" id="regName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" placeholder="أحمد بن علي">
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني</label>
-            <input type="email" id="regEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">كلمة المرور</label>
-            <input type="password" id="regPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="********">
-          </div>
-          
-          <p id="registerError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
-
-          <button type="submit" id="registerSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">تسجيل</button>
-        </form>
-
-        <div class="text-center mt-6 text-sm">
-          <span class="text-gray-500">لديك حساب بالفعل؟</span>
-          <button onclick="showLogin()" class="text-brand-500 font-bold hover:underline mr-1">تسجيل الدخول</button>
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="post_content_label">محتوى المنشور</label>
+          <textarea id="postContent" required rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition resize-none" placeholder="اكتب تفاصيل المنشور هنا..."></textarea>
         </div>
-      </div>
-
-      <!-- Reset Password Form -->
-      <div id="resetPasswordForm" class="hidden">
-        <div class="text-center mb-8">
-          <div class="w-16 h-16 bg-orange-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
-            <i class="fa-solid fa-key"></i>
-          </div>
-          <h2 class="text-2xl font-black text-gray-900">استعادة الحساب</h2>
-          <p class="text-sm text-gray-500 mt-1">أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين كلمة المرور</p>
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="post_tags_label">الوسوم (اختياري)</label>
+          <input type="text" id="postTags" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" placeholder="مثال: #إدارة #دروس">
         </div>
-
-        <form id="resetFormElement" class="space-y-4">
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني</label>
-            <input type="email" id="resetEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
-          </div>
-          
-          <p id="resetError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
-          <p id="resetSuccess" class="text-green-600 text-sm font-bold text-center hidden bg-green-50 p-2 rounded-lg"></p>
-
-          <button type="submit" id="resetSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">إرسال رابط الاستعادة</button>
-        </form>
-
-        <div class="text-center mt-6 text-sm">
-          <button onclick="showLogin()" class="text-gray-500 font-bold hover:text-brand-500 hover:underline">العودة لتسجيل الدخول</button>
-        </div>
-      </div>
-
+        <p id="postError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
+        <button type="submit" id="publishBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5" data-i18n="btn_publish">نشر الآن</button>
+      </form>
     </div>
   </div>
 
-  <!-- ================= FIREBASE & LOGIC ================= -->
+  <!-- Create Room Modal -->
+  <div id="createRoomModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl relative animate-fade-in">
+      <button onclick="document.getElementById('createRoomModal').classList.add('hidden')" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-comments"></i></div>
+        <h2 class="text-2xl font-black text-gray-900" data-i18n="create_room_title">إنشاء غرفة دردشة</h2>
+        <p class="text-sm text-gray-500 mt-1" data-i18n="create_room_subtitle">أنشئ مساحة خاصة للنقاش</p>
+      </div>
+      <form id="createRoomForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="room_name_label">اسم الغرفة</label>
+          <input type="text" id="roomName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" placeholder="مثال: مجموعة الرياضيات">
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="room_pass_label">كلمة المرور (اختياري)</label>
+          <input type="password" id="roomPassword" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="اتركها فارغة للغرفة العامة">
+        </div>
+        <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5" data-i18n="btn_create">إنشاء</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Auth Modal (Login / Register / Reset Password) -->
+  <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl relative animate-fade-in">
+      <button onclick="document.getElementById('authModal').classList.add('hidden')" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+      
+      <!-- Login -->
+      <div id="loginForm">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-user-lock"></i></div>
+          <h2 class="text-2xl font-black text-gray-900" data-i18n="login_title">تسجيل الدخول</h2>
+          <p class="text-sm text-gray-500 mt-1" data-i18n="login_subtitle">مرحباً بك مجدداً في ملتقى الطلبة</p>
+        </div>
+        <form id="loginFormElement" class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="email_label">البريد الإلكتروني</label>
+            <input type="email" id="loginEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="password_label">كلمة المرور</label>
+            <input type="password" id="loginPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="********">
+          </div>
+          <div class="text-left">
+            <button type="button" onclick="showResetPassword()" class="text-sm font-bold text-brand-500 hover:text-brand-600 hover:underline" data-i18n="forgot_password">نسيت كلمة المرور؟</button>
+          </div>
+          <p id="loginError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
+          <button type="submit" id="loginSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5" data-i18n="btn_login">دخول</button>
+        </form>
+        <div class="text-center mt-6 text-sm">
+          <span class="text-gray-500" data-i18n="no_account">ليس لديك حساب؟</span>
+          <button onclick="showRegister()" class="text-brand-500 font-bold hover:underline mr-1" data-i18n="create_account">إنشاء حساب جديد</button>
+        </div>
+      </div>
+
+      <!-- Register -->
+      <div id="registerForm" class="hidden">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-user-plus"></i></div>
+          <h2 class="text-2xl font-black text-gray-900" data-i18n="register_title">إنشاء حساب</h2>
+          <p class="text-sm text-gray-500 mt-1" data-i18n="register_subtitle">انضم إلى مجتمع ENSTP</p>
+        </div>
+        <form id="registerFormElement" class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="name_label">الاسم واللقب</label>
+            <input type="text" id="regName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" placeholder="أحمد بن علي">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="email_label">البريد الإلكتروني</label>
+            <input type="email" id="regEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="password_label">كلمة المرور</label>
+            <input type="password" id="regPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="********">
+          </div>
+          <p id="registerError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
+          <button type="submit" id="registerSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5" data-i18n="btn_register">تسجيل</button>
+        </form>
+        <div class="text-center mt-6 text-sm">
+          <span class="text-gray-500" data-i18n="have_account">لديك حساب بالفعل؟</span>
+          <button onclick="showLogin()" class="text-brand-500 font-bold hover:underline mr-1" data-i18n="btn_login">تسجيل الدخول</button>
+        </div>
+      </div>
+
+      <!-- Reset Password -->
+      <div id="resetPasswordForm" class="hidden">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-orange-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-key"></i></div>
+          <h2 class="text-2xl font-black text-gray-900" data-i18n="reset_title">استعادة الحساب</h2>
+          <p class="text-sm text-gray-500 mt-1" data-i18n="reset_subtitle">أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين كلمة المرور</p>
+        </div>
+        <form id="resetFormElement" class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="email_label">البريد الإلكتروني</label>
+            <input type="email" id="resetEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
+          </div>
+          <p id="resetError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
+          <p id="resetSuccess" class="text-green-600 text-sm font-bold text-center hidden bg-green-50 p-2 rounded-lg"></p>
+          <button type="submit" id="resetSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5" data-i18n="btn_reset">إرسال رابط الاستعادة</button>
+        </form>
+        <div class="text-center mt-6 text-sm">
+          <button onclick="showLogin()" class="text-gray-500 font-bold hover:text-brand-500 hover:underline" data-i18n="btn_back_login">العودة لتسجيل الدخول</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCRIPTS ================= -->
+  
+  <!-- Dictionary -->
+  <script>
+    window.FORUM_TRANSLATIONS = {
+      ar: {
+        page_title: "ملتقى الطلبة - ENSTP",
+        forum_title: "ملتقى الطلبة",
+        forum_subtitle: "ملتقى الطلبة للنادي ونادي الجميع أن من الجمعية الفرعية الجاحة الجامعية.",
+        btn_login: "تسجيل الدخول",
+        chat_sidebar_title: "الرسائل المباشرة والدردشة",
+        btn_send: "إرسال",
+        cat_all: "الكل",
+        cat_discussions: "نقاشات ودروس",
+        cat_clubs: "النوادي",
+        search_placeholder: "ابحث...",
+        btn_create_post: "نشر",
+        no_posts_yet: "لا توجد منشورات بعد. كن أول من ينشر!",
+        
+        // Post Modal
+        create_post_title: "نشر منشور جديد",
+        create_post_subtitle: "شارك أفكارك مع زملائك في الملتقى",
+        post_title_label: "عنوان المنشور",
+        post_content_label: "محتوى المنشور",
+        post_tags_label: "الوسوم (اختياري)",
+        btn_publish: "نشر الآن",
+
+        // Room Modal
+        create_room_title: "إنشاء غرفة دردشة",
+        create_room_subtitle: "أنشئ مساحة خاصة للنقاش",
+        room_name_label: "اسم الغرفة",
+        room_pass_label: "كلمة المرور (اختياري)",
+        btn_create: "إنشاء",
+
+        // Auth
+        login_title: "تسجيل الدخول",
+        login_subtitle: "مرحباً بك مجدداً",
+        email_label: "البريد الإلكتروني",
+        password_label: "كلمة المرور",
+        forgot_password: "نسيت كلمة المرور؟",
+        btn_login: "دخول",
+        no_account: "ليس لديك حساب؟",
+        create_account: "إنشاء حساب جديد",
+        register_title: "إنشاء حساب",
+        register_subtitle: "انضم إلى مجتمع ENSTP",
+        name_label: "الاسم واللقب",
+        btn_register: "تسجيل",
+        have_account: "لديك حساب بالفعل؟",
+        reset_title: "استعادة الحساب",
+        reset_subtitle: "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين كلمة المرور",
+        btn_reset: "إرسال رابط الاستعادة",
+        btn_back_login: "العودة لتسجيل الدخول"
+      },
+      fr: {
+        page_title: "Forum Étudiant - ENSTP",
+        forum_title: "Forum Étudiant",
+        forum_subtitle: "Forum étudiant pour le club et tous, de l'association de l'université.",
+        btn_login: "Connexion",
+        chat_sidebar_title: "Messages Directs et Chat",
+        btn_send: "Envoyer",
+        cat_all: "Tous",
+        cat_discussions: "Discussions et Cours",
+        cat_clubs: "Clubs",
+        search_placeholder: "Rechercher...",
+        btn_create_post: "Publier",
+        no_posts_yet: "Aucun post pour le moment. Soyez le premier !",
+        
+        create_post_title: "Créer un post",
+        create_post_subtitle: "Partagez vos idées avec vos camarades",
+        post_title_label: "Titre du post",
+        post_content_label: "Contenu du post",
+        post_tags_label: "Tags (optionnel)",
+        btn_publish: "Publier maintenant",
+
+        create_room_title: "Créer un salon",
+        create_room_subtitle: "Créez un espace privé pour discuter",
+        room_name_label: "Nom du salon",
+        room_pass_label: "Mot de passe (optionnel)",
+        btn_create: "Créer",
+
+        login_title: "Connexion",
+        login_subtitle: "Bon retour parmi nous",
+        email_label: "Email",
+        password_label: "Mot de passe",
+        forgot_password: "Mot de passe oublié ?",
+        btn_login: "Se connecter",
+        no_account: "Pas de compte ?",
+        create_account: "Créer un compte",
+        register_title: "Créer un compte",
+        register_subtitle: "Rejoignez la communauté ENSTP",
+        name_label: "Nom complet",
+        btn_register: "S'inscrire",
+        have_account: "Déjà un compte ?",
+        reset_title: "Récupération de compte",
+        reset_subtitle: "Entrez votre email pour recevoir un lien de réinitialisation",
+        btn_reset: "Envoyer le lien",
+        btn_back_login: "Retour à la connexion"
+      },
+      en: {
+        page_title: "Student Forum - ENSTP",
+        forum_title: "Student Forum",
+        forum_subtitle: "Student forum for the club and everyone from the university association.",
+        btn_login: "Login",
+        chat_sidebar_title: "Direct Messages & Chat",
+        btn_send: "Send",
+        cat_all: "All",
+        cat_discussions: "Discussions & Lessons",
+        cat_clubs: "Clubs",
+        search_placeholder: "Search...",
+        btn_create_post: "Post",
+        no_posts_yet: "No posts yet. Be the first to post!",
+        
+        create_post_title: "Create a Post",
+        create_post_subtitle: "Share your thoughts with your peers",
+        post_title_label: "Post Title",
+        post_content_label: "Post Content",
+        post_tags_label: "Tags (optional)",
+        btn_publish: "Publish Now",
+
+        create_room_title: "Create Chat Room",
+        create_room_subtitle: "Create a private space for discussion",
+        room_name_label: "Room Name",
+        room_pass_label: "Password (optional)",
+        btn_create: "Create",
+
+        login_title: "Login",
+        login_subtitle: "Welcome back",
+        email_label: "Email",
+        password_label: "Password",
+        forgot_password: "Forgot password?",
+        btn_login: "Login",
+        no_account: "Don't have an account?",
+        create_account: "Create new account",
+        register_title: "Create Account",
+        register_subtitle: "Join the ENSTP community",
+        name_label: "Full Name",
+        btn_register: "Register",
+        have_account: "Already have an account?",
+        reset_title: "Account Recovery",
+        reset_subtitle: "Enter your email to receive a reset link",
+        btn_reset: "Send Reset Link",
+        btn_back_login: "Back to Login"
+      }
+    };
+
+    let currentLang = localStorage.getItem('enstp_forum_lang') || 'ar';
+
+    function applyTranslation(lang) {
+      const dict = window.FORUM_TRANSLATIONS[lang] || window.FORUM_TRANSLATIONS.ar;
+      
+      if(dict.page_title) document.title = dict.page_title;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if(dict[key]) el.innerText = dict[key];
+      });
+      
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if(dict[key]) el.placeholder = dict[key];
+      });
+
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+      
+      // Update lang buttons
+      document.querySelectorAll('#lang-ar, #lang-fr, #lang-en').forEach(b => {
+        b.classList.remove('bg-white', 'shadow-sm', 'text-brand-600');
+        b.classList.add('text-gray-500');
+      });
+      const activeBtn = document.getElementById('lang-' + lang);
+      if(activeBtn) {
+        activeBtn.classList.remove('text-gray-500');
+        activeBtn.classList.add('bg-white', 'shadow-sm', 'text-brand-600');
+      }
+    }
+
+    window.setLanguage = function(lang) {
+      currentLang = lang;
+      localStorage.setItem('enstp_forum_lang', lang);
+      applyTranslation(lang);
+    };
+  </script>
+
+  <!-- Firebase Logic (Auth + Firestore) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
@@ -425,14 +476,14 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    // ====== UI Logic ======
     const authModal = document.getElementById('authModal');
     const headerAuthArea = document.getElementById('headerAuthArea');
     
+    // ====== UI Logic ======
     window.closeAuthModal = () => authModal.classList.add('hidden');
 
-    // Toggle Forms
     window.showLogin = () => {
       document.getElementById('loginForm').classList.remove('hidden');
       document.getElementById('registerForm').classList.add('hidden');
@@ -449,33 +500,22 @@
       document.getElementById('resetPasswordForm').classList.remove('hidden');
     };
 
-    // Open Login Modal if not logged in
-    document.getElementById('loginBtn').addEventListener('click', () => authModal.classList.remove('hidden'));
-
     // ====== Auth Logic ======
-    
-    // Login
     document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('loginEmail').value;
       const pass = document.getElementById('loginPassword').value;
       const btn = document.getElementById('loginSubmitBtn');
       const err = document.getElementById('loginError');
-      
-      btn.disabled = true; btn.innerText = 'جاري الدخول...'; err.classList.add('hidden');
-      
+      btn.disabled = true; btn.innerText = '...'; err.classList.add('hidden');
       try {
         await signInWithEmailAndPassword(auth, email, pass);
         closeAuthModal();
       } catch (error) {
-        err.innerText = "خطأ: " + error.message;
-        err.classList.remove('hidden');
-      } finally {
-        btn.disabled = false; btn.innerText = 'دخول';
-      }
+        err.innerText = error.message; err.classList.remove('hidden');
+      } finally { btn.disabled = false; btn.innerText = 'دخول'; }
     });
 
-    // Register
     document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('regName').value;
@@ -483,48 +523,34 @@
       const pass = document.getElementById('regPassword').value;
       const btn = document.getElementById('registerSubmitBtn');
       const err = document.getElementById('registerError');
-      
-      btn.disabled = true; btn.innerText = 'جاري التسجيل...'; err.classList.add('hidden');
-      
+      btn.disabled = true; btn.innerText = '...'; err.classList.add('hidden');
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
         await updateProfile(userCredential.user, { displayName: name });
         closeAuthModal();
       } catch (error) {
-        err.innerText = "خطأ: " + error.message;
-        err.classList.remove('hidden');
-      } finally {
-        btn.disabled = false; btn.innerText = 'تسجيل';
-      }
+        err.innerText = error.message; err.classList.remove('hidden');
+      } finally { btn.disabled = false; btn.innerText = 'تسجيل'; }
     });
 
-    // Reset Password (Forgot Password)
     document.getElementById('resetFormElement').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('resetEmail').value;
       const btn = document.getElementById('resetSubmitBtn');
       const err = document.getElementById('resetError');
       const success = document.getElementById('resetSuccess');
-      
-      btn.disabled = true; btn.innerText = 'جاري الإرسال...'; 
-      err.classList.add('hidden'); success.classList.add('hidden');
-      
+      btn.disabled = true; btn.innerText = '...'; err.classList.add('hidden'); success.classList.add('hidden');
       try {
         await sendPasswordResetEmail(auth, email);
-        success.innerText = "✅ تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. يرجى مراجعة صندوق الوارد (أو البريد المزعج).";
+        success.innerText = "✅ تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.";
         success.classList.remove('hidden');
       } catch (error) {
-        err.innerText = "خطأ: " + error.message;
-        err.classList.remove('hidden');
-      } finally {
-        btn.disabled = false; btn.innerText = 'إرسال رابط الاستعادة';
-      }
+        err.innerText = error.message; err.classList.remove('hidden');
+      } finally { btn.disabled = false; btn.innerText = 'إرسال'; }
     });
 
-    // Auth State Observer
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // Logged in
         headerAuthArea.innerHTML = `
           <div class="flex items-center gap-3">
             <div class="text-left hidden md:block">
@@ -534,26 +560,125 @@
             <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-lg border-2 border-white shadow-sm">
               ${(user.displayName || 'U').charAt(0).toUpperCase()}
             </div>
-            <button onclick="window.logout()" class="text-gray-400 hover:text-red-500 transition p-2">
+            <button onclick="signOut(auth)" class="text-gray-400 hover:text-red-500 transition p-2">
               <i class="fa-solid fa-power-off"></i>
             </button>
           </div>
         `;
       } else {
-        // Logged out
         headerAuthArea.innerHTML = `
-          <button id="loginBtn" onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md">
+          <button id="loginBtn" onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md" data-i18n="btn_login">
             تسجيل الدخول
           </button>
         `;
+        applyTranslation(currentLang); // Re-apply translation for new button
       }
     });
 
-    // Logout
-    window.logout = async () => {
-      try { await signOut(auth); } catch(e) { console.error(e); }
-    };
+    // ====== Posts (Firestore) ======
+    const postsGrid = document.getElementById('postsGrid');
+    const noPostsMsg = document.getElementById('noPostsMessage');
 
+    // Listen to posts collection
+    const q = query(collection(db, "forum_posts"), orderBy("createdAt", "desc"));
+    
+    onSnapshot(q, (snapshot) => {
+      postsGrid.innerHTML = '';
+      if (snapshot.empty) {
+        noPostsMsg.classList.remove('hidden');
+        return;
+      }
+      noPostsMsg.classList.add('hidden');
+      
+      snapshot.forEach((doc) => {
+        const post = doc.data();
+        const dateStr = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleDateString('ar-DZ') : 'الآن';
+        
+        // Parse tags
+        const tagsHtml = post.tags ? post.tags.split(' ').map(tag => 
+          `<span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">${tag}</span>`
+        ).join('') : '';
+
+        const card = document.createElement('div');
+        card.className = 'post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between animate-fade-in';
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex items-center gap-2">
+                <img src="https://i.pravatar.cc/100?img=${Math.floor(Math.random()*50)}" class="w-10 h-10 rounded-full object-cover">
+                <div>
+                  <h3 class="font-bold text-sm text-gray-900">${post.authorName || 'طالب'}</h3>
+                  <p class="text-[10px] text-gray-400">${dateStr}</p>
+                </div>
+              </div>
+              <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
+            </div>
+            <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">${post.title}</h2>
+            <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">${post.content}</p>
+          </div>
+          <div>
+            <div class="flex flex-wrap gap-2 justify-center mb-4">
+              ${tagsHtml}
+            </div>
+            <div class="flex justify-between items-center pt-3 border-t border-gray-50">
+              <div class="flex gap-3 text-gray-400">
+                <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
+                <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 0</button>
+              </div>
+            </div>
+          </div>
+        `;
+        postsGrid.appendChild(card);
+      });
+    });
+
+    // Create Post Submit
+    document.getElementById('createPostForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if(!auth.currentUser) {
+        alert("يرجى تسجيل الدخول أولاً لنشر منشور.");
+        document.getElementById('createPostModal').classList.add('hidden');
+        authModal.classList.remove('hidden');
+        return;
+      }
+      
+      const title = document.getElementById('postTitle').value;
+      const content = document.getElementById('postContent').value;
+      const tags = document.getElementById('postTags').value;
+      const btn = document.getElementById('publishBtn');
+      const err = document.getElementById('postError');
+      
+      btn.disabled = true;
+      btn.innerText = 'جاري النشر...';
+      err.classList.add('hidden');
+      
+      try {
+        await addDoc(collection(db, "forum_posts"), {
+          title: title,
+          content: content,
+          tags: tags,
+          authorName: auth.currentUser.displayName || auth.currentUser.email,
+          authorId: auth.currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+        document.getElementById('createPostForm').reset();
+        document.getElementById('createPostModal').classList.add('hidden');
+      } catch (error) {
+        err.innerText = "خطأ: " + error.message;
+        err.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'نشر الآن';
+      }
+    });
+
+  </script>
+  
+  <script>
+    // Init Language
+    document.addEventListener('DOMContentLoaded', () => {
+      applyTranslation(currentLang);
+    });
   </script>
 </body>
 </html>
