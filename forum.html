@@ -25,69 +25,91 @@
 
   <style>
     body { background-color: var(--bg); font-family: 'Cairo', sans-serif; }
+    
+    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* Card Hover Effect */
     .post-card { transition: all 0.3s ease; }
     .post-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+
+    /* Chat Sidebar Item Hover */
     .chat-item { transition: background 0.2s; cursor: pointer; }
     .chat-item:hover { background: #fff7ed; }
     .chat-item.active { background: #ffedd5; border-right: 4px solid #f97316; }
+
+    /* Hide scrollbar for category chips */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Fade In Animation */
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-    
-    /* Chat Bubbles */
+
+    /* Chat bubble styles */
     .chat-bubble-me { background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-radius: 18px 18px 4px 18px; }
     .chat-bubble-other { background: #ffffff; color: #1e293b; border-radius: 18px 18px 18px 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #f1f5f9; }
   </style>
 </head>
 <body class="text-gray-800 h-screen overflow-hidden flex flex-col">
 
-  <!-- HEADER -->
+  <!-- ================= HEADER ================= -->
   <header class="bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center shrink-0 z-20 shadow-sm">
     <div class="flex items-center gap-3">
       <div class="w-10 h-10 bg-brand-500 text-white rounded-xl flex items-center justify-center text-xl shadow-md">
         <i class="fa-solid fa-users-rays"></i>
       </div>
       <div>
-        <h1 class="text-xl font-black text-gray-900 leading-tight">ملتقى الطلبة</h1>
-        <p class="text-[11px] text-gray-500 font-semibold">مساحة النقاش والتبادل بين الطلبة</p>
+        <h1 class="text-xl font-black text-gray-900 leading-tight" data-i18n="forum_title">ملتقى الطلبة</h1>
+        <p class="text-[11px] text-gray-500 font-semibold" data-i18n="forum_subtitle">ملتقى الطلبة للنادي ونادي الجميع أن من الجمعية الفرعية الجاحة الجامعية.</p>
       </div>
     </div>
     
-    <div id="headerAuthArea">
-      <button id="loginBtn" onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md">
-        تسجيل الدخول
-      </button>
+    <div class="flex items-center gap-3">
+      <!-- Language Selector -->
+      <div class="flex bg-gray-100 rounded-xl p-1">
+        <button onclick="setLanguage('ar')" id="lang-ar" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white shadow-sm text-brand-600">🇩🇿 عربي</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-500 hover:text-brand-600">🇫🇷 FR</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-500 hover:text-brand-600">🇬🇧 EN</button>
+      </div>
+      
+      <div id="headerAuthArea">
+        <button id="loginBtn" onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md" data-i18n="btn_login">
+          تسجيل الدخول
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- MAIN LAYOUT -->
+  <!-- ================= MAIN LAYOUT ================= -->
   <div class="flex-1 flex overflow-hidden max-w-[1600px] mx-auto w-full p-4 gap-6">
 
-    <!-- SIDEBAR (Chats) -->
+    <!-- ================= RIGHT SIDEBAR (Chats) ================= -->
     <aside class="w-80 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden shrink-0 hidden lg:flex">
       
       <!-- Sidebar Header -->
       <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-brand-50/50">
         <div class="flex items-center gap-2">
           <button onclick="closeChatArea()" id="backToChatListBtn" class="hidden text-gray-500 hover:text-brand-500 transition"><i class="fa-solid fa-arrow-right"></i></button>
-          <h2 id="chatSidebarTitle" class="font-black text-gray-800 text-lg">الرسائل والدردشة</h2>
+          <h2 id="chatSidebarTitle" class="font-black text-gray-800 text-lg" data-i18n="chat_sidebar_title">الرسائل المباشرة والدردشة</h2>
         </div>
-        <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="w-8 h-8 rounded-full bg-white text-brand-500 hover:bg-brand-100 flex items-center justify-center transition shadow-sm border border-brand-100" title="إنشاء غرفة">
+        <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="w-8 h-8 rounded-full bg-white text-brand-500 hover:bg-brand-100 flex items-center justify-center transition shadow-sm border border-brand-100" title="إنشاء غرفة جديدة">
           <i class="fa-solid fa-plus"></i>
         </button>
       </div>
 
       <!-- Chat List -->
       <div class="flex-1 overflow-y-auto" id="chatListContainer">
-        <div class="p-4 text-center text-gray-400 text-sm">جاري التحميل...</div>
+        <div class="p-4 text-center text-gray-400 text-sm">جاري تحميل الغرف...</div>
       </div>
 
       <!-- Active Chat Area -->
       <div id="activeChatArea" class="hidden flex-1 flex flex-col h-full bg-gray-50 absolute inset-0 z-30 transform translate-x-full transition-transform duration-300">
+        
+        <!-- Active Chat Header -->
         <div class="p-3 border-b border-gray-200 flex items-center gap-3 bg-white shrink-0">
           <button onclick="closeChatArea()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition"><i class="fa-solid fa-arrow-right"></i></button>
           <div class="flex items-center gap-2">
@@ -99,8 +121,10 @@
           </div>
         </div>
 
+        <!-- Messages -->
         <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col"></div>
 
+        <!-- Chat Input -->
         <div class="p-3 border-t border-gray-200 bg-white shrink-0">
           <form id="chatForm" class="flex items-center gap-2 bg-gray-100 rounded-xl p-1 border border-transparent focus-within:border-brand-300 transition">
             <input type="text" id="chatInput" placeholder="اكتب رسالة..." class="flex-1 bg-transparent border-none outline-none px-3 py-2 text-sm text-gray-800" required autocomplete="off">
@@ -112,18 +136,23 @@
       </div>
     </aside>
 
-    <!-- MAIN CONTENT (Posts) -->
+    <!-- ================= MAIN CONTENT (Posts) ================= -->
     <main class="flex-1 flex flex-col min-w-0">
       
-      <!-- Top Bar -->
+      <!-- Top Controls -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-4 flex flex-wrap items-center justify-between gap-4 shrink-0">
         <div class="flex gap-2 overflow-x-auto no-scrollbar">
-          <button class="bg-brand-500 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md whitespace-nowrap">الكل</button>
-          <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap">نقاشات</button>
+          <button class="bg-brand-500 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md shadow-brand-500/30 whitespace-nowrap" data-i18n="cat_all">الكل</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap" data-i18n="cat_discussions">نقاشات ودروس</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap" data-i18n="cat_clubs">النوادي</button>
         </div>
         <div class="flex items-center gap-2 w-full md:w-auto">
+          <div class="relative w-full md:w-64">
+            <input type="text" placeholder="ابحث..." data-i18n-placeholder="search_placeholder" class="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:border-brand-500 transition">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          </div>
           <button onclick="document.getElementById('createPostModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-xl font-bold text-sm transition shadow-md flex items-center gap-2 whitespace-nowrap">
-            <i class="fa-solid fa-plus"></i> نشر منشور
+            <i class="fa-solid fa-plus"></i> <span data-i18n="btn_create_post">نشر</span>
           </button>
         </div>
       </div>
@@ -133,7 +162,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" id="postsGrid"></div>
         <div id="noPostsMessage" class="hidden text-center py-20 text-gray-400">
           <i class="fa-regular fa-folder-open text-6xl mb-4 opacity-50"></i>
-          <p class="text-lg font-bold">لا توجد منشورات بعد. كن أول من ينشر!</p>
+          <p class="text-lg font-bold" data-i18n="no_posts_yet">لا توجد منشورات بعد. كن أول من ينشر!</p>
         </div>
       </div>
     </main>
@@ -147,13 +176,23 @@
       <button onclick="document.getElementById('createPostModal').classList.add('hidden')" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
       <div class="text-center mb-6">
         <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-pen-nib"></i></div>
-        <h2 class="text-2xl font-black text-gray-900">نشر منشور جديد</h2>
+        <h2 class="text-2xl font-black text-gray-900" data-i18n="create_post_title">نشر منشور جديد</h2>
       </div>
       <form id="createPostForm" class="space-y-4">
-        <div><label class="block text-sm font-bold mb-1">العنوان</label><input type="text" id="postTitle" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-brand-500"></div>
-        <div><label class="block text-sm font-bold mb-1">المحتوى</label><textarea id="postContent" required rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-brand-500 resize-none"></textarea></div>
+        <div><label class="block text-sm font-bold mb-1" data-i18n="post_title_label">العنوان</label><input type="text" id="postTitle" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-brand-500"></div>
+        <div><label class="block text-sm font-bold mb-1" data-i18n="post_content_label">المحتوى</label><textarea id="postContent" required rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-brand-500 resize-none"></textarea></div>
+        
+        <!-- Upload Area -->
+        <div class="flex items-center gap-3 bg-gray-50 p-3 rounded-xl border border-gray-200 border-dashed">
+          <input type="file" id="postFileInput" class="hidden" accept="image/*,application/pdf" onchange="updateFileNameDisplay(this, 'postFileName')">
+          <button type="button" onclick="document.getElementById('postFileInput').click()" class="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded-lg font-bold text-sm transition border border-gray-200 shadow-sm">
+            <i class="fa-solid fa-paperclip"></i> إرفاق ملف
+          </button>
+          <span id="postFileName" class="text-xs text-gray-500 truncate">لا يوجد ملف</span>
+        </div>
+
         <p id="postError" class="text-red-500 text-sm font-bold text-center hidden"></p>
-        <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition">نشر الآن</button>
+        <button type="submit" id="publishBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition" data-i18n="btn_publish">نشر الآن</button>
       </form>
     </div>
   </div>
@@ -164,11 +203,11 @@
       <button onclick="document.getElementById('createRoomModal').classList.add('hidden')" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
       <div class="text-center mb-6">
         <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-comments"></i></div>
-        <h2 class="text-2xl font-black text-gray-900">إنشاء غرفة جديدة</h2>
+        <h2 class="text-2xl font-black text-gray-900" data-i18n="create_room_title">إنشاء غرفة جديدة</h2>
       </div>
       <form id="createRoomForm" class="space-y-4">
-        <div><label class="block text-sm font-bold mb-1">اسم الغرفة</label><input type="text" id="roomName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-brand-500" placeholder="مثال: مجموعة الرياضيات"></div>
-        <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition">إنشاء</button>
+        <div><label class="block text-sm font-bold mb-1" data-i18n="room_name_label">اسم الغرفة</label><input type="text" id="roomName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:border-brand-500" placeholder="مثال: مجموعة الرياضيات"></div>
+        <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition" data-i18n="btn_create">إنشاء</button>
       </form>
     </div>
   </div>
@@ -194,54 +233,120 @@
       <div id="loginForm">
         <div class="text-center mb-8">
           <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-user-lock"></i></div>
-          <h2 class="text-2xl font-black text-gray-900">تسجيل الدخول</h2>
+          <h2 class="text-2xl font-black text-gray-900" data-i18n="login_title">تسجيل الدخول</h2>
         </div>
         <form id="loginFormElement" class="space-y-4">
-          <div><label class="block text-sm font-bold mb-1">البريد الإلكتروني</label><input type="email" id="loginEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
-          <div><label class="block text-sm font-bold mb-1">كلمة المرور</label><input type="password" id="loginPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
-          <div class="text-left"><button type="button" onclick="showResetPassword()" class="text-sm font-bold text-brand-500 hover:underline">نسيت كلمة المرور؟</button></div>
+          <div><label class="block text-sm font-bold mb-1" data-i18n="email_label">البريد الإلكتروني</label><input type="email" id="loginEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
+          <div><label class="block text-sm font-bold mb-1" data-i18n="password_label">كلمة المرور</label><input type="password" id="loginPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
+          <div class="text-left"><button type="button" onclick="showResetPassword()" class="text-sm font-bold text-brand-500 hover:underline" data-i18n="forgot_password">نسيت كلمة المرور؟</button></div>
           <p id="loginError" class="text-red-500 text-sm font-bold text-center hidden"></p>
-          <button type="submit" class="w-full bg-brand-500 text-white font-bold py-3.5 rounded-xl shadow-lg">دخول</button>
+          <button type="submit" class="w-full bg-brand-500 text-white font-bold py-3.5 rounded-xl shadow-lg" data-i18n="btn_login">دخول</button>
         </form>
-        <div class="text-center mt-6 text-sm"><span class="text-gray-500">ليس لديك حساب؟</span><button onclick="showRegister()" class="text-brand-500 font-bold hover:underline mr-1">إنشاء حساب</button></div>
+        <div class="text-center mt-6 text-sm"><span class="text-gray-500" data-i18n="no_account">ليس لديك حساب؟</span><button onclick="showRegister()" class="text-brand-500 font-bold hover:underline mr-1" data-i18n="create_account">إنشاء حساب</button></div>
       </div>
 
       <div id="registerForm" class="hidden">
         <div class="text-center mb-8">
           <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-user-plus"></i></div>
-          <h2 class="text-2xl font-black text-gray-900">إنشاء حساب</h2>
+          <h2 class="text-2xl font-black text-gray-900" data-i18n="register_title">إنشاء حساب</h2>
         </div>
         <form id="registerFormElement" class="space-y-4">
-          <div><label class="block text-sm font-bold mb-1">الاسم واللقب</label><input type="text" id="regName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50"></div>
-          <div><label class="block text-sm font-bold mb-1">البريد الإلكتروني</label><input type="email" id="regEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
-          <div><label class="block text-sm font-bold mb-1">كلمة المرور</label><input type="password" id="regPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
+          <div><label class="block text-sm font-bold mb-1" data-i18n="name_label">الاسم واللقب</label><input type="text" id="regName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50"></div>
+          <div><label class="block text-sm font-bold mb-1" data-i18n="email_label">البريد الإلكتروني</label><input type="email" id="regEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
+          <div><label class="block text-sm font-bold mb-1" data-i18n="password_label">كلمة المرور</label><input type="password" id="regPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
           <p id="registerError" class="text-red-500 text-sm font-bold text-center hidden"></p>
-          <button type="submit" class="w-full bg-brand-500 text-white font-bold py-3.5 rounded-xl shadow-lg">تسجيل</button>
+          <button type="submit" class="w-full bg-brand-500 text-white font-bold py-3.5 rounded-xl shadow-lg" data-i18n="btn_register">تسجيل</button>
         </form>
-        <div class="text-center mt-6 text-sm"><span class="text-gray-500">لديك حساب؟</span><button onclick="showLogin()" class="text-brand-500 font-bold hover:underline mr-1">تسجيل الدخول</button></div>
+        <div class="text-center mt-6 text-sm"><span class="text-gray-500" data-i18n="have_account">لديك حساب؟</span><button onclick="showLogin()" class="text-brand-500 font-bold hover:underline mr-1" data-i18n="btn_login">تسجيل الدخول</button></div>
       </div>
 
       <div id="resetPasswordForm" class="hidden">
         <div class="text-center mb-8">
           <div class="w-16 h-16 bg-orange-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl"><i class="fa-solid fa-key"></i></div>
-          <h2 class="text-2xl font-black text-gray-900">استعادة الحساب</h2>
+          <h2 class="text-2xl font-black text-gray-900" data-i18n="reset_title">استعادة الحساب</h2>
         </div>
         <form id="resetFormElement" class="space-y-4">
-          <div><label class="block text-sm font-bold mb-1">البريد الإلكتروني</label><input type="email" id="resetEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
+          <div><label class="block text-sm font-bold mb-1" data-i18n="email_label">البريد الإلكتروني</label><input type="email" id="resetEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50" dir="ltr"></div>
           <p id="resetError" class="text-red-500 text-sm font-bold text-center hidden"></p>
           <p id="resetSuccess" class="text-green-600 text-sm font-bold text-center hidden"></p>
-          <button type="submit" class="w-full bg-brand-500 text-white font-bold py-3.5 rounded-xl shadow-lg">إرسال رابط الاستعادة</button>
+          <button type="submit" class="w-full bg-brand-500 text-white font-bold py-3.5 rounded-xl shadow-lg" data-i18n="btn_reset">إرسال رابط الاستعادة</button>
         </form>
-        <div class="text-center mt-6 text-sm"><button onclick="showLogin()" class="text-gray-500 font-bold hover:text-brand-500 hover:underline">العودة لتسجيل الدخول</button></div>
+        <div class="text-center mt-6 text-sm"><button onclick="showLogin()" class="text-gray-500 font-bold hover:text-brand-500 hover:underline" data-i18n="btn_back_login">العودة لتسجيل الدخول</button></div>
       </div>
     </div>
   </div>
 
   <!-- ================= SCRIPTS ================= -->
+  
+  <!-- Dictionary -->
+  <script>
+    window.FORUM_TRANSLATIONS = {
+      ar: {
+        page_title: "ملتقى الطلبة - ENSTP", forum_title: "ملتقى الطلبة", forum_subtitle: "ملتقى الطلبة للنادي ونادي الجميع أن من الجمعية الفرعية الجاحة الجامعية.",
+        btn_login: "تسجيل الدخول", chat_sidebar_title: "الرسائل المباشرة والدردشة", btn_send: "إرسال",
+        cat_all: "الكل", cat_discussions: "نقاشات ودروس", cat_clubs: "النوادي", cat_events: "فعاليات",
+        search_placeholder: "ابحث...", btn_create_post: "نشر", no_posts_yet: "لا توجد منشورات بعد. كن أول من ينشر!",
+        create_post_title: "نشر منشور جديد", create_post_subtitle: "شارك أفكارك مع زملائك",
+        post_title_label: "العنوان", post_content_label: "المحتوى", post_tags_label: "الوسوم (اختياري)", btn_publish: "نشر الآن",
+        create_room_title: "إنشاء غرفة دردشة", room_name_label: "اسم الغرفة", btn_create: "إنشاء",
+        login_title: "تسجيل الدخول", login_subtitle: "مرحباً بك مجدداً", email_label: "البريد الإلكتروني", password_label: "كلمة المرور",
+        forgot_password: "نسيت كلمة المرور؟", btn_login: "دخول", no_account: "ليس لديك حساب؟", create_account: "إنشاء حساب جديد",
+        register_title: "إنشاء حساب", register_subtitle: "انضم إلى مجتمع ENSTP", name_label: "الاسم واللقب", btn_register: "تسجيل", have_account: "لديك حساب بالفعل؟",
+        reset_title: "استعادة الحساب", reset_subtitle: "أدخل بريدك الإلكتروني", btn_reset: "إرسال رابط الاستعادة", btn_back_login: "العودة لتسجيل الدخول"
+      },
+      fr: {
+        page_title: "Forum Étudiant - ENSTP", forum_title: "Forum Étudiant", forum_subtitle: "Forum étudiant pour le club et tous.",
+        btn_login: "Connexion", chat_sidebar_title: "Messages et Chat", btn_send: "Envoyer",
+        cat_all: "Tous", cat_discussions: "Discussions", cat_clubs: "Clubs", cat_events: "Événements",
+        search_placeholder: "Rechercher...", btn_create_post: "Publier", no_posts_yet: "Aucun post pour le moment.",
+        create_post_title: "Créer un post", create_post_subtitle: "Partagez vos idées",
+        post_title_label: "Titre", post_content_label: "Contenu", post_tags_label: "Tags", btn_publish: "Publier maintenant",
+        create_room_title: "Créer un salon", room_name_label: "Nom du salon", btn_create: "Créer",
+        login_title: "Connexion", login_subtitle: "Bon retour", email_label: "Email", password_label: "Mot de passe",
+        forgot_password: "Mot de passe oublié ?", btn_login: "Se connecter", no_account: "Pas de compte ?", create_account: "Créer un compte",
+        register_title: "Créer un compte", register_subtitle: "Rejoignez ENSTP", name_label: "Nom complet", btn_register: "S'inscrire", have_account: "Déjà un compte ?",
+        reset_title: "Récupération", reset_subtitle: "Entrez votre email", btn_reset: "Envoyer le lien", btn_back_login: "Retour à la connexion"
+      },
+      en: {
+        page_title: "Student Forum - ENSTP", forum_title: "Student Forum", forum_subtitle: "Student forum for the club and everyone.",
+        btn_login: "Login", chat_sidebar_title: "Chat & Messages", btn_send: "Send",
+        cat_all: "All", cat_discussions: "Discussions", cat_clubs: "Clubs", cat_events: "Events",
+        search_placeholder: "Search...", btn_create_post: "Post", no_posts_yet: "No posts yet.",
+        create_post_title: "Create a Post", create_post_subtitle: "Share your thoughts",
+        post_title_label: "Title", post_content_label: "Content", post_tags_label: "Tags", btn_publish: "Publish Now",
+        create_room_title: "Create Chat Room", room_name_label: "Room Name", btn_create: "Create",
+        login_title: "Login", login_subtitle: "Welcome back", email_label: "Email", password_label: "Password",
+        forgot_password: "Forgot password?", btn_login: "Login", no_account: "No account?", create_account: "Create account",
+        register_title: "Create Account", register_subtitle: "Join ENSTP community", name_label: "Full Name", btn_register: "Register", have_account: "Already have an account?",
+        reset_title: "Account Recovery", reset_subtitle: "Enter your email", btn_reset: "Send Reset Link", btn_back_login: "Back to Login"
+      }
+    };
+
+    let currentLang = localStorage.getItem('enstp_forum_lang') || 'ar';
+    function applyTranslation(lang) {
+      const dict = window.FORUM_TRANSLATIONS[lang] || window.FORUM_TRANSLATIONS.ar;
+      if(dict.page_title) document.title = dict.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if(dict[key]) el.innerText = dict[key]; });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const key = el.getAttribute('data-i18n-placeholder'); if(dict[key]) el.placeholder = dict[key]; });
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+      
+      document.querySelectorAll('#lang-ar, #lang-fr, #lang-en').forEach(b => {
+        b.classList.remove('bg-white', 'shadow-sm', 'text-brand-600');
+        b.classList.add('text-gray-500');
+      });
+      const activeBtn = document.getElementById('lang-' + lang);
+      if(activeBtn) activeBtn.classList.add('bg-white', 'shadow-sm', 'text-brand-600');
+    }
+    window.setLanguage = function(lang) { currentLang = lang; localStorage.setItem('enstp_forum_lang', lang); applyTranslation(lang); };
+  </script>
+
+  <!-- Firebase Integration -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
@@ -255,43 +360,50 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const storage = getStorage(app);
 
+    // UI Logic
     const authModal = document.getElementById('authModal');
-
-    // ===== Auth UI =====
     window.closeAuthModal = () => authModal.classList.add('hidden');
     window.showLogin = () => { document.getElementById('loginForm').classList.remove('hidden'); document.getElementById('registerForm').classList.add('hidden'); document.getElementById('resetPasswordForm').classList.add('hidden'); };
     window.showRegister = () => { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('registerForm').classList.remove('hidden'); document.getElementById('resetPasswordForm').classList.add('hidden'); };
     window.showResetPassword = () => { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('registerForm').classList.add('hidden'); document.getElementById('resetPasswordForm').classList.remove('hidden'); };
 
-    // Login
+    // Auth Logic
     document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
       e.preventDefault();
       try { await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPassword').value); closeAuthModal(); } 
       catch (error) { const err = document.getElementById('loginError'); err.innerText = error.message; err.classList.remove('hidden'); }
     });
 
-    // Register
     document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
       e.preventDefault();
       try { 
         const u = await createUserWithEmailAndPassword(auth, document.getElementById('regEmail').value, document.getElementById('regPassword').value); 
         await updateProfile(u.user, { displayName: document.getElementById('regName').value }); 
-        // Save user to DB for private chat list
         await addDoc(collection(db, "users"), { uid: u.user.uid, name: document.getElementById('regName').value, email: document.getElementById('regEmail').value });
         closeAuthModal(); 
       } 
       catch (error) { const err = document.getElementById('registerError'); err.innerText = error.message; err.classList.remove('hidden'); }
     });
 
-    // Reset Password
     document.getElementById('resetFormElement').addEventListener('submit', async (e) => {
       e.preventDefault();
       try { await sendPasswordResetEmail(auth, document.getElementById('resetEmail').value); document.getElementById('resetSuccess').innerText = "تم الإرسال!"; document.getElementById('resetSuccess').classList.remove('hidden'); } 
       catch (error) { const err = document.getElementById('resetError'); err.innerText = error.message; err.classList.remove('hidden'); }
     });
 
-    // Auth State
+    window.updateFileNameDisplay = (input, displayId) => {
+      const display = document.getElementById(displayId);
+      if (input.files && input.files[0]) {
+        display.innerText = input.files[0].name;
+        display.classList.add('text-brand-600', 'font-bold');
+      } else {
+        display.innerText = 'لا يوجد ملف';
+        display.classList.remove('text-brand-600', 'font-bold');
+      }
+    };
+
     let currentUser = null;
     onAuthStateChanged(auth, (user) => {
       currentUser = user;
@@ -305,9 +417,10 @@
       }
     });
 
-    // ===== Posts System =====
+    // Posts System
     const postsGrid = document.getElementById('postsGrid');
     const qPosts = query(collection(db, "forum_posts"), orderBy("createdAt", "desc"));
+    
     onSnapshot(qPosts, (snapshot) => {
       postsGrid.innerHTML = '';
       document.getElementById('noPostsMessage').classList.add('hidden');
@@ -318,6 +431,15 @@
         const postId = docSnap.id;
         const dateStr = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleDateString('ar-DZ') : 'الآن';
         
+        let mediaHtml = '';
+        if (post.fileUrl) {
+          if (post.fileType && post.fileType.startsWith('image/')) {
+            mediaHtml = `<img src="${post.fileUrl}" class="w-full h-40 object-cover rounded-xl mt-3 border border-gray-100" alt="Post Image">`;
+          } else {
+            mediaHtml = `<a href="${post.fileUrl}" target="_blank" class="flex items-center justify-center gap-2 w-full py-3 bg-gray-100 hover:bg-gray-200 rounded-xl mt-3 text-gray-700 font-bold transition"><i class="fa-solid fa-file-pdf text-red-500"></i> تحميل الملف المرفق</a>`;
+          }
+        }
+
         const card = document.createElement('div');
         card.className = 'post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between animate-fade-in';
         card.innerHTML = `
@@ -329,9 +451,10 @@
               </div>
             </div>
             <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">${post.title}</h2>
-            <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">${post.content}</p>
+            <p class="text-sm text-gray-600 text-center mb-2 leading-relaxed">${post.content}</p>
+            ${mediaHtml}
           </div>
-          <div class="flex justify-between items-center pt-3 border-t border-gray-50 mt-auto">
+          <div class="flex justify-between items-center pt-3 border-t border-gray-50 mt-3">
             <div class="flex gap-4 text-gray-500">
               <button onclick="likePost('${postId}')" class="hover:text-red-500 flex items-center gap-1 text-sm font-bold"><i class="fa-solid fa-heart text-red-500"></i> ${post.likes || 0}</button>
               <button onclick="openComments('${postId}')" class="hover:text-brand-500 flex items-center gap-1 text-sm font-bold"><i class="fa-regular fa-comment"></i> ${post.commentCount || 0}</button>
@@ -342,22 +465,45 @@
       });
     });
 
-    // Create Post
     document.getElementById('createPostForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       if(!currentUser) { alert("سجل الدخول أولاً"); return; }
+      
+      const btn = document.getElementById('publishBtn');
+      const fileInput = document.getElementById('postFileInput');
+      btn.innerText = 'جاري النشر...'; btn.disabled = true;
+      
       try {
+        let fileUrl = '';
+        let fileType = '';
+        
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          fileType = file.type;
+          const storageRef = ref(storage, 'forum_uploads/' + Date.now() + '_' + file.name);
+          const snapshot = await uploadBytes(storageRef, file);
+          fileUrl = await getDownloadURL(snapshot.ref);
+        }
+
         await addDoc(collection(db, "forum_posts"), {
           title: document.getElementById('postTitle').value,
           content: document.getElementById('postContent').value,
           authorName: currentUser.displayName,
           authorId: currentUser.uid,
+          fileUrl: fileUrl,
+          fileType: fileType,
           likes: 0, commentCount: 0,
           createdAt: serverTimestamp()
         });
+        
         document.getElementById('createPostForm').reset();
+        document.getElementById('postFileName').innerText = 'لا يوجد ملف';
         document.getElementById('createPostModal').classList.add('hidden');
-      } catch (error) { alert("خطأ: " + error.message); }
+      } catch (error) { 
+        alert("خطأ: " + error.message); 
+      } finally {
+        btn.innerText = 'نشر الآن'; btn.disabled = false;
+      }
     });
 
     window.likePost = async (postId) => {
@@ -365,7 +511,6 @@
       await updateDoc(doc(db, "forum_posts", postId), { likes: increment(1) });
     };
 
-    // Comments System
     let currentPostId = null;
     window.openComments = (postId) => {
       currentPostId = postId;
@@ -382,12 +527,7 @@
         if(snap.empty) { list.innerHTML = '<p class="text-center text-sm text-gray-400">لا توجد تعليقات</p>'; return; }
         snap.forEach((doc) => {
           const c = doc.data();
-          list.innerHTML += `
-            <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
-              <div class="flex justify-between mb-1"><span class="text-xs font-bold text-brand-600">${c.authorName}</span></div>
-              <p class="text-sm text-gray-700">${c.text}</p>
-            </div>
-          `;
+          list.innerHTML += `<div class="bg-gray-50 p-3 rounded-xl border border-gray-100"><div class="flex justify-between mb-1"><span class="text-xs font-bold text-brand-600">${c.authorName}</span></div><p class="text-sm text-gray-700">${c.text}</p></div>`;
         });
       });
     }
@@ -403,11 +543,10 @@
       document.getElementById('commentInput').value = '';
     });
 
-    // ===== Chat System (General, Groups, Private) =====
+    // Chat System
     const chatListContainer = document.getElementById('chatListContainer');
     const activeChatArea = document.getElementById('activeChatArea');
     const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
     const chatForm = document.getElementById('chatForm');
     const activeChatName = document.getElementById('activeChatName');
     const chatSidebarTitle = document.getElementById('chatSidebarTitle');
@@ -429,21 +568,17 @@
     function joinRoom(roomId, roomName) {
       currentRoomId = roomId;
       activeChatName.innerText = roomName;
-      
       chatListContainer.classList.add('hidden');
       chatSidebarTitle.classList.add('hidden');
       backToChatListBtn.classList.remove('hidden');
-      
       activeChatArea.classList.remove('hidden');
       setTimeout(() => activeChatArea.classList.remove('translate-x-full'), 10);
-      
       loadMessages(roomId);
     }
 
     function loadMessages(roomId) {
       if(unsubMessages) unsubMessages();
       chatMessages.innerHTML = '<p class="text-center text-gray-400 text-sm py-4">جاري التحميل...</p>';
-      
       const qMsgs = query(collection(db, "forum_chats", roomId, "messages"), orderBy("createdAt", "asc"));
       unsubMessages = onSnapshot(qMsgs, (snap) => {
         chatMessages.innerHTML = '';
@@ -453,31 +588,24 @@
           const isMe = currentUser && msg.senderId === currentUser.uid;
           const div = document.createElement('div');
           div.className = `flex ${isMe ? 'justify-end' : 'justify-start'}`;
-          div.innerHTML = `
-            <div class="max-w-[80%] px-3 py-2 text-sm ${isMe ? 'chat-bubble-me' : 'chat-bubble-other'}">
-              ${!isMe ? `<p class="text-[10px] font-bold text-brand-600 mb-1">${msg.senderName}</p>` : ''}
-              <p>${msg.text}</p>
-            </div>
-          `;
+          div.innerHTML = `<div class="max-w-[80%] px-3 py-2 text-sm ${isMe ? 'chat-bubble-me' : 'chat-bubble-other'}">${!isMe ? `<p class="text-[10px] font-bold text-brand-600 mb-1">${msg.senderName}</p>` : ''}<p>${msg.text}</p></div>`;
           chatMessages.appendChild(div);
         });
         chatMessages.scrollTop = chatMessages.scrollHeight;
       });
     }
 
-    // Send Message
     chatForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       if(!currentRoomId || !currentUser) return;
-      const text = chatInput.value.trim();
+      const text = document.getElementById('chatInput').value.trim();
       if(!text) return;
-      chatInput.value = '';
+      document.getElementById('chatInput').value = '';
       await addDoc(collection(db, "forum_chats", currentRoomId, "messages"), {
         text: text, senderId: currentUser.uid, senderName: currentUser.displayName, createdAt: serverTimestamp()
       });
     });
 
-    // Create Group Room
     document.getElementById('createRoomForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       if(!currentUser) { alert("سجل الدخول أولاً"); return; }
@@ -488,13 +616,11 @@
       joinRoom(newRoom.id, name);
     });
 
-    // Load Rooms & Users List
     function loadPrivateUsers() {
-      // General Room
       chatListContainer.innerHTML = `
         <div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="joinRoom('general_room', 'القاعة العامة')">
           <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg shrink-0"><i class="fa-solid fa-globe"></i></div>
-          <div class="flex-1 min-w-0"><div class="flex justify-between items-center mb-1"><h3 class="font-bold text-sm text-gray-900 truncate">القاعة العامة</h3></div><p class="text-xs text-gray-500 truncate">دردشة عامة لجميع الطلبة</p></div>
+          <div class="flex-1 min-w-0"><div class="flex justify-between items-center mb-1"><h3 class="font-bold text-sm text-gray-900 truncate">القاعة العامة</h3></div><p class="text-xs text-gray-500 truncate">دردشة عامة</p></div>
         </div>
         <div class="p-2 text-xs font-bold text-gray-400 mt-2 mb-1">غرف المجموعات</div>
         <div id="groupsList"></div>
@@ -502,7 +628,6 @@
         <div id="privateList"></div>
       `;
 
-      // Load Groups
       const qGroups = query(collection(db, "forum_chats"), orderBy("createdAt", "desc"));
       onSnapshot(qGroups, (snap) => {
         const gList = document.getElementById('groupsList');
@@ -510,49 +635,34 @@
         snap.forEach((doc) => {
           const room = doc.data();
           if(room.type === 'group') {
-            gList.innerHTML += `
-              <div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="joinRoom('${doc.id}', '${room.name}')">
-                <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold shrink-0"><i class="fa-solid fa-users"></i></div>
-                <div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${room.name}</h3></div>
-              </div>
-            `;
+            gList.innerHTML += `<div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="joinRoom('${doc.id}', '${room.name}')"><div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold shrink-0"><i class="fa-solid fa-users"></i></div><div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${room.name}</h3></div></div>`;
           }
         });
       });
 
-      // Load Users for Private Chat
       const qUsers = query(collection(db, "users"));
       onSnapshot(qUsers, (snap) => {
         const pList = document.getElementById('privateList');
         pList.innerHTML = '';
         snap.forEach((doc) => {
           const u = doc.data();
-          if(u.uid !== currentUser.uid) { // Don't show myself
-            pList.innerHTML += `
-              <div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="startPrivateChat('${u.uid}', '${u.name}')">
-                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold shrink-0">${u.name.charAt(0).toUpperCase()}</div>
-                <div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${u.name}</h3></div>
-              </div>
-            `;
+          if(u.uid !== currentUser.uid) {
+            pList.innerHTML += `<div class="chat-item p-3 flex gap-3 border-b border-gray-50 hover:bg-gray-50 transition" onclick="startPrivateChat('${u.uid}', '${u.name}')"><div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold shrink-0">${u.name.charAt(0).toUpperCase()}</div><div class="flex-1 min-w-0"><h3 class="font-bold text-sm text-gray-900 truncate">${u.name}</h3></div></div>`;
           }
         });
       });
     }
 
-    // Start Private Chat
     window.startPrivateChat = async (otherUserId, otherUserName) => {
       if(!currentUser) return;
-      // Create a consistent ID for the private room (sorted so it's the same for both users)
       const roomId = [currentUser.uid, otherUserId].sort().join('_');
-      
-      // Check if room exists in DB, if not create it
-      const roomRef = doc(db, "forum_chats", roomId);
-      // (Using addDoc with specific ID by setting it is not supported directly via addDoc, 
-      // so we use setDoc if we want fixed ID, but for simplicity we just join it).
-      
       joinRoom(roomId, `دردشة خاصة: ${otherUserName}`);
     };
 
+    // Init Language
+    document.addEventListener('DOMContentLoaded', () => {
+      applyTranslation(currentLang);
+    });
   </script>
 </body>
 </html>
