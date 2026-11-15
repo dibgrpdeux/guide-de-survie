@@ -2,529 +2,558 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title data-i18n="forum_page_title">المنتدى الطلابي - ENSTP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ملتقى الطلبة - ENSTP</title>
   
-  <script src="translate.js"></script>
-  <style>
-    body { top: 0 !important; }
-    .skiptranslate iframe { display: none !important; }
-    .goog-te-banner-frame { display: none !important; }
-    #goog-gt-tt { display: none !important; }
-    #google_translate_element { display: none; } 
-    .lang-btn { background: transparent; border: none; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s; color: #64748b; }
-    .lang-btn:hover { background: #f1f5f9; color: #1e293b; }
-    .lang-btn.active { background: #f97316; color: white; }
-  </style>
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
-          }
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' },
+            bg: '#fdfbf7'
+          },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] }
         }
       }
     }
   </script>
 
   <style>
-    body { font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; }
-    ::-webkit-scrollbar { width: 6px; }
+    body { background-color: var(--bg); font-family: 'Cairo', sans-serif; }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-    .dark ::-webkit-scrollbar-thumb { background: #475569; }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
-    
-    @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-    .animate-pop { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+    /* Card Hover Effect */
+    .post-card { transition: all 0.3s ease; }
+    .post-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
 
-    .chat-bubble-me { background: linear-gradient(135deg, #f97316, #ea580c); color: white; border-radius: 18px 18px 4px 18px; }
-    .chat-bubble-other { background: #ffffff; color: #1e293b; border-radius: 18px 18px 18px 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-    .dark .chat-bubble-other { background: #1e293b; color: #f8fafc; border: 1px solid #334155; }
+    /* Chat Sidebar Item Hover */
+    .chat-item { transition: background 0.2s; }
+    .chat-item:hover { background: #fff7ed; }
+    .chat-item.active { background: #ffedd5; border-right: 4px solid #f97316; }
 
-    .active-room { background: #f3f4f6; }
-    .dark .active-room { background: #334155; }
-
-    /* BLOBS */
-    .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: #f8fafc; transition: background .6s; }
-    .dark .animated-bg { background: #0a1128; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .25; animation: blobFloat 25s ease-in-out infinite; }
-    .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
-    .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
-    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .18; }
-    .dark .blob-1 { background:#f97316; opacity:.15 }
-    .dark .blob-2 { background:#3b82f6; opacity:.12 }
-    .dark .blob-3 { background:#1e3a8a; opacity:.25 }
-    @keyframes blobFloat {
-      0%,100% { transform: translate(0,0) scale(1); }
-      33% { transform: translate(60px,-40px) scale(1.1); }
-      66% { transform: translate(-40px,60px) scale(.95); }
-    }
-
-    /* NAVBAR */
-    .top-navbar {
-      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
-      width: 96%; max-width: 1200px;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      border: 1.5px solid #e2e8f0;
-      border-radius: 22px; padding: 8px 14px;
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 12px; z-index: 1000;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      transition: all .3s;
-    }
-    .dark .top-navbar { background: rgba(10,17,40,0.95); border-color: #1e3a8a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .nav-title { font-size: .95rem; font-weight: 900; line-height: 1.1; color: #0f172a; }
-    .dark .nav-title { color: #f8fafc; }
-    .nav-title span {
-      background: linear-gradient(90deg,#f97316,#fbbf24,#f97316);
-      background-size: 200% auto;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-    }
-    @keyframes shimmer { to { background-position: 200% center; } }
-    .nav-subtitle { font-size: .6rem; color: #64748b; font-weight: 600; margin-top: 1px; }
-    .dark .nav-subtitle { color: #94a3b8; }
-    .nav-icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; box-shadow: 0 6px 18px rgba(249,115,22,.35); flex-shrink: 0;
-    }
-    .nav-menu-btn {
-      width: 38px; height: 38px; border-radius: 12px;
-      border: 1.5px solid #e2e8f0; background: #ffffff;
-      color: #0f172a; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: all .25s; font-size: .95rem; flex-shrink: 0;
-    }
-    .dark .nav-menu-btn { background: #0f1e41; color: #f8fafc; border-color: #1e3a8a; }
-    .nav-menu-btn:hover { background: #f97316; color: #fff; border-color: #f97316; transform: translateY(-2px); }
-    .nav-menu-btn.active { background: #f97316; color: #fff; border-color: #f97316; }
-    .nav-dropdown {
-      position: fixed; top: 66px; left: 50%; transform: translateX(-50%) translateY(-10px);
-      width: 290px; max-width: 92%;
-      background: rgba(255,255,255,0.98);
-      backdrop-filter: blur(20px); border: 1px solid #e2e8f0;
-      border-radius: 20px; padding: 8px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      z-index: 1001; opacity: 0; pointer-events: none;
-      transition: all .25s cubic-bezier(.34,1.56,.64,1);
-    }
-    .dark .nav-dropdown { background: rgba(10,17,40,0.98); border-color: #1e3a8a; }
-    .nav-dropdown.open { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
-    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid #e2e8f0; }
-    .dark .dropdown-section { border-bottom-color: #1e3a8a; }
-    .dropdown-section:last-child { border-bottom: none; }
-    .dropdown-label { font-size: .65rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; padding: 0 4px; }
-    .dark .dropdown-label { color: #94a3b8; }
-    .dropdown-row { display: flex; gap: 5px; flex-wrap: wrap; }
-    .dropdown-btn {
-      padding: 8px 12px; border-radius: 10px; border: 1px solid #e2e8f0;
-      background: #ffffff; color: #0f172a;
-      font-family: inherit; font-size: .75rem; font-weight: 700;
-      cursor: pointer; transition: all .2s; display: inline-flex; align-items: center;
-      gap: 6px; flex: 1; justify-content: center; min-width: fit-content; text-decoration: none;
-    }
-    .dark .dropdown-btn { background: #0f1e41; color: #f8fafc; border-color: #1e3a8a; }
-    .dropdown-btn:hover { background: #fbbf24; color: #000; border-color: #fbbf24; transform: translateY(-1px); }
-    .dropdown-btn.active { background: #f97316; color: #fff; border-color: #f97316; }
-
-    /* ============================================================ */
-    /* 🔥 CORRECTION MOBILE POUR LA BARRE DE SAISIE                 */
-    /* ============================================================ */
-    
-    /* Conteneur principal du forum */
-    #forumScreen {
-      display: flex;
-      flex-direction: row;
-      height: 100vh; /* Prend toute la hauteur de l'écran */
-      height: 100dvh; /* Utilise dvh pour mobile (gère la barre d'adresse) */
-    }
-
-    /* Le main (à droite) prend toute la hauteur */
-    .forum-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      height: 100%;
-    }
-
-    /* La zone des messages prend tout l'espace disponible */
-    #postsContainer {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem;
-      padding-bottom: 1rem;
-    }
-
-    /* La barre de saisie n'est plus en absolute, elle est dans le flux flex */
-    .input-bar-container {
-      background: white;
-      border-top: 1px solid #e2e8f0;
-      padding: 0.5rem 1rem;
-      padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
-      flex-shrink: 0;
-      width: 100%;
-      box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
-    }
-    .dark .input-bar-container {
-      background: #1e293b;
-      border-top-color: #334155;
-      box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
-    }
-
-    /* Ajustement des marges pour les headers */
-    @media(max-width: 768px){
-      .top-navbar { width: 100%; border-radius: 0; top: 0; left: 0; transform: none; }
-      #forumScreen { padding-top: 60px; height: 100dvh; }
-      .mobile-header { display: flex; flex-shrink: 0; }
-      .desktop-header { display: none; }
-    }
-    @media(min-width: 769px){
-      #forumScreen { padding-top: 80px; height: 100vh; }
-      .mobile-header { display: none; }
-      .desktop-header { display: flex; }
-    }
+    /* Hide scrollbar for category chips */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-200 h-screen overflow-hidden">
+<body class="text-gray-800 h-screen overflow-hidden flex flex-col">
 
-  <div class="animated-bg">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-
-  <nav class="top-navbar">
-    <div class="nav-brand">
-      <div class="nav-icon"><i class="fa-solid fa-users-rays"></i></div>
+  <!-- ================= HEADER ================= -->
+  <header class="bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center shrink-0 z-20">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-brand-500 text-white rounded-xl flex items-center justify-center text-xl shadow-md">
+        <i class="fa-solid fa-users-rays"></i>
+      </div>
       <div>
-        <div class="nav-title">ENSTP <span>Forum</span></div>
-        <div class="nav-subtitle">ملتقى الطلبة</div>
+        <h1 class="text-xl font-black text-gray-900 leading-tight">ملتقى الطلبة</h1>
+        <p class="text-[11px] text-gray-500 font-semibold">ملتقى الطلبة للنادي ونادي الجميع أن من الجمعية الفرعية الجاحة الجامعية.</p>
       </div>
     </div>
-    <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة">
-      <i class="fa-solid fa-sliders"></i>
-    </button>
-  </nav>
-
-  <div class="nav-dropdown" id="navDropdown">
-    <div class="dropdown-section">
-      <div class="dropdown-label">🌐 اللغة</div>
-      <div class="dropdown-row">
-        <button class="dropdown-btn active" onclick="setLanguage('ar')" id="btn-ar">🇩🇿 العربية</button>
-        <button class="dropdown-btn" onclick="setLanguage('fr')" id="btn-fr">🇫🇷 Français</button>
-        <button class="dropdown-btn" onclick="setLanguage('en')" id="btn-en">🇬🇧 English</button>
-      </div>
-    </div>
-    <div class="dropdown-section">
-      <div class="dropdown-label">⚙️ الإعدادات</div>
-      <div class="dropdown-row">
-        <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
-          <i class="fa-solid fa-moon"></i> <span>ليلي</span>
-        </button>
-        <a href="index.html" class="dropdown-btn">
-          <i class="fa-solid fa-house"></i> <span>الرئيسية</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div id="loadingScreen" class="fixed inset-0 bg-white dark:bg-slate-900 flex flex-col items-center justify-center z-50">
-    <div class="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-    <p class="font-bold text-gray-600 dark:text-gray-400">جاري الاتصال بالمنتدى...</p>
-  </div>
-
-  <div id="authScreen" class="fixed inset-0 bg-slate-900/95 flex items-center justify-center z-40 p-4 backdrop-blur-md hidden">
-    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-8 w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-pop">
-      
-      <div class="absolute top-4 left-4 flex items-center gap-1 bg-gray-100 dark:bg-slate-700 p-1 rounded-lg border border-gray-200 dark:border-slate-600">
-        <button onclick="setLanguage('ar')" id="btn-ar" class="lang-btn active">عربي</button>
-        <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn">FR</button>
-        <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">EN</button>
-      </div>
-
-      <div class="text-center mb-6 mt-4">
-        <div class="w-20 h-20 bg-gradient-to-br from-brand-400 to-brand-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 text-3xl shadow-lg">
-          <i class="fa-solid fa-users-rays"></i>
-        </div>
-        <h2 class="text-2xl font-black text-gray-900 dark:text-white">ملتقى طلبة ENSTP</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400">مساحة آمنة للنقاش وتبادل الأفكار</p>
-      </div>
-
-      <div class="space-y-4">
-        <div>
-          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">البريد المهني</label>
-          <input type="email" id="emailInput" placeholder="student@enstp.edu.dz" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition" dir="ltr">
-        </div>
-        <div>
-          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">كلمة السر</label>
-          <input type="password" id="passInput" placeholder="********" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition" dir="ltr">
-        </div>
-
-        <div id="registerFields" class="hidden space-y-4 pt-4 border-t border-gray-200 dark:border-slate-700">
-          <div>
-            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">الاسم واللقب</label>
-            <input type="text" id="nameInput" placeholder="مثال: أحمد بن علي" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
-          </div>
-          <div>
-            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">السنة الدراسية</label>
-            <select id="yearInput" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
-              <option value="1CP">1CP</option>
-              <option value="2CP">2CP</option>
-              <option value="DIB">DIB</option>
-              <option value="DMS">DMS</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">الولاية</label>
-            <select id="wilayaInput" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition"></select>
-          </div>
-        </div>
-
-        <p id="errorMsg" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 dark:bg-red-900/30 p-2 rounded-lg border border-red-200 dark:border-red-800"></p>
-
-        <button id="submitBtn" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-bold py-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">تسجيل الدخول</button>
-        
-        <div class="text-center mt-4 text-sm">
-          <span id="toggleText" class="text-gray-500 dark:text-gray-400">ليس لديك حساب؟</span>
-          <button id="toggleBtn" class="text-brand-600 dark:text-brand-400 font-bold hover:underline ml-1">إنشاء حساب جديد</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="forumScreen" class="hidden">
     
-    <aside id="sidebar" class="w-80 bg-white dark:bg-slate-800 border-l border-gray-200 dark:border-slate-700 flex flex-col h-full shrink-0 transition-all duration-300 z-20 absolute md:relative right-0 translate-x-full md:translate-x-0">
+    <!-- User Profile & Auth Buttons -->
+    <div class="flex items-center gap-4" id="headerAuthArea">
+      <!-- سيتم تعبئتها بواسطة JS -->
+      <button id="loginBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md">
+        تسجيل الدخول
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN LAYOUT ================= -->
+  <div class="flex-1 flex overflow-hidden max-w-[1600px] mx-auto w-full p-4 gap-6">
+
+    <!-- ================= RIGHT SIDEBAR (Chats) ================= -->
+    <aside class="w-80 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden shrink-0 hidden lg:flex">
       
-      <div class="p-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-between bg-white dark:bg-slate-800">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md">E</div>
-          <div>
-            <h1 class="font-bold text-sm text-gray-900 dark:text-white">ملتقى الطلبة</h1>
-            <p class="text-[10px] text-gray-500 dark:text-gray-400">ENSTP Kouba</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button onclick="toggleDarkMode()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-slate-600 transition">
-            <i class="fa-solid fa-moon dark:hidden text-sm"></i>
-            <i class="fa-solid fa-sun hidden dark:block text-sm text-brand-400"></i>
-          </button>
-          <button onclick="document.getElementById('createRoomModal').classList.remove('hidden')" class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 flex items-center justify-center hover:bg-brand-200 dark:hover:bg-brand-900/60 transition">
-            <i class="fa-solid fa-plus text-sm"></i>
-          </button>
+      <!-- Sidebar Header -->
+      <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="font-black text-gray-800 text-lg">الرسائل المباشرة والدردشة</h2>
+        <div class="w-8 h-8 rounded-full bg-brand-50 text-brand-500 flex items-center justify-center">
+          <i class="fa-solid fa-comment-dots"></i>
         </div>
       </div>
 
-      <!-- ✅ الجزء الخاص بمعلومات المستخدم (Profile) -->
-      <div class="p-4 border-b border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 flex items-center justify-between">
-        <div class="flex items-center gap-3 overflow-hidden">
-          <div id="userAvatar" class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
-          <div class="overflow-hidden">
-            <p id="userName" class="text-sm font-bold truncate text-gray-900 dark:text-white">طالب</p>
-            <p id="userInfo" class="text-[10px] text-gray-500 dark:text-gray-400 truncate" dir="ltr">info</p>
+      <!-- Chat List -->
+      <div class="flex-1 overflow-y-auto">
+        <!-- Chat Item 1 -->
+        <div class="chat-item active p-3 flex gap-3 cursor-pointer">
+          <div class="relative">
+            <img src="https://i.pravatar.cc/100?img=1" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
+            <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
           </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-bold text-sm text-gray-900 truncate">نادي الهندسة المعمارية</h3>
+              <span class="text-[10px] text-gray-400">10 من</span>
+            </div>
+            <p class="text-xs text-gray-500 truncate">نادي الهندسة المعمارية المسلة ...</p>
+          </div>
+          <div class="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold mt-2">3</div>
         </div>
-        <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition text-lg p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fa-solid fa-power-off"></i></button>
+
+        <!-- Chat Item 2 -->
+        <div class="chat-item p-3 flex gap-3 cursor-pointer border-b border-gray-50">
+          <div class="relative">
+            <img src="https://i.pravatar.cc/100?img=5" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-bold text-sm text-gray-900 truncate">مجموعة فيزياء 1</h3>
+              <span class="text-[10px] text-gray-400">10 من</span>
+            </div>
+            <p class="text-xs text-gray-500 truncate">مجموعة فيزياء 1 بادي الدسوقية ...</p>
+          </div>
+          <div class="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold mt-2">1</div>
+        </div>
+
+        <!-- Chat Item 3 -->
+        <div class="chat-item p-3 flex gap-3 cursor-pointer border-b border-gray-50">
+          <div class="relative">
+            <img src="https://i.pravatar.cc/100?img=12" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm">
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-bold text-sm text-gray-900 truncate">نادي البيئة المعمارية</h3>
+              <span class="text-[10px] text-gray-400">10 من</span>
+            </div>
+            <p class="text-xs text-gray-500 truncate">نادي الهندسة المعمارية في مبنى ...</p>
+          </div>
+          <div class="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold mt-2">1</div>
+        </div>
       </div>
 
-      <div class="flex-1 overflow-y-auto p-3 space-y-6">
-        <div>
-          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">ساحة المنشورات</p>
-          <button onclick="selectChannel('general_posts', 'القاعة العامة', 'شارك أفكارك', 'posts', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300 active-room">
-            <div class="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center"><i class="fa-solid fa-globe"></i></div>
-            <span class="font-bold">القاعة العامة</span>
-          </button>
-        </div>
-
-        <div>
-          <p class="text-[10px] text-gray-500 font-bold mb-2 uppercase tracking-wider px-2">غرف الدردشة</p>
-          <div class="space-y-1">
-            <button onclick="selectChannel('chat_1cp', 'Chat 1CP', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
-              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
-              <span class="font-bold">Chat 1CP</span>
-            </button>
-            <button onclick="selectChannel('chat_2cp', 'Chat 2CP', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
-              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
-              <span class="font-bold">Chat 2CP</span>
-            </button>
-            <button onclick="selectChannel('chat_dib', 'Chat DIB', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
-              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
-              <span class="font-bold">Chat DIB</span>
-            </button>
-            <button onclick="selectChannel('chat_dms', 'Chat DMS', 'نقاش مباشر', 'chat', this)" class="w-full text-right p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-3 text-sm transition-colors text-gray-700 dark:text-gray-300">
-              <div class="w-9 h-9 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
-              <span class="font-bold">Chat DMS</span>
-            </button>
+      <!-- Chat Input (Mockup) -->
+      <div class="p-3 border-t border-gray-100 bg-gray-50">
+        <div class="flex flex-col border border-gray-200 rounded-xl bg-white overflow-hidden focus-within:border-brand-500 transition">
+          <input type="text" placeholder="Message input..." class="w-full px-3 py-2 text-sm outline-none bg-transparent" disabled>
+          <div class="flex items-center justify-between px-2 py-1 border-t border-gray-100">
+            <div class="flex gap-2 text-gray-400">
+              <i class="fa-regular fa-image cursor-pointer hover:text-brand-500"></i>
+              <i class="fa-solid fa-paperclip cursor-pointer hover:text-brand-500"></i>
+              <i class="fa-solid fa-microphone cursor-pointer hover:text-brand-500"></i>
+            </div>
+            <button class="bg-brand-500 text-white text-xs font-bold px-4 py-1.5 rounded-lg opacity-50 cursor-not-allowed">إرسال</button>
           </div>
         </div>
-
-        <div>
-          <div class="flex justify-between items-center px-2 mb-2">
-            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">غرف الطلبة</p>
-          </div>
-          <div id="customChannels" class="space-y-1"></div>
-        </div>
-      </div>
-
-      <div class="p-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 flex items-center justify-between">
-        <div class="flex items-center gap-3 overflow-hidden">
-          <div id="userAvatarFooter" class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">U</div>
-          <div class="overflow-hidden">
-            <p id="userNameFooter" class="text-sm font-bold truncate text-gray-900 dark:text-white">طالب</p>
-            <p id="userInfoFooter" class="text-[10px] text-gray-500 dark:text-gray-400 truncate" dir="ltr">info</p>
-          </div>
-        </div>
-        <button id="logoutBtnFooter" class="text-gray-400 hover:text-red-500 transition text-lg p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fa-solid fa-power-off"></i></button>
       </div>
     </aside>
 
-    <main class="forum-main">
+    <!-- ================= MAIN CONTENT (Posts) ================= -->
+    <main class="flex-1 flex flex-col min-w-0">
       
-      <!-- Mobile Header -->
-      <div class="mobile-header bg-white dark:bg-slate-800 p-3 items-center justify-between border-b border-gray-200 dark:border-slate-700 z-10">
-        <button onclick="toggleSidebar()" class="text-gray-600 dark:text-gray-300 text-xl"><i class="fa-solid fa-bars"></i></button>
-        <h2 id="mobileTitle" class="font-bold text-gray-800 dark:text-white">القاعة العامة</h2>
-        <div class="w-8"></div>
+      <!-- Top Controls -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-4 flex flex-wrap items-center justify-between gap-4 shrink-0">
+        <!-- Categories -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar">
+          <button class="bg-brand-500 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md shadow-brand-500/30 whitespace-nowrap">الكل</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap">نقاشات ودروس</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap">النوادي</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap">فعاليات</button>
+        </div>
+
+        <!-- Search -->
+        <div class="relative w-full md:w-64">
+          <input type="text" placeholder="ابحث..." class="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:border-brand-500 transition">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
       </div>
 
-      <!-- Desktop Header -->
-      <header class="desktop-header bg-white dark:bg-slate-800 p-4 shadow-sm border-b border-gray-200 dark:border-slate-700 justify-between items-center z-10">
-        <div>
-          <h2 id="channelTitle" class="text-lg font-black text-gray-900 dark:text-white flex items-center gap-2">
-            <i class="fa-solid fa-globe text-blue-500"></i> القاعة العامة
-          </h2>
-          <p id="channelSubtitle" class="text-xs text-gray-500 dark:text-gray-400">النقاشات العامة لجميع الطلبة</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <span id="channelTypeBadge" class="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full font-bold">منشورات</span>
-          <button onclick="closeCurrentRoom()" id="closeRoomBtn" class="hidden text-red-500 hover:text-red-700 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition border border-red-200 dark:border-red-800">
-            <i class="fa-solid fa-lock"></i> إغلاق
-          </button>
-        </div>
-      </header>
-
-      <!-- Zone des messages -->
-      <div id="postsContainer" class="scroll-smooth"></div>
-
-      <!-- Barre de saisie (poussée en bas par le flex) -->
-      <div class="input-bar-container">
-        <div class="max-w-3xl mx-auto flex gap-2 items-center">
-          <button onclick="document.getElementById('fileInput').click()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-300 flex items-center justify-center hover:bg-brand-100 dark:hover:bg-brand-900/40 hover:text-brand-600 transition shrink-0">
-            <i class="fa-solid fa-paperclip text-lg"></i>
-          </button>
-          <input type="file" id="fileInput" class="hidden" accept="image/*,video/*,application/pdf" onchange="handleFileUpload(event)">
-
-          <div class="flex-1 bg-gray-100 dark:bg-slate-900 rounded-2xl border border-transparent focus-within:border-brand-300 dark:focus-within:border-brand-600 transition-all p-1">
-            <div id="filePreview" class="hidden px-2 pb-2"></div>
-            <div class="flex items-center gap-2">
-              <textarea id="postText" rows="1" placeholder="اكتب رسالة..." class="w-full bg-transparent border-none outline-none resize-none px-2 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-500 max-h-24"></textarea>
-              <button id="postBtn" type="button" class="bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white px-4 py-2 rounded-xl font-bold text-sm transition shadow-md flex items-center gap-2 shrink-0">
-                <span>إرسال</span> <i class="fa-solid fa-paper-plane text-xs"></i>
-              </button>
+      <!-- Posts Grid -->
+      <div class="flex-1 overflow-y-auto pb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          
+          <!-- Post Card 1 -->
+          <div class="post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <div class="flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/100?img=11" class="w-10 h-10 rounded-full object-cover">
+                  <div>
+                    <h3 class="font-bold text-sm text-gray-900">سارة محمود</h3>
+                    <p class="text-[10px] text-gray-400">10 من</p>
+                  </div>
+                </div>
+                <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
+              </div>
+              <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">إعلان نادي - حدث النوادي</h2>
+              <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">نادي الهندسة المعمارية عليك بالإنشاء نادي المفرش في محاب و دعوة قيام الخطية الطبية ...</p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-2 justify-center mb-4">
+                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#إدارة</span>
+                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#دروس</span>
+              </div>
+              <div class="flex justify-between items-center pt-3 border-t border-gray-50">
+                <div class="flex gap-3 text-gray-400">
+                  <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
+                  <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 16</button>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- Post Card 2 -->
+          <div class="post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <div class="flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/100?img=11" class="w-10 h-10 rounded-full object-cover">
+                  <div>
+                    <h3 class="font-bold text-sm text-gray-900">سارة محمود</h3>
+                    <p class="text-[10px] text-gray-400">10 من</p>
+                  </div>
+                </div>
+                <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
+              </div>
+              <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">طلب وضعية السة مجموعة الدراسة</h2>
+              <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">نادي الدي الديسة وله التلبية، الذي تثقيل اليد ادربس الدرس على النوادس وسناسة الفيواء ...</p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-2 justify-center mb-4">
+                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#دروس</span>
+                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#فيزياء</span>
+              </div>
+              <div class="flex justify-between items-center pt-3 border-t border-gray-50">
+                <div class="flex gap-3 text-gray-400">
+                  <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
+                  <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 16</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post Card 3 -->
+          <div class="post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <div class="flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/100?img=11" class="w-10 h-10 rounded-full object-cover">
+                  <div>
+                    <h3 class="font-bold text-sm text-gray-900">سارة محمود</h3>
+                    <p class="text-[10px] text-gray-400">10 من</p>
+                  </div>
+                </div>
+                <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
+              </div>
+              <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">إعلان النادي الهندسة المعمارية</h2>
+              <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">إعلان نادي الهندسة النادي لبانسي طنطلك على الحمسة في أحداث حدث النب المعالية ...</p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-2 justify-center mb-4">
+                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#تكوين</span>
+                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#تكوين</span>
+              </div>
+              <div class="flex justify-between items-center pt-3 border-t border-gray-50">
+                <div class="flex gap-3 text-gray-400">
+                  <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
+                  <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 14</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post Card 4 -->
+          <div class="post-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-3">
+                <div class="flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/100?img=11" class="w-10 h-10 rounded-full object-cover">
+                  <div>
+                    <h3 class="font-bold text-sm text-gray-900">سارة محمود</h3>
+                    <p class="text-[10px] text-gray-400">10 من</p>
+                  </div>
+                </div>
+                <button class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-ellipsis"></i></button>
+              </div>
+              <h2 class="font-black text-lg text-gray-900 mb-2 leading-tight text-center">أحجى كاشي المياس أدكاسي</h2>
+              <p class="text-sm text-gray-600 text-center mb-4 leading-relaxed">اعلان ملتقى الطلبة المتمثلة ! ستفاعاجات النياشة النارز الصية؟</p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-2 justify-center mb-4">
+                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#تكوين</span>
+                <span class="bg-orange-50 text-brand-600 px-3 py-1 rounded-lg text-xs font-bold">#إدارة</span>
+              </div>
+              <div class="flex justify-between items-center pt-3 border-t border-gray-50">
+                <div class="flex gap-3 text-gray-400">
+                  <button class="hover:text-red-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-heart"></i></button>
+                  <button class="hover:text-brand-500 flex items-center gap-1 text-sm"><i class="fa-regular fa-comment"></i> 2</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-
     </main>
   </div>
 
-  <!-- Modal créer une salle -->
-  <div id="createRoomModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-pop border border-gray-200 dark:border-slate-700">
-      <h3 class="text-xl font-black text-gray-900 dark:text-white mb-4">إنشاء غرفة جديدة</h3>
-      <div class="space-y-4">
-        <div>
-          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">اسم الغرفة</label>
-          <input type="text" id="newRoomName" placeholder="..." class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
+  <!-- ================= MODALS (Auth & Reset Password) ================= -->
+
+  <!-- شاشة تسجيل الدخول / إنشاء حساب / نسيت كلمة المرور -->
+  <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl relative animate-pop">
+      
+      <!-- Close Button -->
+      <button onclick="closeAuthModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Login Form -->
+      <div id="loginForm">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+            <i class="fa-solid fa-user-lock"></i>
+          </div>
+          <h2 class="text-2xl font-black text-gray-900">تسجيل الدخول</h2>
+          <p class="text-sm text-gray-500 mt-1">مرحباً بك مجدداً في ملتقى الطلبة</p>
         </div>
-        <div>
-          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">نوع الغرفة</label>
-          <select id="newRoomType" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
-            <option value="chat">دردشة</option>
-            <option value="posts">منشورات</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-sm font-bold mb-1 text-gray-700 dark:text-gray-300">كلمة مرور الغرفة (اختياري)</label>
-          <input type="password" id="newRoomPassword" placeholder="اتركها فارغة إذا كانت عامة" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition">
-          <p class="text-[10px] text-gray-500 dark:text-gray-400 mt-1"><i class="fa-solid fa-lock"></i> الغرفة بكلمة مرور تصبح خاصة</p>
-        </div>
-        <div class="flex gap-2 justify-end pt-2">
-          <button onclick="document.getElementById('createRoomModal').classList.add('hidden')" class="px-5 py-2.5 text-gray-600 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-slate-700 rounded-xl transition">إلغاء</button>
-          <button onclick="createRoom()" class="px-5 py-2.5 bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition">إنشاء</button>
+
+        <form id="loginFormElement" class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني</label>
+            <input type="email" id="loginEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1">كلمة المرور</label>
+            <input type="password" id="loginPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="********">
+          </div>
+          
+          <!-- Forgot Password Link -->
+          <div class="text-left">
+            <button type="button" onclick="showResetPassword()" class="text-sm font-bold text-brand-500 hover:text-brand-600 hover:underline">نسيت كلمة المرور؟</button>
+          </div>
+
+          <p id="loginError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
+
+          <button type="submit" id="loginSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">دخول</button>
+        </form>
+
+        <div class="text-center mt-6 text-sm">
+          <span class="text-gray-500">ليس لديك حساب؟</span>
+          <button onclick="showRegister()" class="text-brand-500 font-bold hover:underline mr-1">إنشاء حساب جديد</button>
         </div>
       </div>
+
+      <!-- Register Form -->
+      <div id="registerForm" class="hidden">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-brand-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+            <i class="fa-solid fa-user-plus"></i>
+          </div>
+          <h2 class="text-2xl font-black text-gray-900">إنشاء حساب</h2>
+          <p class="text-sm text-gray-500 mt-1">انضم إلى مجتمع ENSTP</p>
+        </div>
+
+        <form id="registerFormElement" class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1">الاسم واللقب</label>
+            <input type="text" id="regName" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" placeholder="أحمد بن علي">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني</label>
+            <input type="email" id="regEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1">كلمة المرور</label>
+            <input type="password" id="regPassword" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="********">
+          </div>
+          
+          <p id="registerError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
+
+          <button type="submit" id="registerSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">تسجيل</button>
+        </form>
+
+        <div class="text-center mt-6 text-sm">
+          <span class="text-gray-500">لديك حساب بالفعل؟</span>
+          <button onclick="showLogin()" class="text-brand-500 font-bold hover:underline mr-1">تسجيل الدخول</button>
+        </div>
+      </div>
+
+      <!-- Reset Password Form -->
+      <div id="resetPasswordForm" class="hidden">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-orange-100 text-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+            <i class="fa-solid fa-key"></i>
+          </div>
+          <h2 class="text-2xl font-black text-gray-900">استعادة الحساب</h2>
+          <p class="text-sm text-gray-500 mt-1">أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين كلمة المرور</p>
+        </div>
+
+        <form id="resetFormElement" class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1">البريد الإلكتروني</label>
+            <input type="email" id="resetEmail" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-500 outline-none transition" dir="ltr" placeholder="student@enstp.edu.dz">
+          </div>
+          
+          <p id="resetError" class="text-red-500 text-sm font-bold text-center hidden bg-red-50 p-2 rounded-lg"></p>
+          <p id="resetSuccess" class="text-green-600 text-sm font-bold text-center hidden bg-green-50 p-2 rounded-lg"></p>
+
+          <button type="submit" id="resetSubmitBtn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">إرسال رابط الاستعادة</button>
+        </form>
+
+        <div class="text-center mt-6 text-sm">
+          <button onclick="showLogin()" class="text-gray-500 font-bold hover:text-brand-500 hover:underline">العودة لتسجيل الدخول</button>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- Modal mot de passe -->
-  <div id="roomPasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-pop border border-gray-200 dark:border-slate-700">
-      <div class="text-center mb-4">
-        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
-          <i class="fa-solid fa-lock"></i>
-        </div>
-        <h3 class="text-xl font-black text-gray-900 dark:text-white">غرفة خاصة</h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">هذه الغرفة محمية بكلمة مرور</p>
-      </div>
-      <div class="space-y-4">
-        <input type="password" id="roomPasswordInput" placeholder="أدخل كلمة المرور" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none transition text-center" dir="ltr">
-        <p id="roomPasswordError" class="text-red-500 text-sm font-bold text-center hidden">كلمة المرور خاطئة</p>
-        <div class="flex gap-2">
-          <button onclick="cancelRoomPassword()" class="flex-1 px-5 py-2.5 text-gray-600 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-slate-700 rounded-xl transition">إلغاء</button>
-          <button onclick="submitRoomPassword()" class="flex-1 px-5 py-2.5 bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold rounded-xl shadow-md">دخول</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- ================= FIREBASE & LOGIC ================= -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  <script>
-    function toggleMenu(){
-      document.getElementById('navDropdown').classList.toggle('open');
-      document.getElementById('menuBtn').classList.toggle('active');
-    }
-    document.addEventListener('click', e=>{
-      const dd = document.getElementById('navDropdown');
-      const btn = document.getElementById('menuBtn');
-      if(dd && btn && !dd.contains(e.target) && !btn.contains(e.target)){
-        dd.classList.remove('open');
-        btn.classList.remove('active');
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvRORhsSl05y-8pu4fERx3gpSYT_XIwrk",
+      authDomain: "enstp-forum-c5a28.firebaseapp.com",
+      projectId: "enstp-forum-c5a28",
+      storageBucket: "enstp-forum-c5a28.firebasestorage.app",
+      messagingSenderId: "129732313908",
+      appId: "1:129732313908:web:c06215b2fde653b76c9b61"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // ====== UI Logic ======
+    const authModal = document.getElementById('authModal');
+    const headerAuthArea = document.getElementById('headerAuthArea');
+    
+    window.closeAuthModal = () => authModal.classList.add('hidden');
+
+    // Toggle Forms
+    window.showLogin = () => {
+      document.getElementById('loginForm').classList.remove('hidden');
+      document.getElementById('registerForm').classList.add('hidden');
+      document.getElementById('resetPasswordForm').classList.add('hidden');
+    };
+    window.showRegister = () => {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('registerForm').classList.remove('hidden');
+      document.getElementById('resetPasswordForm').classList.add('hidden');
+    };
+    window.showResetPassword = () => {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('registerForm').classList.add('hidden');
+      document.getElementById('resetPasswordForm').classList.remove('hidden');
+    };
+
+    // Open Login Modal if not logged in
+    document.getElementById('loginBtn').addEventListener('click', () => authModal.classList.remove('hidden'));
+
+    // ====== Auth Logic ======
+    
+    // Login
+    document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const pass = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('loginSubmitBtn');
+      const err = document.getElementById('loginError');
+      
+      btn.disabled = true; btn.innerText = 'جاري الدخول...'; err.classList.add('hidden');
+      
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        closeAuthModal();
+      } catch (error) {
+        err.innerText = "خطأ: " + error.message;
+        err.classList.remove('hidden');
+      } finally {
+        btn.disabled = false; btn.innerText = 'دخول';
       }
     });
 
-    if(typeof window.setLanguage !== 'function'){
-      window.setLanguage = function(lang){
-        localStorage.setItem('enstp_lang', lang);
-        document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
-        const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
-      };
-    }
-    if(typeof window.toggleDarkMode !== 'function'){
-      window.toggleDarkMode = function(){
-        document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-      };
-    }
-    if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-  </script>
+    // Register
+    document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const pass = document.getElementById('regPassword').value;
+      const btn = document.getElementById('registerSubmitBtn');
+      const err = document.getElementById('registerError');
+      
+      btn.disabled = true; btn.innerText = 'جاري التسجيل...'; err.classList.add('hidden');
+      
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+        await updateProfile(userCredential.user, { displayName: name });
+        closeAuthModal();
+      } catch (error) {
+        err.innerText = "خطأ: " + error.message;
+        err.classList.remove('hidden');
+      } finally {
+        btn.disabled = false; btn.innerText = 'تسجيل';
+      }
+    });
 
-  <script type="module" src="forum.js"></script>
+    // Reset Password (Forgot Password)
+    document.getElementById('resetFormElement').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('resetEmail').value;
+      const btn = document.getElementById('resetSubmitBtn');
+      const err = document.getElementById('resetError');
+      const success = document.getElementById('resetSuccess');
+      
+      btn.disabled = true; btn.innerText = 'جاري الإرسال...'; 
+      err.classList.add('hidden'); success.classList.add('hidden');
+      
+      try {
+        await sendPasswordResetEmail(auth, email);
+        success.innerText = "✅ تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. يرجى مراجعة صندوق الوارد (أو البريد المزعج).";
+        success.classList.remove('hidden');
+      } catch (error) {
+        err.innerText = "خطأ: " + error.message;
+        err.classList.remove('hidden');
+      } finally {
+        btn.disabled = false; btn.innerText = 'إرسال رابط الاستعادة';
+      }
+    });
+
+    // Auth State Observer
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Logged in
+        headerAuthArea.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="text-left hidden md:block">
+              <p class="text-sm font-bold text-gray-900">${user.displayName || 'طالب'}</p>
+              <p class="text-xs text-gray-500">${user.email}</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-lg border-2 border-white shadow-sm">
+              ${(user.displayName || 'U').charAt(0).toUpperCase()}
+            </div>
+            <button onclick="window.logout()" class="text-gray-400 hover:text-red-500 transition p-2">
+              <i class="fa-solid fa-power-off"></i>
+            </button>
+          </div>
+        `;
+      } else {
+        // Logged out
+        headerAuthArea.innerHTML = `
+          <button id="loginBtn" onclick="document.getElementById('authModal').classList.remove('hidden')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-bold text-sm transition shadow-md">
+            تسجيل الدخول
+          </button>
+        `;
+      }
+    });
+
+    // Logout
+    window.logout = async () => {
+      try { await signOut(auth); } catch(e) { console.error(e); }
+    };
+
+  </script>
 </body>
 </html>
