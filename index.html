@@ -337,9 +337,6 @@
       border-color: var(--primary);
     }
 
-    /* ============================================
-       HERO (Image de fond conservée, sans kangourou)
-       ============================================ */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -1314,7 +1311,6 @@
     </div>
   </div>
 
-  <!-- HERO (Image de fond conservée, sans kangourou) -->
   <header class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
@@ -1349,7 +1345,8 @@
       <a href="alger.html" class="section-pill"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="sec_leisure">السياحة</span></a>
       <a href="shopping.html" class="section-pill"><i class="fa-solid fa-cart-shopping"></i> <span data-i18n="sec_shopping">التسوق</span></a>
       <a href="marketplace.html" class="section-pill"><i class="fa-solid fa-store"></i> <span data-i18n="sec_marketplace">سوق الطالب</span></a>
-      <a href="qr.html" class="section-pill"><i class="fa-solid fa-qrcode"></i> <span data-i18n="sec_qr">QR Codes</span></a>
+      <!-- Remplacement de QR par Qui sommes-nous -->
+      <a href="qui-sommes-nous.html" class="section-pill"><i class="fa-solid fa-circle-info"></i> <span data-i18n="sec_about">من نحن</span></a>
     </div>
   </div>
 
@@ -1443,11 +1440,15 @@
       </div>
     </a>
 
-    <a href="qr.html" class="card">
-      <div class="card-img-wrap"><img src="images (78).jpeg" alt="QR Codes" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=QR+Codes'"></div>
+    <!-- Remplacement de la carte QR par la carte Qui sommes-nous -->
+    <a href="qui-sommes-nous.html" class="card">
+      <div class="card-img-wrap">
+        <!-- Vous pouvez mettre l'image du QR code insta ou une image de l'équipe ici (ex: team.jpg) -->
+        <img src="i.jpg" alt="من نحن" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=Qui+sommes-nous'">
+      </div>
       <div class="card-body">
-        <h3 class="card-title" data-i18n="sec_qr">QR Codes</h3>
-        <p class="card-sub" data-i18n="sec_qr_desc">رموز سريعة للوصول المباشر</p>
+        <h3 class="card-title" data-i18n="sec_about">من نحن</h3>
+        <p class="card-sub" data-i18n="sec_about_desc">فريق العمل، مهمتنا ورؤيتنا</p>
       </div>
     </a>
 
@@ -1461,6 +1462,7 @@
         <a href="ma-ecole.html" data-i18n="sec_school">مدرستي</a>
         <a href="ma-reussite.html" data-i18n="sec_success">نجاحي</a>
         <a href="forum.html" data-i18n="sec_forum">ملتقى الطلبة</a>
+        <a href="qui-sommes-nous.html" data-i18n="sec_about">من نحن</a>
       </div>
       <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
     </div>
@@ -1518,7 +1520,6 @@
     <div class="mascot-shadow"></div>
   </div>
 
-  <!-- المساعد الذكي (رسالة الترحيب الجديدة) -->
   <div id="aiChatWindow">
     <div class="ai-chat-header">
       <div class="ai-chat-header-left">
@@ -1710,7 +1711,7 @@
         sec_leisure: "السياحة", sec_leisure_desc: "معالم الجزائر العاصمة",
         sec_shopping: "التسوق", sec_shopping_desc: "المحلات، الأسعار، والعروض",
         sec_marketplace: "سوق الطالب", sec_marketplace_desc: "بيع وشراء الكتب والأدوات",
-        sec_qr: "QR Codes", sec_qr_desc: "رموز سريعة للوصول المباشر",
+        sec_about: "من نحن", sec_about_desc: "فريق العمل، مهمتنا ورؤيتنا",
         nav_home: "الرئيسية", footer_rights: "جميع الحقوق محفوظة",
         ai_assistant_name: "المساعد الذكي", ai_assistant_status: "متصل الآن · يرد فوراً",
         ai_welcome: "أنا الكنغر، دليلك الجديد! لدي جيب يمكنه أن يرافقك ويعتني بك حتى تتعرف على المكان جيداً!",
@@ -1736,7 +1737,7 @@
         sec_leisure: "Tourisme", sec_leisure_desc: "Monuments d'Alger",
         sec_shopping: "Shopping", sec_shopping_desc: "Commerces, prix et offres",
         sec_marketplace: "Marché Étudiant", sec_marketplace_desc: "Achat et vente de livres et outils",
-        sec_qr: "QR Codes", sec_qr_desc: "Accès rapide par codes",
+        sec_about: "Qui sommes-nous", sec_about_desc: "L'équipe, notre mission et vision",
         nav_home: "Accueil", footer_rights: "Tous droits réservés",
         ai_assistant_name: "Assistant Intelligent", ai_assistant_status: "Connecté · Répond instantanément",
         ai_welcome: "Je suis le kangourou, votre nouveau guide ! J'ai une poche qui peut vous accompagner et prendre soin de vous jusqu'à ce que vous connaissiez bien les lieux !",
@@ -1762,7 +1763,7 @@
         sec_leisure: "Tourism", sec_leisure_desc: "Algiers landmarks",
         sec_shopping: "Shopping", sec_shopping_desc: "Shops, prices and offers",
         sec_marketplace: "Student Market", sec_marketplace_desc: "Buy and sell books and tools",
-        sec_qr: "QR Codes", sec_qr_desc: "Quick access codes",
+        sec_about: "About Us", sec_about_desc: "Our team, mission and vision",
         nav_home: "Home", footer_rights: "All rights reserved",
         ai_assistant_name: "Smart Assistant", ai_assistant_status: "Online · Replies instantly",
         ai_welcome: "I am the kangaroo, your new guide! I have a pouch that can accompany you and take care of you until you know the place well!",
