@@ -322,7 +322,6 @@
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* أيقونات الأقسام القابلة للنقر */
     .dept-icons-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -393,7 +392,6 @@
       font-style: italic;
     }
 
-    /* محتوى النص (accordion) */
     .dept-text-panel {
       display: none;
       background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
@@ -431,6 +429,137 @@
       font-size: 0.9rem;
       line-height: 1.9;
       color: var(--text-main);
+    }
+
+    /* ============================================
+       Carte du Chef de Département
+       ============================================ */
+    .dept-head-card {
+      margin-top: 1.25rem;
+      background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
+      border: 2px solid var(--primary);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      box-shadow: 0 10px 30px rgba(249, 115, 22, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .dept-head-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    [data-theme="dark"] .dept-head-card {
+      background: linear-gradient(135deg, #2a1810 0%, #3a2014 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    @media (min-width: 640px) {
+      .dept-head-card { flex-direction: row; align-items: center; }
+    }
+
+    .dept-head-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
+      flex-shrink: 0;
+      background: #fed7aa;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+    .dept-head-photo:hover {
+      transform: scale(1.05) rotate(-3deg);
+    }
+    [data-theme="dark"] .dept-head-photo {
+      border-color: #4a2a18;
+    }
+
+    .dept-head-info {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    @media (min-width: 640px) {
+      .dept-head-info { text-align: right; }
+    }
+
+    .dept-head-role {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: white;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .dept-head-name {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--brown-dark);
+      margin: 0 0 0.3rem;
+      line-height: 1.3;
+    }
+    [data-theme="dark"] .dept-head-name { color: var(--primary-light); }
+
+    .dept-head-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+
+    .dept-head-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--brown-dark);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 8px 16px;
+      border-radius: 22px;
+      border: 1.5px solid var(--border-color);
+      transition: all 0.25s ease;
+      direction: ltr;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="dark"] .dept-head-phone {
+      color: var(--primary-light);
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .dept-head-phone:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px var(--primary-glow);
+      border-color: var(--primary);
+    }
+    .dept-head-phone i {
+      font-size: 0.85rem;
     }
 
     .mascot-container {
@@ -720,6 +849,8 @@
       .blob-1 { width: 300px; height: 300px; }
       .blob-2 { width: 280px; height: 280px; }
       .blob-3 { width: 200px; height: 200px; }
+      .dept-head-photo { width: 110px; height: 110px; }
+      .dept-head-name { font-size: 1.15rem; }
     }
 
     @media (max-width: 480px) {
@@ -849,7 +980,6 @@
           <p data-i18n="about_p3">تضم المدرسة عدة أقسام علمية: قسم المنشآت والجسور، قسم الطرقات والمرور، قسم البناء، ومخابر بحثية متطورة.</p>
         </div>
 
-        <!-- أيقونات الأقسام القابلة للنقر -->
         <div class="dept-icons-row">
           <button class="dept-icon-btn" onclick="toggleDept('prep')" data-dept="prep">
             <div class="dept-icon-circle"><i class="fa-solid fa-flask"></i></div>
@@ -868,7 +998,6 @@
           </button>
         </div>
 
-        <!-- لوحات النص -->
         <div id="dept-panel-prep" class="dept-text-panel">
           <h3><i class="fa-solid fa-flask"></i> <span data-i18n="dept_prep_title">القسم التحضيري</span></h3>
           <div class="dept-sub" data-i18n="dept_prep_sub">Classes Préparatoires</div>
@@ -885,6 +1014,22 @@
           <h3><i class="fa-solid fa-bridge"></i> <span data-i18n="dept_dib_title">قسم منشآت قاعدية</span></h3>
           <div class="dept-sub" data-i18n="dept_dib_sub">Infrastructures</div>
           <p data-i18n="dept_dib_desc">يُعتبر قسم المنشآت القاعدية (DIB) أحد الركائز الأساسية في طور المهندس بالمدرسة الوطنية العليا للأشغال العمومية، حيث يلتحق به الطلاب مباشرة بعد نجاحهم في المسابقة الوطنية. يهدف هذا القسم إلى تكوين مهندسي دولة وباحثين ذوي كفاءة عالية في مجالات تصميم، دراسة، وإدارة مشاريع البنى التحتية الكبرى للبلاد. ويتمحور البرنامج البيداغوجي طوال سنوات الدراسة الثلاث حول تخصصات إستراتيجية تشمل الطرق، الطرق السيّارة، المنشآت الفنية (كالجسور والأنفاق)، السكك الحديدية، بالإضافة إلى المنشآت البحرية والمطارات. ويجمع التكوين بين الدروس النظرية والتطبيقية، حيث يتعلم الطلاب استخدام أحدث برمجيات المحاكاة الهندسية، إلى جانب خوض سلسلة من التربصات الميدانية الإلزامية والخرجات الدورية لورشات الإنجاز الكبرى بالتعاون مع كبرى الشركات الوطنية في قطاع الأشغال العمومية.</p>
+
+          <!-- ✅ Carte du Chef de Département DIB - ajoutée ici après le texte -->
+          <div class="dept-head-card">
+            <img src="mahiaoui.jpg"
+                 alt="Dr Mahiaoui Hadjebar Mahdia Y."
+                 class="dept-head-photo"
+                 onerror="this.src='https://via.placeholder.com/140x140/f97316/ffffff?text=MH'">
+            <div class="dept-head-info">
+              <span class="dept-head-role">👷‍♀️ Chef de Département</span>
+              <h4 class="dept-head-name">Dr Mahiaoui Hadjebar Mahdia Y.</h4>
+              <div class="dept-head-title">MCB · ENSTP Kouba</div>
+              <a href="tel:0559395394" class="dept-head-phone">
+                <i class="fa-solid fa-phone"></i> 0559 39 53 94
+              </a>
+            </div>
+          </div>
         </div>
 
         <div class="bg-orange-50 dark:bg-slate-800 border-2 border-orange-200 dark:border-slate-700 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
