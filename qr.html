@@ -3,734 +3,229 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n="page_title">رموز QR للأفواج - ENSTP</title>
+  <title data-i18n="page_title">من نحن - دليل الطالب KangooETP</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root {
-      --primary: #fbbf24; --primary-hover: #f59e0b;
-      --orange: #f97316; --orange-dark: #ea580c;
-      --bg-color: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
-      --card-bg: #ffffff; --nav-bg: rgba(255,255,255,0.95);
-      --border-color: #e2e8f0;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
+      --primary: #f97316; --primary-dark: #ea580c;
+      --bg-color: #f8fafc; --text-main: #0f172a; --text-muted: #64748b;
+      --card-bg: #ffffff; --border-color: #e2e8f0;
     }
     [data-theme="dark"] {
       --bg-color: #0a1128; --text-main: #f8fafc; --text-muted: #94a3b8;
-      --card-bg: #0f1e41; --nav-bg: rgba(10,17,40,0.95);
-      --border-color: #1e3a8a;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.5);
+      --card-bg: #0f1e41; --border-color: #1e3a8a;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       font-family: 'Cairo', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
       transition: background-color .4s, color .4s;
-      margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased;
-      min-height: 100vh; padding-top: 90px;
+      margin: 0; padding-top: 80px; min-height: 100vh;
+      background-image: radial-gradient(circle at top right, rgba(249, 115, 22, 0.05), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(249, 115, 22, 0.05), transparent 40%);
     }
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #f97316, #ea580c); border-radius: 10px; }
-
-    /* BLOBS */
-    .animated-bg { position: fixed; inset: 0; z-index: -3; overflow: hidden; background: var(--bg-color); transition: background .6s; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; animation: blobFloat 25s ease-in-out infinite; }
-    .blob-1 { width: 500px; height: 500px; background: #f97316; top: -10%; left: -10%; }
-    .blob-2 { width: 450px; height: 450px; background: #fbbf24; bottom: -10%; right: -10%; animation-delay: -8s; }
-    .blob-3 { width: 350px; height: 350px; background: #ea580c; top: 50%; left: 40%; animation-delay: -15s; opacity: .25; }
-    [data-theme="dark"] .blob-1 { background:#f97316; opacity:.2 }
-    [data-theme="dark"] .blob-2 { background:#3b82f6; opacity:.15 }
-    [data-theme="dark"] .blob-3 { background:#1e3a8a; opacity:.3 }
-    @keyframes blobFloat {
-      0%,100% { transform: translate(0,0) scale(1); }
-      33% { transform: translate(60px,-40px) scale(1.1); }
-      66% { transform: translate(-40px,60px) scale(.95); }
-    }
-    .dot { position: absolute; border-radius: 50%; background: #f97316; opacity: .15; animation: dotFloat 15s linear infinite; }
-    [data-theme="dark"] .dot { background: #60a5fa; opacity: .25; }
-    .dot-1 { width: 12px; height: 12px; top: 15%; left: 10%; }
-    .dot-2 { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: -3s; }
-    .dot-3 { width: 16px; height: 16px; top: 80%; left: 20%; animation-delay: -6s; }
-    .dot-4 { width: 10px; height: 10px; top: 30%; left: 70%; animation-delay: -9s; }
-    .dot-5 { width: 14px; height: 14px; top: 45%; left: 50%; animation-delay: -12s; }
-    @keyframes dotFloat {
-      0% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-30px) translateX(20px); }
-      100% { transform: translateY(0) translateX(0); }
-    }
 
     /* NAVBAR */
     .top-navbar {
-      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
-      width: 96%; max-width: 1100px;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      border: 1.5px solid var(--border-color);
-      border-radius: 22px; padding: 10px 14px;
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+      width: 96%; max-width: 1000px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(15px);
+      border: 1.5px solid #fed7aa;
+      border-radius: 16px; padding: 8px 16px;
       display: flex; justify-content: space-between; align-items: center;
-      gap: 12px; z-index: 1000; box-shadow: var(--shadow-md);
+      gap: 12px; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
-    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .nav-title { font-size: 1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; }
-    .nav-title span {
-      background: linear-gradient(90deg,#f97316,#fbbf24,#f97316);
-      background-size: 200% auto;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
+    [data-theme="dark"] .top-navbar { background: rgba(15, 30, 65, 0.85); border-color: #1e3a8a; }
+    
+    .nav-links { display: flex; gap: 20px; font-weight: 700; font-size: 0.9rem; color: var(--text-muted); }
+    .nav-links a { text-decoration: none; color: inherit; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+    
+    .lang-switch {
+      display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.85rem;
     }
-    @keyframes shimmer { to { background-position: 200% center; } }
-    .nav-subtitle { font-size: .65rem; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
-    .nav-icon {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: linear-gradient(135deg,#f97316,#ea580c); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; box-shadow: 0 6px 18px rgba(249,115,22,.35); flex-shrink: 0;
+    .toggle-bg {
+      width: 44px; height: 24px; background: #f97316; border-radius: 20px;
+      position: relative; cursor: pointer; transition: background 0.3s;
     }
-    .nav-menu-btn {
-      width: 42px; height: 42px; border-radius: 14px;
-      border: 1.5px solid var(--border-color); background: var(--card-bg);
-      color: var(--text-main); display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: all .25s; font-size: 1rem; flex-shrink: 0;
+    .toggle-knob {
+      position: absolute; top: 2px; right: 2px; width: 20px; height: 20px;
+      background: white; border-radius: 50%; transition: transform 0.3s;
     }
-    .nav-menu-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,.35); }
-    .nav-menu-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
-    .nav-dropdown {
-      position: fixed; top: 72px; left: 50%; transform: translateX(-50%) translateY(-10px);
-      width: 290px; max-width: 92%; background: var(--nav-bg);
-      backdrop-filter: blur(20px); border: 1px solid var(--border-color);
-      border-radius: 20px; padding: 8px; box-shadow: var(--shadow-md);
-      z-index: 1001; opacity: 0; pointer-events: none;
-      transition: all .25s cubic-bezier(.34,1.56,.64,1);
+    
+    /* CARDS */
+    .card {
+      border-radius: 24px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
-    .nav-dropdown.open { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
-    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid var(--border-color); }
-    .dropdown-section:last-child { border-bottom: none; }
-    .dropdown-label { font-size: .65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; padding: 0 4px; }
-    .dropdown-row { display: flex; gap: 5px; flex-wrap: wrap; }
-    .dropdown-btn {
-      padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color);
-      background: var(--card-bg); color: var(--text-main);
-      font-family: inherit; font-size: .75rem; font-weight: 700;
-      cursor: pointer; transition: all .2s; display: inline-flex; align-items: center;
-      gap: 6px; flex: 1; justify-content: center; min-width: fit-content; text-decoration: none;
+    .card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+    
+    .card-dark { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); color: white; }
+    .card-orange { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; }
+    .card-light { background: var(--card-bg); border: 1.5px solid var(--border-color); }
+    
+    .qr-container {
+      background: white; padding: 15px; border-radius: 20px;
+      display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .dropdown-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: translateY(-1px); }
-    .dropdown-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    
+    .btn-insta {
+      background: linear-gradient(90deg, #f97316, #ea580c); color: white;
+      padding: 12px 24px; border-radius: 30px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      text-decoration: none; transition: transform 0.2s;
+    }
+    .btn-insta:hover { transform: scale(1.03); }
+    
+    .btn-email {
+      background: #1f2937; color: white; padding: 12px 24px; border-radius: 30px;
+      font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px;
+      text-decoration: none; margin-top: 10px; transition: transform 0.2s;
+    }
+    .btn-email:hover { transform: scale(1.03); }
 
-    /* HERO */
-    .page-hero { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; text-align: center; }
-    .page-hero h1 {
-      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
-      margin: 0 0 8px; line-height: 1.2;
-    }
-    .page-hero h1 span {
-      background: linear-gradient(90deg,#fbbf24,#f97316,#fbbf24);
-      background-size: 200% auto;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-    }
-    .page-hero p { color: var(--text-muted); font-size: .95rem; font-weight: 600; margin: 0; }
-
-    /* HERO BANNER qr.jpg */
-    .hero-image-banner { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px; }
-    .hero-image-banner .banner {
-      position: relative; width: 100%; height: 240px;
-      border-radius: 24px; overflow: hidden;
-      border: 2px solid var(--border-color);
-      box-shadow: var(--shadow-md);
-      background: linear-gradient(135deg, #f97316, #ea580c);
-    }
-    .hero-image-banner .banner img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-    .hero-image-banner .banner::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(15,23,42,.8), rgba(15,23,42,.05));
-    }
-    .hero-image-banner .banner-content {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 20px 24px; z-index: 2; color: #fff;
-    }
-    .hero-image-banner .banner-content h3 { margin: 0 0 4px; font-size: 1.3rem; font-weight: 900; }
-    .hero-image-banner .banner-content p { margin: 0; font-size: .88rem; font-weight: 600; color: rgba(255,255,255,.9); }
-    @media(max-width:640px){
-      .hero-image-banner .banner { height: 160px; border-radius: 18px; }
-      .hero-image-banner .banner-content { padding: 14px 16px; }
-      .hero-image-banner .banner-content h3 { font-size: 1rem; }
-      .hero-image-banner .banner-content p { font-size: .75rem; }
-    }
-
-    /* CONTENT */
-    .content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
-
-    /* Filters */
-    .filters-bar {
-      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
-      margin-bottom: 24px;
-    }
-    .filter-chip {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 20px; border-radius: 16px;
-      background: var(--card-bg); border: 1.5px solid var(--border-color);
-      color: var(--text-main); font-family: inherit; font-weight: 800; font-size: .88rem;
-      cursor: pointer; transition: all .3s cubic-bezier(.34,1.56,.64,1);
-      box-shadow: var(--shadow-sm);
-    }
-    .filter-chip:hover {
-      transform: translateY(-3px); border-color: var(--orange);
-      box-shadow: 0 10px 25px rgba(249,115,22,.2);
-    }
-    .filter-chip.active {
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #fff; border-color: transparent;
-      box-shadow: 0 12px 30px rgba(249,115,22,.4);
-    }
-
-    /* QR grid */
-    #qrGrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 16px;
-    }
-
-    .qr-card {
-      background: var(--card-bg);
-      border: 1.5px solid var(--border-color);
-      border-radius: 20px;
-      padding: 16px;
-      text-align: center;
-      display: flex; flex-direction: column; align-items: center;
-      box-shadow: var(--shadow-sm);
-      transition: all .35s cubic-bezier(.34,1.56,.64,1);
-    }
-    .qr-card:hover {
-      transform: translateY(-6px) scale(1.02);
-      border-color: var(--orange);
-      box-shadow: 0 25px 50px -12px rgba(249,115,22,.25);
-    }
-    .qr-image {
-      width: 100%;
-      aspect-ratio: 1;
-      border-radius: 14px;
-      background: #ffffff;
-      padding: 8px;
-      object-fit: contain;
-      border: 1px solid var(--border-color);
-      transition: transform .3s;
-    }
-    .qr-card:hover .qr-image { transform: scale(1.04); }
-    [data-theme="dark"] .qr-image { background: #f8fafc; }
-
-    .qr-label {
-      margin-top: 12px;
-      font-weight: 900;
-      color: var(--orange-dark);
-      font-size: .95rem;
-    }
-    [data-theme="dark"] .qr-label { color: #fdba74; }
-    .qr-sub {
-      font-size: .72rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      font-weight: 600;
-    }
-    .download-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: .72rem; font-weight: 800;
-      color: var(--orange);
-      margin-top: 10px;
-      padding: 5px 12px;
-      border-radius: 10px;
-      border: 1.5px solid rgba(249,115,22,.3);
-      background: rgba(249,115,22,.06);
-      cursor: pointer; text-decoration: none;
-      transition: all .2s;
-    }
-    .download-btn:hover {
-      background: var(--orange); color: #fff;
-      border-color: var(--orange);
-      transform: translateY(-1px);
-    }
-
-    /* CHAT */
-    #chatWindow {
-      position: fixed; bottom: 110px; right: 20px; z-index: 1500;
-      width: 340px; max-height: 480px;
-      background: var(--card-bg); border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.25);
-      border: 1.5px solid var(--border-color);
-      display: none; flex-direction: column; overflow: hidden;
-    }
-    #chatWindow.open { display: flex; }
-    @media(max-width:640px){ #chatWindow { width: calc(100vw - 2rem); right: 1rem; left: 1rem; } }
-    .chat-header {
-      background: linear-gradient(135deg,#f97316,#f59e0b);
-      color: #fff; padding: 14px 16px;
-      display: flex; align-items: center; justify-content: space-between;
-      font-weight: 800;
-    }
-    .chat-header span { display: flex; align-items: center; gap: 8px; }
-    .chat-close-btn {
-      width: 28px; height: 28px; border-radius: 8px;
-      background: rgba(255,255,255,.25); border: none; color: #fff;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-    }
-    #chatBody {
-      padding: 12px; overflow-y: auto; height: 320px;
-      font-size: .85rem; display: flex; flex-direction: column; gap: 8px;
-      background: var(--bg-color);
-    }
-    .chat-input-wrap {
-      padding: 8px; border-top: 1px solid var(--border-color);
-      display: flex; gap: 6px; background: var(--card-bg);
-    }
-    #chatInput {
-      flex: 1; padding: 9px 12px;
-      border: 1.5px solid var(--border-color); border-radius: 10px;
-      font-size: .82rem; outline: none; font-family: inherit;
-      background: var(--bg-color); color: var(--text-main);
-    }
-    #chatInput:focus { border-color: var(--orange); }
-    .chat-send-btn {
-      background: var(--orange); color: #fff; border: none;
-      padding: 9px 14px; border-radius: 10px; cursor: pointer;
-    }
-    .chat-send-btn:hover { background: var(--orange-dark); }
-
-    /* Kangourou */
-    .mascot-container { position: fixed; bottom: 22px; right: 22px; z-index: 1000; cursor: pointer; user-select: none; }
-    .mascot-kangaroo { width: 70px; height: 90px; filter: drop-shadow(0 10px 15px rgba(249,115,22,.3)); transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
-    .mascot-kangaroo.jump { animation: kangarooJump .6s ease; }
-    @keyframes kangarooJump {
-      0%,100% { transform: translateY(0) scale(1); }
-      30% { transform: translateY(-20px) scale(1.1) rotate(-8deg); }
-      60% { transform: translateY(-10px) scale(1) rotate(5deg); }
-    }
-
-    .site-footer { background: var(--card-bg); border-top: 1.5px solid var(--border-color); padding: 25px 20px; margin-top: 40px; text-align: center; }
-    .footer-copy { font-size: .78rem; color: var(--text-muted); font-weight: 600; }
-
-    .hidden { display: none !important; }
-
-    /* Print */
-    @media print {
-      .top-navbar, .site-footer, .mascot-container, #chatWindow, .print-hide, .hero-image-banner { display: none !important; }
-      body { background: white !important; padding: 0 !important; }
-      .qr-card { break-inside: avoid; border: 1px solid #ddd !important; box-shadow: none !important; }
-      .qr-image { background: white !important; }
-      .page-hero, .filters-bar { display: none !important; }
-    }
-
-    @media(max-width:768px){
-      .top-navbar { padding: 8px 10px; border-radius: 16px; }
-      .nav-title { font-size: .85rem; }
-      .nav-subtitle { font-size: .6rem; }
+    @media(max-width: 768px) {
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- BLOBS -->
-  <div class="animated-bg">
-    <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
-    <div class="dot dot-1"></div><div class="dot dot-2"></div><div class="dot dot-3"></div><div class="dot dot-4"></div><div class="dot dot-5"></div>
-  </div>
-
   <!-- NAVBAR -->
   <nav class="top-navbar">
-    <div class="nav-brand">
-      <div class="nav-icon"><i class="fa-solid fa-qrcode"></i></div>
-      <div>
-        <div class="nav-title">ENSTP <span>QR Codes</span></div>
-        <div class="nav-subtitle" data-i18n="qr_subtitle">كل فوج له رمزه الخاص</div>
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-orange-500 text-white flex items-center justify-center font-bold">
+        <i class="fa-solid fa-kiwi-bird"></i>
+      </div>
+      <span class="font-black text-sm" style="color: var(--text-main);">دليل الطالب · KangooETP</span>
+    </div>
+    
+    <div class="nav-links">
+      <a href="#">الرئيسية</a>
+      <a href="#">الخدمات</a>
+      <a href="#">الدعم</a>
+    </div>
+
+    <div class="lang-switch">
+      <span>AR / FR</span>
+      <div class="toggle-bg" onclick="toggleDarkMode()">
+        <div class="toggle-knob"></div>
       </div>
     </div>
-    <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة">
-      <i class="fa-solid fa-sliders"></i>
-    </button>
   </nav>
 
-  <div class="nav-dropdown" id="navDropdown">
-    <div class="dropdown-section">
-      <div class="dropdown-label">🌐 <span data-i18n="menu_lang">اللغة</span></div>
-      <div class="dropdown-row">
-        <button class="dropdown-btn active" onclick="setLanguage('ar')" id="btn-ar">🇩🇿 العربية</button>
-        <button class="dropdown-btn" onclick="setLanguage('fr')" id="btn-fr">🇫🇷 Français</button>
-        <button class="dropdown-btn" onclick="setLanguage('en')" id="btn-en">🇬🇧 English</button>
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-[1000px] mx-auto px-4 py-6">
+    
+    <!-- HEADER TITLE -->
+    <div class="bg-orange-50 border border-orange-200 rounded-2xl p-4 flex justify-between items-center mb-6 shadow-sm">
+      <h1 class="text-xl md:text-3xl font-black text-gray-800">من نحن | Qui sommes-nous</h1>
+      <span class="bg-orange-500 text-white text-xs md:text-sm font-bold px-4 py-1.5 rounded-full">فريق التطوير · Équipe Projet</span>
+    </div>
+
+    <!-- GRID LAYOUT -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- LEFT COLUMN (Mission & Vision) -->
+      <div class="md:col-span-2 space-y-6">
+        
+        <!-- QUI SOMMES-NOUS (DARK CARD) -->
+        <div class="card card-dark p-8 flex flex-col items-center text-center relative overflow-hidden">
+          <!-- Background subtle glow -->
+          <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500 via-transparent to-transparent"></div>
+          
+          <div class="text-7xl mb-4 text-orange-500 relative z-10">
+            <i class="fa-solid fa-graduation-cap drop-shadow-[0_10px_20px_rgba(249,115,22,0.5)]"></i>
+          </div>
+          <h2 class="text-2xl font-black mb-3 relative z-10">فريق العمل (Qui sommes-nous)</h2>
+          <p class="text-sm md:text-base text-gray-300 leading-relaxed relative z-10 max-w-lg">
+            نحن طلبة السنة الأولى – تخصص منشآت قاعدية (الفوج 2)، اجتمعنا لبناء منصة رقمية متكاملة تخدم مجتمعنا الطلابي.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- NOTRE MISSION (ORANGE CARD) -->
+          <div class="card card-orange p-6 flex flex-col items-center text-center">
+            <div class="text-6xl mb-4 drop-shadow-md">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h3 class="text-xl font-black mb-3">مهمتنا (Notre Mission)</h3>
+            <p class="text-sm text-orange-50 leading-relaxed font-medium">
+              توفير دليل رقمي شامل وسريع الوصول يجمع التوجيه الأكاديمي، الخدمات الإدارية، وقضاءات التبادل في مكان واحد.
+            </p>
+          </div>
+
+          <!-- NOTRE VISION (LIGHT CARD) -->
+          <div class="card card-light p-6 flex flex-col items-center text-center">
+            <!-- Your s.jpg image replaces the compass -->
+            <img src="s.jpg" alt="Vision" class="w-24 h-24 object-contain mb-4 drop-shadow-md rounded-full border-4 border-orange-100" onerror="this.src='https://via.placeholder.com/100/f97316/ffffff?text=Vision'">
+            <h3 class="text-xl font-black text-gray-800 mb-3">رؤيتنا (Notre Vision)</h3>
+            <p class="text-sm text-gray-500 leading-relaxed font-medium">
+              الارتقاء بالتجربة الجامعية عبر حلول ذكية مبتكرة تسهل اندماج الطلبة وتدعم مسارهم الأكاديمي.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="dropdown-section">
-      <div class="dropdown-label">⚙️ <span data-i18n="menu_settings">الإعدادات</span></div>
-      <div class="dropdown-row">
-        <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
-          <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
-        </button>
-        <button class="dropdown-btn print-hide" onclick="window.print()">
-          <i class="fa-solid fa-print"></i> <span data-i18n="qr_print">طباعة</span>
-        </button>
-        <a href="index.html" class="dropdown-btn">
-          <i class="fa-solid fa-house"></i> <span data-i18n="nav_home">الرئيسية</span>
-        </a>
+
+      <!-- RIGHT COLUMN (Contact & Insta QR) -->
+      <div class="md:col-span-1">
+        <div class="card card-light p-6 h-full flex flex-col items-center justify-center text-center bg-white" style="background-image: radial-gradient(#f1f5f9 1px, transparent 1px); background-size: 20px 20px;">
+          
+          <h3 class="text-2xl font-black text-gray-800 mb-6">تواصل معنا (Contact)</h3>
+          
+          <!-- INSTAGRAM QR CODE (Your i.jpg) -->
+          <div class="qr-container mb-4">
+            <img src="i.jpg" alt="Instagram QR" class="w-36 h-36 object-cover rounded-xl" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://instagram.com/kangooetp&color=f97316'">
+          </div>
+          <p class="text-sm font-bold text-orange-500 tracking-widest mb-6">@KANGOOETP</p>
+
+          <!-- BUTTONS -->
+          <div class="w-full space-y-3">
+            <a href="https://instagram.com/kangooetp" target="_blank" class="btn-insta w-full">
+              <i class="fa-brands fa-instagram text-xl"></i> تابعنا على إنستغرام
+            </a>
+            <a href="mailto:kangooetp@gmail.com" class="btn-email w-full">
+              <i class="fa-solid fa-envelope text-xl"></i> kangooetp@gmail.com
+            </a>
+          </div>
+
+        </div>
       </div>
+
     </div>
-  </div>
-
-  <!-- HERO -->
-  <header class="page-hero">
-    <h1><span data-i18n="hero_1">رموز QR</span> <span data-i18n="hero_2">للأفواج</span></h1>
-    <p data-i18n="qr_desc">اختر القسم لعرض رموز QR لكل فوج. يمكنك طباعة كل الرموز أو تنزيلها.</p>
-  </header>
-
-  <!-- HERO BANNER qr.jpg -->
-  <div class="hero-image-banner">
-    <div class="banner">
-      <img src="qr.jpg" alt="QR Codes ENSTP"
-           onerror="this.style.display='none';">
-      <div class="banner-content">
-        <h3 data-i18n="banner_title">رموز QR للأفواج</h3>
-        <p data-i18n="banner_desc">امسح الرمز للوصول السريع إلى مجموعة فوجك.</p>
-      </div>
-    </div>
-  </div>
-
-  <main class="content-wrap">
-
-    <!-- Filters -->
-    <div class="filters-bar" id="filtersBar">
-      <button onclick="setSection('1cp')" id="filter-1cp" class="filter-chip active">1CP</button>
-      <button onclick="setSection('2cp')" id="filter-2cp" class="filter-chip">2CP</button>
-      <button onclick="setSection('dib1')" id="filter-dib1" class="filter-chip">DIB 1</button>
-      <button onclick="setSection('dib2')" id="filter-dib2" class="filter-chip">DIB 2</button>
-      <button onclick="setSection('dib3')" id="filter-dib3" class="filter-chip">DIB 3</button>
-      <button onclick="setSection('dms1')" id="filter-dms1" class="filter-chip">DMS 1</button>
-      <button onclick="setSection('dms2')" id="filter-dms2" class="filter-chip">DMS 2</button>
-      <button onclick="setSection('dms3')" id="filter-dms3" class="filter-chip">DMS 3</button>
-    </div>
-
-    <!-- Grid -->
-    <div id="qrGrid"></div>
-
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-copy">© 2026 ENSTP Kouba · <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></div>
+  <!-- FOOTER -->
+  <footer class="max-w-[1000px] mx-auto px-4 pb-8 flex flex-col md:flex-row justify-between items-center text-xs font-bold text-gray-500">
+    <p>© 2024 دليل الطالب · KangooETP</p>
+    <div class="flex gap-4 mt-2 md:mt-0">
+      <a href="#" class="hover:text-orange-500">ar/fr</a>
+      <a href="#" class="hover:text-orange-500">privacy policy</a>
+      <a href="#" class="hover:text-orange-500">contact</a>
+    </div>
   </footer>
 
-  <!-- KANGOUROU -->
-  <div class="mascot-container" id="kangarooContainer">
-    <svg class="mascot-kangaroo" id="kangarooSvg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="32" cy="76" rx="18" ry="3" fill="rgba(0,0,0,0.15)"/>
-      <path d="M12 60 Q4 54 6 64 Q8 72 14 66 Z" fill="#ea580c"/>
-      <ellipse cx="46" cy="68" rx="10" ry="5" fill="#ea580c"/>
-      <ellipse cx="34" cy="52" rx="18" ry="16" fill="#f97316"/>
-      <ellipse cx="36" cy="54" rx="10" ry="10" fill="#fed7aa"/>
-      <ellipse cx="26" cy="64" rx="6" ry="3.5" fill="#ea580c"/>
-      <ellipse cx="44" cy="28" rx="13" ry="12" fill="#f97316"/>
-      <ellipse cx="38" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(-15 38 12)"/>
-      <ellipse cx="38" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(-15 38 12)"/>
-      <ellipse cx="50" cy="12" rx="4" ry="9" fill="#f97316" transform="rotate(15 50 12)"/>
-      <ellipse cx="50" cy="13" rx="2" ry="5.5" fill="#fed7aa" transform="rotate(15 50 12)"/>
-      <ellipse cx="48" cy="33" rx="7" ry="6" fill="#fed7aa"/>
-      <ellipse cx="53" cy="31" rx="2" ry="1.5" fill="#7c2d12"/>
-      <circle cx="46" cy="26" r="2.5" fill="#1a1410"/>
-      <circle cx="46.8" cy="25.2" r="0.9" fill="#ffffff"/>
-      <path d="M47 36 Q51 38 54 36" stroke="#7c2d12" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      <ellipse cx="28" cy="44" rx="5" ry="3" fill="#ea580c" transform="rotate(-30 28 44)"/>
-      <circle cx="22" cy="38" r="4" fill="rgba(255,255,255,0.9)" stroke="#c2410c" stroke-width="1.5"/>
-      <line x1="25" y1="41" x2="28" y2="44" stroke="#c2410c" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </div>
-
-  <!-- CHAT -->
-  <div id="chatWindow">
-    <div class="chat-header">
-      <span><i class="fa-solid fa-comments"></i> <span data-i18n="chat_title">المساعد الافتراضي</span></span>
-      <button class="chat-close-btn" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="chatBody">
-      <div style="background:rgba(249,115,22,.12);padding:9px 13px;border-radius:12px;color:var(--orange-dark);font-weight:600;" data-i18n="chat_welcome">مرحباً! 👋 كيف يمكنني مساعدتك؟</div>
-    </div>
-    <div class="chat-input-wrap">
-      <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="اكتب سؤالك...">
-      <button class="chat-send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
-    </div>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- SCRIPT                                                       -->
-  <!-- ============================================================ -->
   <script>
-    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
-    let currentSection = '1cp';
-
-    /* ========== DARK MODE ========== */
+    // Dark mode toggle logic (optional)
     const htmlEl = document.documentElement;
-    if(localStorage.getItem('theme')==='dark') htmlEl.setAttribute('data-theme','dark');
-    function toggleDarkMode(){
-      const isDark = htmlEl.getAttribute('data-theme')==='dark';
-      htmlEl.setAttribute('data-theme', isDark?'light':'dark');
-      localStorage.setItem('theme', htmlEl.getAttribute('data-theme'));
-      updateThemeBtn();
+    function toggleDarkMode() {
+      const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+      htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
     }
-    function updateThemeBtn(){
-      const tb = document.getElementById('themeBtn'); if(!tb) return;
-      const d = window.QR_TRANSLATIONS[currentLang] || window.QR_TRANSLATIONS.ar;
-      const isDark = htmlEl.getAttribute('data-theme')==='dark';
-      tb.innerHTML = isDark
-        ? '<i class="fa-solid fa-sun"></i> <span>'+d.menu_dark+'</span>'
-        : '<i class="fa-solid fa-moon"></i> <span>'+d.menu_dark+'</span>';
+    if (localStorage.getItem('theme') === 'dark') {
+      htmlEl.setAttribute('data-theme', 'dark');
     }
-
-    /* ========== MENU ========== */
-    function toggleMenu(){
-      document.getElementById('navDropdown').classList.toggle('open');
-      document.getElementById('menuBtn').classList.toggle('active');
-    }
-    document.addEventListener('click', e=>{
-      const dd = document.getElementById('navDropdown');
-      const btn = document.getElementById('menuBtn');
-      if(!dd.contains(e.target) && !btn.contains(e.target)){
-        dd.classList.remove('open');
-        btn.classList.remove('active');
-      }
-    });
-
-    /* ========== TRANSLATIONS ========== */
-    window.QR_TRANSLATIONS = {
-      ar: {
-        page_title: "رموز QR للأفواج - ENSTP", nav_home: "الرئيسية",
-        menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي",
-        hero_1: "رموز QR", hero_2: "للأفواج",
-        banner_title: "رموز QR للأفواج",
-        banner_desc: "امسح الرمز للوصول السريع إلى مجموعة فوجك.",
-        qr_title: "رموز QR للأفواج", qr_subtitle: "كل فوج له رمزه الخاص",
-        qr_desc: "اختر القسم لعرض رموز QR لكل فوج. يمكنك طباعة كل الرموز أو تنزيلها.",
-        qr_print: "طباعة", qr_download: "تنزيل", group_prefix: "الفوج",
-        section_1cp: "السنة الأولى تحضيري",
-        section_2cp: "السنة الثانية تحضيري",
-        section_dib1: "DIB - السنة الأولى مهندس",
-        section_dib2: "DIB - السنة الثانية مهندس",
-        section_dib3: "DIB - السنة الثالثة مهندس",
-        section_dms1: "DMS - السنة الأولى مهندس",
-        section_dms2: "DMS - السنة الثانية مهندس",
-        section_dms3: "DMS - السنة الثالثة مهندس",
-        chat_title: "المساعد الافتراضي", chat_welcome: "مرحباً! 👋 كيف يمكنني مساعدتك؟",
-        chat_placeholder: "اكتب سؤالك...", chat_default: "شكراً!",
-        chat_hello: "أهلاً!", chat_thanks: "على الرحب والسعة!",
-        chat_qr: "هذه الصفحة تعرض رموز QR لكل فوج. اختر القسم لعرض الرموز.",
-        footer_rights: "جميع الحقوق محفوظة"
-      },
-      fr: {
-        page_title: "QR Codes des Classes - ENSTP", nav_home: "Accueil",
-        menu_lang: "Langue", menu_settings: "Paramètres", menu_dark: "Sombre",
-        hero_1: "QR Codes", hero_2: "des Classes",
-        banner_title: "QR Codes des Classes",
-        banner_desc: "Scannez le code pour accéder rapidement à votre groupe.",
-        qr_title: "QR Codes des Classes", qr_subtitle: "Chaque groupe a son propre QR",
-        qr_desc: "Choisissez la section pour afficher les QR codes de chaque groupe. Vous pouvez imprimer ou télécharger.",
-        qr_print: "Imprimer", qr_download: "Télécharger", group_prefix: "Groupe",
-        section_1cp: "1ère Année Préparatoire",
-        section_2cp: "2ème Année Préparatoire",
-        section_dib1: "DIB - 1ère Année Ingénieur",
-        section_dib2: "DIB - 2ème Année Ingénieur",
-        section_dib3: "DIB - 3ème Année Ingénieur",
-        section_dms1: "DMS - 1ère Année Ingénieur",
-        section_dms2: "DMS - 2ème Année Ingénieur",
-        section_dms3: "DMS - 3ème Année Ingénieur",
-        chat_title: "Assistant virtuel", chat_welcome: "Bonjour ! 👋 Comment puis-je vous aider ?",
-        chat_placeholder: "Votre question...", chat_default: "Merci !",
-        chat_hello: "Bienvenue !", chat_thanks: "Avec plaisir !",
-        chat_qr: "Cette page affiche les QR codes de chaque groupe. Choisissez une section.",
-        footer_rights: "Tous droits réservés"
-      },
-      en: {
-        page_title: "Class QR Codes - ENSTP", nav_home: "Home",
-        menu_lang: "Language", menu_settings: "Settings", menu_dark: "Dark",
-        hero_1: "Class", hero_2: "QR Codes",
-        banner_title: "Class QR Codes",
-        banner_desc: "Scan the code for quick access to your group.",
-        qr_title: "Class QR Codes", qr_subtitle: "Each group has its own QR",
-        qr_desc: "Choose a section to display QR codes for each group. You can print or download.",
-        qr_print: "Print", qr_download: "Download", group_prefix: "Group",
-        section_1cp: "1st Preparatory Year",
-        section_2cp: "2nd Preparatory Year",
-        section_dib1: "DIB - 1st Year Engineer",
-        section_dib2: "DIB - 2nd Year Engineer",
-        section_dib3: "DIB - 3rd Year Engineer",
-        section_dms1: "DMS - 1st Year Engineer",
-        section_dms2: "DMS - 2nd Year Engineer",
-        section_dms3: "DMS - 3rd Year Engineer",
-        chat_title: "Virtual Assistant", chat_welcome: "Hello! 👋 How can I help you?",
-        chat_placeholder: "Your question...", chat_default: "Thanks!",
-        chat_hello: "Welcome!", chat_thanks: "You're welcome!",
-        chat_qr: "This page displays the QR codes for each group. Choose a section.",
-        footer_rights: "All rights reserved"
-      }
-    };
-
-    function t(key){
-      const d = window.QR_TRANSLATIONS[currentLang] || window.QR_TRANSLATIONS.ar;
-      return d[key] || key;
-    }
-
-    /* ========== SECTION DATA ========== */
-    const sectionsData = {
-      '1cp': { groups: Array.from({length: 12}, (_, i) => `g${i+1}`), title: 'section_1cp' },
-      '2cp': { groups: Array.from({length: 12}, (_, i) => `g${i+1}`), title: 'section_2cp' },
-      'dib1': { groups: Array.from({length: 4}, (_, i) => `g${i+1}`), title: 'section_dib1' },
-      'dib2': { groups: Array.from({length: 4}, (_, i) => `g${i+1}`), title: 'section_dib2' },
-      'dib3': { groups: ['promo'], title: 'section_dib3' },
-      'dms1': { groups: Array.from({length: 4}, (_, i) => `sec${i+1}`), title: 'section_dms1' },
-      'dms2': { groups: Array.from({length: 2}, (_, i) => `sec${i+1}`), title: 'section_dms2' },
-      'dms3': { groups: ['promo'], title: 'section_dms3' }
-    };
-
-    /* ========== APPLY TRANSLATION ========== */
-    window.applyQrTranslation = function(lang){
-      const d = window.QR_TRANSLATIONS[lang] || window.QR_TRANSLATIONS.ar;
-      if(d.page_title) document.title = d.page_title;
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const k = el.getAttribute('data-i18n');
-        if(d[k]){
-          const icon = el.querySelector('i');
-          if(icon){ el.innerHTML=''; el.appendChild(icon); el.appendChild(document.createTextNode(' '+d[k])); }
-          else el.innerText = d[k];
-        }
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
-        const k = el.getAttribute('data-i18n-placeholder');
-        if(d[k]) el.placeholder = d[k];
-      });
-      document.documentElement.dir = (lang==='ar') ? 'rtl' : 'ltr';
-      document.documentElement.lang = lang;
-      updateThemeBtn();
-      renderQRs();
-    };
-
-    window.setLanguage = function(lang){
-      currentLang = lang;
-      localStorage.setItem('enstp_lang', lang);
-      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
-      const b = document.getElementById('btn-'+lang); if(b) b.classList.add('active');
-      applyQrTranslation(lang);
-    };
-
-    /* ========== SECTION ========== */
-    function setSection(section){
-      currentSection = section;
-      ['1cp','2cp','dib1','dib2','dib3','dms1','dms2','dms3'].forEach(s=>{
-        const btn = document.getElementById('filter-'+s);
-        if(btn){
-          if(s === section) btn.classList.add('active');
-          else btn.classList.remove('active');
-        }
-      });
-      renderQRs();
-    }
-
-    /* ========== RENDER QR ========== */
-    function renderQRs(){
-      const grid = document.getElementById('qrGrid');
-      if(!grid) return;
-      grid.innerHTML = '';
-      const section = sectionsData[currentSection];
-      if(!section) return;
-      const sectionTitle = t(section.title);
-
-      section.groups.forEach(group=>{
-        let groupName;
-        if(group === 'promo'){
-          groupName = `ENSTP - ${sectionTitle}`;
-        } else if(group.startsWith('sec')){
-          groupName = `ENSTP - ${sectionTitle} - Section ${group.replace('sec', '')}`;
-        } else {
-          groupName = `ENSTP - ${sectionTitle} - ${t('group_prefix')} ${group.replace('g', '')}`;
-        }
-
-        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(groupName)}&color=1e293b&bgcolor=ffffff&margin=10`;
-        const displayLabel = group === 'promo' ? sectionTitle : `${t('group_prefix')} ${group.replace('g','').replace('sec','')}`;
-
-        const card = document.createElement('div');
-        card.className = 'qr-card';
-        card.innerHTML = `
-          <img src="${qrUrl}" alt="${groupName}" class="qr-image" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300/f1f5f9/94a3b8?text=QR'">
-          <div class="qr-label">${displayLabel}</div>
-          <div class="qr-sub">${sectionTitle}</div>
-          <a href="${qrUrl}" download="QR-${currentSection}-${group}.png" target="_blank" class="download-btn">
-            <i class="fa-solid fa-download"></i> <span>${t('qr_download')}</span>
-          </a>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    /* ========== CHAT ========== */
-    function toggleChat(){
-      const c = document.getElementById('chatWindow');
-      if(!c) return;
-      c.classList.toggle('open');
-    }
-    function sendMessage(){
-      const input = document.getElementById('chatInput');
-      const body = document.getElementById('chatBody');
-      if(!input || !body) return;
-      const msg = input.value.trim();
-      if(!msg) return;
-      body.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:9px 13px;border-radius:12px 12px 4px 12px;max-width:80%;font-size:.82rem;font-weight:600;">${msg}</div></div>`;
-      input.value = '';
-      body.scrollTop = body.scrollHeight;
-      setTimeout(()=>{
-        let reply = t('chat_default');
-        const m = msg.toLowerCase();
-        if(m.includes("qr") || m.includes("فوج") || m.includes("groupe") || m.includes("class")) reply = "📱 " + t('chat_qr');
-        else if(m.includes("سلام") || m.includes("مرحبا") || m.includes("hello") || m.includes("bonjour")) reply = "👋 " + t('chat_hello');
-        else if(m.includes("شكرا") || m.includes("merci") || m.includes("thanks")) reply = "💛 " + t('chat_thanks');
-        body.innerHTML += `<div style="display:flex;justify-content:flex-start;"><div style="background:rgba(249,115,22,.12);color:var(--orange-dark);padding:9px 13px;border-radius:12px 12px 12px 4px;max-width:80%;font-size:.82rem;font-weight:600;">${reply}</div></div>`;
-        body.scrollTop = body.scrollHeight;
-      }, 500);
-    }
-
-    /* ========== KANGOUROU ========== */
-    const kangarooContainer = document.getElementById('kangarooContainer');
-    const kangarooSvg = document.getElementById('kangarooSvg');
-    if(kangarooContainer){
-      kangarooContainer.addEventListener('click', ()=>{
-        if(kangarooSvg){
-          kangarooSvg.classList.remove('jump');
-          void kangarooSvg.offsetHeight;
-          kangarooSvg.classList.add('jump');
-          setTimeout(()=>kangarooSvg.classList.remove('jump'), 700);
-        }
-        toggleChat();
-      });
-      kangarooContainer.addEventListener('mouseenter', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = 'scale(1.1)'; });
-      kangarooContainer.addEventListener('mouseleave', ()=>{ if(kangarooSvg) kangarooSvg.style.transform = ''; });
-    }
-
-    /* ========== INIT ========== */
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const saved = localStorage.getItem('enstp_lang') || 'ar';
-      currentLang = saved;
-      document.querySelectorAll('.dropdown-btn').forEach(b=>b.classList.remove('active'));
-      const b = document.getElementById('btn-'+saved); if(b) b.classList.add('active');
-      applyQrTranslation(saved);
-      setSection('1cp');
-
-      const chatInput = document.getElementById('chatInput');
-      if(chatInput){
-        chatInput.addEventListener('keypress', e=>{
-          if(e.key === 'Enter'){ e.preventDefault(); sendMessage(); }
-        });
-      }
-    });
   </script>
 </body>
 </html>
