@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="page_title">مدارس الأشغال العمومية في إفريقيا - ENSTP</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        onerror="this.onerror=null;this.href='https://use.fontawesome.com/releases/v6.4.0/css/all.css';">
+
+  <style>
+    :root {
+      --primary: #f97316;
+      --primary-hover: #ea580c;
+      --primary-light: #fdba74;
+      --primary-glow: rgba(249, 115, 22, 0.25);
+      --brown: #7c2d12;
+      --brown-dark: #431407;
+      --cream: #fffbf5;
+      --bg-color: #fffbf5;
+      --text-main: #431407;
+      --text-muted: #92400e;
+      --card-bg: #ffffff;
+      --nav-bg: rgba(255, 251, 245, 0.92);
+      --border-color: #fde8d7;
+      --shadow-sm: 0 2px 10px rgba(124, 45, 18, 0.07);
+      --shadow-md: 0 12px 32px rgba(124, 45, 18, 0.12);
+      --shadow-lg: 0 28px 55px -12px rgba(249, 115, 22, 0.4);
+    }
+    [data-theme="dark"] {
+      --bg-color: #1a0f08;
+      --text-main: #fef3c7;
+      --text-muted: #e0b88a;
+      --card-bg: #26160d;
+      --nav-bg: rgba(26, 15, 8, 0.95);
+      --border-color: #5a3520;
+      --shadow-sm: 0 2px 10px rgba(0,0,0,0.4);
+      --shadow-md: 0 12px 32px rgba(0,0,0,0.5);
+      --shadow-lg: 0 28px 55px -12px rgba(249, 115, 22, 0.5);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-main);
+      transition: background 0.4s ease, color 0.4s ease;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4 { font-family: 'Tajawal', sans-serif; font-weight: 800; margin: 0; }
+
+    /* NAVBAR */
+    .top-navbar {
+      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 96%; max-width: 1100px;
+      background: var(--nav-bg); backdrop-filter: blur(20px);
+      border: 1.5px solid var(--border-color); border-radius: 22px;
+      padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; z-index: 1000; box-shadow: var(--shadow-md);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+    .kangaroo-logo {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+    .kangaroo-logo svg { width: 26px; height: 30px; }
+    .nav-title { font-size: 1rem; font-weight: 900; line-height: 1.1; }
+    .nav-title span {
+      background: linear-gradient(90deg, #f97316, #fbbf24, #f97316);
+      background-size: 200% auto; -webkit-background-clip: text;
+      background-clip: text; -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+    .nav-subtitle { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; }
+
+    .nav-menu-btn {
+      width: 42px; height: 42px; border-radius: 14px;
+      border: 1.5px solid var(--border-color); background: var(--card-bg);
+      color: var(--text-main); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.25s ease; font-size: 1rem;
+    }
+    .nav-menu-btn:hover, .nav-menu-btn.active {
+      background: var(--primary); color: white; border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .nav-dropdown {
+      position: fixed; top: 72px; left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      width: 290px; max-width: 92%; background: var(--nav-bg);
+      backdrop-filter: blur(20px); border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 8px; box-shadow: var(--shadow-md);
+      z-index: 1001; opacity: 0; pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-dropdown.open { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .dropdown-section { padding: 10px 8px; border-bottom: 1px solid var(--border-color); }
+    .dropdown-section:last-child { border-bottom: none; }
+    .dropdown-label {
+      font-size: 0.65rem; font-weight: 800; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+    }
+    .dropdown-row { display: flex; gap: 5px; flex-wrap: wrap; }
+    .dropdown-btn {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color);
+      background: var(--card-bg); color: var(--text-main); font-family: inherit;
+      font-size: 0.75rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s ease; flex: 1; justify-content: center;
+    }
+    .dropdown-btn:hover { background: var(--primary-light); border-color: var(--primary); }
+    .dropdown-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 60vh;
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; text-align: center;
+      padding: 130px 20px 60px; overflow: hidden;
+      background: linear-gradient(135deg, #7c2d12, #431407);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(circle at 20% 30%, rgba(249,115,22,0.3), transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(253,186,116,0.2), transparent 50%);
+    }
+    .hero-badge {
+      background: rgba(249, 115, 22, 0.2);
+      border: 1.5px solid rgba(249, 115, 22, 0.5);
+      color: #fff; padding: 8px 22px; border-radius: 30px;
+      font-size: 0.9rem; font-weight: 700; margin-bottom: 20px;
+      display: inline-flex; align-items: center; gap: 8px;
+      position: relative; z-index: 1;
+    }
+    .hero-title {
+      color: #fff; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 900; line-height: 1.2; margin-bottom: 20px;
+      position: relative; z-index: 1; text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+    .hero-title span {
+      background: linear-gradient(90deg, #fdba74, #f97316, #fdba74);
+      background-size: 200% auto; -webkit-background-clip: text;
+      background-clip: text; -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    .hero-desc {
+      color: #fef3c7; max-width: 700px; font-size: 1rem;
+      line-height: 1.7; margin-bottom: 30px; position: relative; z-index: 1;
+    }
+    .btn-back {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff; padding: 12px 32px; border-radius: 40px;
+      text-decoration: none; font-weight: 800; font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 10px;
+      box-shadow: 0 10px 30px var(--primary-glow);
+      transition: all 0.3s; position: relative; z-index: 1;
+    }
+    .btn-back:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 15px 40px rgba(249,115,22,0.6); }
+
+    /* CONTAINER */
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px 80px; }
+    .section-title {
+      text-align: center; font-size: 1.8rem; margin-bottom: 12px;
+      color: var(--text-main);
+    }
+    .section-title span { color: var(--primary); }
+    .section-sub {
+      text-align: center; color: var(--text-muted);
+      font-size: 0.95rem; margin-bottom: 40px; font-weight: 600;
+    }
+
+    /* SCHOOL CARD GRID */
+    .schools-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 26px; margin-bottom: 60px;
+    }
+    .school-card {
+      background: var(--card-bg); border-radius: 22px; overflow: hidden;
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none; color: var(--text-main);
+      display: flex; flex-direction: column;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .school-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .school-card-img {
+      width: 100%; height: 180px; overflow: hidden;
+      background: linear-gradient(135deg, #fed7aa, #f97316);
+      position: relative;
+    }
+    .school-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .school-card:hover .school-card-img img { transform: scale(1.1); }
+    .school-flag {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(255,255,255,0.95); padding: 4px 10px;
+      border-radius: 20px; font-size: 0.75rem; font-weight: 800;
+      display: flex; align-items: center; gap: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .school-card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+    .school-card-title {
+      font-size: 1.1rem; font-weight: 900; margin-bottom: 6px;
+      color: var(--text-main);
+    }
+    .school-card-title::after {
+      content: ""; display: block; width: 40px; height: 3px;
+      background: linear-gradient(90deg, #f97316, #fdba74);
+      border-radius: 2px; margin-top: 8px;
+    }
+    .school-card-country {
+      font-size: 0.8rem; color: var(--primary); font-weight: 800;
+      margin-bottom: 8px; display: flex; align-items: center; gap: 5px;
+    }
+    .school-card-year {
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 600;
+      display: flex; align-items: center; gap: 5px; margin-bottom: 10px;
+    }
+    .school-card-btn {
+      margin-top: auto; padding: 9px 16px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white; border: none; border-radius: 12px;
+      font-family: inherit; font-weight: 800; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.2s ease;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .school-card-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--primary-glow); }
+
+    /* DETAIL SECTIONS */
+    .detail-section {
+      background: var(--card-bg); border-radius: 24px;
+      padding: 28px; margin-bottom: 32px;
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+    .detail-section h3 {
+      font-size: 1.35rem; color: var(--primary);
+      margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+      border-bottom: 2px solid var(--border-color); padding-bottom: 12px;
+    }
+    .detail-section h3 i { font-size: 1.1rem; }
+    .detail-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .info-row {
+      padding: 12px 14px; background: var(--bg-color);
+      border-radius: 12px; border: 1px solid var(--border-color);
+    }
+    .info-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-bottom: 4px; }
+    .info-value { font-size: 0.9rem; color: var(--text-main); font-weight: 700; }
+
+    .departments-list { display: flex; flex-direction: column; gap: 14px; }
+    .dept-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px; background: var(--bg-color);
+      border-radius: 14px; border-right: 4px solid var(--primary);
+      transition: all 0.2s;
+    }
+    .dept-card:hover { transform: translateX(-4px); box-shadow: var(--shadow-sm); }
+    .dept-photo {
+      width: 60px; height: 60px; border-radius: 50%;
+      object-fit: cover; border: 3px solid var(--primary);
+      flex-shrink: 0;
+    }
+    .dept-info h4 { font-size: 0.95rem; color: var(--text-main); margin-bottom: 2px; }
+    .dept-info p { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; line-height: 1.4; }
+
+    .modules-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .module-chip {
+      padding: 10px 14px; background: var(--bg-color);
+      border: 1.5px solid var(--border-color); border-radius: 12px;
+      font-size: 0.8rem; font-weight: 700; text-align: center;
+      transition: all 0.2s;
+    }
+    .module-chip:hover {
+      background: var(--primary); color: white; border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .gallery {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .gallery img {
+      width: 100%; height: 180px; object-fit: cover;
+      border-radius: 14px; cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 2px solid var(--border-color);
+    }
+    .gallery img:hover { transform: scale(1.04); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+
+    .school-tabs {
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 30px;
+    }
+    .school-tab {
+      padding: 10px 20px; border-radius: 30px;
+      background: var(--card-bg); border: 1.5px solid var(--border-color);
+      color: var(--text-main); font-family: inherit; font-weight: 800;
+      font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .school-tab:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .school-tab.active {
+      background: var(--primary); color: white; border-color: var(--primary);
+      box-shadow: 0 6px 20px var(--primary-glow);
+    }
+
+    .school-detail { display: none; animation: fadeIn 0.4s ease; }
+    .school-detail.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .school-hero {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-bottom: 30px; align-items: center;
+    }
+    .school-hero-img {
+      width: 100%; height: 280px; object-fit: cover;
+      border-radius: 20px; box-shadow: var(--shadow-md);
+      border: 3px solid var(--primary);
+    }
+    .school-hero-text h2 {
+      font-size: 1.6rem; color: var(--primary); margin-bottom: 10px;
+    }
+    .school-hero-text .flag-country {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; background: var(--primary-light); color: var(--brown-dark);
+      border-radius: 20px; font-weight: 800; font-size: 0.85rem; margin-bottom: 12px;
+    }
+    .school-hero-text p { font-size: 0.92rem; line-height: 1.7; color: var(--text-muted); font-weight: 600; }
+
+    .timeline { position: relative; padding-right: 30px; }
+    .timeline::before {
+      content: ""; position: absolute; right: 10px; top: 0; bottom: 0;
+      width: 3px; background: linear-gradient(180deg, var(--primary), var(--primary-light));
+      border-radius: 3px;
+    }
+    .timeline-item { position: relative; padding-bottom: 20px; }
+    .timeline-item::before {
+      content: ""; position: absolute; right: -25px; top: 4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--primary); border: 3px solid var(--card-bg);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+    .timeline-year {
+      font-size: 0.85rem; font-weight: 900; color: var(--primary); margin-bottom: 4px;
+    }
+    .timeline-text { font-size: 0.85rem; color: var(--text-main); font-weight: 600; line-height: 1.5; }
+
+    .footer {
+      text-align: center; padding: 30px 20px; margin-top: 40px;
+      background: var(--card-bg); border-top: 1.5px solid var(--border-color);
+      font-size: 0.8rem; color: var(--text-muted); font-weight: 600;
+    }
+    .footer a { color: var(--primary); text-decoration: none; font-weight: 800; }
+
+    @media (max-width: 768px) {
+      .school-hero { grid-template-columns: 1fr; }
+      .school-hero-img { height: 200px; }
+      .top-navbar { flex-wrap: wrap; }
+      .container { padding: 20px 15px 60px; }
+      .detail-section { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="top-navbar">
+    <a href="index.html" class="nav-brand">
+      <div class="kangaroo-logo">
+        <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+          <radialGradient id="kBodyNav" cx="40%" cy="30%">
+            <stop offset="0%" stop-color="#fef3c7"/>
+            <stop offset="100%" stop-color="#ffffff"/>
+          </radialGradient>
+          <path d="M20 100 Q8 92 10 108 Q14 122 26 114 Z" fill="#7c2d12"/>
+          <ellipse cx="72" cy="112" rx="14" ry="6" fill="#7c2d12"/>
+          <ellipse cx="40" cy="102" rx="9" ry="4.5" fill="#7c2d12"/>
+          <ellipse cx="52" cy="82" rx="28" ry="26" fill="url(#kBodyNav)"/>
+          <ellipse cx="55" cy="88" rx="16" ry="16" fill="#fed7aa"/>
+          <ellipse cx="68" cy="44" rx="20" ry="18" fill="url(#kBodyNav)"/>
+          <ellipse cx="59" cy="20" rx="6" ry="14" fill="#ffffff" transform="rotate(-15 59 20)"/>
+          <ellipse cx="78" cy="20" rx="6" ry="14" fill="#ffffff" transform="rotate(15 78 20)"/>
+          <ellipse cx="75" cy="52" rx="11" ry="9" fill="#fed7aa"/>
+          <circle cx="66" cy="38" r="3.5" fill="#431407"/>
+          <circle cx="76" cy="38" r="3.5" fill="#431407"/>
+          <path d="M70 55 Q76 60 82 55" stroke="#431407" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="nav-title">ENSTP <span>Guide</span></div>
+        <div class="nav-subtitle" data-i18n="nav_subtitle">دليل الطالب</div>
+      </div>
+    </a>
+    <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()">
+      <i class="fa-solid fa-sliders"></i>
+    </button>
+  </nav>
+
+  <div class="nav-dropdown" id="navDropdown">
+    <div class="dropdown-section">
+      <div class="dropdown-label">🌐 <span data-i18n="menu_lang">اللغة</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn active" onclick="setLang('ar')" id="btn-ar">🇩🇿 العربية</button>
+        <button class="dropdown-btn" onclick="setLang('fr')" id="btn-fr">🇫🇷 Français</button>
+        <button class="dropdown-btn" onclick="setLang('en')" id="btn-en">🇬🇧 English</button>
+      </div>
+    </div>
+    <div class="dropdown-section">
+      <div class="dropdown-label">⚙️ <span data-i18n="menu_settings">الإعدادات</span></div>
+      <div class="dropdown-row">
+        <button class="dropdown-btn" onclick="toggleDarkMode()" id="themeBtn">
+          <i class="fa-solid fa-moon"></i> <span data-i18n="menu_dark">ليلي</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-badge">
+      <i class="fa-solid fa-globe-africa"></i> <span data-i18n="hero_badge">شبكة إفريقية</span>
+    </div>
+    <h1 class="hero-title">
+      <span data-i18n="hero_title_1">مدارس الأشغال العمومية</span><br>
+      <span data-i18n="hero_title_2">في إفريقيا</span>
+    </h1>
+    <p class="hero-desc" data-i18n="hero_desc">
+      اكتشف المدارس الوطنية العليا للأشغال العمومية (ENSTP) في الجزائر، الكاميرون، تشاد، بنين، وساحل العاج.
+    </p>
+    <a href="index.html" class="btn-back">
+      <i class="fa-solid fa-arrow-right"></i> <span data-i18n="back_home">العودة للرئيسية</span>
+    </a>
+  </header>
+
+  <main class="container">
+
+    <!-- CARDS GRID -->
+    <h2 class="section-title" data-i18n="section_schools">🏫 <span data-i18n="section_schools_span">المدارس الأعضاء</span></h2>
+    <p class="section-sub" data-i18n="section_sub">اضغط على أي مدرسة لعرض تفاصيلها الكاملة</p>
+
+    <div class="schools-grid">
+      <!-- Algérie -->
+      <a class="school-card" onclick="showSchool('algeria')">
+        <div class="school-card-img">
+          <img src="a2.jpg" alt="ENSTP Algérie" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=ENSTP+Algérie'">
+          <div class="school-flag">🇩🇿 DZ</div>
+        </div>
+        <div class="school-card-body">
+          <div class="school-card-country"><i class="fa-solid fa-location-dot"></i> <span data-i18n="country_algeria">الجزائر</span></div>
+          <h3 class="school-card-title">ENSTP Francis Jeanson</h3>
+          <div class="school-card-year"><i class="fa-solid fa-calendar"></i> <span data-i18n="founded">التأسيس</span>: 1966</div>
+          <button class="school-card-btn">
+            <i class="fa-solid fa-circle-info"></i> <span data-i18n="view_details">عرض التفاصيل</span>
+          </button>
+        </div>
+      </a>
+
+      <!-- Cameroun -->
+      <a class="school-card" onclick="showSchool('cameroon')">
+        <div class="school-card-img">
+          <img src="a3.jpg" alt="ENSTP Cameroun" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=ENSTP+Cameroun'">
+          <div class="school-flag">🇨🇲 CM</div>
+        </div>
+        <div class="school-card-body">
+          <div class="school-card-country"><i class="fa-solid fa-location-dot"></i> <span data-i18n="country_cameroon">الكاميرون</span></div>
+          <h3 class="school-card-title">ENSTP Yaoundé</h3>
+          <div class="school-card-year"><i class="fa-solid fa-calendar"></i> <span data-i18n="founded">التأسيس</span>: 1970</div>
+          <button class="school-card-btn">
+            <i class="fa-solid fa-circle-info"></i> <span data-i18n="view_details">عرض التفاصيل</span>
+          </button>
+        </div>
+      </a>
+
+      <!-- Tchad -->
+      <a class="school-card" onclick="showSchool('tchad')">
+        <div class="school-card-img">
+          <img src="a1.jpg" alt="ENSTP Tchad" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=ENSTP+Tchad'">
+          <div class="school-flag">🇹🇩 TD</div>
+        </div>
+        <div class="school-card-body">
+          <div class="school-card-country"><i class="fa-solid fa-location-dot"></i> <span data-i18n="country_tchad">تشاد</span></div>
+          <h3 class="school-card-title">ENSTP N'Djamena</h3>
+          <div class="school-card-year"><i class="fa-solid fa-calendar"></i> <span data-i18n="founded">التأسيس</span>: 1965</div>
+          <button class="school-card-btn">
+            <i class="fa-solid fa-circle-info"></i> <span data-i18n="view_details">عرض التفاصيل</span>
+          </button>
+        </div>
+      </a>
+
+      <!-- Bénin -->
+      <a class="school-card" onclick="showSchool('benin')">
+        <div class="school-card-img">
+          <img src="a4.jpg" alt="ENSTP Bénin" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=ENSTP+Bénin'">
+          <div class="school-flag">🇧🇯 BJ</div>
+        </div>
+        <div class="school-card-body">
+          <div class="school-card-country"><i class="fa-solid fa-location-dot"></i> <span data-i18n="country_benin">بنين</span></div>
+          <h3 class="school-card-title">ENSTP Abomey</h3>
+          <div class="school-card-year"><i class="fa-solid fa-calendar"></i> <span data-i18n="founded">التأسيس</span>: 2018</div>
+          <button class="school-card-btn">
+            <i class="fa-solid fa-circle-info"></i> <span data-i18n="view_details">عرض التفاصيل</span>
+          </button>
+        </div>
+      </a>
+
+      <!-- Côte d'Ivoire -->
+      <a class="school-card" onclick="showSchool('cotedivoire')">
+        <div class="school-card-img">
+          <img src="a5.jpg" alt="ESTP Côte d'Ivoire" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=ESTP+CI'">
+          <div class="school-flag">🇨🇮 CI</div>
+        </div>
+        <div class="school-card-body">
+          <div class="school-card-country"><i class="fa-solid fa-location-dot"></i> <span data-i18n="country_ci">ساحل العاج</span></div>
+          <h3 class="school-card-title">ESTP (INP-HB) Yamoussoukro</h3>
+          <div class="school-card-year"><i class="fa-solid fa-calendar"></i> <span data-i18n="founded">التأسيس</span>: 1963</div>
+          <button class="school-card-btn">
+            <i class="fa-solid fa-circle-info"></i> <span data-i18n="view_details">عرض التفاصيل</span>
+          </button>
+        </div>
+      </a>
+    </div>
+
+    <!-- TABS -->
+    <div class="school-tabs">
+      <button class="school-tab active" onclick="showSchool('algeria', this)">🇩🇿 <span data-i18n="tab_algeria">الجزائر</span></button>
+      <button class="school-tab" onclick="showSchool('cameroon', this)">🇨🇲 <span data-i18n="tab_cameroon">الكاميرون</span></button>
+      <button class="school-tab" onclick="showSchool('tchad', this)">🇹🇩 <span data-i18n="tab_tchad">تشاد</span></button>
+      <button class="school-tab" onclick="showSchool('benin', this)">🇧🇯 <span data-i18n="tab_benin">بنين</span></button>
+      <button class="school-tab" onclick="showSchool('cotedivoire', this)">🇨🇮 <span data-i18n="tab_ci">ساحل العاج</span></button>
+    </div>
+
+    <!-- ═══════════ ALGÉRIE ═══════════ -->
+    <div class="school-detail active" id="detail-algeria">
+      <div class="school-hero">
+        <img src="a2.jpg" alt="ENSTP Algérie" class="school-hero-img" onerror="this.src='https://via.placeholder.com/600x400/f97316/ffffff?text=ENSTP+Algérie'">
+        <div class="school-hero-text">
+          <div class="flag-country">🇩🇿 <span data-i18n="country_algeria">الجزائر</span></div>
+          <h2>ENSTP Francis Jeanson</h2>
+          <p data-i18n="algeria_intro">المدرسة الوطنية العليا للأشغال العمومية فرانسيس جانسون، القبة، الجزائر العاصمة. تأسست عام 1966، وتُعد من أقدم وأعرق مدارس الهندسة المدنية في إفريقيا.</p>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-circle-info"></i> <span data-i18n="general_info">معلومات عامة</span></h3>
+        <div class="detail-grid">
+          <div class="info-row"><div class="info-label" data-i18n="name_label">الاسم</div><div class="info-value">ENSTP Francis Jeanson</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="country_label">البلد</div><div class="info-value">🇩🇿 <span data-i18n="country_algeria">الجزائر</span></div></div>
+          <div class="info-row"><div class="info-label" data-i18n="city_label">المدينة</div><div class="info-value">Kouba, Alger</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="founded_label">التأسيس</div><div class="info-value">1966</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ CAMEROUN ═══════════ -->
+    <div class="school-detail" id="detail-cameroon">
+      <div class="school-hero">
+        <img src="a3.jpg" alt="ENSTP Cameroun" class="school-hero-img" onerror="this.src='https://via.placeholder.com/600x400/f97316/ffffff?text=ENSTP+Cameroun'">
+        <div class="school-hero-text">
+          <div class="flag-country">🇨🇲 <span data-i18n="country_cameroon">الكاميرون</span></div>
+          <h2>ENSTP Yaoundé</h2>
+          <p data-i18n="cameroon_intro">المدرسة الوطنية العليا للأشغال العمومية في ياوندي، الكاميرون. تأسست عام 1970 تحت اسم ENAT، وأصبحت ENSTP عام 1982. تُكوّن مهندسين وتقنيين في مجالات البناء والأشغال العمومية والهندسة المعمارية والبنية التحتية.</p>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-circle-info"></i> <span data-i18n="general_info">معلومات عامة</span></h3>
+        <div class="detail-grid">
+          <div class="info-row"><div class="info-label" data-i18n="name_label">الاسم</div><div class="info-value">École Nationale Supérieure des Travaux Publics</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="sigle_label">الاختصار</div><div class="info-value">ENSTP</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="country_label">البلد</div><div class="info-value">🇨🇲 <span data-i18n="country_cameroon">الكاميرون</span></div></div>
+          <div class="info-row"><div class="info-label" data-i18n="city_label">المدينة</div><div class="info-value">Yaoundé</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="status_label">الوضع القانوني</div><div class="info-value" data-i18n="public_inst">مؤسسة عمومية للتعليم العالي</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="tutelle_tech">الإشراف التقني</div><div class="info-value" data-i18n="min_tp">وزارة الأشغال العمومية</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="tutelle_acad">الإشراف الأكاديمي</div><div class="info-value" data-i18n="min_es">وزارة التعليم العالي</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="tutelle_fin">الإشراف المالي</div><div class="info-value" data-i18n="min_fin">وزارة المالية</div></div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> <span data-i18n="history">التاريخ</span></h3>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-year">1970</div><div class="timeline-text" data-i18n="hist_1970">الإنشاء تحت اسم المدرسة الوطنية للتقنية (ENAT).</div></div>
+          <div class="timeline-item"><div class="timeline-year">1982</div><div class="timeline-text" data-i18n="hist_1982">تغيير الاسم إلى المدرسة الوطنية العليا للأشغال العمومية (ENSTP).</div></div>
+          <div class="timeline-item"><div class="timeline-year">2016</div><div class="timeline-text" data-i18n="hist_2016">إعادة التنظيم بموجب المرسوم رقم 2016/426 بتاريخ 26 أكتوبر 2016.</div></div>
+          <div class="timeline-item"><div class="timeline-year">2019</div><div class="timeline-text" data-i18n="hist_2019">تعيين مسؤولين جدد بموجب مرسوم.</div></div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-building-columns"></i> <span data-i18n="departments">الأقسام والمسؤولون</span></h3>
+        <div class="departments-list">
+          <div class="dept-card">
+            <img src="c.jpg" alt="Pr MBESSA Michel" class="dept-photo" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><circle cx=%2230%22 cy=%2230%22 r=%2230%22 fill=%22%23f97316%22/></svg>'">
+            <div class="dept-info">
+              <h4 data-i18n="dept_civil">الهندسة المدنية</h4>
+              <p><strong>Pr MBESSA Michel</strong> — <span data-i18n="mbessa_desc">أستاذ جامعي كاميروني، باحث في مواد البناء ومتانة الخرسانة.</span></p>
+            </div>
+          </div>
+          <div class="dept-card">
+            <img src="c1.jpg" alt="Pr TALLA André" class="dept-photo" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><circle cx=%2230%22 cy=%2230%22 r=%2230%22 fill=%22%23f97316%22/></svg>'">
+            <div class="dept-info">
+              <h4 data-i18n="dept_env">الهندسة البيئية</h4>
+              <p><strong>Pr TALLA André</strong> — <span data-i18n="talla_desc">باحث في الهندسة الصناعية والميكانيكا والطاقات المتجددة.</span></p>
+            </div>
+          </div>
+          <div class="dept-card">
+            <img src="c2.jpg" alt="Pr ÉLIME BOUBOAMA" class="dept-photo" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><circle cx=%2230%22 cy=%2230%22 r=%2230%22 fill=%22%23f97316%22/></svg>'">
+            <div class="dept-info">
+              <h4 data-i18n="dept_topo">المساحة والكاداستر</h4>
+              <p><strong>Pr ÉLIME BOUBOAMA</strong> — <span data-i18n="elime_desc">أستاذ الهندسة الميكانيكية، مدير مكتب الدراسات BET ITIS.</span></p>
+            </div>
+          </div>
+          <div class="dept-card">
+            <img src="c2.jpg" alt="Dr ABA NKASSE Alain" class="dept-photo" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><circle cx=%2230%22 cy=%2230%22 r=%2230%22 fill=%22%23f97316%22/></svg>'">
+            <div class="dept-info">
+              <h4 data-i18n="dept_urban">التخطيط العمراني والعمارة</h4>
+              <p><strong>Dr ABA NKASSE Alain</strong> — <span data-i18n="aba_desc">مسؤول قسم التخطيط العمراني والعمارة.</span></p>
+            </div>
+          </div>
+          <div class="dept-card">
+            <img src="c.jpg" alt="Dr NZENDA Silantos" class="dept-photo" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><circle cx=%2230%22 cy=%2230%22 r=%2230%22 fill=%22%23f97316%22/></svg>'">
+            <div class="dept-info">
+              <h4 data-i18n="dept_cont">التكوين المستمر</h4>
+              <p><strong>Dr NZENDA Silantos</strong> — <span data-i18n="nzenda_desc">أستاذ جامعي ومسؤول قسم في وزارة الأشغال العمومية.</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ TCHAD ═══════════ -->
+    <div class="school-detail" id="detail-tchad">
+      <div class="school-hero">
+        <img src="a1.jpg" alt="ENSTP Tchad" class="school-hero-img" onerror="this.src='https://via.placeholder.com/600x400/f97316/ffffff?text=ENSTP+Tchad'">
+        <div class="school-hero-text">
+          <div class="flag-country">🇹🇩 <span data-i18n="country_tchad">تشاد</span></div>
+          <h2>ENSTP N'Djamena</h2>
+          <p data-i18n="tchad_intro">المدرسة الوطنية العليا للأشغال العمومية في انجامينا، تشاد. تأسست عام 1965، واحتفلت بالذكرى الستين لتأسيسها في 2025. تُكوّن مهندسين وتقنيين في الأشغال العمومية والبنية التحتية والهندسة المدنية.</p>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-circle-info"></i> <span data-i18n="general_info">معلومات عامة</span></h3>
+        <div class="detail-grid">
+          <div class="info-row"><div class="info-label" data-i18n="name_label">الاسم</div><div class="info-value">École Nationale Supérieure des Travaux Publics</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="country_label">البلد</div><div class="info-value">🇹🇩 <span data-i18n="country_tchad">تشاد</span></div></div>
+          <div class="info-row"><div class="info-label" data-i18n="city_label">المدينة</div><div class="info-value">N'Djamena</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="founded_label">التأسيس</div><div class="info-value">1965</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="address_label">العنوان</div><div class="info-value">BP 60, N'Djaména</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="lang_label">لغة التدريس</div><div class="info-value" data-i18n="french_lang">الفرنسية</div></div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-user-tie"></i> <span data-i18n="director">المدير العام</span></h3>
+        <div class="dept-card">
+          <img src="direteur.jpg" alt="Pr Koïna Rodoumta" class="dept-photo" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><circle cx=%2230%22 cy=%2230%22 r=%2230%22 fill=%22%23f97316%22/></svg>'">
+          <div class="dept-info">
+            <h4>Pr Koïna Rodoumta</h4>
+            <p data-i18n="koina_desc">أستاذ جامعي تشادي، محاضر في الرياضيات، المدير العام للمدرسة الوطنية العليا للأشغال العمومية في انجامينا.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-graduation-cap"></i> <span data-i18n="domains">مجالات التكوين</span></h3>
+        <div class="departments-list">
+          <div class="dept-card">
+            <div class="dept-info"><h4 data-i18n="domain_civil">1. الهندسة المدنية</h4><p data-i18n="domain_civil_desc">تشييد المباني، الخرسانة المسلحة، الجسور والمنشآت الفنية، الأساسات والهياكل.</p></div>
+          </div>
+          <div class="dept-card">
+            <div class="dept-info"><h4 data-i18n="domain_rural">2. الهندسة الريفية</h4><p data-i18n="domain_rural_desc">الري، الهيدروليكا الريفية، التهيئة الزراعية، إدارة الموارد المائية.</p></div>
+          </div>
+          <div class="dept-card">
+            <div class="dept-info"><h4 data-i18n="domain_topo">3. المساحة والجيوماتيك</h4><p data-i18n="domain_topo_desc">قياس الأراضي، الرفع الطبوغرافي، رسم الخرائط، التحديد الجغرافي.</p></div>
+          </div>
+          <div class="dept-card">
+            <div class="dept-info"><h4 data-i18n="domain_tp">4. الأشغال العمومية</h4><p data-i18n="domain_tp_desc">بناء الطرق، صيانة البنية التحتية، الجسور والطرق، التهيئة الحضرية.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-layer-group"></i> <span data-i18n="lmd_system">نظام الدراسة (LMD)</span></h3>
+        <div class="detail-grid">
+          <div class="info-row"><div class="info-label">Licence</div><div class="info-value">Bac + 3</div></div>
+          <div class="info-row"><div class="info-label">Master</div><div class="info-value">Bac + 5</div></div>
+          <div class="info-row"><div class="info-label">Doctorat</div><div class="info-value">Bac + 8</div></div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-book"></i> <span data-i18n="modules">الوحدات الدراسية</span></h3>
+        <div class="modules-grid">
+          <div class="module-chip" data-i18n="mod_math">الرياضيات</div>
+          <div class="module-chip" data-i18n="mod_physics">الفيزياء</div>
+          <div class="module-chip" data-i18n="mod_chem">الكيمياء</div>
+          <div class="module-chip" data-i18n="mod_analysis">التحليل</div>
+          <div class="module-chip" data-i18n="mod_rdm">مقاومة المواد (RDM)</div>
+          <div class="module-chip" data-i18n="mod_mech">الميكانيكا</div>
+          <div class="module-chip" data-i18n="mod_topo">المساحة</div>
+          <div class="module-chip" data-i18n="mod_hydro">الهيدروليكا</div>
+          <div class="module-chip" data-i18n="mod_concrete">الخرسانة المسلحة</div>
+          <div class="module-chip" data-i18n="mod_geo">الجيوتقنية</div>
+          <div class="module-chip" data-i18n="mod_draw">الرسم التقني</div>
+          <div class="module-chip" data-i18n="mod_info">المعلوماتية</div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-handshake"></i> <span data-i18n="algeria_coop">التعاون مع الجزائر</span></h3>
+        <p style="line-height:1.8;font-weight:600;color:var(--text-muted);margin-bottom:14px" data-i18n="coop_text">
+          في 22 أبريل 2026، وقّعت الجزائر وتشاد 28 اتفاقية ومذكرة تفاهم في مختلف المجالات، منها: التعليم العالي، البحث العلمي، التكوين المهني، وتطوير الكفاءات البشرية. المؤسستان مرتبطتان باتفاقية شراكة.
+        </p>
+        <div class="gallery">
+          <img src="relation1.jpg" alt="Coopération 1" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 220 180%22><rect width=%22220%22 height=%22180%22 fill=%22%23f97316%22/><text x=%22110%22 y=%2290%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2214%22>relation1.jpg</text></svg>'">
+          <img src="relation2.jpg" alt="Coopération 2" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 220 180%22><rect width=%22220%22 height=%22180%22 fill=%22%23f97316%22/><text x=%22110%22 y=%2290%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2214%22>relation2.jpg</text></svg>'">
+          <img src="relstion3.jpg" alt="Coopération 3" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 220 180%22><rect width=%22220%22 height=%22180%22 fill=%22%23f97316%22/><text x=%22110%22 y=%2290%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2214%22>relation3.jpg</text></svg>'">
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-images"></i> <span data-i18n="gallery">معرض الصور</span></h3>
+        <div class="gallery">
+          <img src="ecol 1.jpg" alt="ENSTP Tchad 1" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 220 180%22><rect width=%22220%22 height=%22180%22 fill=%22%23f97316%22/><text x=%22110%22 y=%2290%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2214%22>ecol 1.jpg</text></svg>'">
+          <img src="ecole 2.jpg" alt="ENSTP Tchad 2" onerror="this.style.background='#f97316';this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 220 180%22><rect width=%22220%22 height=%22180%22 fill=%22%23f97316%22/><text x=%22110%22 y=%2290%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2214%22>ecole 2.jpg</text></svg>'">
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ BÉNIN ═══════════ -->
+    <div class="school-detail" id="detail-benin">
+      <div class="school-hero">
+        <img src="a4.jpg" alt="ENSTP Bénin" class="school-hero-img" onerror="this.src='https://via.placeholder.com/600x400/f97316/ffffff?text=ENSTP+Bénin'">
+        <div class="school-hero-text">
+          <div class="flag-country">🇧🇯 <span data-i18n="country_benin">بنين</span></div>
+          <h2>ENSTP Abomey</h2>
+          <p data-i18n="benin_intro">المدرسة الوطنية العليا للأشغال العمومية في أبومي، بنين. تأسست عام 2018، وتتبع الجامعة الوطنية للعلوم والتكنولوجيا والهندسة والرياضيات (UNSTIM).</p>
+        </div>
+      </div>
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-circle-info"></i> <span data-i18n="general_info">معلومات عامة</span></h3>
+        <div class="detail-grid">
+          <div class="info-row"><div class="info-label" data-i18n="name_label">الاسم</div><div class="info-value">ENSTP Abomey</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="country_label">البلد</div><div class="info-value">🇧🇯 <span data-i18n="country_benin">بنين</span></div></div>
+          <div class="info-row"><div class="info-label" data-i18n="city_label">المدينة</div><div class="info-value">Abomey</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="founded_label">التأسيس</div><div class="info-value">2018</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="university_label">الجامعة</div><div class="info-value">UNSTIM</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ CÔTE D'IVOIRE ═══════════ -->
+    <div class="school-detail" id="detail-cotedivoire">
+      <div class="school-hero">
+        <img src="a5.jpg" alt="ESTP Côte d'Ivoire" class="school-hero-img" onerror="this.src='https://via.placeholder.com/600x400/f97316/ffffff?text=ESTP+CI'">
+        <div class="school-hero-text">
+          <div class="flag-country">🇨🇮 <span data-i18n="country_ci">ساحل العاج</span></div>
+          <h2>ESTP (INP-HB) Yamoussoukro</h2>
+          <p data-i18n="ci_intro">المدرسة العليا للأشغال العمومية في ياموسوكرو، ساحل العاج. تأسست عام 1963 في أبيدجان، وانتقلت إلى ياموسوكرو عام 1979، ثم اندمجت في INP-HB عام 1996.</p>
+        </div>
+      </div>
+      <div class="detail-section">
+        <h3><i class="fa-solid fa-circle-info"></i> <span data-i18n="general_info">معلومات عامة</span></h3>
+        <div class="detail-grid">
+          <div class="info-row"><div class="info-label" data-i18n="name_label">الاسم</div><div class="info-value">ESTP (INP-HB)</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="country_label">البلد</div><div class="info-value">🇨🇮 <span data-i18n="country_ci">ساحل العاج</span></div></div>
+          <div class="info-row"><div class="info-label" data-i18n="city_label">المدينة</div><div class="info-value">Yamoussoukro</div></div>
+          <div class="info-row"><div class="info-label" data-i18n="founded_label">التأسيس</div><div class="info-value">1963</div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 ENSTP Kouba · <a href="index.html" data-i18n="back_home">العودة للرئيسية</a></p>
+  </footer>
+
+  <script>
+    /* THEME */
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) html.setAttribute('data-theme', savedTheme);
+    else { const h = new Date().getHours(); if (h >= 19 || h < 7) html.setAttribute('data-theme', 'dark'); }
+
+    function toggleDarkMode() {
+      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      localStorage.setItem('theme', html.getAttribute('data-theme'));
+      updateThemeBtn();
+    }
+    function updateThemeBtn() {
+      const btn = document.getElementById('themeBtn');
+      if (!btn) return;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      btn.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i> <span>نهاري</span>' : '<i class="fa-solid fa-moon"></i> <span>ليلي</span>';
+    }
+
+    /* MENU */
+    function toggleMenu() {
+      document.getElementById('navDropdown').classList.toggle('open');
+      document.getElementById('menuBtn').classList.toggle('active');
+    }
+    document.addEventListener('click', (e) => {
+      const d = document.getElementById('navDropdown');
+      const b = document.getElementById('menuBtn');
+      if (!d.contains(e.target) && !b.contains(e.target)) {
+        d.classList.remove('open'); b.classList.remove('active');
+      }
+    });
+
+    /* TRANSLATIONS */
+    let currentLang = localStorage.getItem('enstp_lang') || 'ar';
+    const TR = {
+      ar: {
+        page_title: "مدارس الأشغال العمومية في إفريقيا - ENSTP",
+        nav_subtitle: "دليل الطالب", menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي",
+        hero_badge: "شبكة إفريقية", hero_title_1: "مدارس الأشغال العمومية", hero_title_2: "في إفريقيا",
+        hero_desc: "اكتشف المدارس الوطنية العليا للأشغال العمومية (ENSTP) في الجزائر، الكاميرون، تشاد، بنين، وساحل العاج.",
+        back_home: "العودة للرئيسية",
+        section_schools: "🏫 المدارس الأعضاء", section_schools_span: "المدارس الأعضاء",
+        section_sub: "اضغط على أي مدرسة لعرض تفاصيلها الكاملة",
+        country_algeria: "الجزائر", country_cameroon: "الكاميرون", country_tchad: "تشاد",
+        country_benin: "بنين", country_ci: "ساحل العاج",
+        founded: "التأسيس", view_details: "عرض التفاصيل",
+        tab_algeria: "الجزائر", tab_cameroon: "الكاميرون", tab_tchad: "تشاد", tab_benin: "بنين", tab_ci: "ساحل العاج",
+        general_info: "معلومات عامة", name_label: "الاسم", sigle_label: "الاختصار",
+        country_label: "البلد", city_label: "المدينة", founded_label: "التأسيس",
+        status_label: "الوضع القانوني", tutelle_tech: "الإشراف التقني",
+        tutelle_acad: "الإشراف الأكاديمي", tutelle_fin: "الإشراف المالي",
+        public_inst: "مؤسسة عمومية للتعليم العالي",
+        min_tp: "وزارة الأشغال العمومية", min_es: "وزارة التعليم العالي", min_fin: "وزارة المالية",
+        history: "التاريخ",
+        hist_1970: "الإنشاء تحت اسم المدرسة الوطنية للتقنية (ENAT).",
+        hist_1982: "تغيير الاسم إلى المدرسة الوطنية العليا للأشغال العمومية (ENSTP).",
+        hist_2016: "إعادة التنظيم بموجب المرسوم رقم 2016/426 بتاريخ 26 أكتوبر 2016.",
+        hist_2019: "تعيين مسؤولين جدد بموجب مرسوم.",
+        departments: "الأقسام والمسؤولون",
+        dept_civil: "الهندسة المدنية", dept_env: "الهندسة البيئية",
+        dept_topo: "المساحة والكاداستر", dept_urban: "التخطيط العمراني والعمارة", dept_cont: "التكوين المستمر",
+        mbessa_desc: "أستاذ جامعي كاميروني، باحث في مواد البناء ومتانة الخرسانة.",
+        talla_desc: "باحث في الهندسة الصناعية والميكانيكا والطاقات المتجددة.",
+        elime_desc: "أستاذ الهندسة الميكانيكية، مدير مكتب الدراسات BET ITIS.",
+        aba_desc: "مسؤول قسم التخطيط العمراني والعمارة.",
+        nzenda_desc: "أستاذ جامعي ومسؤول قسم في وزارة الأشغال العمومية.",
+        director: "المدير العام",
+        koina_desc: "أستاذ جامعي تشادي، محاضر في الرياضيات، المدير العام للمدرسة الوطنية العليا للأشغال العمومية في انجامينا.",
+        domains: "مجالات التكوين",
+        domain_civil: "1. الهندسة المدنية", domain_civil_desc: "تشييد المباني، الخرسانة المسلحة، الجسور والمنشآت الفنية، الأساسات والهياكل.",
+        domain_rural: "2. الهندسة الريفية", domain_rural_desc: "الري، الهيدروليكا الريفية، التهيئة الزراعية، إدارة الموارد المائية.",
+        domain_topo: "3. المساحة والجيوماتيك", domain_topo_desc: "قياس الأراضي، الرفع الطبوغرافي، رسم الخرائط، التحديد الجغرافي.",
+        domain_tp: "4. الأشغال العمومية", domain_tp_desc: "بناء الطرق، صيانة البنية التحتية، الجسور والطرق، التهيئة الحضرية.",
+        lmd_system: "نظام الدراسة (LMD)",
+        modules: "الوحدات الدراسية",
+        mod_math: "الرياضيات", mod_physics: "الفيزياء", mod_chem: "الكيمياء", mod_analysis: "التحليل",
+        mod_rdm: "مقاومة المواد (RDM)", mod_mech: "الميكانيكا", mod_topo: "المساحة", mod_hydro: "الهيدروليكا",
+        mod_concrete: "الخرسانة المسلحة", mod_geo: "الجيوتقنية", mod_draw: "الرسم التقني", mod_info: "المعلوماتية",
+        algeria_coop: "التعاون مع الجزائر",
+        coop_text: "في 22 أبريل 2026، وقّعت الجزائر وتشاد 28 اتفاقية ومذكرة تفاهم في مختلف المجالات، منها: التعليم العالي، البحث العلمي، التكوين المهني، وتطوير الكفاءات البشرية. المؤسستان مرتبطتان باتفاقية شراكة.",
+        gallery: "معرض الصور",
+        algeria_intro: "المدرسة الوطنية العليا للأشغال العمومية فرانسيس جانسون، القبة، الجزائر العاصمة. تأسست عام 1966، وتُعد من أقدم وأعرق مدارس الهندسة المدنية في إفريقيا.",
+        cameroon_intro: "المدرسة الوطنية العليا للأشغال العمومية في ياوندي، الكاميرون. تأسست عام 1970 تحت اسم ENAT، وأصبحت ENSTP عام 1982. تُكوّن مهندسين وتقنيين في مجالات البناء والأشغال العمومية والهندسة المعمارية والبنية التحتية.",
+        tchad_intro: "المدرسة الوطنية العليا للأشغال العمومية في انجامينا، تشاد. تأسست عام 1965، واحتفلت بالذكرى الستين لتأسيسها في 2025. تُكوّن مهندسين وتقنيين في الأشغال العمومية والبنية التحتية والهندسة المدنية.",
+        benin_intro: "المدرسة الوطنية العليا للأشغال العمومية في أبومي، بنين. تأسست عام 2018، وتتبع الجامعة الوطنية للعلوم والتكنولوجيا والهندسة والرياضيات (UNSTIM).",
+        ci_intro: "المدرسة العليا للأشغال العمومية في ياموسوكرو، ساحل العاج. تأسست عام 1963 في أبيدجان، وانتقلت إلى ياموسوكرو عام 1979، ثم اندمجت في INP-HB عام 1996.",
+        address_label: "العنوان", lang_label: "لغة التدريس", french_lang: "الفرنسية", university_label: "الجامعة"
+      },
+      fr: {
+        page_title: "Écoles des Travaux Publics en Afrique - ENSTP",
+        nav_subtitle: "Guide étudiant", menu_lang: "Langue", menu_settings: "Paramètres", menu_dark: "Sombre",
+        hero_badge: "Réseau africain", hero_title_1: "Écoles des Travaux Publics", hero_title_2: "en Afrique",
+        hero_desc: "Découvrez les Écoles Nationales Supérieures des Travaux Publics (ENSTP) en Algérie, Cameroun, Tchad, Bénin et Côte d'Ivoire.",
+        back_home: "Retour à l'accueil",
+        section_schools: "🏫 Écoles membres", section_schools_span: "Écoles membres",
+        section_sub: "Cliquez sur une école pour voir ses détails complets",
+        country_algeria: "Algérie", country_cameroon: "Cameroun", country_tchad: "Tchad",
+        country_benin: "Bénin", country_ci: "Côte d'Ivoire",
+        founded: "Fondation", view_details: "Voir les détails",
+        tab_algeria: "Algérie", tab_cameroon: "Cameroun", tab_tchad: "Tchad", tab_benin: "Bénin", tab_ci: "Côte d'Ivoire",
+        general_info: "Informations générales", name_label: "Nom", sigle_label: "Sigle",
+        country_label: "Pays", city_label: "Ville", founded_label: "Fondation",
+        status_label: "Statut", tutelle_tech: "Tutelle technique",
+        tutelle_acad: "Tutelle académique", tutelle_fin: "Tutelle financière",
+        public_inst: "Établissement public d'enseignement supérieur",
+        min_tp: "Ministère des Travaux Publics", min_es: "Ministère de l'Enseignement Supérieur", min_fin: "Ministère des Finances",
+        history: "Histoire",
+        hist_1970: "Création sous le nom d'École Nationale de Technologie (ENAT).",
+        hist_1982: "Changement de nom : École Nationale Supérieure des Travaux Publics (ENSTP).",
+        hist_2016: "Réorganisation par le décret n° 2016/426 du 26 octobre 2016.",
+        hist_2019: "Nomination de nouveaux responsables par décret.",
+        departments: "Départements et responsables",
+        dept_civil: "Génie civil", dept_env: "Génie de l'environnement",
+        dept_topo: "Topographie-Cadastre", dept_urban: "Urbanisme et Architecture", dept_cont: "Formation continue",
+        mbessa_desc: "Universitaire camerounais, spécialiste des matériaux de construction et de la durabilité des bétons.",
+        talla_desc: "Spécialiste en génie industriel, mécanique, énergétique et énergies renouvelables.",
+        elime_desc: "Professeur de génie mécanique, Directeur Général du bureau d'études BET ITIS.",
+        aba_desc: "Responsable du département Urbanisme et Architecture.",
+        nzenda_desc: "Universitaire et responsable de département au Ministère des Travaux Publics.",
+        director: "Directeur Général",
+        koina_desc: "Universitaire tchadien, maître de conférences en mathématiques, Directeur Général de l'ENSTP de N'Djamena.",
+        domains: "Domaines de formation",
+        domain_civil: "1. Génie civil", domain_civil_desc: "Construction des bâtiments, béton armé, ponts et ouvrages d'art, fondations et structures.",
+        domain_rural: "2. Génie rural", domain_rural_desc: "Irrigation, hydraulique rurale, aménagement agricole, gestion des ressources en eau.",
+        domain_topo: "3. Topographie et géomatique", domain_topo_desc: "Mesure des terrains, levés topographiques, cartographie, géolocalisation.",
+        domain_tp: "4. Travaux publics", domain_tp_desc: "Construction des routes, entretien des infrastructures, ponts et chaussées, aménagement urbain.",
+        lmd_system: "Système d'études (LMD)",
+        modules: "Modules",
+        mod_math: "Mathématiques", mod_physics: "Physique", mod_chem: "Chimie", mod_analysis: "Analyse",
+        mod_rdm: "Résistance des matériaux (RDM)", mod_mech: "Mécanique", mod_topo: "Topographie", mod_hydro: "Hydraulique",
+        mod_concrete: "Béton armé", mod_geo: "Géotechnique", mod_draw: "Dessin technique", mod_info: "Informatique",
+        algeria_coop: "Coopération avec l'Algérie",
+        coop_text: "Le 22 avril 2026, l'Algérie et le Tchad ont signé 28 accords et mémorandums d'entente dans différents domaines, notamment : l'enseignement supérieur, la recherche scientifique, la formation professionnelle et le développement des compétences humaines. Les deux institutions sont déjà liées par un accord de partenariat.",
+        gallery: "Galerie photos",
+        algeria_intro: "École Nationale Supérieure des Travaux Publics Francis Jeanson, Kouba, Alger. Fondée en 1966, l'une des plus anciennes écoles de génie civil d'Afrique.",
+        cameroon_intro: "École Nationale Supérieure des Travaux Publics de Yaoundé, Cameroun. Fondée en 1970 sous le nom d'ENAT, devenue ENSTP en 1982. Forme des ingénieurs et techniciens dans le bâtiment, les travaux publics, l'architecture et les infrastructures.",
+        tchad_intro: "École Nationale Supérieure des Travaux Publics de N'Djamena, Tchad. Fondée en 1965, elle a célébré ses 60 ans en 2025. Forme des ingénieurs et techniciens en travaux publics, infrastructures et génie civil.",
+        benin_intro: "École Nationale Supérieure des Travaux Publics d'Abomey, Bénin. Fondée en 2018, rattachée à l'Université Nationale des Sciences, Technologies, Ingénierie et Mathématiques (UNSTIM).",
+        ci_intro: "École Supérieure des Travaux Publics de Yamoussoukro, Côte d'Ivoire. Fondée en 1963 à Abidjan, transférée à Yamoussoukro en 1979, puis intégrée à l'INP-HB en 1996.",
+        address_label: "Adresse", lang_label: "Langue d'enseignement", french_lang: "Français", university_label: "Université"
+      },
+      en: {
+        page_title: "Public Works Schools in Africa - ENSTP",
+        nav_subtitle: "Student guide", menu_lang: "Language", menu_settings: "Settings", menu_dark: "Dark",
+        hero_badge: "African network", hero_title_1: "Public Works Schools", hero_title_2: "in Africa",
+        hero_desc: "Discover the National Higher Schools of Public Works (ENSTP) in Algeria, Cameroon, Chad, Benin and Côte d'Ivoire.",
+        back_home: "Back to home",
+        section_schools: "🏫 Member schools", section_schools_span: "Member schools",
+        section_sub: "Click on any school to see its full details",
+        country_algeria: "Algeria", country_cameroon: "Cameroon", country_tchad: "Chad",
+        country_benin: "Benin", country_ci: "Côte d'Ivoire",
+        founded: "Founded", view_details: "View details",
+        tab_algeria: "Algeria", tab_cameroon: "Cameroon", tab_tchad: "Chad", tab_benin: "Benin", tab_ci: "Côte d'Ivoire",
+        general_info: "General information", name_label: "Name", sigle_label: "Acronym",
+        country_label: "Country", city_label: "City", founded_label: "Founded",
+        status_label: "Status", tutelle_tech: "Technical supervision",
+        tutelle_acad: "Academic supervision", tutelle_fin: "Financial supervision",
+        public_inst: "Public higher education institution",
+        min_tp: "Ministry of Public Works", min_es: "Ministry of Higher Education", min_fin: "Ministry of Finance",
+        history: "History",
+        hist_1970: "Created as National School of Technology (ENAT).",
+        hist_1982: "Renamed National Higher School of Public Works (ENSTP).",
+        hist_2016: "Reorganized by decree No. 2016/426 of October 26, 2016.",
+        hist_2019: "Appointment of new officials by decree.",
+        departments: "Departments and heads",
+        dept_civil: "Civil Engineering", dept_env: "Environmental Engineering",
+        dept_topo: "Topography-Cadastre", dept_urban: "Urban Planning and Architecture", dept_cont: "Continuing Education",
+        mbessa_desc: "Cameroonian academic, specialist in construction materials and concrete durability.",
+        talla_desc: "Specialist in industrial engineering, mechanics, energy and renewable energies.",
+        elime_desc: "Professor of mechanical engineering, General Director of BET ITIS consulting firm.",
+        aba_desc: "Head of the Urban Planning and Architecture Department.",
+        nzenda_desc: "Academic and department head at the Ministry of Public Works.",
+        director: "General Director",
+        koina_desc: "Chadian academic, lecturer in mathematics, General Director of ENSTP N'Djamena.",
+        domains: "Training fields",
+        domain_civil: "1. Civil Engineering", domain_civil_desc: "Building construction, reinforced concrete, bridges and engineering structures, foundations and structures.",
+        domain_rural: "2. Rural Engineering", domain_rural_desc: "Irrigation, rural hydraulics, agricultural development, water resource management.",
+        domain_topo: "3. Topography and Geomatics", domain_topo_desc: "Land measurement, topographic surveys, cartography, geolocation.",
+        domain_tp: "4. Public Works", domain_tp_desc: "Road construction, infrastructure maintenance, bridges and roads, urban development.",
+        lmd_system: "Study system (LMD)",
+        modules: "Modules",
+        mod_math: "Mathematics", mod_physics: "Physics", mod_chem: "Chemistry", mod_analysis: "Analysis",
+        mod_rdm: "Strength of Materials (RDM)", mod_mech: "Mechanics", mod_topo: "Topography", mod_hydro: "Hydraulics",
+        mod_concrete: "Reinforced concrete", mod_geo: "Geotechnics", mod_draw: "Technical drawing", mod_info: "Computer science",
+        algeria_coop: "Cooperation with Algeria",
+        coop_text: "On April 22, 2026, Algeria and Chad signed 28 agreements and memoranda of understanding in various fields, including: higher education, scientific research, vocational training and human skills development. The two institutions are already linked by a partnership agreement.",
+        gallery: "Photo gallery",
+        algeria_intro: "National Higher School of Public Works Francis Jeanson, Kouba, Algiers. Founded in 1966, one of the oldest civil engineering schools in Africa.",
+        cameroon_intro: "National Higher School of Public Works of Yaoundé, Cameroon. Founded in 1970 as ENAT, became ENSTP in 1982. Trains engineers and technicians in building, public works, architecture and infrastructure.",
+        tchad_intro: "National Higher School of Public Works of N'Djamena, Chad. Founded in 1965, celebrated its 60th anniversary in 2025. Trains engineers and technicians in public works, infrastructure and civil engineering.",
+        benin_intro: "National Higher School of Public Works of Abomey, Benin. Founded in 2018, attached to the National University of Sciences, Technologies, Engineering and Mathematics (UNSTIM).",
+        ci_intro: "Higher School of Public Works of Yamoussoukro, Côte d'Ivoire. Founded in 1963 in Abidjan, moved to Yamoussoukro in 1979, then integrated into INP-HB in 1996.",
+        address_label: "Address", lang_label: "Teaching language", french_lang: "French", university_label: "University"
+      }
+    };
+
+    function applyTranslation(lang) {
+      const dict = TR[lang] || TR.ar;
+      if (dict.page_title) document.title = dict.page_title;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (dict[k]) el.textContent = dict[k];
+      });
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+    }
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('enstp_lang', lang);
+      document.querySelectorAll('.dropdown-btn').forEach(b => b.classList.remove('active'));
+      const b = document.getElementById('btn-' + lang);
+      if (b) b.classList.add('active');
+      applyTranslation(lang);
+    }
+
+    /* SHOW SCHOOL */
+    function showSchool(id, tabEl) {
+      document.querySelectorAll('.school-detail').forEach(d => d.classList.remove('active'));
+      const target = document.getElementById('detail-' + id);
+      if (target) {
+        target.classList.add('active');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      if (tabEl) {
+        document.querySelectorAll('.school-tab').forEach(t => t.classList.remove('active'));
+        tabEl.classList.add('active');
+      } else {
+        const tabs = document.querySelectorAll('.school-tab');
+        const idx = ['algeria','cameroon','tchad','benin','cotedivoire'].indexOf(id);
+        if (tabs[idx]) {
+          tabs.forEach(t => t.classList.remove('active'));
+          tabs[idx].classList.add('active');
+        }
+      }
+    }
+
+    /* INIT */
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('enstp_lang') || 'ar';
+      currentLang = saved;
+      document.querySelectorAll('.dropdown-btn').forEach(b => b.classList.remove('active'));
+      const b = document.getElementById('btn-' + saved);
+      if (b) b.classList.add('active');
+      applyTranslation(saved);
+      updateThemeBtn();
+    });
+  </script>
+</body>
+</html>
