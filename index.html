@@ -9,7 +9,9 @@
   <title data-i18n="page_title">دليل الطالب - ENSTP</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Font Awesome مع fallback -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        onerror="this.onerror=null;this.href='https://use.fontawesome.com/releases/v6.4.0/css/all.css';">
 
   <style>
     :root {
@@ -158,10 +160,7 @@
 
     .nav-brand:hover .kangaroo-logo { transform: rotate(-8deg) scale(1.05); }
 
-    .kangaroo-logo svg {
-      width: 26px;
-      height: 30px;
-    }
+    .kangaroo-logo svg { width: 26px; height: 30px; }
 
     .nav-title {
       font-size: 1rem;
@@ -1369,7 +1368,7 @@
       <i class="fa-solid fa-location-dot"></i> <span data-i18n="home_badge">الدليل الشامل للطلبة</span>
     </div>
     <h1 class="hero-title">
-      <span data-i18n="home_title_1">المدرسة العليا</span><br><span data-i18n="home_title_2">للأشغال العمومية</span>
+      <span data-i18n="home_title_1">المدرسة الوطنية العليا</span><br><span data-i18n="home_title_2">للأشغال العمومية</span>
     </h1>
     <p class="hero-desc" data-i18n="home_desc">
       منصة رقمية متكاملة تجمع كل ما يحتاجه طالب ENSTP: التوجيه، التواصل، الخدمات اليومية، النقل، الإقامة الجامعية، السياحة، التسوق، المطاعم...
@@ -1395,6 +1394,7 @@
       <a href="alger.html" class="section-pill"><i class="fa-solid fa-map-location-dot"></i> <span data-i18n="sec_leisure">السياحة</span></a>
       <a href="shopping.html" class="section-pill"><i class="fa-solid fa-cart-shopping"></i> <span data-i18n="sec_shopping">التسوق</span></a>
       <a href="marketplace.html" class="section-pill"><i class="fa-solid fa-store"></i> <span data-i18n="sec_marketplace">سوق الطالب</span></a>
+      <a href="ecoles-afrique.html" class="section-pill"><i class="fa-solid fa-globe-africa"></i> <span data-i18n="sec_africa">مدارس الاشغال العمومية في إفريقيا</span></a>
       <a href="qui-sommes-nous.html" class="section-pill"><i class="fa-solid fa-circle-info"></i> <span data-i18n="sec_about">من نحن</span></a>
     </div>
   </div>
@@ -1522,6 +1522,18 @@
       </div>
     </a>
 
+    <!-- ═══ بطاقة مدارس الأشغال العمومية في إفريقيا (جديدة) ═══ -->
+    <a href="ecoles-afrique.html" class="card">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+        <i class="fa-solid fa-share-nodes"></i>
+      </button>
+      <div class="card-img-wrap"><img src="a.jpg" alt="مدارس الأشغال العمومية في إفريقيا" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=Afrique'"></div>
+      <div class="card-body">
+        <h3 class="card-title" data-i18n="sec_africa">مدارس الأشغال العمومية في إفريقيا</h3>
+        <p class="card-sub" data-i18n="sec_africa_desc">شبكة المدارس الإفريقية للهندسة المدنية</p>
+      </div>
+    </a>
+
     <a href="qui-sommes-nous.html" class="card">
       <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
         <i class="fa-solid fa-share-nodes"></i>
@@ -1542,6 +1554,7 @@
         <a href="index.html" data-i18n="nav_home">الرئيسية</a>
         <a href="ma-ecole.html" data-i18n="sec_school">مدرستي</a>
         <a href="ma-reussite.html" data-i18n="sec_success">نجاحي</a>
+        <a href="ecoles-afrique.html" data-i18n="sec_africa">مدارس TP في إفريقيا</a>
         <a href="forum.html" data-i18n="sec_forum">ملتقى الطلبة</a>
         <a href="qui-sommes-nous.html" data-i18n="sec_about">من نحن</a>
       </div>
@@ -1792,7 +1805,7 @@
         search_placeholder: "ابحث عن قسم...",
         menu_lang: "اللغة", menu_settings: "الإعدادات", menu_dark: "ليلي", menu_sound: "الصوت",
         home_badge: "الدليل الشامل للطلبة",
-        home_title_1: "المدرسة العليا", home_title_2: "للأشغال العمومية",
+        home_title_1: "المدرسة الوطنية العليا", home_title_2: "للأشغال العمومية",
         home_desc: "منصة رقمية متكاملة تجمع كل ما يحتاجه طالب ENSTP: التوجيه، التواصل، الخدمات اليومية، النقل، الإقامة الجامعية، السياحة، التسوق، المطاعم...",
         home_start: "ابدأ", mascot_hello: "مرحبا! 👋",
         sec_school: "مدرستي", sec_school_desc: "الأساتذة، المباني، والتاريخ",
@@ -1806,6 +1819,8 @@
         sec_leisure: "السياحة", sec_leisure_desc: "معالم الجزائر العاصمة",
         sec_shopping: "التسوق", sec_shopping_desc: "المحلات، الأسعار، والعروض",
         sec_marketplace: "سوق الطالب", sec_marketplace_desc: "بيع وشراء الكتب والأدوات",
+        sec_africa: "مدارس الأشغال العمومية في إفريقيا",
+        sec_africa_desc: "شبكة المدارس الإفريقية للهندسة المدنية",
         sec_about: "من نحن", sec_about_desc: "فريق العمل، مهمتنا ورؤيتنا",
         nav_home: "الرئيسية", footer_rights: "جميع الحقوق محفوظة",
         ai_assistant_name: "المساعد الذكي", ai_assistant_status: "متصل الآن · يرد فوراً",
@@ -1833,6 +1848,8 @@
         sec_leisure: "Tourisme", sec_leisure_desc: "Monuments d'Alger",
         sec_shopping: "Shopping", sec_shopping_desc: "Commerces, prix et offres",
         sec_marketplace: "Marché Étudiant", sec_marketplace_desc: "Achat et vente de livres et outils",
+        sec_africa: "Écoles Traveaux publics en Afrique",
+        sec_africa_desc: " des écoles africaines de génie civil",
         sec_about: "Qui sommes-nous", sec_about_desc: "L'équipe, notre mission et vision",
         nav_home: "Accueil", footer_rights: "Tous droits réservés",
         ai_assistant_name: "Assistant Intelligent", ai_assistant_status: "Connecté · Répond instantanément",
@@ -1860,6 +1877,8 @@
         sec_leisure: "Tourism", sec_leisure_desc: "Algiers landmarks",
         sec_shopping: "Shopping", sec_shopping_desc: "Shops, prices and offers",
         sec_marketplace: "Student Market", sec_marketplace_desc: "Buy and sell books and tools",
+        sec_africa: "Public Works Schools in Africa",
+        sec_africa_desc: "African civil engineering schools ",
         sec_about: "About Us", sec_about_desc: "Our team, mission and vision",
         nav_home: "Home", footer_rights: "All rights reserved",
         ai_assistant_name: "Smart Assistant", ai_assistant_status: "Online · Replies instantly",
@@ -1898,7 +1917,6 @@
       document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
       document.documentElement.lang = lang;
 
-      // تحديث رسالة "لا نتائج" إن وجدت
       const noResults = document.getElementById('noResults');
       if (noResults) {
         noResults.innerHTML = '<i class="fa-solid fa-magnifying-glass" style="font-size:2rem;display:block;margin-bottom:12px;opacity:0.5"></i>' + (dict.no_results || 'لا توجد نتائج مطابقة');
@@ -1917,38 +1935,43 @@
     }
 
     /* ============================================================
-       SEARCH
+       SEARCH — بحث محسّن في كل عناصر الموقع
        ============================================================ */
     const searchInput = document.getElementById('searchInput');
     const clearSearchBtn = document.getElementById('clearSearch');
 
     function doSearch() {
       const query = searchInput.value.trim().toLowerCase();
-      let found = 0;
 
+      // 1. البطاقات
+      let found = 0;
       document.querySelectorAll('.card').forEach(card => {
         const titleEl = card.querySelector('.card-title');
         const subEl = card.querySelector('.card-sub');
         const title = titleEl?.textContent.toLowerCase() || '';
         const sub = subEl?.textContent.toLowerCase() || '';
-        const i18nKey = titleEl?.getAttribute('data-i18n') || '';
-        const subKey = subEl?.getAttribute('data-i18n') || '';
+        const i18nKey = (titleEl?.getAttribute('data-i18n') || '') + ' ' + (subEl?.getAttribute('data-i18n') || '');
         const href = (card.getAttribute('href') || '').toLowerCase();
+        const alt = (card.querySelector('img')?.alt || '').toLowerCase();
 
         const match = !query ||
           title.includes(query) || sub.includes(query) ||
-          i18nKey.includes(query) || subKey.includes(query) ||
-          href.includes(query);
+          i18nKey.includes(query) || href.includes(query) ||
+          alt.includes(query);
 
-        if (match) {
-          card.style.display = 'flex';
-          card.classList.add('visible');
-          found++;
-        } else {
-          card.style.display = 'none';
-        }
+        card.style.display = match ? 'flex' : 'none';
+        if (match) { card.classList.add('visible'); found++; }
       });
 
+      // 2. الأزرار (pilules)
+      document.querySelectorAll('.section-pill').forEach(pill => {
+        const txt = pill.textContent.toLowerCase();
+        const href = (pill.getAttribute('href') || '').toLowerCase();
+        const match = !query || txt.includes(query) || href.includes(query);
+        pill.style.display = match ? 'flex' : 'none';
+      });
+
+      // 3. رسالة "لا نتائج"
       let noResult = document.getElementById('noResults');
       if (!noResult) {
         noResult = document.createElement('div');
@@ -2067,22 +2090,16 @@
       aiChatWindow.classList.remove('open');
     }
 
+    /* ✅ دالة addMessage مُصحّحة (كانت مكسورة) */
     function addMessage(text, sender) {
-  const msg = document.createElement('div');
-  msg.className = `ai-msg ${sender}`;
-  const avatar = sender === 'bot'
-    ? '<div class="ai-msg-avatar"><i class="fa-solid fa-robot"></i></div>'
-    : '<div class="ai-msg-avatar"><i class="fa-solid fa-user"></i></div>';
-  const content = document.createElement('div');
-  content.className = 'ai-msg-content';
-  content.textContent = text;   // ← نص عادي بدون تحويل .html إلى روابط
-  msg.innerHTML = avatar;
-  msg.appendChild(content);
-  aiChatBody.appendChild(msg);
-  aiChatBody.scrollTop = aiChatBody.scrollHeight;
-}
-      });
-
+      const msg = document.createElement('div');
+      msg.className = `ai-msg ${sender}`;
+      const avatar = sender === 'bot'
+        ? '<div class="ai-msg-avatar"><i class="fa-solid fa-robot"></i></div>'
+        : '<div class="ai-msg-avatar"><i class="fa-solid fa-user"></i></div>';
+      const content = document.createElement('div');
+      content.className = 'ai-msg-content';
+      content.textContent = text;
       msg.innerHTML = avatar;
       msg.appendChild(content);
       aiChatBody.appendChild(msg);
@@ -2122,7 +2139,7 @@
     }
 
     /* ============================================================
-       KNOWLEDGE BASE — يغطي كل صفحات الموقع
+       KNOWLEDGE BASE
        ============================================================ */
     window.ENSTP_KNOWLEDGE = {
       schedule: {
@@ -2169,6 +2186,11 @@
         ar: "ENSTP تأسست 1925 في القبة، الجزائر. تكوين في الهندسة المدنية والأشغال العمومية. التفاصيل في ma-ecole.html.",
         fr: "L'ENSTP a été fondée en 1925 à Kouba, Alger. Formation en génie civil et travaux publics. Détails sur ma-ecole.html.",
         en: "ENSTP was founded in 1925 in Kouba, Algiers. Training in civil engineering and public works. Details on ma-ecole.html."
+      },
+      africa_schools: {
+        ar: "شبكة مدارس الأشغال العمومية في إفريقيا تجمع مؤسسات من الجزائر، المغرب، تونس، السنغال، الكاميرون... التفاصيل في ecoles-afrique.html.",
+        fr: "Le réseau des écoles de travaux publics en Afrique regroupe des institutions d'Algérie, du Maroc, de Tunisie, du Sénégal, du Cameroun... Détails sur ecoles-afrique.html.",
+        en: "The African public works schools network gathers institutions from Algeria, Morocco, Tunisia, Senegal, Cameroon... Details on ecoles-afrique.html."
       },
       contact: {
         ar: "جهات الاتصال: m.tebani@enstp.edu.dz (تحضيري)، i.makoudi@enstp.edu.dz (DIB)، m.bourebia83@gmail.com (DMS). في administration.html.",
@@ -2237,7 +2259,6 @@
       }
     };
 
-    /* كلمات مفتاحية → مفاتيح المعرفة */
     window.ENSTP_KEYWORDS = [
       { keys: ['جدول','توقيت','emploi','schedule','horaire'], k: 'schedule' },
       { keys: ['drive','ملفات','cours','دروس','ملخص'], k: 'drives' },
@@ -2247,6 +2268,7 @@
       { keys: ['صيدلية','pharmacie','pharmacy'], k: 'pharmacies' },
       { keys: ['إقامة','résidence','residence','سكن'], k: 'residence' },
       { keys: ['نقل','transport','bus','مترو','metro','ترامواي','tram'], k: 'transport' },
+      { keys: ['إفريقيا','afrique','africa','مدارس','écoles','schools'], k: 'africa_schools' },
       { keys: ['مدرسة','école','school','enstp','قبة','kouba','تاريخ'], k: 'school_info' },
       { keys: ['اتصال','contact','email','بريد','هاتف'], k: 'contact' },
       { keys: ['رياضة','sport','صحة','santé','طبيب'], k: 'sport' },
@@ -2274,7 +2296,6 @@
       return null;
     };
 
-    /* فهرس صفحات الموقع */
     window.SITE_INDEX = [
       { href:'ma-ecole.html',       ar:'مدرستي',          fr:'Mon École',         en:'My School' },
       { href:'administration.html', ar:'إدارتي',          fr:'Administration',    en:'Administration' },
@@ -2287,6 +2308,7 @@
       { href:'alger.html',          ar:'السياحة',         fr:'Tourisme',          en:'Tourism' },
       { href:'shopping.html',       ar:'التسوق',          fr:'Shopping',          en:'Shopping' },
       { href:'marketplace.html',    ar:'سوق الطالب',      fr:'Marché Étudiant',   en:'Student Market' },
+      { href:'ecoles-afrique.html', ar:'مدارس TP في إفريقيا', fr:'Écoles TP en Afrique', en:'Public Works Schools in Africa' },
       { href:'qui-sommes-nous.html',ar:'من نحن',          fr:'Qui sommes-nous',   en:'About Us' }
     ];
 
@@ -2331,7 +2353,6 @@
 
       chatHistory.push({ role: 'user', content: msg });
 
-      // (أ) بحث في قاعدة المعرفة
       const knowledgeReply = window.searchKnowledge(msg);
       if (knowledgeReply) {
         setTimeout(() => {
@@ -2344,7 +2365,6 @@
         return;
       }
 
-      // (ب) بحث في صفحات الموقع
       const siteReply = window.searchSiteLinks(msg);
       if (siteReply) {
         setTimeout(() => {
@@ -2357,7 +2377,6 @@
         return;
       }
 
-      // (ج) fallback: AI عام
       const typing = showTyping();
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 9000);
