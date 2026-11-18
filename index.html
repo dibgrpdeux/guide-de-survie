@@ -272,6 +272,31 @@
       border-color: var(--primary);
     }
 
+    /* ===== Fix #8: زر الوضع الليلي في الهيدر ===== */
+    .nav-theme-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1.5px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-size: 1rem;
+      transition: all 0.25s ease;
+    }
+    .nav-theme-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--primary-glow);
+    }
+    /* ===== نهاية Fix #8 ===== */
+
     .nav-dropdown {
       position: fixed;
       top: 72px;
@@ -679,6 +704,21 @@
     }
 
     .card:hover img { transform: scale(1.08); }
+
+    /* ===== Fix #5: توحيد مظهر صور البطاقات ===== */
+    .card-img-wrap img {
+      filter: saturate(0.95) contrast(1.02);
+    }
+    .card-img-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(249,115,22,0.10), rgba(124,45,18,0.18));
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+    /* ===== نهاية Fix #5 ===== */
 
     .card-img-wrap::after {
       content: "";
@@ -1263,6 +1303,7 @@
       .kangaroo-logo { width: 34px; height: 34px; }
       .kangaroo-logo svg { width: 20px; height: 24px; }
       .nav-menu-btn { width: 38px; height: 38px; font-size: 0.9rem; }
+      .nav-theme-btn { width: 38px; height: 38px; font-size: 0.9rem; }
       .hero-title { font-size: 2rem; }
       .cards-grid { grid-template-columns: 1fr; gap: 18px; padding: 0 15px; }
       .card-img-wrap { height: 190px; }
@@ -1327,12 +1368,18 @@
     <div class="nav-search">
       <input type="text" id="searchInput" placeholder="ابحث عن قسم..." data-i18n-placeholder="search_placeholder">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <button id="clearSearch" title="مسح">
+      <button id="clearSearch" title="مسح" aria-label="مسح البحث">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة">
+    <!-- ===== Fix #8: زر الوضع الليلي في الهيدر ===== -->
+    <button class="nav-theme-btn" id="headerThemeBtn" onclick="toggleDarkMode()" title="الوضع الليلي" aria-label="تبديل الوضع الليلي">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+    <!-- ===== نهاية Fix #8 ===== -->
+
+    <button class="nav-menu-btn" id="menuBtn" onclick="toggleMenu()" title="القائمة" aria-label="القائمة">
       <i class="fa-solid fa-sliders"></i>
     </button>
   </nav>
@@ -1402,7 +1449,7 @@
   <section class="cards-grid" id="cardsGrid">
 
     <a href="ma-ecole.html" class="card featured">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="image_5ab38fe5 (1).jpg" alt="مدرستي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=مدرستي'"></div>
@@ -1413,7 +1460,7 @@
     </a>
 
     <a href="ma-reussite.html" class="card featured">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="image_806ac8b5.jpg" alt="نجاحي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=نجاحي'"></div>
@@ -1424,7 +1471,7 @@
     </a>
 
     <a href="administration.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="images (74).jpeg" alt="إدارتي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=إدارتي'"></div>
@@ -1435,7 +1482,7 @@
     </a>
 
     <a href="residence.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="images (76).jpeg" alt="حياتي الجامعية" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=حياتي'"></div>
@@ -1446,7 +1493,7 @@
     </a>
 
     <a href="sport.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="images (77).jpeg" alt="صحتي ورياضتي" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=رياضتي'"></div>
@@ -1457,7 +1504,7 @@
     </a>
 
     <a href="forum.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="images71.jpeg" alt="ملتقى الطلبة" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=ملتقى'"></div>
@@ -1468,7 +1515,7 @@
     </a>
 
     <a href="transport.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="images80.jpg" alt="النقل" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=النقل'"></div>
@@ -1479,7 +1526,7 @@
     </a>
 
     <a href="resto.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="images (79).jpeg" alt="المطاعم" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=المطاعم'"></div>
@@ -1490,7 +1537,7 @@
     </a>
 
     <a href="alger.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="images82.jpg" alt="السياحة" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=السياحة'"></div>
@@ -1501,7 +1548,7 @@
     </a>
 
     <a href="shopping.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="images (80).jpeg" alt="التسوق" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=التسوق'"></div>
@@ -1512,7 +1559,7 @@
     </a>
 
     <a href="marketplace.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="b.jpg" alt="سوق الطالب" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=سوق+الطالب'"></div>
@@ -1524,7 +1571,7 @@
 
     <!-- ═══ بطاقة مدارس الأشغال العمومية في إفريقيا (جديدة) ═══ -->
     <a href="ecoles-afrique.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="a.jpg" alt="مدارس الأشغال العمومية في إفريقيا" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=Afrique'"></div>
@@ -1535,7 +1582,7 @@
     </a>
 
     <a href="qui-sommes-nous.html" class="card">
-      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة">
+      <button class="card-share" onclick="event.preventDefault();event.stopPropagation();shareCard(this)" title="مشاركة" aria-label="مشاركة هذا القسم">
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div class="card-img-wrap"><img src="i.jpg" alt="من نحن" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=Qui+sommes-nous'"></div>
@@ -1562,11 +1609,11 @@
     </div>
   </footer>
 
-  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="العودة إلى الأعلى">
     <i class="fa-solid fa-chevron-up"></i>
   </button>
 
-  <div class="mascot-container" id="mascotContainer" title="المساعد الذكي">
+  <div class="mascot-container" id="mascotContainer" title="المساعد الذكي" aria-label="فتح المساعد الذكي" role="button" tabindex="0">
     <div class="mascot-bubble" id="mascotBubble" data-i18n="mascot_hello">مرحبا! 👋</div>
     <div class="mascot-3d-wrapper">
       <svg class="mascot-kangaroo" id="mascotKangaroo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
@@ -1623,7 +1670,7 @@
           <p data-i18n="ai_assistant_status">متصل الآن · يرد فوراً</p>
         </div>
       </div>
-      <button class="ai-close-btn" onclick="closeAIChat()"><i class="fa-solid fa-xmark"></i></button>
+      <button class="ai-close-btn" onclick="closeAIChat()" aria-label="إغلاق المحادثة"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="ai-chat-body" id="aiChatBody">
       <div class="ai-msg bot">
@@ -1634,7 +1681,7 @@
     <div class="ai-suggestions" id="aiSuggestions"></div>
     <div class="ai-chat-input-wrap">
       <textarea class="ai-chat-input" id="aiChatInput" rows="1" placeholder="اكتب سؤالك..." data-i18n-placeholder="ai_input_placeholder"></textarea>
-      <button class="ai-send-btn" id="aiSendBtn" onclick="sendAIMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+      <button class="ai-send-btn" id="aiSendBtn" onclick="sendAIMessage()" aria-label="إرسال الرسالة"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
 
@@ -1663,14 +1710,27 @@
       playSound('click');
     }
 
+    /* ===== Fix #8: تحديث زر الهيدر وزر القائمة معاً ===== */
     function updateThemeBtn() {
-      const btn = document.getElementById('themeBtn');
-      if (!btn) return;
       const isDark = html.getAttribute('data-theme') === 'dark';
-      btn.innerHTML = isDark
-        ? '<i class="fa-solid fa-sun"></i> <span>نهاري</span>'
-        : '<i class="fa-solid fa-moon"></i> <span>ليلي</span>';
+      // زر القائمة (الأصلي)
+      const btn = document.getElementById('themeBtn');
+      if (btn) {
+        btn.innerHTML = isDark
+          ? '<i class="fa-solid fa-sun"></i> <span>نهاري</span>'
+          : '<i class="fa-solid fa-moon"></i> <span>ليلي</span>';
+      }
+      // زر الهيدر الجديد
+      const headerBtn = document.getElementById('headerThemeBtn');
+      if (headerBtn) {
+        headerBtn.innerHTML = isDark
+          ? '<i class="fa-solid fa-sun"></i>'
+          : '<i class="fa-solid fa-moon"></i>';
+        headerBtn.setAttribute('aria-label', isDark ? 'التبديل إلى الوضع النهاري' : 'التبديل إلى الوضع الليلي');
+        headerBtn.title = isDark ? 'الوضع النهاري' : 'الوضع الليلي';
+      }
     }
+    /* ===== نهاية Fix #8 ===== */
 
     /* ============================================================
        SOUND
@@ -2090,7 +2150,6 @@
       aiChatWindow.classList.remove('open');
     }
 
-    /* ✅ دالة addMessage مُصحّحة (كانت مكسورة) */
     function addMessage(text, sender) {
       const msg = document.createElement('div');
       msg.className = `ai-msg ${sender}`;
@@ -2438,7 +2497,7 @@
     });
 
     /* ============================================================
-       INIT
+       INIT — (تم إكمال الجزء الناقص)
        ============================================================ */
     document.addEventListener('click', function startAmbientOnce() {
       if (soundEnabled) startAmbient();
@@ -2446,15 +2505,17 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Fix #8: تحديث أيقونة زر الوضع الليلي فور التحميل
+      updateThemeBtn();
+      updateSoundBtn();
+      updateSuggestions();
+
       const savedLang = localStorage.getItem('enstp_lang') || 'ar';
       document.querySelectorAll('.dropdown-btn').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById('btn-' + savedLang);
       if (activeBtn) activeBtn.classList.add('active');
       currentLang = savedLang;
       applyTranslation(savedLang);
-      updateThemeBtn();
-      updateSoundBtn();
-      updateSuggestions();
     });
   </script>
 </body>
