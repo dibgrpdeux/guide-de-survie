@@ -960,76 +960,113 @@
       });
     });
 
-    // ===== ETUSA BUSES DATA =====
-    const ETUSA_LINES = [
+   
+// ===== ETUSA BUSES DATA =====
+const ETUSA_LINES = [
+  {
+    id: 'etusa-189',
+    name: 'LIGNE 189 : Place du 1er Mai ↔ Station Intermédiaire de Kouba',
+    days: ['sun','mon','tue','wed','thu','fri','sat'],
+    trips: [
       {
-        id: 'etusa-189',
-        name: 'LIGNE 189 : Place du 1er Mai ↔ Station Intermédiaire de Kouba',
-        days: ['sun','mon','tue','wed','thu','fri','sat'],
-        trips: [
-          { k:'go', label:'Place du 1er Mai → Station Intermédiaire de Kouba',
-            byDay:{sun:['06:50','07:20','07:50','08:30','09:00','09:30','10:10','10:40','11:10','11:50','12:20','12:50','13:20','13:50','14:20','15:00','15:30','16:00','16:40','17:10','17:40','18:20','18:50','19:20']}},
-         
-          { k:'back', label:'Station Intermédiaire de Kouba → Place du 1er Mai',
-            byDay:{sun:['06:00','06:30','07:00','07:40','08:10','08:40','09:20','09:50','10:20','11:00','11:30','12:00','12:30','13:00','13:30','14:10','14:40','15:10','15:50','16:20','16:50','17:30','18:00','18:30']}}
-        ]
+        k:'go',
+        label:'Place du 1er Mai → Station Intermédiaire de Kouba',
+        t:['06:50','07:20','07:50','08:30','09:00','09:30','10:10','10:40','11:10','11:50','12:20','12:50','13:20','13:50','14:20','15:00','15:30','16:00','16:40','17:10','17:40','18:20','18:50','19:20']
       },
       {
-        id: 'etusa-l06-main',
-        name: 'LIGNE L06 (Principal) : Place des Martyrs ↔ Station Intermédiaire de Kouba',
-        days: ['sun','mon','tue','wed','thu','fri','sat'],
-        trips: [
-          { k:'go', label:'Place des Martyrs → Station Intermédiaire de Kouba',
-            byDay:{sun:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']}},
-          { k:'back', label:'Station Intermédiaire de Kouba → Place des Martyrs',
-            byDay:{sun:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']}}
-        ]
-      },
-      {
-        id: 'etusa-l06-sec',
-        name: 'LIGNE L06 (Secondaire) : Place des Martyrs ↔ Station Intermédiaire de Kouba',
-        days: ['sun','mon','tue','wed','thu','fri','sat'],
-        trips: [
-          { k:'go', label:'Place des Martyrs → Station Intermédiaire de Kouba',
-            byDay:{sun:['06:45','08:20','10:00','11:40','13:20','15:00','16:40']}},
-          { k:'back', label:'Station Intermédiaire de Kouba → Place des Martyrs',
-            byDay:{sun:['05:45','07:30','09:10','10:50','12:10','14:10','15:50','17:30']}}
-        ]
-      },
-      {
-        id: 'etusa-l18',
-        name: 'LIGNE L18 : Bachdjarab ↔ Hôpital Militaire',
-        days: ['sun','mon','tue','wed','thu','fri','sat'],
-        trips: [
-          { k:'go', label:'Bachdjarab → Hôpital Militaire',
-            byDay:{sun:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']}},
-          { k:'back', label:'Hôpital Militaire → Bachdjarab',
-            byDay:{sun:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']}}
-        ]
-      },
-      {
-        id: 'etusa-l33',
-        name: 'LIGNE L33 : Place Audin ↔ Station Intermédiaire de Kouba',
-        days: ['sun','mon','tue','wed','thu','fri','sat'],
-        trips: [
-          { k:'go', label:'Place Audin → Station Intermédiaire de Kouba',
-            byDay:{sun:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']}},
-          { k:'back', label:'Station Intermédiaire de Kouba → Place Audin',
-            byDay:{sun:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']}}
-        ]
-      },
-      {
-        id: 'etusa-l82',
-        name: 'LIGNE L82 : El Harrach ↔ Station Intermédiaire de Kouba',
-        days: ['sun','mon','tue','wed','thu','fri','sat'],
-        trips: [
-          { k:'go', label:'El Harrach → Station Intermédiaire de Kouba',
-            byDay:{sun:['06:00','06:40','08:00','08:40','10:10','10:50','12:10','12:50','13:50','14:30','15:50','16:30','17:50','18:30']}},
-          { k:'back', label:'Station Intermédiaire de Kouba → El Harrach',
-            byDay:{sun:['06:50','07:30','09:10','09:50','11:10','11:50','13:00','13:40','14:50','15:30','16:50','17:30']}}
-        ]
+        k:'back',
+        label:'Station Intermédiaire de Kouba → Place du 1er Mai',
+        t:['06:00','06:30','07:00','07:40','08:10','08:40','09:20','09:50','10:20','11:00','11:30','12:00','12:30','13:00','13:30','14:10','14:40','15:10','15:50','16:20','16:50','17:30','18:00','18:30']
       }
-    ];
+    ]
+  },
+  {
+    id: 'etusa-l06-main',
+    name: 'LIGNE L06 (Principal) : Place des Martyrs ↔ Station Intermédiaire de Kouba',
+    days: ['sun','mon','tue','wed','thu','fri','sat'],
+    trips: [
+      {
+        k:'go',
+        label:'Place des Martyrs → Station Intermédiaire de Kouba',
+        t:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']
+      },
+      {
+        k:'back',
+        label:'Station Intermédiaire de Kouba → Place des Martyrs',
+        t:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']
+      }
+    ]
+  },
+  {
+    id: 'etusa-l06-sec',
+    name: 'LIGNE L06 (Secondaire) : Place des Martyrs ↔ Station Intermédiaire de Kouba',
+    days: ['sun','mon','tue','wed','thu','fri','sat'],
+    trips: [
+      {
+        k:'go',
+        label:'Place des Martyrs → Station Intermédiaire de Kouba',
+        t:['06:45','08:20','10:00','11:40','13:20','15:00','16:40']
+      },
+      {
+        k:'back',
+        label:'Station Intermédiaire de Kouba → Place des Martyrs',
+        t:['05:45','07:30','09:10','10:50','12:10','14:10','15:50','17:30']
+      }
+    ]
+  },
+  {
+    id: 'etusa-l18',
+    name: 'LIGNE L18 : Bachdjarab ↔ Hôpital Militaire',
+    days: ['sun','mon','tue','wed','thu','fri','sat'],
+    trips: [
+      {
+        k:'go',
+        label:'Bachdjarab → Hôpital Militaire',
+        t:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']
+      },
+      {
+        k:'back',
+        label:'Hôpital Militaire → Bachdjarab',
+        t:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']
+      }
+    ]
+  },
+  {
+    id: 'etusa-l33',
+    name: 'LIGNE L33 : Place Audin ↔ Station Intermédiaire de Kouba',
+    days: ['sun','mon','tue','wed','thu','fri','sat'],
+    trips: [
+      {
+        k:'go',
+        label:'Place Audin → Station Intermédiaire de Kouba',
+        t:['05:40','06:20','07:20','08:00','09:10','09:50','10:50','11:30','12:10','12:50','13:40','14:20','15:20','16:00','17:00','17:40']
+      },
+      {
+        k:'back',
+        label:'Station Intermédiaire de Kouba → Place Audin',
+        t:['06:30','07:10','08:20','09:00','10:00','10:40','11:30','12:10','12:50','13:30','14:30','15:10','16:10','16:50','17:50','18:30']
+      }
+    ]
+  },
+  {
+    id: 'etusa-l82',
+    name: 'LIGNE L82 : El Harrach ↔ Station Intermédiaire de Kouba',
+    days: ['sun','mon','tue','wed','thu','fri','sat'],
+    trips: [
+      {
+        k:'go',
+        label:'El Harrach → Station Intermédiaire de Kouba',
+        t:['06:00','06:40','08:00','08:40','10:10','10:50','12:10','12:50','13:50','14:30','15:50','16:30','17:50','18:30']
+      },
+      {
+        k:'back',
+        label:'Station Intermédiaire de Kouba → El Harrach',
+        t:['06:50','07:30','09:10','09:50','11:10','11:50','13:00','13:40','14:50','15:30','16:50','17:30']
+      }
+    ]
+  }
+];
+
 
     // ===== SNTF TRAINS DATA (From Agha) =====
     const SNTF_LINES = [
